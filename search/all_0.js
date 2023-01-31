@@ -1,8 +1,8 @@
 var searchData=
 [
   ['about_0',['About',['../class_bio_g_t_k_1_1_about.html',1,'BioGTK']]],
-  ['aboutclick_1',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
-  ['aboutclick_2',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_1',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_2',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
   ['abstractfloodfiller_3',['AbstractFloodFiller',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html',1,'Bio::Graphics']]],
   ['addimagestotabmenuclick_4',['addImagesToTabMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#acda5763eff30784fa495c584892aaf12',1,'BioGTK::TabsView']]],
   ['addline_5',['AddLine',['../class_bio_g_t_k_1_1_recorder.html#a3aa0aa3afa12a1c537a26083c8a372dc',1,'BioGTK::Recorder']]],

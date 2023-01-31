@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['aboutclick_0',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
-  ['aboutclick_1',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_0',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_1',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
   ['addimagestotabmenuclick_2',['addImagesToTabMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#acda5763eff30784fa495c584892aaf12',1,'BioGTK::TabsView']]],
   ['addline_3',['AddLine',['../class_bio_g_t_k_1_1_recorder.html#a3aa0aa3afa12a1c537a26083c8a372dc',1,'BioGTK::Recorder']]],
   ['addomeimagestotabclick_4',['addOMEImagesToTabClick',['../class_bio_g_t_k_1_1_tabs_view.html#a48aba7a897a6c36e96b4ef6d45145013',1,'BioGTK::TabsView']]],
