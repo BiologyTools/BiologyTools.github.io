@@ -94,7 +94,125 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">BioGTK Documentation</div></div>
 </div><!--header-->
 <div class="contents">
+<h1 id="biogtk">BioGTK</h1>
+<p>A .NET application &amp; library for editing &amp; annotating various microscopy image formats. Supports all bioformats supported images. Integrates with ImageJ, running ImageJ filters &amp; macro functions.Check out the new wiki for <a href="https://github.com/BiologyTools/Bio/wiki/Library-Usage">library usage.</a> or check out the <a href="https://biologytools.github.io/">documentation.</a> Supports Windows, Linux and Mac. For Windows &amp; Mac see installation instructions. For Discussion check out the new Discord Server. <a href="https://discord.gg/NpREVubS">https://discord.gg/NpREVubS</a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li><p>C# scripting with sample tool-script and other sample scripts in &quot;/Scripts/&quot; folder. <a href="https://github.com/BioMicroscopy/BioImage-Scripts">See samples</a></p>
+</li>
+<li><p>Supports running ImageJ macro commands on images open in Bio. Console to run ImageJ macro commands and Bio C# scripts.</p>
+</li>
+<li><p>Supports Pyramidal images with multiple resolutions. Like whole slide images.</p>
+</li>
+<li><p>Multiple view modes like Emission, and Filtered. ROI&#39;s shown for each channel can be configured in ROI Manager.</p>
+</li>
+<li><p>Supports drawing shapes &amp; colors onto 16 bit &amp; 48 bit images, unlike System.Drawing.Graphics.</p>
+</li>
+<li><p>Convenient viewing of image stacks with scroll wheel moving Z-plane and mouse side buttons scrolling C-planes.</p>
+</li>
+<li><p>Editing &amp; saving ROI&#39;s in images to OME format image stacks.</p>
+</li>
+<li><p>Copy &amp; Paste to quickly annotate images and name them easily by right click.</p>
+</li>
+<li><p>Select multiple points by holding down control key, and move them by holding down control key. </p>
+</li>
+<li><p>Exporting ROI&#39;s from each OME image in a folder of images to CSV.</p>
+</li>
+<li><p>Easy freeform annotation with magic select tool which selects based on blob detection.</p>
+</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li><a href="https://github.com/GDanovski/BioFormats.Net">BioFormats.Net</a></li>
+<li><a href="http://www.ikvm.net/">IKVM</a></li>
+<li><a href="http://www.aforgenet.com/">AForge</a></li>
+<li><a href="https://bitmiracle.com/libtiff/">LibTiff.Net</a></li>
+<li><a href="https://github.com/oleg-shilo/cs-script/blob/master/LICENSE">Cs-script</a></li>
+<li><a href="https://imagej.nih.gov/ij/">ImageJ</a> (Only needed when running ImageJ macro commands)</li>
+</ul>
+<h2 id="licenses">Licenses</h2>
+<ul>
+<li>BioGTK <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL3</a></li>
+<li>AForge <a href="http://www.aforgenet.com/framework/license.html">LGPL</a></li>
+<li>BioFormats.Net <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL3</a></li>
+<li><a href="https://github.com/gluck/ikvm/blob/master/LICENSE">IKVM</a></li>
+<li>LibTiff.Net <a href="https://bitmiracle.com/libtiff/">BSD</a></li>
+<li>Cs-script <a href="https://github.com/oleg-shilo/cs-script/blob/master/LICENSE">MIT</a></li>
+</ul>
+<h2 id="scripting">Scripting</h2>
+<ul>
+<li>Save scripts into &quot;StartupPath/Scripts&quot; with &quot;.cs&quot; ending.</li>
+<li>Open script editor and recorder from menu.</li>
+<li>Scripts saved in Scripts folder will be loaded into script runner.</li>
+<li>Use Script recorder to record program function calls and script runner to turn recorder text into working scripts. (See sample <a href="https://github.com/BioMicroscopy/BioImage-Scripts">scripts</a></li>
+</ul>
+<h2 id="mac-installation">Mac Installation</h2>
+<ul>
+<li>Install Mac package manager <a href="https://brew.sh/">homebrew.</a></li>
+<li>From brew install <a href="https://formulae.brew.sh/formula/gtk+3#default">GTK3.</a></li>
+<li>Download the BioGTK application for either OSX-x64 or OSX-Arm from releases.</li>
+<li>Make the file executable by opening terminal in the extracted folder and running &quot;chmod 755 BioGTKApp&quot; </li>
+</ul>
+<h2 id="windows-installation">Windows Installation</h2>
+<ul>
+<li>Install package manager <a href="https://github.com/GtkSharp/GtkSharp/wiki/Installing-Gtk-on-Windows">MSYS2.</a> to install package GTK3. (Required for GTK Apps.)</li>
+<li>Download the BioGTK Windows installer from releases.</li>
+</ul>
+<h2 id="sample-tool-script">Sample Tool Script</h2>
+<pre><code><span class="hljs-comment">//css_reference BioGTK.dll; </span>
+using System; 
+using BioGTK;
+using System.Threading;
+using AForge;
+public <span class="hljs-keyword">class</span> Loader {
+
+<span class="hljs-comment">//Point ROI Tool Example</span>
+public string Load()
+{
+    int ind = 1;
+    <span class="hljs-keyword">do</span>
+    {
+        BioGTK.Scripting.State s = BioGTK.Scripting.GetState();
+        <span class="hljs-keyword">if</span> (s != null)
+        {
+            <span class="hljs-keyword">if</span> (!s.processed)
+            {
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.Down &amp;&amp; s.buts == 1)
+                {
+                    ZCT cord = BioGTK.<span class="hljs-keyword">App</span>.viewer.GetCoordinate();
+                    BioGTK.Scripting.LogLine(cord.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Coordinate"</span>);
+                    BioGTK.ROI <span class="hljs-keyword">an</span> = BioGTK.ROI.CreatePoint(cord, s.p.X, s.p.Y);
+                    BioGTK.ImageView.SelectedImage.Annotations.Add(<span class="hljs-keyword">an</span>);
+                    BioGTK.Scripting.LogLine(cord.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Coordinate"</span>);
+                    <span class="hljs-keyword">an</span>.Text = <span class="hljs-string">"Point"</span> + ind;
+                    ind++;
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Point"</span>);
+                    <span class="hljs-comment">//ImageView.viewer.UpdateOverlay();</span>
+                }
+                <span class="hljs-keyword">else</span>
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.Up)
+                {
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>());
+                }
+                <span class="hljs-keyword">else</span>
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.<span class="hljs-keyword">Move</span>)
+                {
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>());
+                }
+                s.processed = true;
+            }
+        }
+        <span class="hljs-keyword">if</span>(BioGTK.Scripting.<span class="hljs-keyword">Exit</span>(<span class="hljs-string">"points.cs"</span>))
+        {    
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"OK"</span>;
+        }
+    } <span class="hljs-keyword">while</span> (true);
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"OK"</span>;
+}
+}
+</code></pre>
 </div><!-- contents -->
+</div><!-- doc-content -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
