@@ -1,8 +1,8 @@
 var searchData=
 [
   ['onlocaldeleteevent_0',['OnLocalDeleteEvent',['../class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8',1,'BioGTK.NodeView.OnLocalDeleteEvent()'],['../class_bio_g_t_k_1_1_recorder.html#ab401bf3f0f35e204716934fc497eff52',1,'BioGTK.Recorder.OnLocalDeleteEvent()']]],
-  ['open_1',['Open',['../class_bio_g_t_k_1_1_bio_image.html#a65af7d7f94c4d578bd33f834fead5eb1',1,'BioGTK.BioImage.Open(string file)'],['../class_bio_g_t_k_1_1_bio_image.html#aa2b157f471b54f6c6e1488594177d853',1,'BioGTK.BioImage.Open(string[] files)'],['../class_bio_g_t_k_1_1_tabs_view.html#a30006cee6339b88f8c91fb91109b5f5c',1,'BioGTK.TabsView.Open()']]],
-  ['open_2',['open',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#a7a9011c57589b1d6f336e48c730b278c',1,'BioGTK::ImageJ::RoiDecoder']]],
+  ['open_1',['open',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#a7a9011c57589b1d6f336e48c730b278c',1,'BioGTK::ImageJ::RoiDecoder']]],
+  ['open_2',['Open',['../class_bio_g_t_k_1_1_bio_image.html#a65af7d7f94c4d578bd33f834fead5eb1',1,'BioGTK.BioImage.Open(string file)'],['../class_bio_g_t_k_1_1_bio_image.html#aa2b157f471b54f6c6e1488594177d853',1,'BioGTK.BioImage.Open(string[] files)'],['../class_bio_g_t_k_1_1_tabs_view.html#a30006cee6339b88f8c91fb91109b5f5c',1,'BioGTK.TabsView.Open()']]],
   ['openasync_3',['OpenAsync',['../class_bio_g_t_k_1_1_bio_image.html#a00f6faff5b95fecffc27bd6d5b3aeb6d',1,'BioGTK.BioImage.OpenAsync(string file)'],['../class_bio_g_t_k_1_1_bio_image.html#a3cafa3c573bf0ecc721988addff4efeb',1,'BioGTK.BioImage.OpenAsync(string[] files)']]],
   ['openfile_4',['OpenFile',['../class_bio_g_t_k_1_1_bio_image.html#a00787c66ba2458500aa07ff4a9215f41',1,'BioGTK.BioImage.OpenFile(string file)'],['../class_bio_g_t_k_1_1_bio_image.html#a3c2262a7be99c6bc4944a956b006d5e7',1,'BioGTK.BioImage.OpenFile(string file, int series, bool tab, bool addToImages)']]],
   ['openfrombytearray_5',['openFromByteArray',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#a23c2da1634ca0ed9938ce763f1ee7fab',1,'BioGTK::ImageJ::RoiDecoder']]],
