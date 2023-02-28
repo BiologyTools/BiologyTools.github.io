@@ -24,7 +24,7 @@
 */
 var NAVTREE =
 [
-  [ "BioImager", "index.html", [
+  [ "BioGTK", "index.html", [
     [ "IMPORTANT NOTICE", "md__f___shared__bio__bio_g_t_k__bio_g_t_k_bin__a_r_m64__release_net6_0_ikvm_linux_arm__l_i_c_e_n_s_e.html", [
       [ "IKVM", "md__f___shared__bio__bio_g_t_k__bio_g_t_k_bin__a_r_m64__release_net6_0_ikvm_linux_arm__l_i_c_e_n_s_e.html#autotoc_md0", null ],
       [ "GNU General Public License", "md__f___shared__bio__bio_g_t_k__bio_g_t_k_bin__a_r_m64__release_net6_0_ikvm_linux_arm__l_i_c_e_n_s_e.html#autotoc_md1", null ]
