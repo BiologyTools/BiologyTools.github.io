@@ -13,8 +13,9 @@ var searchData=
   ['floodfillrangequeue_10',['FloodFillRangeQueue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html',1,'Bio::Graphics']]],
   ['focus_11',['Focus',['../class_bio_g_t_k_1_1_focus.html',1,'BioGTK']]],
   ['foldertostack_12',['FolderToStack',['../class_bio_g_t_k_1_1_bio_image.html#a64fab899bd35462d7829813f1eeef848',1,'BioGTK::BioImage']]],
-  ['fromimage_13',['FromImage',['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio::Graphics::Graphics']]],
-  ['function_14',['Function',['../class_bio_g_t_k_1_1_function.html',1,'BioGTK']]],
-  ['functions_15',['Functions',['../class_bio_g_t_k_1_1_functions.html',1,'BioGTK.Functions'],['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK.Functions.Functions()']]],
-  ['functionstoolmenuclick_16',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
+  ['fromcolor_13',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
+  ['fromimage_14',['FromImage',['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a2efa77ca2c5be81e081305563abdd9e8',1,'BioGTK.BioImage.ImageJDesc.FromImage()'],['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio.Graphics.Graphics.FromImage()']]],
+  ['function_15',['Function',['../class_bio_g_t_k_1_1_function.html',1,'BioGTK']]],
+  ['functions_16',['Functions',['../class_bio_g_t_k_1_1_functions.html',1,'BioGTK.Functions'],['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK.Functions.Functions()']]],
+  ['functionstoolmenuclick_17',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
 ];

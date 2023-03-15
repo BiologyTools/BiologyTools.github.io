@@ -8,11 +8,11 @@ var searchData=
   ['updategui_5',['UpdateGUI',['../class_bio_g_t_k_1_1_image_view.html#ac7647ef9a6847c959536ce8e11607583',1,'BioGTK::ImageView']]],
   ['updateimage_6',['UpdateImage',['../class_bio_g_t_k_1_1_image_view.html#a1d26df6781107cdf17318d0640ca8f8d',1,'BioGTK::ImageView']]],
   ['updateimages_7',['UpdateImages',['../class_bio_g_t_k_1_1_image_view.html#ae484f90ec77ed9499321fac01dd6f455',1,'BioGTK::ImageView']]],
-  ['updateitems_8',['UpdateItems',['../class_bio_g_t_k_1_1_filters_view.html#a0d3a7020d5a8d0d8a0d76355a23ef578',1,'BioGTK::FiltersView']]],
+  ['updateitems_8',['UpdateItems',['../class_bio_g_t_k_1_1_channels_tool.html#ae148a0e235f9c47af4a959e42ae39d03',1,'BioGTK.ChannelsTool.UpdateItems()'],['../class_bio_g_t_k_1_1_filters_view.html#a0d3a7020d5a8d0d8a0d76355a23ef578',1,'BioGTK.FiltersView.UpdateItems()'],['../class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b',1,'BioGTK.NodeView.UpdateItems()'],['../class_bio_g_t_k_1_1_set_tool.html#a1b915e016e4eeadb9a66a784e4e47b3a',1,'BioGTK.SetTool.UpdateItems()']]],
   ['updatepoint_9',['UpdatePoint',['../class_bio_g_t_k_1_1_r_o_i.html#a2f6f148287452bb3c86023f2fd0580ff',1,'BioGTK::ROI']]],
   ['updatepointbox_10',['UpdatePointBox',['../class_bio_1_1_r_o_i_manager.html#aa0620b5258ceb7214fade359fe228a06',1,'Bio::ROIManager']]],
   ['updateroi_11',['updateROI',['../class_bio_1_1_r_o_i_manager.html#aa0b9656a6b458c8742f2f34b745b1d2c',1,'Bio::ROIManager']]],
-  ['updatestacks_12',['UpdateStacks',['../class_bio_g_t_k_1_1_apply_filter.html#a399105b435445b762e3a0286bf252195',1,'BioGTK::ApplyFilter']]],
+  ['updatestacks_12',['UpdateStacks',['../class_bio_g_t_k_1_1_apply_filter.html#a399105b435445b762e3a0286bf252195',1,'BioGTK.ApplyFilter.UpdateStacks()'],['../class_bio_g_t_k_1_1_stack_tools.html#ac5b3a65661cc1b62e53b230f3fe98ce7',1,'BioGTK.StackTools.UpdateStacks()']]],
   ['updatestate_13',['UpdateState',['../class_bio_g_t_k_1_1_scripting.html#ab471bfd1464966012668fa992eb68bc8',1,'BioGTK::Scripting']]],
   ['updatestatus_14',['UpdateStatus',['../class_bio_g_t_k_1_1_image_view.html#af30cac8e394db9ec2db4ae13ff896847',1,'BioGTK::ImageView']]],
   ['updateview_15',['UpdateView',['../class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95',1,'BioGTK.HistogramControl.UpdateView()'],['../class_bio_g_t_k_1_1_image_view.html#a6efb775e5319c70214dfebee95e6ce93',1,'BioGTK.ImageView.UpdateView()'],['../class_bio_g_t_k_1_1_tools.html#a82a19783e72b28f437454deb77eaee87',1,'BioGTK.Tools.UpdateView()']]]
