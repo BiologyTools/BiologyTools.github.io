@@ -7,7 +7,6 @@ var hierarchy =
       [ "BioGTK.ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", null ],
       [ "BioGTK.ColorTool", "class_bio_g_t_k_1_1_color_tool.html", null ],
       [ "BioGTK.Progress", "class_bio_g_t_k_1_1_progress.html", null ],
-      [ "BioGTK.Resolutions", "class_bio_g_t_k_1_1_resolutions.html", null ],
       [ "BioGTK.TextInput", "class_bio_g_t_k_1_1_text_input.html", null ],
       [ "BioGTK.Tolerance", "class_bio_g_t_k_1_1_tolerance.html", null ]
     ] ],
@@ -47,6 +46,7 @@ var hierarchy =
       [ "BioGTK.NodeView", "class_bio_g_t_k_1_1_node_view.html", null ],
       [ "BioGTK.Play", "class_bio_g_t_k_1_1_play.html", null ],
       [ "BioGTK.Recorder", "class_bio_g_t_k_1_1_recorder.html", null ],
+      [ "BioGTK.Resolutions", "class_bio_g_t_k_1_1_resolutions.html", null ],
       [ "BioGTK.Scripting", "class_bio_g_t_k_1_1_scripting.html", null ],
       [ "BioGTK.SetTool", "class_bio_g_t_k_1_1_set_tool.html", null ],
       [ "BioGTK.StackTools", "class_bio_g_t_k_1_1_stack_tools.html", null ],

@@ -24,27 +24,12 @@
 */
 var NAVTREE =
 [
-  [ "BioGTK", "index.html", [
-    [ "Packages", "namespaces.html", [
-      [ "Package List", "namespaces.html", "namespaces_dup" ]
-    ] ],
-    [ "Classes", "annotated.html", [
-      [ "Class List", "annotated.html", "annotated_dup" ],
-      [ "Class Index", "classes.html", null ],
-      [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
-      [ "Class Members", "functions.html", [
-        [ "All", "functions.html", "functions_dup" ],
-        [ "Functions", "functions_func.html", "functions_func" ]
-      ] ]
-    ] ]
-  ] ]
+  [ "BioGTK", "index.html", ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"class_bio_g_t_k_1_1_image_view.html#a1d26df6781107cdf17318d0640ca8f8d",
-"functions_f.html"
+"index.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';
