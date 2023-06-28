@@ -7,10 +7,11 @@ var searchData=
   ['filteredmenuclick_4',['filteredMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#af9e3186b4a55b8cdc01ce5bd2bc1f3ff',1,'BioGTK::TabsView']]],
   ['filtersmenuclick_5',['filtersMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a61d126b63aea2e49cfe8896e3cc182a4',1,'BioGTK::TabsView']]],
   ['filtersview_6',['FiltersView',['../class_bio_g_t_k_1_1_filters_view.html#a817b8100c04f9f86a13422263ad69b71',1,'BioGTK::FiltersView']]],
-  ['floodfill_7',['FloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#aeece0fb11033d34c111f89cf3adaf365',1,'Bio.Graphics.AbstractFloodFiller.FloodFill()'],['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html#a02cc51ca79a25f276eba1622c01a794b',1,'Bio.Graphics.QueueLinearFloodFiller.FloodFill()']]],
-  ['foldertostack_8',['FolderToStack',['../class_bio_g_t_k_1_1_bio_image.html#a64fab899bd35462d7829813f1eeef848',1,'BioGTK::BioImage']]],
-  ['fromcolor_9',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
-  ['fromimage_10',['FromImage',['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio::Graphics::Graphics']]],
-  ['functions_11',['Functions',['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK::Functions']]],
-  ['functionstoolmenuclick_12',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
+  ['findfocus_7',['FindFocus',['../class_bio_g_t_k_1_1_bio_image.html#acf0dbd72d918d5013c8daca47c4a894b',1,'BioGTK::BioImage']]],
+  ['floodfill_8',['FloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#aeece0fb11033d34c111f89cf3adaf365',1,'Bio.Graphics.AbstractFloodFiller.FloodFill()'],['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html#a02cc51ca79a25f276eba1622c01a794b',1,'Bio.Graphics.QueueLinearFloodFiller.FloodFill()']]],
+  ['foldertostack_9',['FolderToStack',['../class_bio_g_t_k_1_1_bio_image.html#a64fab899bd35462d7829813f1eeef848',1,'BioGTK::BioImage']]],
+  ['fromcolor_10',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
+  ['fromimage_11',['FromImage',['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio::Graphics::Graphics']]],
+  ['functions_12',['Functions',['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK::Functions']]],
+  ['functionstoolmenuclick_13',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
 ];

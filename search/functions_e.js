@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['save_0',['save',['../class_bio_g_t_k_1_1_image_j_1_1_roi_encoder.html#a96fc1414d8c4846c841a7bd643fa0a33',1,'BioGTK::ImageJ::RoiEncoder']]],
-  ['save_1',['Save',['../class_bio_g_t_k_1_1_bio_image.html#ab2bbbd310162643a6fde79029a3ebeda',1,'BioGTK.BioImage.Save()'],['../class_bio_g_t_k_1_1_function.html#a6dbd0cf1f1b942edd61e7b5ed11c9495',1,'BioGTK.Function.Save()']]],
+  ['save_0',['Save',['../class_bio_g_t_k_1_1_bio_image.html#ab2bbbd310162643a6fde79029a3ebeda',1,'BioGTK.BioImage.Save()'],['../class_bio_g_t_k_1_1_function.html#a6dbd0cf1f1b942edd61e7b5ed11c9495',1,'BioGTK.Function.Save()']]],
+  ['save_1',['save',['../class_bio_g_t_k_1_1_image_j_1_1_roi_encoder.html#a96fc1414d8c4846c841a7bd643fa0a33',1,'BioGTK::ImageJ::RoiEncoder']]],
   ['saveall_2',['SaveAll',['../class_bio_g_t_k_1_1_function.html#ad38cf8de97c1b81bb7fb0da50d23336a',1,'BioGTK::Function']]],
   ['saveasync_3',['SaveAsync',['../class_bio_g_t_k_1_1_bio_image.html#a8dcb6c14599a7ad58b601ab02f88ca36',1,'BioGTK::BioImage']]],
   ['savefile_4',['SaveFile',['../class_bio_g_t_k_1_1_bio_image.html#ac41f5ef0319587f0a4fedc55960bd70f',1,'BioGTK::BioImage']]],
