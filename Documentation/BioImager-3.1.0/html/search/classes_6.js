@@ -1,16 +1,12 @@
 var searchData=
 [
-  ['filt_0',['Filt',['../class_bio_1_1_filt.html',1,'Bio']]],
-  ['filter_1',['Filter',['../class_bio_1_1_filter.html',1,'Bio.Filter'],['../classmicroscope_1_1device__server_1_1_filter.html',1,'microscope.device_server.Filter']]],
-  ['filterwheel_2',['FilterWheel',['../class_bio_1_1_filter_wheel.html',1,'Bio.FilterWheel'],['../classmicroscope_1_1abc_1_1_filter_wheel.html',1,'microscope.abc.FilterWheel']]],
-  ['filterwheeltests_3',['FilterWheelTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['filterwheelwidget_4',['FilterWheelWidget',['../classmicroscope_1_1gui_1_1_filter_wheel_widget.html',1,'microscope::gui']]],
-  ['floatingdevicemixin_5',['FloatingDeviceMixin',['../classmicroscope_1_1abc_1_1_floating_device_mixin.html',1,'microscope::abc']]],
-  ['floodfillrange_6',['FloodFillRange',['../struct_bio_1_1_flood_fill_range.html',1,'Bio.FloodFillRange'],['../struct_bio_1_1_graphics_1_1_flood_fill_range.html',1,'Bio.Graphics.FloodFillRange']]],
-  ['floodfillrangequeue_7',['FloodFillRangeQueue',['../class_bio_1_1_flood_fill_range_queue.html',1,'Bio.FloodFillRangeQueue'],['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html',1,'Bio.Graphics.FloodFillRangeQueue']]],
-  ['floodtool_8',['FloodTool',['../class_bio_1_1_graphics_1_1_flood_tool.html',1,'Bio::Graphics']]],
-  ['focus_9',['Focus',['../class_bio_1_1_focus.html',1,'Bio']]],
-  ['frame_5finfo_10',['FRAME_INFO',['../classmicroscope_1_1cameras_1_1pvcam_1_1_f_r_a_m_e___i_n_f_o.html',1,'microscope::cameras::pvcam']]],
-  ['function_11',['Function',['../class_bio_1_1_function.html',1,'Bio']]],
-  ['functionform_12',['FunctionForm',['../class_bio_1_1_function_form.html',1,'Bio']]]
+  ['imageinfo_0',['ImageInfo',['../class_bio_1_1_image_info.html',1,'Bio']]],
+  ['imagej_1',['ImageJ',['../class_bio_1_1_image_j.html',1,'Bio']]],
+  ['imagejdesc_2',['ImageJDesc',['../class_bio_1_1_bio_image_1_1_image_j_desc.html',1,'Bio::BioImage']]],
+  ['imager_3',['Imager',['../class_bio_1_1_imager.html',1,'Bio']]],
+  ['imagestostack_4',['ImagesToStack',['../class_bio_1_1_images_to_stack.html',1,'Bio']]],
+  ['imagesview_5',['ImagesView',['../class_bio_1_1_source_1_1_images_view.html',1,'Bio::Source']]],
+  ['imagetiles_6',['ImageTiles',['../class_bio_1_1_image_tiles.html',1,'Bio']]],
+  ['imageview_7',['ImageView',['../class_bio_1_1_image_view.html',1,'Bio']]],
+  ['imagewindow_8',['ImageWindow',['../class_bio_1_1_image_window.html',1,'Bio']]]
 ];

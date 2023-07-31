@@ -1,18 +1,13 @@
 var searchData=
 [
-  ['imagestostack_0',['ImagesToStack',['../class_bio_1_1_bio_image.html#a931bf38d584744c357e642e04c53150a',1,'Bio::BioImage']]],
-  ['importroiscsv_1',['ImportROIsCSV',['../class_bio_1_1_bio_image.html#abea27d88199db63dfe1b36e89fe3426f',1,'Bio::BioImage']]],
-  ['init_2',['Init',['../class_bio_1_1_filter.html#aab12595a583f9a57bd6f77e64c41a04e',1,'Bio::Filter']]],
-  ['init_5fsdk_3',['init_sdk',['../classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#aa82c0ed4bb1ad7093652d8f0194fc8cc',1,'microscope::stages::linkam::_LinkamBase']]],
-  ['init_5fserial_4',['init_serial',['../classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#a831f858fcc5ef671a84814bd152d1c69',1,'microscope::stages::linkam::_LinkamBase']]],
-  ['init_5fusb_5',['init_usb',['../classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#a2f9d9e0d26d9c8c52ae82eb3ca7dfd52',1,'microscope::stages::linkam::_LinkamBase']]],
-  ['initgui_6',['InitGUI',['../class_bio_1_1_image_view.html#a1251060d3cff8a3e66f9ecb5e5db2c3c',1,'Bio::ImageView']]],
-  ['initialize_7',['Initialize',['../class_bio_1_1_app.html#a3b0c66148ce0c8d30658b5f9f5d12ff0',1,'Bio.App.Initialize()'],['../class_bio_1_1_bio_image.html#afd911751fd49f04f76f6e20d5b8d2b9c',1,'Bio.BioImage.Initialize()'],['../class_bio_1_1_function.html#ac97e55e38dbcaa02c5f25388ad2b4d89',1,'Bio.Function.Initialize()'],['../class_bio_1_1_image_j.html#a425e4f8b4d32012602755dd3d01ca64b',1,'Bio.ImageJ.Initialize()']]],
-  ['initialize_8',['initialize',['../classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023',1,'microscope.abc.Device.initialize()'],['../classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#ad9e11335bc97bebfce8007f3c0ab96d3',1,'microscope.cameras.andorsdk3.AndorSDK3.initialize()'],['../classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a12268ba33a8ae200310811c8a14a5607',1,'microscope.cameras.atmcd.AndorAtmcd.initialize()'],['../classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a3e6e25f9daf0f4fcb42f40474f2b45b8',1,'microscope.cameras.picam.PiCamera.initialize()'],['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a93229fd39170fa2f1b994c1a438375be',1,'microscope.cameras.pvcam.PVCamera.initialize()'],['../classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a808f82612986ac5d699f6f1cd69c2d8f',1,'microscope.cameras.ximea.XimeaCamera.initialize()'],['../classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser.html#a12000ac844b3a356ec150e76af96668f',1,'microscope.lights.cobolt.CoboltLaser.initialize()'],['../classmicroscope_1_1lights_1_1obis_1_1_obis_laser.html#a5344e5fbdb194d232cafdc4bf0540ad2',1,'microscope.lights.obis.ObisLaser.initialize()'],['../classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser.html#a2d61a8dc271e5c3d23d15a4852e0c14d',1,'microscope.lights.sapphire.SapphireLaser.initialize()'],['../classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html#abb8d15f3acfb2ccc13ada1dd0d8381f4',1,'microscope.testsuite.devices.TestFloatingDevice.initialize()']]],
-  ['invalidate_5fbuffers_9',['invalidate_buffers',['../classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#a54530c95ec0bac5a35dcaa4aa3cb0c9c',1,'microscope::cameras::andorsdk3::AndorSDK3']]],
-  ['invoke_10',['Invoke',['../class_bio_1_1_lib.html#aaacc1b9e591d93cc56f8380c89920399',1,'Bio.Lib.Invoke(Type type, string name, object o, object[] args)'],['../class_bio_1_1_lib.html#acedd43079e922fe575796b4dc49ce2e6',1,'Bio.Lib.Invoke(string st, string name, object o, object[] args)']]],
-  ['is_5fmoving_11',['is_moving',['../classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#ac5ee274d9d0e9f64d56dc38018e7f905',1,'microscope::stages::linkam::_LinkamBase']]],
-  ['isome_12',['isOME',['../class_bio_1_1_bio_image.html#a6695f1a6c567593238347e98c450aca2',1,'Bio::BioImage']]],
-  ['isomeseries_13',['isOMESeries',['../class_bio_1_1_bio_image.html#ab1bd8cdd54f9700670c4e589efe9e0a4',1,'Bio::BioImage']]],
-  ['istiffseries_14',['isTiffSeries',['../class_bio_1_1_bio_image.html#a60bff18acff90af08ae31333d25477d2',1,'Bio::BioImage']]]
+  ['mergechannels_0',['MergeChannels',['../class_bio_1_1_bio_image.html#ae42d728d798419370ba5ccd237740d15',1,'Bio.BioImage.MergeChannels(BioImage b2, BioImage b)'],['../class_bio_1_1_bio_image.html#abc07fbea109f0b0b4857a8685170cc51',1,'Bio.BioImage.MergeChannels(string bname, string b2name)']]],
+  ['mergez_1',['MergeZ',['../class_bio_1_1_bio_image.html#a780871aab93df7d7894ac165b984d06e',1,'Bio::BioImage']]],
+  ['mouseevent_2',['MouseEvent',['../class_bio_1_1_mouse_operations.html#a67138c5df2020b3ae0e4233592a21a28',1,'Bio::MouseOperations']]],
+  ['mousewheeldown_3',['MouseWheelDown',['../class_bio_1_1_win32.html#a5cf5cc5b7e1316adf00b842f6f946e0a',1,'Bio::Win32']]],
+  ['mousewheelup_4',['MouseWheelUp',['../class_bio_1_1_win32.html#a925521bea6cd11dc3e8e917bd1aa7397',1,'Bio::Win32']]],
+  ['movedown_5',['MoveDown',['../class_bio_1_1_stage.html#ae2a4ab78b9973ab1a823cfa7827ed608',1,'Bio::Stage']]],
+  ['moveleft_6',['MoveLeft',['../class_bio_1_1_stage.html#a6790f7bdbe27237912a3bed15a61bd10',1,'Bio::Stage']]],
+  ['moveright_7',['MoveRight',['../class_bio_1_1_stage.html#a63ea15c710c2159c585a56876896c2cb',1,'Bio::Stage']]],
+  ['movestagetoimage_8',['MoveStageToImage',['../class_bio_1_1_image_view.html#aa4a6f2f634c40c86f41abd2b3d17dfd8',1,'Bio.ImageView.MoveStageToImage()'],['../class_bio_1_1_image_view.html#ad3c23d20b0e5835f4a917555e582b0b5',1,'Bio.ImageView.MoveStageToImage(int i)']]],
+  ['moveup_9',['MoveUp',['../class_bio_1_1_stage.html#ae7ff43c52be4e836de8d674b6576b5bb',1,'Bio::Stage']]]
 ];
