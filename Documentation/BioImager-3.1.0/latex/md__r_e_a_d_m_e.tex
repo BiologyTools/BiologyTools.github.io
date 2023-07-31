@@ -1,0 +1,128 @@
+A .NET microscopy imaging application based on \mbox{\hyperlink{namespace_bio}{Bio}}. Supports various microscopes by using imported libraries \& GUI automation. Supported libraries include Prior® \& Zeiss® \& all devices supported by \href{https://github.com/python-microscope}{\texttt{ python-\/microscope.}} If your microscope is not supported check your manufacturer\textquotesingle{}s SDK to implement \char`\"{}\+Microscope.\+cs\char`\"{} or use GUI Automation functions. Works with or without hardware through microscope simulation. Allows for tiled \& depth stack imaging \& supports XInput game controllers to move stage, take images, run ImageJ macros on images or \mbox{\hyperlink{namespace_bio}{Bio}} C\# scripts. Also check out the wiki for \href{https://github.com/BiologyTools/Bio/wiki/Library-Usage}{\texttt{ library usage.}} or check out the \href{https://biologytools.github.io/Documentation/BioImager-2.1.0/index.html}{\texttt{ documentation.}}
+
+  \href{https://doi.org/10.5281/zenodo.8187849}{\texttt{ }}\hypertarget{md__r_e_a_d_m_e_autotoc_md965}{}\doxysection{Sample Microscope Script}\label{md__r_e_a_d_m_e_autotoc_md965}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//If the GUI Recording for setting folder is set, we can set the microscope storage folder.}
+\DoxyCodeLine{Microscope.SetFolder("{}F:/Images/5x/"{});}
+\DoxyCodeLine{Microscope.Objectives.SetPosition(0);}
+\DoxyCodeLine{Microscope.TakeImage();}
+\DoxyCodeLine{Microscope.MoveFieldLeft();}
+\DoxyCodeLine{//We can take an image stack based on properties set in the GUI}
+\DoxyCodeLine{Microscope.TakeImageStack();}
+\DoxyCodeLine{// or by specifying them in script.}
+\DoxyCodeLine{Microscope.TakeImageStack(25000,25050,10)}
+\DoxyCodeLine{Microscope.MoveFieldDown();}
+\DoxyCodeLine{Microscope.TakeTiles(4,4);}
+\DoxyCodeLine{Microscope.Objectives.SetPosition(1);}
+\DoxyCodeLine{Microscope.SetFolder("{}F:/Images/10x/"{});}
+\DoxyCodeLine{Microscope.TakeTiles(4,4);}
+
+\end{DoxyCode}
+\hypertarget{md__r_e_a_d_m_e_autotoc_md966}{}\doxysection{Features}\label{md__r_e_a_d_m_e_autotoc_md966}
+
+\begin{DoxyItemize}
+\item C\# scripting with sample tool-\/script and other sample scripts in \char`\"{}/\+Scripts/\char`\"{} folder. \href{https://github.com/BioMicroscopy/BioImage-Scripts}{\texttt{ See samples}}
+\item Supports running ImageJ macro commands on images open in \mbox{\hyperlink{namespace_bio}{Bio}}. New Console to run ImageJ macro commands and \mbox{\hyperlink{namespace_bio}{Bio}} C\# functions.
+\item Multiple view modes like Emission, and Filtered. ROI\textquotesingle{}s shown for each channel can be configured in ROI Manager.
+\item Supports drawing shapes \& colors onto 16 bit \& 48 bit images, unlike System.\+Drawing.\+Graphics.
+\item Convenient viewing of image stacks with scroll wheel moving Z-\/plane and mouse side buttons scrolling C-\/planes.
+\item Editing \& saving ROI\textquotesingle{}s in images to OME format image stacks.
+\item Copy \& Paste to quickly annotate images and name them easily by right click.
+\item Select multiple points by holding down control key, for delete \& move tools.
+\item Exporting ROI\textquotesingle{}s from each OME image in a folder of images to CSV.
+\item Easy freeform annotation with magic select tool which selects based on blob detection.
+\item Use AForge filters by opening filters tool window and right click to apply. Currently supports only some AForge filters as many of them do not support 16bit and 48bit images. Convert to 8bit image to make use of more filters. Applyed filters can be easily recorded and used in scripts. \mbox{\hyperlink{namespace_bio}{Bio}} impliments some filters like crop for 16 \& 48 bit images.
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md967}{}\doxysection{Setup}\label{md__r_e_a_d_m_e_autotoc_md967}
+
+\begin{DoxyItemize}
+\item For detailed Setup instructions see \href{https://github.com/BiologyTools/BioImager/wiki/Setup}{\texttt{ setup.}}
+\item For Zeiss® set the MTB® Api library path to version of MTB® you are using, found in program files.
+\item For Prior® download Prior® SDK and set path to \href{https://www.prior.com/wp-content/themes/prior-scientific/download.php?file=13594}{\texttt{ Prior® SDK}} Prior\+Scientific\+SDK.\+dll
+\item Set Functions to controller buttons by double clicking labels. Functions include all microscope functions \& ImageJ \& \mbox{\hyperlink{namespace_bio}{Bio}} C\# scripts. ~\newline
+
+\item {\ttfamily Star this project on Github to help spread the word about Bio!}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md968}{}\doxysection{Dependencies}\label{md__r_e_a_d_m_e_autotoc_md968}
+
+\begin{DoxyItemize}
+\item \href{https://github.com/GDanovski/BioFormats.Net}{\texttt{ Bio\+Formats.\+Net}}
+\item \href{http://www.ikvm.net/}{\texttt{ IKVM}}
+\item \href{http://www.aforgenet.com/}{\texttt{ AForge}}
+\item \href{https://bitmiracle.com/libtiff/}{\texttt{ Lib\+Tiff.\+Net}}
+\item \href{https://github.com/oleg-shilo/cs-script/blob/master/LICENSE}{\texttt{ Cs-\/script}}
+\item \href{https://github.com/sharpdx/SharpDX}{\texttt{ Sharp\+DX}}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md969}{}\doxysection{Licenses}\label{md__r_e_a_d_m_e_autotoc_md969}
+
+\begin{DoxyItemize}
+\item \mbox{\hyperlink{namespace_bio}{Bio}} \href{https://www.gnu.org/licenses/gpl-3.0.en.html}{\texttt{ GPL3}}
+\item AForge \href{http://www.aforgenet.com/framework/license.html}{\texttt{ LGPL}}
+\item Bio\+Formats.\+Net \href{https://www.gnu.org/licenses/gpl-3.0.en.html}{\texttt{ GPL3}}
+\item \href{https://github.com/gluck/ikvm/blob/master/LICENSE}{\texttt{ IKVM}}
+\item Lib\+Tiff.\+Net \href{https://bitmiracle.com/libtiff/}{\texttt{ BSD}}
+\item Cs-\/script \href{https://github.com/oleg-shilo/cs-script/blob/master/LICENSE}{\texttt{ MIT}}
+\item Prior® Scientific EULA v1.\+0 \href{https://www.prior.com/wp-content/themes/prior-scientific/download.php?file=13594}{\texttt{ Prior® SDK}}
+\item \href{https://www.zeiss.com/microscopy/en/service-support/downloads/micro-toolbox.html}{\texttt{ MTB SDK© 2019 by Carl Zeiss Microscopy}}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md970}{}\doxysection{Scripting}\label{md__r_e_a_d_m_e_autotoc_md970}
+
+\begin{DoxyItemize}
+\item Save scripts into \char`\"{}\+Startup\+Path/\+Scripts\char`\"{} with \char`\"{}.\+cs\char`\"{} ending.
+\item Open script editor and recorder from menu.
+\item Double click on script name in Script runner to run script.
+\item Scripts saved in Scripts folder will be loaded into script runner.
+\item Program installer include sample script \char`\"{}\+Sample.\+cs\char`\"{} which gets \& sets pixels and saves resulting image.
+\item Use Script recorder to record program function calls and script runner to turn recorder text into working scripts. (See sample) \href{https://github.com/BioMicroscopy/BioImage-Scripts}{\texttt{ scripts}}
+\end{DoxyItemize}\hypertarget{md__r_e_a_d_m_e_autotoc_md971}{}\doxysection{Sample Tool Script}\label{md__r_e_a_d_m_e_autotoc_md971}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{//css\_reference Bio.dll;}
+\DoxyCodeLine{using System;}
+\DoxyCodeLine{using System.Windows.Forms;}
+\DoxyCodeLine{using System.Drawing;}
+\DoxyCodeLine{using Bio;}
+\DoxyCodeLine{using System.Threading;}
+\DoxyCodeLine{public class Loader}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{}
+\DoxyCodeLine{    //Point ROI Tool Example}
+\DoxyCodeLine{    public string Load()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        int ind = 1;}
+\DoxyCodeLine{        do}
+\DoxyCodeLine{        \{}
+\DoxyCodeLine{            Bio.Scripting.State s = Bio.Scripting.GetState();}
+\DoxyCodeLine{            if (s != null)}
+\DoxyCodeLine{            \{}
+\DoxyCodeLine{                if (!s.processed)}
+\DoxyCodeLine{                \{}
+\DoxyCodeLine{                    if (s.type == Bio.Scripting.Event.Down \&\& s.buts == MouseButtons.Left)}
+\DoxyCodeLine{                    \{}
+\DoxyCodeLine{                        ZCT cord = Bio.App.viewer.GetCoordinate();}
+\DoxyCodeLine{                        Bio.Scripting.LogLine(cord.ToString() + "{} Coordinate"{});}
+\DoxyCodeLine{                        Bio.ROI an = Bio.ROI.CreatePoint(cord, s.p.X, s.p.Y);}
+\DoxyCodeLine{                        Bio.ImageView.SelectedImage.Annotations.Add(an);}
+\DoxyCodeLine{                        Bio.Scripting.LogLine(cord.ToString() + "{} Coordinate"{});}
+\DoxyCodeLine{                        an.Text = "{}Point"{} + ind;}
+\DoxyCodeLine{                        ind++;}
+\DoxyCodeLine{                        Bio.Scripting.LogLine(s.ToString() + "{} Point"{});}
+\DoxyCodeLine{                        //ImageView.viewer.UpdateOverlay();}
+\DoxyCodeLine{                    \}}
+\DoxyCodeLine{                    else}
+\DoxyCodeLine{                    if (s.type == Bio.Scripting.Event.Up)}
+\DoxyCodeLine{                    \{}
+\DoxyCodeLine{                        Bio.Scripting.LogLine(s.ToString());}
+\DoxyCodeLine{                    \}}
+\DoxyCodeLine{                    else}
+\DoxyCodeLine{                    if (s.type == Bio.Scripting.Event.Move)}
+\DoxyCodeLine{                    \{}
+\DoxyCodeLine{                        Bio.Scripting.LogLine(s.ToString());}
+\DoxyCodeLine{                    \}}
+\DoxyCodeLine{                    s.processed = true;}
+\DoxyCodeLine{                \}}
+\DoxyCodeLine{            \}}
+\DoxyCodeLine{        \} while (true);}
+\DoxyCodeLine{        return "{}OK"{};}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+ 

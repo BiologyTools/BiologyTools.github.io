@@ -1,0 +1,104 @@
+\hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain}{}\doxysection{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain Class Reference}
+\label{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain}\index{microscope.controllers.zaber.ZaberDaisyChain@{microscope.controllers.zaber.ZaberDaisyChain}}
+Inheritance diagram for microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.937716cm]{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_a05bd3ba7d4001d04d0fe0c533cc34870}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, str port, typing.\+Mapping\mbox{[}int, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type}{Zaber\+Device\+Type}}\mbox{]} address2type, $\ast$$\ast$kwargs)
+\item 
+typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.\+abc.\+Device}}\mbox{]} \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_ad3cebca4d1567eebcac75337113cdf90}{devices}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}A daisy chain of Zaber devices.
+
+Args:
+    port: the port name to connect to.  For example, `COM1`,
+        `/dev/ttyUSB0`, or `/dev/cuad1`.
+    address2type: a map of device addresses to the corresponding
+        :class:`ZaberDeviceType`.
+
+Zaber devices can be daisy-chained, i.e., a set of Zaber devices
+can be connected in a sequence so that each device is only wired
+to the previous and next device in the sequence, and only the
+first device in the sequence is connected to the computer.  Even
+if there is only Zaber device, this is modelled as a one element
+daisy-chain.  If there are multiple devices, all connected
+directly to the computer, i.e., not chained, then each device is
+its own one-element daisy-chain.
+
+.. code-block:: python
+
+    from microscope.controllers.zaber import ZaberDaisyChain, ZaberDeviceType
+    zaber = ZaberDaisyChain("/dev/ttyUSB0",
+                            {2: ZaberDeviceType.STAGE,
+                             3: ZaberDeviceType.LED_CONTROLLER,
+                             4: ZaberDeviceType.FILTER_WHEEL})
+
+    # Device names are strings, not int.
+    filterwheel = zaber.devices['4']
+
+    # LEDs are not devices of the zaber daisy chain, they are
+    # devices of the LED controller.
+    led_controller = zaber.devices['3']
+    led1 = led_controller.devices['LED1']
+
+    # Stage axis names are the string of the axis number.
+    xy_stage = zaber.devices['2']
+    motor1 = xy_stage.axes['1']
+
+Each device on a chain is identified by a device address which is
+an integer between 1 and 99.  By default, the addresses start at 1
+and are sorted by distance to the computer, but this can be
+changed.
+
+For an LED controller device, the names of its devices are "LED1",
+"LED2", etc, the same as the labels on the LED controller itself.
+
+Because there is no method to correctly guess a device type, a map
+of device addresses to device types is required.
+
+.. note::
+
+   Zaber devices need to be homed before they can be moved.  A
+   stage will be homed during `enable` but a filter wheel will be
+   homed during the object construction.\end{DoxyVerb}
+ 
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_a05bd3ba7d4001d04d0fe0c533cc34870}\label{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_a05bd3ba7d4001d04d0fe0c533cc34870}} 
+\index{microscope.controllers.zaber.ZaberDaisyChain@{microscope.controllers.zaber.ZaberDaisyChain}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.controllers.zaber.ZaberDaisyChain@{microscope.controllers.zaber.ZaberDaisyChain}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{str}]{port,  }\item[{typing.\+Mapping\mbox{[}int, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type}{Zaber\+Device\+Type}}\mbox{]}}]{address2type,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.\+abc.\+Device}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_ad3cebca4d1567eebcac75337113cdf90}\label{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_ad3cebca4d1567eebcac75337113cdf90}} 
+\index{microscope.controllers.zaber.ZaberDaisyChain@{microscope.controllers.zaber.ZaberDaisyChain}!devices@{devices}}
+\index{devices@{devices}!microscope.controllers.zaber.ZaberDaisyChain@{microscope.controllers.zaber.ZaberDaisyChain}}
+\doxysubsubsection{\texorpdfstring{devices()}{devices()}}
+{\footnotesize\ttfamily  typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.\+abc.\+Device}}\mbox{]} microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+devices (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Map of names to the controlled devices.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a514852dc8a72c9cf2f0277660a32c555}{microscope.\+abc.\+Controller}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+Python\+Microscope/microscope/controllers/zaber.\+py\end{DoxyCompactItemize}

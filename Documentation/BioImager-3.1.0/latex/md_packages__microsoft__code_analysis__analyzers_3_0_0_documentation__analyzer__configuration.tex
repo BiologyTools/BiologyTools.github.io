@@ -1,0 +1,599 @@
+Starting with version {\ttfamily 2.\+6.\+3}, all the analyzer Nu\+Get packages produced in this repo, including the Fx\+Cop Analyzers Nu\+Get package, support \+\_\+.\+editorconfig based analyzer configuration\+\_\+. End users can configure the behavior of specific CA rule(s) OR all configurable CA rules by specifying supported key-\/value pair options in an {\ttfamily .editorconfig} file. You can read more about {\ttfamily .editorconfig} format \href{https://editorconfig.org/}{\texttt{ here}}.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md842}{}\doxysection{.\+editorconfig format}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md842}
+Analyzer configuration options from an .editorconfig file are parsed into {\itshape general} and {\itshape specific} configuration options. General configuration enables configuring the behavior of all CA rules for which the provided option is valid. Specific configuration enables configuring each CA rule ID or CA rules belonging to each rule category, such as \textquotesingle{}Naming\textquotesingle{}, \textquotesingle{}Design\textquotesingle{}, \textquotesingle{}Performance\textquotesingle{}, etc. or CA rules with a specific custom tag, such as \textquotesingle{}Dataflow\textquotesingle{}. Our options are {\itshape case-\/insensitive}. Below are the supported formats\+:
+\begin{DoxyEnumerate}
+\item General configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Option\+Name = Option\+Value}
+\end{DoxyEnumerate}
+\item Specific configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Id.\+Option\+Name = Option\+Value}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Category.\+Option\+Name = Option\+Value}
+\end{DoxyEnumerate}
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Custom\+Tag.\+Option\+Name = Option\+Value}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}
+
+For example, end users can configure the analyzed API surface for analyzers using the below {\ttfamily api\+\_\+surface} option specification\+:
+\begin{DoxyEnumerate}
+\item General configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = public}
+\end{DoxyEnumerate}
+\item Specific configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1040.\+api\+\_\+surface = public}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Naming.\+api\+\_\+surface = public}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Dataflow.\+api\+\_\+surface = public}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md843}{}\doxysection{Enabling .\+editorconfig based configuration for a project}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md843}
+
+\begin{DoxyEnumerate}
+\item Per-\/project .editorconfig file\+: End users can enable .editorconfig based configuration for individual projects by just copying the .editorconfig file with the options to the project root directory. In future, we plan to support hierarchical directory based configuration with an .editorconfig file at the solution directory, repo root directory or even individual document directories.
+\item Shared .editorconfig file\+: If you would like to share a common .editorconfig file between projects, say {\ttfamily \texorpdfstring{$<$}{<}Path\+To\+Shared\+Editor\+Config\%\texorpdfstring{$>$}{>}\textbackslash{}.editorconfig}, then you should add the following MSBuild property group and item group to a shared props file that is imported {\itshape before} the Fx\+Cop analyzer props files (that come from the Fx\+Cop analyzer Nu\+Get package reference)\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<PropertyGroup>}
+\DoxyCodeLine{  <SkipDefaultEditorConfigAsAdditionalFile>true</SkipDefaultEditorConfigAsAdditionalFile>}
+\DoxyCodeLine{</PropertyGroup>}
+\DoxyCodeLine{<ItemGroup Condition="{}Exists('<\%PathToSharedEditorConfig\%>\(\backslash\).editorconfig')"{} >}
+\DoxyCodeLine{  <AdditionalFiles Include="{}<\%PathToSharedEditorConfig\%>\(\backslash\).editorconfig"{} />}
+\DoxyCodeLine{</ItemGroup>}
+
+\end{DoxyCode}
+ Note that this is a temporary workaround that is needed until the dotnet compilers and project system start understanding and respecting .editorconfig files.
+\end{DoxyEnumerate}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md844}{}\doxysection{Supported .\+editorconfig options}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md844}
+This section documents the list of supported .editorconfig key-\/value options for CA rules.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md845}{}\doxysubsection{Analyzed API surface}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md845}
+Option Name\+: {\ttfamily api\+\_\+surface}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1000-do-not-declare-static-members-on-generic-types}{\texttt{ CA1000}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1003-use-generic-event-handler-instances}{\texttt{ CA1003}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1008-enums-should-have-zero-value}{\texttt{ CA1008}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1010-collections-should-implement-generic-interface}{\texttt{ CA1010}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1012-abstract-types-should-not-have-constructors}{\texttt{ CA1012}}, \href{https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1021}{\texttt{ CA1021}},\href{https://docs.microsoft.com/visualstudio/code-quality/ca1024-use-properties-where-appropriate}{\texttt{ CA1024}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1027-mark-enums-with-flagsattribute}{\texttt{ CA1027}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1028-enum-storage-should-be-int32}{\texttt{ CA1028}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1030-use-events-where-appropriate}{\texttt{ CA1030}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1036-override-methods-on-comparable-types}{\texttt{ CA1036}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1040-avoid-empty-interfaces}{\texttt{ CA1040}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1041-provide-obsoleteattribute-message}{\texttt{ CA1041}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1043-use-integral-or-string-argument-for-indexers}{\texttt{ CA1043}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1044-properties-should-not-be-write-only}{\texttt{ CA1044}}, \href{https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1045}{\texttt{ CA1045}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1051-do-not-declare-visible-instance-fields}{\texttt{ CA1051}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1052-static-holder-types-should-be-sealed}{\texttt{ CA1052}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1054-uri-parameters-should-not-be-strings}{\texttt{ CA1054}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1055-uri-return-values-should-not-be-strings}{\texttt{ CA1055}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1056-uri-properties-should-not-be-strings}{\texttt{ CA1056}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1058-types-should-not-extend-certain-base-types}{\texttt{ CA1058}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1063-implement-idisposable-correctly}{\texttt{ CA1063}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1708-identifiers-should-differ-by-more-than-case}{\texttt{ CA1708}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1710-identifiers-should-have-correct-suffix}{\texttt{ CA1710}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1711-identifiers-should-not-have-incorrect-suffix}{\texttt{ CA1711}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1714-flags-enums-should-have-plural-names}{\texttt{ CA1714}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1715-identifiers-should-have-correct-prefix}{\texttt{ CA1715}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1716-identifiers-should-not-match-keywords}{\texttt{ CA1716}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1717-only-flagsattribute-enums-should-have-plural-names}{\texttt{ CA1717}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1720-identifiers-should-not-contain-type-names}{\texttt{ CA1720}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1721-property-names-should-not-match-get-methods}{\texttt{ CA1721}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1725-parameter-names-should-match-base-declaration}{\texttt{ CA1725}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1801-review-unused-parameters}{\texttt{ CA1801}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1802-use-literals-where-appropriate}{\texttt{ CA1802}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1815-override-equals-and-operator-equals-on-value-types}{\texttt{ CA1815}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1819-properties-should-not-return-arrays}{\texttt{ CA1819}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2217-do-not-mark-enums-with-flagsattribute}{\texttt{ CA2217}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2225-operator-overloads-have-named-alternates}{\texttt{ CA2225}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2226-operators-should-have-symmetrical-overloads}{\texttt{ CA2226}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2231-overload-operator-equals-on-overriding-valuetype-equals}{\texttt{ CA2231}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2234-pass-system-uri-objects-instead-of-strings}{\texttt{ CA2234}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily public}   &Analyzes public APIs that are externally visible outside the assembly.    \\\cline{1-2}
+{\ttfamily internal} or {\ttfamily friend}   &Analyzes internal APIs that are visible within the assembly and to assemblies with \href{https://docs.microsoft.com/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute}{\texttt{ Internals\+Visible\+To\+Attribute}} access.    \\\cline{1-2}
+{\ttfamily private}   &Analyzes private APIs that are only visible within the containing type.    \\\cline{1-2}
+{\ttfamily all}   &Analyzes all APIs, regardless of the symbol visibility.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily public}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = all}
+
+Users can also provide a comma separated list of above option values. For example, {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = private, internal} configures analysis of the entire non-\/public API surface.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md846}{}\doxysubsection{Analyzed output kinds}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md846}
+Option Name\+: {\ttfamily output\+\_\+kind}
+
+Configurable Rules\+: \href{../src/Microsoft.CodeQuality.Analyzers/Microsoft.CodeQuality.Analyzers.md\#ca2007-do-not-directly-await-a-task}{\texttt{ CA2007}}
+
+Option Values\+: One or more fields of enum \href{http://source.roslyn.io/\#q=Microsoft.CodeAnalysis.OutputKind}{\texttt{ Microsoft.\+Code\+Analysis.\+Compilation\+Options.\+Output\+Kind}} as a comma separated list.
+
+Default Value\+: All output kinds
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA2007.\+output\+\_\+kind = Console\+Application, Dynamically\+Linked\+Library}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md847}{}\doxysubsection{Required modifiers for analyzed APIs}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md847}
+Option Name\+: {\ttfamily required\+\_\+modifiers}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1802-use-literals-where-appropriate}{\texttt{ CA1802}}
+
+Option Values\+: Comma separated listed of one or more modifier values from the below table. Note that not all values are applicable for every configurable rule.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily none}   &No modifier requirement.    \\\cline{1-2}
+{\ttfamily static} or {\ttfamily Shared}   &Must be declared as \textquotesingle{}static\textquotesingle{} (\textquotesingle{}Shared\textquotesingle{} in Visual Basic).    \\\cline{1-2}
+{\ttfamily const}   &Must be declared as \textquotesingle{}const\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily readonly}   &Must be declared as \textquotesingle{}readonly\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily abstract}   &Must be declared as \textquotesingle{}abstract\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily virtual}   &Must be declared as \textquotesingle{}virtual\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily override}   &Must be declared as \textquotesingle{}override\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily sealed}   &Must be declared as \textquotesingle{}sealed\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily extern}   &Must be declared as \textquotesingle{}extern\textquotesingle{}.    \\\cline{1-2}
+{\ttfamily async}   &Must be declared as \textquotesingle{}async\textquotesingle{}.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: Depends on each configurable rule\+:
+\begin{DoxyEnumerate}
+\item CA1802\+: default value is \textquotesingle{}static\textquotesingle{}. Set the value to \textquotesingle{}none\textquotesingle{} to allow flagging instance fields.
+\end{DoxyEnumerate}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1802.\+required\+\_\+modifiers = none}.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md848}{}\doxysubsection{Async void methods}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md848}
+Option Name\+: {\ttfamily exclude\+\_\+async\+\_\+void\+\_\+methods}
+
+Configurable Rules\+: \href{../src/Microsoft.CodeQuality.Analyzers/Microsoft.CodeQuality.Analyzers.md\#ca2007-do-not-directly-await-a-task}{\texttt{ CA2007}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA2007.\+exclude\+\_\+async\+\_\+void\+\_\+methods = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md849}{}\doxysubsection{Single letter type parameters}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md849}
+Option Name\+: {\ttfamily exclude\+\_\+single\+\_\+letter\+\_\+type\+\_\+parameters}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1715-identifiers-should-have-correct-prefix}{\texttt{ CA1715}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1715.\+exclude\+\_\+single\+\_\+letter\+\_\+type\+\_\+parameters = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md850}{}\doxysubsection{Exclude extension method \textquotesingle{}this\textquotesingle{} parameter}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md850}
+Option Name\+: {\ttfamily exclude\+\_\+extension\+\_\+method\+\_\+this\+\_\+parameter}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods}{\texttt{ CA1062}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1062.\+exclude\+\_\+extension\+\_\+method\+\_\+this\+\_\+parameter = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md851}{}\doxysubsection{Null check validation methods}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md851}
+Option Name\+: {\ttfamily null\+\_\+check\+\_\+validation\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods}{\texttt{ CA1062}}
+
+Option Values\+: Names of null check validation methods (separated by \textquotesingle{}$\vert$\textquotesingle{}) that validate arguments passed to the method are non-\/null for CA1062 (\href{https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods}{\texttt{ https\+://docs.\+microsoft.\+com/visualstudio/code-\/quality/ca1062-\/validate-\/arguments-\/of-\/public-\/methods}}). Allowed method name formats\+:
+\begin{DoxyEnumerate}
+\item Method name only (includes all methods with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+M\+:\char`\"{} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = Validate}   &Matches all methods named \textquotesingle{}Validate\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all methods named either \textquotesingle{}Validate1\textquotesingle{} or \textquotesingle{}Validate2\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method \textquotesingle{}Validate\textquotesingle{} with given fully qualified signature    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$\+NS2.My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods \textquotesingle{}Validate1\textquotesingle{} and \textquotesingle{}Validate2\textquotesingle{} with respective fully qualified signature   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md852}{}\doxysubsection{Additional string formatting methods}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md852}
+Option Name\+: {\ttfamily additional\+\_\+string\+\_\+formatting\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca2241-provide-correct-arguments-to-formatting-methods}{\texttt{ CA2241}}
+
+Option Values\+: Names of additional string formatting methods (separated by \textquotesingle{}$\vert$\textquotesingle{}) for CA2241. Allowed method name formats\+:
+\begin{DoxyEnumerate}
+\item Method name only (includes all methods with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+M\+:\char`\"{} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = My\+Format}   &Matches all methods named \textquotesingle{}My\+Format\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = My\+Format1\textbackslash{}$\vert$\+My\+Format2}   &Matches all methods named either \textquotesingle{}My\+Format1\textquotesingle{} or \textquotesingle{}My\+Format2\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = NS.\+My\+Type.\+My\+Format(\+Param\+Type)}   &Matches specific method \textquotesingle{}My\+Format\textquotesingle{} with given fully qualified signature    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = NS1.\+My\+Type1.\+My\+Format1(\+Param\+Type)\textbackslash{}$\vert$\+NS2.My\+Type2.\+My\+Format2(\+Param\+Type)}   &Matches specific methods \textquotesingle{}My\+Format1\textquotesingle{} and \textquotesingle{}My\+Format2\textquotesingle{} with respective fully qualified signature   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md853}{}\doxysubsection{Excluded symbol names}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md853}
+Option Name\+: {\ttfamily excluded\+\_\+symbol\+\_\+names}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters}{\texttt{ CA1303}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods}{\texttt{ CA1062}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1304}{\texttt{ CA1304}}, CA1508, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2000-dispose-objects-before-losing-scope}{\texttt{ CA2000}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities}{\texttt{ CA2100}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2301-do-not-call-binaryformatter-deserialize-without-first-setting-binaryformatter-binder}{\texttt{ CA2301}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2302-ensure-binaryformatter-binder-is-set-before-calling-binaryformatter-deserialize}{\texttt{ CA2302}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2311-do-not-deserialize-without-first-setting-netdatacontractserializer-binder}{\texttt{ CA2311}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2312-ensure-netdatacontractserializer-binder-is-set-before-deserializing}{\texttt{ CA2312}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2321}{\texttt{ CA2321}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2322}{\texttt{ CA2322}}, CA2327, CA2328, CA2329, CA2330, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3001-review-code-for-sql-injection-vulnerabilities}{\texttt{ CA3001}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3002-review-code-for-xss-vulnerabilities}{\texttt{ CA3002}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3003-review-code-for-file-path-injection-vulnerabilities}{\texttt{ CA3003}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3004-review-code-for-information-disclosure-vulnerabilities}{\texttt{ CA3004}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3005-review-code-for-ldap-injection-vulnerabilities}{\texttt{ CA3005}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3006-review-code-for-process-command-injection-vulnerabilities}{\texttt{ CA3006}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3007-review-code-for-open-redirect-vulnerabilities}{\texttt{ CA3007}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3008-review-code-for-xpath-injection-vulnerabilities}{\texttt{ CA3008}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3009-review-code-for-xml-injection-vulnerabilities}{\texttt{ CA3009}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3010-review-code-for-xaml-injection-vulnerabilities}{\texttt{ CA3010}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3011-review-code-for-dll-injection-vulnerabilities}{\texttt{ CA3011}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca3012-review-code-for-regex-injection-vulnerabilities}{\texttt{ CA3012}}, CA5361, CA5376, CA5377, CA5378, CA5380, CA5381, CA5382, CA5383, CA5384, CA5387, CA5388, CA5389, CA5390
+
+Option Values\+: Names of symbols (separated by \textquotesingle{}$\vert$\textquotesingle{}) that are excluded for analysis. Allowed symbol name formats\+:
+\begin{DoxyEnumerate}
+\item Symbol name only (includes all symbols with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}}. Note that each symbol name requires a symbol kind prefix, such as \char`\"{}\+M\+:\char`\"{} prefix for methods, \char`\"{}\+T\+:\char`\"{} prefix for types, \char`\"{}\+N\+:\char`\"{} prefix for namespaces, etc.
+\item {\ttfamily .ctor} for constructors and {\ttfamily .cctor} for static constructors
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = Validate}   &Matches all symbols named \textquotesingle{}Validate\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all symbols named either \textquotesingle{}Validate1\textquotesingle{} or \textquotesingle{}Validate2\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = M\+:NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method \textquotesingle{}Validate\textquotesingle{} with given fully qualified signature    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = M\+:NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$M\+:NS2.\+My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods \textquotesingle{}Validate1\textquotesingle{} and \textquotesingle{}Validate2\textquotesingle{} with respective fully qualified signature   \\\cline{1-2}
+\end{longtabu}
+
+
+Additionally, all the dataflow analysis based rules can be configured with a single entry {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dataflow.\+excluded\+\_\+symbol\+\_\+names = ...}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md854}{}\doxysubsection{Excluded type names with derived types}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md854}
+Option Name\+: {\ttfamily excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters}{\texttt{ CA1303}}
+
+Option Values\+: Names of types (separated by \textquotesingle{}$\vert$\textquotesingle{}), such that the type and all its derived types are excluded for analysis. Allowed symbol name formats\+:
+\begin{DoxyEnumerate}
+\item Type name only (includes all types with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+T\+:\char`\"{} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = My\+Type}   &Matches all types named \textquotesingle{}My\+Type\textquotesingle{} and all of its derived types in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = My\+Type1\textbackslash{}$\vert$\+My\+Type2}   &Matches all types named either \textquotesingle{}My\+Type1\textquotesingle{} or \textquotesingle{}My\+Type2\textquotesingle{} and all of their derived types in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = T\+:NS.\+My\+Type}   &Matches specific type \textquotesingle{}My\+Type\textquotesingle{} with given fully qualified name and all of its derived types    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = T\+:NS1.\+My\+Type1\textbackslash{}$\vert$M\+:NS2.\+My\+Type2}   &Matches specific types \textquotesingle{}My\+Type1\textquotesingle{} and \textquotesingle{}My\+Type2\textquotesingle{} with respective fully qualified names and all of their derived types   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md855}{}\doxysubsection{Unsafe Dll\+Import\+Search\+Path bits when using Default\+Dll\+Import\+Search\+Paths attribute}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md855}
+Option Name\+: {\ttfamily unsafe\+\_\+\+Dll\+Import\+Search\+Path\+\_\+bits}
+
+Configurable Rules\+: CA5393
+
+Option Values\+: Integer values of System.\+Runtime.\+Interop\+Services.\+Dll\+Import\+Search\+Path
+
+Default Value\+: \textquotesingle{}770\textquotesingle{}, which is Assembly\+Directory $\vert$ Use\+Dll\+Directory\+For\+Dependencies $\vert$ Application\+Directory
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5393.\+unsafe\+\_\+\+Dll\+Import\+Search\+Path\+\_\+bits = 770}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md856}{}\doxysubsection{Exclude ASP.\+NET Core MVC Controller\+Base when considering CSRF}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md856}
+Option Name\+: {\ttfamily exclude\+\_\+aspnet\+\_\+core\+\_\+mvc\+\_\+controllerbase}
+
+Configurable Rules\+: CA5391
+
+Option Values\+: Boolean values
+
+Default Value\+: {\ttfamily true}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5391.\+exclude\+\_\+aspnet\+\_\+core\+\_\+mvc\+\_\+controllerbase = false}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md857}{}\doxysubsection{Disallowed symbol names}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md857}
+Option Name\+: {\ttfamily disallowed\+\_\+symbol\+\_\+names}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1031-do-not-catch-general-exception-types}{\texttt{ CA1031}}
+
+Option Values\+: Names of symbols (separated by \textquotesingle{}$\vert$\textquotesingle{}) that are disallowed in the context of the analysis. Allowed symbol name formats\+:
+\begin{DoxyEnumerate}
+\item Symbol name only (includes all symbols with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}}. Note that each symbol name requires a symbol kind prefix, such as \char`\"{}\+M\+:\char`\"{} prefix for methods, \char`\"{}\+T\+:\char`\"{} prefix for types, \char`\"{}\+N\+:\char`\"{} prefix for namespaces, etc.
+\item {\ttfamily .ctor} for constructors and {\ttfamily .cctor} for static constructors
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = Validate}   &Matches all symbols named \textquotesingle{}Validate\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all symbols named either \textquotesingle{}Validate1\textquotesingle{} or \textquotesingle{}Validate2\textquotesingle{} in the compilation    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = M\+:NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method \textquotesingle{}Validate\textquotesingle{} with given fully qualified signature    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = M\+:NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$M\+:NS2.\+My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods \textquotesingle{}Validate1\textquotesingle{} and \textquotesingle{}Validate2\textquotesingle{} with respective fully qualified signature   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md858}{}\doxysubsection{Dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md858}
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1062-validate-arguments-of-public-methods}{\texttt{ CA1062}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca1303-do-not-pass-literals-as-localized-parameters}{\texttt{ CA1303}}, \href{../src/Microsoft.CodeQuality.Analyzers/Microsoft.CodeQuality.Analyzers.md\#ca1508-avoid-dead-conditional-code}{\texttt{ CA1508}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2000-dispose-objects-before-losing-scope}{\texttt{ CA2000}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2100-review-sql-queries-for-security-vulnerabilities}{\texttt{ CA2100}}, \href{https://docs.microsoft.com/visualstudio/code-quality/ca2213-disposable-fields-should-be-disposed}{\texttt{ CA2213}}, Taint analysis rules\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md859}{}\doxysubsubsection{Interprocedural analysis Kind}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md859}
+Option Name\+: {\ttfamily interprocedural\+\_\+analysis\+\_\+kind}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily None}   &Skip interprocedural analysis for source method invocations.    \\\cline{1-2}
+{\ttfamily Non\+Context\+Sensitive}   &Performs non-\/context sensitive interprocedural analysis for all source method invocations.    \\\cline{1-2}
+{\ttfamily Context\+Sensitive}   &Performs context sensitive interprocedural analysis for all source method invocations.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: Specific to each configurable rule.
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+interprocedural\+\_\+analysis\+\_\+kind = Context\+Sensitive}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md860}{}\doxysubsubsection{Maximum method call chain length to analyze for interprocedural dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md860}
+Option Name\+: {\ttfamily max\+\_\+interprocedural\+\_\+method\+\_\+call\+\_\+chain}
+
+Option Values\+: Unsigned integer
+
+Default Value\+: 3
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+max\+\_\+interprocedural\+\_\+method\+\_\+call\+\_\+chain = 5}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md861}{}\doxysubsubsection{Maximum lambda or local function call chain length to analyze for interprocedural dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md861}
+Option Name\+: {\ttfamily max\+\_\+interprocedural\+\_\+lambda\+\_\+or\+\_\+local\+\_\+function\+\_\+call\+\_\+chain}
+
+Option Values\+: Unsigned integer
+
+Default Value\+: 10
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+max\+\_\+interprocedural\+\_\+lambda\+\_\+or\+\_\+local\+\_\+function\+\_\+call\+\_\+chain = 5}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md862}{}\doxysubsubsection{Dispose analysis kind for IDisposable rules}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md862}
+Option Name\+: {\ttfamily dispose\+\_\+analysis\+\_\+kind}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca2000-dispose-objects-before-losing-scope}{\texttt{ CA2000}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily All\+Paths}   &Track and report missing dispose violations on all paths (non-\/exception and exception paths). Additionally, also flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily All\+Paths\+Only\+Not\+Disposed}   &Track and report missing dispose violations on all paths (non-\/exception and exception paths). Do not flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily Non\+Exception\+Paths}   &Track and report missing dispose violations only on non-\/exception program paths. Additionally, also flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily Non\+Exception\+Paths\+Only\+Not\+Disposed}   &Track and report missing dispose violations only on non-\/exception program paths. Do not flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily Non\+Exception\+Paths}.
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+analysis\+\_\+kind = All\+Paths}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md863}{}\doxysubsubsection{Configure dispose ownership transfer for arguments passed to constructor invocation}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md863}
+Option Name\+: {\ttfamily dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+constructor}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca2000-dispose-objects-before-losing-scope}{\texttt{ CA2000}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+constructor = true}
+
+For example, consider the below code\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using }System;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }A : IDisposable}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{keyword}{public} \textcolor{keywordtype}{void} Dispose()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Test}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    DisposableOwnerType M1()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        \textcolor{comment}{// Dispose ownership for allocation 'new A()' is assumed to be transferred to the returned 'DisposableOwnerType' instance}}
+\DoxyCodeLine{        \textcolor{comment}{// only if 'dotnet\_code\_quality.dispose\_ownership\_transfer\_at\_constructor = true'.}}
+\DoxyCodeLine{        \textcolor{comment}{// Otherwise, current method 'M1' has the dispose ownership for 'new A()', and it fires a CA2000 as a dispose leak for the below code.}}
+\DoxyCodeLine{        \textcolor{keywordflow}{return} \textcolor{keyword}{new} DisposableOwnerType(\textcolor{keyword}{new} A());}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md864}{}\doxysubsubsection{Configure dispose ownership transfer for disposable objects passed as arguments to method calls}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md864}
+Option Name\+: {\ttfamily dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+method\+\_\+call}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca2000-dispose-objects-before-losing-scope}{\texttt{ CA2000}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+method\+\_\+call = false}
+
+For example, consider the below code\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using }System;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Test}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{keywordtype}{void} M1()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        \textcolor{comment}{// Dispose ownership for allocation 'new A()' is assumed to be transferred to 'TransferDisposeOwnership' method}}
+\DoxyCodeLine{        \textcolor{comment}{// if 'dotnet\_code\_quality.dispose\_ownership\_transfer\_at\_method\_call = true'.}}
+\DoxyCodeLine{        \textcolor{comment}{// Otherwise, current method 'M1' has the dispose ownership for 'new A()', and it fires a CA2000 as a dispose leak for the below code.}}
+\DoxyCodeLine{        TransferDisposeOwnership(\textcolor{keyword}{new} A());}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md865}{}\doxysubsubsection{Configure execution of Copy analysis (tracks value and reference copies)}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md865}
+Option Name\+: {\ttfamily copy\+\_\+analysis}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: Specific to each configurable rule (\textquotesingle{}true\textquotesingle{} by default for most rules)
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+copy\+\_\+analysis = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md866}{}\doxysubsubsection{Configure sufficient Iteration\+Count when using weak KDF algorithm}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md866}
+Option Name\+: {\ttfamily sufficient\+\_\+\+Iteration\+Count\+\_\+for\+\_\+weak\+\_\+\+KDF\+\_\+algorithm}
+
+Option Values\+: integral values
+
+Default Value\+: Specific to each configurable rule (\textquotesingle{}100000\textquotesingle{} by default for most rules)
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5387.\+sufficient\+\_\+\+Iteration\+Count\+\_\+for\+\_\+weak\+\_\+\+KDF\+\_\+algorithm = 100000}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md867}{}\doxysubsection{Do not prefix enum values with type name}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md867}
+Option Name\+: {\ttfamily enum\+\_\+values\+\_\+prefix\+\_\+trigger}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1712}{\texttt{ CA1712}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily Any\+Enum\+Value}   &The rule will be triggered if {\itshape any} of the enum values starts with the enum type name.    \\\cline{1-2}
+{\ttfamily All\+Enum\+Values}   &The rule will be triggered if {\itshape all} of the enum values start with the enum type name.    \\\cline{1-2}
+{\ttfamily Heuristic}   &The rule will be triggered using the default Fx\+Cop heuristic (i.\+e. when at least 75\% of the enum values start with the enum type name).   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily Heuristic}.
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1712.\+enum\+\_\+values\+\_\+prefix\+\_\+trigger = Any\+Enum\+Value}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md868}{}\doxysubsection{Exclude indirect base types}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md868}
+Option Name\+: {\ttfamily exclude\+\_\+indirect\+\_\+base\+\_\+types}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1710-identifiers-should-have-correct-suffix}{\texttt{ CA1710}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily true}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+exclude\+\_\+indirect\+\_\+base\+\_\+types = true}
+
+For example, consider the code below\+: 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{// An issue is always raised on this type because the suffix should be 'Exception'.}}
+\DoxyCodeLine{\textcolor{keyword}{public} \textcolor{keyword}{class }MyBaseClass : Exception, IEnumerable}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{   \textcolor{comment}{// code omitted for simplicity}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// If the option is enabled no issue is raised on 'MyClass'; otherwise an issue will}}
+\DoxyCodeLine{\textcolor{comment}{// suggest to add the 'Exception' suffix.}}
+\DoxyCodeLine{\textcolor{keyword}{public} \textcolor{keyword}{class }MyClass : MyBaseClass}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{   \textcolor{comment}{// code omitted for simplicity}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md869}{}\doxysubsection{Additional required suffixes}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md869}
+Option Name\+: {\ttfamily additional\+\_\+required\+\_\+suffixes}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1710-identifiers-should-have-correct-suffix}{\texttt{ CA1710}}
+
+Option Values\+: List (separated by \textquotesingle{}$\vert$\textquotesingle{}) of type names with their required suffix (separated by \textquotesingle{}-\/\texorpdfstring{$>$}{>}\textquotesingle{}).~\newline
+Allowed type name formats\+:
+\begin{DoxyEnumerate}
+\item Type name only (includes all types with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+T\+:\char`\"{} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = My\+Class-\/\texorpdfstring{$>$}{>}Class}   &All types inheriting from \textquotesingle{}My\+Class\textquotesingle{} are expected to have the \textquotesingle{}Class\textquotesingle{} suffix   \\\cline{1-2}
+\end{longtabu}
+$\vert${\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = My\+Class-\/\texorpdfstring{$>$}{>}Class$\vert$\+My\+Namespace.IPath-\/\texorpdfstring{$>$}{>}Path} $\vert$ All types inheriting from \textquotesingle{}My\+Class\textquotesingle{} are expected to have the \textquotesingle{}Class\textquotesingle{} suffix AND all types implementing \textquotesingle{}My\+Namespace.\+IPath\textquotesingle{} are expected to have the \textquotesingle{}Path\textquotesingle{} suffix. $\vert$ $\vert${\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = T\+:System.\+Data.\+IData\+Reader-\/\texorpdfstring{$>$}{>}\{\}} $\vert$ Allows to override built-\/in suffixes, in this case, all types implementing \textquotesingle{}IData\+Reader\textquotesingle{} are no longer expected to end in \textquotesingle{}Collection\textquotesingle{} $\vert$\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md870}{}\doxysubsection{Additional required generic interfaces}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md870}
+Option Name\+: {\ttfamily additional\+\_\+required\+\_\+generic\+\_\+interfaces}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/visualstudio/code-quality/ca1010}{\texttt{ CA1010}}
+
+Option Values\+: List (separated by \textquotesingle{}$\vert$\textquotesingle{}) of interface names with their required generic fully qualified interface (separated by \textquotesingle{}-\/\texorpdfstring{$>$}{>}\textquotesingle{}). Allowed interface formats\+:
+\begin{DoxyEnumerate}
+\item Interface name only (includes all interfaces with the name, regardless of the containing type or namespace)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+T\+:\char`\"{} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: None
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1010.\+additional\+\_\+required\+\_\+generic\+\_\+interfaces = ISomething-\/\texorpdfstring{$>$}{>}System.\+Collections.\+Generic.\+IEnumerable}\`{}{\ttfamily 1}   &All types implementing \textquotesingle{}ISomething\textquotesingle{} regardless of its namespace are expected to also implement \textquotesingle{}System.\+Collections.\+Generic.\+IEnumerable`1'.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1010.\+additional\+\_\+required\+\_\+generic\+\_\+interfaces = T\+:System.\+Collections.\+IDictionary-\/\texorpdfstring{$>$}{>}T\+:System.\+Collections.\+Generic.\+IDictionary}\`{}{\ttfamily 2}   &All types implementing \textquotesingle{}System.\+Collections.\+Generic.\+IDictionary\textquotesingle{} are expected to also implement \textquotesingle{}System.\+Collections.\+Generic.\+IDictionary`2'.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md871}{}\doxysubsection{Inheritance excluded type or namespace names}\label{md_packages__microsoft__code_analysis__analyzers_3_0_0_documentation__analyzer__configuration_autotoc_md871}
+Option Name\+: {\ttfamily additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/en-us/visualstudio/code-quality/ca1501}{\texttt{ CA1501}}
+
+Option Values\+: Names of types or namespaces (separated by \textquotesingle{}$\vert$\textquotesingle{}), such that the type or type\textquotesingle{}s namespace doesn\textquotesingle{}t count in the inheritance hierarchy tree. Allowed symbol name formats\+:
+\begin{DoxyEnumerate}
+\item Type or namespace name (includes all types with the name, regardless of the containing type or namespace and all types whose namespace contains the name)
+\item Type or namespace name ending with a wildcard symbol (includes all types whose name starts with the given name, regardless of the containing type or namespace and all types whose namespace contains the name)
+\item Fully qualified names in the symbol\textquotesingle{}s documentation ID format\+: \href{https://github.com/dotnet/csharplang/blob/master/spec/documentation-comments.md\#id-string-format}{\texttt{ https\+://github.\+com/dotnet/csharplang/blob/master/spec/documentation-\/comments.\+md\#id-\/string-\/format}} with an optional \char`\"{}\+T\+:\char`\"{} prefix for types or \char`\"{}\+N\+:\char`\"{} prefix for namespaces.
+\item Fully qualified type or namespace name with an optional \char`\"{}\+T\+:\char`\"{} prefix for type or \char`\"{}\+N\+:\char`\"{} prefix for namespace and ending with the wildcard symbol (includes all types whose fully qualified name starts with the given suffix)
+\end{DoxyEnumerate}
+
+Default Value\+: {\ttfamily N\+:System.$\ast$} (note that this value is always automatically added to the value provided)
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My\+Type}   &Matches all types named \textquotesingle{}My\+Type\textquotesingle{} or whose containing namespace contains \textquotesingle{}My\+Type\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My\+Type1\textbackslash{}$\vert$\+My\+Type2}   &Matches all types named either \textquotesingle{}My\+Type1\textquotesingle{} or \textquotesingle{}My\+Type2\textquotesingle{} or whose containing namespace contains either \textquotesingle{}My\+Type1\textquotesingle{} or \textquotesingle{}My\+Type2\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS.\+My\+Type}   &Matches specific type \textquotesingle{}My\+Type\textquotesingle{} in the namespace \textquotesingle{}NS\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS1.\+My\+Type1\textbackslash{}$\vert$T\+:NS2.\+My\+Type2}   &Matches specific types \textquotesingle{}My\+Type1\textquotesingle{} and \textquotesingle{}My\+Type2\textquotesingle{} with respective fully qualified names and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = N\+:NS}   &Matches all types from the \textquotesingle{}NS\textquotesingle{} namespace and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My$\ast$}   &Matches all types whose name starts with \textquotesingle{}My\textquotesingle{} or whose containing namespace parts starts with \textquotesingle{}My\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS.\+My$\ast$}   &Matches all types whose name starts with \textquotesingle{}My\textquotesingle{} in the namespace \textquotesingle{}NS\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = N\+:My$\ast$}   &Matches all types whose containing namespace starts with \textquotesingle{}My\textquotesingle{} and all types from the \textquotesingle{}System\textquotesingle{} namespace   \\\cline{1-2}
+\end{longtabu}

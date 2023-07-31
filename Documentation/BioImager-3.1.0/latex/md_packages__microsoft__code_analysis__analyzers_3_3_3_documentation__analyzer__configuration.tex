@@ -1,0 +1,761 @@
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md872}{}\doxysection{Analyzer Configuration}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md872}
+All the analyzer Nu\+Get packages produced in this repo support \+\_\+.\+editorconfig based analyzer configuration\+\_\+. End users can configure the behavior of specific CA rule(s) OR all configurable CA rules by specifying supported key-\/value pair options in an {\ttfamily .editorconfig} file. You can read more about {\ttfamily .editorconfig} format \href{https://editorconfig.org/}{\texttt{ here}}.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md873}{}\doxysubsection{.\+editorconfig format}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md873}
+Analyzer configuration options from an {\ttfamily .editorconfig} file are parsed into {\itshape general} and {\itshape specific} configuration options. General configuration enables configuring the behavior of all CA rules for which the provided option is valid. Specific configuration enables configuring each CA rule ID or CA rules belonging to each rule category, such as {\ttfamily Naming}, {\ttfamily Design}, {\ttfamily Performance}, etc. or CA rules with a specific custom tag, such as {\ttfamily Dataflow}. Our options are {\itshape case-\/insensitive}. Below are the supported formats\+:
+
+
+\begin{DoxyEnumerate}
+\item General configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Option\+Name = Option\+Value}
+\end{DoxyEnumerate}
+\item Specific configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Id.\+Option\+Name = Option\+Value}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Category.\+Option\+Name = Option\+Value}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Rule\+Custom\+Tag.\+Option\+Name = Option\+Value}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}
+
+For example, end users can configure the analyzed API surface for analyzers using the below {\ttfamily api\+\_\+surface} option specification\+:
+
+
+\begin{DoxyEnumerate}
+\item General configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = public}
+\end{DoxyEnumerate}
+\item Specific configuration option\+:
+\begin{DoxyEnumerate}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1040.\+api\+\_\+surface = public}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Naming.\+api\+\_\+surface = public}
+\item {\ttfamily dotnet\+\_\+code\+\_\+quality.\+Dataflow.\+api\+\_\+surface = public}
+\end{DoxyEnumerate}
+\end{DoxyEnumerate}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md874}{}\doxysubsection{Enabling .\+editorconfig based configuration}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md874}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md875}{}\doxysubsubsection{VS2019 16.\+3 and later + Analyzer package version 3.\+3.\+x and later}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md875}
+End users can enable {\ttfamily .editorconfig} based configuration for individual documents, folders, projects, solution or entire repo by creating an {\ttfamily .editorconfig} file with the options in the corresponding directory. This file can also contain {\ttfamily .editorconfig} based diagnostic severity configuration entries. See \href{https://docs.microsoft.com/visualstudio/code-quality/use-roslyn-analyzers\#rule-severity}{\texttt{ here}} for more details.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md876}{}\doxysubsubsection{Prior to VS2019 16.\+3 or using an analyzer package version prior to 3.\+3.\+x}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md876}
+
+\begin{DoxyEnumerate}
+\item Per-\/project {\ttfamily .editorconfig} file\+: End users can enable {\ttfamily .editorconfig} based configuration for individual projects by just copying the {\ttfamily .editorconfig} file with the options to the project root directory.
+\item Shared {\ttfamily .editorconfig} file\+: If you would like to share a common {\ttfamily .editorconfig} file between projects, say {\ttfamily \texorpdfstring{$<$}{<}Path\+To\+Shared\+Editor\+Config\%\texorpdfstring{$>$}{>}\textbackslash{}.editorconfig}, then you should add the following MSBuild property group and item group to a shared props file that is imported {\itshape before} the Fx\+Cop analyzer props files (that come from the Fx\+Cop analyzer Nu\+Get package reference)\+:
+\end{DoxyEnumerate}
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{<\textcolor{keywordtype}{PropertyGroup}>}
+\DoxyCodeLine{  <\textcolor{keywordtype}{SkipDefaultEditorConfigAsAdditionalFile}>\textcolor{keyword}{true}</\textcolor{keywordtype}{SkipDefaultEditorConfigAsAdditionalFile}>}
+\DoxyCodeLine{</\textcolor{keywordtype}{PropertyGroup}>}
+\DoxyCodeLine{<\textcolor{keywordtype}{ItemGroup} \textcolor{keyword}{Condition}=\textcolor{stringliteral}{"{}Exists('<\%PathToSharedEditorConfig\%>\(\backslash\).editorconfig')"{}} >}
+\DoxyCodeLine{  <\textcolor{keywordtype}{AdditionalFiles} \textcolor{keyword}{Include}=\textcolor{stringliteral}{"{}<\%PathToSharedEditorConfig\%>\(\backslash\).editorconfig"{}} />}
+\DoxyCodeLine{</\textcolor{keywordtype}{ItemGroup}>}
+
+\end{DoxyCode}
+
+
+Note that this additional file based approach is also supported on VS2019 16.\+3 and later releases for backwards compatibility.
+
+{\bfseries{The additional file based approach is no longer supported starting in Microsoft.\+Code\+Analysis.\+Net\+Analyzers v5.\+0.\+4. It will be implicitly discovered (if the file is in the project\textquotesingle{}s directory or any ancestor directory), or it should be converted into a \textquotesingle{}globalconfig\textquotesingle{}. See \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/configuration-files}{\texttt{ Configuration files for code analysis rules}}.}}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md877}{}\doxysubsection{Supported .\+editorconfig options}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md877}
+This section documents the list of supported {\ttfamily .editorconfig} key-\/value options for CA rules.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md878}{}\doxysubsubsection{Analyzed API surface}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md878}
+Option Name\+: {\ttfamily api\+\_\+surface}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1000}{\texttt{ CA1000}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1002}{\texttt{ CA1002}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1003}{\texttt{ CA1003}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1005}{\texttt{ CA1005}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1008}{\texttt{ CA1008}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1010}{\texttt{ CA1010}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1012}{\texttt{ CA1012}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1021}{\texttt{ CA1021}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1024}{\texttt{ CA1024}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1027}{\texttt{ CA1027}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1028}{\texttt{ CA1028}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1030}{\texttt{ CA1030}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1036}{\texttt{ CA1036}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1040}{\texttt{ CA1040}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1041}{\texttt{ CA1041}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1043}{\texttt{ CA1043}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1044}{\texttt{ CA1044}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1045}{\texttt{ CA1045}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1046}{\texttt{ CA1046}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1047}{\texttt{ CA1047}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1051}{\texttt{ CA1051}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1052}{\texttt{ CA1052}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1054}{\texttt{ CA1054}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1055}{\texttt{ CA1055}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1056}{\texttt{ CA1056}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1058}{\texttt{ CA1058}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1063}{\texttt{ CA1063}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1068}{\texttt{ CA1068}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1070}{\texttt{ CA1070}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1700}{\texttt{ CA1700}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1707}{\texttt{ CA1707}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1708}{\texttt{ CA1708}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1710}{\texttt{ CA1710}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1711}{\texttt{ CA1711}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1714}{\texttt{ CA1714}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1715}{\texttt{ CA1715}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1716}{\texttt{ CA1716}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1717}{\texttt{ CA1717}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1720}{\texttt{ CA1720}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1721}{\texttt{ CA1721}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1725}{\texttt{ CA1725}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1801}{\texttt{ CA1801}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1802}{\texttt{ CA1802}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1815}{\texttt{ CA1815}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1819}{\texttt{ CA1819}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1822}{\texttt{ CA1822}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2208}{\texttt{ CA2208}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2217}{\texttt{ CA2217}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2225}{\texttt{ CA2225}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2226}{\texttt{ CA2226}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2231}{\texttt{ CA2231}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2234}{\texttt{ CA2234}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily public}   &Analyzes public APIs that are externally visible outside the assembly.    \\\cline{1-2}
+{\ttfamily internal} or {\ttfamily friend}   &Analyzes internal APIs that are visible within the assembly and to assemblies with \href{https://docs.microsoft.com/dotnet/api/system.runtime.compilerservices.internalsvisibletoattribute}{\texttt{ Internals\+Visible\+To\+Attribute}} access.    \\\cline{1-2}
+{\ttfamily private}   &Analyzes private APIs that are only visible within the containing type.    \\\cline{1-2}
+{\ttfamily all}   &Analyzes all APIs, regardless of the symbol visibility.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily public}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = all}
+
+Users can also provide a comma separated list of above option values. For example, {\ttfamily dotnet\+\_\+code\+\_\+quality.\+api\+\_\+surface = private, internal} configures analysis of the entire non-\/public API surface.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md879}{}\doxysubsubsection{Analyzed output kinds}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md879}
+Option Name\+: {\ttfamily output\+\_\+kind}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2007}{\texttt{ CA2007}}
+
+Option Values\+: One or more fields of enum \href{https://docs.microsoft.com/dotnet/api/microsoft.codeanalysis.outputkind}{\texttt{ Microsoft.\+Code\+Analysis.\+Compilation\+Options.\+Output\+Kind}} as a comma separated list.
+
+Default Value\+: {\itshape All output kinds}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA2007.\+output\+\_\+kind = Console\+Application, Dynamically\+Linked\+Library}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md880}{}\doxysubsubsection{Required modifiers for analyzed APIs}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md880}
+Option Name\+: {\ttfamily required\+\_\+modifiers}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1802}{\texttt{ CA1802}}
+
+Option Values\+: Comma separated listed of one or more modifier values from the below table. Note that not all values are applicable for every configurable rule.
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily none}   &No modifier requirement.    \\\cline{1-2}
+{\ttfamily static} or {\ttfamily Shared}   &Must be declared as {\ttfamily static} ({\ttfamily Shared} in Visual Basic).    \\\cline{1-2}
+{\ttfamily const}   &Must be declared as {\ttfamily const}.    \\\cline{1-2}
+{\ttfamily readonly}   &Must be declared as {\ttfamily readonly}.    \\\cline{1-2}
+{\ttfamily abstract}   &Must be declared as {\ttfamily abstract}.    \\\cline{1-2}
+{\ttfamily virtual}   &Must be declared as {\ttfamily virtual}.    \\\cline{1-2}
+{\ttfamily override}   &Must be declared as {\ttfamily override}.    \\\cline{1-2}
+{\ttfamily sealed}   &Must be declared as {\ttfamily sealed}.    \\\cline{1-2}
+{\ttfamily extern}   &Must be declared as {\ttfamily extern}.    \\\cline{1-2}
+{\ttfamily async}   &Must be declared as {\ttfamily async}.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: Depends on each configurable rule\+:
+
+
+\begin{DoxyEnumerate}
+\item CA1802\+: default value is {\ttfamily static}. Set the value to {\ttfamily none} to allow flagging instance fields.
+\end{DoxyEnumerate}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1802.\+required\+\_\+modifiers = none}.\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md881}{}\doxysubsubsection{Async void methods}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md881}
+Option Name\+: {\ttfamily exclude\+\_\+async\+\_\+void\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2007}{\texttt{ CA2007}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA2007.\+exclude\+\_\+async\+\_\+void\+\_\+methods = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md882}{}\doxysubsubsection{Single letter type parameters}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md882}
+Option Name\+: {\ttfamily exclude\+\_\+single\+\_\+letter\+\_\+type\+\_\+parameters}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1715}{\texttt{ CA1715}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1715.\+exclude\+\_\+single\+\_\+letter\+\_\+type\+\_\+parameters = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md883}{}\doxysubsubsection{Exclude extension method \textquotesingle{}this\textquotesingle{} parameter}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md883}
+Option Name\+: {\ttfamily exclude\+\_\+extension\+\_\+method\+\_\+this\+\_\+parameter}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1062}{\texttt{ CA1062}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1062.\+exclude\+\_\+extension\+\_\+method\+\_\+this\+\_\+parameter = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md884}{}\doxysubsubsection{Null check validation methods}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md884}
+Option Name\+: {\ttfamily null\+\_\+check\+\_\+validation\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1062}{\texttt{ CA1062}}
+
+Option Values\+: Names of null check validation methods (separated by {\ttfamily $\vert$}) that validate arguments passed to the method are non-\/null. Allowed method name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Method name only (includes all methods with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily M\+:} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = Validate}   &Matches all methods named {\ttfamily Validate} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all methods named either {\ttfamily Validate1} or {\ttfamily Validate2} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method {\ttfamily Validate} with given fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+null\+\_\+check\+\_\+validation\+\_\+methods = NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$\+NS2.My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods {\ttfamily Validate1} and {\ttfamily Validate2} with respective fully qualified signature.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md885}{}\doxysubsubsection{Additional string formatting methods}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md885}
+Option Name\+: {\ttfamily additional\+\_\+string\+\_\+formatting\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2241}{\texttt{ CA2241}}
+
+Option Values\+: Names of additional string formatting methods (separated by {\ttfamily $\vert$}). Allowed method name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Method name only (includes all methods with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily M\+:} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = My\+Format}   &Matches all methods named {\ttfamily My\+Format} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = My\+Format1\textbackslash{}$\vert$\+My\+Format2}   &Matches all methods named either {\ttfamily My\+Format1} or {\ttfamily My\+Format2} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = NS.\+My\+Type.\+My\+Format(\+Param\+Type)}   &Matches specific method {\ttfamily My\+Format} with given fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+additional\+\_\+string\+\_\+formatting\+\_\+methods = NS1.\+My\+Type1.\+My\+Format1(\+Param\+Type)\textbackslash{}$\vert$\+NS2.My\+Type2.\+My\+Format2(\+Param\+Type)}   &Matches specific methods {\ttfamily My\+Format1} and {\ttfamily My\+Format2} with respective fully qualified signature.   \\\cline{1-2}
+\end{longtabu}
+
+
+Option Name\+: {\ttfamily try\+\_\+determine\+\_\+additional\+\_\+string\+\_\+formatting\+\_\+methods\+\_\+automatically}
+
+Boolean option to enable heuristically detecting of additional string formatting methods A method is considered a string formatting method if it has a {\ttfamily string format} parameter followed by a {\ttfamily params object\mbox{[}\mbox{]}} parameter.
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2241}{\texttt{ CA2241}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+try\+\_\+determine\+\_\+additional\+\_\+string\+\_\+formatting\+\_\+methods\+\_\+automatically = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md886}{}\doxysubsubsection{Excluded symbols}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md886}
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1001}{\texttt{ CA1001}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1062}{\texttt{ CA1062}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1068}{\texttt{ CA1068}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1303}{\texttt{ CA1303}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1304}{\texttt{ CA1304}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1508}{\texttt{ CA1508}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000}{\texttt{ CA2000}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2100}{\texttt{ CA2100}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2301}{\texttt{ CA2301}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2302}{\texttt{ CA2302}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2311}{\texttt{ CA2311}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2312}{\texttt{ CA2312}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2321}{\texttt{ CA2321}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2322}{\texttt{ CA2322}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2327}{\texttt{ CA2327}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2328}{\texttt{ CA2328}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2329}{\texttt{ CA2329}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2330}{\texttt{ CA2330}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3001}{\texttt{ CA3001}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3002}{\texttt{ CA3002}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3003}{\texttt{ CA3003}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3004}{\texttt{ CA3004}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3005}{\texttt{ CA3005}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3006}{\texttt{ CA3006}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3007}{\texttt{ CA3007}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3008}{\texttt{ CA3008}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3009}{\texttt{ CA3009}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3010}{\texttt{ CA3010}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3011}{\texttt{ CA3011}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca3012}{\texttt{ CA3012}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5361}{\texttt{ CA5361}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5376}{\texttt{ CA5376}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5377}{\texttt{ CA5377}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5378}{\texttt{ CA5378}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5380}{\texttt{ CA5380}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5381}{\texttt{ CA5381}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5382}{\texttt{ CA5382}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5383}{\texttt{ CA5383}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5384}{\texttt{ CA5384}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5387}{\texttt{ CA5387}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5388}{\texttt{ CA5388}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5389}{\texttt{ CA5389}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5390}{\texttt{ CA5390}}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md887}{}\doxyparagraph{Excluded symbol names}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md887}
+Option Name\+: {\ttfamily excluded\+\_\+symbol\+\_\+names}
+
+Option Values\+: Names of symbols (separated by {\ttfamily $\vert$}) that are excluded for analysis. Allowed symbol name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Symbol name (includes all symbols with the name, regardless of the containing type or namespace).
+\item Symbol name ending with a wildcard symbol (includes all symbols whose name starts with the given name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}}. Note that each symbol name requires a symbol kind prefix, such as {\ttfamily M\+:} prefix for methods, {\ttfamily T\+:} prefix for types, {\ttfamily N\+:} prefix for namespaces, etc.
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} and ending with the wildcard symbol. Note that each symbol name requires a symbol kind prefix, such as {\ttfamily M\+:} prefix for methods, {\ttfamily T\+:} prefix for types, {\ttfamily N\+:} prefix for namespaces, etc.
+\item {\ttfamily .ctor} for constructors and {\ttfamily .cctor} for static constructors.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = Validate}   &Matches all symbols named {\ttfamily Validate} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all symbols named either {\ttfamily Validate1} or {\ttfamily Validate2} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = M\+:NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method {\ttfamily Validate} with given fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = M\+:NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$M\+:NS2.\+My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods {\ttfamily Validate1} and {\ttfamily Validate2} with respective fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = My$\ast$}   &Matches all symbols whose name starts with {\ttfamily My}.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = T\+:NS.\+My$\ast$}   &Matches all type symbols whose name starts with {\ttfamily My} in the namespace {\ttfamily NS}.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+symbol\+\_\+names = N\+:My$\ast$}   &Matches all symbols whose containing namespace starts with {\ttfamily My}.   \\\cline{1-2}
+\end{longtabu}
+
+
+Additionally, all the dataflow analysis based rules can be configured with a single entry {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dataflow.\+excluded\+\_\+symbol\+\_\+names = ...}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md888}{}\doxyparagraph{Excluded type names with derived types}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md888}
+Option Name\+: {\ttfamily excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types}
+
+Option Values\+: Names of types (separated by {\ttfamily $\vert$}), such that the type and all its derived types are excluded for analysis. Allowed symbol name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Type name only (includes all types with the name, regardless of the containing type or namespace).
+\item Type name only ending with the wildcard symbol (includes all types whose name starts with the given name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily T\+:} prefix.
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily T\+:} prefix and ending with the wildcard symbol.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = My\+Type}   &Matches all types named {\ttfamily My\+Type} and all of its derived types in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = My\+Type1\textbackslash{}$\vert$\+My\+Type2}   &Matches all types named either {\ttfamily My\+Type1} or {\ttfamily My\+Type2} and all of their derived types in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = T\+:NS.\+My\+Type}   &Matches specific type {\ttfamily My\+Type} with given fully qualified name and all of its derived types.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+excluded\+\_\+type\+\_\+names\+\_\+with\+\_\+derived\+\_\+types = T\+:NS1.\+My\+Type1\textbackslash{}$\vert$M\+:NS2.\+My\+Type2}   &Matches specific types {\ttfamily My\+Type1} and {\ttfamily My\+Type2} with respective fully qualified names and all of their derived types.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md889}{}\doxysubsubsection{Unsafe Dll\+Import\+Search\+Path bits when using Default\+Dll\+Import\+Search\+Paths attribute}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md889}
+Option Name\+: {\ttfamily unsafe\+\_\+\+Dll\+Import\+Search\+Path\+\_\+bits}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5393}{\texttt{ CA5393}}
+
+Option Values\+: Integer values of {\ttfamily System.\+Runtime.\+Interop\+Services.\+Dll\+Import\+Search\+Path}
+
+Default Value\+: {\ttfamily 770} (i.\+e. {\ttfamily Assembly\+Directory $\vert$ Use\+Dll\+Directory\+For\+Dependencies $\vert$ Application\+Directory})
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5393.\+unsafe\+\_\+\+Dll\+Import\+Search\+Path\+\_\+bits = 770}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md890}{}\doxysubsubsection{Exclude ASP.\+NET Core MVC Controller\+Base when considering CSRF}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md890}
+Option Name\+: {\ttfamily exclude\+\_\+aspnet\+\_\+core\+\_\+mvc\+\_\+controllerbase}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca5391}{\texttt{ CA5391}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily true}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5391.\+exclude\+\_\+aspnet\+\_\+core\+\_\+mvc\+\_\+controllerbase = false}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md891}{}\doxysubsubsection{Disallowed symbol names}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md891}
+Option Name\+: {\ttfamily disallowed\+\_\+symbol\+\_\+names}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1031}{\texttt{ CA1031}}
+
+Option Values\+: Names of symbols (separated by {\ttfamily $\vert$}) that are disallowed in the context of the analysis. Allowed symbol name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Symbol name only (includes all symbols with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}}. Note that each symbol name requires a symbol kind prefix, such as {\ttfamily M\+:} prefix for methods, {\ttfamily T\+:} prefix for types, {\ttfamily N\+:} prefix for namespaces, etc.
+\item {\ttfamily .ctor} for constructors and {\ttfamily .cctor} for static constructors.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = Validate}   &Matches all symbols named {\ttfamily Validate} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = Validate1\textbackslash{}$\vert$\+Validate2}   &Matches all symbols named either {\ttfamily Validate1} or {\ttfamily Validate2} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = M\+:NS.\+My\+Type.\+Validate(\+Param\+Type)}   &Matches specific method {\ttfamily Validate} with given fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+disallowed\+\_\+symbol\+\_\+names = M\+:NS1.\+My\+Type1.\+Validate1(\+Param\+Type)\textbackslash{}$\vert$M\+:NS2.\+My\+Type2.\+Validate2(\+Param\+Type)}   &Matches specific methods {\ttfamily Validate1} and {\ttfamily Validate2} with respective fully qualified signature.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md892}{}\doxysubsubsection{Dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md892}
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1062}{\texttt{ CA1062}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1303}{\texttt{ CA1303}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1508}{\texttt{ CA1508}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000}{\texttt{ CA2000}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2100}{\texttt{ CA2100}}, \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2213}{\texttt{ CA2213}}, Taint analysis rules\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md893}{}\doxyparagraph{Interprocedural analysis Kind}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md893}
+Option Name\+: {\ttfamily interprocedural\+\_\+analysis\+\_\+kind}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily None}   &Skip interprocedural analysis for source method invocations.    \\\cline{1-2}
+{\ttfamily Non\+Context\+Sensitive}   &Performs non-\/context sensitive interprocedural analysis for all source method invocations.    \\\cline{1-2}
+{\ttfamily Context\+Sensitive}   &Performs context sensitive interprocedural analysis for all source method invocations.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\itshape Specific to each configurable rule}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+interprocedural\+\_\+analysis\+\_\+kind = Context\+Sensitive}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md894}{}\doxyparagraph{Maximum method call chain length to analyze for interprocedural dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md894}
+Option Name\+: {\ttfamily max\+\_\+interprocedural\+\_\+method\+\_\+call\+\_\+chain}
+
+Option Values\+: Unsigned integer
+
+Default Value\+: {\ttfamily 3}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+max\+\_\+interprocedural\+\_\+method\+\_\+call\+\_\+chain = 5}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md895}{}\doxyparagraph{Maximum lambda or local function call chain length to analyze for interprocedural dataflow analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md895}
+Option Name\+: {\ttfamily max\+\_\+interprocedural\+\_\+lambda\+\_\+or\+\_\+local\+\_\+function\+\_\+call\+\_\+chain}
+
+Option Values\+: Unsigned integer
+
+Default Value\+: {\ttfamily 3}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+max\+\_\+interprocedural\+\_\+lambda\+\_\+or\+\_\+local\+\_\+function\+\_\+call\+\_\+chain = 5}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md896}{}\doxyparagraph{Dispose analysis kind for IDisposable rules}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md896}
+Option Name\+: {\ttfamily dispose\+\_\+analysis\+\_\+kind}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000}{\texttt{ CA2000}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily All\+Paths}   &Track and report missing dispose violations on all paths (non-\/exception and exception paths). Additionally, also flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily All\+Paths\+Only\+Not\+Disposed}   &Track and report missing dispose violations on all paths (non-\/exception and exception paths). Do not flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily Non\+Exception\+Paths}   &Track and report missing dispose violations only on non-\/exception program paths. Additionally, also flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.    \\\cline{1-2}
+{\ttfamily Non\+Exception\+Paths\+Only\+Not\+Disposed}   &Track and report missing dispose violations only on non-\/exception program paths. Do not flag use of non-\/recommended dispose patterns that may cause potential dispose leaks.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily Non\+Exception\+Paths}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+analysis\+\_\+kind = All\+Paths}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md897}{}\doxyparagraph{Configure dispose ownership transfer for arguments passed to constructor invocation}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md897}
+Option Name\+: {\ttfamily dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+constructor}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000}{\texttt{ CA2000}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+constructor = true}
+
+For example, consider the below code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using }System;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }A : IDisposable}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{keyword}{public} \textcolor{keywordtype}{void} Dispose()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Test}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    DisposableOwnerType M1()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        \textcolor{comment}{// Dispose ownership for allocation 'new A()' is assumed to be transferred to the returned 'DisposableOwnerType' instance}}
+\DoxyCodeLine{        \textcolor{comment}{// only if 'dotnet\_code\_quality.dispose\_ownership\_transfer\_at\_constructor = true'.}}
+\DoxyCodeLine{        \textcolor{comment}{// Otherwise, current method 'M1' has the dispose ownership for 'new A()', and it fires a CA2000 as a dispose leak for the below code.}}
+\DoxyCodeLine{        \textcolor{keywordflow}{return} \textcolor{keyword}{new} DisposableOwnerType(\textcolor{keyword}{new} A());}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md898}{}\doxyparagraph{Configure dispose ownership transfer for disposable objects passed as arguments to method calls}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md898}
+Option Name\+: {\ttfamily dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+method\+\_\+call}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca2000}{\texttt{ CA2000}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+dispose\+\_\+ownership\+\_\+transfer\+\_\+at\+\_\+method\+\_\+call = false}
+
+For example, consider the below code\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{keyword}{using }System;}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{keyword}{class }Test}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{    \textcolor{keywordtype}{void} M1()}
+\DoxyCodeLine{    \{}
+\DoxyCodeLine{        \textcolor{comment}{// Dispose ownership for allocation 'new A()' is assumed to be transferred to 'TransferDisposeOwnership' method}}
+\DoxyCodeLine{        \textcolor{comment}{// if 'dotnet\_code\_quality.dispose\_ownership\_transfer\_at\_method\_call = true'.}}
+\DoxyCodeLine{        \textcolor{comment}{// Otherwise, current method 'M1' has the dispose ownership for 'new A()', and it fires a CA2000 as a dispose leak for the below code.}}
+\DoxyCodeLine{        TransferDisposeOwnership(\textcolor{keyword}{new} A());}
+\DoxyCodeLine{    \}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md899}{}\doxyparagraph{Points to analysis kind for DFA rules based on Points\+To\+Analysis}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md899}
+Option Name\+: {\ttfamily points\+\_\+to\+\_\+analysis\+\_\+kind}
+
+Configurable Rules\+: All DFA rules
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily None}   &Points\+To\+Analysis is disabled.    \\\cline{1-2}
+{\ttfamily Partial\+Without\+Tracking\+Fields\+And\+Properties}   &Partial analysis that does not track Points\+To\+Data for fields and properties for improved performance.    \\\cline{1-2}
+{\ttfamily Complete}   &Complete analysis that also tracks Points\+To\+Data for fields and properties.   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\itshape Specific to each configurable rule}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+points\+\_\+to\+\_\+analysis\+\_\+kind = Complete}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md900}{}\doxyparagraph{Configure execution of Copy analysis (tracks value and reference copies)}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md900}
+Option Name\+: {\ttfamily copy\+\_\+analysis}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\itshape Specific to each configurable rule} ({\ttfamily true} for most rules)
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+copy\+\_\+analysis = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md901}{}\doxyparagraph{Configure sufficient Iteration\+Count when using weak KDF algorithm}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md901}
+Option Name\+: {\ttfamily sufficient\+\_\+\+Iteration\+Count\+\_\+for\+\_\+weak\+\_\+\+KDF\+\_\+algorithm}
+
+Option Values\+: integral values
+
+Default Value\+: {\itshape Specific to each configurable rule} ({\ttfamily 100000} for most rules)
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA5387.\+sufficient\+\_\+\+Iteration\+Count\+\_\+for\+\_\+weak\+\_\+\+KDF\+\_\+algorithm = 100000}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md902}{}\doxysubsubsection{Do not prefix enum values with type name}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md902}
+Option Name\+: {\ttfamily enum\+\_\+values\+\_\+prefix\+\_\+trigger}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1712}{\texttt{ CA1712}}
+
+Option Values\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily Any\+Enum\+Value}   &The rule will be triggered if {\itshape any} of the enum values starts with the enum type name.    \\\cline{1-2}
+{\ttfamily All\+Enum\+Values}   &The rule will be triggered if {\itshape all} of the enum values start with the enum type name.    \\\cline{1-2}
+{\ttfamily Heuristic}   &The rule will be triggered using the default Fx\+Cop heuristic (i.\+e. when at least 75\% of the enum values start with the enum type name).   \\\cline{1-2}
+\end{longtabu}
+
+
+Default Value\+: {\ttfamily Heuristic}.
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1712.\+enum\+\_\+values\+\_\+prefix\+\_\+trigger = Any\+Enum\+Value}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md903}{}\doxysubsubsection{Exclude indirect base types}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md903}
+Option Name\+: {\ttfamily exclude\+\_\+indirect\+\_\+base\+\_\+types}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1710}{\texttt{ CA1710}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily true}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+exclude\+\_\+indirect\+\_\+base\+\_\+types = true}
+
+For example, consider the code below\+:
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\textcolor{comment}{// An issue is always raised on this type because the suffix should be 'Exception'.}}
+\DoxyCodeLine{\textcolor{keyword}{public} \textcolor{keyword}{class }MyBaseClass : Exception, IEnumerable}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{   \textcolor{comment}{// code omitted for simplicity}}
+\DoxyCodeLine{\}}
+\DoxyCodeLine{}
+\DoxyCodeLine{\textcolor{comment}{// If the option is enabled no issue is raised on 'MyClass'; otherwise an issue will}}
+\DoxyCodeLine{\textcolor{comment}{// suggest to add the 'Exception' suffix.}}
+\DoxyCodeLine{\textcolor{keyword}{public} \textcolor{keyword}{class }MyClass : MyBaseClass}
+\DoxyCodeLine{\{}
+\DoxyCodeLine{   \textcolor{comment}{// code omitted for simplicity}}
+\DoxyCodeLine{\}}
+
+\end{DoxyCode}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md904}{}\doxysubsubsection{Additional required suffixes}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md904}
+Option Name\+: {\ttfamily additional\+\_\+required\+\_\+suffixes}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1710}{\texttt{ CA1710}}
+
+Option Values\+: List (separated by {\ttfamily $\vert$}) of type names with their required suffix (separated by {\ttfamily -\/\texorpdfstring{$>$}{>}}). Allowed type name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Type name only (includes all types with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily T\+:} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = My\+Class-\/\texorpdfstring{$>$}{>}Class}   &All types inheriting from {\ttfamily My\+Class} are expected to have the {\ttfamily Class} suffix.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = My\+Class-\/\texorpdfstring{$>$}{>}Class\textbackslash{}$\vert$\+My\+Namespace.IPath-\/\texorpdfstring{$>$}{>}Path}   &All types inheriting from {\ttfamily My\+Class} are expected to have the {\ttfamily Class} suffix AND all types implementing {\ttfamily My\+Namespace.\+IPath} are expected to have the {\ttfamily Path} suffix.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1710.\+additional\+\_\+required\+\_\+suffixes = T\+:System.\+Data.\+IData\+Reader-\/\texorpdfstring{$>$}{>}\{\}}   &Allows to override built-\/in suffixes, in this case, all types implementing {\ttfamily IData\+Reader} are no longer expected to end in {\ttfamily Collection}.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md905}{}\doxysubsubsection{Additional required generic interfaces}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md905}
+Option Name\+: {\ttfamily additional\+\_\+required\+\_\+generic\+\_\+interfaces}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1010}{\texttt{ CA1010}}
+
+Option Values\+: List (separated by {\ttfamily $\vert$}) of interface names with their required generic fully qualified interface (separated by {\ttfamily -\/\texorpdfstring{$>$}{>}}). Allowed interface formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Interface name only (includes all interfaces with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily T\+:} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1010.\+additional\+\_\+required\+\_\+generic\+\_\+interfaces = ISomething-\/\texorpdfstring{$>$}{>}System.\+Collections.\+Generic.\+IEnumerable\`{}1}   &All types implementing {\ttfamily ISomething} regardless of its namespace are expected to also implement {\ttfamily System.\+Collections.\+Generic.\+IEnumerable\textbackslash{}\`{}1}.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1010.\+additional\+\_\+required\+\_\+generic\+\_\+interfaces = T\+:System.\+Collections.\+IDictionary-\/\texorpdfstring{$>$}{>}T\+:System.\+Collections.\+Generic.\+IDictionary\`{}2}   &All types implementing {\ttfamily System.\+Collections.\+IDictionary} are expected to also implement {\ttfamily System.\+Collections.\+Generic.\+IDictionary\`{}2}.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md906}{}\doxysubsubsection{Inheritance excluded type or namespace names}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md906}
+Option Name\+: {\ttfamily additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1501}{\texttt{ CA1501}}
+
+Option Values\+: Names of types or namespaces (separated by {\ttfamily $\vert$}), such that the type or type\textquotesingle{}s namespace does not count in the inheritance hierarchy tree. Allowed symbol name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Type or namespace name (includes all types with the name, regardless of the containing type or namespace and all types whose namespace contains the name).
+\item Type or namespace name ending with a wildcard symbol (includes all types whose name starts with the given name, regardless of the containing type or namespace and all types whose namespace contains the name).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily T\+:} prefix for types or {\ttfamily N\+:} prefix for namespaces.
+\item Fully qualified type or namespace name with an optional {\ttfamily T\+:} prefix for type or {\ttfamily N\+:} prefix for namespace and ending with the wildcard symbol (includes all types whose fully qualified name starts with the given suffix).
+\end{DoxyEnumerate}
+
+Default Value\+: {\ttfamily N\+:System.$\ast$} (note that this value is always automatically added to the value provided)
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My\+Type}   &Matches all types named {\ttfamily My\+Type} or whose containing namespace contains {\ttfamily My\+Type} and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My\+Type1\textbackslash{}$\vert$\+My\+Type2}   &Matches all types named either {\ttfamily My\+Type1} or {\ttfamily My\+Type2} or whose containing namespace contains either {\ttfamily My\+Type1} or {\ttfamily My\+Type2} and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS.\+My\+Type}   &Matches specific type {\ttfamily My\+Type} in the namespace {\ttfamily NS} and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS1.\+My\+Type1\textbackslash{}$\vert$T\+:NS2.\+My\+Type2}   &Matches specific types {\ttfamily My\+Type1} and {\ttfamily My\+Type2} with respective fully qualified names and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = N\+:NS}   &Matches all types from the {\ttfamily NS} namespace and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = My$\ast$}   &Matches all types whose name starts with {\ttfamily My} or whose containing namespace parts starts with {\ttfamily My} and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = T\+:NS.\+My$\ast$}   &Matches all types whose name starts with {\ttfamily My} in the namespace {\ttfamily NS} and all types from the {\ttfamily System} namespace.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1501.\+additional\+\_\+inheritance\+\_\+excluded\+\_\+symbol\+\_\+names = N\+:My$\ast$}   &Matches all types whose containing namespace starts with {\ttfamily My} and all types from the {\ttfamily System} namespace.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md907}{}\doxysubsubsection{Analyzed symbol kinds}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md907}
+Option Name\+: {\ttfamily analyzed\+\_\+symbol\+\_\+kinds}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1716}{\texttt{ CA1716}}
+
+Option Values\+: One or more fields of enum \href{https://roslynsourceindex.azurewebsites.net/\#Microsoft.CodeAnalysis/Symbols/SymbolKind.cs,30fd9c0834bef6ff}{\texttt{ Microsoft.\+Code\+Analysis.\+Symbol\+Kind}} as a comma separated list.
+
+Default Value\+: {\ttfamily Namespace, Named\+Type, Method, Property, Event, Parameter}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1716.\+analyzed\+\_\+symbol\+\_\+kinds = Namespace, Property}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md908}{}\doxysubsubsection{Use naming heuristic}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md908}
+Option Name\+: {\ttfamily use\+\_\+naming\+\_\+heuristic}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1303}{\texttt{ CA1303}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1303.\+use\+\_\+naming\+\_\+heuristic = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md909}{}\doxysubsubsection{Additional use results methods}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md909}
+Option Name\+: {\ttfamily additional\+\_\+use\+\_\+results\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1806}{\texttt{ CA1806}}
+
+Option Values\+: Names of additional methods (separated by {\ttfamily $\vert$}). Allowed method name formats\+:
+
+
+\begin{DoxyEnumerate}
+\item Method name only (includes all methods with the name, regardless of the containing type or namespace).
+\item Fully qualified names in the \href{https://github.com/dotnet/csharplang/blob/main/spec/documentation-comments.md\#id-string-format}{\texttt{ symbol\textquotesingle{}s documentation ID format}} with an optional {\ttfamily M\+:} prefix.
+\end{DoxyEnumerate}
+
+Default Value\+: {\itshape None}
+
+Examples\+:
+
+\tabulinesep=1mm
+\begin{longtabu}spread 0pt [c]{*{2}{|X[-1]}|}
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endfirsthead
+\hline
+\endfoot
+\hline
+\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Option Value   }&\PBS\centering \cellcolor{\tableheadbgcolor}\textbf{ Summary    }\\\cline{1-2}
+\endhead
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1806.\+additional\+\_\+use\+\_\+results\+\_\+methods = My\+Method}   &Matches all methods named {\ttfamily My\+Method} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1806.\+additional\+\_\+use\+\_\+results\+\_\+methods = My\+Method1\textbackslash{}$\vert$\+My\+Method2}   &Matches all methods named either {\ttfamily My\+Method1} or {\ttfamily My\+Method2} in the compilation.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1806.\+additional\+\_\+use\+\_\+results\+\_\+methods = M\+:NS.\+My\+Type.\+My\+Method(\+Param\+Type)}   &Matches specific method {\ttfamily My\+Method} with given fully qualified signature.    \\\cline{1-2}
+{\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1806.\+additional\+\_\+use\+\_\+results\+\_\+methods = M\+:NS1.\+My\+Type1.\+My\+Method1(\+Param\+Type)\textbackslash{}$\vert$M\+:NS2.\+My\+Type2.\+My\+Method2(\+Param\+Type)}   &Matches specific methods {\ttfamily My\+Method1} and {\ttfamily My\+Method2} with respective fully qualified signature.   \\\cline{1-2}
+\end{longtabu}
+\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md910}{}\doxysubsubsection{Allowed suffixes}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md910}
+Option Name\+: {\ttfamily allowed\+\_\+suffixes}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1711}{\texttt{ CA1711}}
+
+Option Values\+: List (separated by {\ttfamily $\vert$}) of allowed suffixes
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1711.\+allowed\+\_\+suffixes = Flag$\vert$\+Flags}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md911}{}\doxysubsubsection{Enable platform compatibility analyzer for TFMs $<$= net5.\+0}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md911}
+Option Name\+: {\ttfamily enable\+\_\+platform\+\_\+analyzer\+\_\+on\+\_\+pre\+\_\+net5\+\_\+target}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1416}{\texttt{ CA14016}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+enable\+\_\+platform\+\_\+analyzer\+\_\+on\+\_\+pre\+\_\+net5\+\_\+target = true} or {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1416.\+enable\+\_\+platform\+\_\+analyzer\+\_\+on\+\_\+pre\+\_\+net5\+\_\+target = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md912}{}\doxysubsubsection{Exclude structs}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md912}
+Option Name\+: {\ttfamily exclude\+\_\+structs}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1051}{\texttt{ CA1051}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1051.\+exclude\+\_\+structs = true}\hypertarget{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md913}{}\doxysubsubsection{Exclude First\+Or\+Default and Last\+Or\+Default methods}\label{md_packages__microsoft__code_analysis__analyzers_3_3_3_documentation__analyzer__configuration_autotoc_md913}
+Option Name\+: {\ttfamily exclude\+\_\+ordefault\+\_\+methods}
+
+Configurable Rules\+: \href{https://docs.microsoft.com/dotnet/fundamentals/code-analysis/quality-rules/ca1826}{\texttt{ CA1826}}
+
+Option Values\+: {\ttfamily true} or {\ttfamily false}
+
+Default Value\+: {\ttfamily false}
+
+Example\+: {\ttfamily dotnet\+\_\+code\+\_\+quality.\+CA1826.\+exclude\+\_\+ordefault\+\_\+methods = true} 
