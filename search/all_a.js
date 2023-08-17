@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['newtabsviewclick_0',['newTabsViewClick',['../class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964',1,'BioGTK::NodeView']]],
-  ['nodeview_1',['NodeView',['../class_bio_g_t_k_1_1_node_view.html',1,'BioGTK.NodeView'],['../class_bio_g_t_k_1_1_node_view.html#a9aabdb9f30cc4de9bf148a5e1f42b5bd',1,'BioGTK.NodeView.NodeView()']]]
+  ['magicselect_0',['MagicSelect',['../class_bio_1_1_magic_select.html',1,'Bio']]],
+  ['maskpromotion_1',['MaskPromotion',['../class_bio_g_t_k_1_1_mask_promotion.html',1,'BioGTK']]],
+  ['mergechannels_2',['MergeChannels',['../class_bio_g_t_k_1_1_bio_image.html#a39913c9b54af21a75306d361690a5e5c',1,'BioGTK.BioImage.MergeChannels(BioImage b2, BioImage b)'],['../class_bio_g_t_k_1_1_bio_image.html#a22795b6fb3b8f864de57f69625d39e79',1,'BioGTK.BioImage.MergeChannels(string bname, string b2name)']]],
+  ['merget_3',['MergeT',['../class_bio_g_t_k_1_1_bio_image.html#a24ebb21e4ba450433792d08c7460bef8',1,'BioGTK::BioImage']]],
+  ['mergez_4',['MergeZ',['../class_bio_g_t_k_1_1_bio_image.html#ab24694f0844bad4f435f97d7d2aa5046',1,'BioGTK::BioImage']]]
 ];

@@ -15,7 +15,7 @@ var searchData=
   ['getindexrgb_12',['GetIndexRGB',['../class_bio_g_t_k_1_1_bio_image.html#a8c95c59696a289f3b8093536f3f9ba17',1,'BioGTK::BioImage']]],
   ['getmove_13',['GetMove',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ae29498cfd768862f2e2879c37094cd80',1,'BioGTK::Scripting::State']]],
   ['getnone_14',['GetNone',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ac1dee01a3b75eaae56a5e43412180682',1,'BioGTK::Scripting::State']]],
-  ['getpixelformat_15',['GetPixelFormat',['../class_bio_g_t_k_1_1_bio_image.html#a80be5587a7fc48f2e96879c5c48bf31c',1,'BioGTK::BioImage']]],
+  ['getpixelformat_15',['GetPixelFormat',['../class_bio_g_t_k_1_1_bio_image.html#ae3c217e43e3bd2ca5a2e30fb7b26b794',1,'BioGTK.BioImage.GetPixelFormat(int rgbChannelCount, ome.xml.model.enums.PixelType px)'],['../class_bio_g_t_k_1_1_bio_image.html#a80be5587a7fc48f2e96879c5c48bf31c',1,'BioGTK.BioImage.GetPixelFormat(int rgbChannelCount, int bitsPerPixel)']]],
   ['getpoint_16',['GetPoint',['../class_bio_g_t_k_1_1_r_o_i.html#a0f76bd79b4d4e1733e06ff586d609855',1,'BioGTK::ROI']]],
   ['getpointcount_17',['GetPointCount',['../class_bio_g_t_k_1_1_r_o_i.html#a1d8b3e2c50c4622cb6501e615aceb1ff',1,'BioGTK::ROI']]],
   ['getpoints_18',['GetPoints',['../class_bio_g_t_k_1_1_r_o_i.html#a75c312d33f0945e123a40274ed118993',1,'BioGTK::ROI']]],

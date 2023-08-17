@@ -5,5 +5,6 @@ var searchData=
   ['bioconsole_2',['BioConsole',['../class_bio_g_t_k_1_1_bio_console.html#a6ec430edea80195e573a9b9704c903dd',1,'BioGTK.BioConsole.BioConsole()'],['../class_bio_g_t_k_1_1_bio_console.html',1,'BioGTK.BioConsole']]],
   ['biogtk_3',['BioGTK',['../namespace_bio_g_t_k.html',1,'']]],
   ['bioimage_4',['BioImage',['../class_bio_g_t_k_1_1_bio_image.html',1,'BioGTK']]],
-  ['graphics_5',['Graphics',['../namespace_bio_1_1_graphics.html',1,'Bio']]]
+  ['boxpromotion_5',['BoxPromotion',['../class_bio_g_t_k_1_1_box_promotion.html',1,'BioGTK']]],
+  ['graphics_6',['Graphics',['../namespace_bio_1_1_graphics.html',1,'Bio']]]
 ];

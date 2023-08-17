@@ -19,12 +19,18 @@ var hierarchy =
     [ "IDisposable", null, [
       [ "Bio.Graphics.Graphics", "class_bio_1_1_graphics_1_1_graphics.html", null ],
       [ "Bio.Graphics.Pen", "struct_bio_1_1_graphics_1_1_pen.html", null ],
-      [ "BioGTK.BioImage", "class_bio_g_t_k_1_1_bio_image.html", null ]
+      [ "BioGTK.BioImage", "class_bio_g_t_k_1_1_bio_image.html", null ],
+      [ "BioGTK.SAM", "class_bio_g_t_k_1_1_s_a_m.html", null ]
     ] ],
     [ "BioGTK.ImageInfo", "class_bio_g_t_k_1_1_image_info.html", null ],
     [ "BioGTK.BioImage.ImageJDesc", "class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html", null ],
+    [ "BioGTK.MaskPromotion", "class_bio_g_t_k_1_1_mask_promotion.html", null ],
     [ "BioGTK.Objectives.Objective", "class_bio_g_t_k_1_1_objectives_1_1_objective.html", null ],
     [ "BioGTK.Objectives", "class_bio_g_t_k_1_1_objectives.html", null ],
+    [ "BioGTK.Promotion", "class_bio_g_t_k_1_1_promotion.html", [
+      [ "BioGTK.BoxPromotion", "class_bio_g_t_k_1_1_box_promotion.html", null ],
+      [ "BioGTK.PointPromotion", "class_bio_g_t_k_1_1_point_promotion.html", null ]
+    ] ],
     [ "BioGTK.RectangleD", "struct_bio_g_t_k_1_1_rectangle_d.html", null ],
     [ "BioGTK.Resolution", "struct_bio_g_t_k_1_1_resolution.html", null ],
     [ "BioGTK.RLShutter", "class_bio_g_t_k_1_1_r_l_shutter.html", null ],
@@ -36,6 +42,7 @@ var hierarchy =
     [ "BioGTK.Scripting.State", "class_bio_g_t_k_1_1_scripting_1_1_state.html", null ],
     [ "BioGTK.TLShutter", "class_bio_g_t_k_1_1_t_l_shutter.html", null ],
     [ "BioGTK.Tools.Tool", "class_bio_g_t_k_1_1_tools_1_1_tool.html", null ],
+    [ "BioGTK.Transforms", "class_bio_g_t_k_1_1_transforms.html", null ],
     [ "Gtk.Window", null, [
       [ "BioGTK.About", "class_bio_g_t_k_1_1_about.html", null ],
       [ "BioGTK.BioConsole", "class_bio_g_t_k_1_1_bio_console.html", null ],
@@ -48,6 +55,7 @@ var hierarchy =
       [ "BioGTK.Play", "class_bio_g_t_k_1_1_play.html", null ],
       [ "BioGTK.Plot", "class_bio_g_t_k_1_1_plot.html", null ],
       [ "BioGTK.Recorder", "class_bio_g_t_k_1_1_recorder.html", null ],
+      [ "BioGTK.SAMTool", "class_bio_g_t_k_1_1_s_a_m_tool.html", null ],
       [ "BioGTK.Scripting", "class_bio_g_t_k_1_1_scripting.html", null ],
       [ "BioGTK.SetTool", "class_bio_g_t_k_1_1_set_tool.html", null ],
       [ "BioGTK.StackTools", "class_bio_g_t_k_1_1_stack_tools.html", null ],
