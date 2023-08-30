@@ -1,0 +1,9 @@
+var searchData=
+[
+  ['getfocus_0',['GetFocus',['../class_microscope_console_1_1_focus.html#a68a5e07c6625f408174d741841a66fe3',1,'MicroscopeConsole.Focus.GetFocus()'],['../class_microscope_console_1_1_focus.html#a0ac1f392ee2f624edc2ecf30215d4343',1,'MicroscopeConsole.Focus.GetFocus(bool update)']]],
+  ['getobjective_1',['GetObjective',['../class_microscope_console_1_1_objectives.html#abd942f3e98875e328bac78466d1e316c',1,'MicroscopeConsole::Objectives']]],
+  ['getposition_2',['GetPosition',['../class_microscope_console_1_1_stage.html#ad1716a5b474bb583a5705c0a6ea41fc2',1,'MicroscopeConsole.Stage.GetPosition()'],['../class_microscope_console_1_1_t_l_shutter.html#a88283885e2745731c9cf54125320be34',1,'MicroscopeConsole.TLShutter.GetPosition()'],['../class_microscope_console_1_1_h_x_p_shutter.html#a632df93d366cdf1e4566a7bea31c7460',1,'MicroscopeConsole.HXPShutter.GetPosition()'],['../class_microscope_console_1_1_r_l_shutter.html#a4496c92b0d226408255f871ff784d235',1,'MicroscopeConsole.RLShutter.GetPosition()'],['../class_microscope_console_1_1_light_source.html#a95ace154d46735588182b2afe43a982e',1,'MicroscopeConsole.LightSource.GetPosition()'],['../class_microscope_console_1_1_filter_wheel.html#acd0f854c22c7207399626fda623ebd10',1,'MicroscopeConsole.FilterWheel.GetPosition()']]],
+  ['getpositionx_3',['GetPositionX',['../class_microscope_console_1_1_stage.html#a254a5fec04fabdc9ebbcfcbe3a3220d9',1,'MicroscopeConsole::Stage']]],
+  ['getpositiony_4',['GetPositionY',['../class_microscope_console_1_1_stage.html#aaa5fcc8a57a479a92a6c9c194d09426b',1,'MicroscopeConsole::Stage']]],
+  ['getswlimit_5',['GetSWLimit',['../class_microscope_console_1_1_stage.html#ad3cc72b0e4d0129a0a2488d0497db4c3',1,'MicroscopeConsole.Stage.GetSWLimit()'],['../class_microscope_console_1_1_focus.html#a4c62366ff346a236650f4d052e7e26dc',1,'MicroscopeConsole.Focus.GetSWLimit()']]]
+];
