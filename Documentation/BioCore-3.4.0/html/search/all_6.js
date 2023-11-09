@@ -51,6 +51,5 @@ var searchData=
   ['getvalue_48',['GetValue',['../class_bio_1_1_bio_image.html#a0ffa892a0870524a04dbd0ae4ef375f7',1,'Bio.BioImage.GetValue(ZCTXY coord)'],['../class_bio_1_1_bio_image.html#a830078f9a1a1c0ac51da0ebb9695427f',1,'Bio.BioImage.GetValue(ZCT coord, int x, int y)'],['../class_bio_1_1_bio_image.html#a8282c61b98f1a3dd13e9263dfcd42450',1,'Bio.BioImage.GetValue(int z, int c, int t, int x, int y)']]],
   ['getvaluergb_49',['GetValueRGB',['../class_bio_1_1_bio_image.html#aa7803c7c21eb8ee0d991727223bec4d2',1,'Bio.BioImage.GetValueRGB(ZCTXY coord, int index)'],['../class_bio_1_1_bio_image.html#a5e58a73fe01823adf6a42ce18450c0be',1,'Bio.BioImage.GetValueRGB(ZCT coord, int x, int y, int RGBindex)'],['../class_bio_1_1_bio_image.html#adfbbfb8bf01e46e2cddee06dd9a85d34',1,'Bio.BioImage.GetValueRGB(int z, int c, int t, int x, int y, int RGBindex)']]],
   ['getwindowrect_50',['GetWindowRect',['../class_bio_1_1_win32.html#a4aa700db1ada97c41b46de150cc6d7bc',1,'Bio::Win32']]],
-  ['gotoimage_51',['GoToImage',['../class_bio_1_1_image_view.html#adbbd97826066ebd31acd45e42f1a80fc',1,'Bio.ImageView.GoToImage(int i)'],['../class_bio_1_1_image_view.html#aa2a73731e6f27d4a33cc1bc628c7ef4e',1,'Bio.ImageView.GoToImage()']]],
-  ['graphics_52',['Graphics',['../class_bio_1_1_graphics_1_1_graphics.html',1,'Bio::Graphics']]]
+  ['gotoimage_51',['GoToImage',['../class_bio_1_1_image_view.html#aa2a73731e6f27d4a33cc1bc628c7ef4e',1,'Bio.ImageView.GoToImage()'],['../class_bio_1_1_image_view.html#adbbd97826066ebd31acd45e42f1a80fc',1,'Bio.ImageView.GoToImage(int i)']]]
 ];

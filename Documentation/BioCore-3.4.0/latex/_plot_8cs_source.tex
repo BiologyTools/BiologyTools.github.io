@@ -1,0 +1,77 @@
+\hypertarget{_plot_8cs_source}{}\doxysection{Plot.\+cs}
+\label{_plot_8cs_source}\index{BioCoreNew/BioCore/Source/Plot.cs@{BioCoreNew/BioCore/Source/Plot.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00003}00003 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Data;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00010}00010 \textcolor{keyword}{using }ScottPlot;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00011}00011 \textcolor{keyword}{using }ucar.nc2.@\textcolor{keyword}{internal}.iosp.netcdf3;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00012}00012 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00013}00013 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00014}00014 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00015}\mbox{\hyperlink{class_bio_1_1_plot}{00015}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_1_1_plot}{Plot}} : Form}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00016}00016     \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00017}00017         \textcolor{keyword}{public} ScottPlot.Plot plot;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00018}00018         \textcolor{keywordtype}{string} file;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00019}00019         \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00020}00020         Bitmap bitmap;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00021}00021         List<double[]> data = \textcolor{keyword}{new} List<double[]>();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00022}00022         \textcolor{keyword}{public} List<double[]> Data}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00024}00024             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} data; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00025}00025             \textcolor{keyword}{set} \{ data = value; UpdateImage(); \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00026}00026         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00027}00027         \textcolor{keyword}{public} Bitmap Image}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00028}00028         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00029}00029             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} bitmap; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00030}00030             \textcolor{keyword}{set} \{ bitmap = value; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00032}00032         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_plot}{Plot}}()}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00034}00034             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00035}00035             UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00036}00036             name = DateTime.Now.Ticks.ToString();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00037}00037             this.Show();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00039}00039         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_plot}{Plot}}(\textcolor{keywordtype}{double}[] vals, \textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00040}00040         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00041}00041             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00042}00042             data.Add(vals);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00043}00043             UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00044}00044             this.name = name;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00045}00045             this.Show();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00046}00046         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00048}00048         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateImage()}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00049}00049         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00050}00050             plot = \textcolor{keyword}{new} ScottPlot.Plot(Width, Height);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00051}00051             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{double}[] val \textcolor{keywordflow}{in} data) }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00052}00052             \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00053}00053                 plot.AddBar(val);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00054}00054             \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00055}00055             file = plot.SaveFig(name + \textcolor{stringliteral}{"{}.png"{}});}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00056}00056             this.Text = name;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00057}00057             bitmap = (Bitmap)Bitmap.FromFile(file);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00058}00058             pictureBox.Image = bitmap;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00059}00059         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00061}00061         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Plot\_FormClosing(\textcolor{keywordtype}{object} sender, FormClosingEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00062}00062         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00064}00064         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00066}00066         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Plot\_ResizeEnd(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00067}00067         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00068}00068             UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00069}00069         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00070}00070     \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00071}00071 \}}
+
+\end{DoxyCode}

@@ -1,6 +1,5 @@
 var namespace_bio =
 [
-    [ "Graphics", "namespace_bio_1_1_graphics.html", "namespace_bio_1_1_graphics" ],
     [ "Source", "namespace_bio_1_1_source.html", "namespace_bio_1_1_source" ],
     [ "About", "class_bio_1_1_about.html", "class_bio_1_1_about" ],
     [ "App", "class_bio_1_1_app.html", null ],
@@ -58,7 +57,6 @@ var namespace_bio =
     [ "TextInput", "class_bio_1_1_text_input.html", "class_bio_1_1_text_input" ],
     [ "TLShutter", "class_bio_1_1_t_l_shutter.html", null ],
     [ "Tools", "class_bio_1_1_tools.html", "class_bio_1_1_tools" ],
-    [ "View3D", "class_bio_1_1_view3_d.html", "class_bio_1_1_view3_d" ],
     [ "VolumeD", "struct_bio_1_1_volume_d.html", null ],
     [ "Win32", "class_bio_1_1_win32.html", "class_bio_1_1_win32" ],
     [ "XmlTreeDisplay", "class_bio_1_1_xml_tree_display.html", null ],

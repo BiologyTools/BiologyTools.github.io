@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['xmltreedisplay_0',['XmlTreeDisplay',['../class_bio_1_1_xml_tree_display.html',1,'Bio']]],
-  ['xmlview_1',['XMLView',['../class_bio_1_1_x_m_l_view.html',1,'Bio']]]
+  ['zct_0',['ZCT',['../struct_bio_1_1_z_c_t.html',1,'Bio']]],
+  ['zctxy_1',['ZCTXY',['../struct_bio_1_1_z_c_t_x_y.html',1,'Bio']]]
 ];

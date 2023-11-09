@@ -37,16 +37,19 @@ var NAVTREE =
         [ "Functions", "functions_func.html", "functions_func" ],
         [ "Properties", "functions_prop.html", null ]
       ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"class_bio_1_1_graphics_1_1_d_graphics.html",
-"class_bio_1_1_r_o_i.html",
-"pages.html"
+"_about_8_designer_8cs_source.html",
+"class_bio_1_1_code_view.html",
+"class_bio_1_1_progress.html",
+"functions_t.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

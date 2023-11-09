@@ -1,26 +1,10 @@
 var hierarchy =
 [
-    [ "Bio.Graphics.AbstractFloodFiller", "class_bio_1_1_graphics_1_1_abstract_flood_filler.html", [
-      [ "Bio.Graphics.QueueLinearFloodFiller", "class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html", null ]
-    ] ],
     [ "Bio.Automation.Action", "class_bio_1_1_automation_1_1_action.html", null ],
     [ "Bio.App", "class_bio_1_1_app.html", null ],
     [ "Bio.Automation", "class_bio_1_1_automation.html", null ],
     [ "Bio.Channel.ChannelInfo", "struct_bio_1_1_channel_1_1_channel_info.html", null ],
-    [ "Bio.Graphics.Configuration", "class_bio_1_1_graphics_1_1_configuration.html", null ],
-    [ "Bio.Graphics.DBitmap", "class_bio_1_1_graphics_1_1_d_bitmap.html", null ],
-    [ "Bio.Graphics.DCamera", "class_bio_1_1_graphics_1_1_d_camera.html", null ],
-    [ "Bio.Graphics.DColorShader", "class_bio_1_1_graphics_1_1_d_color_shader.html", null ],
-    [ "Bio.Graphics.DDX11", "class_bio_1_1_graphics_1_1_d_d_x11.html", null ],
-    [ "Bio.Graphics.DGraphics", "class_bio_1_1_graphics_1_1_d_graphics.html", null ],
-    [ "Bio.Graphics.DInput", "class_bio_1_1_graphics_1_1_d_input.html", null ],
-    [ "Bio.Graphics.DModel", "class_bio_1_1_graphics_1_1_d_model.html", null ],
-    [ "Bio.Graphics.DSystem", "class_bio_1_1_graphics_1_1_d_system.html", null ],
-    [ "Bio.Graphics.DSystemConfiguration", "class_bio_1_1_graphics_1_1_d_system_configuration.html", null ],
-    [ "Bio.Graphics.DTimer", "class_bio_1_1_graphics_1_1_d_timer.html", null ],
     [ "Bio.Filt", "class_bio_1_1_filt.html", null ],
-    [ "Bio.Graphics.FloodFillRange", "struct_bio_1_1_graphics_1_1_flood_fill_range.html", null ],
-    [ "Bio.Graphics.FloodFillRangeQueue", "class_bio_1_1_graphics_1_1_flood_fill_range_queue.html", null ],
     [ "Bio.Focus", "class_bio_1_1_focus.html", null ],
     [ "Form", null, [
       [ "Bio.About", "class_bio_1_1_about.html", null ],
@@ -30,8 +14,6 @@ var hierarchy =
       [ "Bio.ColorTool", "class_bio_1_1_color_tool.html", null ],
       [ "Bio.Filter", "class_bio_1_1_filter.html", null ],
       [ "Bio.FunctionForm", "class_bio_1_1_function_form.html", null ],
-      [ "Bio.Graphics.FloodTool", "class_bio_1_1_graphics_1_1_flood_tool.html", null ],
-      [ "Bio.Graphics.PenTool", "class_bio_1_1_graphics_1_1_pen_tool.html", null ],
       [ "Bio.ImageWindow", "class_bio_1_1_image_window.html", null ],
       [ "Bio.ImagesToStack", "class_bio_1_1_images_to_stack.html", null ],
       [ "Bio.Library", "class_bio_1_1_library.html", null ],
@@ -55,7 +37,6 @@ var hierarchy =
       [ "Bio.TabsView", "class_bio_1_1_tabs_view.html", null ],
       [ "Bio.TextInput", "class_bio_1_1_text_input.html", null ],
       [ "Bio.Tools", "class_bio_1_1_tools.html", null ],
-      [ "Bio.View3D", "class_bio_1_1_view3_d.html", null ],
       [ "Bio.XMLView", "class_bio_1_1_x_m_l_view.html", null ]
     ] ],
     [ "Bio.Function", "class_bio_1_1_function.html", null ],
@@ -64,9 +45,6 @@ var hierarchy =
       [ "Bio.BufferInfo", "class_bio_1_1_buffer_info.html", null ],
       [ "Bio.Channel", "class_bio_1_1_channel.html", null ],
       [ "Bio.ColorS", "struct_bio_1_1_color_s.html", null ],
-      [ "Bio.Graphics.Direct2D", "class_bio_1_1_graphics_1_1_direct2_d.html", null ],
-      [ "Bio.Graphics.Graphics", "class_bio_1_1_graphics_1_1_graphics.html", null ],
-      [ "Bio.Graphics.Pen", "struct_bio_1_1_graphics_1_1_pen.html", null ],
       [ "Bio.ImageView", "class_bio_1_1_image_view.html", null ]
     ] ],
     [ "Bio.ImageInfo", "class_bio_1_1_image_info.html", null ],

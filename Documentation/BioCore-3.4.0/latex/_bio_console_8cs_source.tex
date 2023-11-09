@@ -1,0 +1,87 @@
+\hypertarget{_bio_console_8cs_source}{}\doxysection{Bio\+Console.\+cs}
+\label{_bio_console_8cs_source}\index{BioCoreNew/BioCore/Source/BioConsole.cs@{BioCoreNew/BioCore/Source/BioConsole.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00001}00001 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00002}00002 \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00003}\mbox{\hyperlink{class_bio_1_1_bio_console}{00003}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_1_1_bio_console}{BioConsole}} : Form}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00004}00004     \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00005}00005         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_bio_console}{BioConsole}}()}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00006}00006         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00007}00007             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00008}00008         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00009}00009         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} onTab = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00010}00010         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} useBioformats = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00015}00015         \textcolor{keyword}{private} \textcolor{keywordtype}{void} runBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00016}00016         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00017}00017             \textcolor{keywordtype}{object} o = \mbox{\hyperlink{class_bio_1_1_scripting}{Scripting}}.\mbox{\hyperlink{class_bio_1_1_scripting_1_1_script}{Script}}.\mbox{\hyperlink{class_bio_1_1_scripting_1_1_script_a565dbce95ba046bae301874d526b03e8}{RunString}}(textBox.Text);}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00018}00018             consoleBox.Text += textBox.Text + Environment.NewLine + o.ToString() + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00019}00019             textBox.Text = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00020}00020         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00028}00028         \textcolor{keyword}{private} \textcolor{keywordtype}{void} imagejBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00029}00029         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00030}00030             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00031}00031                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00032}00032             \mbox{\hyperlink{class_bio_1_1_image_j}{ImageJ}}.\mbox{\hyperlink{class_bio_1_1_image_j_abbf8ee6c4c2f2e5a917a04d091fcdcdd}{RunOnImage}}(textBox.Text, headlessBox.Checked, tabRadioBut.Checked, biofBox.Checked);}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00033}00033             consoleBox.Text += textBox.Text + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00034}00034             textBox.Text = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00035}00035             \textcolor{keywordtype}{string} filename = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00037}00037             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID.EndsWith(\textcolor{stringliteral}{"{}.ome.tif"{}}))}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00038}00038             \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00039}00039                 filename = System.IO.Path.GetFileNameWithoutExtension(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID);}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00040}00040                 filename = filename.Remove(filename.Length -\/ 4, 4);}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00041}00041             \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00042}00042             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00043}00043                 filename = System.IO.Path.GetFileNameWithoutExtension(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID);}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00044}00044             \textcolor{keywordtype}{string} file = System.IO.Path.GetDirectoryName(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID) + \textcolor{stringliteral}{"{}/"{}} + filename + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00045}00045             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID.EndsWith(\textcolor{stringliteral}{"{}.ome.tif"{}}))}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00046}00046                 \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.\mbox{\hyperlink{class_bio_1_1_bio_image_afb6c5c70e1ada16593225dd9493da2e2}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00047}00047             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00048}00048                 \mbox{\hyperlink{class_bio_1_1_app}{App}}.tabsView.\mbox{\hyperlink{class_bio_1_1_tabs_view_ac1fe42bccdb88b50b6da566f405d5d37}{AddTab}}(\mbox{\hyperlink{class_bio_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_1_1_bio_image_ad619b44b270e980570d03bee850c9002}{OpenOME}}(file));}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00055}00055         \textcolor{keyword}{private} \textcolor{keywordtype}{void} topMostBox\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00057}00057             this.TopMost = topMostBox.Checked;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00058}00058         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00064}00064         \textcolor{keyword}{private} \textcolor{keywordtype}{void} BioConsole\_FormClosing(\textcolor{keywordtype}{object} sender, FormClosingEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00066}00066             e.Cancel = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00067}00067             this.Hide();}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00068}00068         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00069}00069         \textcolor{keywordtype}{int} line = 0;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00079}00079         \textcolor{keyword}{private} \textcolor{keywordtype}{void} BioConsole\_KeyDown(\textcolor{keywordtype}{object} sender, KeyEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00080}00080         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00081}00081             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Up)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00082}00082             \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00083}00083                 line++;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00084}00084                 textBox.Text = consoleBox.Lines[consoleBox.Lines.Length -\/ 1 -\/ line];}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00085}00085             \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00086}00086             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Down)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00087}00087             \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00088}00088                 line-\/-\/;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00089}00089                 textBox.Text = consoleBox.Lines[consoleBox.Lines.Length -\/ 1 -\/ line];}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00090}00090             \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00091}00091         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00097}00097         \textcolor{keyword}{private} \textcolor{keywordtype}{void} tabRadioBut\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00098}00098         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00099}00099             onTab = tabRadioBut.Checked;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00100}00100         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00106}00106         \textcolor{keyword}{private} \textcolor{keywordtype}{void} biofBox\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00107}00107         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00108}00108             useBioformats = biofBox.Checked;}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00109}00109         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00115}00115         \textcolor{keyword}{private} \textcolor{keywordtype}{void} headlessBox\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00116}00116         \{}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00119}00119     \}}
+\DoxyCodeLine{\Hypertarget{_bio_console_8cs_source_l00120}00120 \}}
+
+\end{DoxyCode}

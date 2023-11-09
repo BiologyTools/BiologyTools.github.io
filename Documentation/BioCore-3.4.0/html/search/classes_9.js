@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['magicselect_0',['MagicSelect',['../class_bio_1_1_magic_select.html',1,'Bio']]],
-  ['mouseoperations_1',['MouseOperations',['../class_bio_1_1_mouse_operations.html',1,'Bio']]],
-  ['mousepoint_2',['MousePoint',['../struct_bio_1_1_mouse_operations_1_1_mouse_point.html',1,'Bio::MouseOperations']]]
+  ['objectinfo_0',['ObjectInfo',['../class_bio_1_1_lib_1_1_object_info.html',1,'Bio::Lib']]],
+  ['objective_1',['Objective',['../class_bio_1_1_objectives_1_1_objective.html',1,'Bio::Objectives']]],
+  ['objectives_2',['Objectives',['../class_bio_1_1_objectives.html',1,'Bio']]],
+  ['openintab_3',['OpenInTab',['../class_bio_1_1_open_in_tab.html',1,'Bio']]]
 ];

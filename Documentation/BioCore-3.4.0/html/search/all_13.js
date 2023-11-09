@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['verticalscrollposition_0',['VerticalScrollPosition',['../class_bio_1_1_code_view_1_1_scroll_text_box.html#a2f05c9e487d42bdb8583ef765fd5b379',1,'Bio::CodeView::ScrollTextBox']]],
-  ['view3d_1',['View3D',['../class_bio_1_1_view3_d.html',1,'Bio']]],
-  ['volumed_2',['VolumeD',['../struct_bio_1_1_volume_d.html',1,'Bio']]]
+  ['win32_0',['Win32',['../class_bio_1_1_win32.html',1,'Bio']]],
+  ['write_1',['write',['../class_bio_1_1_image_j_1_1_roi_encoder.html#ae4b67c11d5e7894c681863d86bdcbefe',1,'Bio::ImageJ::RoiEncoder']]]
 ];
