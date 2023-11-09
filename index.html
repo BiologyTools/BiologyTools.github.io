@@ -135,6 +135,226 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
   <div class="headertitle"><div class="title">BioGTK Documentation</div></div>
 </div><!--header-->
 <div class="contents">
+<h1 id="biogtk">BioGTK</h1>
+<p><img src="https://github.com/BiologyTools/Bio/blob/master/banner.jpg" alt="Banner"></p>
+<p>A .NET application &amp; library for editing &amp; annotating various microscopy image formats. Supports all bioformats supported images. Integrates with ImageJ, running ImageJ filters &amp; macro functions. Check out the wiki for <a href="https://github.com/BiologyTools/BioGTK/#Usage">library usage.</a> or check out the <a href="https://biologytools.github.io/">documentation.</a> Supports Windows, Linux and Mac. For Windows &amp; Mac see installation instructions. For Discussion check out the new Discord Server. <a href="https://discord.gg/tdeyc6fgpv">https://discord.gg/tdeyc6fgpv</a></p>
+<p><a href="https://www.nuget.org/packages/BioGTK/3.8.0"><img src="https://img.shields.io/nuget/v/BioGTK.svg?style=flat-square" alt="NuGet version (BioGTK)"></a>
+<a href="https://www.nuget.org/packages/BioGTK/3.8.0"><img src="https://img.shields.io/nuget/dt/BioGTK?color=g" alt="NuGet version (BioGTK)"></a> <a href="https://doi.org/10.5281/zenodo.8122239"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8122239.svg" alt="DOI"></a></p>
+<h2 id="features">Features</h2>
+<ul>
+<li><p>C# scripting with sample tool-script and other sample scripts in &quot;/Scripts/&quot; folder. <a href="https://github.com/BioMicroscopy/BioImage-Scripts">See samples</a></p>
+</li>
+<li><p>Supports running ImageJ macro commands on images open in Bio. Console to run ImageJ macro commands and Bio C# scripts.</p>
+</li>
+<li><p>Supports viewing &amp; creating pyramidal images with multiple resolutions. Like whole slide images.</p>
+</li>
+<li><p>Stitch images at varying resolutions into single pyramidal image with multiple resolutions.</p>
+</li>
+<li><p>Multiple view modes like Emission, and Filtered. ROI&#39;s shown for each channel can be configured in ROI Manager.</p>
+</li>
+<li><p>Supports drawing shapes &amp; colors onto 16 bit &amp; 48 bit images, unlike System.Drawing.Graphics.</p>
+</li>
+<li><p>Convenient viewing of image stacks with scroll wheel moving Z-plane and mouse side buttons scrolling C-planes.</p>
+</li>
+<li><p>Editing &amp; saving ROI&#39;s in images to OME format image stacks.</p>
+</li>
+<li><p>Copy &amp; Paste to quickly annotate images and name them easily by right click.</p>
+</li>
+<li><p>Select multiple points by holding down control key, and move them by holding down control key. </p>
+</li>
+<li><p>Exporting ROI&#39;s from each OME image in a folder of images to CSV.</p>
+</li>
+<li><p>Easy segmentation with Segment Anything (SAM). Required model files downloadable from <a href="https://github.com/BiologyTools/BioGTK/releases/tag/SAM-Models">Releases.</a></p>
+</li>
+</ul>
+<h2 id="dependencies">Dependencies</h2>
+<ul>
+<li><a href="https://github.com/BiologyTools/BioFormatsNET6">BioFormats.NET6</a></li>
+<li><a href="http://www.ikvm.net/">IKVM</a></li>
+<li><a href="http://www.aforgenet.com/">AForge</a></li>
+<li><a href="https://bitmiracle.com/libtiff/">LibTiff.Net</a></li>
+<li><a href="https://github.com/oleg-shilo/cs-script/blob/master/LICENSE">Cs-script</a></li>
+<li><a href="https://imagej.nih.gov/ij/">ImageJ</a> (Only needed when running ImageJ macro commands)</li>
+<li><a href="https://oxyplot.github.io/">ScottPlot</a></li>
+<li><a href="https://www.libvips.org/install.html">LibVips</a> (Optional)</li>
+<li><a href="https://github.com/AIDajiangtang/Segment-Anything-CSharp">Segment-Anything-CSharp</a> (Optional)</li>
+</ul>
+<h2 id="licenses">Licenses</h2>
+<ul>
+<li>BioGTK <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL3</a></li>
+<li>AForge <a href="http://www.aforgenet.com/framework/license.html">LGPL</a></li>
+<li>BioFormats.NET6 <a href="https://www.gnu.org/licenses/gpl-3.0.en.html">GPL3</a></li>
+<li><a href="https://github.com/gluck/ikvm/blob/master/LICENSE">IKVM</a></li>
+<li>LibTiff.Net <a href="https://bitmiracle.com/libtiff/">BSD</a></li>
+<li>Cs-script <a href="https://github.com/oleg-shilo/cs-script/blob/master/LICENSE">MIT</a></li>
+<li>ScottPlot <a href="https://github.com/ScottPlot/ScottPlot/blob/main/LICENSE">MIT</a></li>
+<li>LibVips <a href="[https://www.libvips.org/install.html](https://github.com/libvips/libvips/blob/master/LICENSE">LGPL</a>)</li>
+<li>Segment-Anything-CSharp <a href="https://github.com/AIDajiangtang/Segment-Anything-CSharp/blob/main/LICENSE">Apache License 2.0</a></li>
+</ul>
+<h2 id="scripting">Scripting</h2>
+<ul>
+<li>Save scripts into &quot;StartupPath/Scripts&quot; with &quot;.cs&quot; ending.</li>
+<li>Open script editor and recorder from menu.</li>
+<li>Scripts saved in Scripts folder will be loaded into script runner.</li>
+<li>Use Script recorder to record program function calls and script runner to turn recorder text into working scripts. (See sample <a href="https://github.com/BioMicroscopy/BioImage-Scripts">scripts</a></li>
+</ul>
+<h2 id="mac-installation">Mac Installation</h2>
+<ul>
+<li>Install Mac package manager <a href="https://brew.sh/">homebrew.</a></li>
+<li>From brew install <a href="https://formulae.brew.sh/formula/gtk+3#default">GTK3.</a></li>
+<li>Download the BioGTK application for either OSX-x64 or OSX-Arm from releases.</li>
+<li>Make the file executable by opening terminal in the extracted folder and running &quot;chmod 755 BioGTKApp&quot;</li>
+<li>Optionally install <a href="https://www.libvips.org/install.html">LibVips</a> package for whole-slide support with homebrew.</li>
+<li>Optionally install Onnx Runtime by running &quot;brew install onnxruntime&quot; for running SAM.</li>
+</ul>
+<h2 id="windows-installation">Windows Installation</h2>
+<ul>
+<li>Install package manager <a href="https://github.com/GtkSharp/GtkSharp/wiki/Installing-Gtk-on-Windows">MSYS2.</a> to install package GTK3. (Required for GTK Apps.)</li>
+<li>Download the BioGTK Windows installer from releases.</li>
+<li>Optionally install <a href="https://www.libvips.org/install.html">LibVips</a> for increased performance when opening pyramidal images. Make sure to define environmental variable $VIPS_HOME as instructed <a href="https://github.com/kleisauke/net-vips/issues/3">here.</a></li>
+</ul>
+<h2 id="linux-installation">Linux Installation</h2>
+<ul>
+<li>Just download the latest tarball(tar.gz) from Releases as linux already includes GTK3 package.</li>
+<li>Optionally install <a href="https://www.libvips.org/install.html">LibVips</a> for increased performance when opening pyramidal images.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code><span class="hljs-comment">//First you need to setup your project as a GTK project with .NET 6.0 as the target. </span>
+<span class="hljs-comment">//Then in between Gtk.Application.Init() and Gtk.Application.Run() use the library as you please.</span>
+<span class="hljs-comment">//Here is an example from BioGTKApp program.cs.</span>
+
+Console.WriteLine(<span class="hljs-string">"Initializing GTK."</span>);
+Gtk.Application.Init();
+Console.WriteLine(<span class="hljs-string">"Creating NodeView."</span>);
+BioGTK.NodeView node = BioGTK.NodeView.Create(args);
+node.Show();
+Gtk.Application.Run();
+
+
+<span class="hljs-comment">//If you want to initialize the application call app initialize. </span>
+<span class="hljs-comment">//This will initialize Bioformats library as well as the rest of the application.</span>
+App.Initialize();
+
+<span class="hljs-comment">//Or you can create a new NodeView which will initialize the application</span>
+<span class="hljs-comment">//as well as parse any command line arguments.</span>
+NodeView nodes = NodeView.Create(new <span class="hljs-type">string</span>[]{<span class="hljs-string">"file"</span>});
+
+<span class="hljs-comment">//You can also call BioImage.Initialize to </span>
+<span class="hljs-comment">//initialize just the Bioformats library.</span>
+BioImage.Initialize();
+
+<span class="hljs-comment">//Once initialized you can open OME, ImageJ tiff files, and Bio Tiff files with:</span>
+BioImage b = BioImage.OpenFile(<span class="hljs-string">"file"</span>);
+
+<span class="hljs-comment">//Or if you want to use specifically the OME image reader you can use BioImage.OpenOME</span>
+BioImage b = BioImage.OpenOME(<span class="hljs-string">"file"</span>);
+
+<span class="hljs-comment">//If you are working with a pyramidal image you can open a portion of a tiled image with OpenOME.</span>
+<span class="hljs-comment">//BioImage.OpenOME(string file, int serie, bool tab, bool addToImages, bool tile, int tilex, int tiley, int tileSizeX, int tileSizeY)</span>
+
+<span class="hljs-comment">//You can specify whether to open in a newtab as well as whether to add the image to </span>
+<span class="hljs-comment">//the Images.images table. As well as specify whether to open as a tile with the specified </span>
+<span class="hljs-comment">//tile X,Y position &amp; tile width &amp; height.    </span>
+BioImage.OpenOME(<span class="hljs-string">"file"</span>,<span class="hljs-number">0</span>,false,false,true,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">600</span>,<span class="hljs-number">600</span>);
+<span class="hljs-comment">//This will open a portion of the image as a tile and won't add it to the Images table.</span>
+
+<span class="hljs-comment">//Once you have opened a tiled image with BioImage.OpenOME you can call the </span>
+<span class="hljs-comment">//GetTile(BioImage b, ZCT coord, int serie, int tilex, int tiley, int tileSizeX, int tileSizeY) method</span>
+<span class="hljs-comment">// to quickly get another tile from different portion of the image. For BioGTK &amp; BioLib</span>
+Bitmap bm = GetTile(b, new ZCT(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>, <span class="hljs-number">600</span>, <span class="hljs-number">600</span>);
+
+<span class="hljs-comment">//You can display an image with the ImageView control which can display</span>
+<span class="hljs-comment">// Pyramidal, Whole-Slide, and Series of images.</span>
+ImageView v = ImageView.Create(b);
+
+<span class="hljs-comment">//To get the current coordinate of the ImageView you can call GetCoordinate.</span>
+ZCT cord = v.GetCoordinate();
+<span class="hljs-comment">//or to set the current coordinate</span>
+v.SetCoordinate(new ZCT(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>));
+
+<span class="hljs-comment">//To create a point as well as any other ROI type you can call the ROI create methods.</span>
+ROI p = ROI.CreatePoint(cord, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+ROI rect = ROI.CreateRectangle(cord, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>);
+
+<span class="hljs-comment">//Usage of Graphics class for 16 &amp; 48 bit images as well as regular bit depth images</span>
+<span class="hljs-comment">//is very similar to System.Graphics.</span>
+<span class="hljs-comment">//We create a new Graphics object by passing the Bitmap for BioGTK &amp; BioLib and BufferInfo for BioCore</span>
+Graphics g = Graphics.FromImage(b.Buffers[<span class="hljs-number">0</span>]);
+
+<span class="hljs-comment">//Then we create a pen by passing a ColorS which represent a Color with, </span>
+<span class="hljs-comment">//a higher bit depth (unsigned short) rather than a byte.</span>
+g.pen = new Pen(new ColorS(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue));
+
+<span class="hljs-comment">//Then we can call the familiar methods DrawLine, DrawPolygon, FillPolygon etc.</span>
+g.DrawLine(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>);
+<span class="hljs-comment">//Finally we dispose the Graphics object.</span>
+g.Dispose();
+
+<span class="hljs-comment">//Then to update the image in the viewer once we have made changes to the image we call:</span>
+v.UpdateImage();
+<span class="hljs-comment">//This will update the images of the viewer in the current coordinate plane.</span>
+v.UpdateView();
+
+<span class="hljs-comment">//We can also save the resulting image given the ID of the image in the Images table.</span>
+<span class="hljs-comment">//All images opened with BioImage.OpenFile or BioImage.OpenOME are added to the </span>
+<span class="hljs-comment">//Images.images table with the filename as an ID.</span>
+BioImage.SaveFile(<span class="hljs-string">"file"</span>,<span class="hljs-string">"path"</span>);
+
+<span class="hljs-comment">//To convert between different pixel formats we can call for example To24Bit.</span>
+b.To24Bit();
+</code></pre><h2 id="sample-tool-script">Sample Tool Script</h2>
+<pre><code><span class="hljs-comment">//css_reference BioGTK.dll; </span>
+using System; 
+using BioGTK;
+using System.Threading;
+using AForge;
+public <span class="hljs-keyword">class</span> Loader {
+
+<span class="hljs-comment">//Point ROI Tool Example</span>
+public string Load()
+{
+    int ind = 1;
+    <span class="hljs-keyword">do</span>
+    {
+        BioGTK.Scripting.State s = BioGTK.Scripting.GetState();
+        <span class="hljs-keyword">if</span> (s != null)
+        {
+            <span class="hljs-keyword">if</span> (!s.processed)
+            {
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.Down &amp;&amp; s.buts == 1)
+                {
+                    ZCT cord = BioGTK.<span class="hljs-keyword">App</span>.viewer.GetCoordinate();
+                    BioGTK.Scripting.LogLine(cord.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Coordinate"</span>);
+                    BioGTK.ROI <span class="hljs-keyword">an</span> = BioGTK.ROI.CreatePoint(cord, s.p.X, s.p.Y);
+                    BioGTK.ImageView.SelectedImage.Annotations.Add(<span class="hljs-keyword">an</span>);
+                    BioGTK.Scripting.LogLine(cord.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Coordinate"</span>);
+                    <span class="hljs-keyword">an</span>.Text = <span class="hljs-string">"Point"</span> + ind;
+                    ind++;
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>() + <span class="hljs-string">" Point"</span>);
+                    <span class="hljs-comment">//ImageView.viewer.UpdateOverlay();</span>
+                }
+                <span class="hljs-keyword">else</span>
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.Up)
+                {
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>());
+                }
+                <span class="hljs-keyword">else</span>
+                <span class="hljs-keyword">if</span> (s.<span class="hljs-keyword">type</span> == BioGTK.Scripting.Event.<span class="hljs-keyword">Move</span>)
+                {
+                    BioGTK.Scripting.LogLine(s.<span class="hljs-keyword">ToString</span>());
+                }
+                s.processed = true;
+            }
+        }
+        <span class="hljs-keyword">if</span>(BioGTK.Scripting.<span class="hljs-keyword">Exit</span>(<span class="hljs-string">"points.cs"</span>))
+        {    
+            <span class="hljs-keyword">return</span> <span class="hljs-string">"OK"</span>;
+        }
+    } <span class="hljs-keyword">while</span> (true);
+    <span class="hljs-keyword">return</span> <span class="hljs-string">"OK"</span>;
+}
+}
+</code></pre>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
