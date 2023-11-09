@@ -1,0 +1,293 @@
+\hypertarget{_graphics_8cs_source}{}\doxysection{Graphics.\+cs}
+\label{_graphics_8cs_source}\index{BioGTK/Graphics/Graphics.cs@{BioGTK/Graphics/Graphics.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00006}00006 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00007}00007 \textcolor{keyword}{using }Bitmap = AForge.Bitmap; }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00008}00008 }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00009}00009 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_1_1_graphics}{Bio.Graphics}}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00010}00010 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00011}00011     \textcolor{comment}{/* A struct that holds the color, width and bits per pixel of the pen. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00012}\mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{00012}}     \textcolor{keyword}{public} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{Pen}} : IDisposable}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00014}00014         \textcolor{keyword}{public} ColorS color;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00015}00015         \textcolor{keyword}{public} ushort width;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00016}00016         \textcolor{keyword}{public} \textcolor{keywordtype}{byte} bitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00017}00017         \textcolor{comment}{/* A constructor for the Pen struct. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00018}00018         \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{Pen}}(ColorS col, ushort w, \textcolor{keywordtype}{int} bitsPerPixel)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00020}00020             color = col;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00021}00021             width = w;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00022}00022             this.bitsPerPixel = (byte)bitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00023}00023         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00024}00024         \textcolor{comment}{/* A constructor for the Pen struct. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00025}00025         \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{Pen}}(ColorS col, \textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} bitsPerPixel)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00027}00027             color = col;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00028}00028             width = (ushort)w;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00029}00029             this.bitsPerPixel = (byte)bitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00030}00030         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00032}\mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen_a0a4360433f3c2698944cdcea6ad2e344}{00032}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen_a0a4360433f3c2698944cdcea6ad2e344}{Dispose}}()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00034}00034             color.Dispose();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00035}00035         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00036}00036     \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00037}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics}{00037}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics}{Graphics}} : IDisposable}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00038}00038     \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00039}00039         \textcolor{comment}{/* The buffer that the graphics are drawn on. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00040}00040         \textcolor{keyword}{public} Bitmap buf;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00041}00041         \textcolor{comment}{/* A variable that holds the color, width and bits per pixel of the pen. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00042}00042         \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{Pen}} pen;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00043}00043         \textcolor{comment}{/* Used for the flood fill algorithm. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00044}00044         \textcolor{keyword}{private} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_abstract_flood_filler}{AbstractFloodFiller}} filler;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00051}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ac4e3f8c6712a31706ce2ab66b1d8e2fa}{00051}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics}{Graphics}} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ac4e3f8c6712a31706ce2ab66b1d8e2fa}{FromImage}}(Bitmap b)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00053}00053             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics}{Graphics}} g = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics}{Graphics}}();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00054}00054             g.buf = b;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00055}00055             g.pen = \textcolor{keyword}{new} \mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen}{Pen}}(\textcolor{keyword}{new} ColorS(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue),1,b.BitsPerPixel);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00056}00056             \textcolor{keywordflow}{return} g;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00065}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{00065}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} x2, \textcolor{keywordtype}{int} y2)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00066}00066         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00067}00067             \textcolor{comment}{//Bresenham's algorithm for line drawing.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00068}00068             \textcolor{keywordtype}{int} w = x2 -\/ x;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00069}00069             \textcolor{keywordtype}{int} h = y2 -\/ y;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00070}00070             \textcolor{keywordtype}{int} dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00071}00071             \textcolor{keywordflow}{if} (w < 0) dx1 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (w > 0) dx1 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00072}00072             \textcolor{keywordflow}{if} (h < 0) dy1 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 0) dy1 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00073}00073             \textcolor{keywordflow}{if} (w < 0) dx2 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (w > 0) dx2 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00074}00074             \textcolor{keywordtype}{int} longest = Math.Abs(w);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00075}00075             \textcolor{keywordtype}{int} shortest = Math.Abs(h);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00076}00076             \textcolor{keywordflow}{if} (!(longest > shortest))}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00077}00077             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00078}00078                 longest = Math.Abs(h);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00079}00079                 shortest = Math.Abs(w);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00080}00080                 \textcolor{keywordflow}{if} (h < 0) dy2 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 0) dy2 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00081}00081                 dx2 = 0;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00082}00082             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00083}00083             \textcolor{keywordtype}{int} numerator = longest >> 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00084}00084             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= longest; i++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00085}00085             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00086}00086                 \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd71151ceb925ba836bae73965ca0cde}{FillEllipse}}(x, y, pen.width, pen.width, pen.color);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00087}00087                 numerator += shortest;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00088}00088                 \textcolor{keywordflow}{if} (!(numerator < longest))}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00089}00089                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00090}00090                     numerator -\/= longest;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00091}00091                     x += dx1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00092}00092                     y += dy1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00093}00093                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00094}00094                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00095}00095                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00096}00096                     x += dx2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00097}00097                     y += dy2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00098}00098                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00099}00099             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00100}00100         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00109}00109         \textcolor{keyword}{private} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y, \textcolor{keywordtype}{int} x2, \textcolor{keywordtype}{int} y2, Bitmap bf, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00111}00111             \textcolor{comment}{//Bresenham's algorithm for line drawing.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00112}00112             \textcolor{keywordtype}{int} w = x2 -\/ x;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00113}00113             \textcolor{keywordtype}{int} h = y2 -\/ y;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00114}00114             \textcolor{keywordtype}{int} dx1 = 0, dy1 = 0, dx2 = 0, dy2 = 0;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00115}00115             \textcolor{keywordflow}{if} (w < 0) dx1 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (w > 0) dx1 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00116}00116             \textcolor{keywordflow}{if} (h < 0) dy1 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 0) dy1 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00117}00117             \textcolor{keywordflow}{if} (w < 0) dx2 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (w > 0) dx2 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00118}00118             \textcolor{keywordtype}{int} longest = Math.Abs(w);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00119}00119             \textcolor{keywordtype}{int} shortest = Math.Abs(h);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00120}00120             \textcolor{keywordflow}{if} (!(longest > shortest))}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00121}00121             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00122}00122                 longest = Math.Abs(h);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00123}00123                 shortest = Math.Abs(w);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00124}00124                 \textcolor{keywordflow}{if} (h < 0) dy2 = -\/1; \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (h > 0) dy2 = 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00125}00125                 dx2 = 0;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00126}00126             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00127}00127             \textcolor{keywordtype}{int} numerator = longest >> 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00128}00128             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i <= longest; i++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00129}00129             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00130}00130                 bf.SetPixel(x, y, c);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00131}00131                 numerator += shortest;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00132}00132                 \textcolor{keywordflow}{if} (!(numerator < longest))}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00133}00133                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00134}00134                     numerator -\/= longest;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00135}00135                     x += dx1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00136}00136                     y += dy1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00137}00137                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00138}00138                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00139}00139                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00140}00140                     x += dx2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00141}00141                     y += dy2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00142}00142                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00143}00143             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00144}00144         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00150}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd9c6ffb380f1a42c992aad53ef86244}{00150}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd9c6ffb380f1a42c992aad53ef86244}{DrawLine}}(PointF p, PointF p2)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00151}00151         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00152}00152             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}((\textcolor{keywordtype}{int})p.X, (\textcolor{keywordtype}{int})p.Y, (\textcolor{keywordtype}{int})p2.X, (\textcolor{keywordtype}{int})p2.Y);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00153}00153         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00158}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_add3271fa5107229c4ba15e3eb8b127fe}{00158}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_add3271fa5107229c4ba15e3eb8b127fe}{FillRectangle}}(Rectangle r, ColorS col)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00159}00159         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00160}00160             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = r.X; x < r.Width + r.X; x++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00161}00161             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00162}00162                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = r.Y; y < r.Height + r.Y; y++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00163}00163                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00164}00164                     buf.SetPixel(x,y, col);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00165}00165                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00166}00166             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00167}00167         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00172}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a35dbadf42b872a1e5b8e320122a61df3}{00172}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a35dbadf42b872a1e5b8e320122a61df3}{FillRectangle}}(RectangleF r, ColorS col)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00173}00173         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00174}00174             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_add3271fa5107229c4ba15e3eb8b127fe}{FillRectangle}}(\textcolor{keyword}{new} Rectangle((\textcolor{keywordtype}{int})Math.Ceiling(r.X), (\textcolor{keywordtype}{int})Math.Ceiling(r.Y), (\textcolor{keywordtype}{int})Math.Ceiling(r.Width), (\textcolor{keywordtype}{int})Math.Ceiling(r.Height)), col);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00175}00175         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00179}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_af5dbc36bd8e31c3c82a42ac6f3991fd0}{00179}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_af5dbc36bd8e31c3c82a42ac6f3991fd0}{DrawRectangle}}(Rectangle r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00180}00180         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00181}00181             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keyword}{new} PointF(r.X, r.Y), \textcolor{keyword}{new} PointF(r.X + r.Width, r.Y));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00182}00182             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keyword}{new} PointF(r.X + r.Width, r.Y), \textcolor{keyword}{new} PointF(r.X + r.Width, r.Y + r.Height));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00183}00183             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keyword}{new} PointF(r.X, r.Y), \textcolor{keyword}{new} PointF(r.X, r.Y + r.Height));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00184}00184             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}(\textcolor{keyword}{new} PointF(r.X, r.Y + r.Height), \textcolor{keyword}{new} PointF(r.X + r.Width, r.Y + r.Height));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00185}00185         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00194}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a48a4117e2487a2de9b9c9594108cdc87}{00194}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a48a4117e2487a2de9b9c9594108cdc87}{DrawRectangle}}(RectangleF r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00195}00195         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00196}00196             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_af5dbc36bd8e31c3c82a42ac6f3991fd0}{DrawRectangle}}(\textcolor{keyword}{new} Rectangle((\textcolor{keywordtype}{int})Math.Ceiling(r.X), (\textcolor{keywordtype}{int})Math.Ceiling(r.Y), (\textcolor{keywordtype}{int})Math.Ceiling(r.Width), (\textcolor{keywordtype}{int})Math.Ceiling(r.Height)));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00197}00197         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00203}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aef1dbe883959fdc5ba849af40d372252}{00203}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aef1dbe883959fdc5ba849af40d372252}{DrawEllipse}}(Rectangle r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00204}00204         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00205}00205             \textcolor{keywordflow}{if} (r.Width == 1 \&\& r.Height == 1)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00206}00206                 buf.SetPixel(r.X, r.Y, pen.color);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00207}00207             \textcolor{keywordtype}{double} radiusx = r.Width / 2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00208}00208             \textcolor{keywordtype}{double} radiusy = r.Height / 2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00209}00209             \textcolor{keywordtype}{int} x, y;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00210}00210             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} a = 0.0; a < 360.0; a += 0.1)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00211}00211             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00212}00212                 \textcolor{keywordtype}{double} angle = a * System.Math.PI / 180;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00213}00213                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < pen.width; i++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00214}00214                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00215}00215                     x = (int)(radiusx * System.Math.Cos(angle) + radiusx + r.X);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00216}00216                     y = (int)(radiusy * System.Math.Sin(angle) + radiusy + r.Y);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00217}00217                     buf.SetPixel(x+i, y+i, pen.color);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00218}00218                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00219}00219             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00220}00220         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00225}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_abac78d563afee1a651e4043feaab1a5a}{00225}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_abac78d563afee1a651e4043feaab1a5a}{DrawEllipse}}(RectangleF r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00226}00226         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00227}00227             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aef1dbe883959fdc5ba849af40d372252}{DrawEllipse}}(\textcolor{keyword}{new} Rectangle((\textcolor{keywordtype}{int})Math.Ceiling(r.X), (\textcolor{keywordtype}{int})Math.Ceiling(r.Y), (\textcolor{keywordtype}{int})Math.Ceiling(r.Width), (\textcolor{keywordtype}{int})Math.Ceiling(r.Height)));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00228}00228         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00238}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd71151ceb925ba836bae73965ca0cde}{00238}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd71151ceb925ba836bae73965ca0cde}{FillEllipse}}(\textcolor{keywordtype}{float} xx, \textcolor{keywordtype}{float} yy, \textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} h, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00239}00239         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00240}00240             \textcolor{keywordflow}{if} (w <= 1 \&\& w <= 1)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00241}00241             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00242}00242                 buf.SetPixel((\textcolor{keywordtype}{int})xx,(\textcolor{keywordtype}{int})yy, c);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00243}00243                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00244}00244             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00245}00245             \textcolor{keywordtype}{double} radiusx = w / 2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00246}00246             \textcolor{keywordtype}{double} radiusy = h / 2;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00247}00247             \textcolor{keywordtype}{int} x, y;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00248}00248             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} a = 90; a < 270; a += 0.1)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00249}00249             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00250}00250                 \textcolor{keywordtype}{double} angle = a * System.Math.PI / 180;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00251}00251                 x = (int)(radiusx * System.Math.Cos(angle) + radiusx + xx);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00252}00252                 y = (int)(radiusy * System.Math.Sin(angle) + radiusy + yy);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00253}00253                 \textcolor{keywordtype}{double} angle2 = (a+180) * System.Math.PI / 180;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00254}00254                 \textcolor{keywordtype}{int} x2 = (\textcolor{keywordtype}{int})(radiusx * System.Math.Cos(angle2) + radiusx + xx);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00255}00255                 \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ad8b2e64da3bdbc89e111638584e8e676}{DrawScanline}}(x,x2,y,c);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00256}00256             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00257}00257         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00262}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a66f2d5fea74231f586c4638abd8b3bc9}{00262}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a66f2d5fea74231f586c4638abd8b3bc9}{FillEllipse}}(RectangleF r, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00263}00263         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00264}00264             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd71151ceb925ba836bae73965ca0cde}{FillEllipse}}(\textcolor{keyword}{new} Rectangle((\textcolor{keywordtype}{int})Math.Ceiling(r.X), (\textcolor{keywordtype}{int})Math.Ceiling(r.Y), (\textcolor{keywordtype}{int})Math.Ceiling(r.Width), (\textcolor{keywordtype}{int})Math.Ceiling(r.Height)), c);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00265}00265         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00270}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8bdc5741b5c8f5ce6dc5ad10610267e2}{00270}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8bdc5741b5c8f5ce6dc5ad10610267e2}{FillEllipse}}(Rectangle r, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00271}00271         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00272}00272             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_acd71151ceb925ba836bae73965ca0cde}{FillEllipse}}(r.X, r.Y, r.Width, r.Height, c);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00273}00273         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00279}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8a7c9ded61070b46b9c80ebc1b50000a}{00279}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8a7c9ded61070b46b9c80ebc1b50000a}{FillPolygon}}(PointF[] pfs, Rectangle r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00280}00280         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00281}00281             \textcolor{comment}{//We will use the flood fill algorithm to fill the polygon.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00282}00282             \textcolor{comment}{//First we need to create a new Buffer incase the current Buffer contains filled pixels that could prevent flood fill from filling the whole area.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00283}00283             Bitmap bf = buf.CopyInfo();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00284}00284             bf.Bytes = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[buf.Bytes.Length];}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00285}00285 }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00286}00286             DrawPolygon(pfs, bf, pen.color);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00287}00287             }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00288}00288             filler = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_queue_linear_flood_filler}{QueueLinearFloodFiller}}(filler);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00289}00289             filler.FillColor = pen.color;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00290}00290             filler.Tolerance = \textcolor{keyword}{new} ColorS(0, 0, 0);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00291}00291             filler.Bitmap = bf;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00292}00292             \textcolor{comment}{//Next we need to find a point inside the polygon from where to start the flood fill.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00293}00293             \textcolor{comment}{//We use the center points x-\/line till we find a point inside.}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00294}00294             Point p = \textcolor{keyword}{new} Point(r.X + (r.Width / 2), r.Y + (r.Height / 2));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00295}00295             Point? pp = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00296}00296             polygon = pfs;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00297}00297             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = r.X; x < r.Width + r.X; x++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00298}00298             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00299}00299                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aa1814fcf4590201c482aa96470e98ec7}{PointInPolygon}}(x, (\textcolor{keywordtype}{int})p.Y))}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00300}00300                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00301}00301                     pp = \textcolor{keyword}{new} Point(x, p.Y);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00302}00302                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00303}00303                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00304}00304             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00305}00305             filler.\mbox{\hyperlink{class_bio_1_1_graphics_1_1_abstract_flood_filler_aeece0fb11033d34c111f89cf3adaf365}{FloodFill}}(pp.Value);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00306}00306             \textcolor{comment}{//Now that we have a filled shape we draw it onto the original bitmap}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00307}00307             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < bf.SizeX; x++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00308}00308             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00309}00309                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < bf.SizeY; y++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00310}00310                 \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00311}00311                     \textcolor{keywordflow}{if}(bf.GetPixel(x,y) == pen.color)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00312}00312                     \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00313}00313                         buf.SetPixel(x, y, pen.color);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00314}00314                     \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00315}00315                 \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00316}00316             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00317}00317             bf.Dispose();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00318}00318         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00324}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_af77706b3dd2f809ff01f8ceadb26bd82}{00324}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_af77706b3dd2f809ff01f8ceadb26bd82}{FillPolygon}}(PointF[] pfs, RectangleF r)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00325}00325         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00326}00326             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8a7c9ded61070b46b9c80ebc1b50000a}{FillPolygon}}(pfs, \textcolor{keyword}{new} Rectangle((\textcolor{keywordtype}{int})r.X, (\textcolor{keywordtype}{int})r.Y, (\textcolor{keywordtype}{int})r.Width, (\textcolor{keywordtype}{int})r.Height));}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00327}00327         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00328}00328         \textcolor{comment}{/* Declaring a variable called polygon that is an array of PointF objects. */}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00329}00329         \textcolor{keyword}{private} \textcolor{keyword}{static} PointF[] polygon;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00336}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aa1814fcf4590201c482aa96470e98ec7}{00336}}         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_aa1814fcf4590201c482aa96470e98ec7}{PointInPolygon}}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00337}00337         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00338}00338             \textcolor{keywordtype}{int} j = polygon.Length -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00339}00339             \textcolor{keywordtype}{bool} c = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00340}00340             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < polygon.Length; j = i++) c \string^= polygon[i].Y > y \string^ polygon[j].Y > y \&\& x < (polygon[j].X -\/ polygon[i].X) * (y -\/ polygon[i].Y) / (polygon[j].Y -\/ polygon[i].Y) + polygon[i].X;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00341}00341             \textcolor{keywordflow}{return} c;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00342}00342         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00343}00343         }
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00350}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a450efd6201cc03f642c47c5e0bf8f3ba}{00350}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a450efd6201cc03f642c47c5e0bf8f3ba}{FillPolygon}}(PointF[] pfs, Rectangle r, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00351}00351         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00352}00352             pen.color = c;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00353}00353             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8a7c9ded61070b46b9c80ebc1b50000a}{FillPolygon}}(pfs, r);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00354}00354         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00361}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a162707f987726d48720cfc55415b87e1}{00361}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a162707f987726d48720cfc55415b87e1}{FillPolygon}}(PointF[] pfs, RectangleF r, ColorS c)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00362}00362         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00363}00363             pen.color = c;}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00364}00364             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a8a7c9ded61070b46b9c80ebc1b50000a}{FillPolygon}}(pfs, r);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00365}00365         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00372}00372         \textcolor{keyword}{private} \textcolor{keywordtype}{void} DrawPolygon(PointF[] pfs, Bitmap bf, ColorS s)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00373}00373         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00374}00374             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < pfs.Length -\/ 1; i++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00375}00375             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00376}00376                 \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}((\textcolor{keywordtype}{int})pfs[i].X, (\textcolor{keywordtype}{int})pfs[i].Y, (\textcolor{keywordtype}{int})pfs[i + 1].X, (\textcolor{keywordtype}{int})pfs[i + 1].Y, bf, s);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00377}00377             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00378}00378             \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_a127cfc1f7a4a73e903cd4961dfc72a77}{DrawLine}}((\textcolor{keywordtype}{int})pfs[0].X, (\textcolor{keywordtype}{int})pfs[0].Y, (\textcolor{keywordtype}{int})pfs[pfs.Length -\/ 1].X, (\textcolor{keywordtype}{int})pfs[pfs.Length -\/ 1].Y, bf, s);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00379}00379         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00388}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ad8b2e64da3bdbc89e111638584e8e676}{00388}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ad8b2e64da3bdbc89e111638584e8e676}{DrawScanline}}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} x2, \textcolor{keywordtype}{int} line, ColorS col)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00389}00389         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00390}00390             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} xx = x; xx < x2; xx++)}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00391}00391             \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00392}00392                 buf.SetPixel(xx, line, col);}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00393}00393             \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00394}00394         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00396}\mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ac48d89029de6e6dbf132b0c8813d1962}{00396}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_graphics_1_1_graphics_ac48d89029de6e6dbf132b0c8813d1962}{Dispose}}()}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00397}00397         \{}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00398}00398             pen.\mbox{\hyperlink{struct_bio_1_1_graphics_1_1_pen_a0a4360433f3c2698944cdcea6ad2e344}{Dispose}}();}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00399}00399         \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00400}00400     \}}
+\DoxyCodeLine{\Hypertarget{_graphics_8cs_source_l00401}00401 \}}
+
+\end{DoxyCode}

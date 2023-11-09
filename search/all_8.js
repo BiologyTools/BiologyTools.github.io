@@ -8,7 +8,7 @@ var searchData=
   ['imageview_5',['ImageView',['../class_bio_g_t_k_1_1_image_view.html',1,'BioGTK']]],
   ['importroiscsv_6',['ImportROIsCSV',['../class_bio_g_t_k_1_1_bio_image.html#a2c167c70371a5cd368211764c7276a09',1,'BioGTK::BioImage']]],
   ['importroisfromcsvmenuclick_7',['importROIsFromCSVMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#ac13694c7b38a99a893c751e086c6a28c',1,'BioGTK::TabsView']]],
-  ['init_8',['Init',['../class_bio_g_t_k_1_1_histogram_control.html#a217af93d12c85a1e8e05af3bce1bc147',1,'BioGTK.HistogramControl.Init()'],['../class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e',1,'BioGTK.SAMTool.Init()'],['../class_bio_g_t_k_1_1_tools_1_1_tool.html#adc15c578c0fa4f2f27337d5d93d7b722',1,'BioGTK.Tools.Tool.Init()']]],
+  ['init_8',['Init',['../class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e',1,'BioGTK.SAMTool.Init()'],['../class_bio_g_t_k_1_1_histogram_control.html#a217af93d12c85a1e8e05af3bce1bc147',1,'BioGTK.HistogramControl.Init()'],['../class_bio_g_t_k_1_1_tools_1_1_tool.html#adc15c578c0fa4f2f27337d5d93d7b722',1,'BioGTK.Tools.Tool.Init()']]],
   ['initialize_9',['Initialize',['../class_bio_g_t_k_1_1_bio_image.html#ac95d0172af950fa88b2fa78f6700bf43',1,'BioGTK::BioImage']]],
   ['initializecontextmenu_10',['InitializeContextMenu',['../class_bio_g_t_k_1_1_function.html#a066a0909ce10f4a303747e27a815027c',1,'BioGTK::Function']]],
   ['initializemainmenu_11',['InitializeMainMenu',['../class_bio_g_t_k_1_1_function.html#a264e1b546c4cf83abebe7f42426271d7',1,'BioGTK::Function']]],

@@ -1,0 +1,159 @@
+\hypertarget{_play_8cs_source}{}\doxysection{Play.\+cs}
+\label{_play_8cs_source}\index{BioGTK/Source/Play.cs@{BioGTK/Source/Play.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00001}00001 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00002}00002 \textcolor{keyword}{using }Gtk;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00003}00003 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00005}00005 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00010}00010 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_g_t_k}{BioGTK}}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00012}\mbox{\hyperlink{class_bio_g_t_k_1_1_play}{00012}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_g_t_k_1_1_play}{Play}} : Window}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00014}00014 \textcolor{preprocessor}{        \#region Properties}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00015}00015         \textcolor{keyword}{private} Builder \_builder;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00017}00017 \textcolor{preprocessor}{\#pragma warning disable 649}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00018}00018         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00019}00019         \textcolor{keyword}{private} SpinButton startZ;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00020}00020         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00021}00021         \textcolor{keyword}{private} SpinButton startC;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00022}00022         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00023}00023         \textcolor{keyword}{private} SpinButton startT;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00024}00024         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00025}00025         \textcolor{keyword}{private} SpinButton endZ;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00026}00026         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00027}00027         \textcolor{keyword}{private} SpinButton endC;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00028}00028         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00029}00029         \textcolor{keyword}{private} SpinButton endT;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00030}00030         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00031}00031         \textcolor{keyword}{private} SpinButton fpsZ;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00032}00032         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00033}00033         \textcolor{keyword}{private} SpinButton fpsC;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00034}00034         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00035}00035         \textcolor{keyword}{private} SpinButton fpsT;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00036}00036 \textcolor{preprocessor}{\#pragma warning restore 649}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00038}00038 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00040}00040 \textcolor{preprocessor}{        \#region Constructors / Destructors}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00045}\mbox{\hyperlink{class_bio_g_t_k_1_1_play_aa9f7735532d1be69c76693f32220c1bd}{00045}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_g_t_k_1_1_play}{Play}} \mbox{\hyperlink{class_bio_g_t_k_1_1_play_aa9f7735532d1be69c76693f32220c1bd}{Create}}()}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00046}00046         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00047}00047             Builder builder = \textcolor{keyword}{new} Builder(\textcolor{keyword}{new} FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + \textcolor{stringliteral}{"{}/"{}} + \textcolor{stringliteral}{"{}Glade/Play.glade"{}}, FileMode.Open));}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00048}00048             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_g_t_k_1_1_play}{Play}}(builder, builder.GetObject(\textcolor{stringliteral}{"{}play"{}}).Handle);}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00049}00049         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00050}00050         \textcolor{comment}{/* The constructor for the Play class. */}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00051}00051         \textcolor{keyword}{protected} \mbox{\hyperlink{class_bio_g_t_k_1_1_play}{Play}}(Builder builder, IntPtr handle) : base(handle)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00053}00053             \_builder = builder;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00054}00054             builder.Autoconnect(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00055}00055             \mbox{\hyperlink{class_bio_g_t_k_1_1_play_a74c75fc9fedd04083195f0c470431a19}{SetupHandlers}}();}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00056}00056             }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00057}00057             startZ.Adjustment.Upper = ImageView.SelectedImage.SizeZ -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00058}00058             startC.Adjustment.Upper = ImageView.SelectedImage.SizeC -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00059}00059             startT.Adjustment.Upper = ImageView.SelectedImage.SizeT -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00060}00060             endZ.Adjustment.Upper = ImageView.SelectedImage.SizeZ -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00061}00061             endC.Adjustment.Upper = ImageView.SelectedImage.SizeC -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00062}00062             endT.Adjustment.Upper = ImageView.SelectedImage.SizeT -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00063}00063             fpsZ.Adjustment.Upper = 60;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00064}00064             fpsC.Adjustment.Upper = 60;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00065}00065             fpsT.Adjustment.Upper = 60;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00066}00066             startZ.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00067}00067             startC.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00068}00068             startT.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00069}00069             endZ.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00070}00070             endC.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00071}00071             endT.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00072}00072             fpsZ.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00073}00073             fpsC.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00074}00074             fpsT.Adjustment.StepIncrement = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00075}00075             fpsZ.Value = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00076}00076             fpsC.Value = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00077}00077             fpsT.Value = 1;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00078}00078             startZ.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.startz;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00079}00079             startC.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.startc;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00080}00080             startT.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.startt;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00081}00081             endZ.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.endz;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00082}00082             endC.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.endc;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00083}00083             endT.Value = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.endt;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00084}00084         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00086}00086 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00088}00088 \textcolor{preprocessor}{        \#region Handlers}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00091}\mbox{\hyperlink{class_bio_g_t_k_1_1_play_a74c75fc9fedd04083195f0c470431a19}{00091}}         \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_g_t_k_1_1_play_a74c75fc9fedd04083195f0c470431a19}{SetupHandlers}}()}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00092}00092         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00093}00093             startZ.Changed += StartZ\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00094}00094             startC.Changed += StartC\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00095}00095             startT.Changed += StartT\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00096}00096             endZ.Changed += EndZ\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00097}00097             endC.Changed += EndC\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00098}00098             endT.Changed += EndT\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00099}00099             fpsZ.Changed += FpsZ\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00100}00100             fpsC.Changed += FpsC\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00101}00101             fpsT.Changed += FpsT\_Changed;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00102}00102             this.FocusActivated += Play\_FocusActivated;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00103}00103         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00105}00105         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Play\_FocusActivated(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00106}00106         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00110}00110         \textcolor{keyword}{private} \textcolor{keywordtype}{void} FpsT\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00111}00111         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00112}00112             ImageView.waitt = (int)(1000 / fpsT.Value);   }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00113}00113         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00115}00115         \textcolor{keyword}{private} \textcolor{keywordtype}{void} FpsC\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00116}00116         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00117}00117             ImageView.waitc = (int)(1000 / fpsC.Value);}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00118}00118         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00120}00120         \textcolor{keyword}{private} \textcolor{keywordtype}{void} FpsZ\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00121}00121         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00122}00122             ImageView.waitz = (int)(1000 / fpsZ.Value);}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00123}00123         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00125}00125         \textcolor{keyword}{private} \textcolor{keywordtype}{void} EndT\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00126}00126         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00127}00127             ImageView.endt = (int)endT.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00128}00128         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00130}00130         \textcolor{keyword}{private} \textcolor{keywordtype}{void} EndC\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00131}00131         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00132}00132             ImageView.endc = (int)endC.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00133}00133         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00135}00135         \textcolor{keyword}{private} \textcolor{keywordtype}{void} EndZ\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00136}00136         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00137}00137             ImageView.endz = (int)endZ.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00138}00138         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00140}00140         \textcolor{keyword}{private} \textcolor{keywordtype}{void} StartT\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00141}00141         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00142}00142             ImageView.startt = (int)startT.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00143}00143         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00145}00145         \textcolor{keyword}{private} \textcolor{keywordtype}{void} StartC\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00146}00146         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00147}00147             ImageView.startc = (int)startC.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00148}00148         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00150}00150         \textcolor{keyword}{private} \textcolor{keywordtype}{void} StartZ\_Changed(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00151}00151         \{}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00152}00152             ImageView.startz = (int)startZ.Value;}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00153}00153         \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00155}00155 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00157}00157     \}}
+\DoxyCodeLine{\Hypertarget{_play_8cs_source_l00158}00158 \}}
+
+\end{DoxyCode}

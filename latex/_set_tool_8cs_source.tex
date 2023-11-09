@@ -1,0 +1,123 @@
+\hypertarget{_set_tool_8cs_source}{}\doxysection{Set\+Tool.\+cs}
+\label{_set_tool_8cs_source}\index{BioGTK/Source/SetTool.cs@{BioGTK/Source/SetTool.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00001}00001 \textcolor{keyword}{using }Gtk;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00002}00002 \textcolor{keyword}{using }javax.swing.text;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00003}00003 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00004}00004 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_g_t_k}{BioGTK}}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00009}\mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool}{00009}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool}{SetTool}} : Window}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00011}00011 \textcolor{preprocessor}{        \#region Properties}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00013}00013         \textcolor{keyword}{private} Builder \_builder;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00014}00014         \textcolor{keywordtype}{int} line = 0;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00015}00015 \textcolor{preprocessor}{\#pragma warning disable 649}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00016}00016         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00017}00017         \textcolor{keyword}{private} TreeView tree;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00018}00018         [Builder.Object]}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00019}00019         \textcolor{keyword}{private} Menu contextMenu;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00020}00020 \textcolor{preprocessor}{\#pragma warning restore 649}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00022}00022 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00024}00024 \textcolor{preprocessor}{        \#region Constructors / Destructors}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00032}\mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a6992ef420b8564bd6e9c4d70f24e57c2}{00032}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool}{SetTool}} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a6992ef420b8564bd6e9c4d70f24e57c2}{Create}}()}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00034}00034             Builder builder = \textcolor{keyword}{new} Builder(\textcolor{keyword}{new} FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + \textcolor{stringliteral}{"{}/"{}} + \textcolor{stringliteral}{"{}Glade/SetTool.glade"{}}, FileMode.Open));}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00035}00035             \textcolor{keywordflow}{return} \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool}{SetTool}}(builder, builder.GetObject(\textcolor{stringliteral}{"{}setTool"{}}).Handle);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00036}00036         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00037}00037         \textcolor{comment}{/* The constructor of the class. */}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00038}00038         \textcolor{keyword}{protected} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool}{SetTool}}(Builder builder, IntPtr handle) : base(handle)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00040}00040             \_builder = builder;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00041}00041             builder.Autoconnect(\textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00042}00042             tree.RowActivated += TreeView\_RowActivated;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00043}00043             this.FocusActivated += SetTool\_FocusActivated;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00044}00044             this.DeleteEvent += SetTool\_DeleteEvent;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00045}00045             \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a654077c720bb8460e4c400da5d057f1b}{InitItems}}();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00046}00046         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00053}00053         \textcolor{keyword}{private} \textcolor{keywordtype}{void} SetTool\_DeleteEvent(\textcolor{keywordtype}{object} o, DeleteEventArgs args)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00055}00055             args.RetVal = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00056}00056             Hide();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00063}00063         \textcolor{keyword}{private} \textcolor{keywordtype}{void} SetTool\_FocusActivated(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00064}00064         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00065}00065             \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a1b915e016e4eeadb9a66a784e4e47b3a}{UpdateItems}}();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00066}00066         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00067}00067 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00070}\mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a654077c720bb8460e4c400da5d057f1b}{00070}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a654077c720bb8460e4c400da5d057f1b}{InitItems}}()}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00071}00071         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00072}00072             Gtk.TreeViewColumn coordCol = \textcolor{keyword}{new} Gtk.TreeViewColumn();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00073}00073             coordCol.Title = \textcolor{stringliteral}{"{}Tool"{}};}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00074}00074             Gtk.CellRendererText coordCell = \textcolor{keyword}{new} Gtk.CellRendererText();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00075}00075             coordCol.PackStart(coordCell, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00076}00076 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00077}00077             Gtk.TreeViewColumn expCol = \textcolor{keyword}{new} Gtk.TreeViewColumn();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00078}00078             expCol.Title = \textcolor{stringliteral}{"{}State"{}};}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00079}00079             Gtk.CellRendererText expCell = \textcolor{keyword}{new} Gtk.CellRendererText();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00080}00080             expCol.PackStart(expCell, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00082}00082             tree.AppendColumn(coordCol);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00083}00083             tree.AppendColumn(expCol);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00085}00085             coordCol.AddAttribute(coordCell, \textcolor{stringliteral}{"{}text"{}}, 0);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00086}00086             expCol.AddAttribute(expCell, \textcolor{stringliteral}{"{}text"{}}, 1);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00088}00088             \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a1b915e016e4eeadb9a66a784e4e47b3a}{UpdateItems}}();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00089}00089         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00091}\mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a1b915e016e4eeadb9a66a784e4e47b3a}{00091}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a1b915e016e4eeadb9a66a784e4e47b3a}{UpdateItems}}()}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00092}00092         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00093}00093             Gtk.TreeStore store = \textcolor{keyword}{new} Gtk.TreeStore(typeof(\textcolor{keywordtype}{string}), typeof(\textcolor{keywordtype}{string}), typeof(\textcolor{keywordtype}{string}));}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00095}00095             \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{class_bio_g_t_k_1_1_scripting}{Scripting}}.\mbox{\hyperlink{class_bio_g_t_k_1_1_scripting_1_1_script}{Script}} s in \mbox{\hyperlink{class_bio_g_t_k_1_1_scripting}{Scripting}}.scripts.Values)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00097}00097                 \textcolor{keywordflow}{if} (s.thread == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00098}00098                     store.AppendValues(s.name, ThreadState.Unstarted.ToString());}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00099}00099                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00100}00100                     store.AppendValues(s.name, s.thread.ThreadState.ToString());}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00101}00101             \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00102}00102             tree.Model = store;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00103}00103         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00113}00113         \textcolor{keyword}{private} \textcolor{keywordtype}{void} TreeView\_RowActivated(\textcolor{keywordtype}{object} o, RowActivatedArgs args)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00114}00114         \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00115}00115             TreeView treeView = (TreeView)o;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00116}00116             TreePath path = args.Path;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00117}00117             TreeIter iter;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00118}00118             \textcolor{keywordtype}{string} s;}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00119}00119             \textcolor{comment}{// Get the TreeIter for the selected row}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00120}00120             \textcolor{keywordflow}{if} (treeView.Model.GetIter(out iter, path))}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00121}00121             \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00122}00122                 \textcolor{comment}{// Get the value of the "{}Text"{} column for the selected row}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00123}00123                 s = (string)treeView.Model.GetValue(iter, 0);}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00124}00124             \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00125}00125             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00126}00126                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00127}00127             \textcolor{keywordflow}{if} (Scripting.scripts.ContainsKey(s))}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00128}00128             \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00129}00129                 Scripting.Script sc = Scripting.scripts[s];}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00130}00130                 \textcolor{keywordflow}{if} (sc.thread == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00131}00131                     sc.Run();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00132}00132                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00133}00133                 \textcolor{keywordflow}{if}(sc.thread.ThreadState == System.Threading.ThreadState.Running || sc.thread.ThreadState!= System.Threading.ThreadState.WaitSleepJoin)}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00134}00134                 \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00135}00135                     sc.Stop();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00136}00136                 \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00137}00137                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00138}00138                 \{}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00139}00139                     sc.Run();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00140}00140                 \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00141}00141             \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00142}00142             \mbox{\hyperlink{class_bio_g_t_k_1_1_set_tool_a1b915e016e4eeadb9a66a784e4e47b3a}{UpdateItems}}();}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00143}00143         \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00144}00144     \}}
+\DoxyCodeLine{\Hypertarget{_set_tool_8cs_source_l00145}00145 \}}
+
+\end{DoxyCode}

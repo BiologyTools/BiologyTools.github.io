@@ -10,7 +10,7 @@ var searchData=
   ['floodfill_7',['FloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#aeece0fb11033d34c111f89cf3adaf365',1,'Bio.Graphics.AbstractFloodFiller.FloodFill()'],['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html#a02cc51ca79a25f276eba1622c01a794b',1,'Bio.Graphics.QueueLinearFloodFiller.FloodFill()']]],
   ['foldertostack_8',['FolderToStack',['../class_bio_g_t_k_1_1_bio_image.html#a64fab899bd35462d7829813f1eeef848',1,'BioGTK::BioImage']]],
   ['fromcolor_9',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
-  ['fromimage_10',['FromImage',['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a2efa77ca2c5be81e081305563abdd9e8',1,'BioGTK.BioImage.ImageJDesc.FromImage()'],['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio.Graphics.Graphics.FromImage()']]],
+  ['fromimage_10',['FromImage',['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio.Graphics.Graphics.FromImage()'],['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a2efa77ca2c5be81e081305563abdd9e8',1,'BioGTK.BioImage.ImageJDesc.FromImage()']]],
   ['functions_11',['Functions',['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK::Functions']]],
   ['functionstoolmenuclick_12',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
 ];

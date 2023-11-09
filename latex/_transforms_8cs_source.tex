@@ -1,0 +1,135 @@
+\hypertarget{_transforms_8cs_source}{}\doxysection{Transforms.\+cs}
+\label{_transforms_8cs_source}\index{BioGTK/SAM/Transforms.cs@{BioGTK/SAM/Transforms.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00003}00003 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Windows;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00008}00008 \textcolor{keyword}{using }MathNet.Numerics.Statistics;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00009}00009 \textcolor{keyword}{using }Gdk;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00011}00011 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_g_t_k}{BioGTK}}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00014}\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms}{00014}}     \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms}{Transforms}}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00016}00016         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_g_t_k_1_1_transforms}{Transforms}}(\textcolor{keywordtype}{int} target\_length)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00018}00018             this.mTargetLength = target\_length;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00019}00019         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00029}\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_a4bb4b45823ceee7920ba7c0b87f47b89}{00029}}         \textcolor{keyword}{public} \textcolor{keywordtype}{float}[] \mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_a4bb4b45823ceee7920ba7c0b87f47b89}{ApplyImage}}(\mbox{\hyperlink{class_bio_g_t_k_1_1_bio_image}{BioImage}} b)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00031}00031             \textcolor{keywordtype}{int} neww = 0;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00032}00032             \textcolor{keywordtype}{int} newh = 0;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00033}00033             this.GetPreprocessShape(b.SizeX, b.SizeY, \textcolor{keyword}{this}.mTargetLength, ref neww, ref newh);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00035}00035             \textcolor{keywordtype}{float}[,,] resizeImg = this.Resize(neww,newh);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00037}00037             \textcolor{keywordtype}{float}[] means = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[resizeImg.GetLength(0)];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00038}00038             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < resizeImg.GetLength(0); i++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00040}00040                 \textcolor{keywordtype}{float}[] data = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[resizeImg.GetLength(1) * resizeImg.GetLength(2)];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00041}00041                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < resizeImg.GetLength(1); j++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00042}00042                 \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00043}00043                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < resizeImg.GetLength(2); k++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00044}00044                     \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00045}00045                         data[j * resizeImg.GetLength(2) + k] = resizeImg[i, j, k];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00046}00046                     \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00047}00047                 \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00048}00048                 means[i] = (float)MathNet.Numerics.Statistics.Statistics.Mean(data);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00051}00051             \textcolor{keywordtype}{float}[] stdDev = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[resizeImg.GetLength(0)];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00052}00052             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < resizeImg.GetLength(0); i++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00053}00053             \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00054}00054                 \textcolor{keywordtype}{float}[] data = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[resizeImg.GetLength(1) * resizeImg.GetLength(2)];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00055}00055                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < resizeImg.GetLength(1); j++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00056}00056                 \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00057}00057                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} k = 0; k < resizeImg.GetLength(2); k++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00058}00058                     \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00059}00059                         data[j * resizeImg.GetLength(2) + k] = resizeImg[i, j, k];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00060}00060                     \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00061}00061                 \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00062}00062                 stdDev[i] = (float)MathNet.Numerics.Statistics.Statistics.StandardDeviation(data);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00063}00063             \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00066}00066             \textcolor{keywordtype}{float}[] transformedImg = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[3 * this.mTargetLength * this.mTargetLength];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00067}00067             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < neww; i++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00068}00068             \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00069}00069                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < newh; j++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00070}00070                 \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00071}00071                     \textcolor{keywordtype}{int} index = j * this.mTargetLength + i;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00072}00072                     transformedImg[index] = (resizeImg[0, i, j] -\/ means[0]) / stdDev[0];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00073}00073                     transformedImg[this.mTargetLength * this.mTargetLength + index] = (resizeImg[1, i, j] -\/ means[1]) / stdDev[1];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00074}00074                     transformedImg[2 * this.mTargetLength * this.mTargetLength + index] = (resizeImg[2, i, j] -\/ means[2]) / stdDev[2];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00075}00075                 \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00076}00076             \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00078}00078             \textcolor{keywordflow}{return} transformedImg;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00079}00079         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00088}00088         \textcolor{keywordtype}{float}[,,] Resize(\textcolor{keywordtype}{int} w,\textcolor{keywordtype}{int} h)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00089}00089         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00090}00090             Bitmap originalImage = \mbox{\hyperlink{class_bio_g_t_k_1_1_image_view}{ImageView}}.SelectedBuffer;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00091}00091             AForge.Imaging.Filters.ResizeBilinear res = \textcolor{keyword}{new} AForge.Imaging.Filters.ResizeBilinear(w, h);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00092}00092             Bitmap resizedImage = res.Apply(originalImage.ImageRGB);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00093}00093             \textcolor{comment}{//resizedImage.Save("{}resized.jpg"{}, System.Drawing.Imaging.ImageFormat.Jpeg);}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00094}00094             \textcolor{keywordtype}{float}[,,] newimg = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[3, w, h];}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00095}00095             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < w; i++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00097}00097                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < h; j++)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00098}00098                 \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00099}00099                     newimg[0, i, j] = resizedImage.GetPixel(i, j).R;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00100}00100                     newimg[1, i, j] = resizedImage.GetPixel(i, j).G;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00101}00101                     newimg[2, i, j] = resizedImage.GetPixel(i, j).B;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00102}00102                 \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00103}00103             \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00104}00104             \textcolor{comment}{//originalImage.Dispose();}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00105}00105             resizedImage.Dispose();}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00106}00106             \textcolor{keywordflow}{return} newimg;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00107}00107         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00120}\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_acd57eaf49fba2e59edc30669fd074b97}{00120}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}} \mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_acd57eaf49fba2e59edc30669fd074b97}{ApplyCoords}}(\mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}} org\_point, \textcolor{keywordtype}{int} orgw, \textcolor{keywordtype}{int} orgh)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00121}00121         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00122}00122             \textcolor{keywordtype}{int} neww = 0;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00123}00123             \textcolor{keywordtype}{int} newh = 0;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00124}00124             this.GetPreprocessShape(orgw, orgh, this.mTargetLength, ref neww, ref newh);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00125}00125             \mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}} newpointp = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}}(org\_point.m\_Optype);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00126}00126             \textcolor{keywordtype}{float} scalx = (float)neww / (\textcolor{keywordtype}{float})orgw;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00127}00127             \textcolor{keywordtype}{float} scaly = (float)newh / (\textcolor{keywordtype}{float})orgh;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00128}00128             newpointp.X = (int)(org\_point.X * scalx);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00129}00129             newpointp.Y = (int)(org\_point.Y * scaly);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00131}00131             \textcolor{keywordflow}{return} newpointp;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00132}00132         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00142}\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_abe9e077e5c48bcf3e2c54ec2df44c3ff}{00142}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}} \mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_abe9e077e5c48bcf3e2c54ec2df44c3ff}{ApplyBox}}(\mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}} org\_box, \textcolor{keywordtype}{int} orgw, \textcolor{keywordtype}{int} orgh)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00143}00143         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00144}00144             \mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}} box = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}}();}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00145}00145 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00146}00146             \mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}} left = this.\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_acd57eaf49fba2e59edc30669fd074b97}{ApplyCoords}}((org\_box as \mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}}).mLeftUp, orgw, orgh);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00147}00147             \mbox{\hyperlink{class_bio_g_t_k_1_1_point_promotion}{PointPromotion}} lefrightt = this.\mbox{\hyperlink{class_bio_g_t_k_1_1_transforms_acd57eaf49fba2e59edc30669fd074b97}{ApplyCoords}}((org\_box as \mbox{\hyperlink{class_bio_g_t_k_1_1_box_promotion}{BoxPromotion}}).mRightBottom, orgw, orgh);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00149}00149             box.mLeftUp = left;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00150}00150             box.mRightBottom = lefrightt;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00151}00151             \textcolor{keywordflow}{return} box;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00152}00152         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00162}00162         \textcolor{keywordtype}{void} GetPreprocessShape(\textcolor{keywordtype}{int} oldw, \textcolor{keywordtype}{int} oldh, \textcolor{keywordtype}{int} long\_side\_length, ref \textcolor{keywordtype}{int} neww, ref \textcolor{keywordtype}{int} newh)}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00163}00163         \{}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00164}00164             \textcolor{keywordtype}{float} scale = long\_side\_length * 1.0f / Math.Max(oldh, oldw);}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00165}00165             \textcolor{keywordtype}{float} newht = oldh * scale;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00166}00166             \textcolor{keywordtype}{float} newwt = oldw * scale;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00168}00168             neww = (int)(newwt);\textcolor{comment}{//+0.5}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00169}00169             newh = (int)(newht);\textcolor{comment}{//+0.5}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00170}00170         \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00171}00171         \textcolor{keywordtype}{int} mTargetLength;}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00172}00172     \}}
+\DoxyCodeLine{\Hypertarget{_transforms_8cs_source_l00173}00173 \}}
+
+\end{DoxyCode}

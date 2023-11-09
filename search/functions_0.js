@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['aboutclick_0',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
-  ['aboutclick_1',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_0',['AboutClick',['../class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc',1,'BioGTK::TabsView']]],
+  ['aboutclick_1',['aboutClick',['../class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501',1,'BioGTK::NodeView']]],
   ['addasync_2',['AddAsync',['../class_bio_g_t_k_1_1_bio_image.html#a590a3aac268f0cdf157289fa0c5f1712',1,'BioGTK.BioImage.AddAsync(string file)'],['../class_bio_g_t_k_1_1_bio_image.html#a8b5396d66f6c21766cddd7bf35d4fa0a',1,'BioGTK.BioImage.AddAsync(string[] files)']]],
   ['addimage_3',['AddImage',['../class_bio_g_t_k_1_1_image_view.html#ac61e01070d800481fa807cbfb32fe3c8',1,'BioGTK::ImageView']]],
   ['addimagestotabmenuclick_4',['addImagesToTabMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#acda5763eff30784fa495c584892aaf12',1,'BioGTK::TabsView']]],
