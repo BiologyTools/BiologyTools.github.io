@@ -1,0 +1,268 @@
+\hypertarget{_queue_linear_flood_filler_8cs_source}{}\doxysection{Queue\+Linear\+Flood\+Filler.\+cs}
+\label{_queue_linear_flood_filler_8cs_source}\index{F:/repos/BioImager/BioImager/Graphics/QueueLinearFloodFiller.cs@{F:/repos/BioImager/BioImager/Graphics/QueueLinearFloodFiller.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00001}00001 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00002}00002 \textcolor{keyword}{using }PixelFormat = AForge.PixelFormat;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00008}\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler}{00008}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler}{QueueLinearFloodFiller}} : \mbox{\hyperlink{class_bio_1_1_abstract_flood_filler}{AbstractFloodFiller}}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00011}00011         \textcolor{comment}{//Queue of floodfill ranges. We use our own class to increase performance.}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00012}00012         \textcolor{comment}{//To use .NET Queue class, change this to:}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00013}00013         \textcolor{comment}{//<FloodFillRange> ranges = new Queue<FloodFillRange>();}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00014}00014         \mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue}{FloodFillRangeQueue}} ranges = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue}{FloodFillRangeQueue}}();}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00015}00015 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00016}00016         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler}{QueueLinearFloodFiller}}(\mbox{\hyperlink{class_bio_1_1_abstract_flood_filler}{AbstractFloodFiller}} configSource) : base(configSource) \{ \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00017}00017 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00022}\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_ad1bdab4ea820f0539cd8212a22b6d6b9}{00022}}         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_ad1bdab4ea820f0539cd8212a22b6d6b9}{FloodFill}}(AForge.Point pt)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00024}00024             watch.Reset();}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00025}00025             watch.Start();}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00027}00027             \textcolor{comment}{//***Prepare for fill.}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00028}00028             PrepareForFloodFill(pt);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00030}00030             ranges = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue}{FloodFillRangeQueue}}(((bitmapWidth + bitmapHeight) / 2) * 5);\textcolor{comment}{//new Queue<FloodFillRange>();}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00032}00032             \textcolor{comment}{//***Get starting color.}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00033}00033             \textcolor{keywordtype}{int} x = (int)pt.X; \textcolor{keywordtype}{int} y = (\textcolor{keywordtype}{int})pt.Y;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00034}00034             \textcolor{keywordtype}{int} idx = CoordsToByteIndex(ref x, ref y);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00035}00035             startColor = bitmap.GetPixel((\textcolor{keywordtype}{int})pt.X,(\textcolor{keywordtype}{int})pt.Y);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00037}00037             \textcolor{keywordtype}{bool}[] pixelsChecked = this.pixelsChecked;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00039}00039             \textcolor{comment}{//***Do first call to floodfill.}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00040}00040             LinearFill(ref x, ref y);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00042}00042             \textcolor{comment}{//***Call floodfill routine while floodfill ranges still exist on the queue}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00043}00043             \textcolor{keywordflow}{while} (ranges.\mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue_a005c26cfb8ba8b34a9c168f74e8f0abc}{Count}} > 0)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00044}00044             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00045}00045                 \textcolor{comment}{//**Get Next Range Off the Queue}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00046}00046                 \mbox{\hyperlink{struct_bio_1_1_flood_fill_range}{FloodFillRange}} range = ranges.\mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue_a07654a84e999d46d5139e08fc6f632e0}{Dequeue}}();}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00048}00048                 \textcolor{comment}{//**Check Above and Below Each Pixel in the Floodfill Range}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00049}00049                 \textcolor{keywordtype}{int} downPxIdx = (bitmapWidth * (range.Y + 1)) + range.StartX;\textcolor{comment}{//CoordsToPixelIndex(lFillLoc,y+1);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00050}00050                 \textcolor{keywordtype}{int} upPxIdx = (bitmapWidth * (range.Y -\/ 1)) + range.StartX;\textcolor{comment}{//CoordsToPixelIndex(lFillLoc, y -\/ 1);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00051}00051                 \textcolor{keywordtype}{int} upY = range.Y -\/ 1;\textcolor{comment}{//so we can pass the y coord by ref}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00052}00052                 \textcolor{keywordtype}{int} downY = range.Y + 1;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00053}00053                 \textcolor{keywordtype}{int} tempIdx;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00054}00054                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = range.StartX; i <= range.EndX; i++)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00055}00055                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00056}00056                     \textcolor{comment}{//*Start Fill Upwards}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00057}00057                     \textcolor{comment}{//if we're not above the top of the bitmap and the pixel above this one is within the color tolerance}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00058}00058                     tempIdx = CoordsToByteIndex(ref i, ref upY);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00059}00059                     \textcolor{keywordflow}{if} (range.Y > 0 \&\& (!pixelsChecked[upPxIdx]) \&\& \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{CheckPixel}}(ref tempIdx))}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00060}00060                         LinearFill(ref i, ref upY);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00062}00062                     \textcolor{comment}{//*Start Fill Downwards}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00063}00063                     \textcolor{comment}{//if we're not below the bottom of the bitmap and the pixel below this one is within the color tolerance}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00064}00064                     tempIdx = CoordsToByteIndex(ref i, ref downY);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00065}00065                     \textcolor{keywordflow}{if} (range.Y < (bitmapHeight -\/ 1) \&\& (!pixelsChecked[downPxIdx]) \&\& \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{CheckPixel}}(ref tempIdx))}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00066}00066                         LinearFill(ref i, ref downY);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00067}00067                     downPxIdx++;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00068}00068                     upPxIdx++;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00069}00069                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00071}00071             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00073}00073             watch.Stop();}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00084}00084         \textcolor{keywordtype}{void} LinearFill(ref \textcolor{keywordtype}{int} x, ref \textcolor{keywordtype}{int} y)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00085}00085         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00087}00087             \textcolor{comment}{//cache some bitmap and fill info in local variables for a little extra speed}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00089}00089             \textcolor{keywordtype}{byte}[] bitmapBits = this.bitmapBits;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00090}00090             \textcolor{keywordtype}{bool}[] pixelsChecked = this.pixelsChecked;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00091}00091             \textcolor{keywordtype}{byte}[] byteFillColor = this.byteFillColor.GetBytes(pixelFormat);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00092}00092             \textcolor{keywordtype}{int} bitmapPixelFormatSize = this.bitmapPixelFormatSize;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00093}00093             \textcolor{keywordtype}{int} bitmapWidth = this.bitmapWidth;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00094}00094             \textcolor{keywordtype}{byte}[] bt = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[6];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00095}00095             \textcolor{comment}{//***Find Left Edge of Color Area}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00096}00096             \textcolor{keywordtype}{int} lFillLoc = x; \textcolor{comment}{//the location to check/fill on the left}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00097}00097             \textcolor{keywordtype}{int} idx = CoordsToByteIndex(ref x, ref y); \textcolor{comment}{//the byte index of the current location}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00098}00098             \textcolor{keywordtype}{int} pxIdx = (bitmapWidth * y) + x;\textcolor{comment}{//CoordsToPixelIndex(x,y);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00099}00099             \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00100}00100             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00101}00101                 \textcolor{comment}{//**fill with the color}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00102}00102                 \textcolor{comment}{//bitmap.SetColor(x, y, this.byteFillColor);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00103}00103                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format8bppIndexed)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00104}00104                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00105}00105                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00106}00106                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00107}00107                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00108}00108                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format24bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00109}00109                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00110}00110                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00111}00111                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00112}00112                     bitmapBits[idx + 2] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00113}00113                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00114}00114                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format32bppArgb || pixelFormat == PixelFormat.Format32bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00115}00115                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00116}00116                     bitmapBits[idx + 1] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00117}00117                     bitmapBits[idx + 2] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00118}00118                     bitmapBits[idx + 3] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00119}00119                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00120}00120                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format16bppGrayScale)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00121}00121                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00122}00122                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00123}00123                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00124}00124                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00125}00125                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format48bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00126}00126                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00127}00127                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00128}00128                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00129}00129                     bitmapBits[idx + 2] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00130}00130                     bitmapBits[idx + 3] = byteFillColor[3];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00131}00131                     bitmapBits[idx + 4] = byteFillColor[4];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00132}00132                     bitmapBits[idx + 5] = byteFillColor[5];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00133}00133                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00134}00134                 \textcolor{comment}{//**indicate that this pixel has already been checked and filled}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00135}00135                 pixelsChecked[pxIdx] = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00136}00136                 \textcolor{comment}{//**de-\/increment}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00137}00137                 lFillLoc-\/-\/;     \textcolor{comment}{//de-\/increment counter}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00138}00138                 pxIdx-\/-\/;        \textcolor{comment}{//de-\/increment pixel index}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00139}00139                 idx -\/= bitmapPixelFormatSize;\textcolor{comment}{//de-\/increment byte index}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00140}00140                 \textcolor{comment}{//**exit loop if we're at edge of bitmap or color area}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00141}00141                 \textcolor{keywordflow}{if} (lFillLoc <= 0 || (pixelsChecked[pxIdx]) || !\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{CheckPixel}}(ref idx))}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00142}00142                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00144}00144             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00145}00145             lFillLoc++;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00147}00147             \textcolor{comment}{//***Find Right Edge of Color Area}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00148}00148             \textcolor{keywordtype}{int} rFillLoc = x; \textcolor{comment}{//the location to check/fill on the left}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00149}00149             idx = CoordsToByteIndex(ref x, ref y);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00150}00150             pxIdx = (bitmapWidth * y) + x;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00151}00151             \textcolor{keywordflow}{while} (\textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00152}00152             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00153}00153                 \textcolor{comment}{//**fill with the color}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00154}00154                 \textcolor{comment}{//bitmap.SetColor(x, y, this.byteFillColor);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00155}00155                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format8bppIndexed)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00156}00156                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00157}00157                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00158}00158                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00159}00159                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00160}00160                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format24bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00161}00161                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00162}00162                     bitmapBits[idx] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00163}00163                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00164}00164                     bitmapBits[idx + 2] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00165}00165                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00166}00166                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00167}00167                 \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format32bppArgb || pixelFormat == PixelFormat.Format32bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00168}00168                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00169}00169                     bitmapBits[idx + 1] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00170}00170                     bitmapBits[idx + 2] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00171}00171                     bitmapBits[idx + 3] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00172}00172                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00173}00173                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format16bppGrayScale)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00174}00174                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00175}00175                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00176}00176                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00177}00177                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00178}00178                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (pixelFormat == PixelFormat.Format48bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00179}00179                 \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00180}00180                     bitmapBits[idx] = byteFillColor[0];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00181}00181                     bitmapBits[idx + 1] = byteFillColor[1];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00182}00182                     bitmapBits[idx + 2] = byteFillColor[2];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00183}00183                     bitmapBits[idx + 3] = byteFillColor[3];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00184}00184                     bitmapBits[idx + 4] = byteFillColor[4];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00185}00185                     bitmapBits[idx + 5] = byteFillColor[5];}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00186}00186                 \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00187}00187                 \textcolor{comment}{//**indicate that this pixel has already been checked and filled}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00188}00188                 pixelsChecked[pxIdx] = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00189}00189                 \textcolor{comment}{//**increment}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00190}00190                 rFillLoc++;     \textcolor{comment}{//increment counter}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00191}00191                 pxIdx++;        \textcolor{comment}{//increment pixel index}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00192}00192                 idx += bitmapPixelFormatSize;\textcolor{comment}{//increment byte index}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00193}00193                 \textcolor{comment}{//**exit loop if we're at edge of bitmap or color area}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00194}00194                 \textcolor{keywordflow}{if} (rFillLoc >= bitmapWidth || pixelsChecked[pxIdx] || !\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{CheckPixel}}(ref idx))}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00195}00195                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00197}00197             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00198}00198             rFillLoc-\/-\/;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00199}00199 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00200}00200             \textcolor{comment}{//add range to queue}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00201}00201             FloodFillRange r = \textcolor{keyword}{new} FloodFillRange(lFillLoc, rFillLoc, y);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00202}00202             ranges.\mbox{\hyperlink{class_bio_1_1_flood_fill_range_queue_a7cc80688efdc46a943854aeeed0d0736}{Enqueue}}(ref r);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00203}00203         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00207}\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{00207}}         \textcolor{keyword}{protected} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a96964e93377e2675035aeee959040f77}{CheckPixel}}(ref \textcolor{keywordtype}{int} px)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00208}00208         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00209}00209             \textcolor{comment}{//tried a 'for' loop but it adds an 8\% overhead to the floodfill process}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00210}00210             \textcolor{comment}{/*bool ret = true;}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00211}00211 \textcolor{comment}{            for (byte i = 0; i < 3; i++)}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00212}00212 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00213}00213 \textcolor{comment}{                ret \&= (bitmap.Bits[px] >= (startColor[i] -\/ tolerance[i])) \&\& bitmap.Bits[px] <= (startColor[i] + tolerance[i]);}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00214}00214 \textcolor{comment}{                px++;}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00215}00215 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00216}00216 \textcolor{comment}{            return ret;*/}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00217}00217             \textcolor{keywordflow}{if} (bitmap.PixelFormat == PixelFormat.Format8bppIndexed)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00218}00218             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00219}00219                 \textcolor{keywordflow}{return} (bitmapBits[px] >= (startColor.R -\/ tolerance.R)) \&\& bitmapBits[px] <= (startColor.R + tolerance.R);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00220}00220             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00221}00221             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00222}00222             \textcolor{keywordflow}{if} (bitmap.PixelFormat == PixelFormat.Format24bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00223}00223             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00224}00224                 \textcolor{keywordflow}{return} (bitmapBits[px] >= (startColor.R -\/ tolerance.R)) \&\& bitmapBits[px] <= (startColor.R + tolerance.R) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00225}00225                     (bitmapBits[px + 1] >= (startColor.G -\/ tolerance.G)) \&\& bitmapBits[px + 1] <= (startColor.G + tolerance.G) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00226}00226                     (bitmapBits[px + 2] >= (startColor.B -\/ tolerance.B)) \&\& bitmapBits[px + 2] <= (startColor.B + tolerance.B);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00227}00227             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00228}00228             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00229}00229             \textcolor{keywordflow}{if} (bitmap.PixelFormat == PixelFormat.Format32bppArgb || bitmap.PixelFormat == PixelFormat.Format32bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00230}00230             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00231}00231                 \textcolor{keywordflow}{return} (bitmapBits[px + 3] >= (startColor.R -\/ tolerance.R)) \&\& bitmapBits[px + 3] <= (startColor.R + tolerance.R) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00232}00232                     (bitmapBits[px + 2] >= (startColor.G -\/ tolerance.G)) \&\& bitmapBits[px + 2] <= (startColor.G + tolerance.G) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00233}00233                     (bitmapBits[px + 1] >= (startColor.B -\/ tolerance.B)) \&\& bitmapBits[px + 1] <= (startColor.B + tolerance.B);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00234}00234             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00235}00235             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00236}00236             \textcolor{keywordflow}{if} (bitmap.PixelFormat == PixelFormat.Format16bppGrayScale)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00237}00237             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00238}00238                 ushort r = BitConverter.ToUInt16(bitmapBits, px);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00239}00239                 \textcolor{keywordflow}{return} (r >= (startColor.R -\/ tolerance.R)) \&\& r <= (startColor.R + tolerance.R);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00240}00240             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00241}00241             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00242}00242             \textcolor{keywordflow}{if} (bitmap.PixelFormat == PixelFormat.Format48bppRgb)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00243}00243             \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00244}00244                 ushort r = BitConverter.ToUInt16(bitmapBits, px);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00245}00245                 ushort g = BitConverter.ToUInt16(bitmapBits, px + 2);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00246}00246                 ushort b = BitConverter.ToUInt16(bitmapBits, px + 4);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00247}00247                 \textcolor{keywordflow}{return} (r >= (startColor.R -\/ tolerance.R)) \&\& r <= (startColor.R + tolerance.R) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00248}00248                     (g >= (startColor.G -\/ tolerance.G)) \&\& g <= (startColor.G + tolerance.G) \&\&}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00249}00249                     (b >= (startColor.B -\/ tolerance.B)) \&\& b <= (startColor.B + tolerance.B);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00250}00250             \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00251}00251             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(bitmap.PixelFormat + \textcolor{stringliteral}{"{} not supported"{}});}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00252}00252         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00253}00253 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00257}00257         \textcolor{keyword}{protected} \textcolor{keywordtype}{int} CoordsToByteIndex(ref \textcolor{keywordtype}{int} x, ref \textcolor{keywordtype}{int} y)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00258}00258         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00259}00259             \textcolor{keywordflow}{return} (bitmapStride * y) + (x * bitmapPixelFormatSize);}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00260}00260         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00261}00261 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00268}\mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a3b88207d09a784a4a4e6263a6a60acc5}{00268}}         \textcolor{keyword}{protected} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_bio_1_1_queue_linear_flood_filler_a3b88207d09a784a4a4e6263a6a60acc5}{CoordsToPixelIndex}}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00269}00269         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00270}00270             \textcolor{keywordflow}{return} (bitmapWidth * y) + x;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00271}00271         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00273}00273     \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00274}00274 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00278}\mbox{\hyperlink{struct_bio_1_1_flood_fill_range}{00278}}     \textcolor{keyword}{public} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_bio_1_1_flood_fill_range}{FloodFillRange}}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00279}00279     \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00280}00280         \textcolor{keyword}{public} \textcolor{keywordtype}{int} StartX;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00281}00281         \textcolor{keyword}{public} \textcolor{keywordtype}{int} EndX;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00282}00282         \textcolor{keyword}{public} \textcolor{keywordtype}{int} Y;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00283}00283 }
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00284}00284         \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_flood_fill_range}{FloodFillRange}}(\textcolor{keywordtype}{int} startX, \textcolor{keywordtype}{int} endX, \textcolor{keywordtype}{int} y)}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00285}00285         \{}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00286}00286             StartX = startX;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00287}00287             EndX = endX;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00288}00288             Y = y;}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00289}00289         \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00290}00290     \}}
+\DoxyCodeLine{\Hypertarget{_queue_linear_flood_filler_8cs_source_l00291}00291 \}}
+
+\end{DoxyCode}

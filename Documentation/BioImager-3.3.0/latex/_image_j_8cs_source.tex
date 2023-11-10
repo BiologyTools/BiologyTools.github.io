@@ -1,0 +1,1450 @@
+\hypertarget{_image_j_8cs_source}{}\doxysection{Image\+J.\+cs}
+\label{_image_j_8cs_source}\index{F:/repos/BioImager/BioImager/Source/ImageJ.cs@{F:/repos/BioImager/BioImager/Source/ImageJ.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00007}00007 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00008}00008 \textcolor{keyword}{using }CSScripting;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00009}00009 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00010}00010 \textcolor{keyword}{using }Color = AForge.Color;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00011}00011 \textcolor{keyword}{using }Rectangle = AForge.Rectangle;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00012}00012 \textcolor{keyword}{using }PointF = AForge.PointF;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00013}00013 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00014}00014 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00015}00015 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00016}\mbox{\hyperlink{class_bio_1_1_image_j}{00016}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_image_j}{ImageJ}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00017}00017     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00018}00018         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} ImageJPath;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00019}00019         \textcolor{keyword}{public} \textcolor{keyword}{static} List<Process> processes = \textcolor{keyword}{new} List<Process>();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00020}00020         \textcolor{keyword}{private} \textcolor{keyword}{static} Random rng = \textcolor{keyword}{new} Random();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00027}\mbox{\hyperlink{class_bio_1_1_image_j_ad0d789c555176726443e90edf6bb23b0}{00027}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_ad0d789c555176726443e90edf6bb23b0}{RunMacro}}(\textcolor{keywordtype}{string} file, \textcolor{keywordtype}{string} param)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00028}00028         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00029}00029             \textcolor{keywordflow}{if}(ImageJPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00031}00031                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_1_1_app}{App}}.\mbox{\hyperlink{class_bio_1_1_app_a36756cd2d95f9687104d3d6f9fd4dd9f}{SetImageJPath}}())}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00032}00032                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00033}00033             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00034}00034             file.Replace(\textcolor{stringliteral}{"{}/"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00035}00035             Process pr = \textcolor{keyword}{new} Process();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00036}00036             pr.StartInfo.FileName = ImageJPath;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00037}00037             pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/macro "{}} + file + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00039}00039             pr.Start();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00040}00040             processes.Add(pr);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00041}00041             \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}ImageJ.RunMacro("{}} + file + \textcolor{stringliteral}{"{},"{}} + \textcolor{charliteral}{'"{}'} + param + \textcolor{charliteral}{'"{}'} + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00042}00042         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00050}\mbox{\hyperlink{class_bio_1_1_image_j_a09a880f97947d6402d9a6b8018c6eb72}{00050}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_a09a880f97947d6402d9a6b8018c6eb72}{RunString}}(\textcolor{keywordtype}{string} con, \textcolor{keywordtype}{string} param, \textcolor{keywordtype}{bool} headless)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00051}00051         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00053}00053             \textcolor{keywordflow}{if} (ImageJPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00055}00055                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_1_1_app}{App}}.\mbox{\hyperlink{class_bio_1_1_app_a36756cd2d95f9687104d3d6f9fd4dd9f}{SetImageJPath}}())}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00056}00056                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00058}00058             Process pr = \textcolor{keyword}{new} Process();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00059}00059             pr.StartInfo.FileName = ImageJPath;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00060}00060             pr.StartInfo.CreateNoWindow = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00061}00061             \textcolor{keywordtype}{string} te = rng.Next(0, 9999999).ToString();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00062}00062             \textcolor{keywordtype}{string} p = Environment.CurrentDirectory + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}} + te + \textcolor{stringliteral}{"{}.txt"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00063}00063             p.Replace(\textcolor{stringliteral}{"{}/"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00064}00064             File.WriteAllText(p,con);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00065}00065             \textcolor{keywordflow}{if}(headless)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00066}00066                 pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/-\/headless -\/macro "{}} + p + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00067}00067             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00068}00068                 pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/macro "{}} + p + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00069}00069             pr.Start();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00070}00070             File.Delete(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00071}00071             processes.Add(pr);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00072}00072             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00073}00073             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00074}00074                 \textcolor{keywordflow}{if} (File.Exists(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}}))}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00075}00075                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00076}00076                     \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00077}00077                     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00078}00078                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00079}00079                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00080}00080                             File.Delete(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00081}00081                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00082}00082                         \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00083}00083                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00084}00084                         }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00085}00085                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00086}00086                     \} \textcolor{keywordflow}{while} (File.Exists(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}}));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00087}00087                     pr.Kill();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00088}00088                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00089}00089                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00090}00090             \} \textcolor{keywordflow}{while} (!pr.HasExited);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00091}00091             File.Delete(p);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00092}00092         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00104}\mbox{\hyperlink{class_bio_1_1_image_j_abbf8ee6c4c2f2e5a917a04d091fcdcdd}{00104}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_abbf8ee6c4c2f2e5a917a04d091fcdcdd}{RunOnImage}}(\textcolor{keywordtype}{string} con, \textcolor{keywordtype}{bool} headless, \textcolor{keywordtype}{bool} onTab, \textcolor{keywordtype}{bool} bioformats)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00105}00105         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00106}00106             \textcolor{keywordflow}{if} (ImageJPath == \textcolor{stringliteral}{"{}"{}} || ImageJPath == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00107}00107             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00108}00108                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_1_1_app}{App}}.\mbox{\hyperlink{class_bio_1_1_app_a36756cd2d95f9687104d3d6f9fd4dd9f}{SetImageJPath}}())}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00109}00109                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00110}00110             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00111}00111             \textcolor{keywordtype}{string} filename = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00112}00112             \textcolor{keywordtype}{string} dir = Path.GetDirectoryName(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.file);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00114}00114             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID.EndsWith(\textcolor{stringliteral}{"{}.ome.tif"{}}))}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00115}00115             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00116}00116                 filename = Path.GetFileNameWithoutExtension(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00117}00117                 filename = filename.Remove(filename.Length -\/ 4, 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00118}00118             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00119}00119             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00120}00120                 filename = Path.GetFileNameWithoutExtension(\mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.ID);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00121}00121             \textcolor{keywordtype}{string} file = dir + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}} + filename + \textcolor{stringliteral}{"{}-\/temp"{}} + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00122}00122             file = file.Replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00123}00123             \textcolor{keywordtype}{string} st =}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00124}00124             \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Importer\(\backslash\)"{}, \(\backslash\)"{}open=\(\backslash\)"{} + getArgument + \(\backslash\)"{} autoscale color\_mode=Default open\_all\_series display\_rois rois\_import=[ROI manager] view=Hyperstack stack\_order=XYCZT\(\backslash\)"{}); "{}} + con +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00125}00125             \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{}} + file + \textcolor{stringliteral}{"{} export compression=Uncompressed\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00126}00126             \textcolor{stringliteral}{"{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00127}00127             \textcolor{stringliteral}{"{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00128}00128             \textcolor{keywordflow}{if}(bioformats)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00129}00129                 st =}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00130}00130                 \textcolor{stringliteral}{"{}open(getArgument); "{}} + con +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00131}00131                 \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{}} + file + \textcolor{stringliteral}{"{} export compression=Uncompressed\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00132}00132                 \textcolor{stringliteral}{"{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00133}00133                 \textcolor{stringliteral}{"{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00134}00134             \textcolor{comment}{//We save the image as a temp image as otherwise imagej won't export due to file access error.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00135}00135             \mbox{\hyperlink{class_bio_1_1_image_j_a09a880f97947d6402d9a6b8018c6eb72}{RunString}}(st, \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.file, headless);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00137}00137             \textcolor{keywordflow}{if} (!File.Exists(file))}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00138}00138                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00140}00140             \textcolor{keywordtype}{string} ffile = dir + \textcolor{stringliteral}{"{}/"{}} + filename + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00141}00141             File.Delete(ffile);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00142}00142             File.Copy(file, ffile);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00143}00143             File.Delete(file);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00144}00144             \mbox{\hyperlink{class_bio_1_1_app}{App}}.tabsView.\mbox{\hyperlink{class_bio_1_1_tabs_view_ac1fe42bccdb88b50b6da566f405d5d37}{AddTab}}(\mbox{\hyperlink{class_bio_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_1_1_bio_image_a6156e983eec9480649881f03a8a5dc3b}{OpenFile}}(ffile));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00145}00145             \mbox{\hyperlink{class_bio_1_1_app}{App}}.viewer.\mbox{\hyperlink{class_bio_1_1_image_view_a375d8ec6db474dac94b99c0dbb73729a}{UpdateImage}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00146}00146             \mbox{\hyperlink{class_bio_1_1_app}{App}}.viewer.\mbox{\hyperlink{class_bio_1_1_image_view_ad5927804c01c4a3b75db5353ceffcfd7}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00147}00147             }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00148}00148             \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}RunOnImage(\(\backslash\)"{}"{}} + con + \textcolor{stringliteral}{"{}\(\backslash\)"{},"{}} + headless + \textcolor{stringliteral}{"{},"{}} + onTab + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00149}00149         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00151}00151         \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00152}00152 \textcolor{comment}{        public static void RunOnImage(string con, bool headless, bool onTab)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00153}00153 \textcolor{comment}{        \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00154}00154 \textcolor{comment}{            string filename = "{}"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00155}00155 \textcolor{comment}{            string dir = Path.GetDirectoryName(ImageView.SelectedImage.file);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00156}00156 \textcolor{comment}{            if(App.viewer.Images.Count == 1)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00157}00157 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00158}00158 \textcolor{comment}{                if (ImageView.SelectedImage.ID.EndsWith("{}.ome.tif"{}))}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00159}00159 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00160}00160 \textcolor{comment}{                    filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00161}00161 \textcolor{comment}{                    filename = filename.Remove(filename.Length -\/ 4, 4);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00162}00162 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00163}00163 \textcolor{comment}{                else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00164}00164 \textcolor{comment}{                    filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00165}00165 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00166}00166 \textcolor{comment}{            else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00167}00167 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00168}00168 \textcolor{comment}{                string f = App.viewer.Images[0].ID;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00169}00169 \textcolor{comment}{                if (f.EndsWith("{}.ome.tif"{}))}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00170}00170 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00171}00171 \textcolor{comment}{                    filename = Path.GetFileNameWithoutExtension(f);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00172}00172 \textcolor{comment}{                    filename = filename.Remove(filename.Length -\/ 4, 4);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00173}00173 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00174}00174 \textcolor{comment}{                else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00175}00175 \textcolor{comment}{                    filename = Path.GetFileNameWithoutExtension(f);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00176}00176 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00177}00177 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00178}00178 \textcolor{comment}{            string temp;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00179}00179 \textcolor{comment}{            if(dir == "{}"{})}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00180}00180 \textcolor{comment}{                temp = filename + "{}-\/temp"{} + "{}.ome.tif"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00181}00181 \textcolor{comment}{            else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00182}00182 \textcolor{comment}{                temp = dir + "{}\(\backslash\)\(\backslash\)"{} + filename  + "{}-\/temp"{} + "{}.ome.tif"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00183}00183 \textcolor{comment}{            temp = temp.Replace("{}\(\backslash\)\(\backslash\)"{}, "{}/"{});}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00184}00184 \textcolor{comment}{            string st;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00185}00185 \textcolor{comment}{            if (!onTab)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00186}00186 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00187}00187 \textcolor{comment}{                st =}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00188}00188 \textcolor{comment}{                "{}run(\(\backslash\)"{}Bio-\/Formats Importer\(\backslash\)"{}, \(\backslash\)"{}open=\(\backslash\)"{} + getArgument + \(\backslash\)"{} autoscale color\_mode=Default open\_all\_series display\_rois rois\_import=[ROI manager] view=Hyperstack stack\_order=XYCZT\(\backslash\)"{}); "{} + con +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00189}00189 \textcolor{comment}{                "{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{} + temp + "{} export compression=Uncompressed\(\backslash\)"{}); "{} +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00190}00190 \textcolor{comment}{                "{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{} +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00191}00191 \textcolor{comment}{                "{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00192}00192 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00193}00193 \textcolor{comment}{            else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00194}00194 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00195}00195 \textcolor{comment}{                //Currently v.2.4.1 some OME series written by Bio open up only correctly in ImageJ when opened with ImageJ open() rather than BioFormats.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00196}00196 \textcolor{comment}{                st =}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00197}00197 \textcolor{comment}{                "{}open(getArgument); "{} + con +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00198}00198 \textcolor{comment}{                "{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{} + temp + "{} export compression=Uncompressed\(\backslash\)"{}); "{} +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00199}00199 \textcolor{comment}{                "{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{} +}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00200}00200 \textcolor{comment}{                "{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00201}00201 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00202}00202 \textcolor{comment}{            if (App.viewer.Images.Count == 1)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00203}00203 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00204}00204 \textcolor{comment}{                //First we save to a temp file.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00205}00205 \textcolor{comment}{                BioImage.SaveOME(temp, ImageView.SelectedImage.file);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00206}00206 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00207}00207 \textcolor{comment}{            else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00208}00208 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00209}00209 \textcolor{comment}{                //First we save to a temp file.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00210}00210 \textcolor{comment}{                List<string> sts = new List<string>();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00211}00211 \textcolor{comment}{                foreach (BioImage item in App.viewer.Images)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00212}00212 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00213}00213 \textcolor{comment}{                    sts.Add(item.ID);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00214}00214 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00215}00215 \textcolor{comment}{                BioImage.SaveOMESeries(sts.ToArray(), temp);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00216}00216 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00217}00217 \textcolor{comment}{            //We save the image as a temp image as otherwise imagej won't export due to file access error.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00218}00218 \textcolor{comment}{            RunString(st, temp, headless);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00219}00219 \textcolor{comment}{            string ffile = dir + "{}/"{} + filename + "{}.ome.tif"{};}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00220}00220 \textcolor{comment}{            File.Delete(ImageView.SelectedImage.file);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00221}00221 \textcolor{comment}{            File.Copy(temp, ImageView.SelectedImage.file);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00222}00222 \textcolor{comment}{            File.Delete(temp);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00223}00223 \textcolor{comment}{            if (ImageView.SelectedImage.ID.EndsWith("{}.ome.tif"{}))}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00224}00224 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00225}00225 \textcolor{comment}{                if(ImageView.SelectedImage.seriesCount > 1)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00226}00226 \textcolor{comment}{                foreach (BioImage item in App.viewer.Images)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00227}00227 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00228}00228 \textcolor{comment}{                    item.Update();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00229}00229 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00230}00230 \textcolor{comment}{                else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00231}00231 \textcolor{comment}{                    ImageView.SelectedImage.Update();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00232}00232 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00233}00233 \textcolor{comment}{            else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00234}00234 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00235}00235 \textcolor{comment}{                App.tabsView.AddTab(BioImage.OpenFile(ImageView.SelectedImage.file));}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00236}00236 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00237}00237 \textcolor{comment}{            Recorder.AddLine("{}RunOnImage(\(\backslash\)"{}"{} + con + "{},"{} + headless + "{},"{} + onTab + "{});"{});}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00238}00238 \textcolor{comment}{        \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00239}00239 \textcolor{comment}{        */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00243}\mbox{\hyperlink{class_bio_1_1_image_j_a425e4f8b4d32012602755dd3d01ca64b}{00243}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_a425e4f8b4d32012602755dd3d01ca64b}{Initialize}}(\textcolor{keywordtype}{string} path)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00244}00244         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00245}00245             ImageJPath = path;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00246}00246         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00247}00247 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00248}00248         \textcolor{comment}{/* It reads a binary file and returns a ROI object */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00249}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{00249}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{RoiDecoder}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00250}00250         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00251}00251 \textcolor{preprocessor}{            \#region Params}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00252}00252             \textcolor{comment}{// offsets}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00253}00253             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} VERSION\_OFFSET = 4;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00254}00254             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} TYPE = 6;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00255}00255             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} TOP = 8;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00256}00256             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} LEFT = 10;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00257}00257             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} BOTTOM = 12;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00258}00258             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} RIGHT = 14;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00259}00259             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} N\_COORDINATES = 16;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00260}00260             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} X1 = 18;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00261}00261             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} Y1 = 22;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00262}00262             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} X2 = 26;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00263}00263             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} Y2 = 30;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00264}00264             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} XD = 18;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00265}00265             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} YD = 22;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00266}00266             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} WIDTHD = 26;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00267}00267             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} HEIGHTD = 30;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00268}00268             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SIZE = 18;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00269}00269             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} STROKE\_WIDTH = 34;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00270}00270             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SHAPE\_ROI\_SIZE = 36;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00271}00271             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} STROKE\_COLOR = 40;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00272}00272             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} FILL\_COLOR = 44;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00273}00273             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SUBTYPE = 48;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00274}00274             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OPTIONS = 50;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00275}00275             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ARROW\_STYLE = 52;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00276}00276             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} FLOAT\_PARAM = 52; \textcolor{comment}{//ellipse ratio or rotated rect width}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00277}00277             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} POINT\_TYPE = 52;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00278}00278             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ARROW\_HEAD\_SIZE = 53;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00279}00279             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ROUNDED\_RECT\_ARC\_SIZE = 54;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00280}00280             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} POSITION = 56;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00281}00281             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} HEADER2\_OFFSET = 60;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00282}00282             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} COORDINATES = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00283}00283             \textcolor{comment}{// header2 offsets}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00284}00284             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} C\_POSITION = 4;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00285}00285             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} Z\_POSITION = 8;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00286}00286             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} T\_POSITION = 12;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00287}00287             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} NAME\_OFFSET = 16;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00288}00288             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} NAME\_LENGTH = 20;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00289}00289             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_LABEL\_COLOR = 24;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00290}00290             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_FONT\_SIZE = 28; \textcolor{comment}{//short}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00291}00291             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} GROUP = 30;  \textcolor{comment}{//byte}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00292}00292             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} IMAGE\_OPACITY = 31;  \textcolor{comment}{//byte}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00293}00293             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} IMAGE\_SIZE = 32;  \textcolor{comment}{//int}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00294}00294             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} FLOAT\_STROKE\_WIDTH = 36;  \textcolor{comment}{//float}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00295}00295             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ROI\_PROPS\_OFFSET = 40;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00296}00296             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ROI\_PROPS\_LENGTH = 44;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00297}00297             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} COUNTERS\_OFFSET = 48;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00298}00298 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00299}00299             \textcolor{comment}{// subtypes}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00300}00300             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} TEXT = 1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00301}00301             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ARROW = 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00302}00302             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ELLIPSE = 3;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00303}00303             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} IMAGE = 4;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00304}00304             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ROTATED\_RECT = 5;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00305}00305 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00306}00306             \textcolor{comment}{// options}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00307}00307             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SPLINE\_FIT = 1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00308}00308             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} DOUBLE\_HEADED = 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00309}00309             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OUTLINE = 4;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00310}00310             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_LABELS = 8;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00311}00311             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_NAMES = 16;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00312}00312             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_BACKGROUNDS = 32;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00313}00313             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} OVERLAY\_BOLD = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00314}00314             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SUB\_PIXEL\_RESOLUTION = 128;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00315}00315             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} DRAW\_OFFSET = 256;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00316}00316             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ZERO\_TRANSPARENT = 512;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00317}00317             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SHOW\_LABELS = 1024;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00318}00318             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SCALE\_LABELS = 2048;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00319}00319             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} PROMPT\_BEFORE\_DELETING = 4096; \textcolor{comment}{//points}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00320}00320             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} SCALE\_STROKE\_WIDTH = 8192;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00321}00321 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00322}00322             \textcolor{comment}{// types}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00323}00323             \textcolor{keyword}{private} \textcolor{keywordtype}{int} polygon = 0, rect = 1, oval = 2, line = 3, freeline = 4, polyline = 5, noRoi = 6,}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00324}00324                 freehand = 7, traced = 8, angle = 9, point = 10;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00325}00325 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00326}00326             \textcolor{keyword}{private} \textcolor{keywordtype}{byte}[] data;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00327}00327             \textcolor{keyword}{private} \textcolor{keywordtype}{string} path;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00328}00328             \textcolor{keyword}{private} MemoryStream ins;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00329}00329             \textcolor{keyword}{private} \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00330}00330             \textcolor{keyword}{private} \textcolor{keywordtype}{int} size;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00331}00331 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00332}00332 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00334}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a7331c0bbf85026e60ca76a21ee16a34a}{00334}}             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a7331c0bbf85026e60ca76a21ee16a34a}{RoiDecoder}}(\textcolor{keywordtype}{string} path)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00335}00335             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00336}00336                 this.path = path;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00337}00337             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00338}00338 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00340}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_abf636a0b8965e1f39d7078e6cc95eabe}{00340}}             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_abf636a0b8965e1f39d7078e6cc95eabe}{RoiDecoder}}(\textcolor{keywordtype}{byte}[] bytes, \textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00341}00341             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00342}00342                 ins = \textcolor{keyword}{new} MemoryStream(bytes);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00343}00343                 this.name = name;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00344}00344                 this.size = bytes.Length;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00345}00345             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00346}00346 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00348}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a21137c057cc5364ee891ab1d33f143f6}{00348}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a21137c057cc5364ee891ab1d33f143f6}{open}}(\textcolor{keywordtype}{string} path)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00349}00349             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00350}00350                 \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00351}00351                 \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{RoiDecoder}} rd = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{RoiDecoder}}(path);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00352}00352                 roi = rd.\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_aa81977628f6bbda8fcb659d8e7910262}{getRoi}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00353}00353                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00354}00354             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00355}00355 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00357}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_aa81977628f6bbda8fcb659d8e7910262}{00357}}             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_aa81977628f6bbda8fcb659d8e7910262}{getRoi}}()}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00358}00358             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00359}00359                 \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00360}00360                 data = File.ReadAllBytes(path);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00361}00361                 size = data.Length;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00362}00362                 \textcolor{keywordflow}{if} (getByte(0) != 73 || getByte(1) != 111)  \textcolor{comment}{//"{}Iout"{}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00363}00363                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}This is not an ImageJ ROI"{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00364}00364                 \textcolor{keywordtype}{int} version = getShort(VERSION\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00365}00365                 \textcolor{keywordtype}{int} type = getByte(TYPE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00366}00366                 \textcolor{keywordtype}{int} subtype = getShort(SUBTYPE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00367}00367                 \textcolor{keywordtype}{int} top = getShort(TOP);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00368}00368                 \textcolor{keywordtype}{int} left = getShort(LEFT);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00369}00369                 \textcolor{keywordtype}{int} bottom = getShort(BOTTOM);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00370}00370                 \textcolor{keywordtype}{int} right = getShort(RIGHT);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00371}00371                 \textcolor{keywordtype}{int} width = right -\/ left;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00372}00372                 \textcolor{keywordtype}{int} height = bottom -\/ top;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00373}00373                 \textcolor{keywordtype}{int} n = getUnsignedShort(N\_COORDINATES);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00374}00374                 \textcolor{keywordflow}{if} (n == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00375}00375                     n = getInt(SIZE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00376}00376                 \textcolor{keywordtype}{int} options = getShort(OPTIONS);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00377}00377                 \textcolor{keywordtype}{int} position = getInt(POSITION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00378}00378                 \textcolor{keywordtype}{int} hdr2Offset = getInt(HEADER2\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00379}00379                 \textcolor{keywordtype}{int} channel = 0, slice = 0, frame = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00380}00380                 \textcolor{keywordtype}{int} overlayLabelColor = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00381}00381                 \textcolor{keywordtype}{int} overlayFontSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00382}00382                 \textcolor{keywordtype}{int} group = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00383}00383                 \textcolor{keywordtype}{int} imageOpacity = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00384}00384                 \textcolor{keywordtype}{int} imageSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00385}00385                 \textcolor{keywordtype}{bool} subPixelResolution = (options \& SUB\_PIXEL\_RESOLUTION) != 0 \&\& version >= 222;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00386}00386                 \textcolor{keywordtype}{bool} drawOffset = subPixelResolution \&\& (options \& DRAW\_OFFSET) != 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00387}00387                 \textcolor{keywordtype}{bool} scaleStrokeWidth = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00388}00388                 \textcolor{keywordflow}{if} (version >= 228)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00389}00389                     scaleStrokeWidth = (options \& SCALE\_STROKE\_WIDTH) != 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00390}00390 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00391}00391                 \textcolor{keywordtype}{bool} subPixelRect = version >= 223 \&\& subPixelResolution \&\& (type == rect || type == oval);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00392}00392                 \textcolor{keywordtype}{double} xd = 0.0, yd = 0.0, widthd = 0.0, heightd = 0.0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00393}00393                 \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00394}00394                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00395}00395                     xd = getFloat(XD);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00396}00396                     yd = getFloat(YD);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00397}00397                     widthd = getFloat(WIDTHD);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00398}00398                     heightd = getFloat(HEIGHTD);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00399}00399                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00400}00400 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00401}00401                 \textcolor{keywordflow}{if} (hdr2Offset > 0 \&\& hdr2Offset + IMAGE\_SIZE + 4 <= size)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00402}00402                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00403}00403                     channel = getInt(hdr2Offset + C\_POSITION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00404}00404                     slice = getInt(hdr2Offset + Z\_POSITION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00405}00405                     frame = getInt(hdr2Offset + T\_POSITION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00406}00406                     overlayLabelColor = getInt(hdr2Offset + OVERLAY\_LABEL\_COLOR);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00407}00407                     overlayFontSize = getShort(hdr2Offset + OVERLAY\_FONT\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00408}00408                     imageOpacity = getByte(hdr2Offset + IMAGE\_OPACITY);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00409}00409                     imageSize = getInt(hdr2Offset + IMAGE\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00410}00410                     group = getByte(hdr2Offset + GROUP);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00411}00411                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00412}00412 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00413}00413                 \textcolor{keywordflow}{if} (name != \textcolor{keyword}{null} \&\& name.EndsWith(\textcolor{stringliteral}{"{}.roi"{}}))}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00414}00414                     name = name.Substring(0, name.Length -\/ 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00415}00415                 \textcolor{keywordtype}{bool} isComposite = getInt(SHAPE\_ROI\_SIZE) > 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00416}00416 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00417}00417 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00418}00418                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00419}00419 \textcolor{comment}{                if (isComposite)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00420}00420 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00421}00421 \textcolor{comment}{                    roi = getShapeRoi();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00422}00422 \textcolor{comment}{                    if (version >= 218)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00423}00423 \textcolor{comment}{                        getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00424}00424 \textcolor{comment}{                    roi.coord.Z = position;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00425}00425 \textcolor{comment}{                    if (channel > 0 || slice > 0 || frame > 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00426}00426 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00427}00427 \textcolor{comment}{                        roi.coord.C = channel; roi.coord.Z = slice; roi.coord.T = frame;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00428}00428 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00429}00429 \textcolor{comment}{                    decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00430}00430 \textcolor{comment}{                    if (version >= 224)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00431}00431 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00432}00432 \textcolor{comment}{                        string props = getRoiProps();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00433}00433 \textcolor{comment}{                        if (props != null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00434}00434 \textcolor{comment}{                            roi.properties = props;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00435}00435 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00436}00436 \textcolor{comment}{                    if (version >= 228 \&\& group > 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00437}00437 \textcolor{comment}{                        roi.serie = group;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00438}00438 \textcolor{comment}{                    return roi;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00439}00439 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00440}00440 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00441}00441                 \textcolor{keywordflow}{switch} (type)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00442}00442                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00443}00443                     \textcolor{keywordflow}{case} 1: \textcolor{comment}{//Rect}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00444}00444                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00445}00445                             roi = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.\mbox{\hyperlink{class_bio_1_1_r_o_i_a64f0ea766369982c92f8f756f310929b}{CreateRectangle}}(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00446}00446                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00447}00447                             roi = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.\mbox{\hyperlink{class_bio_1_1_r_o_i_a64f0ea766369982c92f8f756f310929b}{CreateRectangle}}(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00448}00448                         \textcolor{keywordtype}{int} arcSize = getShort(ROUNDED\_RECT\_ARC\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00449}00449                         \textcolor{keywordflow}{if} (arcSize > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00450}00450                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type rounded rectangle not supported."{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00451}00451                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00452}00452                     \textcolor{keywordflow}{case} 2: \textcolor{comment}{//Ellipse}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00453}00453                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00454}00454                             roi = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.\mbox{\hyperlink{class_bio_1_1_r_o_i_ac8654ca000794ceb3d75ce1615034acd}{CreateEllipse}}(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00455}00455                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00456}00456                             roi = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.\mbox{\hyperlink{class_bio_1_1_r_o_i_ac8654ca000794ceb3d75ce1615034acd}{CreateEllipse}}(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00457}00457                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00458}00458                     \textcolor{keywordflow}{case} 3: \textcolor{comment}{//Line}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00459}00459                         \textcolor{keywordtype}{float} x1 = getFloat(X1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00460}00460                         \textcolor{keywordtype}{float} y1 = getFloat(Y1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00461}00461                         \textcolor{keywordtype}{float} x2 = getFloat(X2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00462}00462                         \textcolor{keywordtype}{float} y2 = getFloat(Y2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00463}00463 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00464}00464                         \textcolor{keywordflow}{if} (subtype == ARROW)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00465}00465                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00466}00466                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type arrow not supported."{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00467}00467                             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00468}00468 \textcolor{comment}{                            roi = new Arrow(x1, y1, x2, y2);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00469}00469 \textcolor{comment}{                            ((Arrow)roi).setDoubleHeaded((options \& DOUBLE\_HEADED) != 0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00470}00470 \textcolor{comment}{                            ((Arrow)roi).setOutline((options \& OUTLINE) != 0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00471}00471 \textcolor{comment}{                            int style = getByte(ARROW\_STYLE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00472}00472 \textcolor{comment}{                            if (style >= Arrow.FILLED \&\& style <= Arrow.BAR)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00473}00473 \textcolor{comment}{                                ((Arrow)roi).setStyle(style);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00474}00474 \textcolor{comment}{                            int headSize = getByte(ARROW\_HEAD\_SIZE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00475}00475 \textcolor{comment}{                            if (headSize >= 0 \&\& style <= 30)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00476}00476 \textcolor{comment}{                                ((Arrow)roi).setHeadSize(headSize);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00477}00477 \textcolor{comment}{                            */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00478}00478                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00479}00479                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00480}00480                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00481}00481                             roi = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.\mbox{\hyperlink{class_bio_1_1_r_o_i_a23f9ecea3a73e857029fe18f224f6f3d}{CreateLine}}(\textcolor{keyword}{new} ZCT(slice, channel, frame), \textcolor{keyword}{new} PointD(x1, y1), \textcolor{keyword}{new} PointD(x2, y2));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00482}00482                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00483}00483                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00484}00484 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00485}00485                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00486}00486                     \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00487}00487                     \textcolor{keywordflow}{case} 5:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00488}00488                     \textcolor{keywordflow}{case} 6:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00489}00489                     \textcolor{keywordflow}{case} 7:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00490}00490                     \textcolor{keywordflow}{case} 8:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00491}00491                     \textcolor{keywordflow}{case} 9:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00492}00492                     \textcolor{keywordflow}{case} 10:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00493}00493                         \textcolor{comment}{//IJ.log("{}type: "{}+type);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00494}00494                         \textcolor{comment}{//IJ.log("{}n: "{}+n);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00495}00495                         \textcolor{comment}{//ij.IJ.log("{}rect: "{}+left+"{},"{}+top+"{} "{}+width+"{} "{}+height);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00496}00496                         \textcolor{keywordflow}{if} (n == 0 || n < 0) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00497}00497                         \textcolor{keywordtype}{int}[] x = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00498}00498                         \textcolor{keywordtype}{int}[] y = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00499}00499                         \textcolor{keywordtype}{float}[] xf = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00500}00500                         \textcolor{keywordtype}{float}[] yf = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00501}00501                         \textcolor{keywordtype}{int} base1 = COORDINATES;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00502}00502                         \textcolor{keywordtype}{int} base2 = base1 + 2 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00503}00503                         \textcolor{keywordtype}{int} xtmp, ytmp;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00504}00504                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00505}00505                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00506}00506                             xtmp = getShort(base1 + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00507}00507                             \textcolor{keywordflow}{if} (xtmp < 0) xtmp = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00508}00508                             ytmp = getShort(base2 + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00509}00509                             \textcolor{keywordflow}{if} (ytmp < 0) ytmp = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00510}00510                             x[i] = left + xtmp;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00511}00511                             y[i] = top + ytmp;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00512}00512                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00513}00513                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00514}00514                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00515}00515                             xf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00516}00516                             yf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00517}00517                             base1 = COORDINATES + 4 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00518}00518                             base2 = base1 + 4 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00519}00519                             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00520}00520                             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00521}00521                                 xf[i] = getFloat(base1 + i * 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00522}00522                                 yf[i] = getFloat(base2 + i * 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00523}00523                             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00524}00524                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00525}00525                         \textcolor{keywordflow}{if} (type == point)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00526}00526                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00527}00527                             \textcolor{comment}{//TODO implement non subpizel ROI}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00528}00528                             \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00529}00529                             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00530}00530                                 roi.\mbox{\hyperlink{class_bio_1_1_r_o_i_a41d57deeca74f9a12a2c951a05e1b87a}{AddPoints}}(xf, yf);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00531}00531                             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00532}00532                             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00533}00533                                 roi.\mbox{\hyperlink{class_bio_1_1_r_o_i_a41d57deeca74f9a12a2c951a05e1b87a}{AddPoints}}(x, y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00534}00534                             \textcolor{keywordflow}{if} (version >= 226)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00535}00535                             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00536}00536                                 \textcolor{comment}{//((PointRoi)roi).setPointType(getByte(POINT\_TYPE));}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00537}00537                                 roi.strokeWidth = getShort(STROKE\_WIDTH);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00538}00538                             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00539}00539                             \textcolor{comment}{//if ((options \& SHOW\_LABELS) != 0 \&\& !ij.Prefs.noPointLabels)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00540}00540                             \textcolor{comment}{//    ((PointRoi)roi).setShowLabels(true);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00541}00541                             \textcolor{comment}{//if ((options \& PROMPT\_BEFORE\_DELETING) != 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00542}00542                             \textcolor{comment}{//    ((PointRoi)roi).promptBeforeDeleting(true);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00543}00543                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Point;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00544}00544                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00545}00545                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00546}00546                         \textcolor{keywordflow}{if} (type == polygon)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00547}00547                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polygon;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00548}00548                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freehand)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00549}00549                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00550}00550                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Freeform;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00551}00551                             \textcolor{keywordflow}{if} (subtype == ELLIPSE || subtype == ROTATED\_RECT)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00552}00552                             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00553}00553                                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}ROI type not supported."{}});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00554}00554                                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00555}00555 \textcolor{comment}{                                double ex1 = getFloat(X1);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00556}00556 \textcolor{comment}{                                double ey1 = getFloat(Y1);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00557}00557 \textcolor{comment}{                                double ex2 = getFloat(X2);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00558}00558 \textcolor{comment}{                                double ey2 = getFloat(Y2);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00559}00559 \textcolor{comment}{                                double param = getFloat(FLOAT\_PARAM);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00560}00560 \textcolor{comment}{                                if (subtype == ROTATED\_RECT)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00561}00561 \textcolor{comment}{                                    roi = new RotatedRectRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00562}00562 \textcolor{comment}{                                else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00563}00563 \textcolor{comment}{                                    roi = new EllipseRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00564}00564 \textcolor{comment}{                                break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00565}00565 \textcolor{comment}{                                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00566}00566                             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00567}00567                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00568}00568                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == traced)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00569}00569                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polyline;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00570}00570                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == polyline)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00571}00571                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polyline;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00572}00572                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freeline)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00573}00573                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polyline;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00574}00574                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == angle)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00575}00575                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Point;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00576}00576                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00577}00577                             roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Freeform;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00578}00578                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00579}00579                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00580}00580                             roi.\mbox{\hyperlink{class_bio_1_1_r_o_i_a41d57deeca74f9a12a2c951a05e1b87a}{AddPoints}}(xf, yf);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00581}00581                             \textcolor{comment}{//roi = new PolygonRoi(xf, yf, n, roiType);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00582}00582                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00583}00583                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00584}00584                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00585}00585                             roi.\mbox{\hyperlink{class_bio_1_1_r_o_i_a41d57deeca74f9a12a2c951a05e1b87a}{AddPoints}}(x, y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00586}00586                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00587}00587                     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00588}00588                         \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}Unrecognized ROI type: "{}} + type);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00589}00589                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00590}00590                 \textcolor{keywordflow}{if} (roi == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00591}00591                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00592}00592                 roi.roiName = getRoiName();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00593}00593 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00594}00594                 \textcolor{comment}{// read stroke width, stroke color and fill color (1.43i or later)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00595}00595                 \textcolor{keywordflow}{if} (version >= 218)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00596}00596                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00597}00597                     getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00598}00598                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00599}00599 \textcolor{comment}{                    if (type == point)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00600}00600 \textcolor{comment}{                        roi.setStrokeWidth(0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00601}00601 \textcolor{comment}{                    bool splineFit = (options \& SPLINE\_FIT) != 0;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00602}00602 \textcolor{comment}{                    if (splineFit \&\& roi instanceof PolygonRoi)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00603}00603 \textcolor{comment}{                            ((PolygonRoi)roi).fitSpline();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00604}00604 \textcolor{comment}{                    */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00605}00605                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00606}00606 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00607}00607                 \textcolor{keywordflow}{if} (version >= 218 \&\& subtype == TEXT)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00608}00608                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00609}00609                     getTextRoi(roi, version);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00610}00610                     roi.type = \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Label;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00611}00611                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00612}00612                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00613}00613 \textcolor{comment}{                if (version >= 221 \&\& subtype == IMAGE)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00614}00614 \textcolor{comment}{                    roi = getImageRoi(roi, imageOpacity, imageSize, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00615}00615 \textcolor{comment}{                }}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00616}00616 \textcolor{comment}{                if (version >= 224)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00617}00617 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00618}00618 \textcolor{comment}{                    string props = getRoiProps();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00619}00619 \textcolor{comment}{                    if (props != null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00620}00620 \textcolor{comment}{                        roi.setProperties(props);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00621}00621 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00622}00622 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00623}00623 \textcolor{comment}{                if (version >= 227)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00624}00624 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00625}00625 \textcolor{comment}{                    int[] counters = getPointCounters(n);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00626}00626 \textcolor{comment}{                    if (counters != null \&\& (roi instanceof PointRoi))}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00627}00627 \textcolor{comment}{                            ((PointRoi)roi).setCounters(counters);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00628}00628 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00629}00629 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00630}00630                 \textcolor{comment}{// set group (1.52t or later)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00631}00631                 \textcolor{keywordflow}{if} (version >= 228 \&\& group > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00632}00632                     roi.serie = group;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00633}00633 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00634}00634                 roi.coord.Z = position;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00635}00635                 \textcolor{keywordflow}{if} (channel > 0 || slice > 0 || frame > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00636}00636                     roi.coord = \textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1); \textcolor{comment}{//-\/1 because our ROI coordinates are 0 based}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00637}00637                 \textcolor{comment}{//decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00638}00638 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00639}00639                 \textcolor{comment}{//We convert pixel to subpixel}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00640}00640 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00641}00641                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < roi.PointsD.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00642}00642                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00643}00643                     PointD pd = \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.\mbox{\hyperlink{class_bio_1_1_bio_image_a408bfd2a170027b612c7a69365e1ea6c}{ToStageSpace}}(roi.PointsD[i]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00644}00644                     roi.PointsD[i] = pd;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00645}00645                     roi.\mbox{\hyperlink{class_bio_1_1_r_o_i_aad543ee38aa5430c1ab0221c65fb5a3e}{UpdateBoundingBox}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00646}00646                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00647}00647 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00648}00648                 \textcolor{keywordflow}{if} (roi.type == \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polygon || roi.type == \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Freeform)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00649}00649                     roi.closed = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00650}00650                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00651}00651             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00652}00652             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00653}00653 \textcolor{comment}{            void decodeOverlayOptions(ROI roi, int version, int options, int color, int fontSize)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00654}00654 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00655}00655 \textcolor{comment}{                }}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00656}00656 \textcolor{comment}{                Overlay proto = new Overlay();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00657}00657 \textcolor{comment}{                proto.drawLabels((options \& OVERLAY\_LABELS) != 0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00658}00658 \textcolor{comment}{                proto.drawNames((options \& OVERLAY\_NAMES) != 0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00659}00659 \textcolor{comment}{                proto.drawBackgrounds((options \& OVERLAY\_BACKGROUNDS) != 0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00660}00660 \textcolor{comment}{                if (version >= 220 \&\& color != 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00661}00661 \textcolor{comment}{                    proto.setLabelColor(new Color(color));}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00662}00662 \textcolor{comment}{                bool bold = (options \& OVERLAY\_BOLD) != 0;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00663}00663 \textcolor{comment}{                bool scalable = (options \& SCALE\_LABELS) != 0;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00664}00664 \textcolor{comment}{                if (fontSize > 0 || bold || scalable)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00665}00665 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00666}00666 \textcolor{comment}{                    proto.setLabelFont(new Font("{}SansSerif"{}, bold ? Font.BOLD : Font.PLAIN, fontSize), scalable);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00667}00667 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00668}00668 \textcolor{comment}{                roi.setPrototypeOverlay(proto);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00669}00669 \textcolor{comment}{                }}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00670}00670 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00671}00671 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00677}00677             \textcolor{keywordtype}{void} getStrokeWidthAndColor(\mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi, \textcolor{keywordtype}{int} hdr2Offset, \textcolor{keywordtype}{bool} scaleStrokeWidth)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00678}00678             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00679}00679                 \textcolor{keywordtype}{double} strokeWidth = getShort(STROKE\_WIDTH);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00680}00680                 \textcolor{keywordflow}{if} (hdr2Offset > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00681}00681                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00682}00682                     \textcolor{keywordtype}{double} strokeWidthD = getFloat(hdr2Offset + FLOAT\_STROKE\_WIDTH);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00683}00683                     \textcolor{keywordflow}{if} (strokeWidthD > 0.0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00684}00684                         strokeWidth = strokeWidthD;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00685}00685                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00686}00686                 \textcolor{keywordflow}{if} (strokeWidth > 0.0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00687}00687                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00688}00688                     roi.strokeWidth = strokeWidth;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00689}00689                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00690}00690                 \textcolor{keywordtype}{int} strokeColor = getInt(STROKE\_COLOR);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00691}00691                 \textcolor{keywordflow}{if} (strokeColor != 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00692}00692                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00693}00693                     \textcolor{keywordtype}{byte}[] bts = BitConverter.GetBytes(strokeColor);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00694}00694                     Color c = Color.FromArgb(bts[0], bts[1], bts[2], bts[3]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00695}00695                     roi.strokeColor = c;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00696}00696                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00697}00697                 \textcolor{keywordtype}{int} fillColor = getInt(FILL\_COLOR);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00698}00698                 \textcolor{keywordflow}{if} (fillColor != 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00699}00699                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00700}00700                     \textcolor{keywordtype}{byte}[] bts = BitConverter.GetBytes(strokeColor);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00701}00701                     Color c = Color.FromArgb(bts[0], bts[1], bts[2], bts[3]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00702}00702                     roi.fillColor = c;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00703}00703                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00704}00704             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00705}00705             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00706}00706 \textcolor{comment}{            public ROI getShapeRoi()}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00707}00707 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00708}00708 \textcolor{comment}{                int type = getByte(TYPE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00709}00709 \textcolor{comment}{                if (type!=rect)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00710}00710 \textcolor{comment}{                    throw new NotSupportedException("{}Invalid composite ROI type"{});}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00711}00711 \textcolor{comment}{                int top = getShort(TOP);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00712}00712 \textcolor{comment}{                int left = getShort(LEFT);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00713}00713 \textcolor{comment}{                int bottom = getShort(BOTTOM);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00714}00714 \textcolor{comment}{                int right = getShort(RIGHT);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00715}00715 \textcolor{comment}{                int width = right -\/ left;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00716}00716 \textcolor{comment}{                int height = bottom -\/ top;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00717}00717 \textcolor{comment}{                int n = getInt(SHAPE\_ROI\_SIZE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00718}00718 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00719}00719 \textcolor{comment}{                ROI roi = new ROI();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00720}00720 \textcolor{comment}{                float[] shapeArray = new float[n];}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00721}00721 \textcolor{comment}{                int bas = COORDINATES;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00722}00722 \textcolor{comment}{                for (int i = 0; i < n; i++)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00723}00723 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00724}00724 \textcolor{comment}{                    shapeArray[i] = getFloat(bas);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00725}00725 \textcolor{comment}{                    bas += 4;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00726}00726 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00727}00727 \textcolor{comment}{                roi = new ShapeRoi(shapeArray);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00728}00728 \textcolor{comment}{                roi.setName(getRoiName());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00729}00729 \textcolor{comment}{                return roi;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00730}00730 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00731}00731 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00737}00737             \textcolor{keywordtype}{void} getTextRoi(ROI roi, \textcolor{keywordtype}{int} version)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00738}00738             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00739}00739                 Rectangle r = roi.BoundingBox.ToRectangleInt();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00740}00740                 \textcolor{keywordtype}{int} hdrSize = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00741}00741                 \textcolor{keywordtype}{int} size = getInt(hdrSize);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00742}00742                 \textcolor{keywordtype}{int} styleAndJustification = getInt(hdrSize + 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00743}00743                 \textcolor{keywordtype}{int} style = styleAndJustification \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00744}00744                 \textcolor{keywordtype}{int} justification = (styleAndJustification >> 8) \& 3;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00745}00745                 \textcolor{keywordtype}{bool} drawStringMode = (styleAndJustification \& 1024) != 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00746}00746                 \textcolor{keywordtype}{int} nameLength = getInt(hdrSize + 8);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00747}00747                 \textcolor{keywordtype}{int} textLength = getInt(hdrSize + 12);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00748}00748                 \textcolor{keywordtype}{char}[] name = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[nameLength];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00749}00749                 \textcolor{keywordtype}{char}[] text = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[textLength];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00750}00750                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < nameLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00751}00751                     name[i] = (\textcolor{keywordtype}{char})getShort(hdrSize + 16 + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00752}00752                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < textLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00753}00753                     text[i] = (\textcolor{keywordtype}{char})getShort(hdrSize + 16 + nameLength * 2 + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00754}00754                 \textcolor{keywordtype}{double} angle = version >= 225 ? getFloat(hdrSize + 16 + nameLength * 2 + textLength * 2) : 0f;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00755}00755                 \textcolor{comment}{//Font font = new Font(new string(name), style, size);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00756}00756                 \textcolor{keywordtype}{string} fam = \textcolor{keyword}{new} string(name);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00757}00757                 roi.family = fam;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00758}00758                 roi.fontSize = size;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00759}00759                 roi.Text = \textcolor{keyword}{new} string(text);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00760}00760                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00761}00761 \textcolor{comment}{                if (roi.subPixel)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00762}00762 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00763}00763 \textcolor{comment}{                    RectangleD fb = roi.Rect;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00764}00764 \textcolor{comment}{                    roi2 = new TextRoi(fb.getX(), fb.getY(), fb.getWidth(), fb.getHeight(), new string(text), font);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00765}00765 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00766}00766 \textcolor{comment}{                else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00767}00767 \textcolor{comment}{                    roi2 = new TextRoi(r.x, r.y, r.width, r.height, new string(text), font);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00768}00768 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00769}00769 \textcolor{comment}{                roi.strokeColor}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00770}00770 \textcolor{comment}{                roi2.setFillColor(roi.getFillColor());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00771}00771 \textcolor{comment}{                roi2.setName(getRoiName());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00772}00772 \textcolor{comment}{                roi2.setJustification(justification);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00773}00773 \textcolor{comment}{                roi2.setDrawStringMode(drawStringMode);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00774}00774 \textcolor{comment}{                roi2.setAngle(angle);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00775}00775 \textcolor{comment}{                return roi2;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00776}00776 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00777}00777             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00778}00778 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00782}00782             \textcolor{keywordtype}{string} getRoiName()}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00783}00783             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00784}00784                 \textcolor{keywordtype}{string} fileName = name;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00785}00785                 \textcolor{keywordtype}{int} hdr2Offset = getInt(HEADER2\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00786}00786                 \textcolor{keywordflow}{if} (hdr2Offset == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00787}00787                     \textcolor{keywordflow}{return} fileName;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00788}00788                 \textcolor{keywordtype}{int} offset = getInt(hdr2Offset + NAME\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00789}00789                 \textcolor{keywordtype}{int} Length = getInt(hdr2Offset + NAME\_LENGTH);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00790}00790                 \textcolor{keywordflow}{if} (offset == 0 || Length == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00791}00791                     \textcolor{keywordflow}{return} fileName;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00792}00792                 \textcolor{keywordflow}{if} (offset + Length * 2 > size)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00793}00793                     \textcolor{keywordflow}{return} fileName;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00794}00794                 \textcolor{keywordtype}{char}[] namem = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[Length];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00795}00795                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < Length; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00796}00796                     namem[i] = (\textcolor{keywordtype}{char})getShort(offset + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00797}00797                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} string(namem);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00798}00798             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00799}00799 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00803}00803             \textcolor{keywordtype}{string} getRoiProps()}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00804}00804             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00805}00805                 \textcolor{keywordtype}{int} hdr2Offset = getInt(HEADER2\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00806}00806                 \textcolor{keywordflow}{if} (hdr2Offset == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00807}00807                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00808}00808                 \textcolor{keywordtype}{int} offset = getInt(hdr2Offset + ROI\_PROPS\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00809}00809                 \textcolor{keywordtype}{int} Length = getInt(hdr2Offset + ROI\_PROPS\_LENGTH);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00810}00810                 \textcolor{keywordflow}{if} (offset == 0 || Length == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00811}00811                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00812}00812                 \textcolor{keywordflow}{if} (offset + Length * 2 > size)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00813}00813                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00814}00814                 \textcolor{keywordtype}{char}[] props = \textcolor{keyword}{new} \textcolor{keywordtype}{char}[Length];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00815}00815                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < Length; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00816}00816                     props[i] = (\textcolor{keywordtype}{char})getShort(offset + i * 2);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00817}00817                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} string(props);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00818}00818             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00819}00819 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00825}00825             \textcolor{keywordtype}{int}[] getPointCounters(\textcolor{keywordtype}{int} n)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00826}00826             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00827}00827                 \textcolor{keywordtype}{int} hdr2Offset = getInt(HEADER2\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00828}00828                 \textcolor{keywordflow}{if} (hdr2Offset == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00829}00829                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00830}00830                 \textcolor{keywordtype}{int} offset = getInt(hdr2Offset + COUNTERS\_OFFSET);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00831}00831                 \textcolor{keywordflow}{if} (offset == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00832}00832                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00833}00833                 \textcolor{keywordflow}{if} (offset + n * 4 > data.Length)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00834}00834                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00835}00835                 \textcolor{keywordtype}{int}[] counters = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00836}00836                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00837}00837                     counters[i] = getInt(offset + i * 4);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00838}00838                 \textcolor{keywordflow}{return} counters;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00839}00839             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00840}00840 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00841}00841 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00847}00847             \textcolor{keywordtype}{int} getByte(\textcolor{keywordtype}{int} bas)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00848}00848             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00849}00849                 \textcolor{keywordflow}{return} data[bas] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00850}00850             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00851}00851 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00858}00858             \textcolor{keywordtype}{int} getShort(\textcolor{keywordtype}{int} bas)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00859}00859             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00860}00860                 \textcolor{keywordtype}{int} b0 = data[bas] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00861}00861                 \textcolor{keywordtype}{int} b1 = data[bas + 1] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00862}00862                 \textcolor{keywordtype}{int} n = (short)((b0 << 8) + b1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00863}00863                 \textcolor{keywordflow}{if} (n < -\/5000)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00864}00864                     n = (b0 << 8) + b1; \textcolor{comment}{// assume n>32767 and unsigned}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00865}00865                 \textcolor{keywordflow}{return} n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00866}00866             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00867}00867 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00873}00873             \textcolor{keywordtype}{int} getUnsignedShort(\textcolor{keywordtype}{int} bas)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00874}00874             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00875}00875                 \textcolor{keywordtype}{int} b0 = data[bas] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00876}00876                 \textcolor{keywordtype}{int} b1 = data[bas + 1] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00877}00877                 \textcolor{keywordflow}{return} (b0 << 8) + b1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00878}00878             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00879}00879 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00885}00885             \textcolor{keywordtype}{int} getInt(\textcolor{keywordtype}{int} bas)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00886}00886             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00887}00887                 \textcolor{keywordtype}{int} b0 = data[bas] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00888}00888                 \textcolor{keywordtype}{int} b1 = data[bas + 1] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00889}00889                 \textcolor{keywordtype}{int} b2 = data[bas + 2] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00890}00890                 \textcolor{keywordtype}{int} b3 = data[bas + 3] \& 255;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00891}00891                 \textcolor{keywordflow}{return} ((b0 << 24) + (b1 << 16) + (b2 << 8) + b3);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00892}00892             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00893}00893 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00900}00900             \textcolor{keywordtype}{float} getFloat(\textcolor{keywordtype}{int} bas)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00901}00901             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00902}00902                 \textcolor{comment}{//return BitConverter.ToSingle(getInt(bas));}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00903}00903                 \textcolor{keywordtype}{byte}[] bytes = BitConverter.GetBytes(getInt(bas));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00904}00904                 \textcolor{keywordflow}{return} BitConverter.ToSingle(bytes, 0);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00905}00905             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00906}00906 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00912}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a29de230a7e3b0a69864e76f7192c9992}{00912}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_a29de230a7e3b0a69864e76f7192c9992}{openFromByteArray}}(\textcolor{keywordtype}{byte}[] bytes)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00913}00913             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00914}00914                 \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00915}00915                 \textcolor{keywordflow}{if} (bytes == \textcolor{keyword}{null} || bytes.Length == 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00916}00916                     \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00917}00917                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00918}00918                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00919}00919                     \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{RoiDecoder}} decoder = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder}{RoiDecoder}}(bytes, \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00920}00920                     roi = decoder.\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_decoder_aa81977628f6bbda8fcb659d8e7910262}{getRoi}}();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00921}00921                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00922}00922                 \textcolor{keywordflow}{catch} (IOException e)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00923}00923                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00924}00924                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00925}00925                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00926}00926                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00927}00927             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00928}00928 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00929}00929         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00930}00930 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00936}00936         \textcolor{keyword}{static} \textcolor{keywordtype}{int} GetImageJType(\mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00937}00937         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00938}00938             \textcolor{comment}{//private int polygon = 0, rect = 1, oval = 2, line = 3, freeline = 4, polyline = 5, noRoi = 6, freehand = 7,}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00939}00939             \textcolor{comment}{//    traced = 8, angle = 9, point = 10;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00940}00940             \textcolor{keywordflow}{switch} (roi.type)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00941}00941             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00942}00942                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Rectangle:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00943}00943                     \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00944}00944                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Point:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00945}00945                     \textcolor{keywordflow}{return} 10;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00946}00946                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Line:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00947}00947                     \textcolor{keywordflow}{return} 3;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00948}00948                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polygon:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00949}00949                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00950}00950                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Polyline:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00951}00951                     \textcolor{keywordflow}{return} 5;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00952}00952                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Freeform:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00953}00953                     \textcolor{keywordflow}{return} 7;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00954}00954                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Ellipse:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00955}00955                     \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00956}00956                 \textcolor{keywordflow}{case} \mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}}.Type.Label:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00957}00957                 \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00958}00958                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00959}00959             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00960}00960         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00961}00961 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00967}00967         \textcolor{keyword}{static} \textcolor{keywordtype}{void} GetPointsXY(ROI roi, out \textcolor{keywordtype}{int}[] xp, out \textcolor{keywordtype}{int}[] yp)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00968}00968         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00969}00969             \textcolor{keywordtype}{int}[] x = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[roi.PointsD.Count];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00970}00970             \textcolor{keywordtype}{int}[] y = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[roi.PointsD.Count];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00971}00971             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < roi.PointsD.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00972}00972             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00973}00973                 PointD pd = ImageView.SelectedImage.ToImageSpace(roi.PointsD[i]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00974}00974                 x[i] = (int)pd.X;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00975}00975                 y[i] = (\textcolor{keywordtype}{int})pd.Y;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00976}00976             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00977}00977             xp = x;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00978}00978             yp = y;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00979}00979 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00980}00980         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00981}00981 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00987}00987         \textcolor{keyword}{static} \textcolor{keywordtype}{void} GetXY(ROI roi, out \textcolor{keywordtype}{float} x, out \textcolor{keywordtype}{float} y)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00988}00988         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00989}00989             PointD pd = ImageView.SelectedImage.ToImageSpace(\textcolor{keyword}{new} PointD(roi.X, roi.Y));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00990}00990             x = (float)pd.X;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00991}00991             y = (\textcolor{keywordtype}{float})pd.Y;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00992}00992         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00998}00998         \textcolor{keyword}{static} \textcolor{keywordtype}{void} GetWH(ROI roi, out \textcolor{keywordtype}{float} w, out \textcolor{keywordtype}{float} h)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l00999}00999         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01000}01000             w = (float)ImageView.SelectedImage.ToImageSizeX(roi.W);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01001}01001             h = (float)ImageView.SelectedImage.ToImageSizeY(roi.H);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01002}01002         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01010}01010         \textcolor{keyword}{static} \textcolor{keywordtype}{int} rightMove(\textcolor{keywordtype}{int} value, \textcolor{keywordtype}{int} pos)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01011}01011         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01012}01012             \textcolor{keywordflow}{if} (pos != 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01013}01013             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01014}01014                 \textcolor{keywordtype}{int} mask = 0x7fffffff;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01015}01015                 value >>= 1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01016}01016                 value \&= mask;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01017}01017                 value >>= pos -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01018}01018             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01019}01019             \textcolor{keywordflow}{return} value;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01020}01020         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01021}01021         \textcolor{comment}{/* It takes a ROI object and writes it to a file */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01022}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder}{01022}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder}{RoiEncoder}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01023}01023         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01024}01024             \textcolor{keyword}{static} \textcolor{keywordtype}{int} HEADER\_SIZE = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01025}01025             \textcolor{keyword}{static} \textcolor{keywordtype}{int} HEADER2\_SIZE = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01026}01026             \textcolor{keyword}{static} \textcolor{keywordtype}{int} VERSION = 228; \textcolor{comment}{// v1.52t (roi groups, scale stroke width)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01027}01027             \textcolor{keyword}{private} \textcolor{keywordtype}{string} path;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01028}01028             \textcolor{keyword}{private} FileStream f;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01029}01029             \textcolor{keyword}{private} \textcolor{keywordtype}{int} polygon = 0, rect = 1, oval = 2, line = 3, freeline = 4, polyline = 5, noRoi = 6, freehand = 7,}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01030}01030                 traced = 8, angle = 9, point = 10;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01031}01031             \textcolor{keyword}{private} \textcolor{keywordtype}{byte}[] data;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01032}01032             \textcolor{keyword}{private} \textcolor{keywordtype}{string} roiName;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01033}01033             \textcolor{keyword}{private} \textcolor{keywordtype}{int} roiNameSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01034}01034             \textcolor{keyword}{private} \textcolor{keywordtype}{string} roiProps;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01035}01035             \textcolor{keyword}{private} \textcolor{keywordtype}{int} roiPropsSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01036}01036             \textcolor{keyword}{private} \textcolor{keywordtype}{int} countersSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01037}01037             \textcolor{keyword}{private} \textcolor{keywordtype}{int}[] counters;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01038}01038             \textcolor{keyword}{private} \textcolor{keywordtype}{bool} subres = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01039}01039 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01041}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_a19664f9947114018c0b6f79799f6c9b2}{01041}}             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_a19664f9947114018c0b6f79799f6c9b2}{RoiEncoder}}(String path)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01042}01042             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01043}01043                 this.path = path;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01044}01044             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01045}01045 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01047}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_abf302e516388f3d5f6b7fa4a44465024}{01047}}             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_abf302e516388f3d5f6b7fa4a44465024}{RoiEncoder}}(FileStream f)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01048}01048             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01049}01049                 this.f = f;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01050}01050             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01051}01051 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01053}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae05172f2c9984198c4093d3fc3760f39}{01053}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae05172f2c9984198c4093d3fc3760f39}{save}}(\mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi, String path)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01054}01054             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01055}01055                 \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder}{RoiEncoder}} re = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder}{RoiEncoder}}(path);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01056}01056                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01057}01057                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01058}01058                     re.\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{write}}(roi);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01059}01059                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01060}01060                 \textcolor{keywordflow}{catch} (IOException e)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01061}01061                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01062}01062                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01063}01063                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01064}01064                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01065}01065             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01066}01066 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01068}\mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{01068}}             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{write}}(\mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01069}01069             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01070}01070                 \textcolor{keywordflow}{if} (f != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01071}01071                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01072}01072                     \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{write}}(roi, f);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01073}01073 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01074}01074                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01075}01075                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01076}01076                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01077}01077                     f = \textcolor{keyword}{new} FileStream(path, FileMode.Create);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01078}01078                     \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{write}}(roi, f);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01079}01079                     f.Close();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01080}01080                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01081}01081             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01082}01082 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01109}01109             \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_image_j_1_1_roi_encoder_ae4b67c11d5e7894c681863d86bdcbefe}{write}}(\mbox{\hyperlink{class_bio_1_1_r_o_i}{ROI}} roi, FileStream f)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01110}01110             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01111}01111                 RectangleD r = roi.Rect;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01112}01112                 \textcolor{comment}{//if (r.width > 60000 || r.height > 60000 || r.x > 60000 || r.y > 60000)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01113}01113                 \textcolor{comment}{//    roi.enableSubPixelResolution();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01114}01114                 \textcolor{comment}{//int roiType = GetImageJType(roi);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01115}01115                 \textcolor{keywordtype}{int} type = GetImageJType(roi);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01116}01116                 \textcolor{keywordtype}{int} options = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01117}01117                 \textcolor{comment}{//if (roi.getScaleStrokeWidth())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01118}01118                 \textcolor{comment}{//    options |= RoiDecoder.SCALE\_STROKE\_WIDTH;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01119}01119                 roiName = roi.Text;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01120}01120                 \textcolor{keywordflow}{if} (roiName != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01121}01121                     roiNameSize = roiName.Length * 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01122}01122                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01123}01123                     roiNameSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01124}01124 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01125}01125                 roiProps = roi.properties;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01126}01126                 \textcolor{keywordflow}{if} (roiProps != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01127}01127                     roiPropsSize = roiProps.Length * 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01128}01128                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01129}01129                     roiPropsSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01130}01130                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01131}01131 \textcolor{comment}{                switch (roiType) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01132}01132 \textcolor{comment}{                    case Roi.POLYGON: type = polygon; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01133}01133 \textcolor{comment}{                    case Roi.FREEROI: type = freehand; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01134}01134 \textcolor{comment}{                    case Roi.TRACED\_ROI: type = traced; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01135}01135 \textcolor{comment}{                    case Roi.OVAL: type = oval; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01136}01136 \textcolor{comment}{                    case Roi.LINE: type = line; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01137}01137 \textcolor{comment}{                    case Roi.POLYLINE: type = polyline; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01138}01138 \textcolor{comment}{                    case Roi.FREELINE: type = freeline; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01139}01139 \textcolor{comment}{                    case Roi.ANGLE: type = angle; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01140}01140 \textcolor{comment}{                    case Roi.COMPOSITE: type = rect; break; // shape array size (36-\/39) will be >0 to indicate composite type}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01141}01141 \textcolor{comment}{                    case Roi.POINT: type = point; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01142}01142 \textcolor{comment}{                    default: type = rect; break;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01143}01143 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01144}01144 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01145}01145                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01146}01146 \textcolor{comment}{                if (roiType == Roi.COMPOSITE) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01147}01147 \textcolor{comment}{                    saveShapeRoi(roi, type, f, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01148}01148 \textcolor{comment}{                    return;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01149}01149 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01150}01150 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01151}01151                 \textcolor{keywordtype}{int} n = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01152}01152                 \textcolor{keywordtype}{int}[]}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01153}01153                 x = \textcolor{keyword}{null}, y = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01154}01154                 \textcolor{keywordtype}{float}[]}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01155}01155                 xf = \textcolor{keyword}{null}, yf = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01156}01156                 \textcolor{keywordtype}{int} floatSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01157}01157                 \textcolor{comment}{//if (roi instanceof PolygonRoi) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01158}01158                 \textcolor{comment}{//PolygonRoi proi = (PolygonRoi)roi;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01159}01159                 \textcolor{comment}{//Polygon p = proi.getNonSplineCoordinates();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01160}01160                 n = roi.PointsD.Count; \textcolor{comment}{//p.npoints;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01161}01161                 \textcolor{comment}{//x = p.xpoints;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01162}01162                 \textcolor{comment}{//y = p.ypoints;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01163}01163                 GetPointsXY(roi, out x, out y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01164}01164                 \textcolor{keywordflow}{if} (subres)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01165}01165                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01166}01166                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01167}01167 \textcolor{comment}{                    if (proi.isSplineFit())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01168}01168 \textcolor{comment}{                        fp = proi.getNonSplineFloatPolygon();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01169}01169 \textcolor{comment}{                    else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01170}01170 \textcolor{comment}{                        fp = roi.getFloatPolygon();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01171}01171 \textcolor{comment}{                    if (n == fp.npoints)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01172}01172 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01173}01173 \textcolor{comment}{                        options |= RoiDecoder.SUB\_PIXEL\_RESOLUTION;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01174}01174 \textcolor{comment}{                        if (roi.getDrawOffset())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01175}01175 \textcolor{comment}{                            options |= RoiDecoder.DRAW\_OFFSET;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01176}01176 \textcolor{comment}{                        xf = fp.xpoints;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01177}01177 \textcolor{comment}{                        yf = fp.ypoints;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01178}01178 \textcolor{comment}{                        floatSize = n * 8;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01179}01179 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01180}01180 \textcolor{comment}{                    */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01181}01181                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01182}01182 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01183}01183 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01184}01184                 countersSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01185}01185                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01186}01186 \textcolor{comment}{                if (roi instanceof PointRoi) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01187}01187 \textcolor{comment}{                    counters = ((PointRoi)roi).getCounters();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01188}01188 \textcolor{comment}{                    if (counters != null \&\& counters.length >= n)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01189}01189 \textcolor{comment}{                        countersSize = n * 4;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01190}01190 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01191}01191 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01192}01192                 data = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[HEADER\_SIZE + HEADER2\_SIZE + n * 4 + floatSize + roiNameSize + roiPropsSize + countersSize];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01193}01193                 data[0] = 73; data[1] = 111; data[2] = 117; data[3] = 116; \textcolor{comment}{// "{}Iout"{}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01194}01194                 putShort(RoiDecoder.VERSION\_OFFSET, VERSION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01195}01195                 data[RoiDecoder.TYPE] = (byte)type;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01196}01196                 \textcolor{keywordtype}{float} px, py, pw, ph;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01197}01197                 GetXY(roi, out px, out py);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01198}01198                 GetWH(roi, out pw, out ph);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01199}01199                 putShort(RoiDecoder.TOP, (\textcolor{keywordtype}{int})py);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01200}01200                 putShort(RoiDecoder.LEFT, (\textcolor{keywordtype}{int})px);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01201}01201                 putShort(RoiDecoder.BOTTOM, (\textcolor{keywordtype}{int})(py + ph));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01202}01202                 putShort(RoiDecoder.RIGHT, (\textcolor{keywordtype}{int})(px + pw));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01203}01203                 \textcolor{keywordflow}{if} (subres \&\& (type == rect || type == oval))}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01204}01204                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01205}01205                     \textcolor{comment}{//FloatPolygon p = null;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01206}01206                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01207}01207 \textcolor{comment}{                    if (roi instanceof OvalRoi)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01208}01208 \textcolor{comment}{                            p = ((OvalRoi)roi).getFloatPolygon4();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01209}01209 \textcolor{comment}{                        else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01210}01210 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01211}01211 \textcolor{comment}{                        int d = roi.getCornerDiameter();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01212}01212 \textcolor{comment}{                        if (d > 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01213}01213 \textcolor{comment}{                        \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01214}01214 \textcolor{comment}{                            roi.setCornerDiameter(0);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01215}01215 \textcolor{comment}{                            p = roi.getFloatPolygon();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01216}01216 \textcolor{comment}{                            roi.setCornerDiameter(d);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01217}01217 \textcolor{comment}{                        \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01218}01218 \textcolor{comment}{                        else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01219}01219 \textcolor{comment}{                            p = roi.getFloatPolygon();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01220}01220 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01221}01221 \textcolor{comment}{                        */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01222}01222                     \textcolor{keywordflow}{if} (roi.PointsD.Count == 4)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01223}01223                     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01224}01224                         putFloat(RoiDecoder.XD, (\textcolor{keywordtype}{float})roi.PointsImage[0].X);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01225}01225                         putFloat(RoiDecoder.YD, (\textcolor{keywordtype}{float})roi.PointsImage[0].Y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01226}01226                         \textcolor{comment}{//putFloat(RoiDecoder.WIDTHD, p.xpoints[1] -\/ roi.PointsD[0]);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01227}01227                         \textcolor{comment}{//putFloat(RoiDecoder.HEIGHTD, p.ypoints[2] -\/ p.ypoints[1]);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01228}01228                         putFloat(RoiDecoder.WIDTHD, (\textcolor{keywordtype}{float})roi.PointsImage[1].X -\/ (\textcolor{keywordtype}{float})roi.PointsImage[0].X);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01229}01229                         putFloat(RoiDecoder.HEIGHTD, (\textcolor{keywordtype}{float})roi.PointsImage[2].Y -\/ (\textcolor{keywordtype}{float})roi.PointsImage[1].Y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01230}01230                         options |= RoiDecoder.SUB\_PIXEL\_RESOLUTION;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01231}01231                         putShort(RoiDecoder.OPTIONS, options);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01232}01232                     \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01233}01233                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01234}01234                 \textcolor{keywordflow}{if} (n > 65535 \&\& type != point)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01235}01235                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01236}01236                     \textcolor{keywordflow}{if} (type == polygon || type == freehand || type == traced)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01237}01237                     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01238}01238                         \textcolor{comment}{//String name = roi.Text;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01239}01239                         \textcolor{comment}{//roi = new ShapeRoi(roi);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01240}01240                         \textcolor{comment}{//if (name != null) roi.setName(name);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01241}01241                         saveShapeRoi(roi, rect, f, options);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01242}01242                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01243}01243                     \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01244}01244                     \textcolor{comment}{//ij.IJ.beep();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01245}01245                     \textcolor{comment}{//ij.IJ.log("{}Non-\/polygonal selections with more than 65k points cannot be saved."{});}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01246}01246                     n = 65535;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01247}01247                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01248}01248                 \textcolor{keywordflow}{if} (type == point \&\& n > 65535)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01249}01249                     putInt(RoiDecoder.SIZE, n);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01250}01250                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01251}01251                     putShort(RoiDecoder.N\_COORDINATES, n);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01252}01252                 putInt(RoiDecoder.POSITION, roi.coord.Z);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01253}01253 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01254}01254                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01255}01255 \textcolor{comment}{                if (type == rect)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01256}01256 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01257}01257 \textcolor{comment}{                    int arcSize = roi.getCornerDiameter();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01258}01258 \textcolor{comment}{                    if (arcSize > 0)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01259}01259 \textcolor{comment}{                        putShort(RoiDecoder.ROUNDED\_RECT\_ARC\_SIZE, arcSize);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01260}01260 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01261}01261 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01262}01262 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01263}01263                 \textcolor{keywordflow}{if} (type == line) \textcolor{comment}{//(roi instanceof Line) }}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01264}01264                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01265}01265                     \textcolor{comment}{//Line line = (Line)roi;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01266}01266                     putFloat(RoiDecoder.X1, (\textcolor{keywordtype}{float})roi.PointsImage[0].X);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01267}01267                     putFloat(RoiDecoder.Y1, (\textcolor{keywordtype}{float})roi.PointsImage[0].Y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01268}01268                     putFloat(RoiDecoder.X2, (\textcolor{keywordtype}{float})roi.PointsImage[1].X);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01269}01269                     putFloat(RoiDecoder.Y2, (\textcolor{keywordtype}{float})roi.PointsImage[1].Y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01270}01270                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01271}01271 \textcolor{comment}{                    if (roi instanceof Arrow) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01272}01272 \textcolor{comment}{                        putShort(RoiDecoder.SUBTYPE, RoiDecoder.ARROW);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01273}01273 \textcolor{comment}{                        if (((Arrow)roi).getDoubleHeaded())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01274}01274 \textcolor{comment}{                            options |= RoiDecoder.DOUBLE\_HEADED;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01275}01275 \textcolor{comment}{                        if (((Arrow)roi).getOutline())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01276}01276 \textcolor{comment}{                            options |= RoiDecoder.OUTLINE;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01277}01277 \textcolor{comment}{                        putShort(RoiDecoder.OPTIONS, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01278}01278 \textcolor{comment}{                        putByte(RoiDecoder.ARROW\_STYLE, ((Arrow)roi).getStyle());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01279}01279 \textcolor{comment}{                        putByte(RoiDecoder.ARROW\_HEAD\_SIZE, (int)((Arrow)roi).getHeadSize());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01280}01280 \textcolor{comment}{                    \} else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01281}01281 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01282}01282 \textcolor{comment}{                        if (roi.getDrawOffset())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01283}01283 \textcolor{comment}{                            options |= RoiDecoder.SUB\_PIXEL\_RESOLUTION + RoiDecoder.DRAW\_OFFSET;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01284}01284 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01285}01285 \textcolor{comment}{                    */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01286}01286                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01287}01287 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01288}01288                 \textcolor{keywordflow}{if} (type == point)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01289}01289                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01290}01290                     \textcolor{comment}{//PointRoi point = (PointRoi)roi;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01291}01291                     putByte(RoiDecoder.POINT\_TYPE, 1);\textcolor{comment}{//point.getPointType());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01292}01292                     putShort(RoiDecoder.STROKE\_WIDTH, (\textcolor{keywordtype}{int})roi.strokeWidth);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01293}01293                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01294}01294 \textcolor{comment}{                    if (point.getShowLabels())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01295}01295 \textcolor{comment}{                        options |= RoiDecoder.SHOW\_LABELS;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01296}01296 \textcolor{comment}{                    if (point.promptBeforeDeleting())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01297}01297 \textcolor{comment}{                        options |= RoiDecoder.PROMPT\_BEFORE\_DELETING;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01298}01298 \textcolor{comment}{                    */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01299}01299                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01300}01300 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01301}01301                 \textcolor{keywordflow}{if} (type == oval)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01302}01302                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01303}01303                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01304}01304 \textcolor{comment}{                    double[] p = null;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01305}01305 \textcolor{comment}{                    if (roi instanceof RotatedRectRoi) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01306}01306 \textcolor{comment}{                        putShort(RoiDecoder.SUBTYPE, RoiDecoder.ROTATED\_RECT);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01307}01307 \textcolor{comment}{                        p = ((RotatedRectRoi)roi).getParams();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01308}01308 \textcolor{comment}{                    \} else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01309}01309 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01310}01310 \textcolor{comment}{                        */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01311}01311                     putShort(RoiDecoder.SUBTYPE, RoiDecoder.ELLIPSE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01312}01312                     \textcolor{comment}{//p = ((EllipseRoi)roi).getParams();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01313}01313                     \textcolor{comment}{//\}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01314}01314                     \textcolor{keywordtype}{float} fx, fy, fw, fh;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01315}01315                     GetXY(roi, out fx, out fy);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01316}01316                     GetWH(roi, out fw, out fh);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01317}01317                     putFloat(RoiDecoder.X1, fx);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01318}01318                     putFloat(RoiDecoder.Y1, fy);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01319}01319                     putFloat(RoiDecoder.X2, fw);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01320}01320                     putFloat(RoiDecoder.Y2, fh);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01321}01321                     \textcolor{comment}{//putFloat(RoiDecoder.FLOAT\_PARAM, (float)p[4]);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01322}01322                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01323}01323 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01324}01324                 \textcolor{comment}{// save stroke width, stroke color and fill color (1.43i or later)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01325}01325                 \textcolor{keywordflow}{if} (VERSION >= 218)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01326}01326                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01327}01327                     saveStrokeWidthAndColor(roi);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01328}01328                     \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01329}01329 \textcolor{comment}{                    if ((roi instanceof PolygonRoi) \&\& ((PolygonRoi)roi).isSplineFit()) \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01330}01330 \textcolor{comment}{                        options |= RoiDecoder.SPLINE\_FIT;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01331}01331 \textcolor{comment}{                        putShort(RoiDecoder.OPTIONS, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01332}01332 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01333}01333 \textcolor{comment}{                    */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01334}01334                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01335}01335 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01336}01336                 \textcolor{keywordflow}{if} (roi.type == ROI.Type.Label)\textcolor{comment}{//(n == 0 \&\& roi instanceof TextRoi)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01337}01337                     saveTextRoi(roi);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01338}01338                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01339}01339 \textcolor{comment}{                else if (n == 0 \&\& roi instanceof ImageRoi)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01340}01340 \textcolor{comment}{                    options = saveImageRoi((ImageRoi)roi, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01341}01341 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01342}01342                 \textcolor{comment}{//else}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01343}01343                 putHeader2(roi, HEADER\_SIZE + n * 4 + floatSize);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01344}01344 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01345}01345                 \textcolor{keywordflow}{if} (n > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01346}01346                 \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01347}01347                     \textcolor{keywordtype}{int} base1 = 64;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01348}01348                     \textcolor{keywordtype}{int} base2 = base1 + 2 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01349}01349                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01350}01350                     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01351}01351                         putShort(base1 + i * 2, (\textcolor{keywordtype}{int})(x[i] -\/ px));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01352}01352                         putShort(base2 + i * 2, (\textcolor{keywordtype}{int})(y[i] -\/ py));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01353}01353                     \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01354}01354                     \textcolor{keywordflow}{if} (xf != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01355}01355                     \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01356}01356                         base1 = 64 + 4 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01357}01357                         base2 = base1 + 4 * n;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01358}01358                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01359}01359                         \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01360}01360                             putFloat(base1 + i * 4, xf[i]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01361}01361                             putFloat(base2 + i * 4, yf[i]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01362}01362                         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01363}01363                     \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01364}01364                 \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01365}01365 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01366}01366                 \textcolor{comment}{//saveOverlayOptions(roi, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01367}01367                 f.Write(data,0,data.Length);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01368}01368             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01369}01369 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01373}01373             \textcolor{keywordtype}{void} saveStrokeWidthAndColor(ROI roi)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01374}01374             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01375}01375                 \textcolor{comment}{//BasicStroke stroke = roi.getStroke();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01376}01376                 \textcolor{comment}{//if (stroke != null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01377}01377                 putShort(RoiDecoder.STROKE\_WIDTH, (\textcolor{keywordtype}{int})roi.strokeWidth);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01378}01378                 Color strokeColor = roi.strokeColor;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01379}01379                 \textcolor{keywordtype}{int} intColor = (strokeColor.R << 16) | (strokeColor.G << 8) | (strokeColor.B);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01380}01380                 putInt(RoiDecoder.STROKE\_COLOR, 0);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01381}01381                 Color fillColor = roi.fillColor;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01382}01382                 \textcolor{keywordtype}{int} intFillColor = (fillColor.R << 16) | (fillColor.G << 8) | (fillColor.B);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01383}01383                 putInt(RoiDecoder.FILL\_COLOR, 0);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01384}01384             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01385}01385 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01393}01393             \textcolor{keywordtype}{void} saveShapeRoi(ROI roi, \textcolor{keywordtype}{int} type, FileStream f, \textcolor{keywordtype}{int} options)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01394}01394             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01395}01395                 \textcolor{comment}{//float[] shapeArray = ((ShapeRoi)roi).getShapeAsArray();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01396}01396                 \textcolor{comment}{//if (shapeArray == null) return;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01397}01397                 \textcolor{comment}{//BufferedOutputStream bout = new BufferedOutputStream(f);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01398}01398 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01399}01399                 data = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[HEADER\_SIZE + HEADER2\_SIZE + roiNameSize + roiPropsSize];\textcolor{comment}{//shapeArray.length * 4 + roiNameSize + roiPropsSize];}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01400}01400                 data[0] = 73; data[1] = 111; data[2] = 117; data[3] = 116; \textcolor{comment}{// "{}Iout"{}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01401}01401 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01402}01402                 putShort(RoiDecoder.VERSION\_OFFSET, VERSION);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01403}01403                 data[RoiDecoder.TYPE] = (byte)type;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01404}01404 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01405}01405                 \textcolor{keywordtype}{float} x, y, w, h;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01406}01406                 GetXY(roi, out x, out y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01407}01407                 GetWH(roi, out w, out h);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01408}01408                 putShort(RoiDecoder.TOP, (\textcolor{keywordtype}{int})y);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01409}01409                 putShort(RoiDecoder.LEFT, (\textcolor{keywordtype}{int})x);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01410}01410                 putShort(RoiDecoder.BOTTOM, (\textcolor{keywordtype}{int})(y + h));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01411}01411                 putShort(RoiDecoder.RIGHT, (\textcolor{keywordtype}{int})(x + w));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01412}01412                 putInt(RoiDecoder.POSITION, roi.coord.Z);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01414}01414                 \textcolor{comment}{//putInt(36, shapeArray.Length); // non-\/zero segment count indicate composite type}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01415}01415                 \textcolor{keywordflow}{if} (VERSION >= 218)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01416}01416                     saveStrokeWidthAndColor(roi);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01417}01417                 \textcolor{comment}{//saveOverlayOptions(roi, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01418}01418 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01419}01419                 \textcolor{comment}{// handle the actual data: data are stored segment-\/wise, i.e.,}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01420}01420                 \textcolor{comment}{// the type of the segment followed by 0-\/6 control point coordinates.}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01421}01421                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01422}01422 \textcolor{comment}{                int bas = 64;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01423}01423 \textcolor{comment}{                for (int i = 0; i < shapeArray.Length; i++)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01424}01424 \textcolor{comment}{                \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01425}01425 \textcolor{comment}{                    putFloat(bas, shapeArray[i]);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01426}01426 \textcolor{comment}{                    bas += 4;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01427}01427 \textcolor{comment}{                \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01428}01428 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01429}01429                 \textcolor{keywordtype}{int} hdr2Offset = HEADER\_SIZE;\textcolor{comment}{// + shapeArray.Length * 4;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01430}01430                 \textcolor{comment}{//ij.IJ.log("{}saveShapeRoi: "{}+HEADER\_SIZE+"{}  "{}+shapeArray.length);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01431}01431                 putHeader2(roi, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01432}01432                 f.Write(data, 0, data.Length);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01433}01433                 f.Flush();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01434}01434             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01435}01435 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01436}01436             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01437}01437 \textcolor{comment}{            void saveOverlayOptions(ROI roi, int options)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01438}01438 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01439}01439 \textcolor{comment}{                Overlay proto = roi.getPrototypeOverlay();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01440}01440 \textcolor{comment}{                if (proto.getDrawLabels())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01441}01441 \textcolor{comment}{                    options |= RoiDecoder.OVERLAY\_LABELS;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01442}01442 \textcolor{comment}{                if (proto.getDrawNames())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01443}01443 \textcolor{comment}{                    options |= RoiDecoder.OVERLAY\_NAMES;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01444}01444 \textcolor{comment}{                if (proto.getDrawBackgrounds())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01445}01445 \textcolor{comment}{                    options |= RoiDecoder.OVERLAY\_BACKGROUNDS;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01446}01446 \textcolor{comment}{                Font font = proto.getLabelFont();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01447}01447 \textcolor{comment}{                if (font != null \&\& font.getStyle() == Font.BOLD)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01448}01448 \textcolor{comment}{                    options |= RoiDecoder.OVERLAY\_BOLD;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01449}01449 \textcolor{comment}{                if (proto.scalableLabels())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01450}01450 \textcolor{comment}{                    options |= RoiDecoder.SCALE\_LABELS;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01451}01451 \textcolor{comment}{                putShort(RoiDecoder.OPTIONS, options);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01452}01452 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01453}01453 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01457}01457             \textcolor{keywordtype}{void} saveTextRoi(ROI roi)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01458}01458             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01459}01459                 \textcolor{comment}{//Font font = roi.getCurrentFont();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01460}01460                 \textcolor{keywordtype}{string} fontName = roi.family.ToString();}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01461}01461                 \textcolor{keywordtype}{int} size = (int)roi.fontSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01462}01462                 \textcolor{keywordtype}{int} drawStringMode = 0; \textcolor{comment}{//roi.getDrawStringMode() ? 1024 : 0;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01463}01463                 \textcolor{keywordtype}{int} style = 0;\textcolor{comment}{//font.getStyle() + roi.getJustification() * 256 + drawStringMode;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01464}01464                 \textcolor{keywordtype}{string} text = roi.roiName;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01465}01465                 \textcolor{keywordtype}{float} angle = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01466}01466                 \textcolor{keywordtype}{int} angleLength = 4;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01467}01467                 \textcolor{keywordtype}{int} fontNameLength = fontName.Length;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01468}01468                 \textcolor{keywordtype}{int} textLength = text.Length;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01469}01469                 \textcolor{keywordtype}{int} textRoiDataLength = 16 + fontNameLength * 2 + textLength * 2 + angleLength;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01470}01470                 \textcolor{keywordtype}{byte}[] data2 = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[HEADER\_SIZE + HEADER2\_SIZE + textRoiDataLength + roiNameSize + roiPropsSize];}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01471}01471                 Array.Copy(data, 0, data2, 0, HEADER\_SIZE);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01472}01472                 data = data2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01473}01473                 putShort(RoiDecoder.SUBTYPE, RoiDecoder.TEXT);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01474}01474                 putInt(HEADER\_SIZE, size);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01475}01475                 putInt(HEADER\_SIZE + 4, style);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01476}01476                 putInt(HEADER\_SIZE + 8, fontNameLength);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01477}01477                 putInt(HEADER\_SIZE + 12, textLength);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01478}01478                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < fontNameLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01479}01479                     putShort(HEADER\_SIZE + 16 + i * 2, fontName.ElementAt(i));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01480}01480                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < textLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01481}01481                     putShort(HEADER\_SIZE + 16 + fontNameLength * 2 + i * 2, text.ElementAt(i));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01482}01482                 \textcolor{keywordtype}{int} hdr2Offset = HEADER\_SIZE + textRoiDataLength;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01483}01483                 \textcolor{comment}{//ij.IJ.log("{}saveTextRoi: "{}+HEADER\_SIZE+"{}  "{}+textRoiDataLength+"{}  "{}+fontNameLength+"{}  "{}+textLength);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01484}01484                 putFloat(hdr2Offset -\/ angleLength, angle);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01485}01485                 putHeader2(roi, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01486}01486             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01487}01487             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01488}01488 \textcolor{comment}{            private int saveImageRoi(ROI roi, int options)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01489}01489 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01490}01490 \textcolor{comment}{                byte[] bytes = roi.getSerializedImage();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01491}01491 \textcolor{comment}{                int imageSize = bytes.length;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01492}01492 \textcolor{comment}{                byte[] data2 = new byte[HEADER\_SIZE + HEADER2\_SIZE + imageSize + roiNameSize + roiPropsSize];}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01493}01493 \textcolor{comment}{                System.arraycopy(data, 0, data2, 0, HEADER\_SIZE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01494}01494 \textcolor{comment}{                data = data2;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01495}01495 \textcolor{comment}{                putShort(RoiDecoder.SUBTYPE, RoiDecoder.IMAGE);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01496}01496 \textcolor{comment}{                for (int i = 0; i < imageSize; i++)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01497}01497 \textcolor{comment}{                    putByte(HEADER\_SIZE + i, bytes[i] \& 255);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01498}01498 \textcolor{comment}{                int hdr2Offset = HEADER\_SIZE + imageSize;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01499}01499 \textcolor{comment}{                double opacity = roi.getOpacity();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01500}01500 \textcolor{comment}{                putByte(hdr2Offset + RoiDecoder.IMAGE\_OPACITY, (int)(opacity * 255.0));}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01501}01501 \textcolor{comment}{                putInt(hdr2Offset + RoiDecoder.IMAGE\_SIZE, imageSize);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01502}01502 \textcolor{comment}{                if (roi.getZeroTransparent())}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01503}01503 \textcolor{comment}{                    options |= RoiDecoder.ZERO\_TRANSPARENT;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01504}01504 \textcolor{comment}{                putHeader2(roi, hdr2Offset);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01505}01505 \textcolor{comment}{                return options;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01506}01506 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01507}01507 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01512}01512             \textcolor{keywordtype}{void} putHeader2(ROI roi, \textcolor{keywordtype}{int} hdr2Offset)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01513}01513             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01514}01514                 \textcolor{comment}{//ij.IJ.log("{}putHeader2: "{}+hdr2Offset+"{} "{}+roiNameSize+"{}  "{}+roiName);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01515}01515                 putInt(RoiDecoder.HEADER2\_OFFSET, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01516}01516                 putInt(hdr2Offset + RoiDecoder.C\_POSITION, roi.coord.C + 1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01517}01517                 putInt(hdr2Offset + RoiDecoder.Z\_POSITION, roi.coord.Z + 1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01518}01518                 putInt(hdr2Offset + RoiDecoder.T\_POSITION, roi.coord.T + 1);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01519}01519                 \textcolor{comment}{//Overlay proto = roi.getPrototypeOverlay();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01520}01520                 Color overlayLabelColor = roi.strokeColor; \textcolor{comment}{//proto.getLabelColor();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01521}01521                 \textcolor{keywordtype}{int} intColor = (overlayLabelColor.R << 16) | (overlayLabelColor.G << 8) | (overlayLabelColor.B);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01522}01522                 \textcolor{comment}{//if (overlayLabelColor != null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01523}01523                 putInt(hdr2Offset + RoiDecoder.OVERLAY\_LABEL\_COLOR, 0);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01524}01524                 \textcolor{comment}{//Font font = proto.getLabelFont();}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01525}01525                 \textcolor{comment}{//if (font != null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01526}01526                 putShort(hdr2Offset + RoiDecoder.OVERLAY\_FONT\_SIZE, (\textcolor{keywordtype}{int})roi.fontSize);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01527}01527                 \textcolor{keywordflow}{if} (roiNameSize > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01528}01528                     putName(roi, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01529}01529                 \textcolor{keywordtype}{double} strokeWidth = roi.strokeWidth;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01530}01530                 \textcolor{comment}{//if (roi.getStroke() == null)}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01531}01531                 \textcolor{comment}{//    strokeWidth = 0.0;}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01532}01532                 putFloat(hdr2Offset + RoiDecoder.FLOAT\_STROKE\_WIDTH, (\textcolor{keywordtype}{float})strokeWidth);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01533}01533                 \textcolor{keywordflow}{if} (roiPropsSize > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01534}01534                     putProps(roi, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01535}01535                 \textcolor{keywordflow}{if} (countersSize > 0)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01536}01536                     putPointCounters(roi, hdr2Offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01537}01537                 putByte(hdr2Offset + RoiDecoder.GROUP, roi.serie);\textcolor{comment}{//roi.getGroup());}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01538}01538             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01539}01539 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01545}01545             \textcolor{keywordtype}{void} putName(ROI roi, \textcolor{keywordtype}{int} hdr2Offset)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01546}01546             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01547}01547                 \textcolor{keywordtype}{int} offset = hdr2Offset + HEADER2\_SIZE;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01548}01548                 \textcolor{keywordtype}{int} nameLength = roiNameSize / 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01549}01549                 putInt(hdr2Offset + RoiDecoder.NAME\_OFFSET, offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01550}01550                 putInt(hdr2Offset + RoiDecoder.NAME\_LENGTH, nameLength);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01551}01551                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < nameLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01552}01552                     putShort(offset + i * 2, roiName.ElementAt(i));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01553}01553             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01554}01554 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01562}01562             \textcolor{keywordtype}{void} putProps(ROI roi, \textcolor{keywordtype}{int} hdr2Offset)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01563}01563             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01564}01564                 \textcolor{keywordtype}{int} offset = hdr2Offset + HEADER2\_SIZE + roiNameSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01565}01565                 \textcolor{keywordtype}{int} roiPropsLength = roiPropsSize / 2;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01566}01566                 putInt(hdr2Offset + RoiDecoder.ROI\_PROPS\_OFFSET, offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01567}01567                 putInt(hdr2Offset + RoiDecoder.ROI\_PROPS\_LENGTH, roiPropsLength);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01568}01568                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < roiPropsLength; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01569}01569                     putShort(offset + i * 2, roiProps.ElementAt(i));}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01570}01570             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01571}01571 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01576}01576             \textcolor{keywordtype}{void} putPointCounters(ROI roi, \textcolor{keywordtype}{int} hdr2Offset)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01577}01577             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01578}01578                 \textcolor{keywordtype}{int} offset = hdr2Offset + HEADER2\_SIZE + roiNameSize + roiPropsSize;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01579}01579                 putInt(hdr2Offset + RoiDecoder.COUNTERS\_OFFSET, offset);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01580}01580                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < countersSize / 4; i++)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01581}01581                     putInt(offset + i * 4, counters[i]);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01582}01582                 countersSize = 0;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01583}01583             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01584}01584 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01589}01589             \textcolor{keywordtype}{void} putByte(\textcolor{keywordtype}{int} bas, \textcolor{keywordtype}{int} v)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01590}01590             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01591}01591                 data[bas] = (byte)v;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01592}01592             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01593}01593 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01598}01598             \textcolor{keywordtype}{void} putShort(\textcolor{keywordtype}{int} bas, \textcolor{keywordtype}{int} v)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01599}01599             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01600}01600                 \textcolor{comment}{//data[bas] = (byte)(v >>> 8);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01601}01601                 \textcolor{comment}{//data[bas] = (byte)UnsignedRightShift(v, 8);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01602}01602                 data[bas] = (byte)rightMove(v, 8);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01603}01603                 data[bas + 1] = (byte)v;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01604}01604             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01605}01605 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01611}01611             \textcolor{keywordtype}{void} putFloat(\textcolor{keywordtype}{int} bas, \textcolor{keywordtype}{float} v)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01612}01612             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01613}01613                 \textcolor{keywordtype}{byte}[] bytes = BitConverter.GetBytes(v);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01614}01614                 \textcolor{keywordtype}{int} tmp = BitConverter.ToInt32(bytes, 0);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01615}01615                 \textcolor{comment}{//int tmp = BitConverter.SingleToInt32Bits(v);//Float.floatToIntBits(v);}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01616}01616                 data[bas] = (byte)(tmp >> 24);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01617}01617                 data[bas + 1] = (byte)(tmp >> 16);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01618}01618                 data[bas + 2] = (byte)(tmp >> 8);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01619}01619                 data[bas + 3] = (byte)tmp;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01620}01620             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01621}01621 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01626}01626             \textcolor{keywordtype}{void} putInt(\textcolor{keywordtype}{int} bas, \textcolor{keywordtype}{int} i)}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01627}01627             \{}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01628}01628                 data[bas] = (byte)(i >> 24);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01629}01629                 data[bas + 1] = (byte)(i >> 16);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01630}01630                 data[bas + 2] = (byte)(i >> 8);}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01631}01631                 data[bas + 3] = (byte)i;}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01632}01632             \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01633}01633         \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01634}01634 }
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01635}01635     \}}
+\DoxyCodeLine{\Hypertarget{_image_j_8cs_source_l01636}01636 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,451 @@
+\hypertarget{_histogram_control_8cs_source}{}\doxysection{Histogram\+Control.\+cs}
+\label{_histogram_control_8cs_source}\index{F:/repos/BioImager/BioImager/Source/HistogramControl.cs@{F:/repos/BioImager/BioImager/Source/HistogramControl.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00003}00003 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Data;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00010}00010 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00011}00011 \textcolor{keyword}{using }Bitmap = System.Drawing.Bitmap;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00012}00012 \textcolor{keyword}{using }Color = System.Drawing.Color;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00013}00013 \textcolor{keyword}{using }PointF = System.Drawing.PointF;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00014}00014 \textcolor{keyword}{using }Size = System.Drawing.Size;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00015}00015 \textcolor{keyword}{using }SizeF = System.Drawing.SizeF;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00016}00016 \textcolor{keyword}{using }RectangleF = System.Drawing.RectangleF;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00017}00017 \textcolor{keyword}{using }RectangleD = AForge.RectangleD;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00018}00018 \textcolor{keyword}{using }Rectangle = System.Drawing.Rectangle;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00019}00019 \textcolor{keyword}{using }Point = System.Drawing.Point;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00020}00020 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00022}\mbox{\hyperlink{class_bio_1_1_histogram_control}{00022}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_1_1_histogram_control}{HistogramControl}} : UserControl}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00023}00023     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00024}00024         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_histogram_control}{HistogramControl}}(Channel c)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00026}00026             channel = c;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00027}00027             this.Dock = DockStyle.Fill;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00028}00028             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00029}00029             \textcolor{keywordflow}{if} (c.BitsPerPixel == 8)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00031}00031                 graphMax = 255;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00032}00032                 Bin = 1;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00033}00033             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00034}00034             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00035}00035             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00036}00036                 graphMax = ushort.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00037}00037                 Bin = 10;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00038}00038             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00040}00040         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00041}00041         \textcolor{keyword}{private} Channel channel = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00042}00042         \textcolor{keyword}{private} \textcolor{keywordtype}{float} bin = 10;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00043}00043         \textcolor{keyword}{public} \textcolor{keywordtype}{float} Bin}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00045}00045             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00046}00046             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00047}00047                 \textcolor{keywordflow}{return} bin;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00048}00048             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00049}00049             \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00050}00050             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00051}00051                 bin = value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00052}00052             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00053}00053         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00054}00054         \textcolor{keyword}{private} \textcolor{keywordtype}{int} min = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00055}00055         \textcolor{keyword}{public} \textcolor{keywordtype}{float} Min}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00056}00056         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00057}00057             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} min; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00058}00058             \textcolor{keyword}{set} }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00059}00059             \{ }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00060}00060                 \textcolor{keywordflow}{if}(channel!=\textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00061}00061                     channel.range[\mbox{\hyperlink{class_bio_1_1_app}{App}}.channelsTool.SelectedSample].Min = (int)value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00062}00062                 min = (int)value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00063}00063             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00064}00064         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00065}00065         \textcolor{keyword}{private} \textcolor{keywordtype}{int} max = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00066}00066         \textcolor{keyword}{public} \textcolor{keywordtype}{float} Max}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00067}00067         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00068}00068             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} max; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00069}00069             \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00070}00070             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00071}00071                 \textcolor{keywordflow}{if} (channel != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00072}00072                     channel.range[\mbox{\hyperlink{class_bio_1_1_app}{App}}.channelsTool.SelectedSample].Max = (int)value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00073}00073                 max = (int)value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00074}00074             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00075}00075         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00076}00076         \textcolor{keyword}{private} \textcolor{keywordtype}{int} graphMax = ushort.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00077}00077         \textcolor{keyword}{public} \textcolor{keywordtype}{int} GraphMax}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00078}00078         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00079}00079             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} graphMax; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00080}00080             \textcolor{keyword}{set} \{ graphMax = value; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00081}00081         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00082}00082         \textcolor{keyword}{private} \textcolor{keywordtype}{int} graphMin = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00083}00083         \textcolor{keyword}{public} \textcolor{keywordtype}{int} GraphMin}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00084}00084         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00085}00085             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} graphMin; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00086}00086             \textcolor{keyword}{set} \{ graphMin = value; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00087}00087         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00088}00088         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} stackHistogram = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00089}00089         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} StackHistogram}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00090}00090         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00091}00091             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00092}00092             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00093}00093                 \textcolor{keywordflow}{return} stackHistogram;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00094}00094             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00095}00095             \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00096}00096             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00097}00097                 stackHistogram = value;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00098}00098             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00099}00099         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00100}00100         \textcolor{keyword}{private} \textcolor{keywordtype}{int} mouseX = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00101}00101         \textcolor{keyword}{private} \textcolor{keywordtype}{int} mouseY = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00102}00102         \textcolor{keyword}{public} \textcolor{keywordtype}{int} MouseX}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00103}00103         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00104}00104             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00105}00105             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00106}00106                 \textcolor{keywordflow}{return} mouseX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00107}00107             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00108}00108         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00109}00109         \textcolor{keyword}{public} \textcolor{keywordtype}{int} MouseY}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00110}00110         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00111}00111             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00112}00112             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00113}00113                 \textcolor{keywordflow}{return} mouseX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00114}00114             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00115}00115         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00116}00116         \textcolor{keyword}{private} \textcolor{keywordtype}{float} mouseValX = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00117}00117         \textcolor{keyword}{private} \textcolor{keywordtype}{float} mouseValY = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00118}00118         \textcolor{keyword}{public} \textcolor{keywordtype}{float} MouseValX}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00119}00119         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00120}00120             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00121}00121             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00122}00122                 \textcolor{keywordflow}{return} mouseValX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00123}00123             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00124}00124         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00125}00125         \textcolor{keyword}{public} \textcolor{keywordtype}{float} MouseValY}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00126}00126         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00127}00127             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00128}00128             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00129}00129                 \textcolor{keywordflow}{return} mouseValY;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00130}00130             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00131}00131         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00132}00132 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00133}00133         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} axisNumbers = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00134}00134         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} AxisNumbers}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00135}00135         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00136}00136             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} axisNumbers;\}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00137}00137             \textcolor{keyword}{set} \{ axisNumbers = value; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00138}00138         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00140}00140         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} axisTicks = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00141}00141         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} AxisTicks}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00142}00142         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00143}00143             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} axisTicks; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00144}00144             \textcolor{keyword}{set} \{ axisTicks = value; \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00145}00145         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00146}00146 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00147}00147         \textcolor{keyword}{private} \textcolor{keywordtype}{float} fx = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00148}00148         \textcolor{keyword}{private} \textcolor{keywordtype}{float} fy = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00149}00149         \textcolor{keyword}{private} Bitmap bm;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00150}00150         \textcolor{keyword}{private} System.Drawing.Graphics g;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00155}\mbox{\hyperlink{class_bio_1_1_histogram_control_a58047dcca6223e84900d9d83b73291d2}{00155}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_histogram_control_a58047dcca6223e84900d9d83b73291d2}{UpdateChannel}}(Channel c)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00156}00156         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00157}00157             channel = c;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00158}00158         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00160}\mbox{\hyperlink{class_bio_1_1_histogram_control_a5ccddebf79dd837f5d6f2ce6a51655a5}{00160}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_histogram_control_a5ccddebf79dd837f5d6f2ce6a51655a5}{UpdateView}}()}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00161}00161         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00162}00162             this.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00163}00163         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00168}00168         \textcolor{keyword}{private} \textcolor{keywordtype}{void} HistogramControl\_Paint(\textcolor{keywordtype}{object} sender, PaintEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00169}00169         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00170}00170             \textcolor{keywordflow}{if} (graphMax == 0)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00171}00171                 graphMax = ushort.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00172}00172             g.Clear(Color.LightGray);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00173}00173             g.ResetTransform();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00174}00174             g.TranslateTransform(-\/graphMin, 0);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00175}00175             \textcolor{keywordtype}{string} st = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00176}00176             fx = ((float)this.Width) / ((float)graphMax);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00177}00177             \textcolor{keywordtype}{float} maxmedian = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00178}00178             \textcolor{keywordtype}{int} maxChan = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00179}00179             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} cc = 0; cc < \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.Channels.Count; cc++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00180}00180             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00181}00181                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.Channels[cc].stats.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00182}00182                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00183}00183                     \textcolor{keywordtype}{float} f = \mbox{\hyperlink{class_bio_1_1_image_view}{ImageView}}.SelectedImage.Channels[cc].stats[i].StackMedian;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00184}00184                     \textcolor{keywordflow}{if} (maxmedian < f)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00185}00185                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00186}00186                         maxmedian = f;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00187}00187                         maxChan = cc;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00188}00188                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00189}00189                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00190}00190             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00191}00191             fy = ((float)this.Height) / maxmedian;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00192}00192             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < ImageView.SelectedImage.Channels.Count; c++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00193}00193             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00194}00194                 Channel channel = ImageView.SelectedImage.Channels[c];}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00195}00195                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < channel.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00196}00196                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00197}00197                     Statistics stat;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00198}00198                     \textcolor{keywordflow}{if} (ImageView.SelectedImage.RGBChannelCount == 1)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00199}00199                         stat = channel.stats[0];}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00200}00200                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00201}00201                         stat = channel.stats[i];}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00203}00203                     Pen black = \textcolor{keyword}{new} Pen(Color.FromArgb(35, 0, 0, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00204}00204                     Pen blackd = \textcolor{keyword}{new} Pen(Color.FromArgb(150, 0, 0, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00205}00205                     Pen pen = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00206}00206                     Pen pend = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00207}00207                     \textcolor{keywordtype}{int} dark = 200;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00208}00208                     \textcolor{keywordtype}{int} light = 50;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00209}00209                     \textcolor{keywordflow}{if} (channel.Emission != 0)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00210}00210                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00211}00211                         pen = \textcolor{keyword}{new} Pen(SpectralColor(channel.Emission), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00212}00212                         pen.Color = Color.FromArgb(light, pen.Color);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00213}00213                         pend = \textcolor{keyword}{new} Pen(SpectralColor(channel.Emission), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00214}00214                         pend.Color = Color.FromArgb(dark, pen.Color);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00215}00215                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00216}00216                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00217}00217                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00218}00218                         \textcolor{keywordflow}{if} (i == 0)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00219}00219                         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00220}00220                             pen = \textcolor{keyword}{new} Pen(Color.FromArgb(light, 255, 0, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00221}00221                             pend = \textcolor{keyword}{new} Pen(Color.FromArgb(dark, 255, 0, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00222}00222                         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00223}00223                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (i == 1)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00224}00224                         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00225}00225                             pen = \textcolor{keyword}{new} Pen(Color.FromArgb(light, 0, 255, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00226}00226                             pend = \textcolor{keyword}{new} Pen(Color.FromArgb(dark, 0, 255, 0), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00227}00227                         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00228}00228                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00229}00229                         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00230}00230                             pen = \textcolor{keyword}{new} Pen(Color.FromArgb(light, 0, 0, 255), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00231}00231                             pend = \textcolor{keyword}{new} Pen(Color.FromArgb(dark, 0, 0, 255), bin * fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00232}00232                         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00233}00233                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00234}00234 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00235}00235                     g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF(mouseX, 0), \textcolor{keyword}{new} PointF(mouseX, this.Height));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00236}00236                     \textcolor{keywordtype}{int} gmax = graphMax;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00237}00237                     \textcolor{keywordflow}{if} (App.Image.bitsPerPixel <= 8)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00238}00238                         gmax = 255;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00239}00239 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00240}00240 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00241}00241                     \textcolor{keywordtype}{float} sumbins = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00242}00242                     \textcolor{keywordtype}{float} sumbin = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00243}00243                     \textcolor{keywordtype}{int} binind = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00244}00244                     \textcolor{keywordtype}{int} bininds = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00245}00245                     PointF? prevs = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00246}00246                     PointF? prev = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00247}00247                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < gmax; x++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00248}00248                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00249}00249                         \textcolor{keywordflow}{if} (StackHistogram \&\& c == ImageView.SelectedImage.Channels.Count -\/ 1)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00250}00250                         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00251}00251                             \textcolor{comment}{//Lets draw the stack histogram.}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00252}00252                             \textcolor{keywordtype}{float} val = (float)ImageView.SelectedImage.Statistics.StackValues[(\textcolor{keywordtype}{int})x];}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00253}00253                             sumbin += val;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00254}00254                             \textcolor{keywordflow}{if} (binind == bin)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00255}00255                             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00256}00256                                 \textcolor{keywordtype}{float} v = sumbin / binind;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00257}00257                                 \textcolor{keywordtype}{float} yy = this.Height -\/ (fy * v);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00258}00258                                 \textcolor{keywordflow}{if} (prevs != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00259}00259                                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00260}00260                                     g.DrawLine(blackd, prevs.Value, \textcolor{keyword}{new} PointF(fx * x, yy));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00261}00261                                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00262}00262                                 g.DrawLine(black, \textcolor{keyword}{new} PointF(fx * x, this.Height), \textcolor{keyword}{new} PointF(fx * x, yy));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00263}00263                                 prevs = \textcolor{keyword}{new} PointF(fx * x, yy);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00264}00264                                 binind = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00265}00265                                 sumbin = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00266}00266                             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00267}00267                         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00268}00268                         \textcolor{comment}{//Lets draw the channel histogram on top of the stack histogram.}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00269}00269                         \textcolor{keywordtype}{float} rv = stat.StackValues[(int)x];}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00270}00270                         sumbins += rv;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00271}00271                         \textcolor{keywordflow}{if} (bininds == bin)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00272}00272                         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00273}00273                             g.DrawLine(pen, \textcolor{keyword}{new} PointF(fx * x, this.Height), \textcolor{keyword}{new} PointF(fx * x, this.Height -\/ (fy * (sumbins / bininds))));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00274}00274                             \textcolor{keywordflow}{if} (prev != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00275}00275                             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00276}00276                                 g.DrawLine(pend, prev.Value, \textcolor{keyword}{new} PointF(fx * x, this.Height -\/ (fy * (sumbins / bininds))));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00277}00277                             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00278}00278                             prev = \textcolor{keyword}{new} PointF(fx * x, this.Height -\/ (fy * (sumbins / bininds)));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00279}00279                             bininds = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00280}00280                             sumbins = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00281}00281                         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00282}00282                         binind++;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00283}00283                         bininds++;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00284}00284 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00285}00285                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00286}00286                     }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00287}00287                     g.DrawLine(pend, \textcolor{keyword}{new} PointF((fx * channel.range[i].Max), 0), \textcolor{keyword}{new} PointF((fx * channel.range[i].Max), \textcolor{keyword}{this}.Height));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00288}00288                     g.DrawLine(pend, \textcolor{keyword}{new} PointF(fx * channel.range[i].Min, 0), \textcolor{keyword}{new} PointF(fx * channel.range[i].Min, \textcolor{keyword}{this}.Height));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00289}00289 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00290}00290                     black.Dispose();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00291}00291                     blackd.Dispose();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00292}00292                     pen.Dispose();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00293}00293                     pend.Dispose();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00294}00294                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00295}00295                 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00296}00296             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00297}00297 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00298}00298             \textcolor{keywordtype}{float} tick = 6;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00299}00299             \textcolor{keywordflow}{if} (axisTicks)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00300}00300             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00301}00301                 \textcolor{keywordflow}{if} (axisNumbers)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00302}00302                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00303}00303                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < graphMax; x += 2000)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00304}00304                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00305}00305                         SizeF s = g.MeasureString(x.ToString(), SystemFonts.DefaultFont);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00306}00306                         g.DrawString(x.ToString(), SystemFonts.DefaultFont, Brushes.Black, (fx * x) -\/ (s.Width/2), tick + 6);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00307}00307                         g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF((fx * x), 0), \textcolor{keyword}{new} PointF((fx * x), tick + 3));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00308}00308                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00309}00309                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < graphMax; x += 1000)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00310}00310                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00311}00311                         g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF((fx * x), 0), \textcolor{keyword}{new} PointF((fx * x), tick));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00312}00312                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00313}00313                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00314}00314                 \textcolor{keywordflow}{if} (graphMax <= 16383)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00315}00315                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < graphMax; x += 100)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00316}00316                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00317}00317                     g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF((fx * x), 0), \textcolor{keyword}{new} PointF((fx * x), tick));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00318}00318                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00319}00319                 \textcolor{keywordflow}{if} (graphMax <= 255)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00320}00320                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00321}00321                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < graphMax; x += 50)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00322}00322                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00323}00323                         g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF((fx * x), 0), \textcolor{keyword}{new} PointF((fx * x), 4));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00324}00324                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00325}00325                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{float} x = 0; x < graphMax; x += 10)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00326}00326                     \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00327}00327                         g.DrawLine(Pens.Black, \textcolor{keyword}{new} PointF((fx * x), 0), \textcolor{keyword}{new} PointF((fx * x), 2));}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00328}00328                     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00329}00329                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00330}00330             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00331}00331 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00332}00332             \textcolor{keywordflow}{if} (ImageView.SelectedImage.RGBChannelCount == 3)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00333}00333             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00334}00334                 \textcolor{keywordflow}{if} (ImageView.SelectedImage.Channels.Count > 2)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00335}00335                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00336}00336                     st =}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00337}00337                         \textcolor{stringliteral}{"{}("{}} + (mouseX / fx).ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00338}00338                         \textcolor{stringliteral}{"{},R:"{}} + ImageView.SelectedImage.Channels[2].stats[2].StackValues[(int)(mouseX / fx)].ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00339}00339                         \textcolor{stringliteral}{"{},G:"{}} + ImageView.SelectedImage.Channels[1].stats[1].StackValues[(int)(mouseX / fx)].ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00340}00340                         \textcolor{stringliteral}{"{},B:"{}} + ImageView.SelectedImage.Channels[0].stats[0].StackValues[(int)(mouseX / fx)].ToString() + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00341}00341                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00342}00342                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00343}00343                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00344}00344                     st =}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00345}00345                         \textcolor{stringliteral}{"{}("{}} + (mouseX / fx).ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00346}00346                         \textcolor{stringliteral}{"{},R:"{}} + ImageView.SelectedImage.Channels[0].stats[2].StackValues[(int)(mouseX / fx)].ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00347}00347                         \textcolor{stringliteral}{"{},G:"{}} + ImageView.SelectedImage.Channels[0].stats[1].StackValues[(int)(mouseX / fx)].ToString() +}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00348}00348                         \textcolor{stringliteral}{"{},B:"{}} + ImageView.SelectedImage.Channels[0].stats[0].StackValues[(int)(mouseX / fx)].ToString() + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00349}00349                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00350}00350             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00351}00351             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00352}00352             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00353}00353                 \textcolor{keywordtype}{int} x = (int)(mouseX / fx);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00354}00354                 \textcolor{keywordflow}{if} (ImageView.SelectedImage.bitsPerPixel < 8 \&\& ImageView.SelectedImage.Channels[0].stats[0].StackValues.Length < 255)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00355}00355                     st = \textcolor{stringliteral}{"{}("{}} + (mouseX / fx).ToString() + \textcolor{stringliteral}{"{},"{}} + ImageView.SelectedImage.Channels[0].stats[0].StackValues[x].ToString() + \textcolor{stringliteral}{"{})"{}};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00356}00356 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00357}00357             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00358}00358             SizeF sf = g.MeasureString(st, SystemFonts.DefaultFont);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00359}00359             g.DrawString(st, SystemFonts.DefaultFont, Brushes.Black, mouseX, mouseY + sf.Height);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00360}00360 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00361}00361             e.Graphics.DrawImage(bm, 0, 0);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00362}00362         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00363}00363 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00368}00368         \textcolor{keyword}{private} \textcolor{keywordtype}{void} HistogramControl\_MouseDown(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00369}00369         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00370}00370             mouseX = e.X;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00371}00371             mouseY = e.Y;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00372}00372             Invalidate();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00373}00373         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00374}00374 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00380}00380         \textcolor{keyword}{private} \textcolor{keywordtype}{void} HistogramControl\_MouseMove(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00381}00381         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00382}00382             mouseValX = e.X / fx;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00383}00383             mouseValY = e.Y / fy;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00384}00384         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00385}00385 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00390}00390         \textcolor{keyword}{private} \textcolor{keywordtype}{void} HistogramControl\_SizeChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00391}00391         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00392}00392             InitGraphics();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00393}00393         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00398}00398         \textcolor{keyword}{private} \textcolor{keywordtype}{void} InitGraphics()}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00399}00399         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00400}00400             \textcolor{keywordflow}{if} (Width == 0 || Height == 0)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00401}00401                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00402}00402             bm = \textcolor{keyword}{new} Bitmap(Width, Height);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00403}00403             \textcolor{keywordflow}{if} (g != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00404}00404                 g.Dispose();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00405}00405             g = System.Drawing.Graphics.FromImage(bm);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00406}00406         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00407}00407 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00412}00412         \textcolor{keyword}{private} \textcolor{keywordtype}{void} copyViewToClipboardToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00413}00413         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00414}00414             Clipboard.SetImage(bm);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00415}00415         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00416}00416 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00422}00422         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMaxToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00423}00423         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00424}00424             App.channelsTool.SelectedChannel.range[App.channelsTool.SelectedSample].Max = (int)MouseValX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00425}00425             Invalidate();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00426}00426             App.viewer.UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00427}00427         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00428}00428 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00434}00434         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMinToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00435}00435         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00436}00436             App.channelsTool.SelectedChannel.range[App.channelsTool.SelectedSample].Min = (int)MouseValX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00437}00437             Invalidate();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00438}00438             App.viewer.UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00439}00439         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00440}00440 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00445}00445         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMaxAllToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00446}00446         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00447}00447             \textcolor{keywordflow}{foreach} (Channel c \textcolor{keywordflow}{in} ImageView.SelectedImage.Channels)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00448}00448             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00449}00449                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00450}00450                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00451}00451                     c.range[i].Max = (int)MouseValX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00452}00452                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00453}00453             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00454}00454         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00455}00455 }
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00460}00460         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMinAllToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00461}00461         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00462}00462             \textcolor{keywordflow}{foreach} (Channel c \textcolor{keywordflow}{in} ImageView.SelectedImage.Channels)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00463}00463             \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00464}00464                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00465}00465                 \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00466}00466                     c.range[i].Min = (int)MouseValX;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00467}00467                 \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00468}00468             \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00469}00469         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00475}00475         Color SpectralColor(\textcolor{keywordtype}{double} l) \textcolor{comment}{// RGB <0,1> <-\/ lambda l <400,700> [nm]}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00476}00476         \{}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00477}00477             \textcolor{keywordtype}{double} t;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00478}00478             \textcolor{keywordtype}{double} r = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00479}00479             \textcolor{keywordtype}{double} g = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00480}00480             \textcolor{keywordtype}{double} b = 0;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00481}00481             \textcolor{keywordflow}{if} ((l >= 400.0) \&\& (l < 410.0)) \{ t = (l -\/ 400.0) / (410.0 -\/ 400.0); r = +(0.33 * t) -\/ (0.20 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00482}00482             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 410.0) \&\& (l < 475.0)) \{ t = (l -\/ 410.0) / (475.0 -\/ 410.0); r = 0.14 -\/ (0.13 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00483}00483             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 545.0) \&\& (l < 595.0)) \{ t = (l -\/ 545.0) / (595.0 -\/ 545.0); r = +(1.98 * t) -\/ (t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00484}00484             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 595.0) \&\& (l < 650.0)) \{ t = (l -\/ 595.0) / (650.0 -\/ 595.0); r = 0.98 + (0.06 * t) -\/ (0.40 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00485}00485             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 650.0) \&\& (l < 700.0)) \{ t = (l -\/ 650.0) / (700.0 -\/ 650.0); r = 0.65 -\/ (0.84 * t) + (0.20 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00486}00486             \textcolor{keywordflow}{if} ((l >= 415.0) \&\& (l < 475.0)) \{ t = (l -\/ 415.0) / (475.0 -\/ 415.0); g = +(0.80 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00487}00487             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 475.0) \&\& (l < 590.0)) \{ t = (l -\/ 475.0) / (590.0 -\/ 475.0); g = 0.8 + (0.76 * t) -\/ (0.80 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00488}00488             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 585.0) \&\& (l < 639.0)) \{ t = (l -\/ 585.0) / (639.0 -\/ 585.0); g = 0.84 -\/ (0.84 * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00489}00489             \textcolor{keywordflow}{if} ((l >= 400.0) \&\& (l < 475.0)) \{ t = (l -\/ 400.0) / (475.0 -\/ 400.0); b = +(2.20 * t) -\/ (1.50 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00490}00490             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((l >= 475.0) \&\& (l < 560.0)) \{ t = (l -\/ 475.0) / (560.0 -\/ 475.0); b = 0.7 -\/ (t) + (0.30 * t * t); \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00491}00491             r *= 255;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00492}00492             g *= 255;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00493}00493             b *= 255;}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00494}00494             \textcolor{keywordflow}{return} Color.FromArgb(255, (\textcolor{keywordtype}{int})r, (int)g, (\textcolor{keywordtype}{int})b);}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00495}00495         \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00496}00496     \}}
+\DoxyCodeLine{\Hypertarget{_histogram_control_8cs_source_l00497}00497 \}}
+
+\end{DoxyCode}

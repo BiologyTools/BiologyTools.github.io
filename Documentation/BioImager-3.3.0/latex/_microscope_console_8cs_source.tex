@@ -1,0 +1,150 @@
+\hypertarget{_microscope_console_8cs_source}{}\doxysection{Microscope\+Console.\+cs}
+\label{_microscope_console_8cs_source}\index{F:/repos/BioImager/BioImager/Source/MicroscopeConsole.cs@{F:/repos/BioImager/BioImager/Source/MicroscopeConsole.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00001}00001 \textcolor{keyword}{using }\mbox{\hyperlink{namespace_bio}{Bio}};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00002}00002 \textcolor{keyword}{using }com.google.api.client.json;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00003}00003 \textcolor{keyword}{using }Newtonsoft.Json;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00004}00004 \textcolor{keyword}{using }org.checkerframework.checker.units.qual;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00005}00005 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00011}00011 \textcolor{keyword}{using }Bitmap = AForge.Bitmap;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00012}00012 \textcolor{keyword}{using }Color = AForge.Color;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00013}00013 \textcolor{keyword}{using }PointF = AForge.PointF;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00014}00014 \textcolor{keyword}{using }PointD = AForge.PointD;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00015}00015 \textcolor{keyword}{using }Point3D = AForge.Point3D;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00016}00016 \textcolor{keyword}{using }RectangleF = AForge.RectangleF;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00017}00017 \textcolor{keyword}{using }RectangleD = AForge.RectangleD;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00018}00018 \textcolor{keyword}{using }Rectangle = AForge.Rectangle;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00019}00019 \textcolor{keyword}{using }Point = AForge.Point;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00020}00020 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00021}00021 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00022}00022     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }MicroscopeConsole}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00023}00023     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00024}00024         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} synchronous = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00025}00025         \textcolor{keyword}{public} \textcolor{keyword}{static} Process console = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00026}00026         [Serializable]}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00027}\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{00027}}         \textcolor{keyword}{public} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00028}00028         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00029}00029             \textcolor{keyword}{public} \textcolor{keyword}{enum} Type}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00031}00031                 SetStage,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00032}00032                 SetFocus,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00033}00033                 SetObjective,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00034}00034                 SetFilterWheel,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00035}00035                 SetHXP,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00036}00036                 SetRLHalogen,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00037}00037                 SetTLHalogen,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00038}00038                 SetHXPShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00039}00039                 SetRLShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00040}00040                 SetTLShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00041}00041                 SetStageSWLimit,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00042}00042                 SetFocusSWLimit,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00043}00043                 SetCalibration,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00044}00044                 GetStage,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00045}00045                 GetFocus,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00046}00046                 GetObjective,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00047}00047                 GetFilterWheel,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00048}00048                 GetHXP,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00049}00049                 GetRLHalogen,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00050}00050                 GetTLHalogen,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00051}00051                 GetHXPShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00052}00052                 GetRLShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00053}00053                 GetTLShutter,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00054}00054                 GetStageSWLimit,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00055}00055                 GetFocusSWLimit,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00056}00056                 GetCalibration,}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00058}00058             \textcolor{keyword}{public} \textcolor{keywordtype}{double}[] doubles;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00059}00059             \textcolor{keyword}{public} Command.Type type;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00060}00060             \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00062}00062                 doubles = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00063}00063                 type = Type.SetStage;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00064}00064             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00065}00065             \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(Type t, \textcolor{keywordtype}{double}[] ds)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00066}00066             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00067}00067                 doubles = ds;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00068}00068                 type = t;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00069}00069             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00070}00070         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00071}00071         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetStagePosition(PointD p)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00072}00072         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00073}00073             RunCommand(\textcolor{keyword}{new} \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetStage, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ p.X, p.Y \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00074}00074         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00075}00075         \textcolor{keyword}{public} \textcolor{keyword}{static} Command RunCommand(Command c)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00076}00076         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00077}00077             Process[] prs = Process.GetProcessesByName(\textcolor{stringliteral}{"{}MicroscopeConsole.exe"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00078}00078             \textcolor{keywordflow}{if} (prs.Length == 1)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00079}00079                 console = prs[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00080}00080             \textcolor{keywordflow}{if} (console == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00081}00081             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00082}00082                 ProcessStartInfo ps = \textcolor{keyword}{new} ProcessStartInfo();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00083}00083                 \textcolor{keywordtype}{string} arg = JsonConvert.SerializeObject(c);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00084}00084 \textcolor{preprocessor}{\#if DEBUG}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00085}00085                 ps.CreateNoWindow = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00086}00086 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00087}00087                 ps.CreateNoWindow = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00088}00088 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00089}00089                 ps.Arguments = Properties.Settings.Default.LibPath;}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00090}00090                 ps.Arguments = ps.Arguments.Replace(\textcolor{charliteral}{' '}, \textcolor{charliteral}{'\_'});}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00091}00091                 ps.FileName = Application.StartupPath + \textcolor{stringliteral}{"{}MicroscopeConsole\(\backslash\)\(\backslash\)MicroscopeConsole.exe"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00092}00092                 ps.UseShellExecute = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00093}00093                 ps.RedirectStandardError = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00094}00094                 ps.RedirectStandardOutput = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00095}00095                 ps.RedirectStandardInput = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00096}00096                 console = Process.Start(ps);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00097}00097             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00098}00098             \textcolor{keywordflow}{if} (c.type.ToString().StartsWith(\textcolor{stringliteral}{"{}Get"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00099}00099             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00100}00100                 \textcolor{keywordtype}{string} arg = JsonConvert.SerializeObject(c);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00101}00101                 console.StandardInput.WriteLine(\textcolor{stringliteral}{"{}Command:"{}} + arg);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00102}00102                 \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00103}00103                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00104}00104                     \textcolor{keywordflow}{if} (console.HasExited)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00105}00105                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00106}00106                     \textcolor{keywordtype}{string} st = console.StandardOutput.ReadLine();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00107}00107                     \textcolor{keywordflow}{if}(st != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00108}00108                     \textcolor{keywordflow}{if} (st.Length > 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00109}00109                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00110}00110                         \textcolor{keywordflow}{return} JsonConvert.DeserializeObject<Command>(st);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00111}00111                     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00112}00112                     Thread.Sleep(20);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00113}00113                 \} \textcolor{keywordflow}{while} (\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00114}00114                 \textcolor{keywordtype}{string} er = console.StandardError.ReadToEnd();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00115}00115                 \textcolor{keywordtype}{string} o = console.StandardOutput.ReadToEnd();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00116}00116                 Console.WriteLine(er);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00117}00117                 console = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00118}00118                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} Command();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00119}00119             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00120}00120             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00121}00121             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00122}00122                 \textcolor{keywordtype}{string} arg = JsonConvert.SerializeObject(c);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00123}00123                 console.StandardInput.WriteLine(\textcolor{stringliteral}{"{}Command:"{}} + arg);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00124}00124                 \textcolor{keywordflow}{if} (synchronous)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00125}00125                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00126}00126                     \textcolor{comment}{//Now we need to wait till the command is finished.}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00127}00127                     \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00128}00128                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00129}00129                         \textcolor{keywordflow}{if} (console.HasExited)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00130}00130                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00131}00131                         \textcolor{keywordtype}{string} st = console.StandardOutput.ReadLine();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00132}00132                         \textcolor{keywordflow}{if} (st != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00133}00133                             \textcolor{keywordflow}{if} (st.Length > 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00134}00134                             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00135}00135                                 \textcolor{keywordflow}{return} JsonConvert.DeserializeObject<Command>(st);}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00136}00136                             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00137}00137                         Application.DoEvents();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00138}00138                     \} \textcolor{keywordflow}{while} (\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00139}00139                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00140}00140                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} Command();}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00141}00141             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00142}00142         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00143}00143     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_console_8cs_source_l00144}00144 \}}
+
+\end{DoxyCode}

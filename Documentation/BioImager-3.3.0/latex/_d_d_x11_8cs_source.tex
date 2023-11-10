@@ -1,0 +1,290 @@
+\hypertarget{_d_d_x11_8cs_source}{}\doxysection{DDX11.\+cs}
+\label{_d_d_x11_8cs_source}\index{F:/repos/BioImager/BioImager/Graphics/Graphics/DDX11.cs@{F:/repos/BioImager/BioImager/Graphics/Graphics/DDX11.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00001}00001 \textcolor{keyword}{using }SharpDX;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00002}00002 \textcolor{keyword}{using }SharpDX.Direct3D;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00003}00003 \textcolor{keyword}{using }SharpDX.Direct3D11;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00004}00004 \textcolor{keyword}{using }SharpDX.DXGI;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00005}00005 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00006}00006 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00007}00007 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00008}\mbox{\hyperlink{class_bio_1_1_d_d_x11}{00008}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_d_d_x11}{DDX11}}                  \textcolor{comment}{// 270 lines}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00009}00009     \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00010}00010         \textcolor{comment}{// Properties.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00011}00011         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} VerticalSyncEnabled \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00012}00012         \textcolor{keyword}{public} \textcolor{keywordtype}{int} VideoCardMemory \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00013}00013         \textcolor{keyword}{public} \textcolor{keywordtype}{string} VideoCardDescription \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00014}00014         \textcolor{keyword}{private} SwapChain SwapChain \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00015}00015         \textcolor{keyword}{public} SharpDX.Direct3D11.Device Device \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00016}00016         \textcolor{keyword}{public} DeviceContext DeviceContext \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00017}00017         \textcolor{keyword}{private} RenderTargetView RenderTargetView \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00018}00018         \textcolor{keyword}{private} Texture2D DepthStencilBuffer \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00019}00019         \textcolor{keyword}{public} DepthStencilState DepthStencilState \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00020}00020         \textcolor{keyword}{private} DepthStencilView DepthStencilView \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00021}00021         \textcolor{keyword}{private} RasterizerState RasterState \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00022}00022         \textcolor{keyword}{public} Matrix ProjectionMatrix \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00023}00023         \textcolor{keyword}{public} Matrix WorldMatrix \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00025}00025         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00026}00026         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_d_x11}{DDX11}}() \{ \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00028}00028         \textcolor{comment}{// Methods}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00029}00029         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} Initialize(\mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}} configuration, IntPtr windowHandle)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00030}00030         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00031}00031             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00032}00032             \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00033}00033                 \textcolor{comment}{// Store the vsync setting.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00034}00034                 VerticalSyncEnabled = \mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}}.VerticalSyncEnabled;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00036}00036                 \textcolor{comment}{// Create a DirectX graphics interface factory.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00037}00037                 var factory = \textcolor{keyword}{new} Factory1();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00039}00039                 \textcolor{comment}{// Use the factory to create an adapter for the primary graphics interface (video card).}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00040}00040                 var adapter = factory.GetAdapter1(0);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00042}00042                 \textcolor{comment}{// Get the primary adapter output (monitor).}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00043}00043                 var monitor = adapter.GetOutput(0);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00045}00045                 \textcolor{comment}{// Get modes that fit the DXGI\_FORMAT\_R8G8B8A8\_UNORM display format for the adapter output (monitor).}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00046}00046                 var modes = monitor.GetDisplayModeList(Format.R8G8B8A8\_UNorm, DisplayModeEnumerationFlags.Interlaced);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00048}00048                 \textcolor{comment}{// Now go through all the display modes and find the one that matches the screen width and height.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00049}00049                 \textcolor{comment}{// When a match is found store the the refresh rate for that monitor, if vertical sync is enabled. }}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00050}00050                 \textcolor{comment}{// Otherwise we use maximum refresh rate.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00051}00051                 var rational = \textcolor{keyword}{new} Rational(0, 1);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00052}00052                 \textcolor{keywordflow}{if} (VerticalSyncEnabled)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00053}00053                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00054}00054                     \textcolor{keywordflow}{foreach} (var mode \textcolor{keywordflow}{in} modes)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00055}00055                     \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00056}00056                         \textcolor{keywordflow}{if} (mode.Width == configuration.Width \&\& mode.Height == configuration.Height)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00057}00057                         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00058}00058                             rational = \textcolor{keyword}{new} Rational(mode.RefreshRate.Numerator, mode.RefreshRate.Denominator);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00059}00059                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00060}00060                         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00061}00061                     \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00062}00062                 \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00064}00064                 \textcolor{comment}{// Get the adapter (video card) description.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00065}00065                 var adapterDescription = adapter.Description;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00067}00067                 \textcolor{comment}{// Store the dedicated video card memory in megabytes.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00068}00068                 \textcolor{comment}{//VideoCardMemory = adapterDescription.DedicatedVideoMemory >> 10 >> 10;}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00070}00070                 \textcolor{comment}{// Convert the name of the video card to a character array and store it.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00071}00071                 VideoCardDescription = adapterDescription.Description.Trim(\textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00073}00073                 \textcolor{comment}{// Release the adapter output.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00074}00074                 monitor.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00075}00075                 \textcolor{comment}{// Release the adapter.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00076}00076                 adapter.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00077}00077                 \textcolor{comment}{// Release the factory.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00078}00078                 factory.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00080}00080                 \textcolor{comment}{// Initialize the swap chain description.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00081}00081                 var swapChainDesc = \textcolor{keyword}{new} SwapChainDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00082}00082                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00083}00083                     \textcolor{comment}{// Set to a single back buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00084}00084                     BufferCount = 1,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00085}00085                     \textcolor{comment}{// Set the width and height of the back buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00086}00086                     ModeDescription = \textcolor{keyword}{new} ModeDescription(configuration.Width, configuration.Height, rational, Format.R8G8B8A8\_UNorm),}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00087}00087                     \textcolor{comment}{// Set the usage of the back buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00088}00088                     Usage = Usage.RenderTargetOutput,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00089}00089                     \textcolor{comment}{// Set the handle for the window to render to.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00090}00090                     OutputHandle = windowHandle,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00091}00091                     \textcolor{comment}{// Turn multisampling off.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00092}00092                     SampleDescription = \textcolor{keyword}{new} SampleDescription(1, 0),}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00093}00093                     \textcolor{comment}{// Set to full screen or windowed mode.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00094}00094                     IsWindowed = !\mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}}.FullScreen,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00095}00095                     \textcolor{comment}{// Don't set the advanced flags.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00096}00096                     Flags = SwapChainFlags.None,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00097}00097                     \textcolor{comment}{// Discard the back buffer content after presenting.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00098}00098                     SwapEffect = SwapEffect.Discard}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00099}00099                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00101}00101                 \textcolor{comment}{// Create the swap chain, Direct3D device, and Direct3D device context.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00102}00102                 SharpDX.Direct3D11.Device device;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00103}00103                 SwapChain swapChain;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00104}00104                 SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, swapChainDesc, out device, out swapChain);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00106}00106                 Device = device;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00107}00107                 SwapChain = swapChain;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00108}00108                 DeviceContext = device.ImmediateContext;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00110}00110                 \textcolor{comment}{// Get the pointer to the back buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00111}00111                 var backBuffer = Texture2D.FromSwapChain<Texture2D>(SwapChain, 0);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00113}00113                 \textcolor{comment}{// Create the render target view with the back buffer pointer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00114}00114                 RenderTargetView = \textcolor{keyword}{new} RenderTargetView(device, backBuffer);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00116}00116                 \textcolor{comment}{// Release pointer to the back buffer as we no longer need it.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00117}00117                 backBuffer.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00119}00119                 \textcolor{comment}{// Initialize and set up the description of the depth buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00120}00120                 Texture2DDescription depthBufferDesc = \textcolor{keyword}{new} Texture2DDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00121}00121                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00122}00122                     Width = configuration.Width,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00123}00123                     Height = configuration.Height,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00124}00124                     MipLevels = 1,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00125}00125                     ArraySize = 1,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00126}00126                     Format = Format.D24\_UNorm\_S8\_UInt,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00127}00127                     SampleDescription = \textcolor{keyword}{new} SampleDescription(1, 0),}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00128}00128                     Usage = ResourceUsage.Default,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00129}00129                     BindFlags = BindFlags.DepthStencil,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00130}00130                     CpuAccessFlags = CpuAccessFlags.None,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00131}00131                     OptionFlags = ResourceOptionFlags.None}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00132}00132                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00134}00134                 \textcolor{comment}{// Create the texture for the depth buffer using the filled out description.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00135}00135                 DepthStencilBuffer = \textcolor{keyword}{new} Texture2D(device, depthBufferDesc);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00137}00137                 \textcolor{comment}{// Initialize and set up the description of the stencil state.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00138}00138                 DepthStencilStateDescription depthStencilDesc = \textcolor{keyword}{new} DepthStencilStateDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00139}00139                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00140}00140                     IsDepthEnabled = \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00141}00141                     DepthWriteMask = DepthWriteMask.All,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00142}00142                     DepthComparison = Comparison.Less,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00143}00143                     IsStencilEnabled = \textcolor{keyword}{true},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00144}00144                     StencilReadMask = 0xFF,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00145}00145                     StencilWriteMask = 0xFF,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00146}00146                     \textcolor{comment}{// Stencil operation if pixel front-\/facing.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00147}00147                     FrontFace = \textcolor{keyword}{new} DepthStencilOperationDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00148}00148                     \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00149}00149                         FailOperation = StencilOperation.Keep,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00150}00150                         DepthFailOperation = StencilOperation.Increment,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00151}00151                         PassOperation = StencilOperation.Keep,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00152}00152                         Comparison = Comparison.Always}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00153}00153                     \},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00154}00154                     \textcolor{comment}{// Stencil operation if pixel is back-\/facing.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00155}00155                     BackFace = \textcolor{keyword}{new} DepthStencilOperationDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00156}00156                     \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00157}00157                         FailOperation = StencilOperation.Keep,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00158}00158                         DepthFailOperation = StencilOperation.Decrement,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00159}00159                         PassOperation = StencilOperation.Keep,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00160}00160                         Comparison = Comparison.Always}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00161}00161                     \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00162}00162                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00164}00164                 \textcolor{comment}{// Create the depth stencil state.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00165}00165                 DepthStencilState = \textcolor{keyword}{new} DepthStencilState(Device, depthStencilDesc);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00167}00167                 \textcolor{comment}{// Set the depth stencil state.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00168}00168                 DeviceContext.OutputMerger.SetDepthStencilState(DepthStencilState, 1);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00170}00170                 \textcolor{comment}{// Initialize and set up the depth stencil view.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00171}00171                 DepthStencilViewDescription depthStencilViewDesc = \textcolor{keyword}{new} DepthStencilViewDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00172}00172                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00173}00173                     Format = Format.D24\_UNorm\_S8\_UInt,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00174}00174                     Dimension = DepthStencilViewDimension.Texture2D,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00175}00175                     Texture2D = \textcolor{keyword}{new} DepthStencilViewDescription.Texture2DResource()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00176}00176                     \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00177}00177                         MipSlice = 0}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00178}00178                     \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00179}00179                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00181}00181                 \textcolor{comment}{// Create the depth stencil view.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00182}00182                 DepthStencilView = \textcolor{keyword}{new} DepthStencilView(Device, DepthStencilBuffer, depthStencilViewDesc);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00184}00184                 \textcolor{comment}{// Bind the render target view and depth stencil buffer to the output render pipeline.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00185}00185                 DeviceContext.OutputMerger.SetTargets(DepthStencilView, RenderTargetView);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00186}00186 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00187}00187                 \textcolor{comment}{// Setup the raster description which will determine how and what polygon will be drawn.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00188}00188                 RasterizerStateDescription rasterDesc = \textcolor{keyword}{new} RasterizerStateDescription()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00189}00189                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00190}00190                     IsAntialiasedLineEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00191}00191                     CullMode = CullMode.Back,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00192}00192                     DepthBias = 0,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00193}00193                     DepthBiasClamp = .0f,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00194}00194                     IsDepthClipEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00195}00195                     FillMode = FillMode.Solid,}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00196}00196                     IsFrontCounterClockwise = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00197}00197                     IsMultisampleEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00198}00198                     IsScissorEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00199}00199                     SlopeScaledDepthBias = .0f}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00200}00200                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00202}00202                 \textcolor{comment}{// Create the rasterizer state from the description we just filled out.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00203}00203                 RasterState = \textcolor{keyword}{new} RasterizerState(Device, rasterDesc);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00205}00205                 \textcolor{comment}{// Now set the rasterizer state.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00206}00206                 DeviceContext.Rasterizer.State = RasterState;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00208}00208                 \textcolor{comment}{// Setup and create the viewport for rendering.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00209}00209                 DeviceContext.Rasterizer.SetViewport(0, 0, configuration.Width, configuration.Height, 0, 1);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00210}00210 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00211}00211                 \textcolor{comment}{// Setup and create the projection matrix.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00212}00212                 ProjectionMatrix = Matrix.PerspectiveFovLH((\textcolor{keywordtype}{float})(Math.PI / 4), ((\textcolor{keywordtype}{float})configuration.Width / (\textcolor{keywordtype}{float})configuration.Height), \mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}}.ScreenNear, \mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}}.ScreenDepth);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00213}00213 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00214}00214                 \textcolor{comment}{// Initialize the world matrix to the identity matrix.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00215}00215                 WorldMatrix = Matrix.Identity;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00216}00216 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00217}00217                 BlendStateDescription blendStateDescription = \textcolor{keyword}{new} BlendStateDescription}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00218}00218                 \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00219}00219                     AlphaToCoverageEnable = \textcolor{keyword}{false},}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00220}00220                 \};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00221}00221 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00222}00222                 blendStateDescription.RenderTarget[0].IsBlendEnabled = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00223}00223                 blendStateDescription.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00224}00224                 blendStateDescription.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00225}00225                 blendStateDescription.RenderTarget[0].BlendOperation = BlendOperation.Add;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00226}00226                 blendStateDescription.RenderTarget[0].SourceAlphaBlend = BlendOption.Zero;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00227}00227                 blendStateDescription.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00228}00228                 blendStateDescription.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00229}00229                 blendStateDescription.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00230}00230 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00231}00231                 DeviceContext.OutputMerger.BlendState = \textcolor{keyword}{new} BlendState(device, blendStateDescription);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00232}00232 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00233}00233                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00234}00234             \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00235}00235             \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00236}00236             \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00237}00237                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00238}00238             \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00239}00239         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00240}00240         \textcolor{keyword}{public} \textcolor{keywordtype}{void} ShutDown()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00241}00241         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00242}00242             \textcolor{comment}{// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00243}00243             SwapChain?.SetFullscreenState(\textcolor{keyword}{false}, \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00244}00244 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00245}00245             \textcolor{comment}{// Dispose of all objects.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00246}00246             RasterState?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00247}00247             RasterState = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00248}00248             DepthStencilView?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00249}00249             DepthStencilView = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00250}00250             DepthStencilState?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00251}00251             DepthStencilState = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00252}00252             DepthStencilBuffer?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00253}00253             DepthStencilBuffer = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00254}00254             RenderTargetView?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00255}00255             RenderTargetView = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00256}00256             DeviceContext?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00257}00257             DeviceContext = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00258}00258             Device?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00259}00259             Device = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00260}00260             SwapChain?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00261}00261             SwapChain = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00262}00262         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00263}00263         \textcolor{keyword}{public} \textcolor{keywordtype}{void} BeginScene(\textcolor{keywordtype}{float} red, \textcolor{keywordtype}{float} green, \textcolor{keywordtype}{float} blue, \textcolor{keywordtype}{float} alpha)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00264}00264         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00265}00265             BeginScene(\textcolor{keyword}{new} Color4(red, green, blue, alpha));}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00266}00266         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00267}00267         \textcolor{keyword}{private} \textcolor{keywordtype}{void} BeginScene(Color4 givenColour)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00268}00268         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00269}00269             \textcolor{comment}{// Clear the depth buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00270}00270             DeviceContext.ClearDepthStencilView(DepthStencilView, DepthStencilClearFlags.Depth, 1, 0);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00271}00271 }
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00272}00272             \textcolor{comment}{// Clear the back buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00273}00273             DeviceContext.ClearRenderTargetView(RenderTargetView, givenColour);}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00274}00274         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00275}00275         \textcolor{keyword}{public} \textcolor{keywordtype}{void} EndScene()}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00276}00276         \{}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00277}00277             \textcolor{comment}{// Present the back buffer to the screen since rendering is complete.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00278}00278             \textcolor{keywordflow}{if} (VerticalSyncEnabled)}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00279}00279                 SwapChain.Present(1, PresentFlags.None); \textcolor{comment}{// Lock to screen refresh rate.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00280}00280             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00281}00281                 SwapChain.Present(0, PresentFlags.None); \textcolor{comment}{// Present as fast as possible.}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00282}00282         \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00283}00283     \}}
+\DoxyCodeLine{\Hypertarget{_d_d_x11_8cs_source_l00284}00284 \}}
+
+\end{DoxyCode}

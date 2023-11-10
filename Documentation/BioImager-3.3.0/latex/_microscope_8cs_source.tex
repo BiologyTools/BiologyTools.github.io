@@ -1,0 +1,1259 @@
+\hypertarget{_microscope_8cs_source}{}\doxysection{Microscope.\+cs}
+\label{_microscope_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Microscope.cs@{F:/repos/BioImager/BioImager/Source/Microscope.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Globalization;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00011}00011 \textcolor{keyword}{using }System.Reflection;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00012}00012 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00013}00013 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00014}00014 \textcolor{keyword}{using }Bitmap = AForge.Bitmap;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00015}00015 \textcolor{keyword}{using }Color = AForge.Color;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00016}00016 \textcolor{keyword}{using }PointF = AForge.PointF;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00017}00017 \textcolor{keyword}{using }PointD = AForge.PointD;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00018}00018 \textcolor{keyword}{using }Point3D = AForge.Point3D;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00019}00019 \textcolor{keyword}{using }RectangleF = AForge.RectangleF;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00020}00020 \textcolor{keyword}{using }RectangleD = AForge.RectangleD;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00021}00021 \textcolor{keyword}{using }Rectangle = AForge.Rectangle;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00022}00022 \textcolor{keyword}{using }Point = AForge.Point;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00024}00024 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00025}00025 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00026}00026     \textcolor{comment}{/* It's a wrapper for the stage*/}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00027}\mbox{\hyperlink{class_bio_1_1_stage}{00027}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_stage}{Stage}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00028}00028     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00029}00029         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} minX;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00030}00030         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} maxX;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00031}00031         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} minY;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00032}00032         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} maxY;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00033}00033         \textcolor{comment}{/* Creating a new instance of the Stage class. */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00034}00034         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_stage}{Stage}}(\textcolor{keywordtype}{object} st)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00036}00036             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00037}00037             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00038}00038                 PointD d = \mbox{\hyperlink{class_bio_1_1_stage_a3a4390760afcd9d4a931e4e651ce7938}{GetPosition}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00039}00039                 x = d.X;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00040}00040                 y = d.Y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00041}00041                 \mbox{\hyperlink{class_bio_1_1_stage_a5fd7140d3b4cca76f8bba7f2fa7d6fce}{UpdateSWLimit}}();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00042}00042             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00044}00044         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_stage}{Stage}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00045}00045         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00049}00049         \textcolor{keyword}{private} \textcolor{keywordtype}{double} x;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00050}00050         \textcolor{keyword}{private} \textcolor{keywordtype}{double} y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00051}00051         \textcolor{keyword}{public} \textcolor{keywordtype}{double} X}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00052}00052         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00053}00053             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00054}00054             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00055}00055                 \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00056}00056             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00058}00058         \textcolor{keyword}{public} \textcolor{keywordtype}{double} Y}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00060}00060             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00062}00062                 \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00063}00063             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00064}00064         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00065}00065         \textcolor{keyword}{public} \textcolor{keywordtype}{int} moveWait = 250;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00066}00066         \textcolor{keyword}{private} \textcolor{keywordtype}{void} MoveWait()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00067}00067         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00068}00068             Thread.Sleep(moveWait);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00069}00069         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00070}00070 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00075}\mbox{\hyperlink{class_bio_1_1_stage_a9b41bfd7084ae455d35f566c1d3c9c10}{00075}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a9b41bfd7084ae455d35f566c1d3c9c10}{SetPosition}}(\textcolor{keywordtype}{double} px, \textcolor{keywordtype}{double} py)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00076}00076         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00077}00077             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00078}00078                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.Stage.SetPosition("{}} + px + \textcolor{stringliteral}{"{},"{}} + py + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00079}00079             x = px;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00080}00080             y = py;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00081}00081             \textcolor{keywordflow}{if}(Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00082}00082             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00083}00083                 Microscope.pMicroscope.SetPosition(\textcolor{keyword}{new} PointD(px, py));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00084}00084             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00085}00085             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00086}00086             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00087}00087             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00088}00088                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetStage, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[]\{px,py \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00089}00089             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00090}00090             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00091}00091             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00092}00092                 Microscope.sdk.SetPosition(\textcolor{keyword}{new} PointD(px, py));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00093}00093             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00094}00094             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_app}{App}}.viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00095}00095                 \mbox{\hyperlink{class_bio_1_1_app}{App}}.viewer.\mbox{\hyperlink{class_bio_1_1_image_view_ad5927804c01c4a3b75db5353ceffcfd7}{UpdateView}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00096}00096         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00097}00097        }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00101}\mbox{\hyperlink{class_bio_1_1_stage_a673b1808102b0348a6ccdec1341925de}{00101}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a673b1808102b0348a6ccdec1341925de}{SetPositionX}}(\textcolor{keywordtype}{double} px)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00102}00102         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00103}00103             x = px;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00104}00104             \mbox{\hyperlink{class_bio_1_1_stage_a9b41bfd7084ae455d35f566c1d3c9c10}{SetPosition}}(px, y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00105}00105         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00106}00106         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00110}\mbox{\hyperlink{class_bio_1_1_stage_a79058a54c28b914fb06c54e8779748e6}{00110}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a79058a54c28b914fb06c54e8779748e6}{SetPositionY}}(\textcolor{keywordtype}{double} py)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00111}00111         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00112}00112             y = py;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00113}00113             \mbox{\hyperlink{class_bio_1_1_stage_a9b41bfd7084ae455d35f566c1d3c9c10}{SetPosition}}(x, py);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00114}00114         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00115}00115         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00121}\mbox{\hyperlink{class_bio_1_1_stage_a810eef6476f71c8471fd1811d90e1213}{00121}}         \textcolor{keyword}{public} \textcolor{keywordtype}{double} \mbox{\hyperlink{class_bio_1_1_stage_a810eef6476f71c8471fd1811d90e1213}{GetPositionX}}(\textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00122}00122         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00123}00123             x = \mbox{\hyperlink{class_bio_1_1_stage_a3a4390760afcd9d4a931e4e651ce7938}{GetPosition}}(update).X;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00124}00124             \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00125}00125         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00126}00126         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00132}\mbox{\hyperlink{class_bio_1_1_stage_a046590cf341d150fa14d747f498ae296}{00132}}         \textcolor{keyword}{public} \textcolor{keywordtype}{double} \mbox{\hyperlink{class_bio_1_1_stage_a046590cf341d150fa14d747f498ae296}{GetPositionY}}(\textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00133}00133         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00134}00134             y = \mbox{\hyperlink{class_bio_1_1_stage_a3a4390760afcd9d4a931e4e651ce7938}{GetPosition}}(update).Y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00135}00135             \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00136}00136         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00137}00137         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00146}\mbox{\hyperlink{class_bio_1_1_stage_a3a4390760afcd9d4a931e4e651ce7938}{00146}}         \textcolor{keyword}{public} PointD \mbox{\hyperlink{class_bio_1_1_stage_a3a4390760afcd9d4a931e4e651ce7938}{GetPosition}}(\textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00147}00147         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00148}00148             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00149}00149             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00150}00150                 PointD pd;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00151}00151                 Microscope.pMicroscope.GetPosition(out pd,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00152}00152                 \textcolor{keywordflow}{return} pd;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00153}00153             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00154}00154             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00155}00155             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00156}00156             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00157}00157                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00158}00158                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetStage,\textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00159}00159                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(com.doubles[0], com.doubles[1]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00160}00160             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00161}00161             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00162}00162             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00163}00163                 \textcolor{keywordflow}{return} Microscope.sdk.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00164}00164             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00165}00165             \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(x, y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00166}00166         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00167}00167         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00171}\mbox{\hyperlink{class_bio_1_1_stage_ae7ff43c52be4e836de8d674b6576b5bb}{00171}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_ae7ff43c52be4e836de8d674b6576b5bb}{MoveUp}}(\textcolor{keywordtype}{double} m)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00172}00172         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00173}00173             \textcolor{keywordtype}{double} y = \mbox{\hyperlink{class_bio_1_1_stage_a046590cf341d150fa14d747f498ae296}{GetPositionY}}(\textcolor{keyword}{true}) -\/ m;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00174}00174             \mbox{\hyperlink{class_bio_1_1_stage_a79058a54c28b914fb06c54e8779748e6}{SetPositionY}}(y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00175}00175         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00176}00176        }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00180}\mbox{\hyperlink{class_bio_1_1_stage_ae2a4ab78b9973ab1a823cfa7827ed608}{00180}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_ae2a4ab78b9973ab1a823cfa7827ed608}{MoveDown}}(\textcolor{keywordtype}{double} m)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00181}00181         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00182}00182             \textcolor{keywordtype}{double} y = \mbox{\hyperlink{class_bio_1_1_stage_a046590cf341d150fa14d747f498ae296}{GetPositionY}}(\textcolor{keyword}{true}) + m;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00183}00183             \mbox{\hyperlink{class_bio_1_1_stage_a79058a54c28b914fb06c54e8779748e6}{SetPositionY}}(y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00184}00184         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00185}00185         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00189}\mbox{\hyperlink{class_bio_1_1_stage_a63ea15c710c2159c585a56876896c2cb}{00189}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a63ea15c710c2159c585a56876896c2cb}{MoveRight}}(\textcolor{keywordtype}{double} m)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00190}00190         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00191}00191             \textcolor{keywordtype}{double} x = \mbox{\hyperlink{class_bio_1_1_stage_a810eef6476f71c8471fd1811d90e1213}{GetPositionX}}(\textcolor{keyword}{true}) + m;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00192}00192             \mbox{\hyperlink{class_bio_1_1_stage_a673b1808102b0348a6ccdec1341925de}{SetPositionX}}(x);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00193}00193         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00194}00194         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00198}\mbox{\hyperlink{class_bio_1_1_stage_a6790f7bdbe27237912a3bed15a61bd10}{00198}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a6790f7bdbe27237912a3bed15a61bd10}{MoveLeft}}(\textcolor{keywordtype}{double} m)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00199}00199         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00200}00200             \textcolor{keywordtype}{double} x = \mbox{\hyperlink{class_bio_1_1_stage_a810eef6476f71c8471fd1811d90e1213}{GetPositionX}}(\textcolor{keyword}{true}) -\/ m;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00201}00201             \mbox{\hyperlink{class_bio_1_1_stage_a673b1808102b0348a6ccdec1341925de}{SetPositionX}}(x);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00202}00202         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00203}00203         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00205}\mbox{\hyperlink{class_bio_1_1_stage_a5fd7140d3b4cca76f8bba7f2fa7d6fce}{00205}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a5fd7140d3b4cca76f8bba7f2fa7d6fce}{UpdateSWLimit}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00206}00206         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00207}00207             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00208}00208             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00209}00209                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00210}00210                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetStageSWLimit, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00211}00211                 minX = com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00212}00212                 minY = com.doubles[1];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00213}00213                 maxX = com.doubles[2];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00214}00214                 maxY = com.doubles[3];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00215}00215             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00216}00216         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00217}00217        }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00224}\mbox{\hyperlink{class_bio_1_1_stage_a825040dfe4a11e7897f7a94d3ed3f21c}{00224}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_stage_a825040dfe4a11e7897f7a94d3ed3f21c}{SetSWLimit}}(\textcolor{keywordtype}{double} xmin, \textcolor{keywordtype}{double} xmax, \textcolor{keywordtype}{double} ymin, \textcolor{keywordtype}{double} ymax)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00225}00225         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00226}00226             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00227}00227             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00228}00228                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00229}00229                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetStageSWLimit, }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00230}00230                     \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{xmin,xmax,ymin,ymax\}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00231}00231             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00232}00232             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00233}00233                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetSWLimit("{}} + xmin + \textcolor{stringliteral}{"{},"{}} + xmax + \textcolor{stringliteral}{"{},"{}} + ymin + \textcolor{stringliteral}{"{},"{}} + ymax + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00234}00234         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00235}00235     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00236}00236 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00237}00237     \textcolor{comment}{/* The Focus class is used to set and get the focus of the microscope */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00238}\mbox{\hyperlink{class_bio_1_1_focus}{00238}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_focus}{Focus}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00239}00239     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00240}00240         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} upperLimit;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00241}00241         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} lowerLimit;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00242}00242         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{double} z;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00243}00243         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_focus}{Focus}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00244}00244         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00246}00246         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00247}00247 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00251}\mbox{\hyperlink{class_bio_1_1_focus_a1a89102abe4c99796c0ec9143dec2375}{00251}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_focus_a1a89102abe4c99796c0ec9143dec2375}{SetFocus}}(\textcolor{keywordtype}{double} f)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00252}00252         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00253}00253             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00254}00254                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetFocus("{}} + f + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00255}00255             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00256}00256             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00257}00257                 PointD p = Microscope.Stage.GetPosition(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00258}00258                 Microscope.pMicroscope.SetPosition(\textcolor{keyword}{new} Point3D(p.X,p.Y,f));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00259}00259             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00260}00260             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00261}00261             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00262}00262                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00263}00263                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetFocus,\textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ f\}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00264}00264                 z = f;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00265}00265             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00266}00266             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00267}00267             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00268}00268                 Microscope.sdk.SetZ(f);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00269}00269             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00270}00270             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_automation}{Automation}}.Properties.ContainsKey(\textcolor{stringliteral}{"{}SetFocus"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00271}00271             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00272}00272                 \mbox{\hyperlink{class_bio_1_1_automation}{Automation}}.\mbox{\hyperlink{class_bio_1_1_automation_a3187a19d578b93ed0e64850daa994e8b}{SetProperty}}(\textcolor{stringliteral}{"{}SetFocus"{}}, f.ToString());}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00273}00273             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00274}00274         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00275}00275 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00279}\mbox{\hyperlink{class_bio_1_1_focus_a3b74506bad233ddf317978295440dde2}{00279}}         \textcolor{keyword}{public} \textcolor{keywordtype}{double} \mbox{\hyperlink{class_bio_1_1_focus_a3b74506bad233ddf317978295440dde2}{GetFocus}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00280}00280         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00281}00281             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_1_1_focus_a3b74506bad233ddf317978295440dde2}{GetFocus}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00282}00282         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00283}00283 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00291}\mbox{\hyperlink{class_bio_1_1_focus_a69f7578bded99cfe7529cae4b9de295c}{00291}}         \textcolor{keyword}{public} \textcolor{keywordtype}{double} \mbox{\hyperlink{class_bio_1_1_focus_a69f7578bded99cfe7529cae4b9de295c}{GetFocus}}(\textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00292}00292         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00293}00293             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00294}00294             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00295}00295                 Point3D p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00296}00296                 Microscope.pMicroscope.GetPosition3D(out p, update);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00297}00297                 \textcolor{keywordflow}{return} p.Z;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00298}00298             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00299}00299             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00300}00300             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00301}00301                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00302}00302                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetFocus, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00303}00303                 \textcolor{keywordflow}{return} com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00304}00304             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00305}00305             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00306}00306             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00307}00307                 \textcolor{keywordflow}{return} Microscope.sdk.GetZ();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00308}00308             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00309}00309             \textcolor{keywordflow}{if}(\mbox{\hyperlink{class_bio_1_1_automation}{Automation}}.Properties.ContainsKey(\textcolor{stringliteral}{"{}GetFocus"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00310}00310             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00311}00311                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{double})\mbox{\hyperlink{class_bio_1_1_automation}{Automation}}.\mbox{\hyperlink{class_bio_1_1_automation_aa541f91c9e2380108b04685e2ad54331}{GetProperty}}(\textcolor{stringliteral}{"{}GetFocus"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00312}00312             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00313}00313             \textcolor{keywordflow}{return} z;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00314}00314         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00315}00315 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00319}\mbox{\hyperlink{class_bio_1_1_focus_ab970856d081e0895b7a16a89e04393a8}{00319}}         \textcolor{keyword}{public} PointD \mbox{\hyperlink{class_bio_1_1_focus_ab970856d081e0895b7a16a89e04393a8}{GetSWLimit}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00320}00320         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00321}00321             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00322}00322             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00323}00323                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00324}00324                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetStageSWLimit, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00325}00325                 upperLimit = com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00326}00326                 lowerLimit = com.doubles[1];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00327}00327                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(upperLimit,lowerLimit);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00328}00328             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00329}00329             \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(lowerLimit, upperLimit);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00330}00330         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00331}00331 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00337}\mbox{\hyperlink{class_bio_1_1_focus_aa069970036c7bf114ed1adb9799e2ab0}{00337}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_focus_aa069970036c7bf114ed1adb9799e2ab0}{SetSWLimit}}(\textcolor{keywordtype}{double} xd, \textcolor{keywordtype}{double} yd)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00338}00338         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00339}00339             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00340}00340             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00341}00341                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00342}00342                    \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetFocusSWLimit,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00343}00343                    \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ xd, yd \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00344}00344             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00345}00345             upperLimit = xd;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00346}00346             lowerLimit = yd;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00347}00347             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00348}00348                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetSWLimit("{}} + xd + \textcolor{stringliteral}{"{},"{}} + yd + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00349}00349         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00350}00350     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00352}00352     \textcolor{comment}{/* The Objectives class is a class that contains a list of objectives */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00353}\mbox{\hyperlink{class_bio_1_1_objectives}{00353}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_objectives}{Objectives}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00354}00354     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00355}00355         \textcolor{keyword}{public} List<Objective> List = \textcolor{keyword}{new} List<Objective>();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00356}00356        \textcolor{comment}{/* Creating a list of objectives. */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00357}00357         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_objectives}{Objectives}}(\textcolor{keywordtype}{int} count)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00358}00358         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00359}00359             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00360}00360             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00361}00361                 List.Add(\textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{Objective}}(i));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00362}00362             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00363}00363         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00364}00364         \textcolor{comment}{/* The Objective class is a class that contains all the information about the objective */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00365}\mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{00365}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{Objective}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00366}00366         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00367}00367             \textcolor{keyword}{public} Dictionary<string, object> config = \textcolor{keyword}{new} Dictionary<string, object>();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00368}00368             \textcolor{keyword}{public} \textcolor{keywordtype}{int} Index;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00369}00369             \textcolor{keyword}{public} \textcolor{keywordtype}{string} Name;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00370}00370             \textcolor{keyword}{public} \textcolor{keywordtype}{double} LocateExposure = 50;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00371}00371             \textcolor{keyword}{public} \textcolor{keywordtype}{int} WorkingDistance = 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00372}00372             \textcolor{keyword}{public} \textcolor{keywordtype}{double} AcquisitionExposure = 50;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00373}00373             \textcolor{keyword}{public} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_bio_1_1_configuration}{Configuration}} = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00374}00374             \textcolor{keyword}{public} \textcolor{keywordtype}{double} MoveAmountL = 40;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00375}00375             \textcolor{keyword}{public} \textcolor{keywordtype}{double} MoveAmountR = 10;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00376}00376             \textcolor{keyword}{public} \textcolor{keywordtype}{double} FocusMoveAmount = 0.02;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00377}00377             \textcolor{keyword}{public} \textcolor{keywordtype}{double} ViewWidth;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00378}00378             \textcolor{keyword}{public} \textcolor{keywordtype}{double} ViewHeight;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00379}00379             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{Objective}}(\textcolor{keywordtype}{int} index)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00380}00380             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00381}00381                 Index = index;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00382}00382             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00383}00383             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{Objective}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00384}00384             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00385}00385             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00386}00386         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00387}00387         \textcolor{keyword}{private} \textcolor{keywordtype}{int} index;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00388}00388         \textcolor{keyword}{public} \textcolor{keywordtype}{int} moveWait = 1000;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00389}00389         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00391}00391         \textcolor{keyword}{private} \textcolor{keywordtype}{void} MoveWait()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00392}00392         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00393}00393             Thread.Sleep(moveWait);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00394}00394         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00395}00395         \textcolor{keyword}{public} \textcolor{keywordtype}{int} Index}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00396}00396         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00397}00397             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00398}00398             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00399}00399                 \textcolor{keywordflow}{return} GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00400}00400             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00401}00401             \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00402}00402             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00403}00403                 \mbox{\hyperlink{class_bio_1_1_objectives_a8c850ce753de33c205b045e53a23ec82}{SetPosition}}(value);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00404}00404             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00405}00405         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00406}00406         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00413}\mbox{\hyperlink{class_bio_1_1_objectives_a8c850ce753de33c205b045e53a23ec82}{00413}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_objectives_a8c850ce753de33c205b045e53a23ec82}{SetPosition}}(\textcolor{keywordtype}{int} index)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00414}00414         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00415}00415             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00416}00416                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.Objectives.SetObjective("{}} + index + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00417}00417             this.index = index;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00418}00418             \textcolor{keywordflow}{if} (!Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}) \&\& !Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}) \&\& \mbox{\hyperlink{class_bio_1_1_function}{Function}}.Functions.ContainsKey(\textcolor{stringliteral}{"{}SetO"{}} + index))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00419}00419             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00420}00420                 \mbox{\hyperlink{class_bio_1_1_function}{Function}} f = \mbox{\hyperlink{class_bio_1_1_function}{Function}}.Functions[\textcolor{stringliteral}{"{}SetO"{}} + index];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00421}00421                 \mbox{\hyperlink{class_bio_1_1_app}{App}}.imager.\mbox{\hyperlink{class_bio_1_1_imager_acd81efe82c94dbaa068eb1df503d32d0}{PerformFunction}}(f);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00422}00422                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00423}00423             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00424}00424             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00425}00425             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00426}00426                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00427}00427                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetObjective, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ index \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00428}00428                 this.index = index;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00429}00429             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00430}00430         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00431}00431         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00432}00432         \textcolor{keyword}{public} \textcolor{keywordtype}{int} GetPosition()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00433}00433         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00434}00434             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00435}00435             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00436}00436                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00437}00437                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetObjective, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00438}00438                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00439}00439             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00440}00440             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00441}00441             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00442}00442                 \textcolor{keywordflow}{return} Microscope.sdk.GetNosePiece();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00443}00443             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00444}00444             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(!Properties.Settings.Default.PMicroscope \&\& Automation.Properties.ContainsKey(\textcolor{stringliteral}{"{}GetO1"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00445}00445             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00446}00446                 \textcolor{keywordflow}{if} (Function.Functions.ContainsKey(\textcolor{stringliteral}{"{}GetO7"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00447}00447                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00448}00448                     \textcolor{keywordtype}{bool} b;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00449}00449                     \textcolor{comment}{//We check each objective button state to determine which objective we currently are in.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00450}00450                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get01"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00451}00451                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00452}00452                         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00453}00453                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get02"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00454}00454                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00455}00455                         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00456}00456                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get03"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00457}00457                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00458}00458                         \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00459}00459                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get04"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00460}00460                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00461}00461                         \textcolor{keywordflow}{return} 3;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00462}00462                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get05"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00463}00463                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00464}00464                         \textcolor{keywordflow}{return} 4;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00465}00465                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get06"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00466}00466                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00467}00467                         \textcolor{keywordflow}{return} 5;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00468}00468                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get07"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00469}00469                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00470}00470                         \textcolor{keywordflow}{return} 6;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00471}00471                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00472}00472                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00473}00473                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00474}00474                     \textcolor{keywordtype}{bool} b;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00475}00475                     \textcolor{comment}{//We check each objective button state to determine which objective we currently are in.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00476}00476                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get01"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00477}00477                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00478}00478                         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00479}00479                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get02"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00480}00480                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00481}00481                         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00482}00482                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get03"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00483}00483                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00484}00484                         \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00485}00485                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get04"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00486}00486                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00487}00487                         \textcolor{keywordflow}{return} 3;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00488}00488                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get05"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00489}00489                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00490}00490                         \textcolor{keywordflow}{return} 4;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00491}00491                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get06"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00492}00492                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00493}00493                         \textcolor{keywordflow}{return} 5;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00494}00494                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00495}00495             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00496}00496             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00497}00497         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00504}\mbox{\hyperlink{class_bio_1_1_objectives_a637572f84c93c8f360e03fcb3037ff14}{00504}}         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_objectives_1_1_objective}{Objective}} \mbox{\hyperlink{class_bio_1_1_objectives_a637572f84c93c8f360e03fcb3037ff14}{GetObjective}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00505}00505         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00506}00506             \textcolor{keywordflow}{return} List[(short)GetPosition()];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00507}00507         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00508}00508     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00509}00509 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00510}00510    \textcolor{comment}{/* The TLShutter class is a wrapper class for the shutter object */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00511}\mbox{\hyperlink{class_bio_1_1_t_l_shutter}{00511}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_t_l_shutter}{TLShutter}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00512}00512     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00513}00513         \textcolor{keyword}{public} \textcolor{keyword}{static} Type tlType;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00514}00514         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} tlShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00515}00515         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00520}\mbox{\hyperlink{class_bio_1_1_t_l_shutter_a18241220b3736edf7c4b83416dce831a}{00520}}         \textcolor{keyword}{public} \textcolor{keywordtype}{short} \mbox{\hyperlink{class_bio_1_1_t_l_shutter_a18241220b3736edf7c4b83416dce831a}{GetPosition}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00521}00521         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00522}00522             \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00523}00523                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetTLShutter, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00524}00524             \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00525}00525         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00526}00526         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00533}\mbox{\hyperlink{class_bio_1_1_t_l_shutter_a71183556b31bd37068ea77fe472f4172}{00533}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_t_l_shutter_a71183556b31bd37068ea77fe472f4172}{SetPosition}}(\textcolor{keywordtype}{int} p)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00534}00534         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00535}00535             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00536}00536                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.TLShutter.SetPosition("{}} + p + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00537}00537             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00538}00538             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00539}00539                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00540}00540                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetTLShutter, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ p \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00541}00541                 position = p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00542}00542             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00543}00543             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00544}00544             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00545}00545                 \textcolor{keywordflow}{if} (p == 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00546}00546                     Microscope.sdk.shutterClose();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00547}00547                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00548}00548                     Microscope.sdk.shutterOpen();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00549}00549             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00550}00550         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00551}00551     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00552}00552    \textcolor{comment}{/* The HXPShutter class is a wrapper class for the TLShutter class */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00553}\mbox{\hyperlink{class_bio_1_1_h_x_p_shutter}{00553}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_h_x_p_shutter}{HXPShutter}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00554}00554     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00555}00555         \textcolor{keyword}{public} \textcolor{keyword}{static} Type tlType;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00556}00556         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} tlShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00557}00557         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00562}\mbox{\hyperlink{class_bio_1_1_h_x_p_shutter_a7649e40acf79eadcbe40c4be9004ec16}{00562}}         \textcolor{keyword}{public} \textcolor{keywordtype}{short} \mbox{\hyperlink{class_bio_1_1_h_x_p_shutter_a7649e40acf79eadcbe40c4be9004ec16}{GetPosition}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00563}00563         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00564}00564             \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00565}00565                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetHXPShutter, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00566}00566             \textcolor{keywordflow}{if} (com.doubles == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00567}00567                 \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00568}00568             \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00569}00569         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00570}00570 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00577}\mbox{\hyperlink{class_bio_1_1_h_x_p_shutter_a93538ce2e711dee0f4db21b19cadbb33}{00577}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_h_x_p_shutter_a93538ce2e711dee0f4db21b19cadbb33}{SetPosition}}(\textcolor{keywordtype}{int} p)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00578}00578         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00579}00579             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00580}00580                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.TLShutter.SetPosition("{}} + p + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00581}00581             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00582}00582             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00583}00583                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00584}00584                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetHXPShutter, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ p \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00585}00585                 position = p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00586}00586             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00587}00587         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00588}00588     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00589}00589 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00590}00590     \textcolor{comment}{/* The RLShutter class is a wrapper class for the IMTBChanger interface */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00591}\mbox{\hyperlink{class_bio_1_1_r_l_shutter}{00591}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_r_l_shutter}{RLShutter}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00592}00592     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00593}00593         \textcolor{keyword}{public} \textcolor{keyword}{static} Type rlType;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00594}00594         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} rlShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00595}00595         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00600}\mbox{\hyperlink{class_bio_1_1_r_l_shutter_aecd891961c255246c05c59346b14e039}{00600}}         \textcolor{keyword}{public} \textcolor{keywordtype}{short} \mbox{\hyperlink{class_bio_1_1_r_l_shutter_aecd891961c255246c05c59346b14e039}{GetPosition}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00601}00601         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00602}00602             \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00603}00603                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetRLShutter, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00604}00604             \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00605}00605         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00606}00606        }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00611}\mbox{\hyperlink{class_bio_1_1_r_l_shutter_ac72826df5d7ca1114afe66f43a582325}{00611}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_r_l_shutter_ac72826df5d7ca1114afe66f43a582325}{SetPosition}}(\textcolor{keywordtype}{int} p)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00612}00612         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00613}00613             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00614}00614             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00615}00615                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00616}00616                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetRLShutter, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ p \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00617}00617             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00618}00618             position = p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00619}00619             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00620}00620                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.RLShutter.SetPosition("{}} + p + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00621}00621         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00622}00622     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00623}00623     \textcolor{comment}{/* The LightSource class is a wrapper class for the IMTBContinual interface. */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00624}\mbox{\hyperlink{class_bio_1_1_light_source}{00624}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_light_source}{LightSource}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00625}00625     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00626}00626         \textcolor{keyword}{public} \textcolor{keyword}{enum} Type}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00627}00627         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00628}00628             HXP,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00629}00629             RL,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00630}00630             TL}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00631}00631         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00632}00632         \textcolor{keyword}{public} \textcolor{keywordtype}{double} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00633}00633         \textcolor{keyword}{public} Type type;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00634}00634         \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00635}00635         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_light_source}{LightSource}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00636}00636         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00637}00637         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00641}\mbox{\hyperlink{class_bio_1_1_light_source_a21ecaf94d695fedbc13b2045653128c7}{00641}}         \textcolor{keyword}{public} \textcolor{keywordtype}{double} \mbox{\hyperlink{class_bio_1_1_light_source_a21ecaf94d695fedbc13b2045653128c7}{GetPosition}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00642}00642         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00643}00643             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00644}00644             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00645}00645                 \textcolor{keywordflow}{if} (type == Type.HXP)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00646}00646                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00647}00647                     \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00648}00648                         (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetHXP, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00649}00649                     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00650}00650                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00651}00651                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(type == Type.RL)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00652}00652                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00653}00653                     \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00654}00654                         (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetRLHalogen, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00655}00655                     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00656}00656                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00657}00657                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == Type.TL)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00658}00658                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00659}00659                     \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00660}00660                         (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetTLHalogen, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00661}00661                     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{short})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00662}00662                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00663}00663             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00664}00664             \textcolor{keywordflow}{return} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00665}00665         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00670}\mbox{\hyperlink{class_bio_1_1_light_source_a4e0396b5c3648322d129a1687a125126}{00670}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_light_source_a4e0396b5c3648322d129a1687a125126}{SetPosition}}(\textcolor{keywordtype}{double} f)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00671}00671         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00672}00672             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00673}00673                 \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.LightSource.SetPosition("{}} + f + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00674}00674             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00675}00675             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00676}00676                 \textcolor{keywordflow}{if} (type == Type.HXP)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00677}00677                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00678}00678                     \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00679}00679                         \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetHXP, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ f \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00680}00680                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00681}00681                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(type == Type.RL)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00682}00682                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00683}00683                     \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00684}00684                         \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetRLHalogen, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ f \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00685}00685                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00686}00686                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == Type.TL)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00687}00687                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00688}00688                     \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00689}00689                         \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetTLHalogen, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ f \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00690}00690                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00691}00691             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00692}00692         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00693}00693         \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00694}00694         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00695}00695             \textcolor{keywordflow}{return} name;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00696}00696         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00697}00697     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00698}00698     \textcolor{comment}{/* The class is a wrapper for the filter wheel. It has two methods, one to get the current position}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00699}00699 \textcolor{comment}{    of the filter wheel and one to set the position of the filter wheel */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00700}\mbox{\hyperlink{class_bio_1_1_filter_wheel}{00700}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_filter_wheel}{FilterWheel}}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00701}00701     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00702}00702         \textcolor{keyword}{static} \textcolor{keywordtype}{int} position;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00703}00703         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_filter_wheel}{FilterWheel}}() \{ \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00704}00704         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_filter_wheel}{FilterWheel}}(\textcolor{keywordtype}{object} o) }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00705}00705         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00706}00706         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00710}\mbox{\hyperlink{class_bio_1_1_filter_wheel_ada5523e7ee24fe39221d2c1590d4bddd}{00710}}         \textcolor{keyword}{public} \textcolor{keywordtype}{int} \mbox{\hyperlink{class_bio_1_1_filter_wheel_ada5523e7ee24fe39221d2c1590d4bddd}{GetPosition}}()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00711}00711         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00712}00712             \textcolor{keywordflow}{if}(Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00713}00713             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00714}00714                 \mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Bio.MicroscopeConsole.Command}} com = Bio.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00715}00715                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.GetRLShutter, \textcolor{keyword}{null}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00716}00716                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})com.doubles[0];}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00717}00717             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00718}00718             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00719}00719             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00720}00720                 \textcolor{keywordtype}{int} pos;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00721}00721                 Microscope.pMicroscope.GetFilterWheelPosition(out pos);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00722}00722                 \textcolor{keywordflow}{return} pos;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00723}00723             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00724}00724             \textcolor{keywordflow}{return} -\/1;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00725}00725         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00726}00726         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00731}\mbox{\hyperlink{class_bio_1_1_filter_wheel_a99a71a66690b85b761551c78417af627}{00731}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_1_1_filter_wheel_a99a71a66690b85b761551c78417af627}{SetPosition}}(\textcolor{keywordtype}{int} i)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00732}00732         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00733}00733             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00734}00734             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00735}00735                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00736}00736                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetFilterWheel, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ i \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00737}00737             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00738}00738             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00739}00739             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00740}00740                 \textcolor{keywordtype}{int} pos;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00741}00741                 Microscope.pMicroscope.SetFilterWheelPosition(i);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00742}00742                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.recordMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00743}00743                     \mbox{\hyperlink{class_bio_1_1_recorder}{Recorder}}.AddLine(\textcolor{stringliteral}{"{}Microscope.FilterWheel.SetPosition("{}} + i + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00744}00744             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00745}00745         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00746}00746     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00747}00747 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00748}00748     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }Microscope}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00749}00749     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00750}00750         \textcolor{comment}{/* Defining an enum. */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00751}00751         \textcolor{keyword}{public} \textcolor{keyword}{enum} Actions}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00752}00752         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00753}00753             StageUp,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00754}00754             StageRight,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00755}00755             StageDown,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00756}00756             StageLeft,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00757}00757             StageFieldUp,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00758}00758             StageFieldRight,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00759}00759             StageFieldDown,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00760}00760             StageFieldLeft,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00761}00761             FocusUp,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00762}00762             FocusDown,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00763}00763             TL,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00764}00764             RL,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00765}00765             TakeImage,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00766}00766             TakeImageStack,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00767}00767             Acquisition,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00768}00768             Locate,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00769}00769         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00770}00770         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} redraw = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00771}00771         \textcolor{keyword}{public} \textcolor{keyword}{static} Focus Focus = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00772}00772         \textcolor{keyword}{public} \textcolor{keyword}{static} Stage Stage = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00773}00773         \textcolor{keyword}{public} \textcolor{keyword}{static} Objectives Objectives = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00774}00774         \textcolor{keyword}{public} \textcolor{keyword}{static} TLShutter TLShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00775}00775         \textcolor{keyword}{public} \textcolor{keyword}{static} RLShutter RLShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00776}00776         \textcolor{keyword}{public} \textcolor{keyword}{static} HXPShutter HXPShutter = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00777}00777         \textcolor{keyword}{public} \textcolor{keyword}{static} LightSource TLHalogen = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00778}00778         \textcolor{keyword}{public} \textcolor{keyword}{static} LightSource RLHalogen = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00779}00779         \textcolor{keyword}{public} \textcolor{keyword}{static} LightSource HXP = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00780}00780         \textcolor{keyword}{public} \textcolor{keyword}{static} FilterWheel TLFilterWheel = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00781}00781         \textcolor{keyword}{public} \textcolor{keyword}{static} FilterWheel RLFilterWheel = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00782}00782         \textcolor{keyword}{public} \textcolor{keyword}{static} FilterWheel FilterWheel = \textcolor{keyword}{new} FilterWheel();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00783}00783         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} UpperLimit, LowerLimit, fInterVal;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00784}00784         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} CmdSetMode = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00785}00785         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} initialized = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00786}00786         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} ArrowKeysEnabled = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00787}00787         \textcolor{keyword}{public} \textcolor{keyword}{static} Point3D defaultPos = \textcolor{keyword}{new} Point3D(30000, 30000, 23900);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00788}00788         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} root = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00789}00789         \textcolor{keyword}{public} \textcolor{keyword}{static} StringBuilder dllVersion = \textcolor{keyword}{new} StringBuilder();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00790}00790         \textcolor{keyword}{public} \textcolor{keyword}{static} SDK sdk;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00791}00791         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} sessionID = -\/1;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00792}00792         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} userRx = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00793}00793         \textcolor{keyword}{public} \textcolor{keyword}{static} PointD viewSize;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00794}00794         \textcolor{keyword}{public} \textcolor{keyword}{static} PMicroscope pMicroscope = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00795}00795         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00796}00796         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} ImageCount = 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00797}00797         \textcolor{comment}{/* A property that returns the value of the GetObjective method. */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00798}00798         \textcolor{keyword}{public} \textcolor{keyword}{static} Objectives.Objective Objective}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00799}00799         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00800}00800             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00801}00801             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00802}00802                 \textcolor{keywordflow}{return} Objectives.GetObjective();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00803}00803             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00804}00804         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00805}00805         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00809}00809         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Initialize()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00810}00810         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00811}00811             \textcolor{keywordflow}{if} (initialized)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00812}00812                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00813}00813             \textcolor{keywordtype}{int} err;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00814}00814             folder = Properties.Settings.Default.ImagingPath;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00815}00815             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00816}00816             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00817}00817                 pMicroscope = \textcolor{keyword}{new} PMicroscope();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00818}00818                 pMicroscope.Initialize();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00819}00819                 \textcolor{keywordtype}{bool} b = pMicroscope.SetPosition(\textcolor{keyword}{new} Point3D(100, 100, 100));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00820}00820                 Point3D p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00821}00821                 \textcolor{keywordtype}{bool} res = pMicroscope.GetPosition3D(out p,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00822}00822                 \textcolor{keywordtype}{bool} bb = pMicroscope.TakeImage(Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Image"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00823}00823                 Objectives = \textcolor{keyword}{new} Objectives(6);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00824}00824                 Stage = \textcolor{keyword}{new} Stage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00825}00825                 Focus = \textcolor{keyword}{new} Focus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00826}00826             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00827}00827             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00828}00828             \textcolor{keywordflow}{if} (Properties.Settings.Default.AppPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00829}00829             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00830}00830                 OpenFileDialog fl = \textcolor{keyword}{new} OpenFileDialog();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00831}00831                 MessageBox.Show(\textcolor{stringliteral}{"{}Imaging application path is not set. Please set executable location."{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00832}00832                 fl.Title = \textcolor{stringliteral}{"{}Set imaging application location."{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00833}00833                 \textcolor{keywordflow}{if} (fl.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00834}00834                     Application.Exit();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00835}00835                 Properties.Settings.Default.AppPath = fl.FileName;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00836}00836                 fl.Dispose();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00837}00837             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00838}00838             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00839}00839             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00840}00840             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00841}00841                 OpenFileDialog fl = \textcolor{keyword}{new} OpenFileDialog();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00842}00842                 MessageBox.Show(\textcolor{stringliteral}{"{}Imaging library path is not set. Please set imaging library."{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00843}00843                 fl.Title = \textcolor{stringliteral}{"{}Set imaging library location."{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00844}00844                 \textcolor{keywordflow}{if} (fl.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00845}00845                     Application.Exit();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00846}00846                 Properties.Settings.Default.LibPath = fl.FileName;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00847}00847                 fl.Dispose();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00848}00848             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00849}00849             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00850}00850             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00851}00851                 TLFilterWheel = \textcolor{keyword}{new} FilterWheel();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00852}00852                 RLFilterWheel = \textcolor{keyword}{new} FilterWheel();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00853}00853                 Stage = \textcolor{keyword}{new} Stage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00854}00854                 Focus = \textcolor{keyword}{new} Focus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00855}00855                 Objectives = \textcolor{keyword}{new} Objectives(7);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00856}00856                 TLShutter = \textcolor{keyword}{new} TLShutter();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00857}00857                 RLShutter = \textcolor{keyword}{new} RLShutter();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00858}00858                 HXPShutter = \textcolor{keyword}{new} HXPShutter();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00859}00859                 TLHalogen = \textcolor{keyword}{new} LightSource();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00860}00860                 RLHalogen = \textcolor{keyword}{new} LightSource();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00861}00861                 HXP = \textcolor{keyword}{new} LightSource();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00862}00862                 Point3D.SetLimits(Stage.minX, Stage.maxX, Stage.minY, Stage.maxY, Focus.lowerLimit, Focus.upperLimit);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00863}00863                 PointD.SetLimits(Stage.minX, Stage.maxX, Stage.minY, Stage.maxY);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00864}00864                 \textcolor{comment}{//We calibrate the stage and focus, so that images are taken always with same calibration}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00865}00865                 CalibrateXYZ(0);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00866}00866             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00867}00867             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00868}00868             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00869}00869                 sdk = \textcolor{keyword}{new} SDK();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00870}00870                 \textcolor{comment}{/* get the version number of the dll */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00871}00871                 \textcolor{keywordflow}{if} ((err = sdk.GetVersion(dllVersion)) != Prior.PRIOR\_OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00872}00872                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00873}00873                     MessageBox.Show(\textcolor{stringliteral}{"{}Error getting Prior SDK version ("{}} + err.ToString() + \textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00874}00874                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00875}00875                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00876}00876 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00877}00877                 \textcolor{comment}{/* SDK must be initialised before any real use}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00878}00878 \textcolor{comment}{                 */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00879}00879                 \textcolor{keywordflow}{if} ((err = sdk.Initialise()) != Prior.PRIOR\_OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00880}00880                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00881}00881                     MessageBox.Show(\textcolor{stringliteral}{"{}Error initialising Prior SDK ("{}} + err.ToString() + \textcolor{stringliteral}{"{})"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00882}00882                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00883}00883                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00884}00884 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00885}00885                 \textcolor{comment}{/* create a session in the DLL, this gives us one controller and currently an ODS and SL160 robot loader. }}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00886}00886 \textcolor{comment}{                 * Multiple connections allow control of multiple stage/loaders but is outside the brief for this demo}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00887}00887 \textcolor{comment}{                 */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00888}00888                 \textcolor{keywordflow}{if} ((sessionID = sdk.OpenSession()) < 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00889}00889                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00890}00890                     MessageBox.Show(\textcolor{stringliteral}{"{}Error ("{}} + sessionID.ToString() + \textcolor{stringliteral}{"{}) Creating session in SDK "{}} + dllVersion);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00891}00891                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00892}00892                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00893}00893                 \textcolor{keywordtype}{int} open = 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00894}00894                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00895}00895                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00896}00896                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} port = 0; port < 10; port++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00897}00897                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00898}00898                         \textcolor{comment}{//specify path name or PriorSDK.log is written to working directory}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00899}00899                         \textcolor{comment}{//priorSDK.Cmd(sessionID, "{}dll.log.on"{},  ref userRx);}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00900}00900                         \textcolor{comment}{/* my controller identifies on COM1, yours will probably be different.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00901}00901 \textcolor{comment}{                         */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00902}00902                         \textcolor{comment}{/* try to connect to the ps3 */}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00903}00903                         open = sdk.Cmd(sessionID, \textcolor{stringliteral}{"{}controller.connect "{}} + port.ToString(), ref userRx, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00904}00904                     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00905}00905                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00906}00906                 \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00907}00907                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00908}00908 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00909}00909                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00910}00910                 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00911}00911                 \textcolor{keywordflow}{if} (open != Prior.PRIOR\_OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00912}00912                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00913}00913                     MessageBox.Show(\textcolor{stringliteral}{"{}Error ("{}} + open.ToString() + \textcolor{stringliteral}{"{})  connecting to stage controller "{}}, \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00914}00914                         MessageBoxButtons.OK, MessageBoxIcon.Error);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00915}00915                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00916}00916                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00917}00917                 err = sdk.Cmd(sessionID, \textcolor{stringliteral}{"{}controller.stage.hostdirection.set 1 1"{}}, ref userRx);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00918}00918                 Objectives = \textcolor{keyword}{new} Objectives(sdk.GetNosePiecePositions());}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00919}00919                 Stage = \textcolor{keyword}{new} Stage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00920}00920                 Focus = \textcolor{keyword}{new} Focus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00921}00921             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00922}00922 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00923}00923             RectangleD rec = GetObjectiveViewRectangle();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00924}00924             viewSize = \textcolor{keyword}{new} PointD(rec.W, rec.H);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00925}00925             Watcher();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00926}00926             initialized = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00927}00927         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00932}00932         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} CalibrateXYZ(\textcolor{keywordtype}{int} calibMode)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00933}00933         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00934}00934             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00935}00935             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00936}00936                 \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00937}00937                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio}{Bio}}.\mbox{\hyperlink{class_bio_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_1_1_microscope_console_1_1_command}{Command}}.Type.SetCalibration, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ calibMode \}));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00938}00938                 \textcolor{comment}{//We check to see if focus \& stage are correctly calibrated on lower limit and perform calibration if necessary}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00939}00939                 PointD cur = Stage.GetPosition(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00940}00940                 \textcolor{keywordtype}{double} z = Focus.GetFocus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00941}00941                 \textcolor{comment}{//After calibration we return to the position before calibration.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00942}00942                 SetPosition(cur);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00943}00943                 Focus.SetFocus(z);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00944}00944             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00945}00945         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00946}00946 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00947}00947         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00952}00952         \textcolor{keyword}{public} \textcolor{keyword}{static} Point3D GetPosition()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00953}00953         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00954}00954             PointD p = Stage.GetPosition(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00955}00955             \textcolor{keywordtype}{double} f = Focus.GetFocus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00956}00956             \textcolor{keywordflow}{return} \textcolor{keyword}{new} Point3D(p.X, p.Y, f);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00957}00957         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00958}00958 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00959}00959        }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00963}00963         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetPosition(Point3D p)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00964}00964         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00965}00965             Stage.SetPosition(p.X,p.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00966}00966             Focus.SetFocus(p.Z);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00967}00967             Microscope.redraw = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00968}00968         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00969}00969 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00973}00973         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetPosition(PointD p)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00974}00974         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00975}00975             Stage.SetPosition(p.X, p.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00976}00976             Microscope.redraw = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00977}00977         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00979}00979         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} OpenRL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00980}00980         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00981}00981             \textcolor{comment}{//If shutter is closed we open it.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00982}00982             \textcolor{keywordflow}{if} (RLShutter.GetPosition() == 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00983}00983                 RLShutter.SetPosition(1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00984}00984         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00985}00985 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00986}00986         }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00988}00988         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} OpenTL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00989}00989         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00990}00990             \textcolor{comment}{//If shutter is closed we open it.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00991}00991             \textcolor{keywordflow}{if} (TLShutter.GetPosition() == 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00992}00992                 TLShutter.SetPosition(1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00993}00993         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00994}00994 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00996}00996         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} CloseRL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00997}00997         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00998}00998             \textcolor{comment}{//If shutter is open then we close it.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l00999}00999             \textcolor{keywordflow}{if} (RLShutter.GetPosition() == 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01000}01000                 RLShutter.SetPosition(1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01001}01001         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01002}01002 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01004}01004         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} CloseTL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01005}01005         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01006}01006             \textcolor{comment}{//If shutter is open then we close it.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01007}01007             \textcolor{keywordflow}{if} (TLShutter.GetPosition() == 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01008}01008                 TLShutter.SetPosition(1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01009}01009         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01010}01010 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01014}01014         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetTL(uint tl)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01015}01015         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01016}01016             TLShutter.SetPosition((\textcolor{keywordtype}{short})tl);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01017}01017         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01018}01018 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01022}01022         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetRL(uint tr)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01023}01023         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01024}01024             RLShutter.SetPosition((\textcolor{keywordtype}{short})tr);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01025}01025         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01026}01026 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01030}01030         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} GetTL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01031}01031         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01032}01032             \textcolor{keywordflow}{return} TLShutter.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01033}01033         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01034}01034 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01038}01038         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} GetRL()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01039}01039         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01040}01040             \textcolor{keywordflow}{return} RLShutter.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01041}01041         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01042}01042 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01046}01046         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveUp(\textcolor{keywordtype}{double} d)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01047}01047         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01048}01048             Stage.MoveUp(d);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01049}01049         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01050}01050 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01054}01054         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveRight(\textcolor{keywordtype}{double} d)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01055}01055         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01056}01056             Stage.MoveRight(d);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01057}01057         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01058}01058 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01062}01062         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveDown(\textcolor{keywordtype}{double} d)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01063}01063         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01064}01064             Stage.MoveDown(d);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01065}01065         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01066}01066 }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01070}01070         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveLeft(\textcolor{keywordtype}{double} d)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01071}01071         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01072}01072             Stage.MoveLeft(d);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01073}01073         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01075}01075         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveFieldUp()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01076}01076         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01077}01077             Stage.MoveUp(viewSize.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01078}01078         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01080}01080         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveFieldRight()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01081}01081         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01082}01082             Stage.MoveRight(viewSize.X);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01083}01083         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01085}01085         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveFieldDown()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01086}01086         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01087}01087             Stage.MoveDown(viewSize.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01088}01088         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01090}01090         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} MoveFieldLeft()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01091}01091         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01092}01092             Stage.MoveLeft(viewSize.X);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01093}01093         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01098}01098         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetFocus(\textcolor{keywordtype}{double} d)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01099}01099         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01100}01100             Focus.SetFocus(d);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01101}01101         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01105}01105         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} GetFocus()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01106}01106         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01107}01107             \textcolor{keywordflow}{return} Focus.GetFocus();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01108}01108         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01109}01109         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{string} folder = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01116}01116         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} GetFolder()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01117}01117         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01118}01118             \textcolor{keywordtype}{object} o = Recordings.GetProperty(Automation.Action.ValueType.ValuePattern, \textcolor{stringliteral}{"{}GetFolder"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01119}01119             \textcolor{keywordtype}{string} s = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01120}01120             \textcolor{keywordflow}{if} (o != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01121}01121                 s = o.ToString();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01122}01122             \textcolor{keywordflow}{if} (s == \textcolor{keyword}{null} \&\& folder == \textcolor{stringliteral}{"{}"{}} \&\& Properties.Settings.Default.ImagingPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01123}01123             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01124}01124                 FolderBrowserDialog fs = \textcolor{keyword}{new} FolderBrowserDialog();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01125}01125                 fs.Description = \textcolor{stringliteral}{"{}Select Imaging Folder"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01126}01126                 \textcolor{keywordflow}{if} (fs.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01127}01127                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01128}01128                     fs.Dispose();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01129}01129                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01130}01130                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01131}01131                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01132}01132                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01133}01133                     fs.Dispose();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01134}01134                     Properties.Settings.Default.ImagingPath = fs.SelectedPath;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01135}01135                     \textcolor{keywordflow}{return} fs.SelectedPath;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01136}01136                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01137}01137             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01138}01138             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01139}01139             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01140}01140                 folder = Properties.Settings.Default.ImagingPath;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01141}01141                 \textcolor{keywordflow}{return} folder;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01142}01142             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01143}01143         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01148}01148         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} SetFolder(\textcolor{keywordtype}{string} fol)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01149}01149         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01150}01150             \textcolor{keywordflow}{if} (!Directory.Exists(fol))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01151}01151                 Directory.CreateDirectory(fol);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01152}01152             \textcolor{keywordflow}{if}(Automation.Properties.ContainsKey(\textcolor{stringliteral}{"{}SetFolder"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01153}01153                 Automation.SetProperty(\textcolor{stringliteral}{"{}SetFolder"{}},fol);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01154}01154             folder = fol;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01155}01155             Properties.Settings.Default.ImagingPath = folder;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01156}01156             Properties.Settings.Default.Save();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01157}01157         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01161}01161         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} TakeImage()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01162}01162         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01163}01163             \textcolor{keywordflow}{if} (Properties.Settings.Default.SimulateCamera \&\& !Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01164}01164             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01165}01165                 folder = GetFolder();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01166}01166                 BioImage b = MicroscopeSetup.simImage.Copy();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01167}01167                 Point3D p = GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01168}01168                 b.StageSizeX = p.X;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01169}01169                 b.StageSizeY = p.Y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01170}01170                 b.StageSizeZ = p.Z;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01171}01171                 RectangleD view = Microscope.GetViewRectangle(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01172}01172                 b.Resolutions[0] = \textcolor{keyword}{new} Resolution(b.SizeX, b.SizeY, b.Buffers[0].PixelFormat,view.W / b.SizeX, view.H / b.SizeY, b.PhysicalSizeZ,p.X,p.Y,p.Z);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01173}01173                 b.Volume.Location = p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01174}01174                 b.Volume.Width = view.W;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01175}01175                 b.Volume.Height = view.H;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01176}01176                 \textcolor{keywordtype}{string} file;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01177}01177                 \textcolor{keywordflow}{if} (folder == \textcolor{stringliteral}{"{}"{}} || folder == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01178}01178                     file = Properties.Settings.Default.ImageName + (ImageCount++) + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01179}01179                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01180}01180                     file = folder + \textcolor{stringliteral}{"{}/"{}} + Properties.Settings.Default.ImageName + (ImageCount++) + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01181}01181                 b.ID = file;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01182}01182                 b.file = file;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01183}01183                 Images.AddImage(b,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01184}01184                 BioImage.SaveOME(file, b.ID);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01185}01185                 App.viewer.AddImage(b);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01186}01186             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01187}01187             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01188}01188             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01189}01189                 folder = GetFolder();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01190}01190                 \textcolor{keywordtype}{string} file;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01191}01191                 \textcolor{keywordflow}{if} (folder == \textcolor{stringliteral}{"{}"{}} || folder == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01192}01192                     file = Properties.Settings.Default.ImageName + (ImageCount++).ToString();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01193}01193                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01194}01194                     file = folder + \textcolor{stringliteral}{"{}/"{}} + Properties.Settings.Default.ImageName + (ImageCount++);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01195}01195                 pMicroscope.TakeImage(file);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01196}01196                 \textcolor{keywordtype}{byte}[] bts = File.ReadAllBytes(file);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01197}01197                 \textcolor{keywordtype}{int} w, h;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01198}01198                 PixelFormat px;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01199}01199                 Enum.TryParse<PixelFormat>(Properties.Settings.Default.PCameraFormat, out px);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01200}01200                 pMicroscope.GetSize(out w, out h);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01201}01201                 Bitmap bf = \textcolor{keyword}{new} Bitmap(file, w, h, px, bts, \textcolor{keyword}{new} ZCT(0, 0, 0), 0);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01202}01202                 Statistics.CalcStatistics(bf);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01203}01203                 BioImage bm = \textcolor{keyword}{new} BioImage(file + \textcolor{stringliteral}{"{}.ome.tif"{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01204}01204                 bm.Buffers.Add(bf);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01205}01205                 \textcolor{comment}{//Set the physical size based on objective view}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01206}01206                 RectangleD rec = GetViewRectangle(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01207}01207                 Point3D p = Microscope.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01208}01208                 Resolution res = \textcolor{keyword}{new} Resolution(w,h,px,rec.W / bm.SizeX,rec.H / bm.SizeY,1, p.X,p.Y,p.Z);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01209}01209                 bm.Volume.Location = p;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01210}01210                 bm.Volume.Width = rec.W;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01211}01211                 bm.Volume.Height = rec.H;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01212}01212                 bm.bitsPerPixel = bf.BitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01213}01213                 bm.UpdateCoords(1, 1, 1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01214}01214                 bm.Resolutions.Add(res);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01215}01215                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < bf.RGBChannelsCount; c++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01216}01216                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01217}01217                     bm.Channels.Add(\textcolor{keyword}{new} Channel(c, bf.BitsPerPixel, bf.RGBChannelsCount));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01218}01218                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01219}01219                 \textcolor{comment}{//We wait for threshold image statistics calculation}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01220}01220                 \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01221}01221                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01222}01222                     Thread.Sleep(50);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01223}01223                 \} \textcolor{keywordflow}{while} (bm.Buffers[bm.Buffers.Count -\/ 1].Stats == \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01224}01224                 Statistics.ClearCalcBuffer();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01225}01225                 BioImage.AutoThreshold(bm, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01226}01226                 \textcolor{keywordflow}{if} (!imagingStack)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01227}01227                 \{   }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01228}01228                     Images.AddImage(bm,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01229}01229                     BioImage.SaveOME(file + \textcolor{stringliteral}{"{}.ome.tif"{}}, bm.ID);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01230}01230                     \textcolor{keywordflow}{if} (bm.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01231}01231                         bm.StackThreshold(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01232}01232                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01233}01233                         bm.StackThreshold(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01234}01234                     App.viewer.AddImage(bm);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01235}01235                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01236}01236                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01237}01237                     bi.Buffers.Add(bm.Buffers[0]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01238}01238                 \textcolor{comment}{//We delete the temporary file created by camera.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01239}01239                 File.Delete(file);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01240}01240                 currentImage = bm;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01241}01241             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01242}01242             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01243}01243             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01244}01244                 \textcolor{keywordflow}{if} (Function.Functions.ContainsKey(\textcolor{stringliteral}{"{}TakeImage"{}}))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01245}01245                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01246}01246                     App.imager.PerformFunction(Function.Functions[\textcolor{stringliteral}{"{}TakeImage"{}}]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01247}01247                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01248}01248                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01249}01249                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01250}01250                     MessageBox.Show(\textcolor{stringliteral}{"{}Go to Microscope Setup to set 'TakeImage' function eg. a Button shortcut or GUI recording. Or set camera simulation on \& set Camera image."{}}, \textcolor{stringliteral}{"{}Function 'TakeImage' not defined."{}});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01251}01251                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01252}01252                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01253}01253             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01254}01254         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01258}01258         \textcolor{keyword}{public} \textcolor{keyword}{static} BioImage TakeImageStack()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01259}01259         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01260}01260             \textcolor{keywordflow}{return} TakeImageStack(UpperLimit, LowerLimit, fInterVal);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01261}01261         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01262}01262         \textcolor{keyword}{static} FileSystemWatcher watcher = \textcolor{keyword}{new} FileSystemWatcher();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01265}01265         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Watcher()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01266}01266         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01267}01267             \textcolor{keywordtype}{string} s = GetFolder();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01268}01268             watcher.Created += fileSystemWatcher1\_Created;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01269}01269             watcher.Path = s;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01270}01270             watcher.BeginInit();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01271}01271             watcher.EnableRaisingEvents = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01272}01272             watcher.EndInit();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01273}01273         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01274}01274         \textcolor{keyword}{static} BioImage bi;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01275}01275         \textcolor{keyword}{static} BioImage currentImage;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01276}01276         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} imagingStack = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01277}01277         \textcolor{keyword}{static} List<BioImage> images = \textcolor{keyword}{new} List<BioImage>();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01278}01278         \textcolor{keyword}{static} Dictionary<int,string> locked = \textcolor{keyword}{new} Dictionary<int, string>();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01280}01280         \textcolor{keyword}{static} \textcolor{keywordtype}{void} LockWait()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01281}01281         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01282}01282             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01283}01283             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01284}01284                 Thread.Sleep(50);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01285}01285                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < locked.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01286}01286                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01287}01287                     \textcolor{comment}{//We wait till the new file is no longer written into.}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01288}01288                     \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01289}01289                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01290}01290                         List<Process> pr = FileUtil.Locking(locked[i]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01291}01291                         FileInfo fi = \textcolor{keyword}{new} FileInfo(locked[i]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01292}01292                         \textcolor{keywordflow}{if} (pr.Count == 0 \&\& fi.Length > 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01293}01293                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01294}01294                         fi = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01295}01295                     \} \textcolor{keywordflow}{while} (\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01296}01296                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01297}01297             \} \textcolor{keywordflow}{while} (imagingStack);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01298}01298         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01300}01300         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} WaitLocking()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01301}01301         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01302}01302             System.Threading.Thread t = \textcolor{keyword}{new} Thread(LockWait);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01303}01303             t.Start();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01304}01304         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01311}01311         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} fileSystemWatcher1\_Created(\textcolor{keywordtype}{object} sender, FileSystemEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01312}01312         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01313}01313             \textcolor{keywordflow}{if} (!Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01314}01314             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01315}01315                 \textcolor{comment}{//We will only open files with an extension}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01316}01316                 \textcolor{keywordflow}{if} (!Path.HasExtension(e.FullPath))}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01317}01317                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01318}01318                 locked.Add(ImageCount-\/1,e.FullPath);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01319}01319             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01320}01320         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01330}01330         \textcolor{keyword}{public} \textcolor{keyword}{static} BioImage TakeImageStack(\textcolor{keywordtype}{double} UpperLimit, \textcolor{keywordtype}{double} LowerLimit, \textcolor{keywordtype}{double} interval)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01331}01331         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01332}01332             imagingStack = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01333}01333             \textcolor{comment}{//We start the locking wait loop}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01334}01334             WaitLocking();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01335}01335             bi = \textcolor{keyword}{new} BioImage(Properties.Settings.Default.ImageName);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01336}01336             watcher.Path = GetFolder();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01337}01337             Focus.SetFocus(UpperLimit);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01338}01338             \textcolor{keywordtype}{double} d = UpperLimit -\/ LowerLimit;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01339}01339             \textcolor{keywordtype}{double} dd = d / interval;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01340}01340             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dd; i++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01341}01341             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01342}01342                 TakeImage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01343}01343                 \textcolor{comment}{//If this is the last image we don't need to move the focus. }}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01344}01344                 \textcolor{keywordflow}{if} (i < dd)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01345}01345                     Focus.SetFocus(Focus.GetFocus() -\/ fInterVal);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01346}01346                 Application.DoEvents();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01347}01347             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01348}01348             \textcolor{comment}{//If we are using the imaging application to take images we need to add them to the viewer as the filesystemwatcher}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01349}01349             \textcolor{comment}{//can't add them due to thread access violation}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01350}01350             \textcolor{keywordflow}{if} (!Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01351}01351             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01352}01352                 \textcolor{comment}{//First we wait till all the images are loaded}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01353}01353                 \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01354}01354                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01355}01355                     Thread.Sleep(100);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01356}01356                     Application.DoEvents();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01357}01357                 \} \textcolor{keywordflow}{while} (bi.Buffers.Count < (\textcolor{keywordtype}{int})dd);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01358}01358             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01359}01359             }
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01360}01360             bi.UpdateCoords(bi.Buffers.Count, 1, 1);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01361}01361             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < bi.Buffers[0].RGBChannelsCount; c++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01362}01362             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01363}01363                 bi.Channels.Add(\textcolor{keyword}{new} Channel(c, bi.bitsPerPixel, bi.Buffers[c].RGBChannelsCount));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01364}01364             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01365}01365             \textcolor{comment}{//Set the physical size based on objective view}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01366}01366             RectangleD rec = GetObjectiveViewRectangle();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01367}01367            bi.bitsPerPixel = bi.Buffers[0].BitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01368}01368             bi.StageSizeX = rec.X;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01369}01369             bi.StageSizeY = rec.Y;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01370}01370             bi.StageSizeZ = UpperLimit;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01371}01371             bi.Resolutions.Add(\textcolor{keyword}{new} Resolution(bi.SizeX, bi.SizeY, bi.Buffers[0].PixelFormat,}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01372}01372                 rec.W / bi.SizeX, rec.H / bi.SizeY, (UpperLimit -\/ LowerLimit) / bi.SizeZ, bi.StageSizeX,bi.StageSizeY,bi.StageSizeZ));}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01373}01373             BioImage.AutoThreshold(bi, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01374}01374             \textcolor{keywordflow}{if} (bi.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01375}01375                 bi.StackThreshold(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01376}01376             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01377}01377                 bi.StackThreshold(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01378}01378             Images.AddImage(bi,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01379}01379             imagingStack = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01380}01380             currentImage = bi;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01381}01381             images.Clear();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01382}01382             App.viewer.AddImage(currentImage);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01383}01383             locked.Clear();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01384}01384             ImageCount = 0;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01385}01385             \textcolor{keywordflow}{return} bi;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01386}01386         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01391}01391         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} TakeTiles(\textcolor{keywordtype}{int} width, \textcolor{keywordtype}{int} height)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01392}01392         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01393}01393             imagingStack = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01394}01394             \textcolor{keywordtype}{bool} leftright = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01395}01395             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01396}01396             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01397}01397                 Point3D p = Microscope.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01398}01398                 \textcolor{comment}{//We ensure that the cached position is same as actual position}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01399}01399                 Microscope.SetPosition(p);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01400}01400             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01401}01401             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01402}01402             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01403}01403                 \textcolor{keywordflow}{if} (y != 0)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01404}01404                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01405}01405                     Microscope.MoveFieldDown();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01406}01406                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01407}01407                 leftright = !leftright;}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01408}01408                 Microscope.TakeImage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01409}01409                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width -\/ 1; x++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01410}01410                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01411}01411                     \textcolor{keywordflow}{if} (leftright)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01412}01412                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01413}01413                         Microscope.MoveFieldRight();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01414}01414                     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01415}01415                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01416}01416                     \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01417}01417                         Microscope.MoveFieldLeft();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01418}01418                     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01419}01419                     Microscope.TakeImage();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01420}01420                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01421}01421             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01422}01422             \textcolor{comment}{//If we are using the imaging application to take images we need to add them to the viewer as the filesystemwatcher}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01423}01423             \textcolor{comment}{//can't add them due to thread access violation}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01424}01424             \textcolor{keywordflow}{if}(!Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01425}01425             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01426}01426                 \textcolor{comment}{//First we wait till all the images are loaded}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01427}01427                 \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01428}01428                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01429}01429                     Application.DoEvents();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01430}01430                 \} \textcolor{keywordflow}{while} (images.Count < width * height);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01431}01431                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < images.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01432}01432                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01433}01433                     App.viewer.AddImage(images[i]);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01434}01434                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01435}01435                 images.Clear();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01436}01436             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01437}01437             imagingStack = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01438}01438         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01442}01442         \textcolor{keyword}{public} \textcolor{keyword}{static} RectangleD GetObjectiveViewRectangle()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01443}01443         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01444}01444             Objectives.Objective o = Objectives.GetObjective();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01445}01445             PointD d = Stage.GetPosition(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01446}01446             \textcolor{keywordflow}{return} \textcolor{keyword}{new} RectangleD(d.X, d.Y, o.ViewWidth, o.ViewHeight);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01447}01447         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01455}01455         \textcolor{keyword}{public} \textcolor{keyword}{static} RectangleD GetViewRectangle(\textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01456}01456         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01457}01457             Objectives.Objective o = Objectives.GetObjective();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01458}01458             \textcolor{keywordflow}{if} (update)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01459}01459             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01460}01460                 PointD d = Stage.GetPosition(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01461}01461                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} RectangleD(d.X, d.Y, viewSize.X, viewSize.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01462}01462             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01463}01463             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01464}01464             \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01465}01465                 \textcolor{keywordflow}{if}(Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01466}01466                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01467}01467                     \textcolor{keywordflow}{return} \textcolor{keyword}{new} RectangleD(PMicroscope.location.X, PMicroscope.location.Y, viewSize.X, viewSize.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01468}01468                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01469}01469                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01470}01470                 \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01471}01471                     PointD d = Stage.GetPosition(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01472}01472                     \textcolor{keywordflow}{return} \textcolor{keyword}{new} RectangleD(d.X, d.Y, viewSize.X, viewSize.Y);}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01473}01473                 \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01474}01474             \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01475}01475         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01476}01476         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Close()}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01477}01477         \{}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01478}01478             PMicroscope.Stop();}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01479}01479         \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01480}01480     \}}
+\DoxyCodeLine{\Hypertarget{_microscope_8cs_source_l01481}01481 \}}
+
+\end{DoxyCode}

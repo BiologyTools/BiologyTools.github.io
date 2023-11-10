@@ -1,0 +1,117 @@
+\hypertarget{_d_graphics_8cs_source}{}\doxysection{DGraphics.\+cs}
+\label{_d_graphics_8cs_source}\index{F:/repos/BioImager/BioImager/Graphics/Graphics/DGraphics.cs@{F:/repos/BioImager/BioImager/Graphics/Graphics/DGraphics.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00001}00001 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio}{Bio}}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00005}\mbox{\hyperlink{class_bio_1_1_d_graphics}{00005}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_1_1_d_graphics}{DGraphics}}                  \textcolor{comment}{// 113 lines}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00007}00007         \textcolor{comment}{// Properties }}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00008}00008         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_d_x11}{DDX11}} D3D \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00009}00009         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_camera}{DCamera}} Camera \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00010}00010         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_model}{DModel}} Model \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00011}00011         \textcolor{keyword}{private} \mbox{\hyperlink{class_bio_1_1_d_color_shader}{DColorShader}} ColorShader \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00012}00012         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_timer}{DTimer}} Timer \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00013}00013         \textcolor{keyword}{public} \textcolor{keywordtype}{int} BitsPerPixel \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00014}00014         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00015}00015         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_1_1_d_graphics}{DGraphics}}() \{ \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00016}00016 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00017}00017         \textcolor{comment}{// Methods}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00018}00018         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} Initialize(\mbox{\hyperlink{class_bio_1_1_d_system_configuration}{DSystemConfiguration}} configuration, IntPtr windowHandle, \mbox{\hyperlink{class_bio_1_1_bio_image}{BioImage}} im)}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00019}00019         \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00020}00020             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00021}00021             \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00022}00022                 \textcolor{comment}{// Create the Direct3D object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00023}00023                 D3D = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_d_d_x11}{DDX11}}();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00025}00025                 \textcolor{comment}{// I nitialize the Direct3D object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00026}00026                 \textcolor{keywordflow}{if} (!D3D.Initialize(configuration, windowHandle))}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00027}00027                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00029}00029                 \textcolor{comment}{// Create the camera object}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00030}00030                 Camera = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_d_camera}{DCamera}}();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00032}00032                 \textcolor{comment}{// Set the initial position of the camera.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00033}00033                 Camera.SetPosition(0.1f, -\/0.1f, -\/1);}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00035}00035                 \textcolor{comment}{// Create the model object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00036}00036                 Model = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_d_model}{DModel}}();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00038}00038                 \textcolor{comment}{// Initialize the model object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00039}00039                 \textcolor{keywordflow}{if} (!Model.Initialize(D3D.Device, im))}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00040}00040                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00042}00042                 \textcolor{comment}{// Create the color shader object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00043}00043                 ColorShader = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_d_color_shader}{DColorShader}}();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00045}00045                 \textcolor{comment}{// Initialize the color shader object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00046}00046                 \textcolor{keywordflow}{if} (!ColorShader.Initialize(D3D.Device, windowHandle, im.bitsPerPixel))}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00047}00047                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00049}00049                 \textcolor{comment}{// Create the Timer}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00050}00050                 Timer = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_1_1_d_timer}{DTimer}}();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00052}00052                 \textcolor{comment}{// Initialize the Timer}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00053}00053                 \textcolor{keywordflow}{if} (!Timer.Initialize())}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00054}00054                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00055}00055                 BitsPerPixel = im.bitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00056}00056                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00057}00057             \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00058}00058             \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00059}00059             \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00060}00060                 MessageBox.Show(\textcolor{stringliteral}{"{}Could not initialize Direct3D\(\backslash\)nError is '"{}} + ex.Message + \textcolor{stringliteral}{"{}'"{}});}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00061}00061                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00062}00062             \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00063}00063         \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00064}00064         \textcolor{keyword}{public} \textcolor{keywordtype}{void} ShutDown()}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00065}00065         \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00066}00066             \textcolor{comment}{// Release the camera object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00067}00067             Camera = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00068}00068             Timer = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00070}00070             \textcolor{comment}{// Release the color shader object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00071}00071             ColorShader?.ShutDown();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00072}00072             ColorShader = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00073}00073             \textcolor{comment}{// Release the model object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00074}00074             Model?.ShutDown();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00075}00075             Model = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00076}00076             \textcolor{comment}{// Release the Direct3D object.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00077}00077             D3D?.ShutDown();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00078}00078             D3D = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00079}00079         \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00080}00080         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} Frame(IntRange r, IntRange g, IntRange b, \textcolor{keywordtype}{float} interval, \textcolor{keywordtype}{float} alpha)}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00081}00081         \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00082}00082             \textcolor{comment}{// Render the graphics scene.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00083}00083             \textcolor{keywordflow}{return} Render(r, g, b, interval, alpha);}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00084}00084         \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00085}00085         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} Render(IntRange r, IntRange g, IntRange b, \textcolor{keywordtype}{float} interval, \textcolor{keywordtype}{float} alpha)}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00086}00086         \{}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00087}00087             \textcolor{comment}{// Clear the buffer to begin the scene.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00088}00088             D3D.BeginScene(0.0f, 0.0f, 0.0f, 1f);}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00090}00090             \textcolor{comment}{// Generate the view matrix based on the camera position.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00091}00091             Camera.Render();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00093}00093             \textcolor{comment}{// Get the world, view, and projection matrices from camera and d3d objects.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00094}00094             var viewMatrix = Camera.ViewMatrix;}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00095}00095             var worldMatrix = D3D.WorldMatrix;}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00096}00096             var projectionMatrix = D3D.ProjectionMatrix;}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00098}00098             \textcolor{comment}{// Put the model vertex and index buffers on the graphics pipeline to prepare them for drawing.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00099}00099             Model.Render(D3D.DeviceContext);}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00101}00101             \textcolor{comment}{// Render the model using the color shader.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00102}00102             \textcolor{keywordflow}{if} (!ColorShader.Render(D3D.DeviceContext, Model.IndexCount, worldMatrix, viewMatrix, projectionMatrix, r, g, b, interval, alpha))}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00103}00103                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00105}00105             \textcolor{comment}{// Present the rendered scene to the screen.}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00106}00106             D3D.EndScene();}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00108}00108             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00109}00109         \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00110}00110     \}}
+\DoxyCodeLine{\Hypertarget{_d_graphics_8cs_source_l00111}00111 \}}
+
+\end{DoxyCode}
