@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -184,7 +184,7 @@ Public Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02033">2033</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02045">2045</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a2efa77ca2c5be81e081305563abdd9e8" name="a2efa77ca2c5be81e081305563abdd9e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a2efa77ca2c5be81e081305563abdd9e8">&#9670;&#160;</a></span>FromImage()</h2>
@@ -210,8 +210,37 @@ Public Attributes</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The method is returning an instance of the <a class="el" href="class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html">ImageJDesc</a> class. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02059">2059</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02071">2071</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 2072</span>            {</div>
+<div class="line"><span class="lineno"> 2073</span>                ImageJ = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2074</span>                images = b.ImageCount;</div>
+<div class="line"><span class="lineno"> 2075</span>                channels = b.SizeC;</div>
+<div class="line"><span class="lineno"> 2076</span>                slices = b.SizeZ;</div>
+<div class="line"><span class="lineno"> 2077</span>                frames = b.SizeT;</div>
+<div class="line"><span class="lineno"> 2078</span>                hyperstack = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 2079</span>                mode = <span class="stringliteral">&quot;grayscale&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2080</span>                unit = <span class="stringliteral">&quot;micron&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2081</span>                finterval = b.frameInterval;</div>
+<div class="line"><span class="lineno"> 2082</span>                spacing = b.PhysicalSizeZ;</div>
+<div class="line"><span class="lineno"> 2083</span>                loop = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 2084</span>                <span class="comment">/*</span></div>
+<div class="line"><span class="lineno"> 2085</span><span class="comment">                double dmax = double.MinValue;</span></div>
+<div class="line"><span class="lineno"> 2086</span><span class="comment">                double dmin = double.MaxValue;</span></div>
+<div class="line"><span class="lineno"> 2087</span><span class="comment">                foreach (Channel c in b.Channels)</span></div>
+<div class="line"><span class="lineno"> 2088</span><span class="comment">                {</span></div>
+<div class="line"><span class="lineno"> 2089</span><span class="comment">                    if(dmax &lt; c.Max)</span></div>
+<div class="line"><span class="lineno"> 2090</span><span class="comment">                        dmax = c.Max;</span></div>
+<div class="line"><span class="lineno"> 2091</span><span class="comment">                    if(dmin &gt; c.Min)</span></div>
+<div class="line"><span class="lineno"> 2092</span><span class="comment">                        dmin = c.Min;</span></div>
+<div class="line"><span class="lineno"> 2093</span><span class="comment">                }</span></div>
+<div class="line"><span class="lineno"> 2094</span><span class="comment">                min = dmin;</span></div>
+<div class="line"><span class="lineno"> 2095</span><span class="comment">                max = dmax;</span></div>
+<div class="line"><span class="lineno"> 2096</span><span class="comment">                */</span></div>
+<div class="line"><span class="lineno"> 2097</span>                min = b.Channels[0].RangeR.Min;</div>
+<div class="line"><span class="lineno"> 2098</span>                max = b.Channels[0].RangeR.Max;</div>
+<div class="line"><span class="lineno"> 2099</span>                <span class="keywordflow">return</span> <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno"> 2100</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a70a0f0eee9b59e3e03f0e47eb7871bd8" name="a70a0f0eee9b59e3e03f0e47eb7871bd8"></a>
@@ -231,8 +260,25 @@ Public Attributes</h2></td></tr>
 <p >It returns a string that contains the values of all the variables in the imagej image</p>
 <dl class="section return"><dt>Returns</dt><dd>A string representation of the imagej image data. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02092">2092</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02104">2104</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 2105</span>            {</div>
+<div class="line"><span class="lineno"> 2106</span>                <span class="keywordtype">string</span> s = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2107</span>                s += <span class="stringliteral">&quot;ImageJ=&quot;</span> + ImageJ + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2108</span>                s += <span class="stringliteral">&quot;images=&quot;</span> + images + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2109</span>                s += <span class="stringliteral">&quot;channels=&quot;</span> + channels.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2110</span>                s += <span class="stringliteral">&quot;slices=&quot;</span> + slices.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2111</span>                s += <span class="stringliteral">&quot;frames=&quot;</span> + frames.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2112</span>                s += <span class="stringliteral">&quot;hyperstack=&quot;</span> + hyperstack.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2113</span>                s += <span class="stringliteral">&quot;mode=&quot;</span> + mode.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2114</span>                s += <span class="stringliteral">&quot;unit=&quot;</span> + unit.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2115</span>                s += <span class="stringliteral">&quot;finterval=&quot;</span> + finterval.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2116</span>                s += <span class="stringliteral">&quot;spacing=&quot;</span> + spacing.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2117</span>                s += <span class="stringliteral">&quot;loop=&quot;</span> + loop.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2118</span>                s += <span class="stringliteral">&quot;min=&quot;</span> + min.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2119</span>                s += <span class="stringliteral">&quot;max=&quot;</span> + max.ToString() + <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><span class="lineno"> 2120</span>                <span class="keywordflow">return</span> s;</div>
+<div class="line"><span class="lineno"> 2121</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab1abdff664608df09c0818e748b272bd" name="ab1abdff664608df09c0818e748b272bd"></a>
@@ -258,8 +304,50 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02113">2113</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02125">2125</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 2126</span>            {</div>
+<div class="line"><span class="lineno"> 2127</span>                <span class="keywordtype">string</span>[] lines = desc.Split(<span class="keyword">new</span> <span class="keywordtype">string</span>[] { <span class="stringliteral">&quot;\r\n&quot;</span>, <span class="stringliteral">&quot;\r&quot;</span>, <span class="stringliteral">&quot;\n&quot;</span> }, StringSplitOptions.None);</div>
+<div class="line"><span class="lineno"> 2128</span>                <span class="keywordtype">int</span> maxlen = 20;</div>
+<div class="line"><span class="lineno"> 2129</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; lines.Length; i++)</div>
+<div class="line"><span class="lineno"> 2130</span>                {</div>
+<div class="line"><span class="lineno"> 2131</span>                    <span class="keywordflow">if</span> (i &lt; maxlen)</div>
+<div class="line"><span class="lineno"> 2132</span>                    {</div>
+<div class="line"><span class="lineno"> 2133</span>                        <span class="keywordtype">string</span>[] sp = lines[i].Split(<span class="charliteral">&#39;=&#39;</span>);</div>
+<div class="line"><span class="lineno"> 2134</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;ImageJ&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2135</span>                            ImageJ = sp[1];</div>
+<div class="line"><span class="lineno"> 2136</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;images&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2137</span>                            images = <span class="keywordtype">int</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2138</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;channels&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2139</span>                            channels = <span class="keywordtype">int</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2140</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;slices&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2141</span>                            slices = <span class="keywordtype">int</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2142</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;frames&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2143</span>                            frames = <span class="keywordtype">int</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2144</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;hyperstack&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2145</span>                            hyperstack = <span class="keywordtype">bool</span>.Parse(sp[1]);</div>
+<div class="line"><span class="lineno"> 2146</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;mode&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2147</span>                            mode = sp[1];</div>
+<div class="line"><span class="lineno"> 2148</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;unit&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2149</span>                            unit = sp[1];</div>
+<div class="line"><span class="lineno"> 2150</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;finterval&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2151</span>                            finterval = <span class="keywordtype">double</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2152</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;spacing&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2153</span>                            spacing = <span class="keywordtype">double</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2154</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;loop&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2155</span>                            loop = <span class="keywordtype">bool</span>.Parse(sp[1]);</div>
+<div class="line"><span class="lineno"> 2156</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;min&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2157</span>                            min = <span class="keywordtype">double</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2158</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;max&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2159</span>                            max = <span class="keywordtype">double</span>.Parse(sp[1], CultureInfo.InvariantCulture);</div>
+<div class="line"><span class="lineno"> 2160</span>                        <span class="keywordflow">if</span> (sp[0] == <span class="stringliteral">&quot;8bitcolor&quot;</span>)</div>
+<div class="line"><span class="lineno"> 2161</span>                            bit8color = <span class="keywordtype">bool</span>.Parse(sp[1]);</div>
+<div class="line"><span class="lineno"> 2162</span>                    }</div>
+<div class="line"><span class="lineno"> 2163</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno"> 2164</span>                        <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 2165</span>                }</div>
+<div class="line"><span class="lineno"> 2166</span> </div>
+<div class="line"><span class="lineno"> 2167</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -275,7 +363,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02049">2049</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02061">2061</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -291,7 +379,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02037">2037</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02049">2049</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -307,7 +395,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02048">2048</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02060">2060</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -323,7 +411,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02043">2043</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02055">2055</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -339,7 +427,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02039">2039</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02051">2051</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -355,7 +443,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02040">2040</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02052">2052</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -371,7 +459,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02035">2035</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02047">2047</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -387,7 +475,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02036">2036</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02048">2048</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -403,7 +491,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02045">2045</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02057">2057</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -419,7 +507,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02047">2047</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02059">2059</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -435,7 +523,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02046">2046</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02058">2058</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -451,7 +539,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02041">2041</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02053">2053</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -467,7 +555,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02038">2038</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02050">2050</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -483,7 +571,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02044">2044</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02056">2056</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>
@@ -499,7 +587,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02042">2042</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l02054">2054</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
 
 </div>
 </div>

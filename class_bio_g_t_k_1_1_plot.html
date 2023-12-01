@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -203,7 +203,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00028">28</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   29</span>        {</div>
+<div class="line"><span class="lineno">   30</span>            Bar,</div>
+<div class="line"><span class="lineno">   31</span>            Scatter</div>
+<div class="line"><span class="lineno">   32</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -260,7 +264,36 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00144">144</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  144</span>                                                                                                 : base(handle)</div>
+<div class="line"><span class="lineno">  145</span>        {</div>
+<div class="line"><span class="lineno">  146</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">  147</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  148</span>            model = <span class="keyword">new</span> ScottPlot.Plot();</div>
+<div class="line"><span class="lineno">  149</span>            data.Add(vals);</div>
+<div class="line"><span class="lineno">  150</span>            <span class="keywordflow">if</span> (typ == PlotType.Scatter)</div>
+<div class="line"><span class="lineno">  151</span>                InitScatter();</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  153</span>            <span class="keywordflow">if</span> (typ == PlotType.Bar)</div>
+<div class="line"><span class="lineno">  154</span>                InitBars();</div>
+<div class="line"><span class="lineno">  155</span>            <span class="keywordflow">if</span> (!name.EndsWith(<span class="stringliteral">&quot;.png&quot;</span>) || !name.EndsWith(<span class="stringliteral">&quot;.PNG&quot;</span>))</div>
+<div class="line"><span class="lineno">  156</span>            file = name + <span class="stringliteral">&quot;.png&quot;</span>;</div>
+<div class="line"><span class="lineno">  157</span>            this.Title = name;</div>
+<div class="line"><span class="lineno">  158</span>            image.Drawn += Image_Drawn;</div>
+<div class="line"><span class="lineno">  159</span>            image.SizeAllocated += Image_SizeAllocated;</div>
+<div class="line"><span class="lineno">  160</span>            image.ButtonPressEvent += Image_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  161</span>            barMenu.ButtonPressEvent += BarMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  162</span>            scatterMenu.ButtonPressEvent += ScatterMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  163</span>            saveImageMenu.ButtonPressEvent += SaveImageMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  164</span>            saveCSVMenu.ButtonPressEvent += SaveCSVMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  165</span>            this.DeleteEvent += About_DeleteEvent;</div>
+<div class="line"><span class="lineno">  166</span>            this.name = name;</div>
+<div class="line"><span class="lineno">  167</span>            selected = <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  168</span>            <span class="keywordflow">if</span>(plots.ContainsKey(name))</div>
+<div class="line"><span class="lineno">  169</span>                plots[name] = <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  171</span>                plots.Add(name,<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  172</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -301,7 +334,11 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_plot.html">Plot</a> class. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00129">129</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  130</span>        {</div>
+<div class="line"><span class="lineno">  131</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/Plot.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">  132</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> Plot(builder, builder.GetObject(<span class="stringliteral">&quot;plot&quot;</span>).Handle, vals, name, PlotType.Scatter);</div>
+<div class="line"><span class="lineno">  133</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa8102d7364ec895cafd38f3fc8ba3bb2" name="aa8102d7364ec895cafd38f3fc8ba3bb2"></a>
@@ -347,7 +384,11 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_plot.html">Plot</a> class. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00137">137</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  138</span>        {</div>
+<div class="line"><span class="lineno">  139</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(<span class="stringliteral">&quot;Glade/Plot.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">  140</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> Plot(builder, builder.GetObject(<span class="stringliteral">&quot;plot&quot;</span>).Handle, vals, name, typ);</div>
+<div class="line"><span class="lineno">  141</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab0e1330961a887a9249d09c31ba303ab" name="ab0e1330961a887a9249d09c31ba303ab"></a>
@@ -367,7 +408,13 @@ Properties</h2></td></tr>
 <p >The function updates an image by saving it as a PNG file, setting the window title, creating a new Pixbuf object from the file, and redrawing the image. </p>
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00060">60</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   61</span>        {</div>
+<div class="line"><span class="lineno">   62</span>            model.SavePng(file, AllocatedWidth, AllocatedHeight);</div>
+<div class="line"><span class="lineno">   63</span>            this.Title = name;</div>
+<div class="line"><span class="lineno">   64</span>            pixbuf = <span class="keyword">new</span> Pixbuf(file);</div>
+<div class="line"><span class="lineno">   65</span>            image.QueueDraw();</div>
+<div class="line"><span class="lineno">   66</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -392,7 +439,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00043">43</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   44</span>        {</div>
+<div class="line"><span class="lineno">   45</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> data; }</div>
+<div class="line"><span class="lineno">   46</span>            <span class="keyword">set</span> { data = value; <a class="code hl_function" href="class_bio_g_t_k_1_1_plot.html#ab0e1330961a887a9249d09c31ba303ab">UpdateImage</a>(); }</div>
+<div class="line"><span class="lineno">   47</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_plot_html_ab0e1330961a887a9249d09c31ba303ab"><div class="ttname"><a href="class_bio_g_t_k_1_1_plot.html#ab0e1330961a887a9249d09c31ba303ab">BioGTK.Plot.UpdateImage</a></div><div class="ttdeci">void UpdateImage()</div><div class="ttdef"><b>Definition:</b> <a href="_plot_8cs_source.html#l00060">Plot.cs:60</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2703969cf47eab158af48946408a1324" name="a2703969cf47eab158af48946408a1324"></a>
@@ -416,7 +468,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00048">48</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   49</span>        {</div>
+<div class="line"><span class="lineno">   50</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> bitmap; }</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keyword">set</span> { bitmap = value; }</div>
+<div class="line"><span class="lineno">   52</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a202eb77f392a92804ac51ae6c504bf31" name="a202eb77f392a92804ac51ae6c504bf31"></a>
@@ -440,7 +496,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00053">53</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   54</span>        {</div>
+<div class="line"><span class="lineno">   55</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> model; }</div>
+<div class="line"><span class="lineno">   56</span>            <span class="keyword">set</span> { model = value; <a class="code hl_function" href="class_bio_g_t_k_1_1_plot.html#ab0e1330961a887a9249d09c31ba303ab">UpdateImage</a>(); }</div>
+<div class="line"><span class="lineno">   57</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4c9f99bdeee3e190c1ef6af4dff37eae" name="a4c9f99bdeee3e190c1ef6af4dff37eae"></a>
@@ -464,7 +524,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00039">39</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   40</span>        {</div>
+<div class="line"><span class="lineno">   41</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> plots; }</div>
+<div class="line"><span class="lineno">   42</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4e9dc0e9698fa2621b1e4aeff199a28e" name="a4e9dc0e9698fa2621b1e4aeff199a28e"></a>
@@ -488,7 +551,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00290">290</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  291</span>        {</div>
+<div class="line"><span class="lineno">  292</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> selected; }</div>
+<div class="line"><span class="lineno">  293</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af9743a584698921ccba326a42b10aff8" name="af9743a584698921ccba326a42b10aff8"></a>
@@ -512,7 +578,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_plot_8cs_source.html#l00034">34</a> of file <a class="el" href="_plot_8cs_source.html">Plot.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   35</span>        {</div>
+<div class="line"><span class="lineno">   36</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> type; }</div>
+<div class="line"><span class="lineno">   37</span>            <span class="keyword">set</span> { type = value; }</div>
+<div class="line"><span class="lineno">   38</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

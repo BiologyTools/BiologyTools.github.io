@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -184,122 +184,125 @@ $(document).ready(function(){initNavTree('_node_view_8cs_source.html',''); initR
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            System.IO.Directory.CreateDirectory(st + <span class="stringliteral">&quot;/Scripts&quot;</span>);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            System.IO.Directory.CreateDirectory(st + <span class="stringliteral">&quot;/Functions&quot;</span>);</div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            System.IO.Directory.CreateDirectory(st + <span class="stringliteral">&quot;/Tools&quot;</span>);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            App.Initialize();</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            App.nodeView = <span class="keyword">this</span>;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            App.nodeView = <span class="keyword">this</span>;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            App.Initialize();</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">SetupHandlers</a>();</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            Console.WriteLine(<span class="stringliteral">&quot;Parsing arguments.&quot;</span>);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> args)</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordflow">if</span>(args.Length &gt; 0)</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <a class="code hl_class" href="class_bio_g_t_k_1_1_bio_image.html">BioImage</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_bio_image.html#a00787c66ba2458500aa07ff4a9215f41">OpenFile</a>(item);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <a class="code hl_class" href="class_bio_g_t_k_1_1_tabs_view.html">TabsView</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_tabs_view.html#a9abc387c20e2afb6accaf2c1341881f8">Create</a>();</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            Console.WriteLine(<span class="stringliteral">&quot;Initializing nodes.&quot;</span>);    </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">InitItems</a>();</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">   73</a></span>        <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">InitItems</a>()</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            Gtk.TreeViewColumn coordCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            coordCol.Title = <span class="stringliteral">&quot;Coordinate&quot;</span>;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            Gtk.CellRendererText coordCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            coordCol.PackStart(coordCell, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            Gtk.TreeViewColumn expCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            expCol.Title = <span class="stringliteral">&quot;Exposure&quot;</span>;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            Gtk.CellRendererText expCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            expCol.PackStart(expCell, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            Gtk.TreeViewColumn deltaCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            deltaCol.Title = <span class="stringliteral">&quot;Delta&quot;</span>;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            Gtk.CellRendererText deltaCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            deltaCol.PackStart(deltaCell, <span class="keyword">true</span>);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            tree.AppendColumn(coordCol);</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            tree.AppendColumn(expCol);</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            tree.AppendColumn(deltaCol);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            coordCol.AddAttribute(coordCell, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            expCol.AddAttribute(expCell, <span class="stringliteral">&quot;text&quot;</span>, 1);</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            deltaCol.AddAttribute(deltaCell, <span class="stringliteral">&quot;text&quot;</span>, 2);</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> args)</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                BioImage.OpenAsync(item, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            Console.WriteLine(<span class="stringliteral">&quot;Initializing nodes.&quot;</span>);    </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">InitItems</a>();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">   77</a></span>        <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">InitItems</a>()</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            Gtk.TreeViewColumn coordCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            coordCol.Title = <span class="stringliteral">&quot;Coordinate&quot;</span>;</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            Gtk.CellRendererText coordCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            coordCol.PackStart(coordCell, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            Gtk.TreeViewColumn expCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            expCol.Title = <span class="stringliteral">&quot;Exposure&quot;</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            Gtk.CellRendererText expCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            expCol.PackStart(expCell, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            Gtk.TreeViewColumn deltaCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            deltaCol.Title = <span class="stringliteral">&quot;Delta&quot;</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            Gtk.CellRendererText deltaCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            deltaCol.PackStart(deltaCell, <span class="keyword">true</span>);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            tree.AppendColumn(coordCol);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            tree.AppendColumn(expCol);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            tree.AppendColumn(deltaCol);</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="keywordflow">foreach</span> (<a class="code hl_class" href="class_bio_g_t_k_1_1_bio_image.html">BioImage</a> b <span class="keywordflow">in</span> Images.images)</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                Gtk.TreeIter iter = store.AppendValues(System.IO.Path.GetFileName(b.Filename));</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="keywordflow">foreach</span> (AForge.Bitmap bit in b.Buffers)</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                    store.AppendValues(iter, bit.Coordinate.ToString(), bit.Plane.Exposure, bit.Plane.Delta);</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                }</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            }</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            tree.Model = store;</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">  114</a></span>        <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">UpdateItems</a>()</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        {</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <span class="keywordflow">foreach</span> (<a class="code hl_class" href="class_bio_g_t_k_1_1_bio_image.html">BioImage</a> b <span class="keywordflow">in</span> Images.images)</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                Gtk.TreeIter iter = store.AppendValues(System.IO.Path.GetFileName(b.Filename));</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                <span class="keywordflow">foreach</span> (AForge.Bitmap bit in b.Buffers)</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                    <span class="keywordflow">if</span>(bit.Plane != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                        store.AppendValues(iter, bit.Coordinate.ToString(), bit.Plane.Exposure, bit.Plane.Delta);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                        store.AppendValues(iter, bit.Coordinate.ToString(), 0, 0);</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                }</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            }</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            tree.Model = store;</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        }</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span><span class="preprocessor">        #endregion</span></div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span><span class="preprocessor">        #region Handlers</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">  137</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">SetupHandlers</a>()</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        {</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            DeleteEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">OnLocalDeleteEvent</a>;</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            newTabsViewMenu.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">newTabsViewClick</a>;</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>            aboutMenu.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">aboutClick</a>;</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            </div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        }</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">  148</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">OnLocalDeleteEvent</a>(<span class="keywordtype">object</span> sender, DeleteEventArgs a)</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        {</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>            Application.Quit();</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            a.RetVal = <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        }</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">  157</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">newTabsViewClick</a>(<span class="keywordtype">object</span> sender, EventArgs a)</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        {</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <a class="code hl_class" href="class_bio_g_t_k_1_1_tabs_view.html">BioGTK.TabsView</a> tabsView = <a class="code hl_namespace" href="namespace_bio_g_t_k.html">BioGTK</a>.<a class="code hl_class" href="class_bio_g_t_k_1_1_tabs_view.html">TabsView</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_tabs_view.html#a9abc387c20e2afb6accaf2c1341881f8">Create</a>();</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            tabsView.Show();</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            </div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">  166</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">aboutClick</a>(<span class="keywordtype">object</span> sender, EventArgs a)</div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        {</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            <a class="code hl_class" href="class_bio_g_t_k_1_1_about.html">BioGTK.About</a> about = <a class="code hl_namespace" href="namespace_bio_g_t_k.html">BioGTK</a>.<a class="code hl_class" href="class_bio_g_t_k_1_1_about.html">About</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_about.html#a6487438cefc48493bdb6c5fc5320a5df">Create</a>();</div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            about.Show();</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>        }</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">        #endregion</span></div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span> </div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>    }</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>}</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            coordCol.AddAttribute(coordCell, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            expCol.AddAttribute(expCell, <span class="stringliteral">&quot;text&quot;</span>, 1);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            deltaCol.AddAttribute(deltaCell, <span class="stringliteral">&quot;text&quot;</span>, 2);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keywordflow">foreach</span> (<a class="code hl_class" href="class_bio_g_t_k_1_1_bio_image.html">BioImage</a> b <span class="keywordflow">in</span> Images.images)</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                Gtk.TreeIter iter = store.AppendValues(System.IO.Path.GetFileName(b.Filename));</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">foreach</span> (AForge.Bitmap bit in b.Buffers)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                    store.AppendValues(iter, bit.Coordinate.ToString(), bit.Plane.Exposure, bit.Plane.Delta);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            tree.Model = store;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            </div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">  118</a></span>        <span class="keyword">public</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">UpdateItems</a>()</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="keywordflow">foreach</span> (<a class="code hl_class" href="class_bio_g_t_k_1_1_bio_image.html">BioImage</a> b <span class="keywordflow">in</span> Images.images)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                Gtk.TreeIter iter = store.AppendValues(System.IO.Path.GetFileName(b.Filename));</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="keywordflow">foreach</span> (AForge.Bitmap bit in b.Buffers)</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                {</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                    <span class="keywordflow">if</span>(bit.Plane != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                        store.AppendValues(iter, bit.Coordinate.ToString(), bit.Plane.Exposure, bit.Plane.Delta);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                        store.AppendValues(iter, bit.Coordinate.ToString(), 0, 0);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                }</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            }</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            tree.Model = store;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        }</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span><span class="preprocessor">        #endregion</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span><span class="preprocessor">        #region Handlers</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">  141</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">SetupHandlers</a>()</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        {</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            DeleteEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">OnLocalDeleteEvent</a>;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            newTabsViewMenu.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">newTabsViewClick</a>;</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            aboutMenu.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">aboutClick</a>;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            </div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        }</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">  152</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">OnLocalDeleteEvent</a>(<span class="keywordtype">object</span> sender, DeleteEventArgs a)</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            Application.Quit();</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            a.RetVal = <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        }</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">  161</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">newTabsViewClick</a>(<span class="keywordtype">object</span> sender, EventArgs a)</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        {</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            <a class="code hl_class" href="class_bio_g_t_k_1_1_tabs_view.html">BioGTK.TabsView</a> tabsView = <a class="code hl_namespace" href="namespace_bio_g_t_k.html">BioGTK</a>.<a class="code hl_class" href="class_bio_g_t_k_1_1_tabs_view.html">TabsView</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_tabs_view.html#a9abc387c20e2afb6accaf2c1341881f8">Create</a>();</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            tabsView.Show();</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        }</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">  170</a></span>        <span class="keyword">protected</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">aboutClick</a>(<span class="keywordtype">object</span> sender, EventArgs a)</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        {</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            <a class="code hl_class" href="class_bio_g_t_k_1_1_about.html">BioGTK.About</a> about = <a class="code hl_namespace" href="namespace_bio_g_t_k.html">BioGTK</a>.<a class="code hl_class" href="class_bio_g_t_k_1_1_about.html">About</a>.<a class="code hl_function" href="class_bio_g_t_k_1_1_about.html#a6487438cefc48493bdb6c5fc5320a5df">Create</a>();</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            about.Show();</div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        }</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="preprocessor">        #endregion</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span> </div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>    }</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>}</div>
 <div class="ttc" id="aclass_bio_g_t_k_1_1_about_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_about.html">BioGTK.About</a></div><div class="ttdef"><b>Definition:</b> <a href="_about_8cs_source.html#l00014">About.cs:15</a></div></div>
 <div class="ttc" id="aclass_bio_g_t_k_1_1_about_html_a6487438cefc48493bdb6c5fc5320a5df"><div class="ttname"><a href="class_bio_g_t_k_1_1_about.html#a6487438cefc48493bdb6c5fc5320a5df">BioGTK.About.Create</a></div><div class="ttdeci">static About Create()</div><div class="ttdef"><b>Definition:</b> <a href="_about_8cs_source.html#l00032">About.cs:32</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_bio_image_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_bio_image.html">BioGTK.BioImage</a></div><div class="ttdef"><b>Definition:</b> <a href="_bio_8cs_source.html#l01768">Bio.cs:1769</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_bio_image_html_a00787c66ba2458500aa07ff4a9215f41"><div class="ttname"><a href="class_bio_g_t_k_1_1_bio_image.html#a00787c66ba2458500aa07ff4a9215f41">BioGTK.BioImage.OpenFile</a></div><div class="ttdeci">static BioImage OpenFile(string file)</div><div class="ttdef"><b>Definition:</b> <a href="_bio_8cs_source.html#l04273">Bio.cs:4273</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_bio_image_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_bio_image.html">BioGTK.BioImage</a></div><div class="ttdef"><b>Definition:</b> <a href="_bio_8cs_source.html#l01779">Bio.cs:1780</a></div></div>
 <div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html">BioGTK.NodeView</a></div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00012">NodeView.cs:13</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a07eaa3d0dec13e2bd192efbdf1a284a8"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">BioGTK.NodeView.OnLocalDeleteEvent</a></div><div class="ttdeci">void OnLocalDeleteEvent(object sender, DeleteEventArgs a)</div><div class="ttdoc">Handle Close of Form, Quit Application.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00148">NodeView.cs:148</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a361a58a888cbb0e6557530e0b5f4ada1"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">BioGTK.NodeView.InitItems</a></div><div class="ttdeci">void InitItems()</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00073">NodeView.cs:73</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a4082ded05e83de89e0cd025ee4210501"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">BioGTK.NodeView.aboutClick</a></div><div class="ttdeci">void aboutClick(object sender, EventArgs a)</div><div class="ttdoc">Handle Click of Button.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00166">NodeView.cs:166</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a07eaa3d0dec13e2bd192efbdf1a284a8"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8">BioGTK.NodeView.OnLocalDeleteEvent</a></div><div class="ttdeci">void OnLocalDeleteEvent(object sender, DeleteEventArgs a)</div><div class="ttdoc">Handle Close of Form, Quit Application.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00152">NodeView.cs:152</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a361a58a888cbb0e6557530e0b5f4ada1"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1">BioGTK.NodeView.InitItems</a></div><div class="ttdeci">void InitItems()</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00077">NodeView.cs:77</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_a4082ded05e83de89e0cd025ee4210501"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#a4082ded05e83de89e0cd025ee4210501">BioGTK.NodeView.aboutClick</a></div><div class="ttdeci">void aboutClick(object sender, EventArgs a)</div><div class="ttdoc">Handle Click of Button.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00170">NodeView.cs:170</a></div></div>
 <div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_aa604157353eadd7b9b44fa84a9da08bb"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#aa604157353eadd7b9b44fa84a9da08bb">BioGTK.NodeView.Create</a></div><div class="ttdeci">static NodeView Create(string[] args)</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00040">NodeView.cs:40</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_abe7a470f70dd6858afc3e1eec65f2964"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">BioGTK.NodeView.newTabsViewClick</a></div><div class="ttdeci">void newTabsViewClick(object sender, EventArgs a)</div><div class="ttdoc">Handle Click of Button.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00157">NodeView.cs:157</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_acbfa884bdc403a2015a9ec32d4ae2462"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">BioGTK.NodeView.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">Sets up the handlers.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00137">NodeView.cs:137</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_af0f6fe392cfd4ff747cefc2da23f6b5b"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">BioGTK.NodeView.UpdateItems</a></div><div class="ttdeci">void UpdateItems()</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00114">NodeView.cs:114</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_tabs_view.html">BioGTK.TabsView</a></div><div class="ttdef"><b>Definition:</b> <a href="_tabs_view_8cs_source.html#l00015">TabsView.cs:16</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a9abc387c20e2afb6accaf2c1341881f8"><div class="ttname"><a href="class_bio_g_t_k_1_1_tabs_view.html#a9abc387c20e2afb6accaf2c1341881f8">BioGTK.TabsView.Create</a></div><div class="ttdeci">static TabsView Create()</div><div class="ttdef"><b>Definition:</b> <a href="_tabs_view_8cs_source.html#l00141">TabsView.cs:141</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_abe7a470f70dd6858afc3e1eec65f2964"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#abe7a470f70dd6858afc3e1eec65f2964">BioGTK.NodeView.newTabsViewClick</a></div><div class="ttdeci">void newTabsViewClick(object sender, EventArgs a)</div><div class="ttdoc">Handle Click of Button.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00161">NodeView.cs:161</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_acbfa884bdc403a2015a9ec32d4ae2462"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#acbfa884bdc403a2015a9ec32d4ae2462">BioGTK.NodeView.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">Sets up the handlers.</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00141">NodeView.cs:141</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_node_view_html_af0f6fe392cfd4ff747cefc2da23f6b5b"><div class="ttname"><a href="class_bio_g_t_k_1_1_node_view.html#af0f6fe392cfd4ff747cefc2da23f6b5b">BioGTK.NodeView.UpdateItems</a></div><div class="ttdeci">void UpdateItems()</div><div class="ttdef"><b>Definition:</b> <a href="_node_view_8cs_source.html#l00118">NodeView.cs:118</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_tabs_view.html">BioGTK.TabsView</a></div><div class="ttdef"><b>Definition:</b> <a href="_tabs_view_8cs_source.html#l00016">TabsView.cs:17</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a9abc387c20e2afb6accaf2c1341881f8"><div class="ttname"><a href="class_bio_g_t_k_1_1_tabs_view.html#a9abc387c20e2afb6accaf2c1341881f8">BioGTK.TabsView.Create</a></div><div class="ttdeci">static TabsView Create()</div><div class="ttdef"><b>Definition:</b> <a href="_tabs_view_8cs_source.html#l00142">TabsView.cs:142</a></div></div>
 <div class="ttc" id="anamespace_bio_g_t_k_html"><div class="ttname"><a href="namespace_bio_g_t_k.html">BioGTK</a></div><div class="ttdef"><b>Definition:</b> <a href="_promotions_8cs_source.html#l00007">Promotions.cs:8</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->

@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -235,7 +235,13 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00422">422</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  423</span>        {</div>
+<div class="line"><span class="lineno">  424</span>            Down,</div>
+<div class="line"><span class="lineno">  425</span>            Up,</div>
+<div class="line"><span class="lineno">  426</span>            Move,</div>
+<div class="line"><span class="lineno">  427</span>            None</div>
+<div class="line"><span class="lineno">  428</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a11f5879209da21ced9632a7f5c8a3913" name="a11f5879209da21ced9632a7f5c8a3913"></a>
@@ -251,7 +257,12 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00430">430</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  431</span>        {</div>
+<div class="line"><span class="lineno">  432</span>            tool,</div>
+<div class="line"><span class="lineno">  433</span>            script,</div>
+<div class="line"><span class="lineno">  434</span>            imagej</div>
+<div class="line"><span class="lineno">  435</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
@@ -290,7 +301,32 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00068">68</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   68</span>                                                            : base(handle)</div>
+<div class="line"><span class="lineno">   69</span>        {</div>
+<div class="line"><span class="lineno">   70</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   71</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   72</span>            scriptView.RowActivated += ScriptView_RowActivated;</div>
+<div class="line"><span class="lineno">   73</span>            scriptView.ButtonPressEvent += ScriptView_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   74</span>            this.DeleteEvent += Scripting_DeleteEvent;</div>
+<div class="line"><span class="lineno">   75</span>            this.KeyPressEvent += Scripting_KeyPressEvent;</div>
+<div class="line"><span class="lineno">   76</span>            saveBut.ButtonPressEvent += SaveBut_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   77</span>            runBut.ButtonPressEvent += runButton_Click;</div>
+<div class="line"><span class="lineno">   78</span>            scriptLoadBut.ButtonPressEvent += scriptLoadBut_Click;</div>
+<div class="line"><span class="lineno">   79</span>            outputBox.ButtonPressEvent += OutputBox_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   80</span>            errorBox.ButtonPressEvent += OutputBox_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   81</span>            logBox.ButtonPressEvent += OutputBox_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   82</span>            stopBut.ButtonPressEvent += stopBut_Click;</div>
+<div class="line"><span class="lineno">   83</span>            tabsView.SwitchPage += TabsView_SwitchPage;</div>
+<div class="line"><span class="lineno">   84</span>            window = <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   85</span>            <span class="keywordflow">if</span> (!Directory.Exists(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;//&quot;</span> + <span class="stringliteral">&quot;Scripts&quot;</span>))</div>
+<div class="line"><span class="lineno">   86</span>                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;//&quot;</span> + <span class="stringliteral">&quot;Scripts&quot;</span>);</div>
+<div class="line"><span class="lineno">   87</span>            <span class="keywordflow">if</span> (!Directory.Exists(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;//&quot;</span> + <span class="stringliteral">&quot;Tools&quot;</span>))</div>
+<div class="line"><span class="lineno">   88</span>                Directory.CreateDirectory(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;//&quot;</span> + <span class="stringliteral">&quot;Tools&quot;</span>);</div>
+<div class="line"><span class="lineno">   89</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a33d7aa1b51c9043f5206f820bcefcf4a">InitItems</a>();</div>
+<div class="line"><span class="lineno">   90</span>            scriptLabel.Text = <span class="stringliteral">&quot;NewScript.cs&quot;</span>;</div>
+<div class="line"><span class="lineno">   91</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_scripting_html_a33d7aa1b51c9043f5206f820bcefcf4a"><div class="ttname"><a href="class_bio_g_t_k_1_1_scripting.html#a33d7aa1b51c9043f5206f820bcefcf4a">BioGTK.Scripting.InitItems</a></div><div class="ttdeci">void InitItems()</div><div class="ttdoc">It loads all the scripts in the Scripts and Tools folders into the TreeView.</div><div class="ttdef"><b>Definition:</b> <a href="_scripting_8cs_source.html#l00483">Scripting.cs:483</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -320,7 +356,12 @@ Protected Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_scripting.html">Scripting</a> class. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00061">61</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   62</span>        {</div>
+<div class="line"><span class="lineno">   63</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/Scripting.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">   64</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code hl_class" href="class_bio_g_t_k_1_1_scripting.html">Scripting</a>(builder, builder.GetObject(<span class="stringliteral">&quot;scripting&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   65</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_scripting_html"><div class="ttname"><a href="class_bio_g_t_k_1_1_scripting.html">BioGTK.Scripting</a></div><div class="ttdef"><b>Definition:</b> <a href="_scripting_8cs_source.html#l00022">Scripting.cs:23</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a57386ecf8f6aa42b2b90be8319a16383" name="a57386ecf8f6aa42b2b90be8319a16383"></a>
@@ -348,7 +389,14 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00453">453</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  454</span>        {</div>
+<div class="line"><span class="lineno">  455</span>            <span class="keywordflow">if</span>(scripts.ContainsKey(name))</div>
+<div class="line"><span class="lineno">  456</span>            {</div>
+<div class="line"><span class="lineno">  457</span>                <span class="keywordflow">return</span> scripts[name].exit;</div>
+<div class="line"><span class="lineno">  458</span>            }</div>
+<div class="line"><span class="lineno">  459</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  460</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9e93251402a3a8f8d7806bdea582a5b9" name="a9e93251402a3a8f8d7806bdea582a5b9"></a>
@@ -377,7 +425,10 @@ Protected Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The state of the game. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00448">448</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  449</span>        {</div>
+<div class="line"><span class="lineno">  450</span>            <span class="keywordflow">return</span> state;</div>
+<div class="line"><span class="lineno">  451</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a33d7aa1b51c9043f5206f820bcefcf4a" name="a33d7aa1b51c9043f5206f820bcefcf4a"></a>
@@ -398,7 +449,54 @@ Protected Member Functions</h2></td></tr>
 <p>It loads all the scripts in the Scripts and <a class="el" href="class_bio_g_t_k_1_1_tools.html">Tools</a> folders into the TreeView. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00483">483</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  484</span>        {</div>
+<div class="line"><span class="lineno">  485</span>            Gtk.TreeViewColumn typeCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><span class="lineno">  486</span>            typeCol.Title = <span class="stringliteral">&quot;Script&quot;</span>;</div>
+<div class="line"><span class="lineno">  487</span>            Gtk.CellRendererText typeCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><span class="lineno">  488</span>            typeCol.PackStart(typeCell, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  489</span>            scriptView.AppendColumn(typeCol);</div>
+<div class="line"><span class="lineno">  490</span>            typeCol.AddAttribute(typeCell, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">  491</span> </div>
+<div class="line"><span class="lineno">  492</span>            Gtk.TreeViewColumn statCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><span class="lineno">  493</span>            statCol.Title = <span class="stringliteral">&quot;Status&quot;</span>;</div>
+<div class="line"><span class="lineno">  494</span>            Gtk.CellRendererText statCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><span class="lineno">  495</span>            statCol.PackStart(statCell, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  496</span>            scriptView.AppendColumn(statCol);</div>
+<div class="line"><span class="lineno">  497</span>            statCol.AddAttribute(statCell, <span class="stringliteral">&quot;text&quot;</span>, 1);</div>
+<div class="line"><span class="lineno">  498</span> </div>
+<div class="line"><span class="lineno">  499</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  500</span>            scriptView.Model = store;</div>
+<div class="line"><span class="lineno">  501</span>            scripts.Clear();</div>
+<div class="line"><span class="lineno">  502</span>            <span class="keywordtype">string</span> st = System.IO.Path.GetDirectoryName(Environment.ProcessPath);</div>
+<div class="line"><span class="lineno">  503</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> file <span class="keywordflow">in</span> Directory.GetFiles(st + <span class="stringliteral">&quot;/Scripts&quot;</span>))</div>
+<div class="line"><span class="lineno">  504</span>            {</div>
+<div class="line"><span class="lineno">  505</span>                <span class="keywordflow">if</span> (!scripts.ContainsKey(System.IO.Path.GetFileName(file)))</div>
+<div class="line"><span class="lineno">  506</span>                {</div>
+<div class="line"><span class="lineno">  507</span>                    Script sc = <span class="keyword">new</span> Script(file, File.ReadAllText(file));</div>
+<div class="line"><span class="lineno">  508</span>                    <span class="keywordflow">if</span>(sc.thread == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  509</span>                        store.AppendValues(sc.name, ThreadState.Unstarted.ToString());</div>
+<div class="line"><span class="lineno">  510</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  511</span>                        store.AppendValues(sc.name, sc.thread.ThreadState.ToString());</div>
+<div class="line"><span class="lineno">  512</span>                    scripts.Add(sc.name, sc);</div>
+<div class="line"><span class="lineno">  513</span>                }</div>
+<div class="line"><span class="lineno">  514</span>            }</div>
+<div class="line"><span class="lineno">  515</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> file <span class="keywordflow">in</span> Directory.GetFiles(st + <span class="stringliteral">&quot;/Tools&quot;</span>))</div>
+<div class="line"><span class="lineno">  516</span>            {</div>
+<div class="line"><span class="lineno">  517</span>                <span class="keywordflow">if</span> (file.EndsWith(<span class="stringliteral">&quot;.cs&quot;</span>))</div>
+<div class="line"><span class="lineno">  518</span>                {</div>
+<div class="line"><span class="lineno">  519</span>                    <span class="keywordflow">if</span> (!scripts.ContainsKey(System.IO.Path.GetFileName(file)))</div>
+<div class="line"><span class="lineno">  520</span>                    {</div>
+<div class="line"><span class="lineno">  521</span>                        Script sc = <span class="keyword">new</span> Script(file, File.ReadAllText(file));</div>
+<div class="line"><span class="lineno">  522</span>                        <span class="keywordflow">if</span> (sc.thread == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  523</span>                            store.AppendValues(sc.name, ThreadState.Unstarted.ToString());</div>
+<div class="line"><span class="lineno">  524</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  525</span>                            store.AppendValues(sc.name, sc.thread.ThreadState.ToString());</div>
+<div class="line"><span class="lineno">  526</span>                        scripts.Add(sc.name, sc);</div>
+<div class="line"><span class="lineno">  527</span>                    }</div>
+<div class="line"><span class="lineno">  528</span>                }</div>
+<div class="line"><span class="lineno">  529</span>            }</div>
+<div class="line"><span class="lineno">  530</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a41e2fae3a6270c13cc313e8a30e1ac94" name="a41e2fae3a6270c13cc313e8a30e1ac94"></a>
@@ -426,7 +524,10 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00195">195</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  196</span>        {</div>
+<div class="line"><span class="lineno">  197</span>            log += s + Environment.NewLine;</div>
+<div class="line"><span class="lineno">  198</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6504102fb3d8881f19c665e8ae4a97d0" name="a6504102fb3d8881f19c665e8ae4a97d0"></a>
@@ -447,7 +548,18 @@ Protected Member Functions</h2></td></tr>
 <p>It takes the list of scripts and puts them into a tree view. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00533">533</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  534</span>        {</div>
+<div class="line"><span class="lineno">  535</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>), typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  536</span>            <span class="keywordflow">foreach</span> (Script sc <span class="keywordflow">in</span> scripts.Values)</div>
+<div class="line"><span class="lineno">  537</span>            {</div>
+<div class="line"><span class="lineno">  538</span>                <span class="keywordflow">if</span> (sc.thread == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  539</span>                    store.AppendValues(sc.name, ThreadState.Unstarted.ToString());</div>
+<div class="line"><span class="lineno">  540</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  541</span>                    store.AppendValues(sc.name, sc.thread.ThreadState.ToString());</div>
+<div class="line"><span class="lineno">  542</span>            }</div>
+<div class="line"><span class="lineno">  543</span>            scriptView.Model = store;</div>
+<div class="line"><span class="lineno">  544</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a78faf235831d5a1c25ef58d8e8803d5d" name="a78faf235831d5a1c25ef58d8e8803d5d"></a>
@@ -468,7 +580,23 @@ Protected Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The output of the script is being returned. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00620">620</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  621</span>        {</div>
+<div class="line"><span class="lineno">  622</span>            log = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  623</span>            outputBox.Buffer.Text = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  624</span>            logBox.Buffer.Text = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  625</span>            <span class="keywordflow">if</span> (SelectedItem == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  626</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  627</span>            <span class="comment">//We run this script</span></div>
+<div class="line"><span class="lineno">  628</span>            Script sc = SelectedItem;</div>
+<div class="line"><span class="lineno">  629</span>            sc.scriptString = view.Buffer.Text;</div>
+<div class="line"><span class="lineno">  630</span>            sc.output = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  631</span>            sc.Run();</div>
+<div class="line"><span class="lineno">  632</span>            outputBox.Buffer.Text = sc.output;</div>
+<div class="line"><span class="lineno">  633</span>            logBox.Buffer.Text = log;</div>
+<div class="line"><span class="lineno">  634</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a6504102fb3d8881f19c665e8ae4a97d0">RefreshItems</a>();</div>
+<div class="line"><span class="lineno">  635</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_scripting_html_a6504102fb3d8881f19c665e8ae4a97d0"><div class="ttname"><a href="class_bio_g_t_k_1_1_scripting.html#a6504102fb3d8881f19c665e8ae4a97d0">BioGTK.Scripting.RefreshItems</a></div><div class="ttdeci">void RefreshItems()</div><div class="ttdoc">It takes the list of scripts and puts them into a tree view.</div><div class="ttdef"><b>Definition:</b> <a href="_scripting_8cs_source.html#l00533">Scripting.cs:533</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a29aa520e449ee7082841cfd4862bb63e" name="a29aa520e449ee7082841cfd4862bb63e"></a>
@@ -503,7 +631,10 @@ Protected Member Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00587">587</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  588</span>        {</div>
+<div class="line"><span class="lineno">  589</span>            scripts[name].Run();</div>
+<div class="line"><span class="lineno">  590</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae7b5565ce4cb7603cdfef5dda2c67337" name="ae7b5565ce4cb7603cdfef5dda2c67337"></a>
@@ -538,7 +669,13 @@ Protected Member Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00604">604</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  605</span>        {</div>
+<div class="line"><span class="lineno">  606</span>            Script sc = <span class="keyword">new</span> Script(file);</div>
+<div class="line"><span class="lineno">  607</span>            scripts.Add(sc.name, sc);</div>
+<div class="line"><span class="lineno">  608</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a29aa520e449ee7082841cfd4862bb63e">RunByName</a>(sc.name);</div>
+<div class="line"><span class="lineno">  609</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_scripting_html_a29aa520e449ee7082841cfd4862bb63e"><div class="ttname"><a href="class_bio_g_t_k_1_1_scripting.html#a29aa520e449ee7082841cfd4862bb63e">BioGTK.Scripting.RunByName</a></div><div class="ttdeci">static void RunByName(string name)</div><div class="ttdef"><b>Definition:</b> <a href="_scripting_8cs_source.html#l00587">Scripting.cs:587</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a26613fcf836d75036252c1ec686a1702" name="a26613fcf836d75036252c1ec686a1702"></a>
@@ -565,7 +702,13 @@ Protected Member Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00594">594</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  595</span>        {</div>
+<div class="line"><span class="lineno">  596</span>            Script sc = <span class="keyword">new</span> Script(file);</div>
+<div class="line"><span class="lineno">  597</span>            scripts.Add(sc.name,sc);</div>
+<div class="line"><span class="lineno">  598</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a6504102fb3d8881f19c665e8ae4a97d0">RefreshItems</a>();</div>
+<div class="line"><span class="lineno">  599</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a29aa520e449ee7082841cfd4862bb63e">RunByName</a>(sc.name);</div>
+<div class="line"><span class="lineno">  600</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a70549e585998e0dc05ab8c4d4240df27" name="a70549e585998e0dc05ab8c4d4240df27"></a>
@@ -600,7 +743,10 @@ Protected Member Functions</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00613">613</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  614</span>        {</div>
+<div class="line"><span class="lineno">  615</span>            <span class="keywordflow">return</span> Script.RunString(st);</div>
+<div class="line"><span class="lineno">  616</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a7bc656a343de906a041e21625a5811bb" name="a7bc656a343de906a041e21625a5811bb"></a>
@@ -621,7 +767,15 @@ Protected Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The SelectedItem is being returned. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00639">639</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  640</span>        {</div>
+<div class="line"><span class="lineno">  641</span>            <span class="keywordflow">if</span> (SelectedItem == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  642</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  643</span>            <span class="comment">//We stop this script</span></div>
+<div class="line"><span class="lineno">  644</span>            SelectedItem.<a class="code hl_function" href="class_bio_g_t_k_1_1_scripting_1_1_script.html#a0405e1ac4614fed1742c2bb56485d958">Stop</a>();</div>
+<div class="line"><span class="lineno">  645</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_scripting.html#a6504102fb3d8881f19c665e8ae4a97d0">RefreshItems</a>();</div>
+<div class="line"><span class="lineno">  646</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_scripting_1_1_script_html_a0405e1ac4614fed1742c2bb56485d958"><div class="ttname"><a href="class_bio_g_t_k_1_1_scripting_1_1_script.html#a0405e1ac4614fed1742c2bb56485d958">BioGTK.Scripting.Script.Stop</a></div><div class="ttdeci">void Stop()</div><div class="ttdoc">It stops the thread.</div><div class="ttdef"><b>Definition:</b> <a href="_scripting_8cs_source.html#l00331">Scripting.cs:331</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab471bfd1464966012668fa992eb68bc8" name="ab471bfd1464966012668fa992eb68bc8"></a>
@@ -657,7 +811,19 @@ Protected Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The state of the current object. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00469">469</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  470</span>        {</div>
+<div class="line"><span class="lineno">  471</span>            <span class="keywordflow">if</span> (s == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  472</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  473</span>            <span class="keywordflow">if</span> (state == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  474</span>                state = s;</div>
+<div class="line"><span class="lineno">  475</span>            <span class="keywordflow">if</span> (s.p.X == state.p.X &amp;&amp; s.p.Y == state.p.Y &amp;&amp; s.type == state.type)</div>
+<div class="line"><span class="lineno">  476</span>            {</div>
+<div class="line"><span class="lineno">  477</span>                state.processed = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  478</span>            }</div>
+<div class="line"><span class="lineno">  479</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  480</span>            state = s;</div>
+<div class="line"><span class="lineno">  481</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

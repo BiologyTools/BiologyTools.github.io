@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -212,7 +212,44 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_color_tool_8cs_source.html#l00066">66</a> of file <a class="el" href="_color_tool_8cs_source.html">ColorTool.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   66</span>                                                                         : base(handle)</div>
+<div class="line"><span class="lineno">   67</span>        {</div>
+<div class="line"><span class="lineno">   68</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   69</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   70</span>            this.color1 = color1;</div>
+<div class="line"><span class="lineno">   71</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_color_tool.html#a539232489b998d92f744907fc5a01666">SetupHandlers</a>();</div>
+<div class="line"><span class="lineno">   72</span>            rBar.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   73</span>            gBar.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   74</span>            bBar.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   75</span>            rBox.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   76</span>            rBox.Adjustment.StepIncrement = 1;</div>
+<div class="line"><span class="lineno">   77</span>            rBox.Adjustment.PageIncrement = 10;</div>
+<div class="line"><span class="lineno">   78</span>            gBox.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   79</span>            gBox.Adjustment.StepIncrement = 1;</div>
+<div class="line"><span class="lineno">   80</span>            gBox.Adjustment.PageIncrement = 10;</div>
+<div class="line"><span class="lineno">   81</span>            bBox.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   82</span>            bBox.Adjustment.StepIncrement = 1;</div>
+<div class="line"><span class="lineno">   83</span>            bBox.Adjustment.PageIncrement = 10;</div>
+<div class="line"><span class="lineno">   84</span>            widthBar.Adjustment.Upper = 100;</div>
+<div class="line"><span class="lineno">   85</span>            widthBar.Adjustment.Value = Tools.StrokeWidth;</div>
+<div class="line"><span class="lineno">   86</span>            widthBox.Adjustment.Upper = 100;</div>
+<div class="line"><span class="lineno">   87</span>            widthBox.Adjustment.Value = Tools.StrokeWidth;</div>
+<div class="line"><span class="lineno">   88</span>            <span class="keywordflow">if</span> (!color1)</div>
+<div class="line"><span class="lineno">   89</span>            {</div>
+<div class="line"><span class="lineno">   90</span>                rBar.Adjustment.Value = Tools.drawColor.R;</div>
+<div class="line"><span class="lineno">   91</span>                gBar.Adjustment.Value = Tools.drawColor.G;</div>
+<div class="line"><span class="lineno">   92</span>                bBar.Adjustment.Value = Tools.drawColor.B;</div>
+<div class="line"><span class="lineno">   93</span>            }</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   95</span>            {</div>
+<div class="line"><span class="lineno">   96</span>                rBar.Adjustment.Value = Tools.eraseColor.R;</div>
+<div class="line"><span class="lineno">   97</span>                gBar.Adjustment.Value = Tools.eraseColor.G;</div>
+<div class="line"><span class="lineno">   98</span>                bBar.Adjustment.Value = Tools.eraseColor.B;</div>
+<div class="line"><span class="lineno">   99</span>            }</div>
+<div class="line"><span class="lineno">  100</span>            image.QueueDraw();</div>
+<div class="line"><span class="lineno">  101</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_color_tool_html_a539232489b998d92f744907fc5a01666"><div class="ttname"><a href="class_bio_g_t_k_1_1_color_tool.html#a539232489b998d92f744907fc5a01666">BioGTK.ColorTool.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">It sets up the event handlers for the sliders and text boxes.</div><div class="ttdef"><b>Definition:</b> <a href="_color_tool_8cs_source.html#l00107">ColorTool.cs:107</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -249,7 +286,11 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_color_tool.html">ColorTool</a> class. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_color_tool_8cs_source.html#l00058">58</a> of file <a class="el" href="_color_tool_8cs_source.html">ColorTool.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   59</span>        {</div>
+<div class="line"><span class="lineno">   60</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/ColorTool.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> ColorTool(builder, builder.GetObject(<span class="stringliteral">&quot;colorTool&quot;</span>).Handle, color1);</div>
+<div class="line"><span class="lineno">   62</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a539232489b998d92f744907fc5a01666" name="a539232489b998d92f744907fc5a01666"></a>
@@ -278,7 +319,21 @@ Properties</h2></td></tr>
 <p>It sets up the event handlers for the sliders and text boxes. </p>
 
 <p class="definition">Definition at line <a class="el" href="_color_tool_8cs_source.html#l00107">107</a> of file <a class="el" href="_color_tool_8cs_source.html">ColorTool.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  108</span>        {</div>
+<div class="line"><span class="lineno">  109</span>            rBar.ChangeValue += ChangeValue;</div>
+<div class="line"><span class="lineno">  110</span>            gBar.ChangeValue += ChangeValue;</div>
+<div class="line"><span class="lineno">  111</span>            bBar.ChangeValue += ChangeValue;</div>
+<div class="line"><span class="lineno">  112</span>            widthBar.ChangeValue += ChangeValue;</div>
+<div class="line"><span class="lineno">  113</span>            rBox.ChangeValue += Box_ChangeValue;</div>
+<div class="line"><span class="lineno">  114</span>            gBox.ChangeValue += Box_ChangeValue;</div>
+<div class="line"><span class="lineno">  115</span>            bBox.ChangeValue += Box_ChangeValue;</div>
+<div class="line"><span class="lineno">  116</span>            widthBox.ChangeValue += Box_ChangeValue;</div>
+<div class="line"><span class="lineno">  117</span>            image.Drawn += Image_Drawn;</div>
+<div class="line"><span class="lineno">  118</span>            cancelBut.Clicked += CancelBut_Clicked;</div>
+<div class="line"><span class="lineno">  119</span>            okBut.Clicked += OkBut_Clicked;</div>
+<div class="line"><span class="lineno">  120</span>            this.DeleteEvent += ColorTool_DeleteEvent;</div>
+<div class="line"><span class="lineno">  121</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -303,7 +358,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_color_tool_8cs_source.html#l00210">210</a> of file <a class="el" href="_color_tool_8cs_source.html">ColorTool.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  211</span>        {</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keyword">get</span> </div>
+<div class="line"><span class="lineno">  213</span>            {</div>
+<div class="line"><span class="lineno">  214</span>                <span class="keywordflow">return</span> <span class="keyword">new</span> ColorS((ushort)rBox.Value, (ushort)gBox.Value, (ushort)bBox.Value); </div>
+<div class="line"><span class="lineno">  215</span>            }</div>
+<div class="line"><span class="lineno">  216</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1b8fc581fd3630f45c335b504246dd33" name="a1b8fc581fd3630f45c335b504246dd33"></a>
@@ -327,7 +388,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_color_tool_8cs_source.html#l00218">218</a> of file <a class="el" href="_color_tool_8cs_source.html">ColorTool.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  219</span>        {</div>
+<div class="line"><span class="lineno">  220</span>            <span class="keyword">get</span> {</div>
+<div class="line"><span class="lineno">  221</span>                RGBA rgb = <span class="keyword">new</span> RGBA();</div>
+<div class="line"><span class="lineno">  222</span>                rgb.Red = rBox.Value / ushort.MaxValue;</div>
+<div class="line"><span class="lineno">  223</span>                rgb.Green = gBox.Value / ushort.MaxValue;</div>
+<div class="line"><span class="lineno">  224</span>                rgb.Blue = bBox.Value / ushort.MaxValue;</div>
+<div class="line"><span class="lineno">  225</span>                rgb.Alpha = 1.0;</div>
+<div class="line"><span class="lineno">  226</span>                <span class="keywordflow">return</span> rgb; }</div>
+<div class="line"><span class="lineno">  227</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

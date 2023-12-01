@@ -24,7 +24,6 @@ var class_bio_g_t_k_1_1_bio_image =
     [ "GetValueRGB", "class_bio_g_t_k_1_1_bio_image.html#a179ae5c25f35aaf557974212b2a3b62e", null ],
     [ "GetValueRGB", "class_bio_g_t_k_1_1_bio_image.html#a6d999f28c1739ab4126c5d841a957c9b", null ],
     [ "GetValueRGB", "class_bio_g_t_k_1_1_bio_image.html#a29b09516800b281447237ed8c40731b3", null ],
-    [ "RotateFlip", "class_bio_g_t_k_1_1_bio_image.html#a74d2531c75e00a26405be14baab0d110", null ],
     [ "SetValue", "class_bio_g_t_k_1_1_bio_image.html#a4228c8876a614e8e1e6b86afbe7be697", null ],
     [ "SetValue", "class_bio_g_t_k_1_1_bio_image.html#a49d7a17c5da512157d96055abca4165c", null ],
     [ "SetValue", "class_bio_g_t_k_1_1_bio_image.html#a0d75c43bff5de29fad301f81af9befa4", null ],

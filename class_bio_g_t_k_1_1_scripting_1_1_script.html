@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -225,7 +225,13 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00215">215</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  216</span>            {</div>
+<div class="line"><span class="lineno">  217</span>                name = System.IO.Path.GetFileName(file);</div>
+<div class="line"><span class="lineno">  218</span>                scriptString = scriptStr;</div>
+<div class="line"><span class="lineno">  219</span>                <span class="keywordflow">if</span> (file.EndsWith(<span class="stringliteral">&quot;.txt&quot;</span>) || file.EndsWith(<span class="stringliteral">&quot;.ijm&quot;</span>))</div>
+<div class="line"><span class="lineno">  220</span>                    type = ScriptType.imagej;</div>
+<div class="line"><span class="lineno">  221</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8dd39380df52df43c7ed1ebdd77405d4" name="a8dd39380df52df43c7ed1ebdd77405d4"></a>
@@ -245,7 +251,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00224">224</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  225</span>            {</div>
+<div class="line"><span class="lineno">  226</span>                name = System.IO.Path.GetFileName(file);</div>
+<div class="line"><span class="lineno">  227</span>                scriptString = File.ReadAllText(file);</div>
+<div class="line"><span class="lineno">  228</span>                this.file = file;</div>
+<div class="line"><span class="lineno">  229</span>                <span class="keywordflow">if</span> (file.EndsWith(<span class="stringliteral">&quot;.txt&quot;</span>) || file.EndsWith(<span class="stringliteral">&quot;.ijm&quot;</span>))</div>
+<div class="line"><span class="lineno">  230</span>                    type = ScriptType.imagej;</div>
+<div class="line"><span class="lineno">  231</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -267,7 +280,14 @@ Static Public Attributes</h2></td></tr>
 <p>It creates a new thread and starts it. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00322">322</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  323</span>            {</div>
+<div class="line"><span class="lineno">  324</span>                <span class="keywordflow">if</span> (!scripts.ContainsKey(name))</div>
+<div class="line"><span class="lineno">  325</span>                    scripts.Add(name, <span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  326</span>                scriptName = this.name;</div>
+<div class="line"><span class="lineno">  327</span>                thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadStart(RunScript));</div>
+<div class="line"><span class="lineno">  328</span>                thread.Start();</div>
+<div class="line"><span class="lineno">  329</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4086217a8ba1f9f79f1b9c59b2c43490" name="a4086217a8ba1f9f79f1b9c59b2c43490"></a>
@@ -302,7 +322,12 @@ Static Public Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00236">236</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  237</span>            {</div>
+<div class="line"><span class="lineno">  238</span>                scriptName = rn.name;</div>
+<div class="line"><span class="lineno">  239</span>                Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadStart(RunScript));</div>
+<div class="line"><span class="lineno">  240</span>                t.Start();</div>
+<div class="line"><span class="lineno">  241</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="adb36538f8ad614b6ff2c3620d3a6ccb7" name="adb36538f8ad614b6ff2c3620d3a6ccb7"></a>
@@ -338,7 +363,41 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value of the last statement in the script. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00286">286</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  287</span>            {</div>
+<div class="line"><span class="lineno">  288</span>                <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  289</span>                {</div>
+<div class="line"><span class="lineno">  290</span>                    <span class="keywordtype">string</span> loader =</div>
+<div class="line"><span class="lineno">  291</span>                  <span class="stringliteral">@&quot;//css_reference &quot;</span> + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + <span class="stringliteral">@&quot;.dll</span></div>
+<div class="line"><span class="lineno">  292</span><span class="stringliteral">                    using System;</span></div>
+<div class="line"><span class="lineno">  293</span><span class="stringliteral">                    using Gtk;</span></div>
+<div class="line"><span class="lineno">  294</span><span class="stringliteral">                    using System.Threading;</span></div>
+<div class="line"><span class="lineno">  295</span><span class="stringliteral">                    using BioGTK;</span></div>
+<div class="line"><span class="lineno">  296</span><span class="stringliteral">                    using AForge;&quot;</span>;</div>
+<div class="line"><span class="lineno">  297</span>                    <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> usings)</div>
+<div class="line"><span class="lineno">  298</span>                    {</div>
+<div class="line"><span class="lineno">  299</span>                        loader += usings + Environment.NewLine;</div>
+<div class="line"><span class="lineno">  300</span>                    }</div>
+<div class="line"><span class="lineno">  301</span>                    loader += <span class="stringliteral">@&quot;</span></div>
+<div class="line"><span class="lineno">  302</span><span class="stringliteral">                    public class Loader</span></div>
+<div class="line"><span class="lineno">  303</span><span class="stringliteral">                    {</span></div>
+<div class="line"><span class="lineno">  304</span><span class="stringliteral">                        public object Load()</span></div>
+<div class="line"><span class="lineno">  305</span><span class="stringliteral">                        {&quot;</span> +</div>
+<div class="line"><span class="lineno">  306</span>                            st + <span class="stringliteral">@&quot;;</span></div>
+<div class="line"><span class="lineno">  307</span><span class="stringliteral">                            return true;</span></div>
+<div class="line"><span class="lineno">  308</span><span class="stringliteral">                        }</span></div>
+<div class="line"><span class="lineno">  309</span><span class="stringliteral">                    }&quot;</span>;</div>
+<div class="line"><span class="lineno">  310</span>                    dynamic script = CSScript.Evaluator.LoadCode(loader);</div>
+<div class="line"><span class="lineno">  311</span>                    <span class="keywordflow">return</span> script.Load();</div>
+<div class="line"><span class="lineno">  312</span>                }</div>
+<div class="line"><span class="lineno">  313</span>                <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><span class="lineno">  314</span>                {</div>
+<div class="line"><span class="lineno">  315</span>                    MessageDialog md = <span class="keyword">new</span> MessageDialog(window,</div>
+<div class="line"><span class="lineno">  316</span>                DialogFlags.DestroyWithParent, MessageType.Info,</div>
+<div class="line"><span class="lineno">  317</span>                ButtonsType.Close, e.Message + <span class="stringliteral">&quot;, &quot;</span> + e.Source);</div>
+<div class="line"><span class="lineno">  318</span>                    <span class="keywordflow">return</span> e;</div>
+<div class="line"><span class="lineno">  319</span>                }</div>
+<div class="line"><span class="lineno">  320</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a0405e1ac4614fed1742c2bb56485d958" name="a0405e1ac4614fed1742c2bb56485d958"></a>
@@ -359,7 +418,10 @@ Static Public Attributes</h2></td></tr>
 <p>It stops the thread. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00331">331</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  332</span>            {</div>
+<div class="line"><span class="lineno">  333</span>                exit = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  334</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae6bc75426e91f5276bdc41060308bded" name="ae6bc75426e91f5276bdc41060308bded"></a>
@@ -380,7 +442,15 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The name of the thread and the state of the thread. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00339">339</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  340</span>            {</div>
+<div class="line"><span class="lineno">  341</span>                <span class="keywordflow">if</span> (thread != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  342</span>                {</div>
+<div class="line"><span class="lineno">  343</span>                    <span class="keywordflow">return</span> name.ToString() + <span class="stringliteral">&quot;, &quot;</span> + thread.ThreadState.ToString();</div>
+<div class="line"><span class="lineno">  344</span>                }</div>
+<div class="line"><span class="lineno">  345</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  346</span>                    <span class="keywordflow">return</span> name.ToString();</div>
+<div class="line"><span class="lineno">  347</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

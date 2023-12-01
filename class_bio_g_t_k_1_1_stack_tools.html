@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -221,7 +221,37 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_stack_tools_8cs_source.html#l00057">57</a> of file <a class="el" href="_stack_tools_8cs_source.html">StackTools.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   57</span>                                                             : base(handle)</div>
+<div class="line"><span class="lineno">   58</span>        {</div>
+<div class="line"><span class="lineno">   59</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   60</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   61</span>            <span class="comment">// Create an Adjustment object to define the range and step increment</span></div>
+<div class="line"><span class="lineno">   62</span>            zStartBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   63</span>            cStartBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   64</span>            tStartBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   65</span>            zEndBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   66</span>            cEndBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   67</span>            tEndBox.Adjustment = <span class="keyword">new</span> Adjustment(0, 0, 10000, 1, 10, 0);</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>            stackABox.Changed += StackABox_Changed;</div>
+<div class="line"><span class="lineno">   70</span>            stackBBox.Changed += StackBBox_Changed;</div>
+<div class="line"><span class="lineno">   71</span>            splitChannelsBut.Clicked += SplitChannelsBut_Clicked;</div>
+<div class="line"><span class="lineno">   72</span>            substackBut.Clicked += SubstackBut_Clicked;</div>
+<div class="line"><span class="lineno">   73</span>            mergeZBut.Clicked += MergeZBut_Clicked;</div>
+<div class="line"><span class="lineno">   74</span>            mergeTBut.Clicked += MergeTBut_Clicked;</div>
+<div class="line"><span class="lineno">   75</span>            mergeBut.Clicked += MergeBut_Clicked;</div>
+<div class="line"><span class="lineno">   76</span>            this.DeleteEvent += StackTools_DeleteEvent;</div>
+<div class="line"><span class="lineno">   77</span>            this.FocusInEvent += StackTools_FocusInEvent;</div>
+<div class="line"><span class="lineno">   78</span>            <span class="comment">// Set the text column to display</span></div>
+<div class="line"><span class="lineno">   79</span>            var renderer = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">   80</span>            stackABox.PackStart(renderer, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   81</span>            stackABox.AddAttribute(renderer, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">   82</span>            <span class="comment">// Set the text column to display</span></div>
+<div class="line"><span class="lineno">   83</span>            var renderer2 = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">   84</span>            stackBBox.PackStart(renderer2, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   85</span>            stackBBox.AddAttribute(renderer2, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">   86</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -252,7 +282,12 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd><a class="el" href="class_bio_g_t_k_1_1_stack_tools.html">StackTools</a> </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_stack_tools_8cs_source.html#l00048">48</a> of file <a class="el" href="_stack_tools_8cs_source.html">StackTools.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   49</span>        {</div>
+<div class="line"><span class="lineno">   50</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/Stacks.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> <a class="code hl_function" href="class_bio_g_t_k_1_1_stack_tools.html#a69143b47bdf9d3e2b373f6088fe39f67">StackTools</a>(builder, builder.GetObject(<span class="stringliteral">&quot;stackTools&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   52</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_stack_tools_html_a69143b47bdf9d3e2b373f6088fe39f67"><div class="ttname"><a href="class_bio_g_t_k_1_1_stack_tools.html#a69143b47bdf9d3e2b373f6088fe39f67">BioGTK.StackTools.StackTools</a></div><div class="ttdeci">StackTools(Builder builder, IntPtr handle)</div><div class="ttdoc">Specialised constructor for use only by derived class.</div><div class="ttdef"><b>Definition:</b> <a href="_stack_tools_8cs_source.html#l00057">StackTools.cs:57</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac5b3a65661cc1b62e53b230f3fe98ce7" name="ac5b3a65661cc1b62e53b230f3fe98ce7"></a>
@@ -273,7 +308,19 @@ Properties</h2></td></tr>
 <p>It takes a list of images and adds them to a dropdown menu. </p>
 
 <p class="definition">Definition at line <a class="el" href="_stack_tools_8cs_source.html#l00230">230</a> of file <a class="el" href="_stack_tools_8cs_source.html">StackTools.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  231</span>        {</div>
+<div class="line"><span class="lineno">  232</span>            var imgs = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  233</span>            <span class="comment">// Add items to the ListStore</span></div>
+<div class="line"><span class="lineno">  234</span>            <span class="keywordflow">foreach</span> (BioImage b <span class="keywordflow">in</span> Images.images)</div>
+<div class="line"><span class="lineno">  235</span>            {</div>
+<div class="line"><span class="lineno">  236</span>                imgs.AppendValues(b.Filename);</div>
+<div class="line"><span class="lineno">  237</span>            }</div>
+<div class="line"><span class="lineno">  238</span>            <span class="comment">// Set the model for the ComboBox</span></div>
+<div class="line"><span class="lineno">  239</span>            stackABox.Model = imgs;</div>
+<div class="line"><span class="lineno">  240</span>            stackBBox.Model = imgs;</div>
+<div class="line"><span class="lineno">  241</span> </div>
+<div class="line"><span class="lineno">  242</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -298,7 +345,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_stack_tools_8cs_source.html#l00243">243</a> of file <a class="el" href="_stack_tools_8cs_source.html">StackTools.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  244</span>        {</div>
+<div class="line"><span class="lineno">  245</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> Images.images[stackABox.Active]; }</div>
+<div class="line"><span class="lineno">  246</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af842f38244aea9f768bdf0b5a0f4e56c" name="af842f38244aea9f768bdf0b5a0f4e56c"></a>
@@ -322,7 +372,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_stack_tools_8cs_source.html#l00247">247</a> of file <a class="el" href="_stack_tools_8cs_source.html">StackTools.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  248</span>        {</div>
+<div class="line"><span class="lineno">  249</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> Images.images[stackBBox.Active]; }</div>
+<div class="line"><span class="lineno">  250</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -204,7 +204,16 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_filters_8cs_source.html#l00035">35</a> of file <a class="el" href="_filters_8cs_source.html">Filters.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   35</span>                                                              : base(handle)</div>
+<div class="line"><span class="lineno">   36</span>        {</div>
+<div class="line"><span class="lineno">   37</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   38</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   39</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_filters_view.html#ad8330afd3a72408074b416066f0f5b13">InitItems</a>();</div>
+<div class="line"><span class="lineno">   40</span>            tree.RowActivated += Tree_RowActivated;</div>
+<div class="line"><span class="lineno">   41</span>            this.DeleteEvent += FiltersView_DeleteEvent;</div>
+<div class="line"><span class="lineno">   42</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_filters_view_html_ad8330afd3a72408074b416066f0f5b13"><div class="ttname"><a href="class_bio_g_t_k_1_1_filters_view.html#ad8330afd3a72408074b416066f0f5b13">BioGTK.FiltersView.InitItems</a></div><div class="ttdeci">void InitItems()</div><div class="ttdef"><b>Definition:</b> <a href="_filters_8cs_source.html#l00111">Filters.cs:111</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -232,7 +241,11 @@ Protected Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_filters_8cs_source.html#l00026">26</a> of file <a class="el" href="_filters_8cs_source.html">Filters.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   27</span>        {</div>
+<div class="line"><span class="lineno">   28</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/Filters.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">   29</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> FiltersView(builder, builder.GetObject(<span class="stringliteral">&quot;filters&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   30</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad8330afd3a72408074b416066f0f5b13" name="ad8330afd3a72408074b416066f0f5b13"></a>
@@ -252,7 +265,31 @@ Protected Member Functions</h2></td></tr>
 <p >It creates a treeview with two columns, the first column is the filter type, the second column is the filter name </p>
 
 <p class="definition">Definition at line <a class="el" href="_filters_8cs_source.html#l00111">111</a> of file <a class="el" href="_filters_8cs_source.html">Filters.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  112</span>        {</div>
+<div class="line"><span class="lineno">  113</span>            tree.Model = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  114</span>            tree.ActivateOnSingleClick = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  115</span>            Gtk.TreeViewColumn coordCol = <span class="keyword">new</span> Gtk.TreeViewColumn();</div>
+<div class="line"><span class="lineno">  116</span>            coordCol.Title = <span class="stringliteral">&quot;Filter&quot;</span>;</div>
+<div class="line"><span class="lineno">  117</span>            Gtk.CellRendererText coordCell = <span class="keyword">new</span> Gtk.CellRendererText();</div>
+<div class="line"><span class="lineno">  118</span>            coordCol.PackStart(coordCell, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  119</span>            tree.AppendColumn(coordCol);</div>
+<div class="line"><span class="lineno">  120</span>            coordCol.AddAttribute(coordCell, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">  121</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  122</span>            Filters.Init();</div>
+<div class="line"><span class="lineno">  123</span>            <span class="keywordflow">foreach</span> (Filt.Type f in (Filt.Type[])Enum.GetValues(typeof(Filt.Type)))</div>
+<div class="line"><span class="lineno">  124</span>            {</div>
+<div class="line"><span class="lineno">  125</span>                Gtk.TreeIter iter = store.AppendValues(f.ToString());</div>
+<div class="line"><span class="lineno">  126</span>                <span class="keywordflow">foreach</span> (Filt fil <span class="keywordflow">in</span> Filters.filters)</div>
+<div class="line"><span class="lineno">  127</span>                {</div>
+<div class="line"><span class="lineno">  128</span>                    <span class="keywordflow">if</span>(fil.type == f)</div>
+<div class="line"><span class="lineno">  129</span>                    {</div>
+<div class="line"><span class="lineno">  130</span>                        store.AppendValues(iter, fil.name);</div>
+<div class="line"><span class="lineno">  131</span>                    }</div>
+<div class="line"><span class="lineno">  132</span>                }</div>
+<div class="line"><span class="lineno">  133</span>            }</div>
+<div class="line"><span class="lineno">  134</span>            tree.Model = store;</div>
+<div class="line"><span class="lineno">  135</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a0d3a7020d5a8d0d8a0d76355a23ef578" name="a0d3a7020d5a8d0d8a0d76355a23ef578"></a>
@@ -273,7 +310,21 @@ Protected Member Functions</h2></td></tr>
 <p>It takes a list of filters and creates a treeview with the filters grouped by type. </p>
 
 <p class="definition">Definition at line <a class="el" href="_filters_8cs_source.html#l00137">137</a> of file <a class="el" href="_filters_8cs_source.html">Filters.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  138</span>        {</div>
+<div class="line"><span class="lineno">  139</span>            Gtk.TreeStore store = <span class="keyword">new</span> Gtk.TreeStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  140</span>            <span class="keywordflow">foreach</span> (Filt.Type f in (Filt.Type[])Enum.GetValues(typeof(Filt.Type)))</div>
+<div class="line"><span class="lineno">  141</span>            {</div>
+<div class="line"><span class="lineno">  142</span>                Gtk.TreeIter iter = store.AppendValues(f.ToString());</div>
+<div class="line"><span class="lineno">  143</span>                <span class="keywordflow">foreach</span> (Filt fil <span class="keywordflow">in</span> Filters.filters)</div>
+<div class="line"><span class="lineno">  144</span>                {</div>
+<div class="line"><span class="lineno">  145</span>                    <span class="keywordflow">if</span> (fil.type == f)</div>
+<div class="line"><span class="lineno">  146</span>                    {</div>
+<div class="line"><span class="lineno">  147</span>                        store.AppendValues(iter, fil.name);</div>
+<div class="line"><span class="lineno">  148</span>                    }</div>
+<div class="line"><span class="lineno">  149</span>                }</div>
+<div class="line"><span class="lineno">  150</span>            }</div>
+<div class="line"><span class="lineno">  151</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

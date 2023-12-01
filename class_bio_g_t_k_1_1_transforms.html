@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.8.1</span>
+   &#160;<span id="projectnumber">3.9.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -171,7 +171,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_transforms_8cs_source.html#l00016">16</a> of file <a class="el" href="_transforms_8cs_source.html">Transforms.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   17</span>        {</div>
+<div class="line"><span class="lineno">   18</span>            this.mTargetLength = target_length;</div>
+<div class="line"><span class="lineno">   19</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -218,7 +221,18 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The method is returning a <a class="el" href="class_bio_g_t_k_1_1_box_promotion.html">BoxPromotion</a> object. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_transforms_8cs_source.html#l00142">142</a> of file <a class="el" href="_transforms_8cs_source.html">Transforms.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  143</span>        {</div>
+<div class="line"><span class="lineno">  144</span>            BoxPromotion box = <span class="keyword">new</span> BoxPromotion();</div>
+<div class="line"><span class="lineno">  145</span> </div>
+<div class="line"><span class="lineno">  146</span>            PointPromotion left = this.<a class="code hl_function" href="class_bio_g_t_k_1_1_transforms.html#acd57eaf49fba2e59edc30669fd074b97">ApplyCoords</a>((org_box as BoxPromotion).mLeftUp, orgw, orgh);</div>
+<div class="line"><span class="lineno">  147</span>            PointPromotion lefrightt = this.<a class="code hl_function" href="class_bio_g_t_k_1_1_transforms.html#acd57eaf49fba2e59edc30669fd074b97">ApplyCoords</a>((org_box as BoxPromotion).mRightBottom, orgw, orgh);</div>
+<div class="line"><span class="lineno">  148</span> </div>
+<div class="line"><span class="lineno">  149</span>            box.mLeftUp = left;</div>
+<div class="line"><span class="lineno">  150</span>            box.mRightBottom = lefrightt;</div>
+<div class="line"><span class="lineno">  151</span>            <span class="keywordflow">return</span> box;</div>
+<div class="line"><span class="lineno">  152</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_transforms_html_acd57eaf49fba2e59edc30669fd074b97"><div class="ttname"><a href="class_bio_g_t_k_1_1_transforms.html#acd57eaf49fba2e59edc30669fd074b97">BioGTK.Transforms.ApplyCoords</a></div><div class="ttdeci">PointPromotion ApplyCoords(PointPromotion org_point, int orgw, int orgh)</div><div class="ttdef"><b>Definition:</b> <a href="_transforms_8cs_source.html#l00120">Transforms.cs:120</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acd57eaf49fba2e59edc30669fd074b97" name="acd57eaf49fba2e59edc30669fd074b97"></a>
@@ -264,7 +278,19 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The method is returning a new instance of the <a class="el" href="class_bio_g_t_k_1_1_point_promotion.html">PointPromotion</a> class, which is assigned to the variable newpointp. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_transforms_8cs_source.html#l00120">120</a> of file <a class="el" href="_transforms_8cs_source.html">Transforms.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  121</span>        {</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordtype">int</span> neww = 0;</div>
+<div class="line"><span class="lineno">  123</span>            <span class="keywordtype">int</span> newh = 0;</div>
+<div class="line"><span class="lineno">  124</span>            this.GetPreprocessShape(orgw, orgh, this.mTargetLength, ref neww, ref newh);</div>
+<div class="line"><span class="lineno">  125</span>            PointPromotion newpointp = <span class="keyword">new</span> PointPromotion(org_point.m_Optype);</div>
+<div class="line"><span class="lineno">  126</span>            <span class="keywordtype">float</span> scalx = (float)neww / (<span class="keywordtype">float</span>)orgw;</div>
+<div class="line"><span class="lineno">  127</span>            <span class="keywordtype">float</span> scaly = (float)newh / (<span class="keywordtype">float</span>)orgh;</div>
+<div class="line"><span class="lineno">  128</span>            newpointp.X = (int)(org_point.X * scalx);</div>
+<div class="line"><span class="lineno">  129</span>            newpointp.Y = (int)(org_point.Y * scaly);</div>
+<div class="line"><span class="lineno">  130</span> </div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">return</span> newpointp;</div>
+<div class="line"><span class="lineno">  132</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4bb4b45823ceee7920ba7c0b87f47b89" name="a4bb4b45823ceee7920ba7c0b87f47b89"></a>
@@ -292,7 +318,57 @@ Public Member Functions</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The method is returning a float array called "transformedImg". </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_transforms_8cs_source.html#l00029">29</a> of file <a class="el" href="_transforms_8cs_source.html">Transforms.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   30</span>        {</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keywordtype">int</span> neww = 0;</div>
+<div class="line"><span class="lineno">   32</span>            <span class="keywordtype">int</span> newh = 0;</div>
+<div class="line"><span class="lineno">   33</span>            this.GetPreprocessShape(b.SizeX, b.SizeY, <span class="keyword">this</span>.mTargetLength, ref neww, ref newh);</div>
+<div class="line"><span class="lineno">   34</span> </div>
+<div class="line"><span class="lineno">   35</span>            <span class="keywordtype">float</span>[,,] resizeImg = this.Resize(neww,newh);</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordtype">float</span>[] means = <span class="keyword">new</span> <span class="keywordtype">float</span>[resizeImg.GetLength(0)];</div>
+<div class="line"><span class="lineno">   38</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; resizeImg.GetLength(0); i++)</div>
+<div class="line"><span class="lineno">   39</span>            {</div>
+<div class="line"><span class="lineno">   40</span>                <span class="keywordtype">float</span>[] data = <span class="keyword">new</span> <span class="keywordtype">float</span>[resizeImg.GetLength(1) * resizeImg.GetLength(2)];</div>
+<div class="line"><span class="lineno">   41</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; resizeImg.GetLength(1); j++)</div>
+<div class="line"><span class="lineno">   42</span>                {</div>
+<div class="line"><span class="lineno">   43</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; resizeImg.GetLength(2); k++)</div>
+<div class="line"><span class="lineno">   44</span>                    {</div>
+<div class="line"><span class="lineno">   45</span>                        data[j * resizeImg.GetLength(2) + k] = resizeImg[i, j, k];</div>
+<div class="line"><span class="lineno">   46</span>                    }</div>
+<div class="line"><span class="lineno">   47</span>                }</div>
+<div class="line"><span class="lineno">   48</span>                means[i] = (float)MathNet.Numerics.Statistics.Statistics.Mean(data);</div>
+<div class="line"><span class="lineno">   49</span>            }</div>
+<div class="line"><span class="lineno">   50</span> </div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordtype">float</span>[] stdDev = <span class="keyword">new</span> <span class="keywordtype">float</span>[resizeImg.GetLength(0)];</div>
+<div class="line"><span class="lineno">   52</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; resizeImg.GetLength(0); i++)</div>
+<div class="line"><span class="lineno">   53</span>            {</div>
+<div class="line"><span class="lineno">   54</span>                <span class="keywordtype">float</span>[] data = <span class="keyword">new</span> <span class="keywordtype">float</span>[resizeImg.GetLength(1) * resizeImg.GetLength(2)];</div>
+<div class="line"><span class="lineno">   55</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; resizeImg.GetLength(1); j++)</div>
+<div class="line"><span class="lineno">   56</span>                {</div>
+<div class="line"><span class="lineno">   57</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = 0; k &lt; resizeImg.GetLength(2); k++)</div>
+<div class="line"><span class="lineno">   58</span>                    {</div>
+<div class="line"><span class="lineno">   59</span>                        data[j * resizeImg.GetLength(2) + k] = resizeImg[i, j, k];</div>
+<div class="line"><span class="lineno">   60</span>                    }</div>
+<div class="line"><span class="lineno">   61</span>                }</div>
+<div class="line"><span class="lineno">   62</span>                stdDev[i] = (float)MathNet.Numerics.Statistics.Statistics.StandardDeviation(data);</div>
+<div class="line"><span class="lineno">   63</span>            }</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span> </div>
+<div class="line"><span class="lineno">   66</span>            <span class="keywordtype">float</span>[] transformedImg = <span class="keyword">new</span> <span class="keywordtype">float</span>[3 * this.mTargetLength * this.mTargetLength];</div>
+<div class="line"><span class="lineno">   67</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; neww; i++)</div>
+<div class="line"><span class="lineno">   68</span>            {</div>
+<div class="line"><span class="lineno">   69</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> j = 0; j &lt; newh; j++)</div>
+<div class="line"><span class="lineno">   70</span>                {</div>
+<div class="line"><span class="lineno">   71</span>                    <span class="keywordtype">int</span> index = j * this.mTargetLength + i;</div>
+<div class="line"><span class="lineno">   72</span>                    transformedImg[index] = (resizeImg[0, i, j] - means[0]) / stdDev[0];</div>
+<div class="line"><span class="lineno">   73</span>                    transformedImg[this.mTargetLength * this.mTargetLength + index] = (resizeImg[1, i, j] - means[1]) / stdDev[1];</div>
+<div class="line"><span class="lineno">   74</span>                    transformedImg[2 * this.mTargetLength * this.mTargetLength + index] = (resizeImg[2, i, j] - means[2]) / stdDev[2];</div>
+<div class="line"><span class="lineno">   75</span>                }</div>
+<div class="line"><span class="lineno">   76</span>            }</div>
+<div class="line"><span class="lineno">   77</span> </div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">return</span> transformedImg;</div>
+<div class="line"><span class="lineno">   79</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
