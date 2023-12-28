@@ -1,0 +1,209 @@
+\hypertarget{_d_color_shader_8cs_source}{}\doxysection{DColor\+Shader.\+cs}
+\label{_d_color_shader_8cs_source}\index{F:/repos/BioImager/BioImager/Graphics/Graphics/DColorShader.cs@{F:/repos/BioImager/BioImager/Graphics/Graphics/DColorShader.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00001}00001 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00002}00002 \textcolor{keyword}{using }SharpDX;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00003}00003 \textcolor{keyword}{using }SharpDX.D3DCompiler;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00004}00004 \textcolor{keyword}{using }SharpDX.Direct3D11;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Runtime.InteropServices;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00006}00006 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00009}\mbox{\hyperlink{class_bio_imager_1_1_d_color_shader}{00009}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_d_color_shader}{DColorShader}}                   }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00011}00011         \textcolor{comment}{// Structures.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00012}00012         [StructLayout(LayoutKind.Sequential)]}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00013}00013         \textcolor{keyword}{internal} \textcolor{keyword}{struct }DVertex}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00014}00014         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00015}00015             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} AppendAlignedElement = 12;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00016}00016             \textcolor{keyword}{public} Vector3 position;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00017}00017             \textcolor{keyword}{public} Vector4 color;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00019}00019         [StructLayout(LayoutKind.Sequential)]}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00020}00020         \textcolor{keyword}{internal} \textcolor{keyword}{struct }DMatrixBuffer}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00022}00022             \textcolor{keyword}{public} Matrix world;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00023}00023             \textcolor{keyword}{public} Matrix view;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00024}00024             \textcolor{keyword}{public} Matrix projection;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00025}00025             \textcolor{keyword}{public} Vector4 rMinMax;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00026}00026             \textcolor{keyword}{public} Vector4 gMinMax;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00027}00027             \textcolor{keyword}{public} Vector4 bMinMax;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00029}00029         \textcolor{comment}{// Properties.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00030}00030         \textcolor{keyword}{public} VertexShader VertexShader \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00031}00031         \textcolor{keyword}{public} PixelShader PixelShader \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00032}00032         \textcolor{keyword}{public} GeometryShader GeometryShader \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00033}00033         \textcolor{keyword}{public} InputLayout Layout \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00034}00034         \textcolor{keyword}{public} SharpDX.Direct3D11.Buffer ConstantMatrixBuffer \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00035}00035         \textcolor{keyword}{public} \textcolor{keywordtype}{int} BitsPerPixel \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00037}00037         \textcolor{comment}{// Constructor}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00038}00038         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_d_color_shader}{DColorShader}}() \{ \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00040}00040         \textcolor{comment}{// Methods.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00041}00041         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} Initialize(Device device, IntPtr windowsHandle, \textcolor{keywordtype}{int} bitsPerPixel)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00042}00042         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00043}00043             \textcolor{comment}{// Initialize the vertex and pixel shaders.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00044}00044             \textcolor{keywordflow}{return} InitializeShader(device, windowsHandle, \textcolor{stringliteral}{"{}Color-\/vs.hlsl"{}}, \textcolor{stringliteral}{"{}Color-\/ps.hlsl"{}}, \textcolor{stringliteral}{"{}Color-\/gs.hlsl"{}}, bitsPerPixel);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00046}00046         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} InitializeShader(Device device, IntPtr windowsHandle, \textcolor{keywordtype}{string} vsFileName, \textcolor{keywordtype}{string} psFileName, \textcolor{keywordtype}{string} geoFileName, \textcolor{keywordtype}{int} bitsPerPixel)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00048}00048             \textcolor{comment}{// Setup full pathes}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00049}00049             vsFileName = DSystemConfiguration.ShaderFilePath + vsFileName;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00050}00050             psFileName = DSystemConfiguration.ShaderFilePath + psFileName;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00051}00051             geoFileName = DSystemConfiguration.ShaderFilePath + geoFileName;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00052}00052             BitsPerPixel = bitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00053}00053             \textcolor{comment}{// Compile the vertex shader code.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00054}00054             ShaderBytecode vertexShaderByteCode = ShaderBytecode.CompileFromFile(vsFileName, \textcolor{stringliteral}{"{}ColorVertexShader"{}}, \textcolor{stringliteral}{"{}vs\_4\_0"{}}, ShaderFlags.None, EffectFlags.None);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00055}00055             \textcolor{comment}{// Compile the pixel shader code.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00056}00056             ShaderBytecode pixelShaderByteCode = ShaderBytecode.CompileFromFile(psFileName, \textcolor{stringliteral}{"{}ColorPixelShader"{}}, \textcolor{stringliteral}{"{}ps\_4\_0"{}}, ShaderFlags.None, EffectFlags.None);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00057}00057             \textcolor{comment}{// Compile the geometry shader code.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00058}00058             ShaderBytecode geoShaderByteCode = ShaderBytecode.CompileFromFile(geoFileName, \textcolor{stringliteral}{"{}ColorGeometryShader"{}}, \textcolor{stringliteral}{"{}gs\_4\_0"{}}, ShaderFlags.None, EffectFlags.None);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00059}00059 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00060}00060             \textcolor{comment}{// Create the vertex shader from the buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00061}00061             VertexShader = \textcolor{keyword}{new} VertexShader(device, vertexShaderByteCode);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00062}00062             \textcolor{comment}{// Create the pixel shader from the buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00063}00063             PixelShader = \textcolor{keyword}{new} PixelShader(device, pixelShaderByteCode);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00064}00064             \textcolor{comment}{// Create the geo shader from the buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00065}00065             GeometryShader = \textcolor{keyword}{new} GeometryShader(device, geoShaderByteCode);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00067}00067             \textcolor{comment}{// Now setup the layout of the data that goes into the shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00068}00068             \textcolor{comment}{// This setup needs to match the VertexType structure in the Model and in the shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00069}00069             InputElement[] inputElements = \textcolor{keyword}{new} InputElement[]}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00070}00070             \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00071}00071                 \textcolor{keyword}{new} InputElement()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00072}00072                 \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00073}00073                     SemanticName = \textcolor{stringliteral}{"{}POSITION"{}},}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00074}00074                     SemanticIndex = 0,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00075}00075                     Format = SharpDX.DXGI.Format.R32G32B32\_Float,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00076}00076                     Slot = 0,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00077}00077                     AlignedByteOffset = 0,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00078}00078                     Classification = InputClassification.PerVertexData,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00079}00079                     InstanceDataStepRate = 0}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00080}00080                 \},}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00081}00081                 \textcolor{keyword}{new} InputElement()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00082}00082                 \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00083}00083                     SemanticName = \textcolor{stringliteral}{"{}COLOR"{}},}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00084}00084                     SemanticIndex = 0,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00085}00085                     Format = SharpDX.DXGI.Format.R32G32B32A32\_Float,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00086}00086                     Slot = 0,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00087}00087                     AlignedByteOffset = InputElement.AppendAligned,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00088}00088                     Classification = InputClassification.PerVertexData,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00089}00089                     InstanceDataStepRate = 0}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00090}00090                 \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00091}00091             \};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00093}00093             \textcolor{comment}{// Create the vertex input the layout.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00094}00094             Layout = \textcolor{keyword}{new} InputLayout(device, ShaderSignature.GetInputSignature(vertexShaderByteCode), inputElements);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00096}00096             \textcolor{comment}{// Release the vertex and pixel shader buffers, since they are no longer needed.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00097}00097             vertexShaderByteCode.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00098}00098             pixelShaderByteCode.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00099}00099             geoShaderByteCode.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00101}00101             \textcolor{comment}{// Setup the description of the dynamic matrix constant buffer that is in the vertex shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00102}00102             BufferDescription matrixBufDesc = \textcolor{keyword}{new} BufferDescription()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00103}00103             \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00104}00104                 Usage = ResourceUsage.Dynamic,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00105}00105                 SizeInBytes = Utilities.SizeOf<DMatrixBuffer>(),}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00106}00106                 BindFlags = BindFlags.ConstantBuffer,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00107}00107                 CpuAccessFlags = CpuAccessFlags.Write,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00108}00108                 OptionFlags = ResourceOptionFlags.None,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00109}00109                 StructureByteStride = 0}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00110}00110             \};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00112}00112             \textcolor{comment}{// Create the constant buffer pointer so we can access the vertex shader constant buffer from within this class.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00113}00113             ConstantMatrixBuffer = \textcolor{keyword}{new} SharpDX.Direct3D11.Buffer(device, matrixBufDesc);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00114}00114             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00115}00115         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00116}00116         \textcolor{keyword}{public} \textcolor{keywordtype}{void} ShutDown()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00117}00117         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00118}00118             \textcolor{comment}{// Shutdown the vertex and pixel shaders as well as the related objects.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00119}00119             ShuddownShader();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00120}00120         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00121}00121         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ShuddownShader()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00122}00122         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00123}00123             \textcolor{comment}{// Release the matrix constant buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00124}00124             ConstantMatrixBuffer?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00125}00125             ConstantMatrixBuffer = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00126}00126             \textcolor{comment}{// Release the layout.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00127}00127             Layout?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00128}00128             Layout = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00129}00129             \textcolor{comment}{// Release the pixel shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00130}00130             PixelShader?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00131}00131             PixelShader = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00132}00132             \textcolor{comment}{// Release the vertex shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00133}00133             VertexShader?.Dispose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00134}00134             VertexShader = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00135}00135         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00136}00136         \textcolor{keyword}{public} \textcolor{keywordtype}{bool} Render(DeviceContext deviceContext, \textcolor{keywordtype}{int} indexCount, Matrix worldMatrix, Matrix viewMatrix, Matrix projectionMatrix, IntRange r, IntRange g, IntRange b, \textcolor{keywordtype}{float} interval, \textcolor{keywordtype}{float} alpha)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00137}00137         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00138}00138             \textcolor{comment}{// Set the shader parameters that it will use for rendering.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00139}00139             \textcolor{keywordflow}{if} (!SetShaderParameters(deviceContext, worldMatrix, viewMatrix, projectionMatrix, r, g, b, interval, alpha))}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00140}00140                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00142}00142             \textcolor{comment}{// Now render the prepared buffers with the shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00143}00143             RenderShader(deviceContext, indexCount);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00145}00145             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00146}00146         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00147}00147         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} SetShaderParameters(DeviceContext deviceContext, Matrix worldMatrix, Matrix viewMatrix, Matrix projectionMatrix, IntRange r, IntRange g, IntRange b, \textcolor{keywordtype}{float} interval, \textcolor{keywordtype}{float} alpha)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00148}00148         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00149}00149             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00150}00150             \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00151}00151                 \textcolor{comment}{// Transpose the matrices to prepare them for shader.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00152}00152                 worldMatrix.Transpose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00153}00153                 viewMatrix.Transpose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00154}00154                 projectionMatrix.Transpose();}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00156}00156                 \textcolor{comment}{// Lock the constant buffer so it can be written to.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00157}00157                 DataStream mappedResource;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00158}00158                 deviceContext.MapSubresource(ConstantMatrixBuffer, MapMode.WriteDiscard, MapFlags.None, out mappedResource);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00159}00159 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00160}00160                 \textcolor{keywordtype}{float} f;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00161}00161                 \textcolor{keywordflow}{if} (BitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00162}00162                     f = ushort.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00163}00163                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00164}00164                     f = \textcolor{keywordtype}{byte}.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00166}00166                 \textcolor{comment}{// Copy the matrices into the constant buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00167}00167                 DMatrixBuffer matrixBuffer = \textcolor{keyword}{new} DMatrixBuffer()}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00168}00168                 \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00169}00169                     world = worldMatrix,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00170}00170                     view = viewMatrix,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00171}00171                     projection = projectionMatrix,}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00172}00172                     rMinMax = \textcolor{keyword}{new} Vector4((\textcolor{keywordtype}{float})r.Min / f, (\textcolor{keywordtype}{float})r.Max / f, interval, alpha),}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00173}00173                     gMinMax = \textcolor{keyword}{new} Vector4((\textcolor{keywordtype}{float})g.Min / f, (\textcolor{keywordtype}{float})g.Max / f, 0, 0),}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00174}00174                     bMinMax = \textcolor{keyword}{new} Vector4((\textcolor{keywordtype}{float})b.Min / f, (\textcolor{keywordtype}{float})b.Max / f, 0, 0)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00175}00175                 \};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00176}00176                 mappedResource.Write(matrixBuffer);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00177}00177                 \textcolor{comment}{// Unlock the constant buffer.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00178}00178                 deviceContext.UnmapSubresource(ConstantMatrixBuffer, 0);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00179}00179                 \textcolor{comment}{// Finally set the constant buffer in the vertex shader with the updated values.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00180}00180                 deviceContext.VertexShader.SetConstantBuffer(0, ConstantMatrixBuffer);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00181}00181 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00182}00182                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00183}00183             \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00184}00184             \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00185}00185             \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00186}00186                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00187}00187             \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00188}00188         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00189}00189         \textcolor{keyword}{private} \textcolor{keywordtype}{void} RenderShader(DeviceContext deviceContext, \textcolor{keywordtype}{int} indexCount)}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00190}00190         \{}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00191}00191             \textcolor{comment}{// Set the vertex input layout.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00192}00192             deviceContext.InputAssembler.InputLayout = Layout;}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00194}00194             \textcolor{comment}{// Set the vertex and pixel shaders that will be used to render this triangle.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00195}00195             deviceContext.VertexShader.Set(VertexShader);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00196}00196             deviceContext.PixelShader.Set(PixelShader);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00197}00197             deviceContext.GeometryShader.Set(GeometryShader);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00198}00198 }
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00199}00199             \textcolor{comment}{// Render the triangle.}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00200}00200             deviceContext.DrawIndexed(indexCount, 0, 0);}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00201}00201         \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00202}00202     \}}
+\DoxyCodeLine{\Hypertarget{_d_color_shader_8cs_source_l00203}00203 \}}
+
+\end{DoxyCode}

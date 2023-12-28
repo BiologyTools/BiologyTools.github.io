@@ -1,0 +1,288 @@
+\hypertarget{_node_view_8cs_source}{}\doxysection{Node\+View.\+cs}
+\label{_node_view_8cs_source}\index{F:/repos/BioImager/BioImager/Source/NodeView.cs@{F:/repos/BioImager/BioImager/Source/NodeView.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00003}00003 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Data;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00009}00009 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00010}00010 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00012}00012 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00014}\mbox{\hyperlink{class_bio_imager_1_1_node_view}{00014}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_node_view}{NodeView}} : Form}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00016}\mbox{\hyperlink{class_bio_imager_1_1_node_view_1_1_node}{00016}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_node_view_1_1_node}{Node}}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00018}00018             \textcolor{keyword}{public} TreeNode node;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00019}00019             \textcolor{keyword}{public} \textcolor{keyword}{enum} DataType}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00020}00020             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00021}00021                 image,}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00022}00022                 buf,}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00023}00023                 roi,}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00024}00024                 text}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00025}00025             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00026}00026             \textcolor{keyword}{private} DataType type;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00027}00027             \textcolor{keyword}{public} DataType Type}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00028}00028             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00029}00029                 \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} type; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00030}00030                 \textcolor{keyword}{set} \{ type = value; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00031}00031             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00032}00032             \textcolor{keyword}{private} \textcolor{keywordtype}{object} obj;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00033}00033             \textcolor{keyword}{public} \textcolor{keywordtype}{object} Object}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00034}00034             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00035}00035                 \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} obj; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00036}00036                 \textcolor{keyword}{set} \{ obj = value; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00037}00037             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00038}00038             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_node_view_1_1_node}{Node}}(\textcolor{keywordtype}{object} data,DataType typ)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00040}00040                 type = typ;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00041}00041                 obj = data;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00042}00042                 node = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00043}00043                 node.Tag = \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00044}00044                 node.Text = obj.ToString();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00045}00045                 node.ForeColor = System.Drawing.Color.White;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00046}00046             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00047}00047             \textcolor{keyword}{public} \textcolor{keywordtype}{string} Text}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00048}00048             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00049}00049                 \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} node.Text; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00050}00050                 \textcolor{keyword}{set} \{ node.Text = value; \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00051}00051             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00052}00052         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00053}00053         \textcolor{keyword}{static} \textcolor{keywordtype}{bool} setup = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00054}00054         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_node_view}{NodeView}}(\textcolor{keywordtype}{string}[] args)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00055}00055         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00056}00056             List<string> sts = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00057}00057             sts.AddRange(args);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00058}00058             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < args.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00059}00059             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00060}00060                 \textcolor{keywordflow}{if} (args[i].Contains(\textcolor{stringliteral}{"{}-\/setup"{}}))}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00061}00061                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00062}00062                     setup = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00063}00063                     sts.RemoveAt(i);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00064}00064                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00065}00065             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00066}00066             App.nodeView = \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00067}00067             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00068}00068             InitNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00069}00069             Init();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00070}00070             \textcolor{keywordflow}{if} (args.Length > 0)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00071}00071             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00072}00072                 App.tabsView = \textcolor{keyword}{new} TabsView(sts.ToArray());}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00073}00073                 App.tabsView.Show();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00074}00074             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00075}00075             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00076}00076             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00077}00077                 App.tabsView = \textcolor{keyword}{new} TabsView();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00078}00078                 App.tabsView.Show();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00079}00079             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00080}00080             \textcolor{comment}{//timer.Start();}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00081}00081         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00083}00083         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Init()}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00084}00084         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00085}00085             \textcolor{keywordflow}{if} (!Properties.Settings.Default.Setup || setup)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00086}00086                 \textcolor{keyword}{new} Setup().ShowDialog();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00087}00087             App.Initialize();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00088}00088             Filters.Init();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00089}00089             App.imager.Show();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00090}00090             App.runner = \textcolor{keyword}{new} Scripting();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00091}00091             App.recorder = \textcolor{keyword}{new} Recorder();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00092}00092         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00093}00093         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateOverlay()}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00094}00094         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00095}00095             \textcolor{keywordflow}{if} (App.viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00096}00096                 App.viewer.UpdateOverlay();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00097}00097         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00098}00098         \textcolor{keyword}{public} \textcolor{keywordtype}{void} InitNodes()}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00099}00099         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00100}00100             treeView.Nodes.Clear();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00101}00101             TreeNode images = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00102}00102             images.Text = \textcolor{stringliteral}{"{}BioImages"{}};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00103}00103             images.ForeColor = System.Drawing.Color.White;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00104}00104             \textcolor{keywordflow}{foreach} (BioImage item \textcolor{keywordflow}{in} Images.images)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00105}00105             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00106}00106                 \textcolor{comment}{//TreeNode node = new TreeNode();}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00107}00107                 Node tree = \textcolor{keyword}{new} Node(item, Node.DataType.image);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00109}00109                 Node implanes = \textcolor{keyword}{new} Node(item, Node.DataType.text);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00110}00110                 implanes.Text = \textcolor{stringliteral}{"{}Planes"{}};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00112}00112                 \textcolor{keywordflow}{foreach} (AForge.Bitmap buf in item.Buffers)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00113}00113                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00114}00114                     Node plane = \textcolor{keyword}{new} Node(buf, Node.DataType.buf);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00115}00115                     plane.Text = buf.ID + \textcolor{stringliteral}{"{}, "{}} + buf.Coordinate.ToString();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00116}00116                    }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00117}00117                     implanes.node.Nodes.Add(plane.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00118}00118                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00119}00119                 tree.node.Nodes.Add(implanes.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00120}00120 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00121}00121                 Node rois = \textcolor{keyword}{new} Node(item, Node.DataType.text);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00122}00122                 rois.Text = \textcolor{stringliteral}{"{}ROI"{}};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00124}00124                 \textcolor{keywordflow}{foreach} (ROI an \textcolor{keywordflow}{in} item.Annotations)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00125}00125                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00126}00126                     Node roi = \textcolor{keyword}{new} Node(an, Node.DataType.roi);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00127}00127                     rois.node.Nodes.Add(roi.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00128}00128                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00129}00129                 tree.node.Nodes.Add(rois.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00130}00130                 images.Nodes.Add(tree.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00131}00131             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00132}00132             treeView.Nodes.Add(images);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00133}00133         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00135}00135         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateNodes()}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00136}00136         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00137}00137             \textcolor{keywordflow}{if} (Images.images.Count != treeView.Nodes[0].Nodes.Count)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00138}00138             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00139}00139                 \textcolor{comment}{//If image count is not same as node count we refresh whole tree.}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00140}00140                 InitNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00141}00141                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00142}00142             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00143}00143             TreeNode images = treeView.Nodes[0];}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00144}00144             \textcolor{keywordflow}{foreach} (TreeNode item \textcolor{keywordflow}{in} images.Nodes)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00145}00145             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00146}00146                 \textcolor{comment}{//TreeNode node = new TreeNode();}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00147}00147                 Node node = (Node)item.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00148}00148                 BioImage im = (BioImage)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00150}00150                 TreeNode rois = node.node.Nodes[1];}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00151}00151                 \textcolor{keywordflow}{if}(im.Annotations.Count != rois.Nodes.Count)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00152}00152                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00153}00153                     \textcolor{comment}{//If ROI count is not same as node count we refresh annotations.}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00154}00154                     rois.Nodes.Clear();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00155}00155                     \textcolor{keywordflow}{foreach} (ROI an \textcolor{keywordflow}{in} im.Annotations)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00156}00156                     \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00157}00157                         Node roi = \textcolor{keyword}{new} Node(an, Node.DataType.roi);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00158}00158                         rois.Nodes.Add(roi.node);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00159}00159                     \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00160}00160                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00161}00161                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00162}00162                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < im.Annotations.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00163}00163                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00164}00164                     TreeNode roi = rois.Nodes[i];}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00165}00165                     Node n = (Node)roi.Tag;  }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00166}00166                     ROI an = (ROI)n.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00167}00167                     roi.Text = an.ToString();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00168}00168                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00169}00169             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00170}00170         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00171}00171 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00172}00172         \textcolor{keyword}{public} \textcolor{keywordtype}{void} Exit()}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00173}00173         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00174}00174             this.Close();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00175}00175             Application.Exit();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00176}00176             Application.ExitThread();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00177}00177         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00179}00179         \textcolor{keyword}{private} \textcolor{keywordtype}{void} MainForm\_Activated(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00180}00180         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00181}00181             UpdateNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00182}00182         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00184}00184         \textcolor{keyword}{private} \textcolor{keywordtype}{void} deleteToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00185}00185         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00186}00186             \textcolor{keywordflow}{if} (treeView.SelectedNode == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00187}00187                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00188}00188             Node node = (Node)treeView.SelectedNode.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00189}00189             if (node == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00190}00190                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00191}00191             \textcolor{keywordflow}{if}(node.Type == Node.DataType.roi)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00192}00192             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00193}00193                 ROI an = (ROI)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00194}00194                 Node nod = (Node)treeView.SelectedNode.Parent.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00195}00195                 BioImage im = (BioImage)nod.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00196}00196                 im.Annotations.Remove(an);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00197}00197             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00198}00198             \textcolor{keywordflow}{if} (node.Type == Node.DataType.image)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00199}00199             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00200}00200                 BioImage im = (BioImage)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00201}00201                 Images.RemoveImage(im);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00202}00202                 im.Dispose();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00203}00203             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00204}00204             UpdateNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00205}00205             UpdateOverlay();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00206}00206         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00208}00208         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setTextToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00209}00209         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00210}00210             Node node = (Node)treeView.SelectedNode.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00211}00211             if (node.Type == Node.DataType.roi)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00212}00212             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00213}00213                 ROI an = (ROI)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00214}00214                 Node nod = (Node)treeView.SelectedNode.Parent.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00215}00215                 BioImage im = (BioImage)nod.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00216}00216                 TextInput input = \textcolor{keyword}{new} TextInput(an.Text);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00217}00217                 \textcolor{keywordflow}{if} (input.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00218}00218                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00219}00219                 an.Text = input.TextValue;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00220}00220                 an.family = input.Font.FontFamily.ToString();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00221}00221                 an.strokeWidth = input.Font.Size;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00222}00222                 an.strokeColor = AForge.Color.FromArgb(input.color.R, input.color.G, input.color.B);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00223}00223             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00224}00224             UpdateNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00225}00225             UpdateOverlay();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00226}00226         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00227}00227 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00228}00228         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setIDToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00229}00229         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00230}00230             Node node = (Node)treeView.SelectedNode.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00231}00231             if (node.Type == Node.DataType.roi)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00232}00232             \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00233}00233                 ROI an = (ROI)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00234}00234                 Node nod = (Node)treeView.SelectedNode.Parent.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00235}00235                 BioImage im = (BioImage)nod.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00236}00236                 TextInput input = \textcolor{keyword}{new} TextInput(an.id);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00237}00237                 \textcolor{keywordflow}{if} (input.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00238}00238                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00239}00239                 an.id = input.TextValue;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00240}00240             \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00241}00241             UpdateNodes();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00242}00242             UpdateOverlay();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00243}00243         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00244}00244 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00245}00245         \textcolor{keyword}{private} \textcolor{keywordtype}{void} aboutToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00246}00246         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00247}00247             About about = \textcolor{keyword}{new} About();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00248}00248             about.Show();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00249}00249         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00250}00250 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00251}00251         \textcolor{keyword}{private} \textcolor{keywordtype}{void} newTabsViewToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00252}00252         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00253}00253             TabsView v = \textcolor{keyword}{new} TabsView();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00254}00254             v.Show();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00255}00255         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00256}00256 }
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00257}00257         \textcolor{keyword}{private} \textcolor{keywordtype}{void} treeView\_DoubleClick(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00258}00258         \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00259}00259             Node node = (Node)treeView.SelectedNode.Tag;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00260}00260             if (node != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00261}00261                 \textcolor{keywordflow}{if} (node.Type == Node.DataType.buf)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00262}00262                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00263}00263                     setIDToolStripMenuItem.Visible = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00264}00264                     setTextToolStripMenuItem.Visible = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00265}00265                     AForge.Bitmap buf = (AForge.Bitmap)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00266}00266                     App.viewer.SetCoordinate(buf.Coordinate.Z, buf.Coordinate.C, buf.Coordinate.T);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00267}00267                     App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00268}00268                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00269}00269                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00270}00270                 \textcolor{keywordflow}{if} (node.Type == Node.DataType.roi)}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00271}00271                 \{}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00272}00272                     setIDToolStripMenuItem.Visible = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00273}00273                     setTextToolStripMenuItem.Visible = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00274}00274                     ROI an = (ROI)node.Object;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00275}00275                     \textcolor{keywordtype}{string} name = node.node.Parent.Parent.Text;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00276}00276                     ImageView v = TabsView.SelectedViewer;}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00277}00277                     if (v != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00278}00278                         v.SetCoordinate(an.coord.Z, an.coord.C, an.coord.T);}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00279}00279                 \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00280}00280         \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00281}00281     \}}
+\DoxyCodeLine{\Hypertarget{_node_view_8cs_source_l00282}00282 \}}
+
+\end{DoxyCode}

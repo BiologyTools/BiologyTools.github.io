@@ -1,0 +1,1017 @@
+\hypertarget{_tabs_view_8cs_source}{}\doxysection{Tabs\+View.\+cs}
+\label{_tabs_view_8cs_source}\index{F:/repos/BioImager/BioImager/Source/TabsView.cs@{F:/repos/BioImager/BioImager/Source/TabsView.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00006}00006 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Threading;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00008}00008 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00009}00009 \textcolor{keyword}{using }RotateFlipType = AForge.RotateFlipType;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00011}00011 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00012}00012 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00013}\mbox{\hyperlink{class_bio_imager_1_1_tabs_view}{00013}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_tabs_view}{TabsView}} : Form}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00014}00014     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00015}00015         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} init = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00016}00016         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_filter}{Filter}} filters = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00017}00017         \textcolor{keyword}{public} \textcolor{keyword}{static} System.Drawing.Graphics graphics = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00018}00018         \textcolor{comment}{/* Returning the ImageView object that is currently selected in the tabControl. */}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00019}00019         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}} Viewer}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00020}00020         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00021}00021             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00022}00022             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00023}00023                 \textcolor{keywordflow}{if} (tabControl.TabPages.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00024}00024                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00025}00025                 \textcolor{keywordflow}{if} (tabControl.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00026}00026                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00027}00027                 \textcolor{keywordflow}{if} (tabControl.SelectedTab.Controls.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00028}00028                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00029}00029                 \textcolor{keywordflow}{return} (\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}})tabControl.SelectedTab.Controls[0];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00030}00030             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00031}00031         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00032}00032         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} SelectedImage}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00033}00033         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00034}00034             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00035}00035             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00036}00036                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.tabsView.Image;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00037}00037             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00039}00039         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}} SelectedViewer}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00040}00040         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00041}00041             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00042}00042             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00043}00043                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.tabsView.ImageView;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00044}00044             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00046}00046         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view}{TabsView}}(\mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} arg)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00048}00048             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00049}00049             LoadProperties();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00050}00050             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a33d12536da2bb79ed7d55f813df04189}{ResizeView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00051}00051             Init();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00052}00052         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00053}00053         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view}{TabsView}}()}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00055}00055             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00056}00056             LoadProperties();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00057}00057             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a33d12536da2bb79ed7d55f813df04189}{ResizeView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00058}00058             Init();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00059}00059         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00060}00060         \textcolor{comment}{/* A constructor for a class called TabsView. It is initializing the component and loading}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00061}00061 \textcolor{comment}{        properties. It is also initializing the class. */}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00062}00062         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view}{TabsView}}(\textcolor{keywordtype}{string}[] arg)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00063}00063         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00064}00064             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00065}00065             LoadProperties();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00066}00066             Init();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00067}00067             \textcolor{keywordflow}{if} (arg.Length == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00068}00068                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00069}00069             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00070}00070             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00071}00071                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < arg.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00072}00072                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00073}00073                     \textcolor{keywordflow}{if} (arg[i].EndsWith(\textcolor{stringliteral}{"{}.cs"{}}))}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00074}00074                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00075}00075                         \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.runner.\mbox{\hyperlink{class_bio_imager_1_1_scripting_a9e79f265bd2f431191830129376d30f8}{RunScriptFile}}(arg[0]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00076}00076                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00077}00077                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00078}00078                     \textcolor{keywordflow}{if} (arg[i].EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00079}00079                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00080}00080                         \mbox{\hyperlink{class_bio_imager_1_1_image_j}{ImageJ}}.\mbox{\hyperlink{class_bio_imager_1_1_image_j_a40611c73686613a5cb602fd270280632}{RunMacro}}(arg[i], \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00081}00081                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00082}00082                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00083}00083                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00084}00084                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00085}00085                         \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_aa1b64335a510e5d0c276574673e3c22e}{OpenFile}}(arg[i],\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00086}00086                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00087}00087                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00088}00088             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00089}00089         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00096}\mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{00096}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(\mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} b)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00097}00097         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00098}00098             \textcolor{keywordflow}{if} (b == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00099}00099                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00100}00100             \textcolor{keywordflow}{if} (b.filename.Contains(\textcolor{stringliteral}{"{}/"{}}) || b.filename.Contains(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}))}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00101}00101                 b.filename = Path.GetFileName(b.filename);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00102}00102             TabPage t = \textcolor{keyword}{new} TabPage(b.filename);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00103}00103             \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}} v = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}(b);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00104}00104             v.ShowStage = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00105}00105             v.Dock = DockStyle.Fill;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00106}00106             t.Controls.Add(v);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00107}00107             \textcolor{keywordflow}{if} (Width < b.SizeX || Height < b.SizeY)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00108}00108             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00109}00109                 Width = b.SizeX;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00110}00110                 Height = b.SizeY + 190;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00111}00111             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00112}00112             tabControl.TabPages.Add(t);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00113}00113             tabControl.Dock = DockStyle.Fill;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00114}00114             tabControl.SelectedIndex = tabControl.TabCount -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00115}00115             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a33d12536da2bb79ed7d55f813df04189}{ResizeView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00116}00116         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00117}00117         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Init()}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00118}00118         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00119}00119             TabPage t = \textcolor{keyword}{new} TabPage(\textcolor{stringliteral}{"{}Viewer"{}});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00120}00120             \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}} v = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00121}00121             v.ShowStage = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00122}00122             v.Dock = DockStyle.Fill;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00123}00123             t.Controls.Add(v);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00124}00124             tabControl.TabPages.Add(t);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00125}00125             filters = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_filter}{Filter}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00126}00126             init = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00127}00127         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00133}\mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a33d12536da2bb79ed7d55f813df04189}{00133}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a33d12536da2bb79ed7d55f813df04189}{ResizeView}}()}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00134}00134         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00135}00135             \textcolor{keywordflow}{if} (Image == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00136}00136                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00137}00137             System.Drawing.Size s;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00138}00138             \textcolor{keywordflow}{if} (SelectedImage.isPyramidal)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00139}00139                 s = \textcolor{keyword}{new} System.Drawing.Size(\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage.Resolutions[\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.\mbox{\hyperlink{class_bio_imager_1_1_image_view_add717aef7e5bb3d8475ecf08f3a74aff}{Level}}].SizeX + 42, \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage.Resolutions[\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.\mbox{\hyperlink{class_bio_imager_1_1_image_view_add717aef7e5bb3d8475ecf08f3a74aff}{Level}}].SizeY + 206);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00140}00140             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00141}00141                 s = \textcolor{keyword}{new} System.Drawing.Size(\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage.SizeX + 20, \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage.SizeY + 180);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00142}00142             \textcolor{keywordflow}{if} (s.Width > Screen.PrimaryScreen.Bounds.Width || s.Height > Screen.PrimaryScreen.Bounds.Height)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00143}00143             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00144}00144                 this.WindowState = FormWindowState.Maximized;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00145}00145                 Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a8bc8dce4466dfd9c2b0ea39262cb3987}{GoToImage}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00146}00146             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00147}00147             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00148}00148             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00149}00149                 Size = s;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00150}00150                 Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a8bc8dce4466dfd9c2b0ea39262cb3987}{GoToImage}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00151}00151             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00152}00152         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00154}00154         \textcolor{comment}{/* A property that returns the selected image from the image viewer. */}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00155}00155         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} Image}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00156}00156         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00157}00157             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00158}00158             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00159}00159                 \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00160}00160                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00161}00161                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00162}00162                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00163}00163                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.SelectedImage;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00164}00164             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00165}00165         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00167}00167         \textcolor{comment}{/* A property of the ImageView class. */}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00168}00168         \textcolor{keyword}{public} ImageView ImageView}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00169}00169         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00170}00170             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00171}00171             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00172}00172                 \textcolor{keywordflow}{return} Viewer;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00173}00173             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00174}00174         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00176}00176         \textcolor{comment}{/* A property that returns the number of tabs in the tab control. */}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00177}00177         \textcolor{keyword}{public} \textcolor{keywordtype}{int} TabCount}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00178}00178         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00179}00179             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00180}00180             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00181}00181                 \textcolor{keywordflow}{return} tabControl.TabPages.Count;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00182}00182             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00183}00183         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00189}\mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a93c08e004fa721fe1683ef1e79e07fe9}{00189}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a93c08e004fa721fe1683ef1e79e07fe9}{OpenInNewProcess}}(\textcolor{keywordtype}{string} file)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00190}00190         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00191}00191             Process p = \textcolor{keyword}{new} Process();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00192}00192             p.StartInfo.FileName = Application.ExecutablePath;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00193}00193             p.StartInfo.Arguments = file;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00194}00194             p.Start();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00195}00195         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00205}00205         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00206}00206         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00207}00207             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00208}00208                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00209}00209             \textcolor{keywordtype}{int} img = Images.images.Count;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00210}00210             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} openFilesDialog.FileNames)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00211}00211             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00212}00212                 \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} im = \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_aa1b64335a510e5d0c276574673e3c22e}{OpenFile}}(item,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00213}00213                 \textcolor{keywordflow}{if} (im == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00214}00214                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00215}00215                 \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(im);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00216}00216                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.recent.Contains(im.ID))}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00217}00217                     \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.recent.Add(im.ID);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00218}00218             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00219}00219             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} App.recent)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00220}00220             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00221}00221                 openRecentToolStripMenuItem.DropDownItems.Add(item, \textcolor{keyword}{null}, ItemClicked);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00222}00222             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00223}00223         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00224}00224 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00226}00226         \textcolor{keyword}{private} \textcolor{keywordtype}{void} SaveProperties()}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00227}00227         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00228}00228             \textcolor{keywordtype}{string} s = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00229}00229             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < App.recent.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00230}00230             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00231}00231                 s += \textcolor{stringliteral}{"{}\$"{}} + App.recent[i];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00232}00232             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00233}00233             Properties.Settings.Default[\textcolor{stringliteral}{"{}Recent"{}}] = s;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00234}00234             Properties.Settings.Default.Save();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00235}00235         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00236}00236 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00238}00238         \textcolor{keyword}{private} \textcolor{keywordtype}{void} LoadProperties()}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00239}00239         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00240}00240             App.recent.Clear();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00241}00241             \textcolor{keywordtype}{string} s = (string)Properties.Settings.Default[\textcolor{stringliteral}{"{}Recent"{}}];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00242}00242             \textcolor{keywordtype}{string}[] sts = s.Split(\textcolor{charliteral}{'\$'});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00243}00243             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00244}00244             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00245}00245                 \textcolor{keywordflow}{if} (item != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00246}00246                     App.recent.Add(item);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00247}00247             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00248}00248         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00249}00249 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00254}00254         \textcolor{keyword}{private} \textcolor{keywordtype}{void} closeToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00255}00255         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00256}00256             \textcolor{keywordflow}{if} (this.Viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00257}00257             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00258}00258                 Images.RemoveImage(SelectedImage);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00259}00259             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00260}00260         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00261}00261 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00268}00268         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00269}00269         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00270}00270             \textcolor{keywordflow}{if} (Image == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00271}00271                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00272}00272             saveTiffFileDialog.FileName = Path.GetFileNameWithoutExtension(Image.Filename);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00273}00273             \textcolor{keywordflow}{if} (saveTiffFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00274}00274                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00275}00275             \textcolor{keywordtype}{string}[] sts = \textcolor{keyword}{new} \textcolor{keywordtype}{string}[1];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00276}00276             sts[0] = ImageView.SelectedImage.ID;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00277}00277             BioImage.SaveSeries(sts, saveTiffFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00278}00278         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00285}00285         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ImageViewer\_PreviewKeyDown(\textcolor{keywordtype}{object} sender, PreviewKeyDownEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00286}00286         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00287}00287             \textcolor{keywordflow}{if} (e.KeyCode == Keys.S \&\& e.Control)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00288}00288             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00289}00289                 saveToolStripMenuItem.PerformClick();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00290}00290             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00291}00291             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00292}00292             \textcolor{keywordflow}{if} (e.KeyCode == Keys.O \&\& e.Control)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00293}00293             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00294}00294                 openToolStripMenuItem.PerformClick();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00295}00295             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00296}00296         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00297}00297 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00302}00302         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toolboxToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00303}00303         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00304}00304             App.tools.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00305}00305         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00306}00306 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00314}00314         \textcolor{keyword}{private} \textcolor{keywordtype}{void} exportCSVToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00315}00315         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00316}00316             \textcolor{keywordflow}{if} (saveCSVFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00317}00317                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00318}00318             BioImage.ExportROIsCSV(saveCSVFileDialog.FileName, ImageView.SelectedImage.Annotations);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00319}00319         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00320}00320 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00328}00328         \textcolor{keyword}{private} \textcolor{keywordtype}{void} importCSVToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00329}00329         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00330}00330             \textcolor{keywordflow}{if} (openCSVFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00331}00331                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00332}00332             ImageView.SelectedImage.Annotations.AddRange(BioImage.ImportROIsCSV(openCSVFileDialog.FileName));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00333}00333         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00334}00334 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00341}00341         \textcolor{keyword}{private} \textcolor{keywordtype}{void} exportROIsOfFolderOfImagesToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00342}00342         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00343}00343             \textcolor{keywordflow}{if} (folderBrowserDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00344}00344                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00345}00345             saveOMEFileDialog.InitialDirectory = folderBrowserDialog.SelectedPath;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00346}00346             \textcolor{keywordflow}{if} (saveCSVFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00347}00347                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00348}00348             \textcolor{keywordtype}{string} f = Path.GetFileName(saveCSVFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00349}00349 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00350}00350             BioImage.ExportROIFolder(folderBrowserDialog.SelectedPath, f);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00351}00351         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00352}00352 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00357}00357         \textcolor{keyword}{private} \textcolor{keywordtype}{void} rOIManagerToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00358}00358         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00359}00359             App.manager.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00360}00360         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00361}00361 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00366}00366         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ImageViewer\_Activated(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00367}00367         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00368}00368             App.tabsView = \textcolor{keyword}{this};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00369}00369             \textcolor{comment}{//App.Image = SelectedImage;}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00370}00370         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00371}00371 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00379}00379         \textcolor{keyword}{private} \textcolor{keywordtype}{void} channelsToolToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00380}00380         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00381}00381             \textcolor{keywordflow}{if} (ImageView.SelectedImage == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00382}00382                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00383}00383             \textcolor{keywordflow}{if} (App.channelsTool == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00384}00384                 App.channelsTool = \textcolor{keyword}{new} ChannelsTool(App.Channels);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00385}00385             App.channelsTool.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00386}00386         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00387}00387 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00395}00395         \textcolor{keyword}{private} \textcolor{keywordtype}{void} rGBToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00396}00396         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00397}00397             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00398}00398                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00399}00399             Viewer.Mode = ImageView.ViewMode.RGBImage;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00400}00400             filteredToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00401}00401             rawToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00402}00402             emissionToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00403}00403             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a77d0940fc94d71f1629cb3d50b385262}{UpdateStatus}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00404}00404         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00405}00405 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00413}00413         \textcolor{keyword}{private} \textcolor{keywordtype}{void} filteredToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00414}00414         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00415}00415             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00416}00416                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00417}00417             Viewer.Mode = ImageView.ViewMode.Filtered;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00418}00418             rGBToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00419}00419             rawToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00420}00420             emissionToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00421}00421             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a77d0940fc94d71f1629cb3d50b385262}{UpdateStatus}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00422}00422         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00423}00423 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00431}00431         \textcolor{keyword}{private} \textcolor{keywordtype}{void} rawToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00432}00432         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00433}00433             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00434}00434                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00435}00435             Viewer.Mode = ImageView.ViewMode.Raw;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00436}00436             rGBToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00437}00437             filteredToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00438}00438             emissionToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00439}00439             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a77d0940fc94d71f1629cb3d50b385262}{UpdateStatus}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00440}00440         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00441}00441 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00449}00449         \textcolor{keyword}{private} \textcolor{keywordtype}{void} autoThresholdToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00450}00450         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00451}00451             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00452}00452                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00453}00453             BioImage.AutoThreshold(ImageView.SelectedImage, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00454}00454             \textcolor{keywordflow}{if} (ImageView.SelectedImage.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00455}00455                 ImageView.SelectedImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a850bb2abd1b7e0eed849083ac789cf92}{StackThreshold}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00456}00456             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00457}00457                 ImageView.SelectedImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a850bb2abd1b7e0eed849083ac789cf92}{StackThreshold}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00458}00458         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00459}00459 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00460}00460 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00464}\mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a659d1b3833dd4d34eb5024cc647bfa2b}{00464}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a659d1b3833dd4d34eb5024cc647bfa2b}{UpdateViewMode}}(\mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.ViewMode v)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00465}00465         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00466}00466             \textcolor{keywordflow}{if} (v == \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.ViewMode.RGBImage)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00467}00467                 rGBToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00468}00468             \textcolor{keywordflow}{if} (v == \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.ViewMode.Filtered)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00469}00469                 filteredToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00470}00470             \textcolor{keywordflow}{if} (v == \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}.ViewMode.Raw)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00471}00471                 rawToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00472}00472         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00473}00473 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00478}00478         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptRunnerToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00479}00479         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00480}00480             App.runner.WindowState = FormWindowState.Normal;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00481}00481             \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.runner.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00482}00482         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00483}00483 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00488}00488         \textcolor{keyword}{private} \textcolor{keywordtype}{void} stackToolsToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00489}00489         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00490}00490             App.stackTools.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00491}00491         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00492}00492 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00497}00497         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptRecorderToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00498}00498         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00499}00499             Recorder.recorder.WindowState = FormWindowState.Normal;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00500}00500             Recorder.recorder.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00501}00501         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00502}00502 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00509}00509         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveOMEToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00510}00510         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00511}00511             \textcolor{keywordflow}{if} (Image == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00512}00512                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00513}00513             saveOMEFileDialog.FileName = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.Filename);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00514}00514             \textcolor{keywordflow}{if} (saveOMEFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00515}00515                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00516}00516             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} file \textcolor{keywordflow}{in} saveOMEFileDialog.FileNames)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00517}00517             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00518}00518                 BioImage.SaveOME(file, Image.ID);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00519}00519             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00520}00520         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00521}00521 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00522}00522         \textcolor{keyword}{private} \textcolor{keywordtype}{void} copyToClipboardToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00523}00523         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00524}00524 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00525}00525         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00526}00526 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00531}00531         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setToolToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00532}00532         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00533}00533             SetTool tool = \textcolor{keyword}{new} SetTool();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00534}00534             tool.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00535}00535         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00536}00536 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00537}00537         \textcolor{keyword}{private} \textcolor{keywordtype}{void} timer\_Tick(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00538}00538         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00539}00539             \textcolor{comment}{//Here we update the tabs based on images in the table.}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00540}00540 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00541}00541         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00542}00542 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00543}00543         \textcolor{keyword}{private} \textcolor{keywordtype}{void} filtersToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00544}00544         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00545}00545         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00546}00546 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00551}00551         \textcolor{keyword}{private} \textcolor{keywordtype}{void} to8BitToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00552}00552         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00553}00553             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a9e341ba893601a1b89b0fa9036259798}{To8Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00554}00554         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00555}00555 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00561}00561         \textcolor{keyword}{private} \textcolor{keywordtype}{void} to16BitToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00562}00562         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00563}00563             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a3250a292727112bb03f6d78166cd474e}{To16Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00564}00564         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00565}00565 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00570}00570         \textcolor{keyword}{private} \textcolor{keywordtype}{void} filtersToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00571}00571         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00572}00572             filters = \textcolor{keyword}{new} Filter();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00573}00573             filters.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00574}00574         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00575}00575 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00581}00581         \textcolor{keyword}{private} \textcolor{keywordtype}{void} bit8ToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00582}00582         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00583}00583             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a9e341ba893601a1b89b0fa9036259798}{To8Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00584}00584             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_acd91244aa8511c64964a01c025df8448}{InitGUI}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00585}00585             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00586}00586         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00587}00587 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00593}00593         \textcolor{keyword}{private} \textcolor{keywordtype}{void} bit16ToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00594}00594         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00595}00595             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a3250a292727112bb03f6d78166cd474e}{To16Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00596}00596             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_acd91244aa8511c64964a01c025df8448}{InitGUI}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00597}00597             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00598}00598         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00599}00599 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00604}00604         \textcolor{keyword}{private} \textcolor{keywordtype}{void} to24BitToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00605}00605         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00606}00606             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a2cf0f96aa828a2ceec260cfbcb8dded1}{To24Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00607}00607             \textcolor{comment}{//We update the viewer gui since there are less planes now.}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00608}00608             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_acd91244aa8511c64964a01c025df8448}{InitGUI}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00609}00609             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00610}00610         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00611}00611 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00616}00616         \textcolor{keyword}{private} \textcolor{keywordtype}{void} to48BitToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00617}00617         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00618}00618             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a1fd44112af0526b7ed54763d986efce3}{To48Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00619}00619             \textcolor{comment}{//We update the viewer gui since there are less planes now.}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00620}00620             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_acd91244aa8511c64964a01c025df8448}{InitGUI}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00621}00621             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00622}00622         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00623}00623 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00628}00628         \textcolor{keyword}{private} \textcolor{keywordtype}{void} to32BitToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00629}00629         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00630}00630             Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a92f6119f85ae8e477573138516d2e919}{To32Bit}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00631}00631             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_acd91244aa8511c64964a01c025df8448}{InitGUI}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00632}00632             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00633}00633         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00634}00634 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00642}00642         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toWindowToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00643}00643         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00644}00644             \textcolor{keywordflow}{if} (tabControl.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00645}00645                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00646}00646             BioImage im = ImageView.SelectedImage;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00647}00647             ImageWindow vi = \textcolor{keyword}{new} ImageWindow(im);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00648}00648             vi.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00649}00649         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00650}00650 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00657}00657         \textcolor{keyword}{private} \textcolor{keywordtype}{void} tabControl\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00658}00658         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00659}00659             \textcolor{keywordflow}{if} (tabControl.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00660}00660                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00661}00661             \textcolor{comment}{//We update the view status based on tab.}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00662}00662             \textcolor{keywordflow}{if} (Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a772613440709e33230818ad43613e768}{Mode}} == ImageView.ViewMode.Raw)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00663}00663                 rawToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00664}00664             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00665}00665                 rawToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00666}00666             \textcolor{keywordflow}{if} (Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a772613440709e33230818ad43613e768}{Mode}} == ImageView.ViewMode.Filtered)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00667}00667                 filteredToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00668}00668             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00669}00669                 filteredToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00670}00670             \textcolor{keywordflow}{if} (Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a772613440709e33230818ad43613e768}{Mode}} == ImageView.ViewMode.RGBImage)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00671}00671                 rGBToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00672}00672             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00673}00673                 rGBToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00674}00674             \textcolor{comment}{//We update the active Viewer.}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00675}00675             App.viewer = Viewer;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00676}00676             ImageView.SelectedIndex = 0;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00677}00677         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00678}00678 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00686}00686         \textcolor{keyword}{private} \textcolor{keywordtype}{void} closeToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00687}00687         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00688}00688             \textcolor{keywordflow}{if} (tabControl.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00689}00689                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00690}00690             ImageView v = (ImageView)tabControl.SelectedTab.Controls[0];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00691}00691             tabControl.TabPages.RemoveAt(tabControl.SelectedIndex);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00692}00692             v.Dispose();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00693}00693             \textcolor{keywordflow}{foreach} (BioImage item \textcolor{keywordflow}{in} v.Images)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00694}00694             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00695}00695                 Images.RemoveImage(item);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00696}00696                 item.Dispose();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00697}00697             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00698}00698             GC.Collect();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00699}00699         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00700}00700 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00701}00701         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openOMEToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00702}00702         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00703}00703 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00704}00704         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00705}00705 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00710}00710         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveAllToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00711}00711         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00712}00712             List<string> sts = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00713}00713             \textcolor{keywordflow}{foreach} (BioImage item \textcolor{keywordflow}{in} Images.images)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00714}00714             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00715}00715                 BioImage.Save(Image.ID, Image.ID);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00716}00716             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00717}00717         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00718}00718 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00723}00723         \textcolor{keyword}{private} \textcolor{keywordtype}{void} aboutToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00724}00724         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00725}00725             About about = \textcolor{keyword}{new} About();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00726}00726             about.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00727}00727         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00728}00728 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00733}00733         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptRunnerToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00734}00734         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00735}00735             App.runner.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00736}00736         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00737}00737 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00742}00742         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptRecorderToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00743}00743         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00744}00744             App.recorder.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00745}00745         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00746}00746 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00753}00753         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openOMEToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00754}00754         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00755}00755             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00756}00756                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00757}00757             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} sts \textcolor{keywordflow}{in} openFilesDialog.FileNames)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00758}00758             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00759}00759                 BioImage im = BioImage.OpenOME(sts,\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00760}00760                 \textcolor{keywordflow}{if} (im == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00761}00761                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00762}00762                 \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(im);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00763}00763             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00764}00764         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00765}00765 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00770}00770         \textcolor{keyword}{private} \textcolor{keywordtype}{void} newTabViewToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00771}00771         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00772}00772             Process.Start(Application.ExecutablePath);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00773}00773         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00774}00774 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00779}00779         \textcolor{keyword}{private} \textcolor{keywordtype}{void} nodeViewToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00780}00780         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00781}00781             App.nodeView.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00782}00782             App.nodeView.ShowInTaskbar = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00783}00783         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00790}00790         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveToolStripMenuItem1\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00791}00791         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00792}00792             \textcolor{keywordflow}{if} (saveTiffFileDialog.ShowDialog() == DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00793}00793                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_ad27424c7339a61da896e99ec03851941}{Save}}(ImageView.SelectedImage.ID, saveTiffFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00794}00794         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00795}00795 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00801}00801         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveOMEToolStripMenuItem1\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00802}00802         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00803}00803             \textcolor{keywordflow}{if} (saveOMEFileDialog.ShowDialog() == DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00804}00804                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}}.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_ad27424c7339a61da896e99ec03851941}{Save}}(ImageView.SelectedImage.ID, saveOMEFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00805}00805         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00810}00810         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openRecentToolStripMenuItem\_DropDownOpening(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00811}00811         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00812}00812             openRecentToolStripMenuItem.DropDownItems.Clear();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00813}00813             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} App.recent)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00814}00814             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00815}00815                 openRecentToolStripMenuItem.DropDownItems.Add(item, \textcolor{keyword}{null}, ItemClicked);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00816}00816             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00817}00817         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00824}00824         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ItemClicked(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00825}00825         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00826}00826             ToolStripMenuItem ts = (ToolStripMenuItem)sender;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00827}00827             \textcolor{keywordflow}{if} (!BioImage.isOME(ts.Text))}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00828}00828             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00829}00829                 BioImage[] bs = BioImage.OpenSeries(ts.Text,\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00830}00830                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < bs.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00831}00831                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00832}00832                     \textcolor{keywordflow}{if} (i == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00833}00833                         \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(bs[i]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00834}00834                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00835}00835                         Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_ae7277ec634db3f2dd018fcd47cb89774}{AddImage}}(bs[i]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00836}00836                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00837}00837             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00838}00838             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00839}00839             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00840}00840                 BioImage[] bs = BioImage.OpenOMESeries(ts.Text,\textcolor{keyword}{true},\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00841}00841             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00842}00842             App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00843}00843             SaveProperties();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00844}00844         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00852}00852         \textcolor{keyword}{private} \textcolor{keywordtype}{void} TabsView\_KeyDown(\textcolor{keywordtype}{object} sender, KeyEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00853}00853         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00854}00854             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00855}00855                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00856}00856             \textcolor{keywordtype}{double} moveAmount = 1500 * (1 / App.viewer.Scale.Width);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00857}00857             \textcolor{keywordflow}{if} (e.KeyCode == Keys.C \&\& e.Control)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00858}00858             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00859}00859                 Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a9a5f093f3065323e522e8174519a6836}{CopySelection}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00860}00860                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00861}00861             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00862}00862             \textcolor{keywordflow}{if} (e.KeyCode == Keys.V \&\& e.Control)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00863}00863             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00864}00864                 Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_afa72a2954f0df52889a8047fa030e40a}{PasteSelection}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00865}00865                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00866}00866             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00867}00867             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Subtract || e.KeyCode == Keys.NumPad7)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00868}00868             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00869}00869                 App.viewer.Scale = \textcolor{keyword}{new} AForge.SizeF(App.viewer.Scale.Width -\/ 0.1f, App.viewer.Scale.Height -\/ 0.1f);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00870}00870             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00871}00871             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Add || e.KeyCode == Keys.NumPad9)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00872}00872             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00873}00873                 App.viewer.Scale = \textcolor{keyword}{new} AForge.SizeF(App.viewer.Scale.Width -\/ 0.1f, App.viewer.Scale.Height -\/ 0.1f);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00874}00874             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00875}00875             \textcolor{keywordflow}{if} (e.KeyCode == Keys.W || e.KeyCode == Keys.NumPad8)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00876}00876             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00877}00877                 Viewer.Origin = \textcolor{keyword}{new} PointD(Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.X, Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.Y -\/ moveAmount);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00878}00878             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00879}00879             \textcolor{keywordflow}{if} (e.KeyCode == Keys.S || e.KeyCode == Keys.NumPad2)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00880}00880             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00881}00881                 Viewer.Origin = \textcolor{keyword}{new} PointD(Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.X, Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.Y + moveAmount);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00882}00882             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00883}00883             \textcolor{keywordflow}{if} (e.KeyCode == Keys.A || e.KeyCode == Keys.NumPad4)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00884}00884             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00885}00885                 Viewer.Origin = \textcolor{keyword}{new} PointD(Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.X -\/ moveAmount, Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.Y);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00886}00886             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00887}00887             \textcolor{keywordflow}{if} (e.KeyCode == Keys.D || e.KeyCode == Keys.NumPad6)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00888}00888             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00889}00889                 Viewer.Origin = \textcolor{keyword}{new} PointD(Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.X + moveAmount, Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a2f517343db7b1343c123766bfd3414af}{Origin}}.Y);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00890}00890             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00891}00891             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Up)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00892}00892                 Microscope.MoveUp(Microscope.viewSize.Y / 2);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00893}00893             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Down)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00894}00894                 Microscope.MoveDown(Microscope.viewSize.Y / 2);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00895}00895             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Left)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00896}00896                 Microscope.MoveRight(-\/(Microscope.viewSize.X / 2));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00897}00897             \textcolor{keywordflow}{if} (e.KeyCode == Keys.Right)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00898}00898                 Microscope.MoveRight((Microscope.viewSize.X / 2) / 2);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00899}00899             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a77d0940fc94d71f1629cb3d50b385262}{UpdateStatus}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00900}00900             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_adc65e6e60745ab28f68c3e63642f547e}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00901}00901         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00902}00902 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00908}00908         \textcolor{keyword}{private} \textcolor{keywordtype}{void} duplicateToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00909}00909         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00910}00910             BioImage im = Image.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_ab3cec75af3191b597b3ff2ef7d97751d}{Copy}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00911}00911             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(im);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00912}00912         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00913}00913 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00918}00918         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveSeriesToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00919}00919         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00920}00920             App.seriesTool.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00921}00921         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00922}00922 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00928}00928         \textcolor{keyword}{private} \textcolor{keywordtype}{void} TabsView\_FormClosing(\textcolor{keywordtype}{object} sender, FormClosingEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00929}00929         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00930}00930             SaveProperties();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00931}00931             Microscope.Close();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00932}00932             App.imager.Close();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00933}00933             App.stage.Close();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00934}00934             App.nodeView.Close();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00935}00935             Application.Exit();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00936}00936         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00937}00937 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00942}00942         \textcolor{keyword}{private} \textcolor{keywordtype}{void} automationToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00943}00943         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00944}00944             App.recordings.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00945}00945         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00946}00946 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00947}00947         \textcolor{keyword}{private} \textcolor{keywordtype}{void} stageToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00948}00948         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00949}00949             App.stage.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00950}00950         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00951}00951 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00958}00958         \textcolor{keyword}{private} \textcolor{keywordtype}{void} addImagesToTabToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00959}00959         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00960}00960             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00961}00961                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00962}00962             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < openFilesDialog.FileNames.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00963}00963             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00964}00964                 \textcolor{keywordflow}{if} (i == 0 \&\& tabControl.TabPages.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00965}00965                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00966}00966                     BioImage[] bts = BioImage.OpenOMESeries(openFilesDialog.FileNames[0],\textcolor{keyword}{false},\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00967}00967                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} f = 0; f < bts.Length; f++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00968}00968                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00969}00969                         \textcolor{keywordflow}{if} (f == 0 \&\& i == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00970}00970                             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(bts[f]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00971}00971                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00972}00972                             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_ae7277ec634db3f2dd018fcd47cb89774}{AddImage}}(bts[f]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00973}00973                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00974}00974                     \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(BioImage.OpenFile(openFilesDialog.FileNames[0]));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00975}00975                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00976}00976                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00977}00977                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00978}00978                     BioImage[] bts = BioImage.OpenOMESeries(openFilesDialog.FileNames[0],\textcolor{keyword}{false},\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00979}00979                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} f = 0; f < bts.Length; f++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00980}00980                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00981}00981                         Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_ae7277ec634db3f2dd018fcd47cb89774}{AddImage}}(bts[f]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00982}00982                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00983}00983                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00984}00984             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00985}00985             App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00986}00986         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00987}00987 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00994}00994         \textcolor{keyword}{private} \textcolor{keywordtype}{void} addImagesOMEToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00995}00995         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00996}00996             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00997}00997                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00998}00998             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < openFilesDialog.FileNames.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l00999}00999             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01000}01000                 \textcolor{keywordflow}{if} (i == 0 \&\& tabControl.TabPages.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01001}01001                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01002}01002                     \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(BioImage.OpenOME(openFilesDialog.FileNames[0],\textcolor{keyword}{false}));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01003}01003                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01004}01004                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01005}01005                     App.viewer.AddImage(BioImage.OpenOME(openFilesDialog.FileNames[i],\textcolor{keyword}{false}));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01006}01006             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01007}01007             App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01008}01008         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01009}01009 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01016}01016         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openSeriesToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01017}01017         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01018}01018             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01019}01019                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01020}01020             BioImage[] bs = BioImage.OpenOMESeries(openFilesDialog.FileName,\textcolor{keyword}{false},\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01021}01021             \textcolor{keywordflow}{if} (bs == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01022}01022                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01023}01023             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(bs[0]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01024}01024             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < bs.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01025}01025             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01026}01026                 Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_ae7277ec634db3f2dd018fcd47cb89774}{AddImage}}(bs[i]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01027}01027             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01028}01028             App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01029}01029         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01030}01030 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01038}01038         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveTabToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01039}01039         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01040}01040             \textcolor{keywordflow}{if} (saveOMEFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01041}01041                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01042}01042             \textcolor{keywordtype}{bool} convert = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01043}01043             \textcolor{keywordflow}{foreach} (BioImage b \textcolor{keywordflow}{in} ImageView.Images)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01044}01044             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01045}01045                 \textcolor{keywordflow}{if} (b.isRGB)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01046}01046                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01047}01047                     convert = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01048}01048                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01049}01049                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01050}01050             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01051}01051             \textcolor{keywordflow}{if} (convert)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01052}01052             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01053}01053                 \textcolor{keywordtype}{string} mes;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01054}01054                 \textcolor{keywordflow}{if} (ImageView.SelectedImage.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01055}01055                     mes = \textcolor{stringliteral}{"{}Saving Series as OME only supports 8 bit \& 16 bit images. Convert 16 bit?"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01056}01056                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01057}01057                     mes = \textcolor{stringliteral}{"{}Saving Series as OME only supports 8 bit \& 16 bit images. Convert 8 bit?"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01058}01058                 \textcolor{keywordflow}{if} (MessageBox.Show(\textcolor{keyword}{this}, mes, \textcolor{stringliteral}{"{}Convert to supported format?"{}}, MessageBoxButtons.OKCancel) == DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01059}01059                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01060}01060                     \textcolor{keywordflow}{foreach} (BioImage b \textcolor{keywordflow}{in} ImageView.Images)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01061}01061                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01062}01062                         \textcolor{keywordflow}{if} (b.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01063}01063                             b.To16Bit();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01064}01064                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01065}01065                             b.To8Bit();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01066}01066                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01067}01067                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01068}01068                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01069}01069                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01070}01070             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01071}01071 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01072}01072             \textcolor{keywordtype}{string}[] sts = \textcolor{keyword}{new} \textcolor{keywordtype}{string}[App.viewer.Images.Count];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01073}01073             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sts.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01074}01074             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01075}01075                 sts[i] = App.viewer.Images[i].ID;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01076}01076             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01077}01077             BioImage.SaveOMESeries(sts, saveOMEFileDialog.FileName, Properties.Settings.Default.Planes);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01078}01078         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01079}01079 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01087}01087         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveTabTiffToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01088}01088         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01089}01089             \textcolor{keywordflow}{if} (saveTiffFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01090}01090                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01091}01091             \textcolor{keywordtype}{string}[] sts = \textcolor{keyword}{new} \textcolor{keywordtype}{string}[App.viewer.Images.Count];}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01092}01092             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sts.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01093}01093             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01094}01094                 sts[i] = App.viewer.Images[i].Filename;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01095}01095             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01096}01096             BioImage.SaveSeries(sts, saveTiffFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01097}01097         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01098}01098 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01105}01105         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openSeriesToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01106}01106         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01107}01107             \textcolor{keywordflow}{if} (openFilesDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01108}01108                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01109}01109             BioImage[] bms = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01110}01110             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} openFilesDialog.FileNames)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01111}01111             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01112}01112                 bms = BioImage.OpenSeries(openFilesDialog.FileName,\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01113}01113                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < bms.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01114}01114                 \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01115}01115                     \textcolor{keywordflow}{if} (i == 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01116}01116                     \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01117}01117                         \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(bms[i]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01118}01118                     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01119}01119                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01120}01120                         App.viewer.AddImage(bms[i]);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01121}01121                 \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01122}01122             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01123}01123             App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01124}01124         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01125}01125 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01132}01132         \textcolor{keyword}{private} \textcolor{keywordtype}{void} TabsView\_Load(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01133}01133         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01134}01134             \textcolor{keywordflow}{if} (App.viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01135}01135                 App.viewer.GoToImage();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01136}01136 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01137}01137             Function.Initialize();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01138}01138         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01139}01139 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01144}01144         \textcolor{keyword}{private} \textcolor{keywordtype}{void} clearRecentToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01145}01145         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01146}01146             Properties.Settings.Default.Recent = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01147}01147             Properties.Settings.Default.Save();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01148}01148             openRecentToolStripMenuItem.DropDownItems.Clear();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01149}01149             App.recent.Clear();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01150}01150         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01151}01151 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01159}01159         \textcolor{keyword}{private} \textcolor{keywordtype}{void} rotateToolStripMenuItem\_DropDownItemClicked(\textcolor{keywordtype}{object} sender, ToolStripItemClickedEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01160}01160         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01161}01161             \textcolor{keywordflow}{if} (ImageView.SelectedImage == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01162}01162                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01163}01163             \textcolor{keywordtype}{string} st = e.ClickedItem.Text;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01164}01164             RotateFlipType rot = (RotateFlipType)Enum.Parse(typeof(RotateFlipType), st);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01165}01165             ImageView.SelectedImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_a77ac85a6e6cb02ff1b9ac981ff121b20}{RotateFlip}}(rot);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01166}01166             ImageView.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a0e9084cef81901f6353ff8837a7f2f7a}{UpdateImage}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01167}01167             ImageView.\mbox{\hyperlink{class_bio_imager_1_1_image_view_adc65e6e60745ab28f68c3e63642f547e}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01168}01168         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01169}01169 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01176}01176         \textcolor{keyword}{private} \textcolor{keywordtype}{void} rotateToolStripMenuItem\_DropDownOpening(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01177}01177         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01178}01178             \textcolor{keywordflow}{if} (rotateToolStripMenuItem.DropDownItems.Count > 0)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01179}01179                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01180}01180             \textcolor{keywordtype}{string}[] sts = Enum.GetNames(typeof(RotateFlipType));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01181}01181             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01182}01182             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01183}01183                 rotateToolStripMenuItem.DropDownItems.Add(item);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01184}01184             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01185}01185         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01186}01186 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01194}01194         \textcolor{keyword}{private} \textcolor{keywordtype}{void} emissionToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01195}01195         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01196}01196             \textcolor{keywordflow}{if} (Viewer == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01197}01197                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01198}01198             Viewer.Mode = ImageView.ViewMode.Emission;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01199}01199             rGBToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01200}01200             rawToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01201}01201             filteredToolStripMenuItem.Checked = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01202}01202             emissionToolStripMenuItem.Checked = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01203}01203             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a77d0940fc94d71f1629cb3d50b385262}{UpdateStatus}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01204}01204         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01205}01205 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01210}01210         \textcolor{keyword}{private} \textcolor{keywordtype}{void} consoleToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01211}01211         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01212}01212             App.console.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01213}01213         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01214}01214 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01220}01220         \textcolor{keyword}{private} \textcolor{keywordtype}{void} switchRedBlueToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01221}01221         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01222}01222             \textcolor{keywordflow}{foreach} (AForge.Bitmap bf in ImageView.SelectedImage.Buffers)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01223}01223             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01224}01224                 bf.SwitchRedBlue();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01225}01225             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01226}01226             ImageView.\mbox{\hyperlink{class_bio_imager_1_1_image_view_af4c1a4575ab3b0f0fdc92eaba9299f2b}{UpdateImages}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01227}01227         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01232}01232         \textcolor{keyword}{private} \textcolor{keywordtype}{void} createFunctionToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01233}01233         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01234}01234             FunctionForm f = \textcolor{keyword}{new} FunctionForm(\textcolor{keyword}{new} Function());}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01235}01235             f.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01236}01236         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01242}01242         \textcolor{keyword}{private} \textcolor{keywordtype}{void} DropDownItemClicked(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01243}01243         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01244}01244             ToolStripMenuItem ts = (ToolStripMenuItem)sender;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01245}01245             Function.Functions[ts.Text].PerformFunction(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01246}01246         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01251}01251         \textcolor{keyword}{private} \textcolor{keywordtype}{void} runToolStripMenuItem\_DropDownOpening(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01252}01252         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01253}01253             runToolStripMenuItem.DropDownItems.Clear();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01254}01254             \textcolor{keywordflow}{foreach} (var item \textcolor{keywordflow}{in} Function.Functions)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01255}01255             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01256}01256                 runToolStripMenuItem.DropDownItems.Add(item.Value.Name, \textcolor{keyword}{null}, DropDownItemClicked);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01257}01257             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01258}01258         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01259}01259 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01264}01264         \textcolor{keyword}{private} \textcolor{keywordtype}{void} reloadToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01265}01265         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01266}01266             ImageView.SelectedImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_acff9f0c9b5d6f4472a926771833b908b}{Update}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01267}01267         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01268}01268 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01273}01273         \textcolor{keyword}{private} \textcolor{keywordtype}{void} xMLToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01274}01274         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01275}01275             XMLView v = \textcolor{keyword}{new} XMLView(BioImage.OpenXML(ImageView.SelectedImage.file));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01276}01276             v.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01277}01277         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01283}01283         \textcolor{keyword}{private} \textcolor{keywordtype}{void} dToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01284}01284         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01285}01285             Viewer.HardwareAcceleration = dToolStripMenuItem.Checked;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01286}01286             Properties.Settings.Default.HardwareAcceleration = dToolStripMenuItem.Checked;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01287}01287             Properties.Settings.Default.Save();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01288}01288             Viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_adc65e6e60745ab28f68c3e63642f547e}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01289}01289         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01290}01290 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01299}01299         \textcolor{keyword}{private} \textcolor{keywordtype}{void} imagesToStackToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01300}01300         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01301}01301             OpenFileDialog fd = \textcolor{keyword}{new} OpenFileDialog();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01302}01302             fd.Title = \textcolor{stringliteral}{"{}Images to Stack"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01303}01303             fd.Multiselect = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01304}01304             \textcolor{keywordflow}{if} (fd.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01305}01305                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01306}01306             BioImage b = BioImage.ImagesToStack(fd.FileNames, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01307}01307             \mbox{\hyperlink{class_bio_imager_1_1_tabs_view_a0945d36df7b2cf82e9fb843a94253ae2}{AddTab}}(b);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01308}01308         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01309}01309 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01315}01315         \textcolor{keyword}{private} \textcolor{keywordtype}{void} \_3dToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01316}01316         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01317}01317             View3D d = \textcolor{keyword}{new} View3D(ImageView.SelectedImage);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01318}01318             d.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01319}01319         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01320}01320 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01327}01327         \textcolor{keyword}{private} \textcolor{keywordtype}{void} importImageJROIToSelectedImageToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01328}01328         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01329}01329             \textcolor{keywordflow}{if} (openImageJROI.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01330}01330                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01331}01331             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} openImageJROI.FileNames)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01332}01332             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01333}01333                 ImageView.SelectedImage.Annotations.Add(ImageJ.RoiDecoder.open(item));}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01334}01334             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01335}01335             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01336}01336         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01337}01337 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01344}01344         \textcolor{keyword}{private} \textcolor{keywordtype}{void} exportImageJROIFromSelectedImageToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01345}01345         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01346}01346             saveImageJROI.Title = \textcolor{stringliteral}{"{}Set Filename for exported ROI's."{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01347}01347             saveImageJROI.FileName = ImageView.SelectedImage.Filename;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01348}01348             \textcolor{keywordflow}{if} (saveImageJROI.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01349}01349                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01350}01350             \textcolor{keywordtype}{int} i = 1;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01351}01351             \textcolor{keywordflow}{foreach} (ROI roi \textcolor{keywordflow}{in} ImageView.SelectedImage.Annotations)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01352}01352             \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01353}01353                 \textcolor{keywordtype}{string} s = Path.GetDirectoryName(saveImageJROI.FileName) + \textcolor{stringliteral}{"{}//"{}} + Path.GetFileNameWithoutExtension(saveImageJROI.FileName) + \textcolor{stringliteral}{"{}-\/"{}} + i + \textcolor{stringliteral}{"{}.roi"{}};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01354}01354                 ImageJ.RoiEncoder.save(roi, s);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01355}01355                 i++;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01356}01356             \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01357}01357             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01358}01358         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01359}01359 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01364}01364         \textcolor{keyword}{private} \textcolor{keywordtype}{void} lightToolToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01365}01365         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01366}01366             App.lightTool.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01367}01367         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01368}01368 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01369}01369         \textcolor{keyword}{private} \textcolor{keywordtype}{void} savePyramidalToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01370}01370         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01371}01371             \textcolor{keywordflow}{if} (saveOMEFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01372}01372                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01373}01373             BioImage.SaveOMEPyramidal(App.viewer.Images.ToArray(), saveOMEFileDialog.FileName, NetVips.Enums.ForeignTiffCompression.None, 0);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01374}01374         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01375}01375 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01376}01376         \textcolor{keyword}{private} \textcolor{keywordtype}{void} findFocusToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01377}01377         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01378}01378             \textcolor{keywordflow}{if} (ImageView.SelectedImage == \textcolor{keyword}{null}) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01379}01379             ZCT co = SelectedViewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a4f79d964828de0096a607e844e738e6c}{GetCoordinate}}();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01380}01380             \textcolor{keywordtype}{int} f = BioImage.FindFocus(ImageView.SelectedImage, co.C, co.T);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01381}01381             ZCT z = ImageView.SelectedImage.Buffers[f].Coordinate;}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01382}01382             SelectedViewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_a4a66be15164c1312d809ed87d5dd5eed}{SetCoordinate}}(z.Z, z.C, z.T);}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01383}01383         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01384}01384 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01385}01385         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setupToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01386}01386         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01387}01387             App.setup.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01388}01388         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01389}01389 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01390}01390         \textcolor{keyword}{private} \textcolor{keywordtype}{void} imagerToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01391}01391         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01392}01392             App.imager.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01393}01393         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01394}01394 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01395}01395         \textcolor{keyword}{private} \textcolor{keywordtype}{void} stageToolToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01396}01396         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01397}01397             App.stage.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01398}01398         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01399}01399 }
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01400}01400         \textcolor{keyword}{private} \textcolor{keywordtype}{void} cellImagerToolStripMenuItem\_Click\_1(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01401}01401         \{}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01402}01402             App.cellImager.Show();}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01403}01403         \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01404}01404     \}}
+\DoxyCodeLine{\Hypertarget{_tabs_view_8cs_source_l01405}01405 \}}
+
+\end{DoxyCode}
