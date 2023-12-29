@@ -181,7 +181,18 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00112">112</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  113</span>            {</div>
+<div class="line"><span class="lineno">  114</span>                <a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af762741a7088ddd462acde14127697f9">FilePath</a> = path;</div>
+<div class="line"><span class="lineno">  115</span>                <span class="keywordflow">if</span> (path != <span class="stringliteral">&quot;Default&quot;</span>)</div>
+<div class="line"><span class="lineno">  116</span>                {</div>
+<div class="line"><span class="lineno">  117</span>                    <a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af0ac036173dd0f5c6703db4ec0c4925a">Name</a> = Path.GetFileNameWithoutExtension(<a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af762741a7088ddd462acde14127697f9">FilePath</a>);</div>
+<div class="line"><span class="lineno">  118</span>                    <a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#aa5ea1a66b91f31d88fcc0ad8e2c20011">DirName</a> = Path.GetDirectoryName(<a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af762741a7088ddd462acde14127697f9">FilePath</a>);</div>
+<div class="line"><span class="lineno">  119</span>                }</div>
+<div class="line"><span class="lineno">  120</span>            }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_imager_1_1_profile_html_aa5ea1a66b91f31d88fcc0ad8e2c20011"><div class="ttname"><a href="class_bio_imager_1_1_imager_1_1_profile.html#aa5ea1a66b91f31d88fcc0ad8e2c20011">BioImager.Imager.Profile.DirName</a></div><div class="ttdeci">string DirName</div><div class="ttdef"><b>Definition:</b> <a href="_imager_8cs_source.html#l00100">Imager.cs:100</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_imager_1_1_profile_html_af0ac036173dd0f5c6703db4ec0c4925a"><div class="ttname"><a href="class_bio_imager_1_1_imager_1_1_profile.html#af0ac036173dd0f5c6703db4ec0c4925a">BioImager.Imager.Profile.Name</a></div><div class="ttdeci">string Name</div><div class="ttdef"><b>Definition:</b> <a href="_imager_8cs_source.html#l00099">Imager.cs:99</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_imager_1_1_profile_html_af762741a7088ddd462acde14127697f9"><div class="ttname"><a href="class_bio_imager_1_1_imager_1_1_profile.html#af762741a7088ddd462acde14127697f9">BioImager.Imager.Profile.FilePath</a></div><div class="ttdeci">string FilePath</div><div class="ttdef"><b>Definition:</b> <a href="_imager_8cs_source.html#l00098">Imager.cs:98</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -201,7 +212,25 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00122">122</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  123</span>            {</div>
+<div class="line"><span class="lineno">  124</span>                <span class="keywordtype">string</span>[] sts = File.ReadAllLines(<a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af762741a7088ddd462acde14127697f9">FilePath</a>);</div>
+<div class="line"><span class="lineno">  125</span>                <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> sts)</div>
+<div class="line"><span class="lineno">  126</span>                {</div>
+<div class="line"><span class="lineno">  127</span>                    <span class="keywordtype">string</span>[] ss = s.Split(<span class="charliteral">&#39;=&#39;</span>);</div>
+<div class="line"><span class="lineno">  128</span>                    <span class="keywordflow">if</span> (Settings.Default[ss[0]].GetType() == typeof(<span class="keywordtype">double</span>))</div>
+<div class="line"><span class="lineno">  129</span>                    {</div>
+<div class="line"><span class="lineno">  130</span>                        Settings.Default[ss[0]] = <span class="keywordtype">double</span>.Parse(ss[1]);</div>
+<div class="line"><span class="lineno">  131</span>                    }</div>
+<div class="line"><span class="lineno">  132</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  133</span>                        <span class="keywordflow">if</span> (Settings.Default[ss[0]].GetType() == typeof(<span class="keywordtype">string</span>))</div>
+<div class="line"><span class="lineno">  134</span>                    {</div>
+<div class="line"><span class="lineno">  135</span>                        Settings.Default[ss[0]] = ss[1];</div>
+<div class="line"><span class="lineno">  136</span>                    }</div>
+<div class="line"><span class="lineno">  137</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  138</span>                        <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentException();</div>
+<div class="line"><span class="lineno">  139</span>                }</div>
+<div class="line"><span class="lineno">  140</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a18a88b62caa7bdf09977dfa9ac9e5f65" name="a18a88b62caa7bdf09977dfa9ac9e5f65"></a>
@@ -221,7 +250,16 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00101">101</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  102</span>            {</div>
+<div class="line"><span class="lineno">  103</span>                List&lt;string&gt; sts = <span class="keyword">new</span> List&lt;string&gt;();</div>
+<div class="line"><span class="lineno">  104</span>                <span class="keywordflow">foreach</span> (SettingsProperty currentProperty <span class="keywordflow">in</span> Settings.Default.Properties)</div>
+<div class="line"><span class="lineno">  105</span>                {</div>
+<div class="line"><span class="lineno">  106</span>                    <span class="keywordtype">string</span> s = currentProperty.Name + <span class="stringliteral">&quot;=&quot;</span> + Settings.Default[currentProperty.Name].ToString();</div>
+<div class="line"><span class="lineno">  107</span>                    sts.Add(s);</div>
+<div class="line"><span class="lineno">  108</span>                }</div>
+<div class="line"><span class="lineno">  109</span>                File.WriteAllLines(path, sts.ToArray());</div>
+<div class="line"><span class="lineno">  110</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a527e60186c05733debb9aa3c177afdaa" name="a527e60186c05733debb9aa3c177afdaa"></a>
@@ -240,7 +278,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00142">142</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  143</span>            {</div>
+<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#af0ac036173dd0f5c6703db4ec0c4925a">Name</a> + <span class="stringliteral">&quot; &quot;</span> + <a class="code hl_variable" href="class_bio_imager_1_1_imager_1_1_profile.html#aa5ea1a66b91f31d88fcc0ad8e2c20011">DirName</a>;</div>
+<div class="line"><span class="lineno">  145</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

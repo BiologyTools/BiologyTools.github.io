@@ -1,7 +1,20 @@
 var searchData=
 [
-  ['objectinfo_0',['ObjectInfo',['../class_bio_imager_1_1_lib_1_1_object_info.html',1,'BioImager::Lib']]],
-  ['objective_1',['Objective',['../class_bio_imager_1_1_objectives_1_1_objective.html',1,'BioImager::Objectives']]],
-  ['objectives_2',['Objectives',['../class_bio_imager_1_1_objectives.html',1,'BioImager']]],
-  ['openintab_3',['OpenInTab',['../class_bio_imager_1_1_open_in_tab.html',1,'BioImager']]]
+  ['magicselect_0',['MagicSelect',['../class_bio_imager_1_1_magic_select.html',1,'BioImager']]],
+  ['mainwindow_1',['MainWindow',['../classmicroscope_1_1gui_1_1_main_window.html',1,'microscope::gui']]],
+  ['md_5fext_5fitem_2',['md_ext_item',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fext_5fitem_5fcollection_3',['md_ext_item_collection',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__collection.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fext_5fitem_5finfo_4',['md_ext_item_info',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__info.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fframe_5',['md_frame',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__frame.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fframe_5fheader_6',['md_frame_header',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__header.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fframe_5froi_7',['md_frame_roi',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi.html',1,'microscope::cameras::pvcam']]],
+  ['md_5fframe_5froi_5fheader_8',['md_frame_roi_header',['../classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi__header.html',1,'microscope::cameras::pvcam']]],
+  ['microscopeerror_9',['MicroscopeError',['../classmicroscope_1_1_microscope_error.html',1,'microscope']]],
+  ['microscopesetup_10',['MicroscopeSetup',['../class_bio_imager_1_1_microscope_setup.html',1,'BioImager.MicroscopeSetup'],['../class_bio_imager_1_1_python_microscope_1_1_microscope_setup.html',1,'BioImager.PythonMicroscope.MicroscopeSetup']]],
+  ['microscopewindowsservice_11',['MicroscopeWindowsService',['../classmicroscope_1_1win32_1_1_microscope_windows_service.html',1,'microscope::win32']]],
+  ['mirao52e_12',['Mirao52e',['../classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e.html',1,'microscope::mirror::mirao52e']]],
+  ['mode_13',['Mode',['../classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock_1_1_mode.html',1,'microscope::testsuite::mock_devices::OmicronDeepstarLaserMock']]],
+  ['mouseoperations_14',['MouseOperations',['../class_bio_imager_1_1_mouse_operations.html',1,'BioImager']]],
+  ['mousepoint_15',['MousePoint',['../struct_bio_imager_1_1_mouse_operations_1_1_mouse_point.html',1,'BioImager::MouseOperations']]],
+  ['msg_16',['Msg',['../classmicroscope_1_1stages_1_1linkam_1_1_msg.html',1,'microscope::stages::linkam']]]
 ];

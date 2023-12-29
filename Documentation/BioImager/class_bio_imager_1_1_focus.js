@@ -1,5 +1,6 @@
 var class_bio_imager_1_1_focus =
 [
+    [ "Focus", "class_bio_imager_1_1_focus.html#a4c17fd00e2f019b04bce13a0aaf4c957", null ],
     [ "GetFocus", "class_bio_imager_1_1_focus.html#a3cca66b920dadb0649c9bffeb87a0ac0", null ],
     [ "GetFocus", "class_bio_imager_1_1_focus.html#a490d467a04084f8ed73be0157f794156", null ],
     [ "GetSWLimit", "class_bio_imager_1_1_focus.html#a4066fa2ce5019736fac41f717966b9cc", null ],
