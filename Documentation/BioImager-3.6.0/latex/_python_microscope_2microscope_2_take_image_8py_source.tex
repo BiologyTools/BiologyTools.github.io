@@ -1,0 +1,24 @@
+\hypertarget{_python_microscope_2microscope_2_take_image_8py_source}{}\doxysection{takeimage.\+py}
+\label{_python_microscope_2microscope_2_take_image_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/takeimage.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/takeimage.py}}
+\mbox{\hyperlink{_python_microscope_2microscope_2_take_image_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1takeimage}{00001}} \textcolor{keyword}{import} Pyro4}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00002}00002 \textcolor{keyword}{import} sys}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00003}00003 \textcolor{keyword}{import} queue}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00004}00004 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00005}00005 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1clients}{microscope.clients}}}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00006}00006 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1simulators}{microscope.simulators}}}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00007}00007 \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1simulators}{microscope.simulators}} \textcolor{keyword}{import} SimulatedCamera}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00008}\mbox{\hyperlink{namespacemicroscope_1_1takeimage_a4b3fc2124bfdb9d42d59d9804f4af9fb}{00008}} camera = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera}{SimulatedCamera}}()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00009}\mbox{\hyperlink{namespacemicroscope_1_1takeimage_aa6129d5508851f928651f2d18f29ef14}{00009}} data\_queue = queue.Queue()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00010}00010 camera.set\_client(data\_queue)}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00011}00011 camera.enable()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00012}00012 camera.trigger()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00013}\mbox{\hyperlink{namespacemicroscope_1_1takeimage_a94c24d7d62bd14c3ee1962e92007204b}{00013}} img = data\_queue.get()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00014}\mbox{\hyperlink{namespacemicroscope_1_1takeimage_aa8afcfcaed2ee35d231d2158dee51c38}{00014}} file = open(sys.argv[1],\textcolor{stringliteral}{"{}wb"{}})}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00015}00015 file.write(img.tobytes())}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00016}00016 file.close()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00017}00017 camera.disable()}
+\DoxyCodeLine{\Hypertarget{_python_microscope_2microscope_2_take_image_8py_source_l00018}00018 print(\textcolor{stringliteral}{"{}OK"{}})}
+
+\end{DoxyCode}

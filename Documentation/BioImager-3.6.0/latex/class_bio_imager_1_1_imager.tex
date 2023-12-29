@@ -16,11 +16,13 @@ class \mbox{\hyperlink{class_bio_imager_1_1_imager_1_1_profile}{Profile}}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{class_bio_imager_1_1_imager_add00508e4d4cb1ae4e05c7649afec78a}{Imager}} ()
+\item 
 void \mbox{\hyperlink{class_bio_imager_1_1_imager_a2d41da3ba8542e641e5d834e85987395}{Update\+Status}} ()
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_imager_af1e821a0319301bcd3bcc4c9a346a5da}{Store\+Coordinate}} ()
 \item 
-void \mbox{\hyperlink{class_bio_imager_1_1_imager_ab23fd9c5d83759acad380119c57e9e3c}{Check\+Gamepad\+Buttons}} (Gamepad state, Gamepad prev\+State)
+void \mbox{\hyperlink{class_bio_imager_1_1_imager_ab23fd9c5d83759acad380119c57e9e3c}{Check\+Gamepad\+Buttons}} (Gamepad state, Gamepad \mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prev\+State}})
 \item 
 object \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{Perform\+Function}} (\mbox{\hyperlink{class_bio_imager_1_1_function}{Function}} f)
 \end{DoxyCompactItemize}
@@ -104,6 +106,103 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00032}{32}} of file \mbo
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00149}{149}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150         \{}
+\DoxyCodeLine{00151             InitializeComponent();}
+\DoxyCodeLine{00152 }
+\DoxyCodeLine{00153             Stopwatch timer = \textcolor{keyword}{new} Stopwatch();}
+\DoxyCodeLine{00154             timer.Start();}
+\DoxyCodeLine{00155             TimeSpan st1 = timer.Elapsed;}
+\DoxyCodeLine{00156             \mbox{\hyperlink{class_bio_imager_1_1_imager_abab0c490188fbd2b6959c9794fd6d108}{m\_ID}} = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00157             \textcolor{keywordflow}{if} (Settings.Default.AppPath != \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00158             \{}
+\DoxyCodeLine{00159                 \textcolor{comment}{//We start the imaging application making sure the we have the right path to the executable.}}
+\DoxyCodeLine{00160                 \mbox{\hyperlink{class_bio_imager_1_1_imager_ad5a16857ec5e3a1d02ffa47501396238}{AppPath}} = Settings.Default.AppPath;}
+\DoxyCodeLine{00161                 \textcolor{keywordflow}{if} (!File.Exists(\mbox{\hyperlink{class_bio_imager_1_1_imager_ad5a16857ec5e3a1d02ffa47501396238}{AppPath}}))}
+\DoxyCodeLine{00162                 \{}
+\DoxyCodeLine{00163                     MessageBox.Show(\textcolor{stringliteral}{"{}Error!"{}}, \textcolor{stringliteral}{"{}Imaging appplication not found. Please locate the executable."{}});}
+\DoxyCodeLine{00164                     \textcolor{comment}{//path is not default. Let the user find it.}}
+\DoxyCodeLine{00165                     \textcolor{keywordflow}{if} (openExeFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{00166                         Application.Exit();}
+\DoxyCodeLine{00167                     Settings.Default.AppPath = openExeFileDialog.FileName;}
+\DoxyCodeLine{00168                 \}}
+\DoxyCodeLine{00169                 \textcolor{keywordtype}{string} pn = Path.GetFileNameWithoutExtension(\mbox{\hyperlink{class_bio_imager_1_1_imager_ad5a16857ec5e3a1d02ffa47501396238}{AppPath}});}
+\DoxyCodeLine{00170                 Process[] prs = Process.GetProcessesByName(pn);}
+\DoxyCodeLine{00171                 \textcolor{keywordflow}{if} (prs.Length == 0)}
+\DoxyCodeLine{00172                 \{}
+\DoxyCodeLine{00173                     AppP = Process.Start(\mbox{\hyperlink{class_bio_imager_1_1_imager_ad5a16857ec5e3a1d02ffa47501396238}{AppPath}});}
+\DoxyCodeLine{00174                 \}}
+\DoxyCodeLine{00175                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00176                     AppP = prs[0];}
+\DoxyCodeLine{00177                 \mbox{\hyperlink{class_bio_imager_1_1_imager_af383ce118a6708e990b1844a159de7f6}{apph}} = AppP.MainWindowHandle;}
+\DoxyCodeLine{00178                 \textcolor{comment}{//We use a try block incase of Win32 Access violation error.}}
+\DoxyCodeLine{00179                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00180                 \{}
+\DoxyCodeLine{00181                     AppP.WaitForInputIdle();}
+\DoxyCodeLine{00182                 \}}
+\DoxyCodeLine{00183                 \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00184                 \{}
+\DoxyCodeLine{00185                 \}}
+\DoxyCodeLine{00186             \}}
+\DoxyCodeLine{00187             statusTimer.Start();}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189             \textcolor{keywordflow}{for} (UserIndex i = UserIndex.One; i <= UserIndex.Four; i++)}
+\DoxyCodeLine{00190             \{}
+\DoxyCodeLine{00191                 \mbox{\hyperlink{class_bio_imager_1_1_imager_ab2680b65dad22c440409facd2b4c88b7}{controller}} = \textcolor{keyword}{new} Controller(i);}
+\DoxyCodeLine{00192                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_ab2680b65dad22c440409facd2b4c88b7}{controller}}.IsConnected)}
+\DoxyCodeLine{00193                 \{}
+\DoxyCodeLine{00194                     \mbox{\hyperlink{class_bio_imager_1_1_imager_a9a783fff5ce45213d34e71f3cfd78007}{connected}} = \textcolor{keyword}{true};}
+\DoxyCodeLine{00195                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00196                 \}}
+\DoxyCodeLine{00197                 \textcolor{keywordflow}{else} \mbox{\hyperlink{class_bio_imager_1_1_imager_ab2680b65dad22c440409facd2b4c88b7}{controller}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00198             \}}
+\DoxyCodeLine{00199 }
+\DoxyCodeLine{00200             ControllerFuncs.LoadSettings();}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202             controllerJoystickUpdate.Start();}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204             controllerButtonUpdate.Start();}
+\DoxyCodeLine{00205 }
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207             \textcolor{keywordflow}{if} (!Directory.Exists(Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Profiles"{}}))}
+\DoxyCodeLine{00208                 Directory.CreateDirectory(Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Profiles"{}});}
+\DoxyCodeLine{00209             \textcolor{keywordtype}{string}[] sts = Directory.GetFiles(Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Profiles"{}});}
+\DoxyCodeLine{00210             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{00211             \{}
+\DoxyCodeLine{00212                 Profile p = \textcolor{keyword}{new} Profile(s);}
+\DoxyCodeLine{00213                 profilesBox.Items.Add(p);}
+\DoxyCodeLine{00214             \}}
+\DoxyCodeLine{00215 }
+\DoxyCodeLine{00216             \textcolor{keywordflow}{if} (Settings.Default.PreviousProfile != \textcolor{stringliteral}{"{}Default"{}})}
+\DoxyCodeLine{00217             \{}
+\DoxyCodeLine{00218                 \mbox{\hyperlink{class_bio_imager_1_1_imager_ac17b76c29df7a7f744f7d1fd36e83260}{CurrentProfile}} = \textcolor{keyword}{new} Profile(Settings.Default.PreviousProfile);}
+\DoxyCodeLine{00219                 \mbox{\hyperlink{class_bio_imager_1_1_imager_ac17b76c29df7a7f744f7d1fd36e83260}{CurrentProfile}}.\mbox{\hyperlink{class_bio_imager_1_1_imager_1_1_profile_a4aa4f00172fa7aa6e47331eb39f2af42}{Load}}();}
+\DoxyCodeLine{00220                 \textcolor{keywordtype}{int} index = 0;}
+\DoxyCodeLine{00221                 \textcolor{keywordflow}{foreach} (Profile item \textcolor{keywordflow}{in} profilesBox.Items)}
+\DoxyCodeLine{00222                 \{}
+\DoxyCodeLine{00223                     \textcolor{keywordflow}{if} (item.FilePath == Settings.Default.PreviousProfile)}
+\DoxyCodeLine{00224                     \{}
+\DoxyCodeLine{00225                         profilesBox.SelectedIndex = index;}
+\DoxyCodeLine{00226                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00227                     \}}
+\DoxyCodeLine{00228                     index++;}
+\DoxyCodeLine{00229                 \}}
+\DoxyCodeLine{00230             \}}
+\DoxyCodeLine{00231             this.TopMost = topMostCheckBox.Checked;}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233             \textcolor{keywordflow}{if} (dockToApp.Checked \&\& !Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00234             \{}
+\DoxyCodeLine{00235                 \textcolor{comment}{//We set window location based on imaging application location.}}
+\DoxyCodeLine{00236                 Win32.Rect r = \textcolor{keyword}{new} Win32.Rect();}
+\DoxyCodeLine{00237                 Win32.GetWindowRect(\mbox{\hyperlink{class_bio_imager_1_1_imager_af383ce118a6708e990b1844a159de7f6}{apph}}, ref r);}
+\DoxyCodeLine{00238                 \mbox{\hyperlink{_abstract_flood_filler_8cs_a56dbdc2d1967068a5ea5467fa821244c}{Point}} pp = \textcolor{keyword}{new} \mbox{\hyperlink{_abstract_flood_filler_8cs_a56dbdc2d1967068a5ea5467fa821244c}{Point}}(r.Right -\/ \textcolor{keyword}{this}.Width, r.Bottom -\/ \textcolor{keyword}{this}.Height -\/ 23);}
+\DoxyCodeLine{00239                 this.Location = \textcolor{keyword}{new} System.Drawing.Point((\textcolor{keywordtype}{int})pp.X, (\textcolor{keywordtype}{int})pp.Y);}
+\DoxyCodeLine{00240             \}}
+\DoxyCodeLine{00241             this.Show();}
+\DoxyCodeLine{00242         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_ab23fd9c5d83759acad380119c57e9e3c}\label{class_bio_imager_1_1_imager_ab23fd9c5d83759acad380119c57e9e3c}} 
@@ -125,6 +224,342 @@ If the button is set to be pressed, then check if the button is pressed. If it i
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l01003}{1003}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01004         \{}
+\DoxyCodeLine{01005 \textcolor{preprocessor}{            \#region YBAX Keys}}
+\DoxyCodeLine{01006             \textcolor{keywordflow}{if} (ControllerFuncs.Y.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01007             \{}
+\DoxyCodeLine{01008                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.Y \&\& state.Buttons != GamepadButtonFlags.Y)}
+\DoxyCodeLine{01009                 \{}
+\DoxyCodeLine{01010                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Y);}
+\DoxyCodeLine{01011                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01012                     YPressedLabel.Text = \textcolor{stringliteral}{"{}Y: released"{}};}
+\DoxyCodeLine{01013                 \}}
+\DoxyCodeLine{01014                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01015                     YPressedLabel.Text = \textcolor{stringliteral}{"{}Y: not pressed"{}};}
+\DoxyCodeLine{01016             \}}
+\DoxyCodeLine{01017             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01018             \{}
+\DoxyCodeLine{01019                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.Y)}
+\DoxyCodeLine{01020                 \{}
+\DoxyCodeLine{01021                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Y);}
+\DoxyCodeLine{01022                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01023                     YPressedLabel.Text = \textcolor{stringliteral}{"{}Y: pressed"{}};}
+\DoxyCodeLine{01024                 \}}
+\DoxyCodeLine{01025                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01026                     YPressedLabel.Text = \textcolor{stringliteral}{"{}Y: not pressed"{}};}
+\DoxyCodeLine{01027             \}}
+\DoxyCodeLine{01028             \textcolor{keywordflow}{if} (ControllerFuncs.B.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01029             \{}
+\DoxyCodeLine{01030                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.B \&\& state.Buttons != GamepadButtonFlags.B)}
+\DoxyCodeLine{01031                 \{}
+\DoxyCodeLine{01032                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.B);}
+\DoxyCodeLine{01033                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01034                     state.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01035                     BPressedLabel.Text = \textcolor{stringliteral}{"{}B: released"{}};}
+\DoxyCodeLine{01036                 \}}
+\DoxyCodeLine{01037                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01038                     BPressedLabel.Text = \textcolor{stringliteral}{"{}B: not pressed"{}};}
+\DoxyCodeLine{01039             \}}
+\DoxyCodeLine{01040             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01041             \{}
+\DoxyCodeLine{01042                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.B)}
+\DoxyCodeLine{01043                 \{}
+\DoxyCodeLine{01044                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.B);}
+\DoxyCodeLine{01045                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01046                     BPressedLabel.Text = \textcolor{stringliteral}{"{}B: pressed"{}};}
+\DoxyCodeLine{01047                 \}}
+\DoxyCodeLine{01048                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01049                     BPressedLabel.Text = \textcolor{stringliteral}{"{}B: not pressed"{}};}
+\DoxyCodeLine{01050             \}}
+\DoxyCodeLine{01051             \textcolor{keywordflow}{if} (ControllerFuncs.A.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01052             \{}
+\DoxyCodeLine{01053                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.A \&\& state.Buttons != GamepadButtonFlags.A)}
+\DoxyCodeLine{01054                 \{}
+\DoxyCodeLine{01055                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.A);}
+\DoxyCodeLine{01056                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01057                     APressedLabel.Text = \textcolor{stringliteral}{"{}A: released"{}};}
+\DoxyCodeLine{01058                 \}}
+\DoxyCodeLine{01059                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01060                     APressedLabel.Text = \textcolor{stringliteral}{"{}A: not pressed"{}};}
+\DoxyCodeLine{01061             \}}
+\DoxyCodeLine{01062             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01063             \{}
+\DoxyCodeLine{01064                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.A)}
+\DoxyCodeLine{01065                 \{}
+\DoxyCodeLine{01066                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.A);}
+\DoxyCodeLine{01067                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01068                     APressedLabel.Text = \textcolor{stringliteral}{"{}A: pressed"{}};}
+\DoxyCodeLine{01069                 \}}
+\DoxyCodeLine{01070                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01071                     APressedLabel.Text = \textcolor{stringliteral}{"{}A: not pressed"{}};}
+\DoxyCodeLine{01072             \}}
+\DoxyCodeLine{01073             \textcolor{keywordflow}{if} (ControllerFuncs.X.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01074             \{}
+\DoxyCodeLine{01075                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.X \&\& state.Buttons != GamepadButtonFlags.X)}
+\DoxyCodeLine{01076                 \{}
+\DoxyCodeLine{01077                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.X);}
+\DoxyCodeLine{01078                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01079                     XPressedLabel.Text = \textcolor{stringliteral}{"{}X: released"{}};}
+\DoxyCodeLine{01080                 \}}
+\DoxyCodeLine{01081                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01082                     XPressedLabel.Text = \textcolor{stringliteral}{"{}X: not pressed"{}};}
+\DoxyCodeLine{01083             \}}
+\DoxyCodeLine{01084             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01085             \{}
+\DoxyCodeLine{01086                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.X)}
+\DoxyCodeLine{01087                 \{}
+\DoxyCodeLine{01088                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.X);}
+\DoxyCodeLine{01089                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01090                     XPressedLabel.Text = \textcolor{stringliteral}{"{}X: pressed"{}};}
+\DoxyCodeLine{01091                 \}}
+\DoxyCodeLine{01092                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01093                     XPressedLabel.Text = \textcolor{stringliteral}{"{}X: not pressed"{}};}
+\DoxyCodeLine{01094             \}}
+\DoxyCodeLine{01095 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{01096 }
+\DoxyCodeLine{01097 \textcolor{preprocessor}{            \#region Back \& Start Keys}}
+\DoxyCodeLine{01098             \textcolor{keywordflow}{if} (ControllerFuncs.Start.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01099             \{}
+\DoxyCodeLine{01100                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.Start \&\& state.Buttons != GamepadButtonFlags.Start)}
+\DoxyCodeLine{01101                 \{}
+\DoxyCodeLine{01102                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Start);}
+\DoxyCodeLine{01103                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01104                     StartPressedLabel.Text = \textcolor{stringliteral}{"{}Start: released"{}};}
+\DoxyCodeLine{01105                 \}}
+\DoxyCodeLine{01106                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01107                     StartPressedLabel.Text = \textcolor{stringliteral}{"{}Start: not pressed"{}};}
+\DoxyCodeLine{01108             \}}
+\DoxyCodeLine{01109             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01110             \{}
+\DoxyCodeLine{01111                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.Start)}
+\DoxyCodeLine{01112                 \{}
+\DoxyCodeLine{01113                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Start);}
+\DoxyCodeLine{01114                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01115                     StartPressedLabel.Text = \textcolor{stringliteral}{"{}Start: pressed"{}};}
+\DoxyCodeLine{01116                 \}}
+\DoxyCodeLine{01117                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01118                     StartPressedLabel.Text = \textcolor{stringliteral}{"{}Start: not pressed"{}};}
+\DoxyCodeLine{01119             \}}
+\DoxyCodeLine{01120             \textcolor{keywordflow}{if} (ControllerFuncs.Back.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01121             \{}
+\DoxyCodeLine{01122                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.Back \&\& state.Buttons != GamepadButtonFlags.Back)}
+\DoxyCodeLine{01123                 \{}
+\DoxyCodeLine{01124                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Back);}
+\DoxyCodeLine{01125                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01126                     BackPressedLabel.Text = \textcolor{stringliteral}{"{}Back: released"{}};}
+\DoxyCodeLine{01127                 \}}
+\DoxyCodeLine{01128                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01129                     BackPressedLabel.Text = \textcolor{stringliteral}{"{}Back: not pressed"{}};}
+\DoxyCodeLine{01130             \}}
+\DoxyCodeLine{01131             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01132             \{}
+\DoxyCodeLine{01133                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.Back)}
+\DoxyCodeLine{01134                 \{}
+\DoxyCodeLine{01135                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.Back);}
+\DoxyCodeLine{01136                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01137                     BackPressedLabel.Text = \textcolor{stringliteral}{"{}Back: pressed"{}};}
+\DoxyCodeLine{01138                 \}}
+\DoxyCodeLine{01139                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01140                     BackPressedLabel.Text = \textcolor{stringliteral}{"{}Back: not pressed"{}};}
+\DoxyCodeLine{01141             \}}
+\DoxyCodeLine{01142 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{01143 }
+\DoxyCodeLine{01144 \textcolor{preprocessor}{            \#region Shoulders}}
+\DoxyCodeLine{01145             \textcolor{keywordflow}{if} (ControllerFuncs.RShoulder.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01146             \{}
+\DoxyCodeLine{01147                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.RightShoulder \&\& state.Buttons != GamepadButtonFlags.RightShoulder)}
+\DoxyCodeLine{01148                 \{}
+\DoxyCodeLine{01149                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.RShoulder);}
+\DoxyCodeLine{01150                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01151                     shoulderRightLabel.Text = \textcolor{stringliteral}{"{}Right: released"{}};}
+\DoxyCodeLine{01152                 \}}
+\DoxyCodeLine{01153                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01154                     shoulderRightLabel.Text = \textcolor{stringliteral}{"{}Right: not pressed"{}};}
+\DoxyCodeLine{01155             \}}
+\DoxyCodeLine{01156             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01157             \{}
+\DoxyCodeLine{01158                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.RightShoulder)}
+\DoxyCodeLine{01159                 \{}
+\DoxyCodeLine{01160                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.RShoulder);}
+\DoxyCodeLine{01161                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01162                     shoulderRightLabel.Text = \textcolor{stringliteral}{"{}Right: pressed"{}};}
+\DoxyCodeLine{01163                 \}}
+\DoxyCodeLine{01164                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01165                     shoulderRightLabel.Text = \textcolor{stringliteral}{"{}Right: not pressed"{}};}
+\DoxyCodeLine{01166             \}}
+\DoxyCodeLine{01167             \textcolor{keywordflow}{if} (ControllerFuncs.LShoulder.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01168             \{}
+\DoxyCodeLine{01169                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.LeftShoulder \&\& state.Buttons != GamepadButtonFlags.LeftShoulder)}
+\DoxyCodeLine{01170                 \{}
+\DoxyCodeLine{01171                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.RShoulder);}
+\DoxyCodeLine{01172                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01173                     shoulderLeftLabel.Text = \textcolor{stringliteral}{"{}Left: released"{}};}
+\DoxyCodeLine{01174                 \}}
+\DoxyCodeLine{01175                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01176                     shoulderLeftLabel.Text = \textcolor{stringliteral}{"{}Left: not pressed"{}};}
+\DoxyCodeLine{01177             \}}
+\DoxyCodeLine{01178             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01179             \{}
+\DoxyCodeLine{01180                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.LeftShoulder)}
+\DoxyCodeLine{01181                 \{}
+\DoxyCodeLine{01182                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.LShoulder);}
+\DoxyCodeLine{01183                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01184                     shoulderLeftLabel.Text = \textcolor{stringliteral}{"{}Left: pressed"{}};}
+\DoxyCodeLine{01185                 \}}
+\DoxyCodeLine{01186                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01187                     shoulderLeftLabel.Text = \textcolor{stringliteral}{"{}Left: not pressed"{}};}
+\DoxyCodeLine{01188             \}}
+\DoxyCodeLine{01189 }
+\DoxyCodeLine{01190 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{01191 }
+\DoxyCodeLine{01192 \textcolor{preprocessor}{            \#region L3 \& R3}}
+\DoxyCodeLine{01193             \textcolor{keywordflow}{if} (ControllerFuncs.R3.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01194             \{}
+\DoxyCodeLine{01195                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.RightThumb \&\& state.Buttons != GamepadButtonFlags.RightThumb)}
+\DoxyCodeLine{01196                 \{}
+\DoxyCodeLine{01197                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.R3);}
+\DoxyCodeLine{01198                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01199                     r3PressedLabel.Text = \textcolor{stringliteral}{"{}R3: released"{}};}
+\DoxyCodeLine{01200                 \}}
+\DoxyCodeLine{01201                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01202                     r3PressedLabel.Text = \textcolor{stringliteral}{"{}R3: not pressed"{}};}
+\DoxyCodeLine{01203             \}}
+\DoxyCodeLine{01204             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01205             \{}
+\DoxyCodeLine{01206                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.RightThumb)}
+\DoxyCodeLine{01207                 \{}
+\DoxyCodeLine{01208                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.R3);}
+\DoxyCodeLine{01209                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01210                     r3PressedLabel.Text = \textcolor{stringliteral}{"{}R3: pressed"{}};}
+\DoxyCodeLine{01211                 \}}
+\DoxyCodeLine{01212                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01213                     r3PressedLabel.Text = \textcolor{stringliteral}{"{}R3: not pressed"{}};}
+\DoxyCodeLine{01214             \}}
+\DoxyCodeLine{01215 }
+\DoxyCodeLine{01216             \textcolor{keywordflow}{if} (ControllerFuncs.L3.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01217             \{}
+\DoxyCodeLine{01218                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.LeftThumb \&\& state.Buttons != GamepadButtonFlags.LeftThumb)}
+\DoxyCodeLine{01219                 \{}
+\DoxyCodeLine{01220                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.L3);}
+\DoxyCodeLine{01221                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01222                     l3PressedLabel.Text = \textcolor{stringliteral}{"{}L3: released"{}};}
+\DoxyCodeLine{01223                 \}}
+\DoxyCodeLine{01224                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01225                     l3PressedLabel.Text = \textcolor{stringliteral}{"{}L3: not pressed"{}};}
+\DoxyCodeLine{01226             \}}
+\DoxyCodeLine{01227             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01228             \{}
+\DoxyCodeLine{01229                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.LeftThumb)}
+\DoxyCodeLine{01230                 \{}
+\DoxyCodeLine{01231                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.L3);}
+\DoxyCodeLine{01232                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01233                     l3PressedLabel.Text = \textcolor{stringliteral}{"{}L3: pressed"{}};}
+\DoxyCodeLine{01234                 \}}
+\DoxyCodeLine{01235                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01236                     l3PressedLabel.Text = \textcolor{stringliteral}{"{}L3: not pressed"{}};}
+\DoxyCodeLine{01237             \}}
+\DoxyCodeLine{01238 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{01239 }
+\DoxyCodeLine{01240 \textcolor{preprocessor}{            \#region DPAD BUTTONS}}
+\DoxyCodeLine{01241             \textcolor{keywordflow}{if} (ControllerFuncs.DPadUp.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01242             \{}
+\DoxyCodeLine{01243                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.DPadUp \&\& state.Buttons != GamepadButtonFlags.DPadUp)}
+\DoxyCodeLine{01244                 \{}
+\DoxyCodeLine{01245                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadUp);}
+\DoxyCodeLine{01246                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01247                     DPadUpLabel.Text = \textcolor{stringliteral}{"{}Up: released"{}};}
+\DoxyCodeLine{01248                 \}}
+\DoxyCodeLine{01249                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01250                     DPadUpLabel.Text = \textcolor{stringliteral}{"{}Up: not pressed"{}};}
+\DoxyCodeLine{01251             \}}
+\DoxyCodeLine{01252             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01253             \{}
+\DoxyCodeLine{01254                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.DPadUp)}
+\DoxyCodeLine{01255                 \{}
+\DoxyCodeLine{01256                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadUp);}
+\DoxyCodeLine{01257                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01258                     DPadUpLabel.Text = \textcolor{stringliteral}{"{}Up: pressed"{}};}
+\DoxyCodeLine{01259                 \}}
+\DoxyCodeLine{01260                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01261                     DPadUpLabel.Text = \textcolor{stringliteral}{"{}Up: not pressed"{}};}
+\DoxyCodeLine{01262             \}}
+\DoxyCodeLine{01263 }
+\DoxyCodeLine{01264             \textcolor{keywordflow}{if} (ControllerFuncs.DPadRight.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01265             \{}
+\DoxyCodeLine{01266                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.DPadRight \&\& state.Buttons != GamepadButtonFlags.DPadRight)}
+\DoxyCodeLine{01267                 \{}
+\DoxyCodeLine{01268                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadRight);}
+\DoxyCodeLine{01269                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01270                     DPadRightLabel.Text = \textcolor{stringliteral}{"{}Right: released"{}};}
+\DoxyCodeLine{01271                 \}}
+\DoxyCodeLine{01272                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01273                     DPadRightLabel.Text = \textcolor{stringliteral}{"{}Right: not pressed"{}};}
+\DoxyCodeLine{01274             \}}
+\DoxyCodeLine{01275             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01276             \{}
+\DoxyCodeLine{01277                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.DPadRight)}
+\DoxyCodeLine{01278                 \{}
+\DoxyCodeLine{01279                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadRight);}
+\DoxyCodeLine{01280                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01281                     DPadRightLabel.Text = \textcolor{stringliteral}{"{}Right: pressed"{}};}
+\DoxyCodeLine{01282                 \}}
+\DoxyCodeLine{01283                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01284                     DPadRightLabel.Text = \textcolor{stringliteral}{"{}Right: not pressed"{}};}
+\DoxyCodeLine{01285             \}}
+\DoxyCodeLine{01286 }
+\DoxyCodeLine{01287             \textcolor{keywordflow}{if} (ControllerFuncs.DPadDown.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01288             \{}
+\DoxyCodeLine{01289                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.DPadDown \&\& state.Buttons != GamepadButtonFlags.DPadDown)}
+\DoxyCodeLine{01290                 \{}
+\DoxyCodeLine{01291                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadDown);}
+\DoxyCodeLine{01292                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01293                     DPadDownLabel.Text = \textcolor{stringliteral}{"{}Down: released"{}};}
+\DoxyCodeLine{01294                 \}}
+\DoxyCodeLine{01295                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01296                     DPadDownLabel.Text = \textcolor{stringliteral}{"{}Down: not pressed"{}};}
+\DoxyCodeLine{01297             \}}
+\DoxyCodeLine{01298             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01299             \{}
+\DoxyCodeLine{01300                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.DPadDown)}
+\DoxyCodeLine{01301                 \{}
+\DoxyCodeLine{01302                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadDown);}
+\DoxyCodeLine{01303                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01304                     DPadDownLabel.Text = \textcolor{stringliteral}{"{}Down: pressed"{}};}
+\DoxyCodeLine{01305                 \}}
+\DoxyCodeLine{01306                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01307                     DPadDownLabel.Text = \textcolor{stringliteral}{"{}Down: not pressed"{}};}
+\DoxyCodeLine{01308             \}}
+\DoxyCodeLine{01309 }
+\DoxyCodeLine{01310             \textcolor{keywordflow}{if} (ControllerFuncs.DPadLeft.State == Function.ButtonState.Released)}
+\DoxyCodeLine{01311             \{}
+\DoxyCodeLine{01312                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a31d82f887a6b0cb6327461f81e9167e2}{prevState}}.Buttons == GamepadButtonFlags.DPadLeft \&\& state.Buttons != GamepadButtonFlags.DPadLeft)}
+\DoxyCodeLine{01313                 \{}
+\DoxyCodeLine{01314                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadLeft);}
+\DoxyCodeLine{01315                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01316                     DPadLeftLabel.Text = \textcolor{stringliteral}{"{}Left: released"{}};}
+\DoxyCodeLine{01317                 \}}
+\DoxyCodeLine{01318                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01319                     DPadLeftLabel.Text = \textcolor{stringliteral}{"{}Left: not pressed"{}};}
+\DoxyCodeLine{01320             \}}
+\DoxyCodeLine{01321             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01322             \{}
+\DoxyCodeLine{01323                 \textcolor{keywordflow}{if} (state.Buttons == GamepadButtonFlags.DPadLeft)}
+\DoxyCodeLine{01324                 \{}
+\DoxyCodeLine{01325                     \mbox{\hyperlink{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}{PerformFunction}}(ControllerFuncs.DPadLeft);}
+\DoxyCodeLine{01326                     prevState.Buttons = GamepadButtonFlags.None;}
+\DoxyCodeLine{01327                     DPadLeftLabel.Text = \textcolor{stringliteral}{"{}Left: pressed"{}};}
+\DoxyCodeLine{01328                 \}}
+\DoxyCodeLine{01329                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01330                     DPadLeftLabel.Text = \textcolor{stringliteral}{"{}Left: not pressed"{}};}
+\DoxyCodeLine{01331             \}}
+\DoxyCodeLine{01332 }
+\DoxyCodeLine{01333 \textcolor{preprocessor}{            \#endregion}}
+\DoxyCodeLine{01334 }
+\DoxyCodeLine{01335         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_a7c801cf1efecd390fcc18ff67c75bfb7}\label{class_bio_imager_1_1_imager_a7c801cf1efecd390fcc18ff67c75bfb7}} 
 \index{BioImager.Imager@{BioImager.Imager}!DigitsInString@{DigitsInString}}
 \index{DigitsInString@{DigitsInString}!BioImager.Imager@{BioImager.Imager}}
@@ -145,6 +580,21 @@ The number of digits in the string.
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00484}{484}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00485         \{}
+\DoxyCodeLine{00486             \textcolor{keywordtype}{int} count = 0;}
+\DoxyCodeLine{00487             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < str.Length; i++)}
+\DoxyCodeLine{00488             \{}
+\DoxyCodeLine{00489                 \textcolor{keywordflow}{if} ((str[i] >= \textcolor{charliteral}{'0'}) \&\& (str[i] <= \textcolor{charliteral}{'9'}))}
+\DoxyCodeLine{00490                 \{}
+\DoxyCodeLine{00491                     count++;}
+\DoxyCodeLine{00492                 \}}
+\DoxyCodeLine{00493             \}}
+\DoxyCodeLine{00494             \textcolor{keywordflow}{return} count;}
+\DoxyCodeLine{00495         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_a7d406e13d04dcf96a4418b60ac0b5ef6}\label{class_bio_imager_1_1_imager_a7d406e13d04dcf96a4418b60ac0b5ef6}} 
 \index{BioImager.Imager@{BioImager.Imager}!Dispose@{Dispose}}
 \index{Dispose@{Dispose}!BioImager.Imager@{BioImager.Imager}}
@@ -164,6 +614,17 @@ Clean up any resources being used.
 
 Definition at line \mbox{\hyperlink{_imager_8_designer_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_imager_8_designer_8cs_source}{Imager.\+Designer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016         \{}
+\DoxyCodeLine{00017             \textcolor{keywordflow}{if} (disposing \&\& (components != \textcolor{keyword}{null}))}
+\DoxyCodeLine{00018             \{}
+\DoxyCodeLine{00019                 components.Dispose();}
+\DoxyCodeLine{00020             \}}
+\DoxyCodeLine{00021             base.Dispose(disposing);}
+\DoxyCodeLine{00022         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}\label{class_bio_imager_1_1_imager_acbaa41ce4ee9c71a18c94f55527618e0}} 
 \index{BioImager.Imager@{BioImager.Imager}!PerformFunction@{PerformFunction}}
 \index{PerformFunction@{PerformFunction}!BioImager.Imager@{BioImager.Imager}}
@@ -184,6 +645,230 @@ Nothing.
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l01344}{1344}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01345         \{}
+\DoxyCodeLine{01346             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.Key)}
+\DoxyCodeLine{01347             \{}
+\DoxyCodeLine{01348                 \textcolor{keywordflow}{if} (AppP.HasExited)}
+\DoxyCodeLine{01349                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01350                 AppP.WaitForInputIdle();}
+\DoxyCodeLine{01351                 Win32.SetForegroundWindow(\mbox{\hyperlink{class_bio_imager_1_1_imager_af383ce118a6708e990b1844a159de7f6}{apph}});}
+\DoxyCodeLine{01352                 \textcolor{keywordflow}{if} (f.Modifier != VirtualKeyCode.NONAME)}
+\DoxyCodeLine{01353                 \{}
+\DoxyCodeLine{01354                     \mbox{\hyperlink{class_bio_imager_1_1_imager_a1265b9077bc1f2d60c512557921cf622}{input}}.Keyboard.ModifiedKeyStroke(f.Modifier, f.Key);}
+\DoxyCodeLine{01355                 \}}
+\DoxyCodeLine{01356                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01357                 \{}
+\DoxyCodeLine{01358                     \mbox{\hyperlink{class_bio_imager_1_1_imager_a1265b9077bc1f2d60c512557921cf622}{input}}.Keyboard.KeyPress(f.Key);}
+\DoxyCodeLine{01359                 \}}
+\DoxyCodeLine{01360                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01361             \}}
+\DoxyCodeLine{01362             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.Objective)}
+\DoxyCodeLine{01363             \{}
+\DoxyCodeLine{01364                 Objectives.Objective obj = \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope}{Microscope}}.Objectives.GetObjective();}
+\DoxyCodeLine{01365                 Microscope.Objectives.SetPosition((\textcolor{keywordtype}{int})f.Value);}
+\DoxyCodeLine{01366                 \textcolor{comment}{//We set locate exposure as the locate tab is the only one that updates lightpath automatically after objective change. }}
+\DoxyCodeLine{01367                 \textcolor{comment}{//Automation.SetProperty("{}LocateExposure"{}, obj.LocateExposure.ToString());}}
+\DoxyCodeLine{01368                 LJoystickStageMoveAmountBox.Value = (decimal)obj.MoveAmountL;}
+\DoxyCodeLine{01369                 RJoystickStageMoveAmountBox.Value = (decimal)obj.MoveAmountR;}
+\DoxyCodeLine{01370                 triggerFocusBox.Value = (decimal)obj.FocusMoveAmount;}
+\DoxyCodeLine{01371                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01372             \}}
+\DoxyCodeLine{01373             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.StoreCoordinate)}
+\DoxyCodeLine{01374             \{}
+\DoxyCodeLine{01375                 \mbox{\hyperlink{class_bio_imager_1_1_imager_af1e821a0319301bcd3bcc4c9a346a5da}{StoreCoordinate}}();}
+\DoxyCodeLine{01376                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01377             \}}
+\DoxyCodeLine{01378             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.NextCoordinate)}
+\DoxyCodeLine{01379             \{}
+\DoxyCodeLine{01380                 \textcolor{comment}{//If stored coordinates selected index is -\/1 then nothing is selected.}}
+\DoxyCodeLine{01381                 \textcolor{comment}{//so we can't go to next stored coordinate}}
+\DoxyCodeLine{01382                 \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{01383                 \{}
+\DoxyCodeLine{01384                     \textcolor{comment}{//We go to the next stored coordinate}}
+\DoxyCodeLine{01385                     \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex + 1 < storedCoordsBox.Items.Count)}
+\DoxyCodeLine{01386                     \{}
+\DoxyCodeLine{01387                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedCoordsBox.Items[storedCoordsBox.SelectedIndex + 1];}
+\DoxyCodeLine{01388                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01389                         storedCoordsBox.SelectedIndex = storedCoordsBox.SelectedIndex + 1;}
+\DoxyCodeLine{01390                     \}}
+\DoxyCodeLine{01391                     \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex == 0)}
+\DoxyCodeLine{01392                     \{}
+\DoxyCodeLine{01393                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedCoordsBox.Items[storedCoordsBox.SelectedIndex];}
+\DoxyCodeLine{01394                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01395                     \}}
+\DoxyCodeLine{01396                 \}}
+\DoxyCodeLine{01397                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01398             \}}
+\DoxyCodeLine{01399             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.PreviousCoordinate)}
+\DoxyCodeLine{01400             \{}
+\DoxyCodeLine{01401                 \textcolor{comment}{//We go to the previous stored coordinate unless selected index is 0}}
+\DoxyCodeLine{01402                 \textcolor{comment}{//in which case we go to coordinate of selected point.}}
+\DoxyCodeLine{01403 }
+\DoxyCodeLine{01404                 \textcolor{comment}{//If stored coordinates selected index is -\/1 then nothing is selected.}}
+\DoxyCodeLine{01405                 \textcolor{comment}{//so we can't go to next stored coordinate}}
+\DoxyCodeLine{01406                 \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{01407                 \{}
+\DoxyCodeLine{01408                     \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex == 0)}
+\DoxyCodeLine{01409                     \{}
+\DoxyCodeLine{01410                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedCoordsBox.Items[storedCoordsBox.SelectedIndex];}
+\DoxyCodeLine{01411                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01412                     \}}
+\DoxyCodeLine{01413                     \textcolor{keywordflow}{if} (storedCoordsBox.SelectedIndex > 0)}
+\DoxyCodeLine{01414                     \{}
+\DoxyCodeLine{01415                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedCoordsBox.Items[storedCoordsBox.SelectedIndex -\/ 1];}
+\DoxyCodeLine{01416                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01417                         storedCoordsBox.SelectedIndex = storedCoordsBox.SelectedIndex -\/ 1;}
+\DoxyCodeLine{01418                     \}}
+\DoxyCodeLine{01419                 \}}
+\DoxyCodeLine{01420                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01421             \}}
+\DoxyCodeLine{01422             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.NextSnapCoordinate)}
+\DoxyCodeLine{01423             \{}
+\DoxyCodeLine{01424                 \textcolor{comment}{//If stored coordinates selected index is -\/1 then nothing is selected.}}
+\DoxyCodeLine{01425                 \textcolor{comment}{//so we can't go to next stored coordinate}}
+\DoxyCodeLine{01426                 \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{01427                 \{}
+\DoxyCodeLine{01428                     \textcolor{comment}{//We go to the next stored coordinate}}
+\DoxyCodeLine{01429                     \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex + 1 < storedImageBox.Items.Count)}
+\DoxyCodeLine{01430                     \{}
+\DoxyCodeLine{01431                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedImageBox.Items[storedImageBox.SelectedIndex + 1];}
+\DoxyCodeLine{01432                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01433                         storedImageBox.SelectedIndex = storedImageBox.SelectedIndex + 1;}
+\DoxyCodeLine{01434                     \}}
+\DoxyCodeLine{01435                     \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex == 0)}
+\DoxyCodeLine{01436                     \{}
+\DoxyCodeLine{01437                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedImageBox.Items[storedImageBox.SelectedIndex];}
+\DoxyCodeLine{01438                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01439                     \}}
+\DoxyCodeLine{01440                 \}}
+\DoxyCodeLine{01441                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01442             \}}
+\DoxyCodeLine{01443             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.PreviousSnapCoordinate)}
+\DoxyCodeLine{01444             \{}
+\DoxyCodeLine{01445                 \textcolor{comment}{//We go to the previous stored coordinate unless selected index is 0}}
+\DoxyCodeLine{01446                 \textcolor{comment}{//in which case we go to coordinate of selected point.}}
+\DoxyCodeLine{01447 }
+\DoxyCodeLine{01448                 \textcolor{comment}{//If stored coordinates selected index is -\/1 then nothing is selected.}}
+\DoxyCodeLine{01449                 \textcolor{comment}{//so we can't go to next stored coordinate}}
+\DoxyCodeLine{01450                 \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{01451                 \{}
+\DoxyCodeLine{01452                     \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex == 0)}
+\DoxyCodeLine{01453                     \{}
+\DoxyCodeLine{01454                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedImageBox.Items[storedImageBox.SelectedIndex];}
+\DoxyCodeLine{01455                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01456                     \}}
+\DoxyCodeLine{01457                     \textcolor{keywordflow}{if} (storedImageBox.SelectedIndex > 0)}
+\DoxyCodeLine{01458                     \{}
+\DoxyCodeLine{01459                         \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = (\mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}})storedImageBox.Items[storedImageBox.SelectedIndex -\/ 1];}
+\DoxyCodeLine{01460                         Microscope.SetPosition(p);}
+\DoxyCodeLine{01461                         \textcolor{comment}{//We stop the controller update timer so we can update the stored coordinates list it operates on safely}}
+\DoxyCodeLine{01462                         storedImageBox.SelectedIndex = storedImageBox.SelectedIndex -\/ 1;}
+\DoxyCodeLine{01463                     \}}
+\DoxyCodeLine{01464                 \}}
+\DoxyCodeLine{01465                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01466             \}}
+\DoxyCodeLine{01467             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.Script)}
+\DoxyCodeLine{01468             \{}
+\DoxyCodeLine{01469                 Scripting.RunScript(f.File);}
+\DoxyCodeLine{01470             \}}
+\DoxyCodeLine{01471             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.ImageJ)}
+\DoxyCodeLine{01472             \{}
+\DoxyCodeLine{01473                 ImageJ.RunMacro(f.File, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{01474             \}}
+\DoxyCodeLine{01475             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageUp"{}})}
+\DoxyCodeLine{01476             \{}
+\DoxyCodeLine{01477                 Microscope.MoveUp(f.Value);}
+\DoxyCodeLine{01478             \}}
+\DoxyCodeLine{01479             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01480             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageRight"{}})}
+\DoxyCodeLine{01481             \{}
+\DoxyCodeLine{01482                 Microscope.MoveRight(f.Value);}
+\DoxyCodeLine{01483             \}}
+\DoxyCodeLine{01484             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01485             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageDown"{}})}
+\DoxyCodeLine{01486             \{}
+\DoxyCodeLine{01487                 Microscope.MoveDown(f.Value);}
+\DoxyCodeLine{01488             \}}
+\DoxyCodeLine{01489             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01490             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageLeft"{}})}
+\DoxyCodeLine{01491             \{}
+\DoxyCodeLine{01492                 Microscope.MoveLeft(f.Value);}
+\DoxyCodeLine{01493             \}}
+\DoxyCodeLine{01494             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01495             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}FocusUp"{}})}
+\DoxyCodeLine{01496             \{}
+\DoxyCodeLine{01497                 Microscope.SetFocus(f.Value);}
+\DoxyCodeLine{01498             \}}
+\DoxyCodeLine{01499             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01500             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}FocusDown"{}})}
+\DoxyCodeLine{01501             \{}
+\DoxyCodeLine{01502                 Microscope.SetFocus(-\/f.Value);}
+\DoxyCodeLine{01503             \}}
+\DoxyCodeLine{01504             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01505             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageFieldUp"{}})}
+\DoxyCodeLine{01506             \{}
+\DoxyCodeLine{01507                 Microscope.MoveFieldUp();}
+\DoxyCodeLine{01508             \}}
+\DoxyCodeLine{01509             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01510             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageFieldRight"{}})}
+\DoxyCodeLine{01511             \{}
+\DoxyCodeLine{01512                 Microscope.MoveFieldRight();}
+\DoxyCodeLine{01513             \}}
+\DoxyCodeLine{01514             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01515             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageFieldDown"{}})}
+\DoxyCodeLine{01516             \{}
+\DoxyCodeLine{01517                 Microscope.MoveFieldDown();}
+\DoxyCodeLine{01518             \}}
+\DoxyCodeLine{01519             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01520             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}StageFieldLeft"{}})}
+\DoxyCodeLine{01521             \{}
+\DoxyCodeLine{01522                 Microscope.MoveFieldLeft();}
+\DoxyCodeLine{01523             \}}
+\DoxyCodeLine{01524             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01525             \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}TakeImage"{}})}
+\DoxyCodeLine{01526             \{}
+\DoxyCodeLine{01527                 Microscope.TakeImage();}
+\DoxyCodeLine{01528                 \}}
+\DoxyCodeLine{01529                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01530                 \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}TakeImageStack"{}})}
+\DoxyCodeLine{01531                 \{}
+\DoxyCodeLine{01532                     Microscope.TakeImageStack();}
+\DoxyCodeLine{01533                 \}}
+\DoxyCodeLine{01534                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01535                 \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}RL"{}})}
+\DoxyCodeLine{01536                 \{}
+\DoxyCodeLine{01537                     Microscope.RLShutter.SetPosition((\textcolor{keywordtype}{int})f.Value);}
+\DoxyCodeLine{01538                 \}}
+\DoxyCodeLine{01539                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01540                 \textcolor{keywordflow}{if} (f.FuncType.ToString() == \textcolor{stringliteral}{"{}TL"{}})}
+\DoxyCodeLine{01541                 \{}
+\DoxyCodeLine{01542                     Microscope.TLShutter.SetPosition((\textcolor{keywordtype}{int})f.Value);}
+\DoxyCodeLine{01543                 \}}
+\DoxyCodeLine{01544             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.Property)}
+\DoxyCodeLine{01545             \{}
+\DoxyCodeLine{01546                 \textcolor{keywordflow}{if} (f.Name.StartsWith(\textcolor{stringliteral}{"{}Get"{}}))}
+\DoxyCodeLine{01547                 \{}
+\DoxyCodeLine{01548                     Automation.Recording r = (Automation.Recording)Automation.Properties[Path.GetFileNameWithoutExtension(f.File)];}
+\DoxyCodeLine{01549                     \textcolor{keywordflow}{return} r.Get();}
+\DoxyCodeLine{01550                 \}}
+\DoxyCodeLine{01551                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (f.Name.StartsWith(\textcolor{stringliteral}{"{}Set"{}}))}
+\DoxyCodeLine{01552                 \{}
+\DoxyCodeLine{01553                     Automation.Recording r = (Automation.Recording)Automation.Properties[Path.GetFileNameWithoutExtension(f.File)];}
+\DoxyCodeLine{01554                     r.Set(f.Value.ToString());}
+\DoxyCodeLine{01555                 \}}
+\DoxyCodeLine{01556 }
+\DoxyCodeLine{01557             \}}
+\DoxyCodeLine{01558             \textcolor{keywordflow}{if} (f.FuncType == Function.FunctionType.Recording)}
+\DoxyCodeLine{01559             \{}
+\DoxyCodeLine{01560                 Automation.Recording r = (Automation.Recording)Automation.Recordings[Path.GetFileNameWithoutExtension(f.File)];}
+\DoxyCodeLine{01561                 r.Run();}
+\DoxyCodeLine{01562             \}}
+\DoxyCodeLine{01563             \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{01564         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_af1e821a0319301bcd3bcc4c9a346a5da}\label{class_bio_imager_1_1_imager_af1e821a0319301bcd3bcc4c9a346a5da}} 
 \index{BioImager.Imager@{BioImager.Imager}!StoreCoordinate@{StoreCoordinate}}
 \index{StoreCoordinate@{StoreCoordinate}!BioImager.Imager@{BioImager.Imager}}
@@ -194,6 +879,15 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l01344}{1344}} of file \m
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00270}{270}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00271         \{}
+\DoxyCodeLine{00272             \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p3 = Microscope.GetPosition();}
+\DoxyCodeLine{00273             storedCoordsBox.Items.Add(p3);}
+\DoxyCodeLine{00274             storedCoordsBox.SelectedIndex = storedCoordsBox.Items.Count -\/ 1;}
+\DoxyCodeLine{00275         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_a2d41da3ba8542e641e5d834e85987395}\label{class_bio_imager_1_1_imager_a2d41da3ba8542e641e5d834e85987395}} 
 \index{BioImager.Imager@{BioImager.Imager}!UpdateStatus@{UpdateStatus}}
 \index{UpdateStatus@{UpdateStatus}!BioImager.Imager@{BioImager.Imager}}
@@ -211,6 +905,28 @@ The return type is void, so nothing is being returned.
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00250}{250}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00251         \{}
+\DoxyCodeLine{00252             \textcolor{comment}{//GetLiveStatus();}}
+\DoxyCodeLine{00253             \textcolor{keywordflow}{if} (AppP.HasExited)}
+\DoxyCodeLine{00254                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00255             \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} p = Microscope.GetPosition();}
+\DoxyCodeLine{00256             \textcolor{keywordtype}{double} f = Microscope.GetFocus();}
+\DoxyCodeLine{00257             \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}} point = \textcolor{keyword}{new} \mbox{\hyperlink{_microscope_8cs_aed0fa5b64e6b13858be8106e67c09bf0}{Point3D}}(p.X, p.Y, f);}
+\DoxyCodeLine{00258             statusLabel.Text = \textcolor{stringliteral}{"{}Stage: "{}} + p.X + \textcolor{stringliteral}{"{} , "{}} + p.Y + \textcolor{stringliteral}{"{} Focus: "{}} + f;}
+\DoxyCodeLine{00259             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_imager_a77d46eb1f43f00fe73bf02789ed92137}{StoredImages}}.Count > storedImageBox.Items.Count)}
+\DoxyCodeLine{00260             \{}
+\DoxyCodeLine{00261                 \textcolor{keywordtype}{int} dif = StoredImages.Count -\/ storedImageBox.Items.Count;}
+\DoxyCodeLine{00262                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < dif; i++)}
+\DoxyCodeLine{00263                 \{}
+\DoxyCodeLine{00264                     \textcolor{keywordtype}{int} index = (StoredImages.Count -\/ 1) + dif;}
+\DoxyCodeLine{00265                     storedImageBox.Items.Add(\mbox{\hyperlink{class_bio_imager_1_1_imager_a77d46eb1f43f00fe73bf02789ed92137}{StoredImages}}[index -\/ 1]);}
+\DoxyCodeLine{00266                 \}}
+\DoxyCodeLine{00267             \}}
+\DoxyCodeLine{00268         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -387,6 +1103,20 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00047}{47}} of file \mbo
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00059}{59}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060         \{}
+\DoxyCodeLine{00061             \textcolor{keyword}{get}}
+\DoxyCodeLine{00062             \{}
+\DoxyCodeLine{00063                 \textcolor{keywordflow}{return} (uint)imagesPerSliceBox.Value;}
+\DoxyCodeLine{00064             \}}
+\DoxyCodeLine{00065             \textcolor{keyword}{set}}
+\DoxyCodeLine{00066             \{}
+\DoxyCodeLine{00067                 imagesPerSliceBox.Value = (decimal)value;}
+\DoxyCodeLine{00068             \}}
+\DoxyCodeLine{00069         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_ab8a3147b9d49d5659502f5b80c627b89}\label{class_bio_imager_1_1_imager_ab8a3147b9d49d5659502f5b80c627b89}} 
 \index{BioImager.Imager@{BioImager.Imager}!SliceIncrement@{SliceIncrement}}
 \index{SliceIncrement@{SliceIncrement}!BioImager.Imager@{BioImager.Imager}}
@@ -397,6 +1127,20 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00059}{59}} of file \mbo
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00070}{70}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00071         \{}
+\DoxyCodeLine{00072             \textcolor{keyword}{get}}
+\DoxyCodeLine{00073             \{}
+\DoxyCodeLine{00074                 \textcolor{keywordflow}{return} (uint)sliceIncrementBox.Value;}
+\DoxyCodeLine{00075             \}}
+\DoxyCodeLine{00076             \textcolor{keyword}{set}}
+\DoxyCodeLine{00077             \{}
+\DoxyCodeLine{00078                 sliceIncrementBox.Value = (decimal)value;}
+\DoxyCodeLine{00079             \}}
+\DoxyCodeLine{00080         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_ad4673ce646192db296e6fbdb8d2b9fe8}\label{class_bio_imager_1_1_imager_ad4673ce646192db296e6fbdb8d2b9fe8}} 
 \index{BioImager.Imager@{BioImager.Imager}!SlicesPerSlide@{SlicesPerSlide}}
 \index{SlicesPerSlide@{SlicesPerSlide}!BioImager.Imager@{BioImager.Imager}}
@@ -407,6 +1151,20 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00070}{70}} of file \mbo
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00081}{81}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082         \{}
+\DoxyCodeLine{00083             \textcolor{keyword}{get}}
+\DoxyCodeLine{00084             \{}
+\DoxyCodeLine{00085                 \textcolor{keywordflow}{return} (uint)slicesPerSlideBox.Value;}
+\DoxyCodeLine{00086             \}}
+\DoxyCodeLine{00087             \textcolor{keyword}{set}}
+\DoxyCodeLine{00088             \{}
+\DoxyCodeLine{00089                 slicesPerSlideBox.Value = (decimal)value;}
+\DoxyCodeLine{00090             \}}
+\DoxyCodeLine{00091         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_ae4f2fea29c55ef4ca0d190e2cec73000}\label{class_bio_imager_1_1_imager_ae4f2fea29c55ef4ca0d190e2cec73000}} 
 \index{BioImager.Imager@{BioImager.Imager}!ZenP@{ZenP}}
 \index{ZenP@{ZenP}!BioImager.Imager@{BioImager.Imager}}
@@ -418,8 +1176,22 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00081}{81}} of file \mbo
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00048}{48}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00049         \{}
+\DoxyCodeLine{00050             \textcolor{keyword}{get}}
+\DoxyCodeLine{00051             \{}
+\DoxyCodeLine{00052                 \textcolor{keywordflow}{return} AppP;}
+\DoxyCodeLine{00053             \}}
+\DoxyCodeLine{00054             \textcolor{keyword}{set}}
+\DoxyCodeLine{00055             \{}
+\DoxyCodeLine{00056                 AppP = value;}
+\DoxyCodeLine{00057             \}}
+\DoxyCodeLine{00058         \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Imager.\+cs\item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Imager.\+Designer.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_imager_8cs}{Imager.\+cs}}\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_imager_8_designer_8cs}{Imager.\+Designer.\+cs}}\end{DoxyCompactItemize}

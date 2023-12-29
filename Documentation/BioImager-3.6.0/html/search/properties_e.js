@@ -1,4 +1,19 @@
 var searchData=
 [
-  ['zfps_0',['ZFps',['../class_bio_imager_1_1_image_view.html#aba0738f8765bc0d8beb1abba6bf825ec',1,'BioImager::ImageView']]]
+  ['path_0',['Path',['../class_bio_imager_1_1_image_view.html#ab45f8eef396eea7c90c1e0d1c378ffcf',1,'BioImager::ImageView']]],
+  ['pen_1',['Pen',['../class_bio_imager_1_1_graphics_1_1_flood_tool.html#ae52b8dd6bf65efdd93d6d72cc3f66db9',1,'BioImager.Graphics.FloodTool.Pen()'],['../class_bio_imager_1_1_graphics_1_1_pen_tool.html#a92662b63ec93e673468e2b76fa82b44a',1,'BioImager.Graphics.PenTool.Pen()']]],
+  ['physicalsizex_2',['PhysicalSizeX',['../struct_bio_imager_1_1_resolution.html#a7eb5e867c71c889e7f869426c506d770',1,'BioImager.Resolution.PhysicalSizeX()'],['../class_bio_imager_1_1_image_info.html#aeb27e60cb2e413e59754cd0b72b26cb3',1,'BioImager.ImageInfo.PhysicalSizeX()'],['../class_bio_imager_1_1_bio_image.html#a88ded032e1b269be7cd179b0d75228b5',1,'BioImager.BioImage.PhysicalSizeX()']]],
+  ['physicalsizey_3',['PhysicalSizeY',['../struct_bio_imager_1_1_resolution.html#a773ce0fa4c59ea0afb2aa9497ac46486',1,'BioImager.Resolution.PhysicalSizeY()'],['../class_bio_imager_1_1_image_info.html#a1e6fd1e417c44e958a3bf17fa0334fa1',1,'BioImager.ImageInfo.PhysicalSizeY()'],['../class_bio_imager_1_1_bio_image.html#a3911bad6f160e3a1115fa5a8e923230b',1,'BioImager.BioImage.PhysicalSizeY()']]],
+  ['physicalsizez_4',['PhysicalSizeZ',['../struct_bio_imager_1_1_resolution.html#a1f3508b594f1b1a08fe02900d7969b6d',1,'BioImager.Resolution.PhysicalSizeZ()'],['../class_bio_imager_1_1_image_info.html#a41b68ad2dca15fc8e48a6acc339e17c9',1,'BioImager.ImageInfo.PhysicalSizeZ()'],['../class_bio_imager_1_1_bio_image.html#a8017319f6870e866967c49dd3b223c5e',1,'BioImager.BioImage.PhysicalSizeZ()']]],
+  ['pixelformat_5',['PixelFormat',['../struct_bio_imager_1_1_resolution.html#ae715583369111ef856118527b848b941',1,'BioImager::Resolution']]],
+  ['pixelshader_6',['PixelShader',['../class_bio_imager_1_1_d_color_shader.html#a7a4832284bc02cc3f6b573e1d5044d05',1,'BioImager::DColorShader']]],
+  ['plots_7',['Plots',['../class_bio_imager_1_1_plot.html#a7a6572e6e00ed6b72e25b5cd7fa56247',1,'BioImager::Plot']]],
+  ['point_8',['Point',['../class_bio_imager_1_1_automation_1_1_action.html#a26c266f328c5c5c96adae88ccc85300d',1,'BioImager.Automation.Action.Point()'],['../class_bio_imager_1_1_r_o_i.html#a9b3cf3860f470ca08a78afe86b957482',1,'BioImager.ROI.Point()']]],
+  ['pointsd_9',['PointsD',['../class_bio_imager_1_1_r_o_i.html#abd2f072dbde1159aa2104fb2acd3d834',1,'BioImager::ROI']]],
+  ['pointsimage_10',['PointsImage',['../class_bio_imager_1_1_r_o_i.html#a2afc7e3b26b722fd362778601bfaddc8',1,'BioImager::ROI']]],
+  ['processname_11',['ProcessName',['../class_bio_imager_1_1_automation_1_1_action.html#a05da85d9e96345d45d03fd25169fbb77',1,'BioImager::Automation::Action']]],
+  ['projectionmatrix_12',['ProjectionMatrix',['../class_bio_imager_1_1_d_d_x11.html#a9b3aea7ea5c1ef2105127fc9891be895',1,'BioImager::DDX11']]],
+  ['pxhmicron_13',['PxHmicron',['../class_bio_imager_1_1_image_view.html#a773efe49ff932b4d604f6fe508eb14e9',1,'BioImager::ImageView']]],
+  ['pxwmicron_14',['PxWmicron',['../class_bio_imager_1_1_image_view.html#abbf4c20c726f9083ee7c83964d42e5b2',1,'BioImager::ImageView']]],
+  ['pyramidalorigin_15',['PyramidalOrigin',['../class_bio_imager_1_1_image_view.html#a4875f86fe3e56a77be557c4bda5afe06',1,'BioImager::ImageView']]]
 ];

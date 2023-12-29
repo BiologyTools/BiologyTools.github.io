@@ -1,0 +1,130 @@
+\hypertarget{classmicroscope_1_1clients_1_1_data_client}{}\doxysection{microscope.\+clients.\+Data\+Client Class Reference}
+\label{classmicroscope_1_1clients_1_1_data_client}\index{microscope.clients.DataClient@{microscope.clients.DataClient}}
+Inheritance diagram for microscope.\+clients.\+Data\+Client\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicroscope_1_1clients_1_1_data_client}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, url)
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}{enable}} (self)
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a656ecc9571606ead52f8c8cd38310c65}{receive\+Data}} (self, data, timestamp, $\ast$args)
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a13f912c0bee1ee6c861a4ddc18241a27}{trigger\+\_\+and\+\_\+wait}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}A client that can receive and buffer data.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{clients_8py_source_l00070}{70}} of file \mbox{\hyperlink{clients_8py_source}{clients.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}\label{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}} 
+\index{microscope.clients.DataClient@{microscope.clients.DataClient}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.clients.DataClient@{microscope.clients.DataClient}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def microscope.\+clients.\+Data\+Client.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{url }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_ad2d2568159add9dc01e24b409c99f7db}{microscope.\+clients.\+Client}}.
+
+
+
+Definition at line \mbox{\hyperlink{clients_8py_source_l00073}{73}} of file \mbox{\hyperlink{clients_8py_source}{clients.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00073     \textcolor{keyword}{def }\_\_init\_\_(self, url):}
+\DoxyCodeLine{00074         super().\_\_init\_\_(url)}
+\DoxyCodeLine{00075         self.\_buffer = queue.Queue()}
+\DoxyCodeLine{00076         \textcolor{comment}{\# Register self with a listener.}}
+\DoxyCodeLine{00077         \textcolor{keywordflow}{if} self.\_url.split(\textcolor{stringliteral}{"{}@"{}})[1].split(\textcolor{stringliteral}{"{}:"{}})[0] \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}127.0.0.1"{}}, \textcolor{stringliteral}{"{}localhost"{}}]:}
+\DoxyCodeLine{00078             iface = \textcolor{stringliteral}{"{}127.0.0.1"{}}}
+\DoxyCodeLine{00079         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00080             \textcolor{comment}{\# TODO: support multiple interfaces. Could use ifaddr.get\_adapters() to}}
+\DoxyCodeLine{00081             \textcolor{comment}{\# query ip addresses then pick first interface on the same subnet.}}
+\DoxyCodeLine{00082             iface = socket.gethostbyname(socket.gethostname())}
+\DoxyCodeLine{00083         \textcolor{keywordflow}{if} iface \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} LISTENERS:}
+\DoxyCodeLine{00084             LISTENERS[iface] = Pyro4.Daemon(host=iface)}
+\DoxyCodeLine{00085             lthread = threading.Thread(target=LISTENERS[iface].requestLoop)}
+\DoxyCodeLine{00086             lthread.daemon = \textcolor{keyword}{True}}
+\DoxyCodeLine{00087             lthread.start()}
+\DoxyCodeLine{00088         self.\_client\_uri = LISTENERS[iface].register(self)}
+\DoxyCodeLine{00089 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}\label{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}} 
+\index{microscope.clients.DataClient@{microscope.clients.DataClient}!enable@{enable}}
+\index{enable@{enable}!microscope.clients.DataClient@{microscope.clients.DataClient}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily def microscope.\+clients.\+Data\+Client.\+enable (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the client on the remote and enable it.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{clients_8py_source_l00090}{90}} of file \mbox{\hyperlink{clients_8py_source}{clients.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090     \textcolor{keyword}{def }enable(self):}
+\DoxyCodeLine{00091         \textcolor{stringliteral}{"{}"{}"{}Set the client on the remote and enable it."{}"{}"{}}}
+\DoxyCodeLine{00092         self.set\_client(self.\_client\_uri)}
+\DoxyCodeLine{00093         self.\_proxy.enable()}
+\DoxyCodeLine{00094 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1clients_1_1_data_client_a656ecc9571606ead52f8c8cd38310c65}\label{classmicroscope_1_1clients_1_1_data_client_a656ecc9571606ead52f8c8cd38310c65}} 
+\index{microscope.clients.DataClient@{microscope.clients.DataClient}!receiveData@{receiveData}}
+\index{receiveData@{receiveData}!microscope.clients.DataClient@{microscope.clients.DataClient}}
+\doxysubsubsection{\texorpdfstring{receiveData()}{receiveData()}}
+{\footnotesize\ttfamily def microscope.\+clients.\+Data\+Client.\+receive\+Data (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{data,  }\item[{}]{timestamp,  }\item[{$\ast$}]{args }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{clients_8py_source_l00099}{99}} of file \mbox{\hyperlink{clients_8py_source}{clients.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00099     \textcolor{keyword}{def }receiveData(self, data, timestamp, *args):}
+\DoxyCodeLine{00100         del args}
+\DoxyCodeLine{00101         self.\_buffer.put((data, timestamp))}
+\DoxyCodeLine{00102 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1clients_1_1_data_client_a13f912c0bee1ee6c861a4ddc18241a27}\label{classmicroscope_1_1clients_1_1_data_client_a13f912c0bee1ee6c861a4ddc18241a27}} 
+\index{microscope.clients.DataClient@{microscope.clients.DataClient}!trigger\_and\_wait@{trigger\_and\_wait}}
+\index{trigger\_and\_wait@{trigger\_and\_wait}!microscope.clients.DataClient@{microscope.clients.DataClient}}
+\doxysubsubsection{\texorpdfstring{trigger\_and\_wait()}{trigger\_and\_wait()}}
+{\footnotesize\ttfamily def microscope.\+clients.\+Data\+Client.\+trigger\+\_\+and\+\_\+wait (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{clients_8py_source_l00103}{103}} of file \mbox{\hyperlink{clients_8py_source}{clients.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103     \textcolor{keyword}{def }trigger\_and\_wait(self):}
+\DoxyCodeLine{00104         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} hasattr(self, \textcolor{stringliteral}{"{}trigger"{}}):}
+\DoxyCodeLine{00105             \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Device has no trigger method."{}})}
+\DoxyCodeLine{00106         self.trigger()}
+\DoxyCodeLine{00107         \textcolor{keywordflow}{return} self.\_buffer.get(block=\textcolor{keyword}{True})}
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/\mbox{\hyperlink{clients_8py}{clients.\+py}}\end{DoxyCompactItemize}

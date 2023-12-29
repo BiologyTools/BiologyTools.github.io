@@ -1,10 +1,9 @@
 var searchData=
 [
-  ['cellimager_0',['CellImager',['../class_bio_imager_1_1_cell_imager.html',1,'BioImager']]],
-  ['channelstool_1',['ChannelsTool',['../class_bio_imager_1_1_channels_tool.html',1,'BioImager']]],
-  ['codeview_2',['CodeView',['../class_bio_imager_1_1_code_view.html',1,'BioImager']]],
-  ['colortool_3',['ColorTool',['../class_bio_imager_1_1_color_tool.html',1,'BioImager']]],
-  ['command_4',['Command',['../struct_bio_imager_1_1_microscope_console_1_1_command.html',1,'BioImager::MicroscopeConsole']]],
-  ['configuration_5',['Configuration',['../class_bio_imager_1_1_configuration.html',1,'BioImager']]],
-  ['controllerfuncs_6',['ControllerFuncs',['../class_bio_imager_1_1_imager_1_1_controller_funcs.html',1,'BioImager::Imager']]]
+  ['basetestdeviceserver_0',['BaseTestDeviceServer',['../classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server.html',1,'microscope::testsuite::test_device_server']]],
+  ['basetestservedevices_1',['BaseTestServeDevices',['../classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices.html',1,'microscope::testsuite::test_device_server']]],
+  ['binning_2',['Binning',['../classmicroscope_1_1_binning.html',1,'microscope']]],
+  ['bioconsole_3',['BioConsole',['../class_bio_imager_1_1_bio_console.html',1,'BioImager']]],
+  ['bioimage_4',['BioImage',['../class_bio_imager_1_1_bio_image.html',1,'BioImager']]],
+  ['bmcdeformablemirror_5',['BMCDeformableMirror',['../classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html',1,'microscope::mirror::bmc']]]
 ];

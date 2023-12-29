@@ -1,0 +1,28 @@
+var test__devices_8py =
+[
+    [ "microscope.testsuite.test_devices.TestSerialMock", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock" ],
+    [ "microscope.testsuite.test_devices.TestSerialMock.Serial", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_1_1_serial.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_1_1_serial" ],
+    [ "microscope.testsuite.test_devices.DeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests" ],
+    [ "microscope.testsuite.test_devices.SerialDeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_serial_device_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_serial_device_tests" ],
+    [ "microscope.testsuite.test_devices.LightSourceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_light_source_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_light_source_tests" ],
+    [ "microscope.testsuite.test_devices.CameraTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_camera_tests.html", null ],
+    [ "microscope.testsuite.test_devices.ControllerTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_controller_tests.html", null ],
+    [ "microscope.testsuite.test_devices.FilterWheelTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests" ],
+    [ "microscope.testsuite.test_devices.DeformableMirrorTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_deformable_mirror_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_deformable_mirror_tests" ],
+    [ "microscope.testsuite.test_devices.SLMTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_s_l_m_tests.html", null ],
+    [ "microscope.testsuite.test_devices.DSPTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_d_s_p_tests.html", null ],
+    [ "microscope.testsuite.test_devices.TestDummyLightSource", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_light_source.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_light_source" ],
+    [ "microscope.testsuite.test_devices.TestCoherentSapphireLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser" ],
+    [ "microscope.testsuite.test_devices.TestCoboltLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser" ],
+    [ "microscope.testsuite.test_devices.TestOmicronDeepstarLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser" ],
+    [ "microscope.testsuite.test_devices.TestDummyCamera", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_camera.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_camera" ],
+    [ "microscope.testsuite.test_devices.TestImageGenerator", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_image_generator.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_image_generator" ],
+    [ "microscope.testsuite.test_devices.TestDummyController", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_controller.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_controller" ],
+    [ "microscope.testsuite.test_devices.TestEmptyDummyFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_empty_dummy_filter_wheel.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_empty_dummy_filter_wheel" ],
+    [ "microscope.testsuite.test_devices.TestOnePositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_one_position_filter_wheel.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_one_position_filter_wheel" ],
+    [ "microscope.testsuite.test_devices.TestSixPositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_six_position_filter_wheel.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_six_position_filter_wheel" ],
+    [ "microscope.testsuite.test_devices.TestDummyDeformableMirror", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_deformable_mirror.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_deformable_mirror" ],
+    [ "microscope.testsuite.test_devices.TestDummySLM", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m" ],
+    [ "microscope.testsuite.test_devices.TestDummyDSP", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_d_s_p.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_d_s_p" ],
+    [ "microscope.testsuite.test_devices.TestBaseDevice", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_base_device.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_base_device" ]
+];

@@ -308,7 +308,10 @@ Static Public Attributes</h2></td></tr>
 <p >Constructs an <a class="el" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html">RoiDecoder</a> using a file path. </p>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00334">334</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  335</span>            {</div>
+<div class="line"><span class="lineno">  336</span>                this.path = path;</div>
+<div class="line"><span class="lineno">  337</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa2d3a6cbf326900d4bbf6d05d5d6b1f7" name="aa2d3a6cbf326900d4bbf6d05d5d6b1f7"></a>
@@ -339,7 +342,12 @@ Static Public Attributes</h2></td></tr>
 <p >Constructs an <a class="el" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html">RoiDecoder</a> using a byte array. </p>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00340">340</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  341</span>            {</div>
+<div class="line"><span class="lineno">  342</span>                ins = <span class="keyword">new</span> MemoryStream(bytes);</div>
+<div class="line"><span class="lineno">  343</span>                this.name = name;</div>
+<div class="line"><span class="lineno">  344</span>                this.size = bytes.Length;</div>
+<div class="line"><span class="lineno">  345</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -360,7 +368,343 @@ Static Public Attributes</h2></td></tr>
 <p >Returns the <a class="el" href="class_bio_imager_1_1_r_o_i.html">ROI</a>. </p>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00357">357</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  358</span>            {</div>
+<div class="line"><span class="lineno">  359</span>                ROI <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = <span class="keyword">new</span> ROI();</div>
+<div class="line"><span class="lineno">  360</span>                data = File.ReadAllBytes(path);</div>
+<div class="line"><span class="lineno">  361</span>                size = data.Length;</div>
+<div class="line"><span class="lineno">  362</span>                <span class="keywordflow">if</span> (getByte(0) != 73 || getByte(1) != 111)  <span class="comment">//&quot;Iout&quot;</span></div>
+<div class="line"><span class="lineno">  363</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> IOException(<span class="stringliteral">&quot;This is not an ImageJ ROI&quot;</span>);</div>
+<div class="line"><span class="lineno">  364</span>                <span class="keywordtype">int</span> version = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a39c1070afbb55194f535ca03afc54ef1">VERSION_OFFSET</a>);</div>
+<div class="line"><span class="lineno">  365</span>                <span class="keywordtype">int</span> type = getByte(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ad6cd5c2aa86854d2efb969526ce5b4d4">TYPE</a>);</div>
+<div class="line"><span class="lineno">  366</span>                <span class="keywordtype">int</span> subtype = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a5ff96ed7c2a94137d0bed5391848d755">SUBTYPE</a>);</div>
+<div class="line"><span class="lineno">  367</span>                <span class="keywordtype">int</span> top = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaf4bf3d7428395cb97426ab62d230b82">TOP</a>);</div>
+<div class="line"><span class="lineno">  368</span>                <span class="keywordtype">int</span> left = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#afa4a39ce81a1f5fc70518a6678416d62">LEFT</a>);</div>
+<div class="line"><span class="lineno">  369</span>                <span class="keywordtype">int</span> bottom = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab462a2a2b251a0edee003d905b5969af">BOTTOM</a>);</div>
+<div class="line"><span class="lineno">  370</span>                <span class="keywordtype">int</span> right = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a8db40e04774fe3bbdb40bae822247a67">RIGHT</a>);</div>
+<div class="line"><span class="lineno">  371</span>                <span class="keywordtype">int</span> width = right - left;</div>
+<div class="line"><span class="lineno">  372</span>                <span class="keywordtype">int</span> height = bottom - top;</div>
+<div class="line"><span class="lineno">  373</span>                <span class="keywordtype">int</span> n = getUnsignedShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a714f21756cf64e7f278bbabb9ce2692b">N_COORDINATES</a>);</div>
+<div class="line"><span class="lineno">  374</span>                <span class="keywordflow">if</span> (n == 0)</div>
+<div class="line"><span class="lineno">  375</span>                    n = getInt(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ad592363e7c2a65d183e62ad16d51c39a">SIZE</a>);</div>
+<div class="line"><span class="lineno">  376</span>                <span class="keywordtype">int</span> options = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#acc9ba13a81a85cf81c5b1516c0576275">OPTIONS</a>);</div>
+<div class="line"><span class="lineno">  377</span>                <span class="keywordtype">int</span> <a class="code hl_variable" href="namespacemicroscope_1_1setfilterwheel.html#a217c7f5aaaf2dd7e6747b3ed925387b5">position</a> = getInt(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a76dfb277da31bc2df17a52426eb6ba52">POSITION</a>);</div>
+<div class="line"><span class="lineno">  378</span>                <span class="keywordtype">int</span> hdr2Offset = getInt(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a99002ef1aaca7eb99bc75d1fd3e96427">HEADER2_OFFSET</a>);</div>
+<div class="line"><span class="lineno">  379</span>                <span class="keywordtype">int</span> channel = 0, slice = 0, frame = 0;</div>
+<div class="line"><span class="lineno">  380</span>                <span class="keywordtype">int</span> overlayLabelColor = 0;</div>
+<div class="line"><span class="lineno">  381</span>                <span class="keywordtype">int</span> overlayFontSize = 0;</div>
+<div class="line"><span class="lineno">  382</span>                <span class="keywordtype">int</span> group = 0;</div>
+<div class="line"><span class="lineno">  383</span>                <span class="keywordtype">int</span> imageOpacity = 0;</div>
+<div class="line"><span class="lineno">  384</span>                <span class="keywordtype">int</span> imageSize = 0;</div>
+<div class="line"><span class="lineno">  385</span>                <span class="keywordtype">bool</span> subPixelResolution = (options &amp; <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a604728c2c3cd6581f691a7ad441c39b1">SUB_PIXEL_RESOLUTION</a>) != 0 &amp;&amp; version &gt;= 222;</div>
+<div class="line"><span class="lineno">  386</span>                <span class="keywordtype">bool</span> drawOffset = subPixelResolution &amp;&amp; (options &amp; <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7bdbe323fecb6c891b08549b403380bf">DRAW_OFFSET</a>) != 0;</div>
+<div class="line"><span class="lineno">  387</span>                <span class="keywordtype">bool</span> scaleStrokeWidth = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  388</span>                <span class="keywordflow">if</span> (version &gt;= 228)</div>
+<div class="line"><span class="lineno">  389</span>                    scaleStrokeWidth = (options &amp; <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a865d58a5c6b042ea065ae4c5933024c3">SCALE_STROKE_WIDTH</a>) != 0;</div>
+<div class="line"><span class="lineno">  390</span> </div>
+<div class="line"><span class="lineno">  391</span>                <span class="keywordtype">bool</span> subPixelRect = version &gt;= 223 &amp;&amp; subPixelResolution &amp;&amp; (type == rect || type == oval);</div>
+<div class="line"><span class="lineno">  392</span>                <span class="keywordtype">double</span> xd = 0.0, yd = 0.0, widthd = 0.0, heightd = 0.0;</div>
+<div class="line"><span class="lineno">  393</span>                <span class="keywordflow">if</span> (subPixelRect)</div>
+<div class="line"><span class="lineno">  394</span>                {</div>
+<div class="line"><span class="lineno">  395</span>                    xd = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaef08aec36a39edc2233a1921d5d66ad">XD</a>);</div>
+<div class="line"><span class="lineno">  396</span>                    yd = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a2a8f3dd4ef1ae9803dea256d6516b486">YD</a>);</div>
+<div class="line"><span class="lineno">  397</span>                    widthd = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#af544bd4500307f7af002b123cbebab95">WIDTHD</a>);</div>
+<div class="line"><span class="lineno">  398</span>                    heightd = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a9cc5ac471aacb8d4965ba3b9b7331b5e">HEIGHTD</a>);</div>
+<div class="line"><span class="lineno">  399</span>                }</div>
+<div class="line"><span class="lineno">  400</span> </div>
+<div class="line"><span class="lineno">  401</span>                <span class="keywordflow">if</span> (hdr2Offset &gt; 0 &amp;&amp; hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aced63c18588692b4976eae7965129a53">IMAGE_SIZE</a> + 4 &lt;= size)</div>
+<div class="line"><span class="lineno">  402</span>                {</div>
+<div class="line"><span class="lineno">  403</span>                    channel = getInt(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab661b39b507949f49e0aa9b14b55e6a1">C_POSITION</a>);</div>
+<div class="line"><span class="lineno">  404</span>                    slice = getInt(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab1e8da1b60b28f5e7ac2a087fa604507">Z_POSITION</a>);</div>
+<div class="line"><span class="lineno">  405</span>                    frame = getInt(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0f77d7576c5a5bfadda33a16a20a2eb8">T_POSITION</a>);</div>
+<div class="line"><span class="lineno">  406</span>                    overlayLabelColor = getInt(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a529ca4c3996b023e72cabac690e0524b">OVERLAY_LABEL_COLOR</a>);</div>
+<div class="line"><span class="lineno">  407</span>                    overlayFontSize = getShort(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a627dd62a9fe640b451b0666394dc1923">OVERLAY_FONT_SIZE</a>);</div>
+<div class="line"><span class="lineno">  408</span>                    imageOpacity = getByte(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0a7997f226ff646783e3cb2827cfaba3">IMAGE_OPACITY</a>);</div>
+<div class="line"><span class="lineno">  409</span>                    imageSize = getInt(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aced63c18588692b4976eae7965129a53">IMAGE_SIZE</a>);</div>
+<div class="line"><span class="lineno">  410</span>                    group = getByte(hdr2Offset + <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a563137177c19bfc45d43528f49b078cc">GROUP</a>);</div>
+<div class="line"><span class="lineno">  411</span>                }</div>
+<div class="line"><span class="lineno">  412</span> </div>
+<div class="line"><span class="lineno">  413</span>                <span class="keywordflow">if</span> (name != <span class="keyword">null</span> &amp;&amp; name.EndsWith(<span class="stringliteral">&quot;.roi&quot;</span>))</div>
+<div class="line"><span class="lineno">  414</span>                    name = name.Substring(0, name.Length - 4);</div>
+<div class="line"><span class="lineno">  415</span>                <span class="keywordtype">bool</span> isComposite = getInt(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a33cd3c28d206418cc7f1047032634cc3">SHAPE_ROI_SIZE</a>) &gt; 0;</div>
+<div class="line"><span class="lineno">  416</span> </div>
+<div class="line"><span class="lineno">  417</span> </div>
+<div class="line"><span class="lineno">  418</span>                <span class="comment">/*</span></div>
+<div class="line"><span class="lineno">  419</span><span class="comment">                if (isComposite)</span></div>
+<div class="line"><span class="lineno">  420</span><span class="comment">                {</span></div>
+<div class="line"><span class="lineno">  421</span><span class="comment">                    roi = getShapeRoi();</span></div>
+<div class="line"><span class="lineno">  422</span><span class="comment">                    if (version &gt;= 218)</span></div>
+<div class="line"><span class="lineno">  423</span><span class="comment">                        getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);</span></div>
+<div class="line"><span class="lineno">  424</span><span class="comment">                    roi.coord.Z = position;</span></div>
+<div class="line"><span class="lineno">  425</span><span class="comment">                    if (channel &gt; 0 || slice &gt; 0 || frame &gt; 0)</span></div>
+<div class="line"><span class="lineno">  426</span><span class="comment">                    {</span></div>
+<div class="line"><span class="lineno">  427</span><span class="comment">                        roi.coord.C = channel; roi.coord.Z = slice; roi.coord.T = frame;</span></div>
+<div class="line"><span class="lineno">  428</span><span class="comment">                    }</span></div>
+<div class="line"><span class="lineno">  429</span><span class="comment">                    decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);</span></div>
+<div class="line"><span class="lineno">  430</span><span class="comment">                    if (version &gt;= 224)</span></div>
+<div class="line"><span class="lineno">  431</span><span class="comment">                    {</span></div>
+<div class="line"><span class="lineno">  432</span><span class="comment">                        string props = getRoiProps();</span></div>
+<div class="line"><span class="lineno">  433</span><span class="comment">                        if (props != null)</span></div>
+<div class="line"><span class="lineno">  434</span><span class="comment">                            roi.properties = props;</span></div>
+<div class="line"><span class="lineno">  435</span><span class="comment">                    }</span></div>
+<div class="line"><span class="lineno">  436</span><span class="comment">                    if (version &gt;= 228 &amp;&amp; group &gt; 0)</span></div>
+<div class="line"><span class="lineno">  437</span><span class="comment">                        roi.serie = group;</span></div>
+<div class="line"><span class="lineno">  438</span><span class="comment">                    return roi;</span></div>
+<div class="line"><span class="lineno">  439</span><span class="comment">                }</span></div>
+<div class="line"><span class="lineno">  440</span><span class="comment">                */</span></div>
+<div class="line"><span class="lineno">  441</span>                <span class="keywordflow">switch</span> (type)</div>
+<div class="line"><span class="lineno">  442</span>                {</div>
+<div class="line"><span class="lineno">  443</span>                    <span class="keywordflow">case</span> 1: <span class="comment">//Rect</span></div>
+<div class="line"><span class="lineno">  444</span>                        <span class="keywordflow">if</span> (subPixelRect)</div>
+<div class="line"><span class="lineno">  445</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = ROI.CreateRectangle(<span class="keyword">new</span> ZCT(slice - 1, channel - 1, frame - 1), xd, yd, widthd, heightd);</div>
+<div class="line"><span class="lineno">  446</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  447</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = ROI.CreateRectangle(<span class="keyword">new</span> ZCT(slice - 1, channel - 1, frame - 1), left, top, width, height);</div>
+<div class="line"><span class="lineno">  448</span>                        <span class="keywordtype">int</span> arcSize = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7ebeddbff69c7b5dc4f3f899554840ea">ROUNDED_RECT_ARC_SIZE</a>);</div>
+<div class="line"><span class="lineno">  449</span>                        <span class="keywordflow">if</span> (arcSize &gt; 0)</div>
+<div class="line"><span class="lineno">  450</span>                            <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException(<span class="stringliteral">&quot;Type rounded rectangle not supported.&quot;</span>);</div>
+<div class="line"><span class="lineno">  451</span>                        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  452</span>                    <span class="keywordflow">case</span> 2: <span class="comment">//Ellipse</span></div>
+<div class="line"><span class="lineno">  453</span>                        <span class="keywordflow">if</span> (subPixelRect)</div>
+<div class="line"><span class="lineno">  454</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = ROI.CreateEllipse(<span class="keyword">new</span> ZCT(slice - 1, channel - 1, frame - 1), xd, yd, widthd, heightd);</div>
+<div class="line"><span class="lineno">  455</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  456</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = ROI.CreateEllipse(<span class="keyword">new</span> ZCT(slice - 1, channel - 1, frame - 1), left, top, width, height);</div>
+<div class="line"><span class="lineno">  457</span>                        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  458</span>                    <span class="keywordflow">case</span> 3: <span class="comment">//Line</span></div>
+<div class="line"><span class="lineno">  459</span>                        <span class="keywordtype">float</span> x1 = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7454c043d89b4078396fdbf94ea72f4f">X1</a>);</div>
+<div class="line"><span class="lineno">  460</span>                        <span class="keywordtype">float</span> y1 = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a1463e65af7296554613f35ac5518d310">Y1</a>);</div>
+<div class="line"><span class="lineno">  461</span>                        <span class="keywordtype">float</span> x2 = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a44ad5db3dd1e87e7f3a178f23ae680f6">X2</a>);</div>
+<div class="line"><span class="lineno">  462</span>                        <span class="keywordtype">float</span> y2 = getFloat(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0bad0679824fb47a3f64975a686272a5">Y2</a>);</div>
+<div class="line"><span class="lineno">  463</span> </div>
+<div class="line"><span class="lineno">  464</span>                        <span class="keywordflow">if</span> (subtype == <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ae87e86b098c4f71144d365e796cab228">ARROW</a>)</div>
+<div class="line"><span class="lineno">  465</span>                        {</div>
+<div class="line"><span class="lineno">  466</span>                            <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException(<span class="stringliteral">&quot;Type arrow not supported.&quot;</span>);</div>
+<div class="line"><span class="lineno">  467</span>                            <span class="comment">/*</span></div>
+<div class="line"><span class="lineno">  468</span><span class="comment">                            roi = new Arrow(x1, y1, x2, y2);</span></div>
+<div class="line"><span class="lineno">  469</span><span class="comment">                            ((Arrow)roi).setDoubleHeaded((options &amp; DOUBLE_HEADED) != 0);</span></div>
+<div class="line"><span class="lineno">  470</span><span class="comment">                            ((Arrow)roi).setOutline((options &amp; OUTLINE) != 0);</span></div>
+<div class="line"><span class="lineno">  471</span><span class="comment">                            int style = getByte(ARROW_STYLE);</span></div>
+<div class="line"><span class="lineno">  472</span><span class="comment">                            if (style &gt;= Arrow.FILLED &amp;&amp; style &lt;= Arrow.BAR)</span></div>
+<div class="line"><span class="lineno">  473</span><span class="comment">                                ((Arrow)roi).setStyle(style);</span></div>
+<div class="line"><span class="lineno">  474</span><span class="comment">                            int headSize = getByte(ARROW_HEAD_SIZE);</span></div>
+<div class="line"><span class="lineno">  475</span><span class="comment">                            if (headSize &gt;= 0 &amp;&amp; style &lt;= 30)</span></div>
+<div class="line"><span class="lineno">  476</span><span class="comment">                                ((Arrow)roi).setHeadSize(headSize);</span></div>
+<div class="line"><span class="lineno">  477</span><span class="comment">                            */</span></div>
+<div class="line"><span class="lineno">  478</span>                        }</div>
+<div class="line"><span class="lineno">  479</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  480</span>                        {</div>
+<div class="line"><span class="lineno">  481</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = ROI.CreateLine(<span class="keyword">new</span> ZCT(slice, channel, frame), <span class="keyword">new</span> <a class="code hl_typedef" href="_microscope_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a>(x1, y1), <span class="keyword">new</span> <a class="code hl_typedef" href="_microscope_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a>(x2, y2));</div>
+<div class="line"><span class="lineno">  482</span>                            <span class="comment">//roi.setDrawOffset(drawOffset);</span></div>
+<div class="line"><span class="lineno">  483</span>                        }</div>
+<div class="line"><span class="lineno">  484</span> </div>
+<div class="line"><span class="lineno">  485</span>                        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  486</span>                    <span class="keywordflow">case</span> 0:</div>
+<div class="line"><span class="lineno">  487</span>                    <span class="keywordflow">case</span> 5:</div>
+<div class="line"><span class="lineno">  488</span>                    <span class="keywordflow">case</span> 6:</div>
+<div class="line"><span class="lineno">  489</span>                    <span class="keywordflow">case</span> 7:</div>
+<div class="line"><span class="lineno">  490</span>                    <span class="keywordflow">case</span> 8:</div>
+<div class="line"><span class="lineno">  491</span>                    <span class="keywordflow">case</span> 9:</div>
+<div class="line"><span class="lineno">  492</span>                    <span class="keywordflow">case</span> 10:</div>
+<div class="line"><span class="lineno">  493</span>                        <span class="comment">//IJ.log(&quot;type: &quot;+type);</span></div>
+<div class="line"><span class="lineno">  494</span>                        <span class="comment">//IJ.log(&quot;n: &quot;+n);</span></div>
+<div class="line"><span class="lineno">  495</span>                        <span class="comment">//ij.IJ.log(&quot;rect: &quot;+left+&quot;,&quot;+top+&quot; &quot;+width+&quot; &quot;+height);</span></div>
+<div class="line"><span class="lineno">  496</span>                        <span class="keywordflow">if</span> (n == 0 || n &lt; 0) <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  497</span>                        <span class="keywordtype">int</span>[] x = <span class="keyword">new</span> <span class="keywordtype">int</span>[n];</div>
+<div class="line"><span class="lineno">  498</span>                        <span class="keywordtype">int</span>[] y = <span class="keyword">new</span> <span class="keywordtype">int</span>[n];</div>
+<div class="line"><span class="lineno">  499</span>                        <span class="keywordtype">float</span>[] xf = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  500</span>                        <span class="keywordtype">float</span>[] yf = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  501</span>                        <span class="keywordtype">int</span> base1 = <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaec38b8011aacde27cabce9a5d7af8e9">COORDINATES</a>;</div>
+<div class="line"><span class="lineno">  502</span>                        <span class="keywordtype">int</span> base2 = base1 + 2 * n;</div>
+<div class="line"><span class="lineno">  503</span>                        <span class="keywordtype">int</span> xtmp, ytmp;</div>
+<div class="line"><span class="lineno">  504</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; i++)</div>
+<div class="line"><span class="lineno">  505</span>                        {</div>
+<div class="line"><span class="lineno">  506</span>                            xtmp = getShort(base1 + i * 2);</div>
+<div class="line"><span class="lineno">  507</span>                            <span class="keywordflow">if</span> (xtmp &lt; 0) xtmp = 0;</div>
+<div class="line"><span class="lineno">  508</span>                            ytmp = getShort(base2 + i * 2);</div>
+<div class="line"><span class="lineno">  509</span>                            <span class="keywordflow">if</span> (ytmp &lt; 0) ytmp = 0;</div>
+<div class="line"><span class="lineno">  510</span>                            x[i] = left + xtmp;</div>
+<div class="line"><span class="lineno">  511</span>                            y[i] = top + ytmp;</div>
+<div class="line"><span class="lineno">  512</span>                        }</div>
+<div class="line"><span class="lineno">  513</span>                        <span class="keywordflow">if</span> (subPixelResolution)</div>
+<div class="line"><span class="lineno">  514</span>                        {</div>
+<div class="line"><span class="lineno">  515</span>                            xf = <span class="keyword">new</span> <span class="keywordtype">float</span>[n];</div>
+<div class="line"><span class="lineno">  516</span>                            yf = <span class="keyword">new</span> <span class="keywordtype">float</span>[n];</div>
+<div class="line"><span class="lineno">  517</span>                            base1 = <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaec38b8011aacde27cabce9a5d7af8e9">COORDINATES</a> + 4 * n;</div>
+<div class="line"><span class="lineno">  518</span>                            base2 = base1 + 4 * n;</div>
+<div class="line"><span class="lineno">  519</span>                            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; n; i++)</div>
+<div class="line"><span class="lineno">  520</span>                            {</div>
+<div class="line"><span class="lineno">  521</span>                                xf[i] = getFloat(base1 + i * 4);</div>
+<div class="line"><span class="lineno">  522</span>                                yf[i] = getFloat(base2 + i * 4);</div>
+<div class="line"><span class="lineno">  523</span>                            }</div>
+<div class="line"><span class="lineno">  524</span>                        }</div>
+<div class="line"><span class="lineno">  525</span>                        <span class="keywordflow">if</span> (type == point)</div>
+<div class="line"><span class="lineno">  526</span>                        {</div>
+<div class="line"><span class="lineno">  527</span>                            <span class="comment">//TODO implement non subpizel ROI</span></div>
+<div class="line"><span class="lineno">  528</span>                            <span class="keywordflow">if</span> (subPixelResolution)</div>
+<div class="line"><span class="lineno">  529</span>                            {</div>
+<div class="line"><span class="lineno">  530</span>                                <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.AddPoints(xf, yf);</div>
+<div class="line"><span class="lineno">  531</span>                            }</div>
+<div class="line"><span class="lineno">  532</span>                            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  533</span>                                <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.AddPoints(x, y);</div>
+<div class="line"><span class="lineno">  534</span>                            <span class="keywordflow">if</span> (version &gt;= 226)</div>
+<div class="line"><span class="lineno">  535</span>                            {</div>
+<div class="line"><span class="lineno">  536</span>                                <span class="comment">//((PointRoi)roi).setPointType(getByte(POINT_TYPE));</span></div>
+<div class="line"><span class="lineno">  537</span>                                roi.strokeWidth = getShort(<a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aa31f7865dc78f0f6d250c5015b5b69b0">STROKE_WIDTH</a>);</div>
+<div class="line"><span class="lineno">  538</span>                            }</div>
+<div class="line"><span class="lineno">  539</span>                            <span class="comment">//if ((options &amp; SHOW_LABELS) != 0 &amp;&amp; !ij.Prefs.noPointLabels)</span></div>
+<div class="line"><span class="lineno">  540</span>                            <span class="comment">//    ((PointRoi)roi).setShowLabels(true);</span></div>
+<div class="line"><span class="lineno">  541</span>                            <span class="comment">//if ((options &amp; PROMPT_BEFORE_DELETING) != 0)</span></div>
+<div class="line"><span class="lineno">  542</span>                            <span class="comment">//    ((PointRoi)roi).promptBeforeDeleting(true);</span></div>
+<div class="line"><span class="lineno">  543</span>                            roi.type = ROI.Type.Point;</div>
+<div class="line"><span class="lineno">  544</span>                            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  545</span>                        }</div>
+<div class="line"><span class="lineno">  546</span>                        <span class="keywordflow">if</span> (type == polygon)</div>
+<div class="line"><span class="lineno">  547</span>                            roi.type = ROI.Type.Polygon;</div>
+<div class="line"><span class="lineno">  548</span>                        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == freehand)</div>
+<div class="line"><span class="lineno">  549</span>                        {</div>
+<div class="line"><span class="lineno">  550</span>                            roi.type = ROI.Type.Freeform;</div>
+<div class="line"><span class="lineno">  551</span>                            <span class="keywordflow">if</span> (subtype == <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a9ec9a474ec2cb3686e26095cf7aa115f">ELLIPSE</a> || subtype == <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a1cd0f54c5bb76d23c8509ed5a4c0ab04">ROTATED_RECT</a>)</div>
+<div class="line"><span class="lineno">  552</span>                            {</div>
+<div class="line"><span class="lineno">  553</span>                                <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException(<span class="stringliteral">&quot;ROI type not supported.&quot;</span>);</div>
+<div class="line"><span class="lineno">  554</span>                                <span class="comment">/*</span></div>
+<div class="line"><span class="lineno">  555</span><span class="comment">                                double ex1 = getFloat(X1);</span></div>
+<div class="line"><span class="lineno">  556</span><span class="comment">                                double ey1 = getFloat(Y1);</span></div>
+<div class="line"><span class="lineno">  557</span><span class="comment">                                double ex2 = getFloat(X2);</span></div>
+<div class="line"><span class="lineno">  558</span><span class="comment">                                double ey2 = getFloat(Y2);</span></div>
+<div class="line"><span class="lineno">  559</span><span class="comment">                                double param = getFloat(FLOAT_PARAM);</span></div>
+<div class="line"><span class="lineno">  560</span><span class="comment">                                if (subtype == ROTATED_RECT)</span></div>
+<div class="line"><span class="lineno">  561</span><span class="comment">                                    roi = new RotatedRectRoi(ex1, ey1, ex2, ey2, param);</span></div>
+<div class="line"><span class="lineno">  562</span><span class="comment">                                else</span></div>
+<div class="line"><span class="lineno">  563</span><span class="comment">                                    roi = new EllipseRoi(ex1, ey1, ex2, ey2, param);</span></div>
+<div class="line"><span class="lineno">  564</span><span class="comment">                                break;</span></div>
+<div class="line"><span class="lineno">  565</span><span class="comment">                                */</span></div>
+<div class="line"><span class="lineno">  566</span>                            }</div>
+<div class="line"><span class="lineno">  567</span>                        }</div>
+<div class="line"><span class="lineno">  568</span>                        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == traced)</div>
+<div class="line"><span class="lineno">  569</span>                            roi.type = ROI.Type.Polyline;</div>
+<div class="line"><span class="lineno">  570</span>                        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == polyline)</div>
+<div class="line"><span class="lineno">  571</span>                            roi.type = ROI.Type.Polyline;</div>
+<div class="line"><span class="lineno">  572</span>                        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == freeline)</div>
+<div class="line"><span class="lineno">  573</span>                            roi.type = ROI.Type.Polyline;</div>
+<div class="line"><span class="lineno">  574</span>                        <span class="keywordflow">else</span> <span class="keywordflow">if</span> (type == angle)</div>
+<div class="line"><span class="lineno">  575</span>                            roi.type = ROI.Type.Point;</div>
+<div class="line"><span class="lineno">  576</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  577</span>                            roi.type = ROI.Type.Freeform;</div>
+<div class="line"><span class="lineno">  578</span>                        <span class="keywordflow">if</span> (subPixelResolution)</div>
+<div class="line"><span class="lineno">  579</span>                        {</div>
+<div class="line"><span class="lineno">  580</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.AddPoints(xf, yf);</div>
+<div class="line"><span class="lineno">  581</span>                            <span class="comment">//roi = new PolygonRoi(xf, yf, n, roiType);</span></div>
+<div class="line"><span class="lineno">  582</span>                            <span class="comment">//roi.setDrawOffset(drawOffset);</span></div>
+<div class="line"><span class="lineno">  583</span>                        }</div>
+<div class="line"><span class="lineno">  584</span>                        <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  585</span>                            <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.AddPoints(x, y);</div>
+<div class="line"><span class="lineno">  586</span>                        <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  587</span>                    <span class="keywordflow">default</span>:</div>
+<div class="line"><span class="lineno">  588</span>                        <span class="keywordflow">throw</span> <span class="keyword">new</span> IOException(<span class="stringliteral">&quot;Unrecognized ROI type: &quot;</span> + type);</div>
+<div class="line"><span class="lineno">  589</span>                }</div>
+<div class="line"><span class="lineno">  590</span>                <span class="keywordflow">if</span> (roi == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  591</span>                    <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  592</span>                roi.roiName = getRoiName();</div>
+<div class="line"><span class="lineno">  593</span> </div>
+<div class="line"><span class="lineno">  594</span>                <span class="comment">// read stroke width, stroke color and fill color (1.43i or later)</span></div>
+<div class="line"><span class="lineno">  595</span>                <span class="keywordflow">if</span> (version &gt;= 218)</div>
+<div class="line"><span class="lineno">  596</span>                {</div>
+<div class="line"><span class="lineno">  597</span>                    getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);</div>
+<div class="line"><span class="lineno">  598</span>                    <span class="comment">/*</span></div>
+<div class="line"><span class="lineno">  599</span><span class="comment">                    if (type == point)</span></div>
+<div class="line"><span class="lineno">  600</span><span class="comment">                        roi.setStrokeWidth(0);</span></div>
+<div class="line"><span class="lineno">  601</span><span class="comment">                    bool splineFit = (options &amp; SPLINE_FIT) != 0;</span></div>
+<div class="line"><span class="lineno">  602</span><span class="comment">                    if (splineFit &amp;&amp; roi instanceof PolygonRoi)</span></div>
+<div class="line"><span class="lineno">  603</span><span class="comment">                            ((PolygonRoi)roi).fitSpline();</span></div>
+<div class="line"><span class="lineno">  604</span><span class="comment">                    */</span></div>
+<div class="line"><span class="lineno">  605</span>                }</div>
+<div class="line"><span class="lineno">  606</span> </div>
+<div class="line"><span class="lineno">  607</span>                <span class="keywordflow">if</span> (version &gt;= 218 &amp;&amp; subtype == <a class="code hl_variable" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a251da2cdfff3b5d59a91238c81754195">TEXT</a>)</div>
+<div class="line"><span class="lineno">  608</span>                {</div>
+<div class="line"><span class="lineno">  609</span>                    getTextRoi(roi, version);</div>
+<div class="line"><span class="lineno">  610</span>                    roi.type = ROI.Type.Label;</div>
+<div class="line"><span class="lineno">  611</span>                }</div>
+<div class="line"><span class="lineno">  612</span>                <span class="comment">/*</span></div>
+<div class="line"><span class="lineno">  613</span><span class="comment">                if (version &gt;= 221 &amp;&amp; subtype == IMAGE)</span></div>
+<div class="line"><span class="lineno">  614</span><span class="comment">                    roi = getImageRoi(roi, imageOpacity, imageSize, options);</span></div>
+<div class="line"><span class="lineno">  615</span><span class="comment">                </span></div>
+<div class="line"><span class="lineno">  616</span><span class="comment">                if (version &gt;= 224)</span></div>
+<div class="line"><span class="lineno">  617</span><span class="comment">                {</span></div>
+<div class="line"><span class="lineno">  618</span><span class="comment">                    string props = getRoiProps();</span></div>
+<div class="line"><span class="lineno">  619</span><span class="comment">                    if (props != null)</span></div>
+<div class="line"><span class="lineno">  620</span><span class="comment">                        roi.setProperties(props);</span></div>
+<div class="line"><span class="lineno">  621</span><span class="comment">                }</span></div>
+<div class="line"><span class="lineno">  622</span><span class="comment"></span> </div>
+<div class="line"><span class="lineno">  623</span><span class="comment">                if (version &gt;= 227)</span></div>
+<div class="line"><span class="lineno">  624</span><span class="comment">                {</span></div>
+<div class="line"><span class="lineno">  625</span><span class="comment">                    int[] counters = getPointCounters(n);</span></div>
+<div class="line"><span class="lineno">  626</span><span class="comment">                    if (counters != null &amp;&amp; (roi instanceof PointRoi))</span></div>
+<div class="line"><span class="lineno">  627</span><span class="comment">                            ((PointRoi)roi).setCounters(counters);</span></div>
+<div class="line"><span class="lineno">  628</span><span class="comment">                }</span></div>
+<div class="line"><span class="lineno">  629</span><span class="comment">                */</span></div>
+<div class="line"><span class="lineno">  630</span>                <span class="comment">// set group (1.52t or later)</span></div>
+<div class="line"><span class="lineno">  631</span>                <span class="keywordflow">if</span> (version &gt;= 228 &amp;&amp; group &gt; 0)</div>
+<div class="line"><span class="lineno">  632</span>                    roi.serie = group;</div>
+<div class="line"><span class="lineno">  633</span> </div>
+<div class="line"><span class="lineno">  634</span>                roi.coord.Z = <a class="code hl_variable" href="namespacemicroscope_1_1setfilterwheel.html#a217c7f5aaaf2dd7e6747b3ed925387b5">position</a>;</div>
+<div class="line"><span class="lineno">  635</span>                <span class="keywordflow">if</span> (channel &gt; 0 || slice &gt; 0 || frame &gt; 0)</div>
+<div class="line"><span class="lineno">  636</span>                    roi.coord = <span class="keyword">new</span> ZCT(slice - 1, channel - 1, frame - 1); <span class="comment">//-1 because our ROI coordinates are 0 based</span></div>
+<div class="line"><span class="lineno">  637</span>                <span class="comment">//decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);</span></div>
+<div class="line"><span class="lineno">  638</span> </div>
+<div class="line"><span class="lineno">  639</span>                <span class="comment">//We convert pixel to subpixel</span></div>
+<div class="line"><span class="lineno">  640</span> </div>
+<div class="line"><span class="lineno">  641</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.PointsD.Count; i++)</div>
+<div class="line"><span class="lineno">  642</span>                {</div>
+<div class="line"><span class="lineno">  643</span>                    <a class="code hl_typedef" href="_microscope_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> pd = ImageView.SelectedImage.ToStageSpace(<a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.PointsD[i]);</div>
+<div class="line"><span class="lineno">  644</span>                    <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.PointsD[i] = pd;</div>
+<div class="line"><span class="lineno">  645</span>                    <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.UpdateBoundingBox();</div>
+<div class="line"><span class="lineno">  646</span>                }</div>
+<div class="line"><span class="lineno">  647</span> </div>
+<div class="line"><span class="lineno">  648</span>                <span class="keywordflow">if</span> (<a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.type == ROI.Type.Polygon || <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>.type == ROI.Type.Freeform)</div>
+<div class="line"><span class="lineno">  649</span>                    roi.closed = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  650</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>;</div>
+<div class="line"><span class="lineno">  651</span>            }</div>
+<div class="ttc" id="a_microscope_8cs_html_a40ad24a6b4c995cdf7ce359c4fab62d1"><div class="ttname"><a href="_microscope_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a></div><div class="ttdeci">AForge.PointD PointD</div><div class="ttdef"><b>Definition:</b> <a href="_microscope_8cs_source.html#l00017">Microscope.cs:17</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a0a7997f226ff646783e3cb2827cfaba3"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0a7997f226ff646783e3cb2827cfaba3">BioImager.ImageJ.RoiDecoder.IMAGE_OPACITY</a></div><div class="ttdeci">static int IMAGE_OPACITY</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00292">ImageJ.cs:292</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a0bad0679824fb47a3f64975a686272a5"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0bad0679824fb47a3f64975a686272a5">BioImager.ImageJ.RoiDecoder.Y2</a></div><div class="ttdeci">static int Y2</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00263">ImageJ.cs:263</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a0f77d7576c5a5bfadda33a16a20a2eb8"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0f77d7576c5a5bfadda33a16a20a2eb8">BioImager.ImageJ.RoiDecoder.T_POSITION</a></div><div class="ttdeci">static int T_POSITION</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00286">ImageJ.cs:286</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a1463e65af7296554613f35ac5518d310"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a1463e65af7296554613f35ac5518d310">BioImager.ImageJ.RoiDecoder.Y1</a></div><div class="ttdeci">static int Y1</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00261">ImageJ.cs:261</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a1cd0f54c5bb76d23c8509ed5a4c0ab04"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a1cd0f54c5bb76d23c8509ed5a4c0ab04">BioImager.ImageJ.RoiDecoder.ROTATED_RECT</a></div><div class="ttdeci">static int ROTATED_RECT</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00304">ImageJ.cs:304</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a251da2cdfff3b5d59a91238c81754195"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a251da2cdfff3b5d59a91238c81754195">BioImager.ImageJ.RoiDecoder.TEXT</a></div><div class="ttdeci">static int TEXT</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00300">ImageJ.cs:300</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a2a8f3dd4ef1ae9803dea256d6516b486"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a2a8f3dd4ef1ae9803dea256d6516b486">BioImager.ImageJ.RoiDecoder.YD</a></div><div class="ttdeci">static int YD</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00265">ImageJ.cs:265</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a33cd3c28d206418cc7f1047032634cc3"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a33cd3c28d206418cc7f1047032634cc3">BioImager.ImageJ.RoiDecoder.SHAPE_ROI_SIZE</a></div><div class="ttdeci">static int SHAPE_ROI_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00270">ImageJ.cs:270</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a39c1070afbb55194f535ca03afc54ef1"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a39c1070afbb55194f535ca03afc54ef1">BioImager.ImageJ.RoiDecoder.VERSION_OFFSET</a></div><div class="ttdeci">static int VERSION_OFFSET</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00253">ImageJ.cs:253</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a44ad5db3dd1e87e7f3a178f23ae680f6"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a44ad5db3dd1e87e7f3a178f23ae680f6">BioImager.ImageJ.RoiDecoder.X2</a></div><div class="ttdeci">static int X2</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00262">ImageJ.cs:262</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a529ca4c3996b023e72cabac690e0524b"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a529ca4c3996b023e72cabac690e0524b">BioImager.ImageJ.RoiDecoder.OVERLAY_LABEL_COLOR</a></div><div class="ttdeci">static int OVERLAY_LABEL_COLOR</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00289">ImageJ.cs:289</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a563137177c19bfc45d43528f49b078cc"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a563137177c19bfc45d43528f49b078cc">BioImager.ImageJ.RoiDecoder.GROUP</a></div><div class="ttdeci">static int GROUP</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00291">ImageJ.cs:291</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a5ff96ed7c2a94137d0bed5391848d755"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a5ff96ed7c2a94137d0bed5391848d755">BioImager.ImageJ.RoiDecoder.SUBTYPE</a></div><div class="ttdeci">static int SUBTYPE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00273">ImageJ.cs:273</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a604728c2c3cd6581f691a7ad441c39b1"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a604728c2c3cd6581f691a7ad441c39b1">BioImager.ImageJ.RoiDecoder.SUB_PIXEL_RESOLUTION</a></div><div class="ttdeci">static int SUB_PIXEL_RESOLUTION</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00314">ImageJ.cs:314</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a627dd62a9fe640b451b0666394dc1923"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a627dd62a9fe640b451b0666394dc1923">BioImager.ImageJ.RoiDecoder.OVERLAY_FONT_SIZE</a></div><div class="ttdeci">static int OVERLAY_FONT_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00290">ImageJ.cs:290</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a714f21756cf64e7f278bbabb9ce2692b"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a714f21756cf64e7f278bbabb9ce2692b">BioImager.ImageJ.RoiDecoder.N_COORDINATES</a></div><div class="ttdeci">static int N_COORDINATES</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00259">ImageJ.cs:259</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a7454c043d89b4078396fdbf94ea72f4f"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7454c043d89b4078396fdbf94ea72f4f">BioImager.ImageJ.RoiDecoder.X1</a></div><div class="ttdeci">static int X1</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00260">ImageJ.cs:260</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a76dfb277da31bc2df17a52426eb6ba52"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a76dfb277da31bc2df17a52426eb6ba52">BioImager.ImageJ.RoiDecoder.POSITION</a></div><div class="ttdeci">static int POSITION</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00280">ImageJ.cs:280</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a7bdbe323fecb6c891b08549b403380bf"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7bdbe323fecb6c891b08549b403380bf">BioImager.ImageJ.RoiDecoder.DRAW_OFFSET</a></div><div class="ttdeci">static int DRAW_OFFSET</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00315">ImageJ.cs:315</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a7ebeddbff69c7b5dc4f3f899554840ea"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7ebeddbff69c7b5dc4f3f899554840ea">BioImager.ImageJ.RoiDecoder.ROUNDED_RECT_ARC_SIZE</a></div><div class="ttdeci">static int ROUNDED_RECT_ARC_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00279">ImageJ.cs:279</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a865d58a5c6b042ea065ae4c5933024c3"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a865d58a5c6b042ea065ae4c5933024c3">BioImager.ImageJ.RoiDecoder.SCALE_STROKE_WIDTH</a></div><div class="ttdeci">static int SCALE_STROKE_WIDTH</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00320">ImageJ.cs:320</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a8db40e04774fe3bbdb40bae822247a67"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a8db40e04774fe3bbdb40bae822247a67">BioImager.ImageJ.RoiDecoder.RIGHT</a></div><div class="ttdeci">static int RIGHT</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00258">ImageJ.cs:258</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a99002ef1aaca7eb99bc75d1fd3e96427"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a99002ef1aaca7eb99bc75d1fd3e96427">BioImager.ImageJ.RoiDecoder.HEADER2_OFFSET</a></div><div class="ttdeci">static int HEADER2_OFFSET</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00281">ImageJ.cs:281</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a9cc5ac471aacb8d4965ba3b9b7331b5e"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a9cc5ac471aacb8d4965ba3b9b7331b5e">BioImager.ImageJ.RoiDecoder.HEIGHTD</a></div><div class="ttdeci">static int HEIGHTD</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00267">ImageJ.cs:267</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a9ec9a474ec2cb3686e26095cf7aa115f"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a9ec9a474ec2cb3686e26095cf7aa115f">BioImager.ImageJ.RoiDecoder.ELLIPSE</a></div><div class="ttdeci">static int ELLIPSE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00302">ImageJ.cs:302</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_aa31f7865dc78f0f6d250c5015b5b69b0"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aa31f7865dc78f0f6d250c5015b5b69b0">BioImager.ImageJ.RoiDecoder.STROKE_WIDTH</a></div><div class="ttdeci">static int STROKE_WIDTH</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00269">ImageJ.cs:269</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_aaec38b8011aacde27cabce9a5d7af8e9"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaec38b8011aacde27cabce9a5d7af8e9">BioImager.ImageJ.RoiDecoder.COORDINATES</a></div><div class="ttdeci">static int COORDINATES</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00282">ImageJ.cs:282</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_aaef08aec36a39edc2233a1921d5d66ad"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaef08aec36a39edc2233a1921d5d66ad">BioImager.ImageJ.RoiDecoder.XD</a></div><div class="ttdeci">static int XD</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00264">ImageJ.cs:264</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_aaf4bf3d7428395cb97426ab62d230b82"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaf4bf3d7428395cb97426ab62d230b82">BioImager.ImageJ.RoiDecoder.TOP</a></div><div class="ttdeci">static int TOP</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00255">ImageJ.cs:255</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ab1e8da1b60b28f5e7ac2a087fa604507"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab1e8da1b60b28f5e7ac2a087fa604507">BioImager.ImageJ.RoiDecoder.Z_POSITION</a></div><div class="ttdeci">static int Z_POSITION</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00285">ImageJ.cs:285</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ab462a2a2b251a0edee003d905b5969af"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab462a2a2b251a0edee003d905b5969af">BioImager.ImageJ.RoiDecoder.BOTTOM</a></div><div class="ttdeci">static int BOTTOM</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00257">ImageJ.cs:257</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ab661b39b507949f49e0aa9b14b55e6a1"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ab661b39b507949f49e0aa9b14b55e6a1">BioImager.ImageJ.RoiDecoder.C_POSITION</a></div><div class="ttdeci">static int C_POSITION</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00284">ImageJ.cs:284</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_acc9ba13a81a85cf81c5b1516c0576275"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#acc9ba13a81a85cf81c5b1516c0576275">BioImager.ImageJ.RoiDecoder.OPTIONS</a></div><div class="ttdeci">static int OPTIONS</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00274">ImageJ.cs:274</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_aced63c18588692b4976eae7965129a53"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aced63c18588692b4976eae7965129a53">BioImager.ImageJ.RoiDecoder.IMAGE_SIZE</a></div><div class="ttdeci">static int IMAGE_SIZE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00293">ImageJ.cs:293</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ad592363e7c2a65d183e62ad16d51c39a"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ad592363e7c2a65d183e62ad16d51c39a">BioImager.ImageJ.RoiDecoder.SIZE</a></div><div class="ttdeci">static int SIZE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00268">ImageJ.cs:268</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ad6cd5c2aa86854d2efb969526ce5b4d4"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ad6cd5c2aa86854d2efb969526ce5b4d4">BioImager.ImageJ.RoiDecoder.TYPE</a></div><div class="ttdeci">static int TYPE</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00254">ImageJ.cs:254</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_ae87e86b098c4f71144d365e796cab228"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ae87e86b098c4f71144d365e796cab228">BioImager.ImageJ.RoiDecoder.ARROW</a></div><div class="ttdeci">static int ARROW</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00301">ImageJ.cs:301</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_af544bd4500307f7af002b123cbebab95"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#af544bd4500307f7af002b123cbebab95">BioImager.ImageJ.RoiDecoder.WIDTHD</a></div><div class="ttdeci">static int WIDTHD</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00266">ImageJ.cs:266</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_afa4a39ce81a1f5fc70518a6678416d62"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#afa4a39ce81a1f5fc70518a6678416d62">BioImager.ImageJ.RoiDecoder.LEFT</a></div><div class="ttdeci">static int LEFT</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00256">ImageJ.cs:256</a></div></div>
+<div class="ttc" id="anamespacemicroscope_1_1getcamrect_html_ab7e5e26c0b7478e19dd4383576443c61"><div class="ttname"><a href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">microscope.getcamrect.roi</a></div><div class="ttdeci">roi</div><div class="ttdef"><b>Definition:</b> <a href="getcamrect_8py_source.html#l00005">getcamrect.py:5</a></div></div>
+<div class="ttc" id="anamespacemicroscope_1_1setfilterwheel_html_a217c7f5aaaf2dd7e6747b3ed925387b5"><div class="ttname"><a href="namespacemicroscope_1_1setfilterwheel.html#a217c7f5aaaf2dd7e6747b3ed925387b5">microscope.setfilterwheel.position</a></div><div class="ttdeci">position</div><div class="ttdef"><b>Definition:</b> <a href="setfilterwheel_8py_source.html#l00004">setfilterwheel.py:4</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad4b360e58c7918aae85e2f368e48a04d" name="ad4b360e58c7918aae85e2f368e48a04d"></a>
@@ -389,7 +733,14 @@ Static Public Attributes</h2></td></tr>
 <p >Opens the <a class="el" href="class_bio_imager_1_1_r_o_i.html">ROI</a> at the specified path. Returns null if there is an error. </p>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00348">348</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  349</span>            {</div>
+<div class="line"><span class="lineno">  350</span>                ROI <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  351</span>                <a class="code hl_function" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a31ca49ea30d96c369b6beead2c7ea660">RoiDecoder</a> rd = <span class="keyword">new</span> <a class="code hl_function" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a31ca49ea30d96c369b6beead2c7ea660">RoiDecoder</a>(path);</div>
+<div class="line"><span class="lineno">  352</span>                <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = rd.getRoi();</div>
+<div class="line"><span class="lineno">  353</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>;</div>
+<div class="line"><span class="lineno">  354</span>            }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_1_1_roi_decoder_html_a31ca49ea30d96c369b6beead2c7ea660"><div class="ttname"><a href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a31ca49ea30d96c369b6beead2c7ea660">BioImager.ImageJ.RoiDecoder.RoiDecoder</a></div><div class="ttdeci">RoiDecoder(string path)</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00334">ImageJ.cs:334</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a668e4b1fd00368fdedc54c61c2b15971" name="a668e4b1fd00368fdedc54c61c2b15971"></a>
@@ -425,7 +776,22 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>A <a class="el" href="class_bio_imager_1_1_r_o_i.html">ROI</a> object. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00912">912</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  913</span>            {</div>
+<div class="line"><span class="lineno">  914</span>                ROI <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  915</span>                <span class="keywordflow">if</span> (bytes == <span class="keyword">null</span> || bytes.Length == 0)</div>
+<div class="line"><span class="lineno">  916</span>                    <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>;</div>
+<div class="line"><span class="lineno">  917</span>                <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  918</span>                {</div>
+<div class="line"><span class="lineno">  919</span>                    <a class="code hl_function" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a31ca49ea30d96c369b6beead2c7ea660">RoiDecoder</a> decoder = <span class="keyword">new</span> <a class="code hl_function" href="class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a31ca49ea30d96c369b6beead2c7ea660">RoiDecoder</a>(bytes, <span class="keyword">null</span>);</div>
+<div class="line"><span class="lineno">  920</span>                    <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a> = decoder.getRoi();</div>
+<div class="line"><span class="lineno">  921</span>                }</div>
+<div class="line"><span class="lineno">  922</span>                <span class="keywordflow">catch</span> (IOException e)</div>
+<div class="line"><span class="lineno">  923</span>                {</div>
+<div class="line"><span class="lineno">  924</span>                    <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  925</span>                }</div>
+<div class="line"><span class="lineno">  926</span>                <span class="keywordflow">return</span> <a class="code hl_variable" href="namespacemicroscope_1_1getcamrect.html#ab7e5e26c0b7478e19dd4383576443c61">roi</a>;</div>
+<div class="line"><span class="lineno">  927</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['waitverticalblanking_0',['WaitVerticalBlanking',['../class_bio_imager_1_1_configuration.html#a8730d470dbd9f909a67998f674033dda',1,'BioImager::Configuration']]],
-  ['width_1',['Width',['../class_bio_imager_1_1_configuration.html#af3e30488873d7cd5a136ea7f509c4b71',1,'BioImager::Configuration']]]
+  ['object_0',['Object',['../class_bio_imager_1_1_node_view_1_1_node.html#aed5688929b459136023d31cb7fb0189c',1,'BioImager::NodeView::Node']]],
+  ['openslide_1',['OpenSlide',['../class_bio_imager_1_1_image_view.html#a576b7b1c003b378450a89f0a94c4571e',1,'BioImager::ImageView']]],
+  ['origin_2',['Origin',['../class_bio_imager_1_1_image_view.html#a2f517343db7b1343c123766bfd3414af',1,'BioImager::ImageView']]]
 ];

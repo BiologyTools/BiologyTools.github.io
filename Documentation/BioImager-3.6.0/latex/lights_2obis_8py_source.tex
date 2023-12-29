@@ -1,0 +1,206 @@
+\hypertarget{lights_2obis_8py_source}{}\doxysection{obis.\+py}
+\label{lights_2obis_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/lights/obis.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/lights/obis.py}}
+\mbox{\hyperlink{lights_2obis_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1lights_1_1obis}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00021}00021 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00022}00022 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00024}00024 \textcolor{keyword}{import} serial}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00025}00025 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00026}00026 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00027}00027 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00030}00030 \_logger = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00033}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser}{00033}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser}{ObisLaser}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin}{microscope.abc.SerialDeviceMixin}}, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}}):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00034}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_ad410c797adf853de41de0f960bf4a435}{00034}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_ad410c797adf853de41de0f960bf4a435}{\_\_init\_\_}}(self, com, baud=115200, timeout=0.5, **kwargs) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00035}00035         super().\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_ad410c797adf853de41de0f960bf4a435}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00036}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{00036}}         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{connection}} = serial.Serial(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00037}00037             port=com,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00038}00038             baudrate=baud,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00039}00039             timeout=timeout,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00040}00040             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00041}00041             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00042}00042             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00043}00043         )}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00044}00044         \textcolor{comment}{\# Start a logger.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00045}00045         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SYSTem:INFormation:MODel?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00046}00046         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00047}00047         \_logger.info(\textcolor{stringliteral}{"{}OBIS laser model: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00048}00048         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SYSTem:INFormation:SNUMber?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00049}00049         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00050}00050         \_logger.info(\textcolor{stringliteral}{"{}OBIS laser serial number: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00051}00051         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SYSTem:CDRH?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00052}00052         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00053}00053         \_logger.info(\textcolor{stringliteral}{"{}CDRH safety: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00054}00054         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:TEMPerature:APRobe?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00055}00055         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00056}00056         \_logger.info(\textcolor{stringliteral}{"{}TEC temperature control: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00057}00057         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}*TST?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00058}00058         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00059}00059         \_logger.info(\textcolor{stringliteral}{"{}Self test procedure: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00060}00060 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00061}00061         \textcolor{comment}{\# We need to ensure that autostart is disabled so that we can}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00062}00062         \textcolor{comment}{\# switch emission on/off remotely.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00063}00063         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SYSTem:AUTostart?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00064}00064         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00065}00065         \_logger.info(\textcolor{stringliteral}{"{}Response to Autostart: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00067}00067         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:POWer:LIMit:HIGH?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00068}00068         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00069}00069         \_logger.info(\textcolor{stringliteral}{"{}Max intensity in watts: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00070}00070         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_afa8a28e0f0a37baec54d6e0bd1b798af}{\_max\_power\_mw}} = float(response) * 1000.0}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00072}00072         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}{initialize}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a5344e5fbdb194d232cafdc4bf0540ad2}{initialize}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00074}00074     \textcolor{keyword}{def }\_write(self, command):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00075}00075         \textcolor{stringliteral}{"{}"{}"{}Send a command."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00076}00076         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{connection}}.write(command + b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00077}00077         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00079}00079     \textcolor{keyword}{def }\_readline(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00080}00080         \textcolor{stringliteral}{"{}"{}"{}Read a line from connection without leading and trailing whitespace.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00081}00081 \textcolor{stringliteral}{        We override }\textcolor{keyword}{from} SerialDeviceMixin}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00082}00082         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00083}00083 \textcolor{stringliteral}{        response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{connection}}.readline().strip()}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00084}00084 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{connection}}.readline().strip() != b\textcolor{stringliteral}{"{}OK"{}}:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00085}00085             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00086}00086                 \textcolor{stringliteral}{"{}Did not get a proper answer from the laser serial comm."{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00087}00087             )}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00088}00088         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00090}00090     \textcolor{keyword}{def }\_flush\_handshake(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00091}00091         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a086cdda64ca85c1294a9e7d178a7fd34}{connection}}.readline()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00093}00093     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00094}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a464570b89c2f4eb5d3d79f8e397158ac}{00094}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a464570b89c2f4eb5d3d79f8e397158ac}{get\_status}}(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00095}00095         result = []}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00096}00096         \textcolor{keywordflow}{for} cmd, stat \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00097}00097             (b\textcolor{stringliteral}{"{}SOURce:AM:STATe?"{}}, \textcolor{stringliteral}{"{}Emission on?"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00098}00098             (b\textcolor{stringliteral}{"{}SOURce:POWer:LEVel:IMMediate:AMPLitude?"{}}, \textcolor{stringliteral}{"{}Target power:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00099}00099             (b\textcolor{stringliteral}{"{}SOURce:POWer:LEVel?"{}}, \textcolor{stringliteral}{"{}Measured power:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00100}00100             (b\textcolor{stringliteral}{"{}SYSTem:STATus?"{}}, \textcolor{stringliteral}{"{}Status code?"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00101}00101             (b\textcolor{stringliteral}{"{}SYSTem:FAULt?"{}}, \textcolor{stringliteral}{"{}Fault code?"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00102}00102             (b\textcolor{stringliteral}{"{}SYSTem:HOURs?"{}}, \textcolor{stringliteral}{"{}Head operating hours:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00103}00103         ]:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00104}00104             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(cmd)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00105}00105             result.append(stat + \textcolor{stringliteral}{"{} "{}} + self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}().decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00106}00106         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00108}00108     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00109}00109     \textcolor{keyword}{def }\_do\_enable(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00110}00110         \textcolor{stringliteral}{"{}"{}"{}Turn the laser ON. Return True if we succeeded, False otherwise."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00111}00111         \_logger.info(\textcolor{stringliteral}{"{}Turning laser ON."{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00112}00112         \textcolor{comment}{\# Exiting Sleep Mode.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00113}00113         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:TEMPerature:APRobe ON"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00114}00114         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00115}00115         \textcolor{comment}{\# Turn on emission.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00116}00116         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:STATe ON"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00117}00117         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00118}00118         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:STATe?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00119}00119         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00120}00120         \_logger.info(\textcolor{stringliteral}{"{}SOURce:AM:STATe? [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00122}00122         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{get\_is\_on}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a54d10efdf41616f01e2198bb0aba0637}{get\_is\_on}}():}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00123}00123             \textcolor{comment}{\# Something went wrong.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00124}00124             \_logger.error(\textcolor{stringliteral}{"{}Failed to turn ON. Current status:\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00125}00125             \_logger.error(self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{get\_status}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a464570b89c2f4eb5d3d79f8e397158ac}{get\_status}}())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00126}00126             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00127}00127         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00129}00129     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00130}00130         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_add8e7f466e7a28137d6e0ceede74e15e}{disable}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00131}00131         \textcolor{comment}{\# We set the power to a safe level}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00132}00132         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_add10fbfa23315ae2f34220249f458b4f}{\_set\_power\_mw}}(2)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00133}00133         \textcolor{comment}{\# We want it back into direct control mode.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00134}00134         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:INTernal CWP"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00135}00135         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00137}00137         \textcolor{comment}{\# Going into Sleep mode}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00138}00138         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:TEMPerature:APRobe OFF"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00139}00139         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00141}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a5344e5fbdb194d232cafdc4bf0540ad2}{00141}}     \textcolor{keyword}{def }initialize(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00142}00142         \textcolor{comment}{\# self.flush\_buffer()}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00143}00143         \textcolor{comment}{\# We ensure that handshaking is off.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00144}00144         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SYSTem:COMMunicate:HANDshaking ON"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00145}00145         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00146}00146         \textcolor{comment}{\# We don't want 'direct control' mode.}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00147}00147         \textcolor{comment}{\# TODO: Change to MIXED when analogue output is available}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00148}00148         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:EXTernal DIGital"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00149}00149         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00151}00151     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00152}00152     \textcolor{keyword}{def }\_do\_disable(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00153}00153         \textcolor{stringliteral}{"{}"{}"{}Turn the laser OFF. Return True if we succeeded, False otherwise."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00154}00154         \_logger.info(\textcolor{stringliteral}{"{}Turning laser OFF."{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00155}00155         \textcolor{comment}{\# Turning LASER OFF}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00156}00156         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:STATe OFF"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00157}00157         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00159}00159         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{get\_is\_on}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a54d10efdf41616f01e2198bb0aba0637}{get\_is\_on}}():}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00160}00160             \_logger.error(\textcolor{stringliteral}{"{}Failed to turn OFF. Current status:\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00161}00161             \_logger.error(self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{get\_status}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a464570b89c2f4eb5d3d79f8e397158ac}{get\_status}}())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00162}00162             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00163}00163         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00164}00164 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00165}00165     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00166}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a54d10efdf41616f01e2198bb0aba0637}{00166}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a54d10efdf41616f01e2198bb0aba0637}{get\_is\_on}}(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00167}00167         \textcolor{stringliteral}{"{}"{}"{}Return True if the laser is currently able to produce light."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00168}00168         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:AM:STATe?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00169}00169         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00170}00170         \_logger.info(\textcolor{stringliteral}{"{}Are we on? [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00171}00171         \textcolor{keywordflow}{return} response == b\textcolor{stringliteral}{"{}ON"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00172}00172 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00173}00173     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00174}00174     \textcolor{keyword}{def }\_get\_power\_mw(self):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00175}00175         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{get\_is\_on}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a54d10efdf41616f01e2198bb0aba0637}{get\_is\_on}}():}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00176}00176             \textcolor{keywordflow}{return} 0.0}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00177}00177         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:POWer:LEVel?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00178}00178         response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a47d657811abeecce2bf65c8e47d71c1e}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00179}00179         \textcolor{keywordflow}{return} float(response.decode()) * 1000.0}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00181}00181     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00182}00182     \textcolor{keyword}{def }\_set\_power\_mw(self, mw):}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00183}00183         power\_w = mw / 1000.0}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00184}00184         \_logger.info(\textcolor{stringliteral}{"{}Setting laser power to \%.7sW"{}}, power\_w)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00185}00185         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a43f562ed978d395440270ee654cb1bce}{\_write}}(b\textcolor{stringliteral}{"{}SOURce:POWer:LEVel:IMMediate:AMPLitude \%.5f"{}} \% power\_w)}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00186}00186         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a49212f20691bfc9be26d18b82d4b20aa}{\_flush\_handshake}}()}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00187}00187 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00188}00188     \textcolor{keyword}{def }\_do\_set\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00189}00189         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_add10fbfa23315ae2f34220249f458b4f}{\_set\_power\_mw}}(power * self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_afa8a28e0f0a37baec54d6e0bd1b798af}{\_max\_power\_mw}})}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00191}00191     \textcolor{keyword}{def }\_do\_get\_power(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00192}00192         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a65e25c4c50a7d0d1c1d8275b65416c2b}{\_get\_power\_mw}}() / self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_afa8a28e0f0a37baec54d6e0bd1b798af}{\_max\_power\_mw}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00194}00194     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00195}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_af569dcb02a7638632d7e90262c02ba42}{00195}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_af569dcb02a7638632d7e90262c02ba42}{trigger\_type}}(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00196}00196         \textcolor{keywordflow}{return} microscope.TriggerType.HIGH}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00197}00197 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00198}00198     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00199}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_aa3f244a3192a6694b56444358f7a6842}{00199}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_aa3f244a3192a6694b56444358f7a6842}{trigger\_mode}}(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00200}00200         \textcolor{keywordflow}{return} microscope.TriggerMode.BULB}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00202}\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a18912f19080a6d813599ac5c2c50cd2e}{00202}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1obis_1_1_obis_laser_a18912f19080a6d813599ac5c2c50cd2e}{set\_trigger}}(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00203}00203         self, ttype: microscope.TriggerType, tmode: \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.TriggerMode}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00204}00204     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00205}00205         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerType.HIGH:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00206}00206             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00207}00207                 \textcolor{stringliteral}{"{}the only trigger type supported is 'high'"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00208}00208             )}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00209}00209         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.BULB:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00210}00210             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00211}00211                 \textcolor{stringliteral}{"{}the only trigger mode supported is 'bulb'"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00212}00212             )}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00213}00213 }
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00214}00214     \textcolor{keyword}{def }\_do\_trigger(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00215}00215         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}(}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00216}00216             \textcolor{stringliteral}{"{}trigger does not make sense in trigger mode bulb, only enable"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2obis_8py_source_l00217}00217         )}
+
+\end{DoxyCode}

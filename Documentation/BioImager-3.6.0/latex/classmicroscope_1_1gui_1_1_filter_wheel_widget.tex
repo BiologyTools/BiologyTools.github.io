@@ -1,0 +1,92 @@
+\hypertarget{classmicroscope_1_1gui_1_1_filter_wheel_widget}{}\doxysection{microscope.\+gui.\+Filter\+Wheel\+Widget Class Reference}
+\label{classmicroscope_1_1gui_1_1_filter_wheel_widget}\index{microscope.gui.FilterWheelWidget@{microscope.gui.FilterWheelWidget}}
+Inheritance diagram for microscope.\+gui.\+Filter\+Wheel\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicroscope_1_1gui_1_1_filter_wheel_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a2a4a0c1521246d15330661c1e8ed5500}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{microscope.\+abc.\+Filter\+Wheel}} device, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a76fa88dbc9af27a77a21c1bda86bb9fc}{set\+Filter\+Wheel\+Position}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Group of toggle push buttons to change filter position.
+
+This widget shows a table of toggle buttons with the filterwheel
+position numbers.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00310}{310}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_filter_wheel_widget_a2a4a0c1521246d15330661c1e8ed5500}\label{classmicroscope_1_1gui_1_1_filter_wheel_widget_a2a4a0c1521246d15330661c1e8ed5500}} 
+\index{microscope.gui.FilterWheelWidget@{microscope.gui.FilterWheelWidget}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.gui.FilterWheelWidget@{microscope.gui.FilterWheelWidget}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Filter\+Wheel\+Widget.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{microscope.\+abc.\+Filter\+Wheel}}}]{device,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00317}{317}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00319     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00320         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00321         self.\_device = device}
+\DoxyCodeLine{00322 }
+\DoxyCodeLine{00323         self.\_button\_grp = QtWidgets.QButtonGroup(self)}
+\DoxyCodeLine{00324         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(self.\_device.n\_positions):}
+\DoxyCodeLine{00325             button = QtWidgets.QPushButton(str(i + 1), parent=self)}
+\DoxyCodeLine{00326             button.setCheckable(\textcolor{keyword}{True})}
+\DoxyCodeLine{00327             self.\_button\_grp.addButton(button, i)}
+\DoxyCodeLine{00328         self.\_button\_grp.button(self.\_device.position).setChecked(\textcolor{keyword}{True})}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330         \textcolor{comment}{\# We use buttonClicked instead of idClicked because that}}
+\DoxyCodeLine{00331         \textcolor{comment}{\# requires Qt 5.15 which is too recent.  Once we can use}}
+\DoxyCodeLine{00332         \textcolor{comment}{\# idClicked, then the slot will automatically get the wanted}}
+\DoxyCodeLine{00333         \textcolor{comment}{\# position.}}
+\DoxyCodeLine{00334         self.\_button\_grp.buttonClicked.connect(self.setFilterWheelPosition)}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{00337         \textcolor{keywordflow}{for} button \textcolor{keywordflow}{in} self.\_button\_grp.buttons():}
+\DoxyCodeLine{00338             layout.addWidget(button)}
+\DoxyCodeLine{00339         self.setLayout(layout)}
+\DoxyCodeLine{00340 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_filter_wheel_widget_a76fa88dbc9af27a77a21c1bda86bb9fc}\label{classmicroscope_1_1gui_1_1_filter_wheel_widget_a76fa88dbc9af27a77a21c1bda86bb9fc}} 
+\index{microscope.gui.FilterWheelWidget@{microscope.gui.FilterWheelWidget}!setFilterWheelPosition@{setFilterWheelPosition}}
+\index{setFilterWheelPosition@{setFilterWheelPosition}!microscope.gui.FilterWheelWidget@{microscope.gui.FilterWheelWidget}}
+\doxysubsubsection{\texorpdfstring{setFilterWheelPosition()}{setFilterWheelPosition()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Filter\+Wheel\+Widget.\+set\+Filter\+Wheel\+Position (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00341}{341}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00341     \textcolor{keyword}{def }setFilterWheelPosition(self) -\/> None:}
+\DoxyCodeLine{00342         self.\_device.position = self.\_button\_grp.checkedId()}
+\DoxyCodeLine{00343 }
+\DoxyCodeLine{00344 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/\mbox{\hyperlink{gui_8py}{gui.\+py}}\end{DoxyCompactItemize}

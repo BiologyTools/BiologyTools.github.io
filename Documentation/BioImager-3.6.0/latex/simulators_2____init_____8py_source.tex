@@ -1,0 +1,469 @@
+\hypertarget{simulators_2____init_____8py_source}{}\doxysection{\+\_\+\+\_\+init\+\_\+\+\_\+.\+py}
+\label{simulators_2____init_____8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/simulators/\_\_init\_\_.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/simulators/\_\_init\_\_.py}}
+\mbox{\hyperlink{simulators_2____init_____8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1simulators}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00021}00021 \textcolor{stringliteral}{"{}"{}"{}Simulated devices for use during development.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00022}00022 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00023}00023 \textcolor{stringliteral}{This module provides a series of test devices, which mimic real}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00024}00024 \textcolor{stringliteral}{hardware behaviour.  They implement the different ABC.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00025}00025 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00026}00026 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00027}00027 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00028}00028 \textcolor{stringliteral}{import logging}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00029}00029 \textcolor{stringliteral}{import random}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00030}00030 \textcolor{stringliteral}{import time}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00031}00031 \textcolor{stringliteral}{import typing}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00032}00032 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00033}00033 \textcolor{stringliteral}{import numpy as np}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00034}00034 \textcolor{stringliteral}{from PIL import Image, ImageDraw, ImageFont}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00035}00035 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00036}00036 \textcolor{stringliteral}{import microscope}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00037}00037 \textcolor{stringliteral}{import microscope.\_utils}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00038}00038 \textcolor{stringliteral}{import microscope.abc}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00039}00039 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00040}00040 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00041}00041 \textcolor{stringliteral}{\_logger = logging.getLogger(\_\_name\_\_)}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00042}00042 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00043}00043 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00044}00044 \textcolor{stringliteral}{def \_theta\_generator():}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00045}00045 \textcolor{stringliteral}{    "{}"{}"{}A generator that yields values between 0 and 2*pi"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00046}00046     TWOPI = 2 * np.pi}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00047}00047     th = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00048}00048     \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00049}00049         \textcolor{keywordflow}{yield} th}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00050}00050         th = (th + 0.01 * TWOPI) \% TWOPI}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00053}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator}{00053}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator}{\_ImageGenerator}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00054}00054     \textcolor{stringliteral}{"{}"{}"{}Generates test images, with methods for configuration via a Setting."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00056}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ac6d75a0d8bdaed1212f26319d097bcff}{00056}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ac6d75a0d8bdaed1212f26319d097bcff}{\_\_init\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00057}00057         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a10b38fd8ad8098cb9020fb28822e27d3}{\_methods}} = (}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00058}00058             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ad7b6784b1524550b76fe8519828b3624}{noise}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00059}00059             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a08f64ccd7c6c3526b37d1c38319110f5}{gradient}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00060}00060             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aa14b2aea100e86fe0a6327f3466eb9f2}{sawtooth}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00061}00061             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a6b73ed02385c7512c5d09fbc00f92021}{one\_gaussian}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00062}00062             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a7df1fa80f5372e7c677923a57bf188b8}{black}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00063}00063             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a0b734346867fdac9c26d1eee761b6aaa}{white}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00064}00064         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00065}00065         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a040ebccbef7d88e04aa4d07b86848a33}{\_method\_index}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00066}00066         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aed56a3f8327083826b421c82af19bcbe}{\_datatypes}} = (np.uint8, np.uint16, float)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00067}00067         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ade3e59518fd2058247a94676b9a2cfe4}{\_datatype\_index}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00068}00068         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a44bb5701834dfa064975a8f7ba58a7f7}{\_theta}} = \_theta\_generator()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00069}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a96851f7684d55fabe4bc1b6065ee536e}{00069}}         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a96851f7684d55fabe4bc1b6065ee536e}{numbering}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00070}00070         \textcolor{comment}{\# Font for rendering counter in images.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00071}00071         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_af72d363145aa1a0438479dfc3c36f1e3}{\_font}} = ImageFont.load\_default()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00073}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a800b7a0d14b03f318e3f0f5ed45338ad}{00073}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a800b7a0d14b03f318e3f0f5ed45338ad}{enable\_numbering}}(self, enab):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00074}00074         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a96851f7684d55fabe4bc1b6065ee536e}{numbering}} = enab}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00076}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a368bb95963cf48bb873cbe606ecfa13d}{00076}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a368bb95963cf48bb873cbe606ecfa13d}{get\_data\_types}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00077}00077         \textcolor{keywordflow}{return} (t.\_\_name\_\_ \textcolor{keywordflow}{for} t \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aed56a3f8327083826b421c82af19bcbe}{\_datatypes}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00079}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a7b7ae624c01255837c56e8e11e11a320}{00079}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a7b7ae624c01255837c56e8e11e11a320}{data\_type}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00080}00080         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ade3e59518fd2058247a94676b9a2cfe4}{\_datatype\_index}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00082}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_af5666b89927eecec43e0fecdd5cdf150}{00082}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_af5666b89927eecec43e0fecdd5cdf150}{set\_data\_type}}(self, index):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00083}00083         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ade3e59518fd2058247a94676b9a2cfe4}{\_datatype\_index}} = index}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00084}00084 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00085}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aa478846902c40273420b1768e587dd1b}{00085}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aa478846902c40273420b1768e587dd1b}{get\_methods}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00086}00086         \textcolor{stringliteral}{"{}"{}"{}Return the names of available image generation methods"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00087}00087         \textcolor{keywordflow}{return} (m.\_\_name\_\_ \textcolor{keywordflow}{for} m \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a10b38fd8ad8098cb9020fb28822e27d3}{\_methods}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00089}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a6b3f322fd048a7c95af4c8ddfd4d4b5b}{00089}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a6b3f322fd048a7c95af4c8ddfd4d4b5b}{method}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00090}00090         \textcolor{stringliteral}{"{}"{}"{}Return the index of the current image generation method."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00091}00091         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a040ebccbef7d88e04aa4d07b86848a33}{\_method\_index}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00093}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ae16245ec225012aaef474bfbec098b9c}{00093}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ae16245ec225012aaef474bfbec098b9c}{set\_method}}(self, index):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00094}00094         \textcolor{stringliteral}{"{}"{}"{}Set the image generation method."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00095}00095         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a040ebccbef7d88e04aa4d07b86848a33}{\_method\_index}} = index}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00097}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_abed43933b94b6ff979441bcd1300ea4e}{00097}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_abed43933b94b6ff979441bcd1300ea4e}{get\_image}}(self, width, height, dark=0, light=255, index=None):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00098}00098         \textcolor{stringliteral}{"{}"{}"{}Return an image using the currently selected method."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00099}00099         m = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a10b38fd8ad8098cb9020fb28822e27d3}{\_methods}}[self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a040ebccbef7d88e04aa4d07b86848a33}{\_method\_index}}]}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00100}00100         d = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aed56a3f8327083826b421c82af19bcbe}{\_datatypes}}[self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ade3e59518fd2058247a94676b9a2cfe4}{\_datatype\_index}}]}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00101}00101         \textcolor{comment}{\# return Image.fromarray(m(width, height, dark, light).astype(d), 'L')}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00102}00102         data = m(width, height, dark, light).astype(d)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00103}00103         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a96851f7684d55fabe4bc1b6065ee536e}{numbering}} \textcolor{keywordflow}{and} index \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00104}00104             text = \textcolor{stringliteral}{"{}\%d"{}} \% index}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00105}00105             size = tuple(d + 2 \textcolor{keywordflow}{for} d \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_af72d363145aa1a0438479dfc3c36f1e3}{\_font}}.getsize(text))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00106}00106             img = Image.new(\textcolor{stringliteral}{"{}L"{}}, size)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00107}00107             ctx = ImageDraw.Draw(img)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00108}00108             ctx.text((1, 1), text, fill=light)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00109}00109             data[0 : size[1], 0 : size[0]] = np.asarray(img)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00110}00110         \textcolor{keywordflow}{return} data}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00112}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a7df1fa80f5372e7c677923a57bf188b8}{00112}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a7df1fa80f5372e7c677923a57bf188b8}{black}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00113}00113         \textcolor{stringliteral}{"{}"{}"{}Ignores dark and light -\/ returns zeros"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00114}00114         \textcolor{keywordflow}{return} np.zeros((h, w))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00116}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a0b734346867fdac9c26d1eee761b6aaa}{00116}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a0b734346867fdac9c26d1eee761b6aaa}{white}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00117}00117         \textcolor{stringliteral}{"{}"{}"{}Ignores dark and light -\/ returns max value for current data type."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00118}00118         d = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aed56a3f8327083826b421c82af19bcbe}{\_datatypes}}[self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ade3e59518fd2058247a94676b9a2cfe4}{\_datatype\_index}}]}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00119}00119         \textcolor{keywordflow}{if} issubclass(d, np.integer):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00120}00120             value = np.iinfo(d).max}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00121}00121         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00122}00122             value = 1.0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00123}00123         \textcolor{keywordflow}{return} value * np.ones((h, w)).astype(d)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00125}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a08f64ccd7c6c3526b37d1c38319110f5}{00125}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a08f64ccd7c6c3526b37d1c38319110f5}{gradient}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00126}00126         \textcolor{stringliteral}{"{}"{}"{}A single gradient across the whole image from top left to bottom right."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00127}00127         xx, yy = np.meshgrid(range(w), range(h))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00128}00128         \textcolor{keywordflow}{return} dark + light * (xx + yy) / (xx.max() + yy.max())}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00130}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ad7b6784b1524550b76fe8519828b3624}{00130}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_ad7b6784b1524550b76fe8519828b3624}{noise}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00131}00131         \textcolor{stringliteral}{"{}"{}"{}Random noise."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00132}00132         \textcolor{keywordflow}{return} np.random.randint(dark, light, size=(h, w))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00134}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a6b73ed02385c7512c5d09fbc00f92021}{00134}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a6b73ed02385c7512c5d09fbc00f92021}{one\_gaussian}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00135}00135         \textcolor{stringliteral}{"{}A single gaussian"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00136}00136         sigma = 0.01 * max(w, h)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00137}00137         x0 = np.random.randint(w)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00138}00138         y0 = np.random.randint(h)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00139}00139         xx, yy = np.meshgrid(range(w), range(h))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00140}00140         \textcolor{keywordflow}{return} dark + light * np.exp(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00141}00141             -\/((xx -\/ x0) ** 2 + (yy -\/ y0) ** 2) / (2 * sigma**2)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00142}00142         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00144}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aa14b2aea100e86fe0a6327f3466eb9f2}{00144}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_aa14b2aea100e86fe0a6327f3466eb9f2}{sawtooth}}(self, w, h, dark, light):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00145}00145         \textcolor{stringliteral}{"{}"{}"{}A sawtooth gradient that rotates about 0,0."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00146}00146         th = next(self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator_a44bb5701834dfa064975a8f7ba58a7f7}{\_theta}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00147}00147         xx, yy = np.meshgrid(range(w), range(h))}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00148}00148         wrap = 0.1 * max(xx.max(), yy.max())}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00149}00149         \textcolor{keywordflow}{return} dark + light * ((np.sin(th) * xx + np.cos(th) * yy) \% wrap) / (}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00150}00150             wrap}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00151}00151         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00152}00152 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00153}00153 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00154}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera}{00154}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera}{SimulatedCamera}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00155}00155     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin}{microscope.\_utils.OnlyTriggersOnceOnSoftwareMixin}}, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{microscope.abc.Camera}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00156}00156 ):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00157}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a657d93b584e6915a33f4a853529330b4}{00157}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a657d93b584e6915a33f4a853529330b4}{\_\_init\_\_}}(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00158}00158         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a657d93b584e6915a33f4a853529330b4}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00159}00159         \textcolor{comment}{\# Binning and ROI}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00160}00160         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}} = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{microscope.ROI}}(0, 0, 512, 512)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00161}00161         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}} = \mbox{\hyperlink{classmicroscope_1_1_binning}{microscope.Binning}}(1, 1)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00162}00162         \textcolor{comment}{\# Function used to generate test image}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00163}00163         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}} = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1___image_generator}{\_ImageGenerator}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00164}00164         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00165}00165             \textcolor{stringliteral}{"{}image pattern"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00166}00166             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00167}00167             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.method,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00168}00168             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.set\_method,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00169}00169             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.get\_methods,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00170}00170         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00171}00171         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00172}00172             \textcolor{stringliteral}{"{}image data type"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00173}00173             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00174}00174             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.data\_type,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00175}00175             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.set\_data\_type,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00176}00176             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.get\_data\_types,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00177}00177         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00178}00178         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00179}00179             \textcolor{stringliteral}{"{}display image number"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00180}00180             \textcolor{stringliteral}{"{}bool"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00181}00181             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.numbering,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00182}00182             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.enable\_numbering,}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00183}00183             \textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00184}00184         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00185}00185         \textcolor{comment}{\# Software buffers and parameters for data conversion.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00186}00186         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a081c8c2d91973be0c1c5a4d3ce30fc8e}{\_a\_setting}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00187}00187         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00188}00188             \textcolor{stringliteral}{"{}a\_setting"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00189}00189             \textcolor{stringliteral}{"{}int"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00190}00190             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a081c8c2d91973be0c1c5a4d3ce30fc8e}{\_a\_setting}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00191}00191             \textcolor{keyword}{lambda} val: setattr(self, \textcolor{stringliteral}{"{}\_a\_setting"{}}, val),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00192}00192             \textcolor{keyword}{lambda}: (1, 100),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00193}00193         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00194}00194         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1f3837a44a22e085dbcca68ca4b628e1}{\_error\_percent}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00195}00195         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00196}00196             \textcolor{stringliteral}{"{}\_error\_percent"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00197}00197             \textcolor{stringliteral}{"{}int"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00198}00198             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1f3837a44a22e085dbcca68ca4b628e1}{\_error\_percent}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00199}00199             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_af5b44ebdff268c2e0920392166057d2d}{\_set\_error\_percent}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00200}00200             \textcolor{keyword}{lambda}: (0, 100),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00201}00201         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00202}00202         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a91d00b1489afe679f44c93baa554af7e}{\_gain}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00203}00203         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00204}00204             \textcolor{stringliteral}{"{}gain"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00205}00205             \textcolor{stringliteral}{"{}int"{}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00206}00206             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a91d00b1489afe679f44c93baa554af7e}{\_gain}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00207}00207             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a0f500a000ecfc0bb3a7f28ba0a07d918}{\_set\_gain}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00208}00208             \textcolor{keyword}{lambda}: (0, 8192),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00209}00209         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00210}00210         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00211}00211         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}} = 0.1}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00212}00212         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00213}00213         \textcolor{comment}{\# Count number of images sent since last enable.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00214}00214         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00215}00215 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00216}00216     \textcolor{keyword}{def }\_set\_error\_percent(self, value):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00217}00217         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1f3837a44a22e085dbcca68ca4b628e1}{\_error\_percent}} = value}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00218}00218         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a081c8c2d91973be0c1c5a4d3ce30fc8e}{\_a\_setting}} = value // 10}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00220}00220     \textcolor{keyword}{def }\_set\_gain(self, value):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00221}00221         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a91d00b1489afe679f44c93baa554af7e}{\_gain}} = value}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00222}00222 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00223}00223     \textcolor{keyword}{def }\_purge\_buffers(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00224}00224         \textcolor{stringliteral}{"{}"{}"{}Purge buffers on both camera and PC."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00225}00225         \_logger.info(\textcolor{stringliteral}{"{}Purging buffers."{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00227}00227     \textcolor{keyword}{def }\_create\_buffers(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00228}00228         \textcolor{stringliteral}{"{}"{}"{}Create buffers and store values needed to remove padding later."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00229}00229         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_af20f4fe4944a4668a11e106fe302ddfe}{\_purge\_buffers}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00230}00230         \_logger.info(\textcolor{stringliteral}{"{}Creating buffers."{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00231}00231 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00232}00232     \textcolor{keyword}{def }\_fetch\_data(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00233}00233         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}} \textcolor{keywordflow}{and} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}} > 0:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00234}00234             \textcolor{keywordflow}{if} random.randint(0, 100) < self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1f3837a44a22e085dbcca68ca4b628e1}{\_error\_percent}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00235}00235                 \_logger.info(\textcolor{stringliteral}{"{}Raising exception"{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00236}00236                 \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00237}00237                     \textcolor{stringliteral}{"{}Exception raised in SimulatedCamera.\_fetch\_data"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00238}00238                 )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00239}00239             \_logger.info(\textcolor{stringliteral}{"{}Sending image"{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00240}00240             time.sleep(self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00241}00241             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}} -\/= 1}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00242}00242             \textcolor{comment}{\# Create an image}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00243}00243             dark = int(32 * np.random.rand())}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00244}00244             light = int(255 -\/ 128 * np.random.rand())}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00245}00245             width = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}}.width // self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}}.h}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00246}00246             height = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}}.height // self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}}.v}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00247}00247             image = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ab9fb867c7589d5df72de42574d1a9bb9}{\_image\_generator}}.get\_image(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00248}00248                 width, height, dark, light, index=self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00249}00249             )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00250}00250             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}} += 1}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00251}00251             \textcolor{keywordflow}{return} image}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00252}00252 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00253}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a99371761dfb5c1080144afc08b341c89}{00253}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a99371761dfb5c1080144afc08b341c89}{abort}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00254}00254         \_logger.info(\textcolor{stringliteral}{"{}Disabling acquisition; \%d images sent."{}}, self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00255}00255         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00256}00256             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00257}00257 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00258}00258     \textcolor{keyword}{def }\_do\_disable(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00259}00259         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a36952a38857bc6c8eb627b2d8b6b867b}{abort}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a99371761dfb5c1080144afc08b341c89}{abort}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00260}00260 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00261}00261     \textcolor{keyword}{def }\_do\_enable(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00262}00262         \_logger.info(\textcolor{stringliteral}{"{}Preparing for acquisition."{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00263}00263         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00264}00264             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a36952a38857bc6c8eb627b2d8b6b867b}{abort}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a99371761dfb5c1080144afc08b341c89}{abort}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00265}00265         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_ac91afaf04f38114f6b994ec425a8e14b}{\_create\_buffers}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00266}00266         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00267}00267         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00268}00268         \_logger.info(\textcolor{stringliteral}{"{}Acquisition enabled."{}})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00269}00269         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00271}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_aa056a4f4ce7fd13acec9c778846b8a5e}{00271}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_aa056a4f4ce7fd13acec9c778846b8a5e}{set\_exposure\_time}}(self, value):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00272}00272         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}} = value}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00273}00273 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00274}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1c63fc13e73960dc4fb657f5c799f38e}{00274}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a1c63fc13e73960dc4fb657f5c799f38e}{get\_exposure\_time}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00275}00275         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00276}00276 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00277}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3bc2f4a77edbd2a6fba31e8a950827f6}{00277}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3bc2f4a77edbd2a6fba31e8a950827f6}{get\_cycle\_time}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00278}00278         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00280}00280     \textcolor{keyword}{def }\_get\_sensor\_shape(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00281}00281         \textcolor{keywordflow}{return} (512, 512)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00282}00282 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00283}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a47f6be6ed8249522ab6913b12c5108e7}{00283}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a47f6be6ed8249522ab6913b12c5108e7}{soft\_trigger}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00284}00284         \textcolor{comment}{\# deprecated, use self.trigger()}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00285}00285         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_a13348ed06ccceb5184881f9fc5330bbb}{trigger}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00286}00286 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00287}00287     \textcolor{keyword}{def }\_do\_trigger(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00288}00288         \_logger.info(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00289}00289             \textcolor{stringliteral}{"{}Trigger received; self.\_acquiring is \%s."{}}, self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00290}00290         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00291}00291         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00292}00292             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}} += 1}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00293}00293 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00294}00294     \textcolor{keyword}{def }\_get\_binning(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00295}00295         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00296}00296 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00297}00297     \textcolor{preprocessor}{@microscope.abc.keep\_acquiring}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00298}00298     \textcolor{keyword}{def }\_set\_binning(self, binning):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00299}00299         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}} = binning}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00300}00300 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00301}00301     \textcolor{keyword}{def }\_get\_roi(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00302}00302         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00303}00303 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00304}00304     \textcolor{preprocessor}{@microscope.abc.keep\_acquiring}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00305}00305     \textcolor{keyword}{def }\_set\_roi(self, roi):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00306}00306         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}} = roi}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00307}00307 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00308}00308     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00309}00309         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00310}00310 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00311}00311 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00312}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller}{00312}} \textcolor{keyword}{class }SimulatedController(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller}{microscope.abc.Controller}}):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00313}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller_ad6dafff71e9bd58ac72c02f0d59dce03}{00313}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller_ad6dafff71e9bd58ac72c02f0d59dce03}{\_\_init\_\_}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00314}00314         self, devices: typing.Mapping[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}]}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00315}00315     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00316}00316         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller_a22f591d0e759c440c78f0d9245214367}{\_devices}} = devices.copy()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00317}00317 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00318}00318     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00319}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller_a3e47ff2e9214d974441915282dbc7815}{00319}}     \textcolor{keyword}{def }devices(self) -\/> typing.Mapping[str, microscope.abc.Device]:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00320}00320         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_controller_a22f591d0e759c440c78f0d9245214367}{\_devices}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00321}00321 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00322}00322 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00323}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel}{00323}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel}{SimulatedFilterWheel}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{microscope.abc.FilterWheel}}):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00324}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a8d28fa9dea62317c67959411d1761d30}{00324}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a8d28fa9dea62317c67959411d1761d30}{\_\_init\_\_}}(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00325}00325         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a8d28fa9dea62317c67959411d1761d30}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00326}00326         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a94b440efb881833f1b3eadf885493a4d}{\_position}} = 0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00327}00327 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00328}00328     \textcolor{keyword}{def }\_do\_get\_position(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00329}00329         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a94b440efb881833f1b3eadf885493a4d}{\_position}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00330}00330 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00331}00331     \textcolor{keyword}{def }\_do\_set\_position(self, position):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00332}00332         \_logger.info(\textcolor{stringliteral}{"{}Setting position to \%s"{}}, position)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00333}00333         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel_a94b440efb881833f1b3eadf885493a4d}{\_position}} = position}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00334}00334 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00335}00335     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00336}00336         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00337}00337 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00338}00338 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00339}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source}{00339}} \textcolor{keyword}{class }SimulatedLightSource(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00340}00340     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin}{microscope.\_utils.OnlyTriggersBulbOnSoftwareMixin}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00341}00341     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00342}00342 ):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00343}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aead6ae8c12f862079fe063cd7afc5754}{00343}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aead6ae8c12f862079fe063cd7afc5754}{\_\_init\_\_}}(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00344}00344         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aead6ae8c12f862079fe063cd7afc5754}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00345}00345         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aa5138cbaf67e9046b1909b085d46fb18}{\_power}} = 0.0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00346}00346         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00347}00347 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00348}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aaf4dbb2a6a638c8b0c317ddc2c7d1e6d}{00348}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aaf4dbb2a6a638c8b0c317ddc2c7d1e6d}{get\_status}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00349}00349         \textcolor{keywordflow}{return} [str(x) \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} (self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}}, self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aa5138cbaf67e9046b1909b085d46fb18}{\_power}}, self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a90299b0af3d292db9b3d1d339871eab5}{\_set\_point}})]}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00350}00350 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00351}00351     \textcolor{keyword}{def }\_do\_enable(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00352}00352         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00353}00353         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00354}00354 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00355}00355     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00356}00356         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00357}00357 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00358}00358     \textcolor{keyword}{def }\_do\_disable(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00359}00359         self.\_emission = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00360}00360         \textcolor{keywordflow}{return} self.\_emission}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00361}00361 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00362}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aca67d63c6fc3e7afe89dbc4d2f9a8f67}{00362}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aca67d63c6fc3e7afe89dbc4d2f9a8f67}{get\_is\_on}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00363}00363         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00364}00364 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00365}00365     \textcolor{keyword}{def }\_do\_set\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00366}00366         \_logger.info(\textcolor{stringliteral}{"{}Power set to \%s."{}}, power)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00367}00367         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aa5138cbaf67e9046b1909b085d46fb18}{\_power}} = power}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00368}00368 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00369}00369     \textcolor{keyword}{def }\_do\_get\_power(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00370}00370         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_a2cf3d2efde6ec49615a3db5b6e4a62b1}{\_emission}}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00371}00371             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source_aa5138cbaf67e9046b1909b085d46fb18}{\_power}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00372}00372         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00373}00373             \textcolor{keywordflow}{return} 0.0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00374}00374 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00375}00375 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00376}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror}{00376}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror}{SimulatedDeformableMirror}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00377}00377     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin}{microscope.\_utils.OnlyTriggersOnceOnSoftwareMixin}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00378}00378     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{microscope.abc.DeformableMirror}},}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00379}00379 ):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00380}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_aef6e1ffa81f8d0e719714d4bf33563e1}{00380}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_aef6e1ffa81f8d0e719714d4bf33563e1}{\_\_init\_\_}}(self, n\_actuators, **kwargs):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00381}00381         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_aef6e1ffa81f8d0e719714d4bf33563e1}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00382}00382         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a892c143bcf01ce403d0786ca9b9bd2bd}{\_n\_actuators}} = n\_actuators}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00383}00383 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00384}00384     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00385}00385         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00386}00386 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00387}00387     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00388}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_aa0766ae8baeaae533d5ab2286b5e05f7}{00388}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_aa0766ae8baeaae533d5ab2286b5e05f7}{n\_actuators}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00389}00389         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a892c143bcf01ce403d0786ca9b9bd2bd}{\_n\_actuators}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00390}00390 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00391}00391     \textcolor{keyword}{def }\_do\_apply\_pattern(self, pattern):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00392}00392         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a633d0717ca11f6d744d62d67ff8d6f3a}{\_current\_pattern}} = pattern}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00393}00393 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00394}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a5f28ebc4ae8716c1b14edf456d9b9d02}{00394}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a5f28ebc4ae8716c1b14edf456d9b9d02}{get\_current\_pattern}}(self):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00395}00395         \textcolor{stringliteral}{"{}"{}"{}Method for debug purposes only.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00396}00396 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00397}00397 \textcolor{stringliteral}{        This method }\textcolor{keywordflow}{is} \textcolor{keywordflow}{not} part of the DeformableMirror ABC, it only}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00398}00398         exists on this test device to help during development.}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00399}00399         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00400}00400 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_deformable_mirror_a633d0717ca11f6d744d62d67ff8d6f3a}{\_current\_pattern}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00401}00401 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00402}00402 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00403}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis}{00403}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis}{SimulatedStageAxis}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis}{microscope.abc.StageAxis}}):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00404}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a407997e941d240e461087921f800bd3b}{00404}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a407997e941d240e461087921f800bd3b}{\_\_init\_\_}}(self, limits: microscope.AxisLimits) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00405}00405         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a407997e941d240e461087921f800bd3b}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00406}00406         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}} = limits}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00407}00407         \textcolor{comment}{\# Start axis in the middle of its range.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00408}00408         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}} = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.lower + (}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00409}00409             (self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.upper -\/ self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.lower) / 2.0}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00410}00410         )}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00411}00411 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00412}00412     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00413}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_afa587e44d67c030a5075133eb9b31c02}{00413}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_afa587e44d67c030a5075133eb9b31c02}{position}}(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00414}00414         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00415}00415 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00416}00416     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00417}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a4be39d53ed9170f2f66750f5c8abbcb3}{00417}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a4be39d53ed9170f2f66750f5c8abbcb3}{limits}}(self) -\/> microscope.AxisLimits:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00418}00418         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00419}00419 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00420}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a418e6388a9bb7ddacd03266f7b2f3725}{00420}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a418e6388a9bb7ddacd03266f7b2f3725}{move\_by}}(self, delta: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00421}00421         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis_a14b522d41fec9cc65afb5a8297ead8c1}{move\_to}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_ade5a8aa58712ad65f63591a6d8ef798c}{move\_to}}(self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}} + delta)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00422}00422 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00423}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_ade5a8aa58712ad65f63591a6d8ef798c}{00423}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_ade5a8aa58712ad65f63591a6d8ef798c}{move\_to}}(self, pos: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00424}00424         \textcolor{keywordflow}{if} pos < self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.lower:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00425}00425             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}} = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.lower}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00426}00426         \textcolor{keywordflow}{elif} pos > self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.upper:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00427}00427             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}} = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_abee2f3f1c2aac46b012f672af89c96e5}{\_limits}}.upper}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00428}00428         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00429}00429             self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis_a456b074bcea010dbb1bb1c22ab181fe7}{\_position}} = pos}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00430}00430 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00431}00431 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00432}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage}{00432}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage}{SimulatedStage}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage}{microscope.abc.Stage}}):}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00433}00433     \textcolor{stringliteral}{"{}"{}"{}A test stage with any number of axis.}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00434}00434 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00435}00435 \textcolor{stringliteral}{    Args:}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00436}00436 \textcolor{stringliteral}{        limits: map of test axis to be created }\textcolor{keywordflow}{and} their limits.}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00437}00437 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00438}00438     .. code-\/block:: python}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00439}00439 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00440}00440         \textcolor{comment}{\# Test XY motorized stage of square shape:}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00441}00441         xy\_stage = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage}{SimulatedStage}}(\{}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00442}00442             \textcolor{stringliteral}{'X'} : \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{AxisLimits}}(0, 5000),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00443}00443             \textcolor{stringliteral}{'Y'} : \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{AxisLimits}}(0, 5000),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00444}00444         \})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00445}00445 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00446}00446         \textcolor{comment}{\# XYZ stage, on rectangular shape and negative coordinates:}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00447}00447         xyz\_stage = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage}{SimulatedStage}}(\{}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00448}00448             \textcolor{stringliteral}{'X'} : \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{AxisLimits}}(-\/5000, 5000),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00449}00449             \textcolor{stringliteral}{'Y'} : \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{AxisLimits}}(-\/10000, 12000),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00450}00450             \textcolor{stringliteral}{'Z'} : \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{AxisLimits}}(0, 1000),}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00451}00451         \})}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00452}00452 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00453}00453     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00454}00454 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00455}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a683e90d22e3de6cdf044ba3df498dec0}{00455}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a683e90d22e3de6cdf044ba3df498dec0}{\_\_init\_\_}}(}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00456}00456         self, limits: typing.Mapping[str, \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}], **kwargs}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00457}00457     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00458}00458         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a683e90d22e3de6cdf044ba3df498dec0}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00459}00459         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_ac45643357e2113c94e5da61544033a76}{\_axes}} = \{}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00460}00460             name: \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_axis}{SimulatedStageAxis}}(lim) \textcolor{keywordflow}{for} name, lim \textcolor{keywordflow}{in} limits.items()}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00461}00461         \}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00462}00462 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00463}00463     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00464}00464         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00465}00465 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00466}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa2887476f57aa058e0c08fca054a2844}{00466}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa2887476f57aa058e0c08fca054a2844}{may\_move\_on\_enable}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00467}00467         \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00468}00468 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00469}00469     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00470}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa09063d616ef150b85f237467ed3fd91}{00470}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa09063d616ef150b85f237467ed3fd91}{axes}}(self) -\/> typing.Mapping[str, microscope.abc.StageAxis]:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00471}00471         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_ac45643357e2113c94e5da61544033a76}{\_axes}}}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00472}00472 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00473}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a71580c0f72073e69d8265b0f823d31e0}{00473}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a71580c0f72073e69d8265b0f823d31e0}{move\_by}}(self, delta: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00474}00474         \textcolor{keywordflow}{for} name, rpos \textcolor{keywordflow}{in} delta.items():}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00475}00475             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92dd2da8d928c166bc55b800}{axes}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa09063d616ef150b85f237467ed3fd91}{axes}}[name].\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a71580c0f72073e69d8265b0f823d31e0}{move\_by}}(rpos)}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00476}00476 }
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00477}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a854836af5f917c28b88e6a630f8f741a}{00477}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a854836af5f917c28b88e6a630f8f741a}{move\_to}}(self, position: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00478}00478         \textcolor{keywordflow}{for} name, pos \textcolor{keywordflow}{in} position.items():}
+\DoxyCodeLine{\Hypertarget{simulators_2____init_____8py_source_l00479}00479             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92dd2da8d928c166bc55b800}{axes}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa09063d616ef150b85f237467ed3fd91}{axes}}[name].\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a854836af5f917c28b88e6a630f8f741a}{move\_to}}(pos)}
+
+\end{DoxyCode}

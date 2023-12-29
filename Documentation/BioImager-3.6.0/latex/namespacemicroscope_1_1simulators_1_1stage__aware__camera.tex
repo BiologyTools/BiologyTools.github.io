@@ -1,0 +1,68 @@
+\hypertarget{namespacemicroscope_1_1simulators_1_1stage__aware__camera}{}\doxysection{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera Namespace Reference}
+\label{namespacemicroscope_1_1simulators_1_1stage__aware__camera}\index{microscope.simulators.stage\_aware\_camera@{microscope.simulators.stage\_aware\_camera}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera}{Stage\+Aware\+Camera}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.\+abc.\+Device}}\mbox{]} \mbox{\hyperlink{namespacemicroscope_1_1simulators_1_1stage__aware__camera_ae5befbb5a8b6632573d50455906f6a1b}{simulated\+\_\+setup\+\_\+from\+\_\+image}} (str filepath, $\ast$$\ast$kwargs)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1simulators_1_1stage__aware__camera_ae5befbb5a8b6632573d50455906f6a1b}\label{namespacemicroscope_1_1simulators_1_1stage__aware__camera_ae5befbb5a8b6632573d50455906f6a1b}} 
+\index{microscope.simulators.stage\_aware\_camera@{microscope.simulators.stage\_aware\_camera}!simulated\_setup\_from\_image@{simulated\_setup\_from\_image}}
+\index{simulated\_setup\_from\_image@{simulated\_setup\_from\_image}!microscope.simulators.stage\_aware\_camera@{microscope.simulators.stage\_aware\_camera}}
+\doxysubsubsection{\texorpdfstring{simulated\_setup\_from\_image()}{simulated\_setup\_from\_image()}}
+{\footnotesize\ttfamily  typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.\+abc.\+Device}}\mbox{]} microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+simulated\+\_\+setup\+\_\+from\+\_\+image (\begin{DoxyParamCaption}\item[{str}]{filepath,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Create simulated devices given an image file.
+
+To use with the `device-server`::
+
+    DEVICES = [
+        device(simulated_setup_from_image, 'localhost', 8000,
+               conf={'filepath': path_to_image_file}),
+    ]
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{stage__aware__camera_8py_source_l00129}{129}} of file \mbox{\hyperlink{stage__aware__camera_8py_source}{stage\+\_\+aware\+\_\+camera.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131 ) -\/> typing.Dict[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}]:}
+\DoxyCodeLine{00132     \textcolor{stringliteral}{"{}"{}"{}Create simulated devices given an image file.}}
+\DoxyCodeLine{00133 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00134 \textcolor{stringliteral}{    To use }\textcolor{keyword}{with} the `device-\/server`::}
+\DoxyCodeLine{00135 }
+\DoxyCodeLine{00136         DEVICES = [}
+\DoxyCodeLine{00137             device(simulated\_setup\_from\_image, \textcolor{stringliteral}{'localhost'}, 8000,}
+\DoxyCodeLine{00138                    conf=\{\textcolor{stringliteral}{'filepath'}: path\_to\_image\_file\}),}
+\DoxyCodeLine{00139         ]}
+\DoxyCodeLine{00140     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00141 \textcolor{stringliteral}{    PIL.Image.MAX\_IMAGE\_PIXELS = }\textcolor{keywordtype}{None}}
+\DoxyCodeLine{00142     image = np.array(PIL.Image.open(filepath))}
+\DoxyCodeLine{00143     \textcolor{keywordflow}{if} len(image.shape) < 3:}
+\DoxyCodeLine{00144         \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}not an RGB image"{}})}
+\DoxyCodeLine{00145 }
+\DoxyCodeLine{00146     stage = SimulatedStage(}
+\DoxyCodeLine{00147         \{}
+\DoxyCodeLine{00148             \textcolor{stringliteral}{"{}x"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(0, image.shape[0]),}
+\DoxyCodeLine{00149             \textcolor{stringliteral}{"{}y"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(0, image.shape[1]),}
+\DoxyCodeLine{00150             \textcolor{stringliteral}{"{}z"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(-\/50, 50),}
+\DoxyCodeLine{00151         \}}
+\DoxyCodeLine{00152     )}
+\DoxyCodeLine{00153     filterwheel = SimulatedFilterWheel(positions=image.shape[2])}
+\DoxyCodeLine{00154     camera = StageAwareCamera(image, stage, filterwheel)}
+\DoxyCodeLine{00155 }
+\DoxyCodeLine{00156     \textcolor{keywordflow}{return} \{}
+\DoxyCodeLine{00157         \textcolor{stringliteral}{"{}camera"{}}: camera,}
+\DoxyCodeLine{00158         \textcolor{stringliteral}{"{}filterwheel"{}}: filterwheel,}
+\DoxyCodeLine{00159         \textcolor{stringliteral}{"{}stage"{}}: stage,}
+\DoxyCodeLine{00160     \}}
+
+\end{DoxyCode}

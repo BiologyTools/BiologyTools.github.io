@@ -1,0 +1,137 @@
+\hypertarget{classmicroscope_1_1gui_1_1_deformable_mirror_widget}{}\doxysection{microscope.\+gui.\+Deformable\+Mirror\+Widget Class Reference}
+\label{classmicroscope_1_1gui_1_1_deformable_mirror_widget}\index{microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}}
+Inheritance diagram for microscope.\+gui.\+Deformable\+Mirror\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicroscope_1_1gui_1_1_deformable_mirror_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a34e38234e430b08596291aecab6d90c4}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{microscope.\+abc.\+Deformable\+Mirror}} device, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a8fe0ac3eb0775d920057e97889735f67}{set\+Actuator\+Value}} (self, int actuator\+\_\+index, int value)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}{reset\+Pattern}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Display a slider for each actuator.
+
+Constructing this widget will set all actuators to their mid-point
+since the actuators position are not queryable..  The reset button
+does this too, i.e., it sets all actuators to their mid-point.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00247}{247}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a34e38234e430b08596291aecab6d90c4}\label{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a34e38234e430b08596291aecab6d90c4}} 
+\index{microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Deformable\+Mirror\+Widget.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{microscope.\+abc.\+Deformable\+Mirror}}}]{device,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00255}{255}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00258         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00259         self.\_device = device}
+\DoxyCodeLine{00260 }
+\DoxyCodeLine{00261         self.\_pattern = numpy.ndarray(shape=(self.\_device.n\_actuators))}
+\DoxyCodeLine{00262         self.\_actuators: typing.List[QtWidgets.QSlider] = []}
+\DoxyCodeLine{00263         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(self.\_device.n\_actuators):}
+\DoxyCodeLine{00264             actuator = QtWidgets.QSlider(QtCore.Qt.Horizontal, parent=self)}
+\DoxyCodeLine{00265             actuator.setMinimum(0)}
+\DoxyCodeLine{00266             actuator.setMaximum(100)}
+\DoxyCodeLine{00267 }
+\DoxyCodeLine{00268             \textcolor{keyword}{def }setThisActuator(value, actuator\_index=i):}
+\DoxyCodeLine{00269                 self.setActuatorValue(actuator\_index, value)}
+\DoxyCodeLine{00270 }
+\DoxyCodeLine{00271             actuator.valueChanged.connect(setThisActuator)}
+\DoxyCodeLine{00272             self.\_actuators.append(actuator)}
+\DoxyCodeLine{00273         \textcolor{comment}{\# We don't know the pattern currently applied to the mirror so}}
+\DoxyCodeLine{00274         \textcolor{comment}{\# we reset it which also updates the slider positions.}}
+\DoxyCodeLine{00275         self.resetPattern()}
+\DoxyCodeLine{00276 }
+\DoxyCodeLine{00277         self.\_reset\_button = QtWidgets.QPushButton(\textcolor{stringliteral}{"{}Reset"{}}, parent=self)}
+\DoxyCodeLine{00278         self.\_reset\_button.clicked.connect(self.resetPattern)}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280         main\_layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{00281         main\_layout.addWidget(self.\_reset\_button)}
+\DoxyCodeLine{00282 }
+\DoxyCodeLine{00283         actuators\_layout = QtWidgets.QFormLayout()}
+\DoxyCodeLine{00284         actuators\_layout.setLabelAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{00285         \textcolor{keywordflow}{for} i, actuator \textcolor{keywordflow}{in} enumerate(self.\_actuators, start=1):}
+\DoxyCodeLine{00286             actuators\_layout.addRow(str(i), actuator)}
+\DoxyCodeLine{00287         main\_layout.addLayout(actuators\_layout)}
+\DoxyCodeLine{00288 }
+\DoxyCodeLine{00289         self.setLayout(main\_layout)}
+\DoxyCodeLine{00290 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}\label{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}} 
+\index{microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}!resetPattern@{resetPattern}}
+\index{resetPattern@{resetPattern}!microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}}
+\doxysubsubsection{\texorpdfstring{resetPattern()}{resetPattern()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Deformable\+Mirror\+Widget.\+reset\+Pattern (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set all actuators to their mid-point (0.5).\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00300}{300}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00300     \textcolor{keyword}{def }resetPattern(self) -\/> None:}
+\DoxyCodeLine{00301         \textcolor{stringliteral}{"{}"{}"{}Set all actuators to their mid-\/point (0.5)."{}"{}"{}}}
+\DoxyCodeLine{00302         self.\_pattern.fill(0.5)}
+\DoxyCodeLine{00303         self.\_device.apply\_pattern(self.\_pattern)}
+\DoxyCodeLine{00304         \textcolor{keywordflow}{for} i, actuator \textcolor{keywordflow}{in} enumerate(self.\_actuators):}
+\DoxyCodeLine{00305             actuator.blockSignals(\textcolor{keyword}{True})}
+\DoxyCodeLine{00306             actuator.setSliderPosition(int(self.\_pattern[i] * 100))}
+\DoxyCodeLine{00307             actuator.blockSignals(\textcolor{keyword}{False})}
+\DoxyCodeLine{00308 }
+\DoxyCodeLine{00309 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a8fe0ac3eb0775d920057e97889735f67}\label{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a8fe0ac3eb0775d920057e97889735f67}} 
+\index{microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}!setActuatorValue@{setActuatorValue}}
+\index{setActuatorValue@{setActuatorValue}!microscope.gui.DeformableMirrorWidget@{microscope.gui.DeformableMirrorWidget}}
+\doxysubsubsection{\texorpdfstring{setActuatorValue()}{setActuatorValue()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Deformable\+Mirror\+Widget.\+set\+Actuator\+Value (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{int}]{actuator\+\_\+index,  }\item[{int}]{value }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00291}{291}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00291     \textcolor{keyword}{def }setActuatorValue(self, actuator\_index: int, value: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00292         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (0 < actuator\_index < self.\_pattern.size):}
+\DoxyCodeLine{00293             \textcolor{keywordflow}{raise} ValueError(}
+\DoxyCodeLine{00294                 \textcolor{stringliteral}{"{}index \%d is invalid because DM has \%d actuators"{}}}
+\DoxyCodeLine{00295                 \% (actuator\_index, self.\_pattern.size)}
+\DoxyCodeLine{00296             )}
+\DoxyCodeLine{00297         self.\_pattern[actuator\_index] = value / 100.0}
+\DoxyCodeLine{00298         self.\_device.apply\_pattern(self.\_pattern)}
+\DoxyCodeLine{00299 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/\mbox{\hyperlink{gui_8py}{gui.\+py}}\end{DoxyCompactItemize}

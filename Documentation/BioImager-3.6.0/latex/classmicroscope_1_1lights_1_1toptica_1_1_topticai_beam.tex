@@ -1,0 +1,177 @@
+\hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam}{}\doxysection{microscope.\+lights.\+toptica.\+Topticai\+Beam Class Reference}
+\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam}\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+Inheritance diagram for microscope.\+lights.\+toptica.\+Topticai\+Beam\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=0.880503cm]{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a4d9258086407024c91632f77fc37cfdc}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, str port, $\ast$$\ast$kwargs)
+\item 
+typing.\+List\mbox{[}str\mbox{]} \mbox{\hyperlink{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a25f933681399dd9d794cf591c7f370ab}{get\+\_\+status}} (self)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a6c8e9ce41dfba25d8201d0a566e9ac94}{enable}} (self)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_ace72a4800f613b245fa2f35c0683fd21}{disable}} (self)
+\item 
+bool \mbox{\hyperlink{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_aa0222648ea020139d63f50f3255a3171}{get\+\_\+is\+\_\+on}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Toptica iBeam smart laser.
+
+Control of laser power is performed by setting the power level on
+the normal channel (#2) only.  The bias channel (#1) is left
+unmodified and so defines the lowest level power.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00205}{205}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a4d9258086407024c91632f77fc37cfdc}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a4d9258086407024c91632f77fc37cfdc}} 
+\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{str}]{port,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ae9b6a53598f41b773e97ddcb2c78a0ac}{microscope.\+abc.\+Light\+Source}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00216}{216}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00217         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00218         self.\_conn = \_iBeamConnection(port)}
+\DoxyCodeLine{00219         \textcolor{comment}{\# The Toptica iBeam has up to five operation modes, named}}
+\DoxyCodeLine{00220         \textcolor{comment}{\# "{}channels"{} on the documentation.  Only the first three}}
+\DoxyCodeLine{00221         \textcolor{comment}{\# channels have any sort of documentation:}}
+\DoxyCodeLine{00222         \textcolor{comment}{\#}}
+\DoxyCodeLine{00223         \textcolor{comment}{\#   Ch 1: bias level channel}}
+\DoxyCodeLine{00224         \textcolor{comment}{\#   Ch 2: normal operating level channel}}
+\DoxyCodeLine{00225         \textcolor{comment}{\#   Ch 3: only used at high-\/power models}}
+\DoxyCodeLine{00226         \textcolor{comment}{\#}}
+\DoxyCodeLine{00227         \textcolor{comment}{\# We haven't come across a laser with a channel 3 so we are}}
+\DoxyCodeLine{00228         \textcolor{comment}{\# ignoring it until then.  So we just leave the bias channel}}
+\DoxyCodeLine{00229         \textcolor{comment}{\# (1) alone and control power via the normal channel (2).}}
+\DoxyCodeLine{00230         self.\_max\_power = self.\_conn.show\_max\_power()}
+\DoxyCodeLine{00231 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_ace72a4800f613b245fa2f35c0683fd21}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_ace72a4800f613b245fa2f35c0683fd21}} 
+\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!disable@{disable}}
+\index{disable@{disable}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+\doxysubsubsection{\texorpdfstring{disable()}{disable()}}
+{\footnotesize\ttfamily  None microscope.\+lights.\+toptica.\+Topticai\+Beam.\+disable (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Disable the device for a short period for inactivity.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_add8e7f466e7a28137d6e0ceede74e15e}{microscope.\+abc.\+Device}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00242}{242}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00242     \textcolor{keyword}{def }disable(self) -\/> None:}
+\DoxyCodeLine{00243         self.\_conn.laser\_off()}
+\DoxyCodeLine{00244 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a6c8e9ce41dfba25d8201d0a566e9ac94}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a6c8e9ce41dfba25d8201d0a566e9ac94}} 
+\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!enable@{enable}}
+\index{enable@{enable}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+\doxysubsubsection{\texorpdfstring{enable()}{enable()}}
+{\footnotesize\ttfamily  None microscope.\+lights.\+toptica.\+Topticai\+Beam.\+enable (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Enable the device.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_ac7759ad4eb304422f07cfee215a73961}{microscope.\+abc.\+Device}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00239}{239}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239     \textcolor{keyword}{def }enable(self) -\/> None:}
+\DoxyCodeLine{00240         self.\_conn.laser\_on()}
+\DoxyCodeLine{00241 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_aa0222648ea020139d63f50f3255a3171}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_aa0222648ea020139d63f50f3255a3171}} 
+\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!get\_is\_on@{get\_is\_on}}
+\index{get\_is\_on@{get\_is\_on}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+\doxysubsubsection{\texorpdfstring{get\_is\_on()}{get\_is\_on()}}
+{\footnotesize\ttfamily  bool microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+is\+\_\+on (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return True if the light source is currently able to produce light.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{microscope.\+abc.\+Light\+Source}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00245}{245}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245     \textcolor{keyword}{def }get\_is\_on(self) -\/> bool:}
+\DoxyCodeLine{00246         state = self.\_conn.status\_laser()}
+\DoxyCodeLine{00247         \textcolor{keywordflow}{if} state == b\textcolor{stringliteral}{"{}ON"{}}:}
+\DoxyCodeLine{00248             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00249         \textcolor{keywordflow}{elif} state == b\textcolor{stringliteral}{"{}OFF"{}}:}
+\DoxyCodeLine{00250             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00251         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00252             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00253                 \textcolor{stringliteral}{"{}Unexpected laser status: \%s"{}} \% state.decode()}
+\DoxyCodeLine{00254             )}
+\DoxyCodeLine{00255 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a25f933681399dd9d794cf591c7f370ab}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a25f933681399dd9d794cf591c7f370ab}} 
+\index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!get\_status@{get\_status}}
+\index{get\_status@{get\_status}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
+\doxysubsubsection{\texorpdfstring{get\_status()}{get\_status()}}
+{\footnotesize\ttfamily  typing.\+List\mbox{[}str\mbox{]} microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+status (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Query and return the light source status.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{microscope.\+abc.\+Light\+Source}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00235}{235}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235     \textcolor{keyword}{def }get\_status(self) -\/> typing.List[str]:}
+\DoxyCodeLine{00236         status: typing.List[str] = []}
+\DoxyCodeLine{00237         \textcolor{keywordflow}{return} status}
+\DoxyCodeLine{00238 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/lights/\mbox{\hyperlink{lights_2toptica_8py}{toptica.\+py}}\end{DoxyCompactItemize}

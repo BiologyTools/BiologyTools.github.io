@@ -3,6 +3,8 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a04f5f623573c622b08045c35d21265d9}{DGraphics}} ()
+\item 
 bool \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_aef45ba95341dae8fe00134d2986f3b8e}{Initialize}} (\mbox{\hyperlink{class_bio_imager_1_1_d_system_configuration}{DSystem\+Configuration}} configuration, Int\+Ptr window\+Handle, \mbox{\hyperlink{class_bio_imager_1_1_bio_image}{Bio\+Image}} im)
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a3fe4e3b2c232934548d2bc40b4f40f19}{Shut\+Down}} ()
@@ -43,6 +45,11 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00005}{5}} of file \
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015 \{ \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_afead48c268ee6ec53f322daa12c15237}\label{class_bio_imager_1_1_d_graphics_afead48c268ee6ec53f322daa12c15237}} 
@@ -55,6 +62,14 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00015}{15}} of file 
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00080}{80}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00081         \{}
+\DoxyCodeLine{00082             \textcolor{comment}{// Render the graphics scene.}}
+\DoxyCodeLine{00083             \textcolor{keywordflow}{return} Render(r, g, b, interval, alpha);}
+\DoxyCodeLine{00084         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_aef45ba95341dae8fe00134d2986f3b8e}\label{class_bio_imager_1_1_d_graphics_aef45ba95341dae8fe00134d2986f3b8e}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!Initialize@{Initialize}}
 \index{Initialize@{Initialize}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -65,6 +80,55 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00080}{80}} of file 
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019         \{}
+\DoxyCodeLine{00020             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00021             \{}
+\DoxyCodeLine{00022                 \textcolor{comment}{// Create the Direct3D object.}}
+\DoxyCodeLine{00023                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}} = \textcolor{keyword}{new} DDX11();}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025                 \textcolor{comment}{// I nitialize the Direct3D object.}}
+\DoxyCodeLine{00026                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}}.\mbox{\hyperlink{class_bio_imager_1_1_d_d_x11_ac44a80c22bd66870f1ba3b8fa1ac4cd4}{Initialize}}(configuration, windowHandle))}
+\DoxyCodeLine{00027                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029                 \textcolor{comment}{// Create the camera object}}
+\DoxyCodeLine{00030                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a2cf2eaa0d0ceeedcbf89ef058eff735d}{Camera}} = \textcolor{keyword}{new} DCamera();}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032                 \textcolor{comment}{// Set the initial position of the camera.}}
+\DoxyCodeLine{00033                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a2cf2eaa0d0ceeedcbf89ef058eff735d}{Camera}}.\mbox{\hyperlink{class_bio_imager_1_1_d_camera_afdd57938b819ff3c9bcdc05d03c07d33}{SetPosition}}(0.1f, -\/0.1f, -\/1);}
+\DoxyCodeLine{00034 }
+\DoxyCodeLine{00035                 \textcolor{comment}{// Create the model object.}}
+\DoxyCodeLine{00036                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}{Model}} = \textcolor{keyword}{new} DModel();}
+\DoxyCodeLine{00037 }
+\DoxyCodeLine{00038                 \textcolor{comment}{// Initialize the model object.}}
+\DoxyCodeLine{00039                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}{Model}}.\mbox{\hyperlink{class_bio_imager_1_1_d_model_ad24970fd447be002e12cd7af91cb91c0}{Initialize}}(\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}}.\mbox{\hyperlink{class_bio_imager_1_1_d_d_x11_a92cbe58b5b099098210ace88576470e6}{Device}}, im))}
+\DoxyCodeLine{00040                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042                 \textcolor{comment}{// Create the color shader object.}}
+\DoxyCodeLine{00043                 ColorShader = \textcolor{keyword}{new} DColorShader();}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045                 \textcolor{comment}{// Initialize the color shader object.}}
+\DoxyCodeLine{00046                 \textcolor{keywordflow}{if} (!ColorShader.\mbox{\hyperlink{class_bio_imager_1_1_d_color_shader_adb158771224683a63738710a72265b57}{Initialize}}(\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}}.\mbox{\hyperlink{class_bio_imager_1_1_d_d_x11_a92cbe58b5b099098210ace88576470e6}{Device}}, windowHandle, im.bitsPerPixel))}
+\DoxyCodeLine{00047                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049                 \textcolor{comment}{// Create the Timer}}
+\DoxyCodeLine{00050                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a11874d2c9a186026c9bff21c5d315113}{Timer}} = \textcolor{keyword}{new} DTimer();}
+\DoxyCodeLine{00051 }
+\DoxyCodeLine{00052                 \textcolor{comment}{// Initialize the Timer}}
+\DoxyCodeLine{00053                 \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a11874d2c9a186026c9bff21c5d315113}{Timer}}.\mbox{\hyperlink{class_bio_imager_1_1_d_timer_a36370e18cade3986383dc3e359eda3fe}{Initialize}}())}
+\DoxyCodeLine{00054                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00055                 \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a4eb74cbc02d73bfa872f48a87f55c4a4}{BitsPerPixel}} = im.bitsPerPixel;}
+\DoxyCodeLine{00056                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00057             \}}
+\DoxyCodeLine{00058             \textcolor{keywordflow}{catch} (Exception ex)}
+\DoxyCodeLine{00059             \{}
+\DoxyCodeLine{00060                 MessageBox.Show(\textcolor{stringliteral}{"{}Could not initialize Direct3D\(\backslash\)nError is '"{}} + ex.Message + \textcolor{stringliteral}{"{}'"{}});}
+\DoxyCodeLine{00061                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00062             \}}
+\DoxyCodeLine{00063         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_a3fe4e3b2c232934548d2bc40b4f40f19}\label{class_bio_imager_1_1_d_graphics_a3fe4e3b2c232934548d2bc40b4f40f19}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!ShutDown@{ShutDown}}
 \index{ShutDown@{ShutDown}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -75,6 +139,25 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00018}{18}} of file 
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00064}{64}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065         \{}
+\DoxyCodeLine{00066             \textcolor{comment}{// Release the camera object.}}
+\DoxyCodeLine{00067             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a2cf2eaa0d0ceeedcbf89ef058eff735d}{Camera}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00068             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a11874d2c9a186026c9bff21c5d315113}{Timer}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070             \textcolor{comment}{// Release the color shader object.}}
+\DoxyCodeLine{00071             ColorShader?.\mbox{\hyperlink{class_bio_imager_1_1_d_color_shader_a04f7b9c0c51c29e430734a5a34e31d96}{ShutDown}}();}
+\DoxyCodeLine{00072             ColorShader = \textcolor{keyword}{null};}
+\DoxyCodeLine{00073             \textcolor{comment}{// Release the model object.}}
+\DoxyCodeLine{00074             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}{Model}}?.\mbox{\hyperlink{class_bio_imager_1_1_d_model_ae15c7ac303a908c4f690411b5bbfc06e}{ShutDown}}();}
+\DoxyCodeLine{00075             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}{Model}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00076             \textcolor{comment}{// Release the Direct3D object.}}
+\DoxyCodeLine{00077             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}}?.\mbox{\hyperlink{class_bio_imager_1_1_d_d_x11_a0266f404d171453d83bd17cdf3f8839e}{ShutDown}}();}
+\DoxyCodeLine{00078             \mbox{\hyperlink{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}{D3D}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00079         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Property Documentation}
@@ -88,6 +171,11 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00064}{64}} of file 
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_a2cf2eaa0d0ceeedcbf89ef058eff735d}\label{class_bio_imager_1_1_d_graphics_a2cf2eaa0d0ceeedcbf89ef058eff735d}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!Camera@{Camera}}
 \index{Camera@{Camera}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -98,6 +186,11 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00013}{13}} of file 
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00009}{9}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00009 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}\label{class_bio_imager_1_1_d_graphics_a5293907b90db210918bc442f7ada5ae5}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!D3D@{D3D}}
 \index{D3D@{D3D}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -108,6 +201,11 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00009}{9}} of file \
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00008}{8}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00008 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}\label{class_bio_imager_1_1_d_graphics_a73a8657303cdcaddc4a05da3650a73eb}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!Model@{Model}}
 \index{Model@{Model}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -118,6 +216,11 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00008}{8}} of file \
 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00010}{10}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00010 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_graphics_a11874d2c9a186026c9bff21c5d315113}\label{class_bio_imager_1_1_d_graphics_a11874d2c9a186026c9bff21c5d315113}} 
 \index{BioImager.DGraphics@{BioImager.DGraphics}!Timer@{Timer}}
 \index{Timer@{Timer}!BioImager.DGraphics@{BioImager.DGraphics}}
@@ -129,7 +232,12 @@ Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00010}{10}} of file 
 Definition at line \mbox{\hyperlink{_d_graphics_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_d_graphics_8cs_source}{DGraphics.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/\+Graphics/DGraphics.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/\+Graphics/\mbox{\hyperlink{_d_graphics_8cs}{DGraphics.\+cs}}\end{DoxyCompactItemize}

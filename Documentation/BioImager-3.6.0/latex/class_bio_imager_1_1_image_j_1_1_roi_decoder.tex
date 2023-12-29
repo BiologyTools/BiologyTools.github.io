@@ -165,6 +165,13 @@ Constructs an \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder}{Roi
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00334}{334}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00335             \{}
+\DoxyCodeLine{00336                 this.path = path;}
+\DoxyCodeLine{00337             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_aa2d3a6cbf326900d4bbf6d05d5d6b1f7}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_aa2d3a6cbf326900d4bbf6d05d5d6b1f7}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!RoiDecoder@{RoiDecoder}}
 \index{RoiDecoder@{RoiDecoder}!BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}}
@@ -175,6 +182,15 @@ Constructs an \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder}{Roi
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00340}{340}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00341             \{}
+\DoxyCodeLine{00342                 ins = \textcolor{keyword}{new} MemoryStream(bytes);}
+\DoxyCodeLine{00343                 this.name = name;}
+\DoxyCodeLine{00344                 this.size = bytes.Length;}
+\DoxyCodeLine{00345             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -188,6 +204,304 @@ Returns the \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}}.
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00357}{357}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00358             \{}
+\DoxyCodeLine{00359                 ROI \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = \textcolor{keyword}{new} ROI();}
+\DoxyCodeLine{00360                 data = File.ReadAllBytes(path);}
+\DoxyCodeLine{00361                 size = data.Length;}
+\DoxyCodeLine{00362                 \textcolor{keywordflow}{if} (getByte(0) != 73 || getByte(1) != 111)  \textcolor{comment}{//"{}Iout"{}}}
+\DoxyCodeLine{00363                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}This is not an ImageJ ROI"{}});}
+\DoxyCodeLine{00364                 \textcolor{keywordtype}{int} version = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a39c1070afbb55194f535ca03afc54ef1}{VERSION\_OFFSET}});}
+\DoxyCodeLine{00365                 \textcolor{keywordtype}{int} type = getByte(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad6cd5c2aa86854d2efb969526ce5b4d4}{TYPE}});}
+\DoxyCodeLine{00366                 \textcolor{keywordtype}{int} subtype = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a5ff96ed7c2a94137d0bed5391848d755}{SUBTYPE}});}
+\DoxyCodeLine{00367                 \textcolor{keywordtype}{int} top = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aaf4bf3d7428395cb97426ab62d230b82}{TOP}});}
+\DoxyCodeLine{00368                 \textcolor{keywordtype}{int} left = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_afa4a39ce81a1f5fc70518a6678416d62}{LEFT}});}
+\DoxyCodeLine{00369                 \textcolor{keywordtype}{int} bottom = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ab462a2a2b251a0edee003d905b5969af}{BOTTOM}});}
+\DoxyCodeLine{00370                 \textcolor{keywordtype}{int} right = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a8db40e04774fe3bbdb40bae822247a67}{RIGHT}});}
+\DoxyCodeLine{00371                 \textcolor{keywordtype}{int} width = right -\/ left;}
+\DoxyCodeLine{00372                 \textcolor{keywordtype}{int} height = bottom -\/ top;}
+\DoxyCodeLine{00373                 \textcolor{keywordtype}{int} n = getUnsignedShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a714f21756cf64e7f278bbabb9ce2692b}{N\_COORDINATES}});}
+\DoxyCodeLine{00374                 \textcolor{keywordflow}{if} (n == 0)}
+\DoxyCodeLine{00375                     n = getInt(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad592363e7c2a65d183e62ad16d51c39a}{SIZE}});}
+\DoxyCodeLine{00376                 \textcolor{keywordtype}{int} options = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_acc9ba13a81a85cf81c5b1516c0576275}{OPTIONS}});}
+\DoxyCodeLine{00377                 \textcolor{keywordtype}{int} \mbox{\hyperlink{namespacemicroscope_1_1setfilterwheel_a217c7f5aaaf2dd7e6747b3ed925387b5}{position}} = getInt(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a76dfb277da31bc2df17a52426eb6ba52}{POSITION}});}
+\DoxyCodeLine{00378                 \textcolor{keywordtype}{int} hdr2Offset = getInt(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a99002ef1aaca7eb99bc75d1fd3e96427}{HEADER2\_OFFSET}});}
+\DoxyCodeLine{00379                 \textcolor{keywordtype}{int} channel = 0, slice = 0, frame = 0;}
+\DoxyCodeLine{00380                 \textcolor{keywordtype}{int} overlayLabelColor = 0;}
+\DoxyCodeLine{00381                 \textcolor{keywordtype}{int} overlayFontSize = 0;}
+\DoxyCodeLine{00382                 \textcolor{keywordtype}{int} group = 0;}
+\DoxyCodeLine{00383                 \textcolor{keywordtype}{int} imageOpacity = 0;}
+\DoxyCodeLine{00384                 \textcolor{keywordtype}{int} imageSize = 0;}
+\DoxyCodeLine{00385                 \textcolor{keywordtype}{bool} subPixelResolution = (options \& \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a604728c2c3cd6581f691a7ad441c39b1}{SUB\_PIXEL\_RESOLUTION}}) != 0 \&\& version >= 222;}
+\DoxyCodeLine{00386                 \textcolor{keywordtype}{bool} drawOffset = subPixelResolution \&\& (options \& \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a7bdbe323fecb6c891b08549b403380bf}{DRAW\_OFFSET}}) != 0;}
+\DoxyCodeLine{00387                 \textcolor{keywordtype}{bool} scaleStrokeWidth = \textcolor{keyword}{true};}
+\DoxyCodeLine{00388                 \textcolor{keywordflow}{if} (version >= 228)}
+\DoxyCodeLine{00389                     scaleStrokeWidth = (options \& \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a865d58a5c6b042ea065ae4c5933024c3}{SCALE\_STROKE\_WIDTH}}) != 0;}
+\DoxyCodeLine{00390 }
+\DoxyCodeLine{00391                 \textcolor{keywordtype}{bool} subPixelRect = version >= 223 \&\& subPixelResolution \&\& (type == rect || type == oval);}
+\DoxyCodeLine{00392                 \textcolor{keywordtype}{double} xd = 0.0, yd = 0.0, widthd = 0.0, heightd = 0.0;}
+\DoxyCodeLine{00393                 \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00394                 \{}
+\DoxyCodeLine{00395                     xd = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aaef08aec36a39edc2233a1921d5d66ad}{XD}});}
+\DoxyCodeLine{00396                     yd = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a2a8f3dd4ef1ae9803dea256d6516b486}{YD}});}
+\DoxyCodeLine{00397                     widthd = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_af544bd4500307f7af002b123cbebab95}{WIDTHD}});}
+\DoxyCodeLine{00398                     heightd = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a9cc5ac471aacb8d4965ba3b9b7331b5e}{HEIGHTD}});}
+\DoxyCodeLine{00399                 \}}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401                 \textcolor{keywordflow}{if} (hdr2Offset > 0 \&\& hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aced63c18588692b4976eae7965129a53}{IMAGE\_SIZE}} + 4 <= size)}
+\DoxyCodeLine{00402                 \{}
+\DoxyCodeLine{00403                     channel = getInt(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ab661b39b507949f49e0aa9b14b55e6a1}{C\_POSITION}});}
+\DoxyCodeLine{00404                     slice = getInt(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ab1e8da1b60b28f5e7ac2a087fa604507}{Z\_POSITION}});}
+\DoxyCodeLine{00405                     frame = getInt(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a0f77d7576c5a5bfadda33a16a20a2eb8}{T\_POSITION}});}
+\DoxyCodeLine{00406                     overlayLabelColor = getInt(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a529ca4c3996b023e72cabac690e0524b}{OVERLAY\_LABEL\_COLOR}});}
+\DoxyCodeLine{00407                     overlayFontSize = getShort(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a627dd62a9fe640b451b0666394dc1923}{OVERLAY\_FONT\_SIZE}});}
+\DoxyCodeLine{00408                     imageOpacity = getByte(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a0a7997f226ff646783e3cb2827cfaba3}{IMAGE\_OPACITY}});}
+\DoxyCodeLine{00409                     imageSize = getInt(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aced63c18588692b4976eae7965129a53}{IMAGE\_SIZE}});}
+\DoxyCodeLine{00410                     group = getByte(hdr2Offset + \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a563137177c19bfc45d43528f49b078cc}{GROUP}});}
+\DoxyCodeLine{00411                 \}}
+\DoxyCodeLine{00412 }
+\DoxyCodeLine{00413                 \textcolor{keywordflow}{if} (name != \textcolor{keyword}{null} \&\& name.EndsWith(\textcolor{stringliteral}{"{}.roi"{}}))}
+\DoxyCodeLine{00414                     name = name.Substring(0, name.Length -\/ 4);}
+\DoxyCodeLine{00415                 \textcolor{keywordtype}{bool} isComposite = getInt(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a33cd3c28d206418cc7f1047032634cc3}{SHAPE\_ROI\_SIZE}}) > 0;}
+\DoxyCodeLine{00416 }
+\DoxyCodeLine{00417 }
+\DoxyCodeLine{00418                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00419 \textcolor{comment}{                if (isComposite)}}
+\DoxyCodeLine{00420 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00421 \textcolor{comment}{                    roi = getShapeRoi();}}
+\DoxyCodeLine{00422 \textcolor{comment}{                    if (version >= 218)}}
+\DoxyCodeLine{00423 \textcolor{comment}{                        getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}}
+\DoxyCodeLine{00424 \textcolor{comment}{                    roi.coord.Z = position;}}
+\DoxyCodeLine{00425 \textcolor{comment}{                    if (channel > 0 || slice > 0 || frame > 0)}}
+\DoxyCodeLine{00426 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{00427 \textcolor{comment}{                        roi.coord.C = channel; roi.coord.Z = slice; roi.coord.T = frame;}}
+\DoxyCodeLine{00428 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{00429 \textcolor{comment}{                    decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{00430 \textcolor{comment}{                    if (version >= 224)}}
+\DoxyCodeLine{00431 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{00432 \textcolor{comment}{                        string props = getRoiProps();}}
+\DoxyCodeLine{00433 \textcolor{comment}{                        if (props != null)}}
+\DoxyCodeLine{00434 \textcolor{comment}{                            roi.properties = props;}}
+\DoxyCodeLine{00435 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{00436 \textcolor{comment}{                    if (version >= 228 \&\& group > 0)}}
+\DoxyCodeLine{00437 \textcolor{comment}{                        roi.serie = group;}}
+\DoxyCodeLine{00438 \textcolor{comment}{                    return roi;}}
+\DoxyCodeLine{00439 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00440 \textcolor{comment}{                */}}
+\DoxyCodeLine{00441                 \textcolor{keywordflow}{switch} (type)}
+\DoxyCodeLine{00442                 \{}
+\DoxyCodeLine{00443                     \textcolor{keywordflow}{case} 1: \textcolor{comment}{//Rect}}
+\DoxyCodeLine{00444                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00445                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = ROI.CreateRectangle(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{00446                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00447                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = ROI.CreateRectangle(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{00448                         \textcolor{keywordtype}{int} arcSize = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a7ebeddbff69c7b5dc4f3f899554840ea}{ROUNDED\_RECT\_ARC\_SIZE}});}
+\DoxyCodeLine{00449                         \textcolor{keywordflow}{if} (arcSize > 0)}
+\DoxyCodeLine{00450                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type rounded rectangle not supported."{}});}
+\DoxyCodeLine{00451                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00452                     \textcolor{keywordflow}{case} 2: \textcolor{comment}{//Ellipse}}
+\DoxyCodeLine{00453                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00454                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = ROI.CreateEllipse(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{00455                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00456                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = ROI.CreateEllipse(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{00457                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00458                     \textcolor{keywordflow}{case} 3: \textcolor{comment}{//Line}}
+\DoxyCodeLine{00459                         \textcolor{keywordtype}{float} x1 = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a7454c043d89b4078396fdbf94ea72f4f}{X1}});}
+\DoxyCodeLine{00460                         \textcolor{keywordtype}{float} y1 = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a1463e65af7296554613f35ac5518d310}{Y1}});}
+\DoxyCodeLine{00461                         \textcolor{keywordtype}{float} x2 = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a44ad5db3dd1e87e7f3a178f23ae680f6}{X2}});}
+\DoxyCodeLine{00462                         \textcolor{keywordtype}{float} y2 = getFloat(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a0bad0679824fb47a3f64975a686272a5}{Y2}});}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464                         \textcolor{keywordflow}{if} (subtype == \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_ae87e86b098c4f71144d365e796cab228}{ARROW}})}
+\DoxyCodeLine{00465                         \{}
+\DoxyCodeLine{00466                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type arrow not supported."{}});}
+\DoxyCodeLine{00467                             \textcolor{comment}{/*}}
+\DoxyCodeLine{00468 \textcolor{comment}{                            roi = new Arrow(x1, y1, x2, y2);}}
+\DoxyCodeLine{00469 \textcolor{comment}{                            ((Arrow)roi).setDoubleHeaded((options \& DOUBLE\_HEADED) != 0);}}
+\DoxyCodeLine{00470 \textcolor{comment}{                            ((Arrow)roi).setOutline((options \& OUTLINE) != 0);}}
+\DoxyCodeLine{00471 \textcolor{comment}{                            int style = getByte(ARROW\_STYLE);}}
+\DoxyCodeLine{00472 \textcolor{comment}{                            if (style >= Arrow.FILLED \&\& style <= Arrow.BAR)}}
+\DoxyCodeLine{00473 \textcolor{comment}{                                ((Arrow)roi).setStyle(style);}}
+\DoxyCodeLine{00474 \textcolor{comment}{                            int headSize = getByte(ARROW\_HEAD\_SIZE);}}
+\DoxyCodeLine{00475 \textcolor{comment}{                            if (headSize >= 0 \&\& style <= 30)}}
+\DoxyCodeLine{00476 \textcolor{comment}{                                ((Arrow)roi).setHeadSize(headSize);}}
+\DoxyCodeLine{00477 \textcolor{comment}{                            */}}
+\DoxyCodeLine{00478                         \}}
+\DoxyCodeLine{00479                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00480                         \{}
+\DoxyCodeLine{00481                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = ROI.CreateLine(\textcolor{keyword}{new} ZCT(slice, channel, frame), \textcolor{keyword}{new} \mbox{\hyperlink{_microscope_8cs_a40ad24a6b4c995cdf7ce359c4fab62d1}{PointD}}(x1, y1), \textcolor{keyword}{new} \mbox{\hyperlink{_microscope_8cs_a40ad24a6b4c995cdf7ce359c4fab62d1}{PointD}}(x2, y2));}
+\DoxyCodeLine{00482                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{00483                         \}}
+\DoxyCodeLine{00484 }
+\DoxyCodeLine{00485                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00486                     \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00487                     \textcolor{keywordflow}{case} 5:}
+\DoxyCodeLine{00488                     \textcolor{keywordflow}{case} 6:}
+\DoxyCodeLine{00489                     \textcolor{keywordflow}{case} 7:}
+\DoxyCodeLine{00490                     \textcolor{keywordflow}{case} 8:}
+\DoxyCodeLine{00491                     \textcolor{keywordflow}{case} 9:}
+\DoxyCodeLine{00492                     \textcolor{keywordflow}{case} 10:}
+\DoxyCodeLine{00493                         \textcolor{comment}{//IJ.log("{}type: "{}+type);}}
+\DoxyCodeLine{00494                         \textcolor{comment}{//IJ.log("{}n: "{}+n);}}
+\DoxyCodeLine{00495                         \textcolor{comment}{//ij.IJ.log("{}rect: "{}+left+"{},"{}+top+"{} "{}+width+"{} "{}+height);}}
+\DoxyCodeLine{00496                         \textcolor{keywordflow}{if} (n == 0 || n < 0) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00497                         \textcolor{keywordtype}{int}[] x = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{00498                         \textcolor{keywordtype}{int}[] y = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{00499                         \textcolor{keywordtype}{float}[] xf = \textcolor{keyword}{null};}
+\DoxyCodeLine{00500                         \textcolor{keywordtype}{float}[] yf = \textcolor{keyword}{null};}
+\DoxyCodeLine{00501                         \textcolor{keywordtype}{int} base1 = \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aaec38b8011aacde27cabce9a5d7af8e9}{COORDINATES}};}
+\DoxyCodeLine{00502                         \textcolor{keywordtype}{int} base2 = base1 + 2 * n;}
+\DoxyCodeLine{00503                         \textcolor{keywordtype}{int} xtmp, ytmp;}
+\DoxyCodeLine{00504                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{00505                         \{}
+\DoxyCodeLine{00506                             xtmp = getShort(base1 + i * 2);}
+\DoxyCodeLine{00507                             \textcolor{keywordflow}{if} (xtmp < 0) xtmp = 0;}
+\DoxyCodeLine{00508                             ytmp = getShort(base2 + i * 2);}
+\DoxyCodeLine{00509                             \textcolor{keywordflow}{if} (ytmp < 0) ytmp = 0;}
+\DoxyCodeLine{00510                             x[i] = left + xtmp;}
+\DoxyCodeLine{00511                             y[i] = top + ytmp;}
+\DoxyCodeLine{00512                         \}}
+\DoxyCodeLine{00513                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00514                         \{}
+\DoxyCodeLine{00515                             xf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{00516                             yf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{00517                             base1 = \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aaec38b8011aacde27cabce9a5d7af8e9}{COORDINATES}} + 4 * n;}
+\DoxyCodeLine{00518                             base2 = base1 + 4 * n;}
+\DoxyCodeLine{00519                             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{00520                             \{}
+\DoxyCodeLine{00521                                 xf[i] = getFloat(base1 + i * 4);}
+\DoxyCodeLine{00522                                 yf[i] = getFloat(base2 + i * 4);}
+\DoxyCodeLine{00523                             \}}
+\DoxyCodeLine{00524                         \}}
+\DoxyCodeLine{00525                         \textcolor{keywordflow}{if} (type == point)}
+\DoxyCodeLine{00526                         \{}
+\DoxyCodeLine{00527                             \textcolor{comment}{//TODO implement non subpizel ROI}}
+\DoxyCodeLine{00528                             \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00529                             \{}
+\DoxyCodeLine{00530                                 \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.AddPoints(xf, yf);}
+\DoxyCodeLine{00531                             \}}
+\DoxyCodeLine{00532                             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00533                                 \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.AddPoints(x, y);}
+\DoxyCodeLine{00534                             \textcolor{keywordflow}{if} (version >= 226)}
+\DoxyCodeLine{00535                             \{}
+\DoxyCodeLine{00536                                 \textcolor{comment}{//((PointRoi)roi).setPointType(getByte(POINT\_TYPE));}}
+\DoxyCodeLine{00537                                 roi.strokeWidth = getShort(\mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_aa31f7865dc78f0f6d250c5015b5b69b0}{STROKE\_WIDTH}});}
+\DoxyCodeLine{00538                             \}}
+\DoxyCodeLine{00539                             \textcolor{comment}{//if ((options \& SHOW\_LABELS) != 0 \&\& !ij.Prefs.noPointLabels)}}
+\DoxyCodeLine{00540                             \textcolor{comment}{//    ((PointRoi)roi).setShowLabels(true);}}
+\DoxyCodeLine{00541                             \textcolor{comment}{//if ((options \& PROMPT\_BEFORE\_DELETING) != 0)}}
+\DoxyCodeLine{00542                             \textcolor{comment}{//    ((PointRoi)roi).promptBeforeDeleting(true);}}
+\DoxyCodeLine{00543                             roi.type = ROI.Type.Point;}
+\DoxyCodeLine{00544                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00545                         \}}
+\DoxyCodeLine{00546                         \textcolor{keywordflow}{if} (type == polygon)}
+\DoxyCodeLine{00547                             roi.type = ROI.Type.Polygon;}
+\DoxyCodeLine{00548                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freehand)}
+\DoxyCodeLine{00549                         \{}
+\DoxyCodeLine{00550                             roi.type = ROI.Type.Freeform;}
+\DoxyCodeLine{00551                             \textcolor{keywordflow}{if} (subtype == \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a9ec9a474ec2cb3686e26095cf7aa115f}{ELLIPSE}} || subtype == \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a1cd0f54c5bb76d23c8509ed5a4c0ab04}{ROTATED\_RECT}})}
+\DoxyCodeLine{00552                             \{}
+\DoxyCodeLine{00553                                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}ROI type not supported."{}});}
+\DoxyCodeLine{00554                                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00555 \textcolor{comment}{                                double ex1 = getFloat(X1);}}
+\DoxyCodeLine{00556 \textcolor{comment}{                                double ey1 = getFloat(Y1);}}
+\DoxyCodeLine{00557 \textcolor{comment}{                                double ex2 = getFloat(X2);}}
+\DoxyCodeLine{00558 \textcolor{comment}{                                double ey2 = getFloat(Y2);}}
+\DoxyCodeLine{00559 \textcolor{comment}{                                double param = getFloat(FLOAT\_PARAM);}}
+\DoxyCodeLine{00560 \textcolor{comment}{                                if (subtype == ROTATED\_RECT)}}
+\DoxyCodeLine{00561 \textcolor{comment}{                                    roi = new RotatedRectRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{00562 \textcolor{comment}{                                else}}
+\DoxyCodeLine{00563 \textcolor{comment}{                                    roi = new EllipseRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{00564 \textcolor{comment}{                                break;}}
+\DoxyCodeLine{00565 \textcolor{comment}{                                */}}
+\DoxyCodeLine{00566                             \}}
+\DoxyCodeLine{00567                         \}}
+\DoxyCodeLine{00568                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == traced)}
+\DoxyCodeLine{00569                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00570                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == polyline)}
+\DoxyCodeLine{00571                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00572                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freeline)}
+\DoxyCodeLine{00573                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00574                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == angle)}
+\DoxyCodeLine{00575                             roi.type = ROI.Type.Point;}
+\DoxyCodeLine{00576                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00577                             roi.type = ROI.Type.Freeform;}
+\DoxyCodeLine{00578                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00579                         \{}
+\DoxyCodeLine{00580                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.AddPoints(xf, yf);}
+\DoxyCodeLine{00581                             \textcolor{comment}{//roi = new PolygonRoi(xf, yf, n, roiType);}}
+\DoxyCodeLine{00582                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{00583                         \}}
+\DoxyCodeLine{00584                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00585                             \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.AddPoints(x, y);}
+\DoxyCodeLine{00586                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00587                     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00588                         \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}Unrecognized ROI type: "{}} + type);}
+\DoxyCodeLine{00589                 \}}
+\DoxyCodeLine{00590                 \textcolor{keywordflow}{if} (roi == \textcolor{keyword}{null})}
+\DoxyCodeLine{00591                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00592                 roi.roiName = getRoiName();}
+\DoxyCodeLine{00593 }
+\DoxyCodeLine{00594                 \textcolor{comment}{// read stroke width, stroke color and fill color (1.43i or later)}}
+\DoxyCodeLine{00595                 \textcolor{keywordflow}{if} (version >= 218)}
+\DoxyCodeLine{00596                 \{}
+\DoxyCodeLine{00597                     getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}
+\DoxyCodeLine{00598                     \textcolor{comment}{/*}}
+\DoxyCodeLine{00599 \textcolor{comment}{                    if (type == point)}}
+\DoxyCodeLine{00600 \textcolor{comment}{                        roi.setStrokeWidth(0);}}
+\DoxyCodeLine{00601 \textcolor{comment}{                    bool splineFit = (options \& SPLINE\_FIT) != 0;}}
+\DoxyCodeLine{00602 \textcolor{comment}{                    if (splineFit \&\& roi instanceof PolygonRoi)}}
+\DoxyCodeLine{00603 \textcolor{comment}{                            ((PolygonRoi)roi).fitSpline();}}
+\DoxyCodeLine{00604 \textcolor{comment}{                    */}}
+\DoxyCodeLine{00605                 \}}
+\DoxyCodeLine{00606 }
+\DoxyCodeLine{00607                 \textcolor{keywordflow}{if} (version >= 218 \&\& subtype == \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a251da2cdfff3b5d59a91238c81754195}{TEXT}})}
+\DoxyCodeLine{00608                 \{}
+\DoxyCodeLine{00609                     getTextRoi(roi, version);}
+\DoxyCodeLine{00610                     roi.type = ROI.Type.Label;}
+\DoxyCodeLine{00611                 \}}
+\DoxyCodeLine{00612                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00613 \textcolor{comment}{                if (version >= 221 \&\& subtype == IMAGE)}}
+\DoxyCodeLine{00614 \textcolor{comment}{                    roi = getImageRoi(roi, imageOpacity, imageSize, options);}}
+\DoxyCodeLine{00615 \textcolor{comment}{                }}
+\DoxyCodeLine{00616 \textcolor{comment}{                if (version >= 224)}}
+\DoxyCodeLine{00617 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00618 \textcolor{comment}{                    string props = getRoiProps();}}
+\DoxyCodeLine{00619 \textcolor{comment}{                    if (props != null)}}
+\DoxyCodeLine{00620 \textcolor{comment}{                        roi.setProperties(props);}}
+\DoxyCodeLine{00621 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00622 \textcolor{comment}{}}
+\DoxyCodeLine{00623 \textcolor{comment}{                if (version >= 227)}}
+\DoxyCodeLine{00624 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00625 \textcolor{comment}{                    int[] counters = getPointCounters(n);}}
+\DoxyCodeLine{00626 \textcolor{comment}{                    if (counters != null \&\& (roi instanceof PointRoi))}}
+\DoxyCodeLine{00627 \textcolor{comment}{                            ((PointRoi)roi).setCounters(counters);}}
+\DoxyCodeLine{00628 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00629 \textcolor{comment}{                */}}
+\DoxyCodeLine{00630                 \textcolor{comment}{// set group (1.52t or later)}}
+\DoxyCodeLine{00631                 \textcolor{keywordflow}{if} (version >= 228 \&\& group > 0)}
+\DoxyCodeLine{00632                     roi.serie = group;}
+\DoxyCodeLine{00633 }
+\DoxyCodeLine{00634                 roi.coord.Z = \mbox{\hyperlink{namespacemicroscope_1_1setfilterwheel_a217c7f5aaaf2dd7e6747b3ed925387b5}{position}};}
+\DoxyCodeLine{00635                 \textcolor{keywordflow}{if} (channel > 0 || slice > 0 || frame > 0)}
+\DoxyCodeLine{00636                     roi.coord = \textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1); \textcolor{comment}{//-\/1 because our ROI coordinates are 0 based}}
+\DoxyCodeLine{00637                 \textcolor{comment}{//decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{00638 }
+\DoxyCodeLine{00639                 \textcolor{comment}{//We convert pixel to subpixel}}
+\DoxyCodeLine{00640 }
+\DoxyCodeLine{00641                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.PointsD.Count; i++)}
+\DoxyCodeLine{00642                 \{}
+\DoxyCodeLine{00643                     \mbox{\hyperlink{_microscope_8cs_a40ad24a6b4c995cdf7ce359c4fab62d1}{PointD}} pd = ImageView.SelectedImage.ToStageSpace(\mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.PointsD[i]);}
+\DoxyCodeLine{00644                     \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.PointsD[i] = pd;}
+\DoxyCodeLine{00645                     \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.UpdateBoundingBox();}
+\DoxyCodeLine{00646                 \}}
+\DoxyCodeLine{00647 }
+\DoxyCodeLine{00648                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.type == ROI.Type.Polygon || \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.type == ROI.Type.Freeform)}
+\DoxyCodeLine{00649                     roi.closed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00650                 \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}};}
+\DoxyCodeLine{00651             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad4b360e58c7918aae85e2f368e48a04d}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad4b360e58c7918aae85e2f368e48a04d}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!open@{open}}
 \index{open@{open}!BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}}
@@ -198,6 +512,16 @@ Opens the \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}} at the specified pa
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00348}{348}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00349             \{}
+\DoxyCodeLine{00350                 ROI \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00351                 \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}} rd = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}}(path);}
+\DoxyCodeLine{00352                 \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = rd.getRoi();}
+\DoxyCodeLine{00353                 \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}};}
+\DoxyCodeLine{00354             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_a668e4b1fd00368fdedc54c61c2b15971}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_a668e4b1fd00368fdedc54c61c2b15971}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!openFromByteArray@{openFromByteArray}}
 \index{openFromByteArray@{openFromByteArray}!BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}}
@@ -218,6 +542,25 @@ A \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}} object.
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00912}{912}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00913             \{}
+\DoxyCodeLine{00914                 ROI \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = \textcolor{keyword}{null};}
+\DoxyCodeLine{00915                 \textcolor{keywordflow}{if} (bytes == \textcolor{keyword}{null} || bytes.Length == 0)}
+\DoxyCodeLine{00916                     \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}};}
+\DoxyCodeLine{00917                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00918                 \{}
+\DoxyCodeLine{00919                     \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}} decoder = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}}(bytes, \textcolor{keyword}{null});}
+\DoxyCodeLine{00920                     \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = decoder.getRoi();}
+\DoxyCodeLine{00921                 \}}
+\DoxyCodeLine{00922                 \textcolor{keywordflow}{catch} (IOException e)}
+\DoxyCodeLine{00923                 \{}
+\DoxyCodeLine{00924                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00925                 \}}
+\DoxyCodeLine{00926                 \textcolor{keywordflow}{return} \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}};}
+\DoxyCodeLine{00927             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -855,4 +1198,4 @@ Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00316}{316}} of file \m
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Image\+J.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_image_j_8cs}{Image\+J.\+cs}}\end{DoxyCompactItemize}

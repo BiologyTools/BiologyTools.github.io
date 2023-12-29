@@ -1,0 +1,73 @@
+\hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel}{}\doxysection{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel Class Reference}
+\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel}\index{microscope.controllers.zaber.\_ZaberFilterWheel@{microscope.controllers.zaber.\_ZaberFilterWheel}}
+Inheritance diagram for microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.898305cm]{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel_aa31d32b060ddeeb58f4760e43348fab4}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection}{\+\_\+\+Zaber\+Connection}} conn, int device\+\_\+address, $\ast$$\ast$kwargs)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Zaber filter wheels and filter cube turrets.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{zaber_8py_source_l00375}{375}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel_aa31d32b060ddeeb58f4760e43348fab4}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel_aa31d32b060ddeeb58f4760e43348fab4}} 
+\index{microscope.controllers.zaber.\_ZaberFilterWheel@{microscope.controllers.zaber.\_ZaberFilterWheel}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.controllers.zaber.\_ZaberFilterWheel@{microscope.controllers.zaber.\_ZaberFilterWheel}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection}{\+\_\+\+Zaber\+Connection}}}]{conn,  }\item[{int}]{device\+\_\+address,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel_a352dc540b23427231703a8e86e864036}{microscope.\+abc.\+Filter\+Wheel}}.
+
+
+
+Definition at line \mbox{\hyperlink{zaber_8py_source_l00378}{378}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00380     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00381         self.\_dev\_conn = \_ZaberDeviceConnection(conn, device\_address)}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383         \textcolor{keywordflow}{if} self.\_dev\_conn.get\_number\_axes() != 1:}
+\DoxyCodeLine{00384             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00385                 \textcolor{stringliteral}{"{}Device with address \%d is not a filter wheel"{}} \% device\_address}
+\DoxyCodeLine{00386             )}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388         rotation\_length = self.\_dev\_conn.get\_rotation\_length(1)}
+\DoxyCodeLine{00389         \textcolor{keywordflow}{if} rotation\_length <= 0:}
+\DoxyCodeLine{00390             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00391                 \textcolor{stringliteral}{"{}Device with address \%d is not a filter wheel"{}} \% device\_address}
+\DoxyCodeLine{00392             )}
+\DoxyCodeLine{00393         positions = int(rotation\_length / self.\_dev\_conn.get\_index\_distance(1))}
+\DoxyCodeLine{00394 }
+\DoxyCodeLine{00395         super().\_\_init\_\_(positions, **kwargs)}
+\DoxyCodeLine{00396 }
+\DoxyCodeLine{00397         \textcolor{comment}{\# Before a device can moved, it first needs to establish a}}
+\DoxyCodeLine{00398         \textcolor{comment}{\# reference to the home position.  We won't be able to move}}
+\DoxyCodeLine{00399         \textcolor{comment}{\# unless we home it first.  On a stage this happens during}}
+\DoxyCodeLine{00400         \textcolor{comment}{\# enable because the stage movemenet can be dangerous but on a}}
+\DoxyCodeLine{00401         \textcolor{comment}{\# filter wheel this is fine.}}
+\DoxyCodeLine{00402         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\_dev\_conn.been\_homed():}
+\DoxyCodeLine{00403             self.\_dev\_conn.home()}
+\DoxyCodeLine{00404 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/controllers/\mbox{\hyperlink{zaber_8py}{zaber.\+py}}\end{DoxyCompactItemize}

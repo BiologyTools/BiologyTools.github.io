@@ -1,0 +1,139 @@
+\hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection}{}\doxysection{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection Class Reference}
+\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection}\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a8b1051699ad122038729ef1e7c8916a7}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\+\_\+utils.\+Shared\+Serial}} shared\+\_\+serial)
+\item 
+bytes \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}{param\+\_\+ref}} (self, bytes name)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ac8103905c2e9d011dd16d8af1c2c474c}{param\+\_\+set}} (self, bytes name, bytes value)
+\item 
+str \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a7c5f6217f87891cfea525bbdf366c1a9}{get\+\_\+serial\+\_\+number}} (self)
+\item 
+str \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}{get\+\_\+system\+\_\+type}} (self)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Connection to the iChrome MLE.
+
+This is a simple wrapper to the iChrome MLE interface.  It only
+supports the parameter commands which reply with a single line
+which is all we need to support this on Python-Microscope.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00045}{45}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a8b1051699ad122038729ef1e7c8916a7}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a8b1051699ad122038729ef1e7c8916a7}} 
+\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\+\_\+utils.\+Shared\+Serial}}}]{shared\+\_\+serial }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00054}{54}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054     \textcolor{keyword}{def }\_\_init\_\_(self, shared\_serial: microscope.\_utils.SharedSerial) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00055         self.\_serial = shared\_serial}
+\DoxyCodeLine{00056 }
+\DoxyCodeLine{00057         self.\_serial.readlines()  \textcolor{comment}{\# discard anything that may be on the line}}
+\DoxyCodeLine{00058 }
+\DoxyCodeLine{00059         \textcolor{keywordflow}{if} self.get\_system\_type() != \textcolor{stringliteral}{"{}iChrome-\/MLE"{}}:}
+\DoxyCodeLine{00060             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}not an iChrome MLE device"{}})}
+\DoxyCodeLine{00061 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a7c5f6217f87891cfea525bbdf366c1a9}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a7c5f6217f87891cfea525bbdf366c1a9}} 
+\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}!get\_serial\_number@{get\_serial\_number}}
+\index{get\_serial\_number@{get\_serial\_number}!microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsubsection{\texorpdfstring{get\_serial\_number()}{get\_serial\_number()}}
+{\footnotesize\ttfamily  str microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+get\+\_\+serial\+\_\+number (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00101}{101}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101     \textcolor{keyword}{def }get\_serial\_number(self) -\/> str:}
+\DoxyCodeLine{00102         \textcolor{keywordflow}{return} \_parse\_string(self.param\_ref(b\textcolor{stringliteral}{"{}serial-\/number"{}}))}
+\DoxyCodeLine{00103 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}} 
+\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}!get\_system\_type@{get\_system\_type}}
+\index{get\_system\_type@{get\_system\_type}!microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsubsection{\texorpdfstring{get\_system\_type()}{get\_system\_type()}}
+{\footnotesize\ttfamily  str microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+get\+\_\+system\+\_\+type (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00104}{104}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104     \textcolor{keyword}{def }get\_system\_type(self) -\/> str:}
+\DoxyCodeLine{00105         \textcolor{keywordflow}{return} \_parse\_string(self.param\_ref(b\textcolor{stringliteral}{"{}system-\/type"{}}))}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}} 
+\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}!param\_ref@{param\_ref}}
+\index{param\_ref@{param\_ref}!microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsubsection{\texorpdfstring{param\_ref()}{param\_ref()}}
+{\footnotesize\ttfamily  bytes microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+param\+\_\+ref (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{bytes}]{name }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Get parameter value (`param-ref` operator).\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00087}{87}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087     \textcolor{keyword}{def }param\_ref(self, name: bytes) -\/> bytes:}
+\DoxyCodeLine{00088         \textcolor{stringliteral}{"{}"{}"{}Get parameter value (`param-\/ref` operator)."{}"{}"{}}}
+\DoxyCodeLine{00089         \textcolor{keywordflow}{return} self.\_param\_command(b\textcolor{stringliteral}{"{}(param-\/ref '\%s)"{}} \% name)}
+\DoxyCodeLine{00090 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ac8103905c2e9d011dd16d8af1c2c474c}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ac8103905c2e9d011dd16d8af1c2c474c}} 
+\index{microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}!param\_set@{param\_set}}
+\index{param\_set@{param\_set}!microscope.controllers.toptica.\_iChromeConnection@{microscope.controllers.toptica.\_iChromeConnection}}
+\doxysubsubsection{\texorpdfstring{param\_set()}{param\_set()}}
+{\footnotesize\ttfamily  None microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+param\+\_\+set (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{bytes}]{name,  }\item[{bytes}]{value }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Change parameter (`param-set!` operator).\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00091}{91}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091     \textcolor{keyword}{def }param\_set(self, name: bytes, value: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00092         \textcolor{stringliteral}{"{}"{}"{}Change parameter (`param-\/set!` operator)."{}"{}"{}}}
+\DoxyCodeLine{00093         answer = self.\_param\_command(b\textcolor{stringliteral}{"{}(param-\/set! '\%s \%s)"{}} \% (name, value))}
+\DoxyCodeLine{00094         status = int(answer)}
+\DoxyCodeLine{00095         \textcolor{keywordflow}{if} status < 0:}
+\DoxyCodeLine{00096             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00097                 \textcolor{stringliteral}{"{}Failed to set parameter \%s (return value \%d)"{}}}
+\DoxyCodeLine{00098                 \% (name.decode(), status)}
+\DoxyCodeLine{00099             )}
+\DoxyCodeLine{00100 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/controllers/\mbox{\hyperlink{controllers_2toptica_8py}{toptica.\+py}}\end{DoxyCompactItemize}

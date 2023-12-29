@@ -11,6 +11,8 @@ Inheritance diagram for Bio\+Imager.\+Color\+Tool\+:\begin{figure}[H]
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_color_tool_a5c2ed395e51f3e294c145a3aa1f7e9a7}{Update\+GUI}} ()
 \begin{DoxyCompactList}\small\item\em It updates the GUI. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_bio_imager_1_1_color_tool_a51f1e6ffd93406a9cc863b34be614a06}{Color\+Tool}} ()
+\item 
 \mbox{\hyperlink{class_bio_imager_1_1_color_tool_a585bd89b9f21c59bce1ffa164bcc1ca0}{Color\+Tool}} (ColorS col, int bit\+Per\+Pixel)
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Member Functions}
@@ -43,6 +45,14 @@ Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00013}{13}} of file 
 
 Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00043}{43}} of file \mbox{\hyperlink{_color_tool_8cs_source}{Color\+Tool.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044         \{}
+\DoxyCodeLine{00045             InitializeComponent();}
+\DoxyCodeLine{00046             \mbox{\hyperlink{class_bio_imager_1_1_color_tool_a5c2ed395e51f3e294c145a3aa1f7e9a7}{UpdateGUI}}();}
+\DoxyCodeLine{00047         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_color_tool_a585bd89b9f21c59bce1ffa164bcc1ca0}\label{class_bio_imager_1_1_color_tool_a585bd89b9f21c59bce1ffa164bcc1ca0}} 
 \index{BioImager.ColorTool@{BioImager.ColorTool}!ColorTool@{ColorTool}}
 \index{ColorTool@{ColorTool}!BioImager.ColorTool@{BioImager.ColorTool}}
@@ -53,6 +63,30 @@ Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00043}{43}} of file 
 
 Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00049}{49}} of file \mbox{\hyperlink{_color_tool_8cs_source}{Color\+Tool.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050         \{}
+\DoxyCodeLine{00051             InitializeComponent();}
+\DoxyCodeLine{00052             this.bitsPerPixel = bitPerPixel;}
+\DoxyCodeLine{00053             \textcolor{keywordflow}{if}(bitsPerPixel == 8)}
+\DoxyCodeLine{00054             \{}
+\DoxyCodeLine{00055                 rBar.Maximum = 255;}
+\DoxyCodeLine{00056                 gBar.Maximum = 255;}
+\DoxyCodeLine{00057                 bBar.Maximum = 255;}
+\DoxyCodeLine{00058                 redBox.Maximum = 255;}
+\DoxyCodeLine{00059                 greenBox.Maximum = 255;}
+\DoxyCodeLine{00060                 blueBox.Maximum = 255;}
+\DoxyCodeLine{00061             \}}
+\DoxyCodeLine{00062             \textcolor{keywordflow}{if} (rBar.Maximum <= col.R)}
+\DoxyCodeLine{00063                 rBar.Value = rBar.Maximum;}
+\DoxyCodeLine{00064             \textcolor{keywordflow}{if} (gBar.Maximum <= col.G)}
+\DoxyCodeLine{00065                 gBar.Value = gBar.Maximum;}
+\DoxyCodeLine{00066             \textcolor{keywordflow}{if} (bBar.Maximum <= col.B)}
+\DoxyCodeLine{00067                 bBar.Value = bBar.Maximum;}
+\DoxyCodeLine{00068             \mbox{\hyperlink{class_bio_imager_1_1_color_tool_a5c2ed395e51f3e294c145a3aa1f7e9a7}{UpdateGUI}}();}
+\DoxyCodeLine{00069         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -75,6 +109,17 @@ Clean up any resources being used.
 
 Definition at line \mbox{\hyperlink{_color_tool_8_designer_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_color_tool_8_designer_8cs_source}{Color\+Tool.\+Designer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015         \{}
+\DoxyCodeLine{00016             \textcolor{keywordflow}{if} (disposing \&\& (components != \textcolor{keyword}{null}))}
+\DoxyCodeLine{00017             \{}
+\DoxyCodeLine{00018                 components.Dispose();}
+\DoxyCodeLine{00019             \}}
+\DoxyCodeLine{00020             base.Dispose(disposing);}
+\DoxyCodeLine{00021         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_color_tool_a5c2ed395e51f3e294c145a3aa1f7e9a7}\label{class_bio_imager_1_1_color_tool_a5c2ed395e51f3e294c145a3aa1f7e9a7}} 
 \index{BioImager.ColorTool@{BioImager.ColorTool}!UpdateGUI@{UpdateGUI}}
 \index{UpdateGUI@{UpdateGUI}!BioImager.ColorTool@{BioImager.ColorTool}}
@@ -90,6 +135,20 @@ It updates the GUI.
 Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_color_tool_8cs_source}{Color\+Tool.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032         \{}
+\DoxyCodeLine{00033             color = \textcolor{keyword}{new} ColorS((ushort)redBox.Value, (ushort)greenBox.Value, (ushort)blueBox.Value);}
+\DoxyCodeLine{00034             colorPanel.BackColor = System.Drawing.Color.FromArgb(color.R / ushort.MaxValue,color.G / ushort.MaxValue,color.B / ushort.MaxValue);}
+\DoxyCodeLine{00035             \textcolor{keywordflow}{if} (rBar.Value != redBox.Value)}
+\DoxyCodeLine{00036                 redBox.Value = rBar.Value;}
+\DoxyCodeLine{00037             \textcolor{keywordflow}{if} (gBar.Value != greenBox.Value)}
+\DoxyCodeLine{00038                 greenBox.Value = gBar.Value;}
+\DoxyCodeLine{00039             \textcolor{keywordflow}{if} (bBar.Value != blueBox.Value)}
+\DoxyCodeLine{00040                 blueBox.Value = bBar.Value;}
+\DoxyCodeLine{00041         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Property Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_color_tool_a47a2ebabd24e6c4a956577145f3f28df}\label{class_bio_imager_1_1_color_tool_a47a2ebabd24e6c4a956577145f3f28df}} 
@@ -103,8 +162,22 @@ Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00031}{31}} of file 
 Definition at line \mbox{\hyperlink{_color_tool_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_color_tool_8cs_source}{Color\+Tool.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019         \{}
+\DoxyCodeLine{00020             \textcolor{keyword}{get}}
+\DoxyCodeLine{00021             \{}
+\DoxyCodeLine{00022                 \textcolor{keywordflow}{return} color;}
+\DoxyCodeLine{00023             \}}
+\DoxyCodeLine{00024             \textcolor{keyword}{set}}
+\DoxyCodeLine{00025             \{}
+\DoxyCodeLine{00026                 color = value;}
+\DoxyCodeLine{00027             \}}
+\DoxyCodeLine{00028         \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Color\+Tool.\+cs\item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Color\+Tool.\+Designer.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_color_tool_8cs}{Color\+Tool.\+cs}}\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_color_tool_8_designer_8cs}{Color\+Tool.\+Designer.\+cs}}\end{DoxyCompactItemize}

@@ -1,0 +1,271 @@
+\hypertarget{picam_8py_source}{}\doxysection{picam.\+py}
+\label{picam_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/cameras/picam.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/cameras/picam.py}}
+\mbox{\hyperlink{picam_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1cameras_1_1picam}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00021}00021 \textcolor{keyword}{import} enum}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00022}00022 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00023}00023 \textcolor{keyword}{import} queue}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00024}00024 \textcolor{keyword}{import} time}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00025}00025 \textcolor{keyword}{from} io \textcolor{keyword}{import} BytesIO}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00027}00027 \textcolor{keyword}{import} numpy \textcolor{keyword}{as} np}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00028}00028 \textcolor{keyword}{import} picamera}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00029}00029 \textcolor{keyword}{import} picamera.array}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00030}00030 \textcolor{keyword}{import} RPi.GPIO \textcolor{keyword}{as} GPIO}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00032}00032 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00033}00033 \textcolor{keyword}{from} microscope \textcolor{keyword}{import} ROI, Binning, TriggerMode, TriggerType}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00034}00034 \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}} \textcolor{keyword}{import} keep\_acquiring}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00036}00036 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00037}\mbox{\hyperlink{namespacemicroscope_1_1cameras_1_1picam_a5e7268d1a8f43a4c7061857e734f8853}{00037}} GPIO\_Trigger = 21}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00038}\mbox{\hyperlink{namespacemicroscope_1_1cameras_1_1picam_a5cd1f732b2646d4180c4d065d92ff0a9}{00038}} GPIO\_CAMLED = 5}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00040}00040 \_logger = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00043}00043 \textcolor{comment}{\# Trigger types.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00044}00044 \textcolor{preprocessor}{@enum.unique}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00045}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map}{00045}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map}{TrgSourceMap}}(enum.Enum):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00046}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map_a2ddf53d4cbe3b9047b824a45312cc21f}{00046}}     SOFTWARE = TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00047}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map_a4e004ae68f91030721ad1ad689088420}{00047}}     EDGE\_RISING = TriggerType.RISING\_EDGE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00050}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera}{00050}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera}{PiCamera}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{microscope.abc.Camera}}):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00051}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a8958fbb797332a875b157cfc782b1012}{00051}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a8958fbb797332a875b157cfc782b1012}{\_\_init\_\_}}(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00052}00052         super(PiCamera, self).\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a8958fbb797332a875b157cfc782b1012}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00053}00053         \textcolor{comment}{\# example parameter to allow setting.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00054}00054         \textcolor{comment}{\#        self.add\_setting('\_error\_percent', 'int',}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00055}00055         \textcolor{comment}{\#                         lambda: self.\_error\_percent,}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00056}00056         \textcolor{comment}{\#                         self.\_set\_error\_percent,}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00057}00057         \textcolor{comment}{\#                         lambda: (0, 100))}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00058}00058         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00059}00059         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5318d8cf99ef2c1442a5cc8a881e9680}{\_exposure\_time}} = 0.1}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00060}00060         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a63b59e96a65f2b45897388dfbea92314}{\_triggered}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00061}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{00061}}         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}} = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00062}00062         \textcolor{comment}{\# Region of interest.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00063}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}{00063}}         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}{roi}} = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{ROI}}(\textcolor{keywordtype}{None}, \textcolor{keywordtype}{None}, \textcolor{keywordtype}{None}, \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00064}00064         \textcolor{comment}{\# Cycle time}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00065}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afafc78e1f3659591dc9d422a7f554e3b}{00065}}         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afafc78e1f3659591dc9d422a7f554e3b}{exposure\_time}} = 0.001  \textcolor{comment}{\# in seconds}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00066}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab76b89bc864bb541ffcbe9ebbc017b47}{00066}}         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab76b89bc864bb541ffcbe9ebbc017b47}{cycle\_time}} = self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afafc78e1f3659591dc9d422a7f554e3b}{exposure\_time}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00067}00067         \textcolor{comment}{\# initialise in soft trigger mode}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00068}00068         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}} = TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00069}00069         \textcolor{comment}{\# setup hardware triggerline}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00070}00070         GPIO.setmode(GPIO.BCM)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00071}00071         \textcolor{comment}{\# GPIO trigger line is an input}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00072}00072         GPIO.setup(GPIO\_Trigger, GPIO.IN)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00073}00073         \textcolor{comment}{\# GPIO control over camera LED is an output}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00074}00074         GPIO.setup(GPIO\_CAMLED, GPIO.OUT)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00075}00075         \textcolor{comment}{\# add trigger to settings}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00076}00076         trg\_source\_names = [x.name \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} TrgSourceMap]}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00077}00077         \textcolor{comment}{\# set up queue to store images as they are acquired}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00078}00078         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6e7e8de7a84f393bcf23cd0ed3a2083a}{\_queue}} = queue.Queue()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00079}00079         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6218be312f51948e190571643f4959fb}{\_awb\_modes}} = picamera.PiCamera.AWB\_MODES}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00080}00080         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4b6d49b8e9f55f9b1bbea02e3be18ff9}{\_iso\_modes}} = [0, 100, 200, 320, 400, 500, 640, 800]}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00082}00082         \textcolor{keyword}{def }\_trigger\_source\_setter(index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00083}00083             trigger\_type = TrgSourceMap[trg\_source\_names[index]].value}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00084}00084             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_a3c74f4111c799b181a6168d35474def0}{set\_trigger}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab4591ad6076c8afe5f6201a35bae2c2c}{set\_trigger}}(trigger\_type, self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_ae7007f4ba2c462e3214ea06abf7398f3}{trigger\_mode}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4aace40298ffebdd7a50a3c531725c63}{trigger\_mode}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00086}00086         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00087}00087             \textcolor{stringliteral}{"{}trig source"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00088}00088             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00089}00089             \textcolor{keyword}{lambda}: \mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map}{TrgSourceMap}}(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}}).name,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00090}00090             \_trigger\_source\_setter,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00091}00091             trg\_source\_names,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00092}00092         )}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00093}00093         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00094}00094             \textcolor{stringliteral}{"{}AWB"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00095}00095             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00096}00096             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6218be312f51948e190571643f4959fb}{\_awb\_modes}}[self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ad945b87e0b6058a21825d201198fe07d}{get\_awb\_mode}}()],}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00097}00097             \textcolor{keyword}{lambda} awb: self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}{set\_awb\_mode}}(awb),}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00098}00098             values=(list(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6218be312f51948e190571643f4959fb}{\_awb\_modes}}.keys())),}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00099}00099         )}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00101}00101         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00102}00102             \textcolor{stringliteral}{"{}ISO"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00103}00103             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00104}00104             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4b6d49b8e9f55f9b1bbea02e3be18ff9}{\_iso\_modes}}.index(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.iso),}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00105}00105             \textcolor{keyword}{lambda} iso: self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3a4164a20cf8fba15dea133db765847c}{set\_iso\_mode}}(iso),}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00106}00106             values=(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4b6d49b8e9f55f9b1bbea02e3be18ff9}{\_iso\_modes}}),}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00107}00107         )}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00109}00109         \textcolor{comment}{\# self.add\_setting(}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00110}00110         \textcolor{comment}{\#     "{}pixel size"{},}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00111}00111         \textcolor{comment}{\#     "{}float"{},}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00112}00112         \textcolor{comment}{\#     lambda: self.\_pixel\_size,}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00113}00113         \textcolor{comment}{\#     lambda pxsz: setattr(self, "{}\_pixel\_size"{}, pxsz),}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00114}00114         \textcolor{comment}{\#     \# technically should be: (nextafter(0.0, inf), nextafter(inf, 0.0))}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00115}00115         \textcolor{comment}{\#     values=(0.0, float("{}inf"{})),}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00116}00116         \textcolor{comment}{\# )}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00117}00117         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}{initialize}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3e6e25f9daf0f4fcb42f40474f2b45b8}{initialize}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00119}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ad945b87e0b6058a21825d201198fe07d}{00119}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ad945b87e0b6058a21825d201198fe07d}{get\_awb\_mode}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00120}00120         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.awb\_mode}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00122}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}{00122}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}{set\_awb\_mode}}(self, val):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00123}00123         \textcolor{keywordflow}{for} key, value \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6218be312f51948e190571643f4959fb}{\_awb\_modes}}.items():}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00124}00124             \textcolor{keywordflow}{if} value == val:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00125}00125                 self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.awb\_mode = key}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00127}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3a4164a20cf8fba15dea133db765847c}{00127}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3a4164a20cf8fba15dea133db765847c}{set\_iso\_mode}}(self, val):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00128}00128         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.iso = self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4b6d49b8e9f55f9b1bbea02e3be18ff9}{\_iso\_modes}}[val]}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00130}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a10272f036fb315426084e003b34775e9}{00130}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a10272f036fb315426084e003b34775e9}{HW\_trigger}}(self, channel):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00131}00131         \textcolor{stringliteral}{"{}"{}"{}Function called by GPIO interupt, needs to trigger image capture"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00132}00132         \textcolor{keyword}{with} picamera.array.PiYUVArray(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}) \textcolor{keyword}{as} output:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00133}00133             self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.capture(output, format=\textcolor{stringliteral}{"{}yuv"{}}, use\_video\_port=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00134}00134             self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6e7e8de7a84f393bcf23cd0ed3a2083a}{\_queue}}.put(output.array[:, :, 0])}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00136}00136     \textcolor{keyword}{def }\_fetch\_data(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00137}00137         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6e7e8de7a84f393bcf23cd0ed3a2083a}{\_queue}}.qsize() \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} 0:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00138}00138             data = self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6e7e8de7a84f393bcf23cd0ed3a2083a}{\_queue}}.get()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00139}00139             \_logger.info(\textcolor{stringliteral}{"{}Sending image"{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00140}00140             \textcolor{keywordflow}{return} data}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00141}00141         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00142}00142             \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00144}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3e6e25f9daf0f4fcb42f40474f2b45b8}{00144}}     \textcolor{keyword}{def }initialize(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00145}00145         \textcolor{stringliteral}{"{}"{}"{}Initialise the Pi Camera camera.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00146}00146 \textcolor{stringliteral}{        Open the connection, connect properties }\textcolor{keywordflow}{and} populate settings dict.}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00147}00147         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00148}00148 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00149}00149             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00150}00150                 \textcolor{comment}{\# initialise camera in still image mode.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00151}00151                 self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}} = picamera.PiCamera(sensor\_mode=2)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00152}00152             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00153}00153                 \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Problem opening camera."{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00154}00154         \_logger.info(\textcolor{stringliteral}{"{}Initializing camera."{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00155}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}{00155}}         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}{camversion}} = self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.revision}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00156}00156         \_logger.info(\textcolor{stringliteral}{"{}cam version "{}} + self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}{camversion}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00158}00158         \textcolor{comment}{\# create img buffer to hold images.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00159}00159         \textcolor{comment}{\# disable camera LED by default}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00160}00160         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afd91e9e24cc4f9d4704a9fc9c46eac63}{setLED}}(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00161}00161         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}{set\_awb\_mode}}(0)  \textcolor{comment}{\# set auto white balance to off}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00162}00162         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_a93d7d74973ec8583858b60e77809faf6}{\_get\_sensor\_shape}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a8d3c6352a020782be85f436c489b74b4}{\_get\_sensor\_shape}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00164}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa8ee8ee605be37cfcad0104dab8df7ef}{00164}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa8ee8ee605be37cfcad0104dab8df7ef}{make\_safe}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00165}00165         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00166}00166             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a36952a38857bc6c8eb627b2d8b6b867b}{abort}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}{abort}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00168}00168     \textcolor{keyword}{def }\_do\_disable(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00169}00169         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a36952a38857bc6c8eb627b2d8b6b867b}{abort}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}{abort}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00171}00171     \textcolor{keyword}{def }\_do\_shutdown(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00172}00172         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a21b0cd26b1a1ab19103ea9f22e0d5254}{\_do\_disable}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa69add5b8cc24913511e8b8de62de85e}{\_do\_disable}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00173}00173         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.close()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00175}00175     \textcolor{keyword}{def }\_do\_enable(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00176}00176         \_logger.info(\textcolor{stringliteral}{"{}Preparing for acquisition."{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00177}00177         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00178}00178             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a36952a38857bc6c8eb627b2d8b6b867b}{abort}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}{abort}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00179}00179         \textcolor{comment}{\# actually start camera}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00180}00180         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00181}00181             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}{initialize}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3e6e25f9daf0f4fcb42f40474f2b45b8}{initialize}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00182}00182         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00183}00183         \_logger.info(\textcolor{stringliteral}{"{}Acquisition enabled."{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00184}00184         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00185}00185 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00186}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}{00186}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}{abort}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00187}00187         \_logger.info(\textcolor{stringliteral}{"{}Disabling acquisition."{}})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00188}00188         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00189}00189             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00191}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab4591ad6076c8afe5f6201a35bae2c2c}{00191}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab4591ad6076c8afe5f6201a35bae2c2c}{set\_trigger}}(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00192}00192         self, ttype: TriggerType, tmode: TriggerMode}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00193}00193     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00194}00194         \textcolor{keywordflow}{if} ttype == self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00195}00195             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00196}00196         \textcolor{keywordflow}{elif} ttype == TriggerType.SOFTWARE:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00197}00197             GPIO.remove\_event\_detect(GPIO\_Trigger)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00198}00198             self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}} = TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00199}00199         \textcolor{keywordflow}{elif} ttype == TriggerType.RISING\_EDGE:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00200}00200             GPIO.add\_event\_detect(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00201}00201                 GPIO\_Trigger,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00202}00202                 GPIO.RISING,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00203}00203                 callback=self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a10272f036fb315426084e003b34775e9}{HW\_trigger}},}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00204}00204                 bouncetime=10,}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00205}00205             )}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00206}00206             self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}} = TriggerType.RISING\_EDGE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00208}00208     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00209}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4aace40298ffebdd7a50a3c531725c63}{00209}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4aace40298ffebdd7a50a3c531725c63}{trigger\_mode}}(self) -\/> TriggerMode:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00210}00210         \textcolor{comment}{\#        if self.\_trigger\_type==devices.TRIGGER\_BEFORE:}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00211}00211         \textcolor{keywordflow}{return} TriggerMode.ONCE}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00212}00212 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00213}00213     \textcolor{comment}{\#        else:}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00214}00214     \textcolor{comment}{\#            return TriggerMode.ONCE}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00215}00215 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00216}00216     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00217}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a28e85b1efe105cb26a86d61c4af7b0b0}{00217}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a28e85b1efe105cb26a86d61c4af7b0b0}{trigger\_type}}(self) -\/> TriggerType:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00218}00218         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a52f41e2fa75adc6df3491fad640711b1}{\_trigger\_type}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00220}00220     \textcolor{keyword}{def }\_get\_roi(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00221}00221         \textcolor{stringliteral}{"{}"{}"{}Return the current ROI (left, top, width, height)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00222}00222         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}{roi}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00223}00223 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00224}00224     \textcolor{keyword}{def }\_set\_binning(self, h\_bin, v\_bin):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00225}00225         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00226}00226 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00227}00227     \textcolor{keyword}{def }\_get\_binning(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00228}00228         \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1_binning}{Binning}}(1, 1)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00229}00229 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00230}00230     \textcolor{preprocessor}{@keep\_acquiring}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00231}00231     \textcolor{keyword}{def }\_set\_roi(self, left, top, width, height):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00232}00232         \textcolor{stringliteral}{"{}"{}"{}Set the ROI to (left, tip, width, height)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00233}00233         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}{roi}} = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{ROI}}(left, top, width, height)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00234}00234 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00235}00235     \textcolor{comment}{\# set camera LED status, off is best for microscopy.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00236}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afd91e9e24cc4f9d4704a9fc9c46eac63}{00236}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afd91e9e24cc4f9d4704a9fc9c46eac63}{setLED}}(self, state=False):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00237}00237         GPIO.output(GPIO\_CAMLED, state)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00238}00238 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00239}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab3d50b09994deb47585bae7360958eb8}{00239}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab3d50b09994deb47585bae7360958eb8}{set\_exposure\_time}}(self, value):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00240}00240         \textcolor{comment}{\# exposure times are set in us.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00241}00241         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.shutter\_speed = int(value * 1.0e6)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00242}00242 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00243}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af63aa3bf60461bb5b66285998de897c8}{00243}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af63aa3bf60461bb5b66285998de897c8}{get\_exposure\_time}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00244}00244         \textcolor{comment}{\# exposure times are in us, so multiple by 1E-\/6 to get seconds.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00245}00245         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.exposure\_speed * 1.0e-\/6}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00246}00246 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00247}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af4e4b15508e4330c289592e9d0438e35}{00247}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af4e4b15508e4330c289592e9d0438e35}{get\_cycle\_time}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00248}00248         \textcolor{comment}{\# fudge to make it work initially}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00249}00249         \textcolor{comment}{\# exposure times are in us, so multiple by 1E-\/6 to get seconds.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00250}00250         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.exposure\_speed * 1.0e-\/6 + 0.1}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00251}00251 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00252}00252     \textcolor{keyword}{def }\_get\_sensor\_shape(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00253}00253         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}{camversion}} == \textcolor{stringliteral}{"{}ov5647"{}}:  \textcolor{comment}{\# picam version 1}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00254}00254             self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.resolution = (2592, 1944)}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00255}00255         \textcolor{comment}{\# faqll back to defualt if not set above.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00256}00256         res = self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.resolution}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00257}00257         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_a248e7c40b0047921f3ad00f845500a56}{\_set\_roi}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af56d53e45470ad8af2ea46e3e0739b76}{\_set\_roi}}(0, 0, res[0], res[1])}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00258}00258         \textcolor{keywordflow}{return} res}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00260}00260     \textcolor{keyword}{def }\_do\_trigger(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00261}00261         self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6eb964846db1ee269c82b8191fa03e6e}{soft\_trigger}}()}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00262}00262 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00263}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6eb964846db1ee269c82b8191fa03e6e}{00263}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6eb964846db1ee269c82b8191fa03e6e}{soft\_trigger}}(self):}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00264}00264         \_logger.info(}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00265}00265             \textcolor{stringliteral}{"{}Trigger received; self.\_acquiring is \%s."{}} \% self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00266}00266         )}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00267}00267         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a9650aa931bf53351d92981e3bbeb9f95}{\_acquiring}}:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00268}00268             \textcolor{keyword}{with} picamera.array.PiYUVArray(self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}) \textcolor{keyword}{as} output:}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00269}00269                 self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}{camera}}.capture(output, format=\textcolor{stringliteral}{"{}yuv"{}}, use\_video\_port=\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00270}00270                 self.\mbox{\hyperlink{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6e7e8de7a84f393bcf23cd0ed3a2083a}{\_queue}}.put(output.array[:, :, 0])}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00271}00271 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00272}00272 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00273}00273 \textcolor{comment}{\# ongoing implemetation notes}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00274}00274 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00275}00275 \textcolor{comment}{\# should be able to use rotation and hflip to set specific output image}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00276}00276 \textcolor{comment}{\# rotations}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00277}00277 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00278}00278 \textcolor{comment}{\# roi's can be set with the zoom function, default is (0,0,1,1) meaning all the data.}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00280}00280 \textcolor{comment}{\# Need to setup a buffer for harware triggered data aquisition so we can}}
+\DoxyCodeLine{\Hypertarget{picam_8py_source_l00281}00281 \textcolor{comment}{\# call the acquisition and then download the data at our leasure}}
+
+\end{DoxyCode}

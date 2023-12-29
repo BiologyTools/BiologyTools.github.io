@@ -14,6 +14,8 @@ class \mbox{\hyperlink{class_bio_imager_1_1_recordings_1_1_node}{Node}}
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{class_bio_imager_1_1_recordings_a93c48a91dbf0cdcc248e87ad88a1d9fa}{Recordings}} ()
+\item 
 void \mbox{\hyperlink{class_bio_imager_1_1_recordings_a91871cd9808adfb8884660684f88c26d}{Init\+Elements}} ()
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_recordings_a724892c7905ad702e24d7e2394861d3a}{Update\+Elements}} ()
@@ -27,7 +29,7 @@ void \mbox{\hyperlink{class_bio_imager_1_1_recordings_a189861757871292f9e58f5f95
 \item 
 static void \mbox{\hyperlink{class_bio_imager_1_1_recordings_ac5fb15ed8f875368a332ef07f779be2c}{Perform}} (string act)
 \item 
-static object \mbox{\hyperlink{class_bio_imager_1_1_recordings_a727cfdb0e1c6bfaacf775ba7e3900551}{Get\+Property}} (Automation.\+Action.\+Value\+Type automation, string pro)
+static object \mbox{\hyperlink{class_bio_imager_1_1_recordings_a727cfdb0e1c6bfaacf775ba7e3900551}{Get\+Property}} (\mbox{\hyperlink{class_bio_imager_1_1_automation_1_1_action_a17559f2ff5665e76947224324c751256}{Automation.\+Action.\+Value\+Type}} automation, string pro)
 \end{DoxyCompactItemize}
 \doxysubsection*{Protected Member Functions}
 \begin{DoxyCompactItemize}
@@ -55,6 +57,27 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00010}{10}} of file 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013         \{}
+\DoxyCodeLine{00014             InitializeComponent();}
+\DoxyCodeLine{00015             \textcolor{keywordflow}{if} (!Directory.Exists(\textcolor{stringliteral}{"{}Recordings"{}}))}
+\DoxyCodeLine{00016                 Directory.CreateDirectory(\textcolor{stringliteral}{"{}Recordings"{}});}
+\DoxyCodeLine{00017             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} file \textcolor{keywordflow}{in} Directory.GetFiles(\textcolor{stringliteral}{"{}Recordings"{}}))}
+\DoxyCodeLine{00018             \{}
+\DoxyCodeLine{00019                 \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespacemicroscope_1_1takeimage_aa8afcfcaed2ee35d231d2158dee51c38}{file}}.EndsWith(\textcolor{stringliteral}{"{}reco"{}}))}
+\DoxyCodeLine{00020                     \mbox{\hyperlink{class_bio_imager_1_1_recordings_a714a3bc17c9dd718d900f0648b1f294c}{OpenRecording}}(file);}
+\DoxyCodeLine{00021                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (\mbox{\hyperlink{namespacemicroscope_1_1takeimage_aa8afcfcaed2ee35d231d2158dee51c38}{file}}.EndsWith(\textcolor{stringliteral}{"{}pro"{}}))}
+\DoxyCodeLine{00022                     \mbox{\hyperlink{class_bio_imager_1_1_recordings_a189861757871292f9e58f5f95a5c12c5}{OpenProperty}}(file);}
+\DoxyCodeLine{00023             \}}
+\DoxyCodeLine{00024             \textcolor{keywordflow}{foreach} (Automation.Action.ValueType val in (Automation.Action.ValueType[])Enum.GetValues(typeof(Automation.Action.ValueType)))}
+\DoxyCodeLine{00025             \{}
+\DoxyCodeLine{00026                 propBox.Items.Add(val);}
+\DoxyCodeLine{00027             \}}
+\DoxyCodeLine{00028 }
+\DoxyCodeLine{00029         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_afb85b6719b11b02360e8bca0b1f0a4e2}\label{class_bio_imager_1_1_recordings_afb85b6719b11b02360e8bca0b1f0a4e2}} 
@@ -76,16 +99,40 @@ Clean up any resources being used.
 
 Definition at line \mbox{\hyperlink{_recordings_8designer_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_recordings_8designer_8cs_source}{Recordings.\+designer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015         \{}
+\DoxyCodeLine{00016             \textcolor{keywordflow}{if} (disposing \&\& (components != \textcolor{keyword}{null}))}
+\DoxyCodeLine{00017             \{}
+\DoxyCodeLine{00018                 components.Dispose();}
+\DoxyCodeLine{00019             \}}
+\DoxyCodeLine{00020             base.Dispose(disposing);}
+\DoxyCodeLine{00021         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_a727cfdb0e1c6bfaacf775ba7e3900551}\label{class_bio_imager_1_1_recordings_a727cfdb0e1c6bfaacf775ba7e3900551}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!GetProperty@{GetProperty}}
 \index{GetProperty@{GetProperty}!BioImager.Recordings@{BioImager.Recordings}}
 \doxysubsubsection{\texorpdfstring{GetProperty()}{GetProperty()}}
-{\footnotesize\ttfamily static object Bio\+Imager.\+Recordings.\+Get\+Property (\begin{DoxyParamCaption}\item[{Automation.\+Action.\+Value\+Type}]{automation,  }\item[{string}]{pro }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
+{\footnotesize\ttfamily static object Bio\+Imager.\+Recordings.\+Get\+Property (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_bio_imager_1_1_automation_1_1_action_a17559f2ff5665e76947224324c751256}{Automation.\+Action.\+Value\+Type}}}]{automation,  }\item[{string}]{pro }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [static]}}
 
 
 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00170}{170}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171         \{}
+\DoxyCodeLine{00172             Automation.Recording rec = \textcolor{keyword}{null};}
+\DoxyCodeLine{00173             \textcolor{keywordflow}{if} (Automation.Properties.ContainsKey(pro))}
+\DoxyCodeLine{00174                 rec = (Automation.Recording)Automation.Properties[pro];}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00176                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00177             Recorder.AddLine(\textcolor{stringliteral}{"{}Recordings.Get("{}} + rec.Name + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00178             \textcolor{keywordflow}{return} rec.Get();}
+\DoxyCodeLine{00179         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_a91871cd9808adfb8884660684f88c26d}\label{class_bio_imager_1_1_recordings_a91871cd9808adfb8884660684f88c26d}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!InitElements@{InitElements}}
 \index{InitElements@{InitElements}!BioImager.Recordings@{BioImager.Recordings}}
@@ -96,6 +143,64 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00170}{170}} of file
 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031         \{}
+\DoxyCodeLine{00032             view.Nodes.Clear();}
+\DoxyCodeLine{00033             \textcolor{keywordflow}{foreach} (Automation.Recording rec in Automation.Recordings.Values)}
+\DoxyCodeLine{00034             \{}
+\DoxyCodeLine{00035                 TreeNode tr = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00036                 Node n = \textcolor{keyword}{new} Node(rec, tr, Node.Type.recording);}
+\DoxyCodeLine{00037                 tr.Tag = n;}
+\DoxyCodeLine{00038                 tr.Text = rec.Name;}
+\DoxyCodeLine{00039                 \textcolor{keywordflow}{foreach} (Automation.Action item in rec.List)}
+\DoxyCodeLine{00040                 \{}
+\DoxyCodeLine{00041                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00042                     \{}
+\DoxyCodeLine{00043                         TreeNode tn = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00044                         tn.Text = item.ToString();}
+\DoxyCodeLine{00045                         Node no = \textcolor{keyword}{new} Node(item, tn, Node.Type.action);}
+\DoxyCodeLine{00046                         no.recording = rec;}
+\DoxyCodeLine{00047                         tn.Tag = no;}
+\DoxyCodeLine{00048                         tr.Nodes.Add(tn);}
+\DoxyCodeLine{00049                     \}}
+\DoxyCodeLine{00050                     \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00051                     \{}
+\DoxyCodeLine{00052 }
+\DoxyCodeLine{00053                     \}}
+\DoxyCodeLine{00054                 \}}
+\DoxyCodeLine{00055                 view.Nodes.Add(tr);}
+\DoxyCodeLine{00056             \}}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058             propView.Nodes.Clear();}
+\DoxyCodeLine{00059             \textcolor{keywordflow}{foreach} (Automation.Recording rec in Automation.Properties.Values)}
+\DoxyCodeLine{00060             \{}
+\DoxyCodeLine{00061                 TreeNode tr = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00062                 Node n = \textcolor{keyword}{new} Node(rec, tr, Node.Type.recording);}
+\DoxyCodeLine{00063                 tr.Tag = n;}
+\DoxyCodeLine{00064                 tr.Text = rec.Name;}
+\DoxyCodeLine{00065                 \textcolor{keywordflow}{foreach} (Automation.Action item in rec.List)}
+\DoxyCodeLine{00066                 \{}
+\DoxyCodeLine{00067                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00068                     \{}
+\DoxyCodeLine{00069                         TreeNode tn = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00070                         tn.Text = item.ToString();}
+\DoxyCodeLine{00071 }
+\DoxyCodeLine{00072                         Node no = \textcolor{keyword}{new} Node(item, tn, Node.Type.action);}
+\DoxyCodeLine{00073                         no.recording = rec;}
+\DoxyCodeLine{00074                         tn.Tag = no;}
+\DoxyCodeLine{00075                         tr.Nodes.Add(tn);}
+\DoxyCodeLine{00076                     \}}
+\DoxyCodeLine{00077                     \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00078                     \{}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080                     \}}
+\DoxyCodeLine{00081                 \}}
+\DoxyCodeLine{00082                 propView.Nodes.Add(tr);}
+\DoxyCodeLine{00083             \}}
+\DoxyCodeLine{00084         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_a189861757871292f9e58f5f95a5c12c5}\label{class_bio_imager_1_1_recordings_a189861757871292f9e58f5f95a5c12c5}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!OpenProperty@{OpenProperty}}
 \index{OpenProperty@{OpenProperty}!BioImager.Recordings@{BioImager.Recordings}}
@@ -106,6 +211,15 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00030}{30}} of file 
 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00316}{316}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00317         \{}
+\DoxyCodeLine{00318             Automation.Recording rec = OpenRec(file);}
+\DoxyCodeLine{00319             Automation.Properties.Add(rec.Name, rec);}
+\DoxyCodeLine{00320             \mbox{\hyperlink{class_bio_imager_1_1_recordings_a91871cd9808adfb8884660684f88c26d}{InitElements}}();}
+\DoxyCodeLine{00321         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_a714a3bc17c9dd718d900f0648b1f294c}\label{class_bio_imager_1_1_recordings_a714a3bc17c9dd718d900f0648b1f294c}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!OpenRecording@{OpenRecording}}
 \index{OpenRecording@{OpenRecording}!BioImager.Recordings@{BioImager.Recordings}}
@@ -116,6 +230,15 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00316}{316}} of file
 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00310}{310}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00311         \{}
+\DoxyCodeLine{00312             Automation.Recording rec = OpenRec(file);}
+\DoxyCodeLine{00313             Automation.Recordings.Add(rec.Name, rec);}
+\DoxyCodeLine{00314             \mbox{\hyperlink{class_bio_imager_1_1_recordings_a91871cd9808adfb8884660684f88c26d}{InitElements}}();}
+\DoxyCodeLine{00315         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_ac5fb15ed8f875368a332ef07f779be2c}\label{class_bio_imager_1_1_recordings_ac5fb15ed8f875368a332ef07f779be2c}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!Perform@{Perform}}
 \index{Perform@{Perform}!BioImager.Recordings@{BioImager.Recordings}}
@@ -126,6 +249,15 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00310}{310}} of file
 
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00164}{164}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00165         \{}
+\DoxyCodeLine{00166             Automation.Recording rec = (Automation.Recording)Automation.Recordings[act];}
+\DoxyCodeLine{00167             rec.Run();}
+\DoxyCodeLine{00168             Recorder.AddLine(\textcolor{stringliteral}{"{}Recordings.Perform("{}} + rec.Name + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00169         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_recordings_a724892c7905ad702e24d7e2394861d3a}\label{class_bio_imager_1_1_recordings_a724892c7905ad702e24d7e2394861d3a}} 
 \index{BioImager.Recordings@{BioImager.Recordings}!UpdateElements@{UpdateElements}}
 \index{UpdateElements@{UpdateElements}!BioImager.Recordings@{BioImager.Recordings}}
@@ -137,8 +269,56 @@ Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00164}{164}} of file
 Definition at line \mbox{\hyperlink{_recordings_8cs_source_l00085}{85}} of file \mbox{\hyperlink{_recordings_8cs_source}{Recordings.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086         \{}
+\DoxyCodeLine{00087             \textcolor{keywordflow}{foreach} (TreeNode rec \textcolor{keywordflow}{in} view.Nodes)}
+\DoxyCodeLine{00088             \{}
+\DoxyCodeLine{00089                 rec.Nodes.Clear();}
+\DoxyCodeLine{00090                 Node n = (Node)rec.Tag;}
+\DoxyCodeLine{00091                 foreach (Automation.Action item in n.recording.List)}
+\DoxyCodeLine{00092                 \{}
+\DoxyCodeLine{00093                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00094                     \{}
+\DoxyCodeLine{00095                         TreeNode tr = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00096                         tr.Text = item.ToString();}
+\DoxyCodeLine{00097                         Node no = \textcolor{keyword}{new} Node(item, rec, Node.Type.action);}
+\DoxyCodeLine{00098                         no.recording = n.recording;}
+\DoxyCodeLine{00099                         tr.Tag = no;}
+\DoxyCodeLine{00100                         rec.Nodes.Add(tr);}
+\DoxyCodeLine{00101                     \}}
+\DoxyCodeLine{00102                     \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00103                     \{}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105                     \}}
+\DoxyCodeLine{00106                 \}}
+\DoxyCodeLine{00107             \}}
+\DoxyCodeLine{00108             \textcolor{keywordflow}{foreach} (TreeNode rec \textcolor{keywordflow}{in} propView.Nodes)}
+\DoxyCodeLine{00109             \{}
+\DoxyCodeLine{00110                 rec.Nodes.Clear();}
+\DoxyCodeLine{00111                 Node n = (Node)rec.Tag;}
+\DoxyCodeLine{00112                 foreach (Automation.Action item in n.recording.List)}
+\DoxyCodeLine{00113                 \{}
+\DoxyCodeLine{00114                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00115                     \{}
+\DoxyCodeLine{00116                         TreeNode tr = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00117                         tr.Text = item.ToString();}
+\DoxyCodeLine{00118                         Node no = \textcolor{keyword}{new} Node(item, rec, Node.Type.action);}
+\DoxyCodeLine{00119                         no.recording = n.recording;}
+\DoxyCodeLine{00120                         tr.Tag = no;}
+\DoxyCodeLine{00121                         rec.Nodes.Add(tr);}
+\DoxyCodeLine{00122                     \}}
+\DoxyCodeLine{00123                     \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00124                     \{}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126                     \}}
+\DoxyCodeLine{00127                 \}}
+\DoxyCodeLine{00128             \}}
+\DoxyCodeLine{00129         \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Recordings.\+cs\item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Recordings.\+designer.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_recordings_8cs}{Recordings.\+cs}}\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_recordings_8designer_8cs}{Recordings.\+designer.\+cs}}\end{DoxyCompactItemize}

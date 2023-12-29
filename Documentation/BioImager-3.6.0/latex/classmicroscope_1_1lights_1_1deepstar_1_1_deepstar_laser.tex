@@ -1,0 +1,237 @@
+\hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser}{}\doxysection{microscope.\+lights.\+deepstar.\+Deepstar\+Laser Class Reference}
+\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser}\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+Inheritance diagram for microscope.\+lights.\+deepstar.\+Deepstar\+Laser\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.240310cm]{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a31ea0e2779c37bef8bb0330c78397a5e}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, com, baud=9600, timeout=2.\+0, $\ast$$\ast$kwargs)
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9fadbdcb7fae8ddb69244d2384fdafd6}{get\+\_\+status}} (self)
+\item 
+def \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac21b5e48216d31598280afea5e2f55d4}{get\+\_\+is\+\_\+on}} (self)
+\item 
+\mbox{\hyperlink{classmicroscope_1_1_trigger_type}{microscope.\+Trigger\+Type}} \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a6433c5348594d8ddf12e1d00746cbbc5}{trigger\+\_\+type}} (self)
+\item 
+\mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.\+Trigger\+Mode}} \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9ef5ae77f60bd70bcb977697b599c2f3}{trigger\+\_\+mode}} (self)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a350855dbc1164259acab1fde69b338f0}{set\+\_\+trigger}} (self, \mbox{\hyperlink{classmicroscope_1_1_trigger_type}{microscope.\+Trigger\+Type}} ttype, \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.\+Trigger\+Mode}} tmode)
+\end{DoxyCompactItemize}
+\doxysubsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac5301d72166a3ad8e7853499dcd0cc58}{connection}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Omicron DeepStar laser.
+
+Omicron LDM lasers can be bought with and without the LDM.APC
+power monitoring option (light pick-off).  If this option is not
+available, the `power` attribute will return the set power value
+instead of the actual power value.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00032}{32}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a31ea0e2779c37bef8bb0330c78397a5e}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a31ea0e2779c37bef8bb0330c78397a5e}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{com,  }\item[{}]{baud = {\ttfamily 9600},  }\item[{}]{timeout = {\ttfamily 2.0},  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a223e61b484d5f3da1ce4a53794685ae2}{microscope.\+abc.\+Serial\+Device\+Mixin}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00044}{44}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00044     \textcolor{keyword}{def }\_\_init\_\_(self, com, baud=9600, timeout=2.0, **kwargs):}
+\DoxyCodeLine{00045         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00046         self.connection = serial.Serial(}
+\DoxyCodeLine{00047             port=com,}
+\DoxyCodeLine{00048             baudrate=baud,}
+\DoxyCodeLine{00049             timeout=timeout,}
+\DoxyCodeLine{00050             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00051             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00052             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00053         )}
+\DoxyCodeLine{00054         \textcolor{comment}{\# If the laser is currently on, then we need to use 7-\/byte mode; otherwise we need to}}
+\DoxyCodeLine{00055         \textcolor{comment}{\# use 16-\/byte mode.}}
+\DoxyCodeLine{00056         self.\_write(b\textcolor{stringliteral}{"{}S?"{}})}
+\DoxyCodeLine{00057         response = self.\_readline()}
+\DoxyCodeLine{00058         \_logger.info(\textcolor{stringliteral}{"{}Current laser state: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{00059 }
+\DoxyCodeLine{00060         self.\_write(b\textcolor{stringliteral}{"{}STAT3"{}})}
+\DoxyCodeLine{00061         option\_codes = self.\_readline()}
+\DoxyCodeLine{00062         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} option\_codes.startswith(b\textcolor{stringliteral}{"{}OC "{}}):}
+\DoxyCodeLine{00063             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00064                 \textcolor{stringliteral}{"{}Failed to get option codes '\%s'"{}} \% option\_codes.decode()}
+\DoxyCodeLine{00065             )}
+\DoxyCodeLine{00066         \textcolor{keywordflow}{if} option\_codes[9:12] == b\textcolor{stringliteral}{"{}AP1"{}}:}
+\DoxyCodeLine{00067             self.\_has\_apc = \textcolor{keyword}{True}}
+\DoxyCodeLine{00068         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00069             \_logger.warning(}
+\DoxyCodeLine{00070                 \textcolor{stringliteral}{"{}Laser is missing APC option.  Will return set"{}}}
+\DoxyCodeLine{00071                 \textcolor{stringliteral}{"{} power instead of actual power"{}}}
+\DoxyCodeLine{00072             )}
+\DoxyCodeLine{00073             self.\_has\_apc = \textcolor{keyword}{False}}
+\DoxyCodeLine{00074 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac21b5e48216d31598280afea5e2f55d4}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac21b5e48216d31598280afea5e2f55d4}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!get\_is\_on@{get\_is\_on}}
+\index{get\_is\_on@{get\_is\_on}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{get\_is\_on()}{get\_is\_on()}}
+{\footnotesize\ttfamily def microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Return True if the light source is currently able to produce light.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{microscope.\+abc.\+Light\+Source}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{136}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00136     \textcolor{keyword}{def }get\_is\_on(self):}
+\DoxyCodeLine{00137         self.\_write(b\textcolor{stringliteral}{"{}S?"{}})}
+\DoxyCodeLine{00138         response = self.\_readline()}
+\DoxyCodeLine{00139         \_logger.debug(\textcolor{stringliteral}{"{}Are we on? [\%s]"{}}, response.decode())}
+\DoxyCodeLine{00140         \textcolor{keywordflow}{return} response == b\textcolor{stringliteral}{"{}S2"{}}}
+\DoxyCodeLine{00141 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9fadbdcb7fae8ddb69244d2384fdafd6}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9fadbdcb7fae8ddb69244d2384fdafd6}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!get\_status@{get\_status}}
+\index{get\_status@{get\_status}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{get\_status()}{get\_status()}}
+{\footnotesize\ttfamily def microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Query and return the light source status.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{microscope.\+abc.\+Light\+Source}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{87}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087     \textcolor{keyword}{def }get\_status(self):}
+\DoxyCodeLine{00088         result = []}
+\DoxyCodeLine{00089         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(4):}
+\DoxyCodeLine{00090             self.\_write((\textcolor{stringliteral}{"{}STAT\%d"{}} \% i).encode())}
+\DoxyCodeLine{00091             result.append(self.\_readline().decode())}
+\DoxyCodeLine{00092         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{00093 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a350855dbc1164259acab1fde69b338f0}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a350855dbc1164259acab1fde69b338f0}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!set\_trigger@{set\_trigger}}
+\index{set\_trigger@{set\_trigger}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{set\_trigger()}{set\_trigger()}}
+{\footnotesize\ttfamily  None microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+set\+\_\+trigger (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1_trigger_type}{microscope.\+Trigger\+Type}}}]{ttype,  }\item[{\mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.\+Trigger\+Mode}}     }]{tmode }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set device for a specific trigger.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_a3c74f4111c799b181a6168d35474def0}{microscope.\+abc.\+Trigger\+Target\+Mixin}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00181}{181}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00184         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerType.HIGH:}
+\DoxyCodeLine{00185             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00186                 \textcolor{stringliteral}{"{}the only trigger type supported is 'high'"{}}}
+\DoxyCodeLine{00187             )}
+\DoxyCodeLine{00188         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.BULB:}
+\DoxyCodeLine{00189             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00190                 \textcolor{stringliteral}{"{}the only trigger mode supported is 'bulb'"{}}}
+\DoxyCodeLine{00191             )}
+\DoxyCodeLine{00192 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9ef5ae77f60bd70bcb977697b599c2f3}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a9ef5ae77f60bd70bcb977697b599c2f3}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!trigger\_mode@{trigger\_mode}}
+\index{trigger\_mode@{trigger\_mode}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{trigger\_mode()}{trigger\_mode()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.\+Trigger\+Mode}} microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+trigger\+\_\+mode (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_ae7007f4ba2c462e3214ea06abf7398f3}{microscope.\+abc.\+Trigger\+Target\+Mixin}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00178}{178}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178     \textcolor{keyword}{def }trigger\_mode(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{00179         \textcolor{keywordflow}{return} microscope.TriggerMode.BULB}
+\DoxyCodeLine{00180 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a6433c5348594d8ddf12e1d00746cbbc5}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_a6433c5348594d8ddf12e1d00746cbbc5}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!trigger\_type@{trigger\_type}}
+\index{trigger\_type@{trigger\_type}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{trigger\_type()}{trigger\_type()}}
+{\footnotesize\ttfamily  \mbox{\hyperlink{classmicroscope_1_1_trigger_type}{microscope.\+Trigger\+Type}} microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+trigger\+\_\+type (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin_a04e0920d33c9b5c7cedcaba7c41053e3}{microscope.\+abc.\+Trigger\+Target\+Mixin}}.
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00174}{174}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00174     \textcolor{keyword}{def }trigger\_type(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{00175         \textcolor{keywordflow}{return} microscope.TriggerType.HIGH}
+\DoxyCodeLine{00176 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Data Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac5301d72166a3ad8e7853499dcd0cc58}\label{classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser_ac5301d72166a3ad8e7853499dcd0cc58}} 
+\index{microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}!connection@{connection}}
+\index{connection@{connection}!microscope.lights.deepstar.DeepstarLaser@{microscope.lights.deepstar.DeepstarLaser}}
+\doxysubsubsection{\texorpdfstring{connection}{connection}}
+{\footnotesize\ttfamily microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+connection}
+
+
+
+Definition at line \mbox{\hyperlink{lights_2deepstar_8py_source_l00046}{46}} of file \mbox{\hyperlink{lights_2deepstar_8py_source}{deepstar.\+py}}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/lights/\mbox{\hyperlink{lights_2deepstar_8py}{deepstar.\+py}}\end{DoxyCompactItemize}

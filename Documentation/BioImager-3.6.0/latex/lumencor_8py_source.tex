@@ -1,0 +1,234 @@
+\hypertarget{lumencor_8py_source}{}\doxysection{lumencor.\+py}
+\label{lumencor_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/controllers/lumencor.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/controllers/lumencor.py}}
+\mbox{\hyperlink{lumencor_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1controllers_1_1lumencor}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00020}00020 \textcolor{stringliteral}{"{}"{}"{}Lumencor Spectra Light Engine.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00021}00021 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00022}00022 \textcolor{stringliteral}{The implementation here is limited to the Lumencor Spectra III but}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00023}00023 \textcolor{stringliteral}{should be trivial to make it work for other Lumencor light engines.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00024}00024 \textcolor{stringliteral}{We only need access to other such devices.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00025}00025 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00026}00026 \textcolor{stringliteral}{.. note::}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00027}00027 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00028}00028 \textcolor{stringliteral}{   The engine }\textcolor{keywordflow}{is} expected to be on the standard mode communications}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00029}00029    (\textcolor{keywordflow}{not} legacy).  This can be changed via the device web interface.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00030}00030 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00031}00031 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00032}00032 \textcolor{stringliteral}{import typing}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00033}00033 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00034}00034 \textcolor{stringliteral}{import serial}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00035}00035 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00036}00036 \textcolor{stringliteral}{import microscope}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00037}00037 \textcolor{stringliteral}{import microscope.\_utils}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00038}00038 \textcolor{stringliteral}{import microscope.abc}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00039}00039 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00040}00040 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00041}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection}{00041}} \textcolor{stringliteral}{class \_SpectraIIIConnection:}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00042}00042 \textcolor{stringliteral}{    "{}"{}"{}Connection to a Spectra III Light Engine.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00043}00043 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00044}00044 \textcolor{stringliteral}{    This module makes checks }\textcolor{keywordflow}{for} Spectra III light engine \textcolor{keywordflow}{and} it was}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00045}00045     only tested \textcolor{keywordflow}{for} it.  But it should work \textcolor{keyword}{with} other lumencor light}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00046}00046     engines \textcolor{keyword}{with} little work though, \textcolor{keywordflow}{if} only we got access to them.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00048}00048     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00049}00049 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00050}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a2d2dcc162793c11ee9a344cab43611ce}{00050}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a2d2dcc162793c11ee9a344cab43611ce}{\_\_init\_\_}}(self, serial: microscope.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{\_utils.SharedSerial}}) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00051}00051         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}} = serial}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00052}00052         \textcolor{comment}{\# If the Spectra has just been powered up the first command}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00053}00053         \textcolor{comment}{\# will fail with UNKNOWNCMD.  So just send an empty command}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00054}00054         \textcolor{comment}{\# and ignore the result.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00055}00055         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.write(b\textcolor{stringliteral}{"{}\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00056}00056         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.readline()}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00057}00057 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00058}00058         \textcolor{comment}{\# We use command() and readline() instead of get\_command() in}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00059}00059         \textcolor{comment}{\# case this is not a Lumencor and won't even give a standard}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00060}00060         \textcolor{comment}{\# answer and raises an exception during the answer validation.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00061}00061         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.write(b\textcolor{stringliteral}{"{}GET MODEL\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00062}00062         answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.readline()}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00063}00063         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}A MODEL Spectra III"{}}):}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00064}00064             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00065}00065                 \textcolor{stringliteral}{"{}Not a Lumencor Spectra III Light Engine"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00066}00066             )}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00068}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}{00068}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}{command\_and\_answer}}(self, *TX\_tokens: bytes) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00069}00069         \textcolor{comment}{\# Command contains two or more tokens.  The first token for a}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00070}00070         \textcolor{comment}{\# TX (transmitted) command string is one of the two keywords}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00071}00071         \textcolor{comment}{\# GET, SET (to query or to set).  The second token is the}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00072}00072         \textcolor{comment}{\# command name.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00073}00073         \textcolor{keyword}{assert} len(TX\_tokens) >= 2, \textcolor{stringliteral}{"{}invalid command with less than two tokens"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00074}00074         \textcolor{keyword}{assert} TX\_tokens[0] \textcolor{keywordflow}{in} (}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00075}00075             b\textcolor{stringliteral}{"{}GET"{}},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00076}00076             b\textcolor{stringliteral}{"{}SET"{}},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00077}00077         ), \textcolor{stringliteral}{"{}invalid command (not SET/GET)"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00079}00079         TX\_command = b\textcolor{stringliteral}{"{} "{}}.join(TX\_tokens) + b\textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00080}00080         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.lock:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00081}00081             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.write(TX\_command)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00082}00082             answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aad0421651365486fb7f9973f0471baa3}{\_serial}}.readline()}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00083}00083         RX\_tokens = answer.split(maxsplit=2)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00084}00084         \textcolor{comment}{\# A received answer has at least two tokens.  The first token}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00085}00085         \textcolor{comment}{\# is A or E (for success or failure).  The second token is the}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00086}00086         \textcolor{comment}{\# command name (second token of the transmitted command).}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00087}00087         \textcolor{keywordflow}{if} (}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00088}00088             len(RX\_tokens) < 2}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00089}00089             \textcolor{keywordflow}{or} RX\_tokens[0] != b\textcolor{stringliteral}{"{}A"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00090}00090             \textcolor{keywordflow}{or} RX\_tokens[1] != TX\_tokens[1]}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00091}00091         ):}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00092}00092             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00093}00093                 \textcolor{stringliteral}{"{}command \%s failed: \%s"{}} \% (TX\_command, answer)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00094}00094             )}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00095}00095         \textcolor{keywordflow}{return} answer}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00096}00096 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00097}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aee9568d06479f4906a905e187204d831}{00097}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aee9568d06479f4906a905e187204d831}{get\_command}}(self, command: bytes, *args: bytes) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00098}00098         answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}{command\_and\_answer}}(b\textcolor{stringliteral}{"{}GET"{}}, command, *args)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00099}00099         \textcolor{comment}{\# The three bytes we remove at the start are the 'A ' before}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00100}00100         \textcolor{comment}{\# the command, and the space after the command.  The last two}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00101}00101         \textcolor{comment}{\# bytes are '\(\backslash\)r\(\backslash\)n'.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00102}00102         \textcolor{keywordflow}{return} answer[3 + len(command) : -\/2]}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00104}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a849c3ffdd84fb9628c10c4beba43a77f}{00104}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a849c3ffdd84fb9628c10c4beba43a77f}{set\_command}}(self, command: bytes, *args: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00105}00105         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}{command\_and\_answer}}(b\textcolor{stringliteral}{"{}SET"{}}, command, *args)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00107}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aa2f74cb0b3beeb9f027047cd192759b5}{00107}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aa2f74cb0b3beeb9f027047cd192759b5}{get\_channel\_map}}(self) -\/> typing.List[typing.Tuple[int, str]]:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00108}00108         answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aee9568d06479f4906a905e187204d831}{get\_command}}(b\textcolor{stringliteral}{"{}CHMAP"{}})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00109}00109         \textcolor{keywordflow}{return} list(enumerate(answer.decode().split()))}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00112}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection}{00112}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection}{\_LightChannelConnection}}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00113}00113     \textcolor{stringliteral}{"{}"{}"{}Commands for a channel in a Lumencor light engine."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00115}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a0ed23869c5bb25e01b83af777bb530e5}{00115}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a0ed23869c5bb25e01b83af777bb530e5}{\_\_init\_\_}}(self, connection: \_SpectraIIIConnection, index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00116}00116         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}} = connection}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00117}00117         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}} = b\textcolor{stringliteral}{"{}\%d"{}} \% index}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00118}00118 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00119}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a83a8af29b7620eac5a4681764ee47215}{00119}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a83a8af29b7620eac5a4681764ee47215}{get\_light\_state}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00120}00120         \textcolor{stringliteral}{"{}"{}"{}On (True) or off (False) state"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00121}00121         \textcolor{comment}{\# We use CHACT (actual light state) instead of CH (light}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00122}00122         \textcolor{comment}{\# state) because CH checks both the TTL inputs and channel}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00123}00123         \textcolor{comment}{\# state switches.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00124}00124         state = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}}.get\_command(b\textcolor{stringliteral}{"{}CHACT"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00125}00125         \textcolor{keywordflow}{if} state == b\textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00126}00126             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00127}00127         \textcolor{keywordflow}{elif} state == b\textcolor{stringliteral}{"{}0"{}}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00128}00128             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00129}00129         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00130}00130             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}unexpected answer"{}})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00132}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a27d9f52dd4575f070b2c76f48e7bfb85}{00132}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a27d9f52dd4575f070b2c76f48e7bfb85}{set\_light\_state}}(self, state: bool) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00133}00133         \textcolor{stringliteral}{"{}"{}"{}Turn light on (True) or off (False)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00134}00134         state\_arg = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} state \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00135}00135         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}}.set\_command(b\textcolor{stringliteral}{"{}CH"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}}, state\_arg)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00137}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_acc4ce58dea6f67ef992a849fcae614be}{00137}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_acc4ce58dea6f67ef992a849fcae614be}{get\_max\_intensity}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00138}00138         \textcolor{stringliteral}{"{}"{}"{}Maximum valid intensity that can be applied to a light channel."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00139}00139         \textcolor{keywordflow}{return} int(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}}.get\_command(b\textcolor{stringliteral}{"{}MAXINT"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}}))}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00141}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a1723c7331b392278c979930ca0121a53}{00141}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a1723c7331b392278c979930ca0121a53}{get\_intensity}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00142}00142         \textcolor{stringliteral}{"{}"{}"{}Current intensity setting between 0 and maximum intensity."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00143}00143         \textcolor{keywordflow}{return} int(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}}.get\_command(b\textcolor{stringliteral}{"{}CHINT"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}}))}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00145}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a21aacbc50f7d43522a15283e6d380a13}{00145}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a21aacbc50f7d43522a15283e6d380a13}{set\_intensity}}(self, intensity: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00146}00146         \textcolor{stringliteral}{"{}"{}"{}Set light intensity between 0 and maximum intensity."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00147}00147         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a654bdd0ab0cb31443921ffa4868a3698}{\_conn}}.set\_command(b\textcolor{stringliteral}{"{}CHINT"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a06b9e6e30a070a6661a8812e20f0a321}{\_index\_bytes}}, b\textcolor{stringliteral}{"{}\%d"{}} \% intensity)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00150}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine}{00150}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine}{SpectraIIILightEngine}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller}{microscope.abc.Controller}}):}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00151}00151     \textcolor{stringliteral}{"{}"{}"{}Spectra III Light Engine.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00152}00152 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00153}00153 \textcolor{stringliteral}{    Args:}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00154}00154 \textcolor{stringliteral}{        port: port name (Windows) }\textcolor{keywordflow}{or} path to port (everything \textcolor{keywordflow}{else}) to}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00155}00155             connect to.  For example, `/dev/ttyS1`, `COM1`, \textcolor{keywordflow}{or}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00156}00156             `/dev/cuad1`.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00157}00157 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00158}00158     The names used on the devices dict are the ones provided by the}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00159}00159     Spectra engine.  These are the colour names \textcolor{keywordflow}{in} capitals such \textcolor{keyword}{as}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00160}00160     `\textcolor{stringliteral}{'BLUE'}`, `\textcolor{stringliteral}{'NIR'}`, \textcolor{keywordflow}{or} `\textcolor{stringliteral}{'VIOLET'}`.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00162}00162     Not all sources may be turned on simultaneously. To prevent}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00163}00163     exceeding the capacity of the DC power supply, power consumption}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00164}00164     \textcolor{keywordflow}{is} tracked by the Spectra onboard computer. If a set limit \textcolor{keywordflow}{is}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00165}00165     exceeded, either by increasing intensity settings \textcolor{keywordflow}{for} sources that}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00166}00166     are already on, \textcolor{keywordflow}{or} by turning on additional sources, commands will}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00167}00167     be rejected. To clear the error condition, reduce intensities of}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00168}00168     sources that are on \textcolor{keywordflow}{or} turn off additional sources.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00170}00170     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00171}00171 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00172}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_a87133ac484484673e0840ecf759334cd}{00172}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_a87133ac484484673e0840ecf759334cd}{\_\_init\_\_}}(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00173}00173         super().\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_a87133ac484484673e0840ecf759334cd}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00174}00174         self.\_lights: typing.Mapping[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}] = \{\}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00176}00176         \textcolor{comment}{\# We use standard (not legacy) mode communication so 115200,8,N,1}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00177}00177         serial\_conn = serial.Serial(}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00178}00178             port=port,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00179}00179             baudrate=115200,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00180}00180             timeout=1,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00181}00181             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00182}00182             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00183}00183             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00184}00184             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00185}00185             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00186}00186             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00187}00187         )}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00188}00188         shared\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00189}00189         connection = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection}{\_SpectraIIIConnection}}(shared\_serial)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00190}00190 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00191}00191         \textcolor{keywordflow}{for} index, name \textcolor{keywordflow}{in} connection.get\_channel\_map():}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00192}00192             \textcolor{keyword}{assert} (}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00193}00193                 name \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_lights}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00194}00194             ), \textcolor{stringliteral}{"{}light with name '\%s' already mapped"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00195}00195             self.\_lights[name] = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel}{\_SpectraIIILightChannel}}(connection, index)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00197}00197     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00198}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_af2a1b1b538b366b85d576fcd9e9b2fe2}{00198}}     \textcolor{keyword}{def }devices(self) -\/> typing.Mapping[str, microscope.abc.Device]:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00199}00199         \textcolor{keywordflow}{return} self.\_lights}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00202}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel}{00202}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel}{\_SpectraIIILightChannel}}(}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00203}00203     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin}{microscope.\_utils.OnlyTriggersBulbOnSoftwareMixin}},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00204}00204     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}},}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00205}00205 ):}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00206}00206     \textcolor{stringliteral}{"{}"{}"{}A single light channel from a light engine.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00207}00207 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00208}00208 \textcolor{stringliteral}{    A channel may be an LED, luminescent light pipe, }\textcolor{keywordflow}{or} a laser.}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00209}00209     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00210}00210 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00211}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af2730ad4faa3107fcf30316eac8de904}{00211}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af2730ad4faa3107fcf30316eac8de904}{\_\_init\_\_}}(self, connection: \_SpectraIIIConnection, index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00212}00212         super().\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af2730ad4faa3107fcf30316eac8de904}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00213}00213         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}} = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection}{\_LightChannelConnection}}(connection, index)}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00214}00214         \textcolor{comment}{\# The lumencor only allows to set the power via intensity}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00215}00215         \textcolor{comment}{\# levels (values between 0 and MAXINT).  We keep the max}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00216}00216         \textcolor{comment}{\# intensity internal as float for the multiply/divide}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00217}00217         \textcolor{comment}{\# operations.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00218}00218         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af0496fefcb777c8240a6c5892c7766ae}{\_max\_intensity}} = float(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.get\_max\_intensity())}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00220}00220     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00221}00221         \textcolor{comment}{\# There is a shutdown command but this actually powers off the}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00222}00222         \textcolor{comment}{\# device which is not what LightSource.shutdown() is meant to}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00223}00223         \textcolor{comment}{\# do.  So do nothing.}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00224}00224         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00226}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a277d0ae1cacdcfe9ed9f543c8186d306}{00226}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a277d0ae1cacdcfe9ed9f543c8186d306}{get\_status}}(self) -\/> typing.List[str]:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00227}00227         status: typing.List[str] = []}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00228}00228         \textcolor{keywordflow}{return} status}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00229}00229 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00230}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_ad267aa79697c1f45df2f6bbe49772469}{00230}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_ad267aa79697c1f45df2f6bbe49772469}{enable}}(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00231}00231         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.set\_light\_state(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00232}00232 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00233}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a08de704864682fc88e565c97922ee0a0}{00233}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a08de704864682fc88e565c97922ee0a0}{disable}}(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00234}00234         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.set\_light\_state(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00235}00235 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00236}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a3e9deeb7f5507ff42babe9ff41e1325d}{00236}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a3e9deeb7f5507ff42babe9ff41e1325d}{get\_is\_on}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00237}00237         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.get\_light\_state()}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00238}00238 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00239}00239     \textcolor{keyword}{def }\_do\_set\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00240}00240         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.set\_intensity(int(power * self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af0496fefcb777c8240a6c5892c7766ae}{\_max\_intensity}}))}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00241}00241 }
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00242}00242     \textcolor{keyword}{def }\_do\_get\_power(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{lumencor_8py_source_l00243}00243         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_a0644f813545d2987650f50c36b480c9c}{\_conn}}.get\_intensity() / self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel_af0496fefcb777c8240a6c5892c7766ae}{\_max\_intensity}}}
+
+\end{DoxyCode}

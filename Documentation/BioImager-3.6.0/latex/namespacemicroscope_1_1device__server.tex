@@ -1,0 +1,413 @@
+\hypertarget{namespacemicroscope_1_1device__server}{}\doxysection{microscope.\+device\+\_\+server Namespace Reference}
+\label{namespacemicroscope_1_1device__server}\index{microscope.device\_server@{microscope.device\_server}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server}{Device\+Server}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{Device\+Server\+Options}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_filter}{Filter}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemicroscope_1_1device__server_a3ae40a0d7c733abb46179fe8b10d2ffb}{device}} (typing.\+Callable cls, str host, int port, typing.\+Mapping\mbox{[}str, typing.\+Any\mbox{]} conf=\{\}, typing.\+Optional\mbox{[}str\mbox{]} uid=None)
+\item 
+def \mbox{\hyperlink{namespacemicroscope_1_1device__server_a99b4d716a66e5a533bdea3cab4802105}{serve\+\_\+devices}} (devices, \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{Device\+Server\+Options}} options, exit\+\_\+event=None)
+\item 
+def \mbox{\hyperlink{namespacemicroscope_1_1device__server_af1e7050ec2d8f8db92b59c6f2491c771}{validate\+\_\+devices}} (configfile)
+\item 
+int \mbox{\hyperlink{namespacemicroscope_1_1device__server_a2656bc392b373a557deca7df3d8d9aa7}{main}} (typing.\+Sequence\mbox{[}str\mbox{]} argv)
+\item 
+None \mbox{\hyperlink{namespacemicroscope_1_1device__server_a039da250d83e4d9e5fe37efb443c8873}{\+\_\+\+\_\+main\+\_\+\+\_\+}} ()
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemicroscope_1_1device__server_a782eda789a6c9717d4b64a9c9a17885f}{multiprocessing}} = multiprocessing.\+get\+\_\+context(\char`\"{}spawn\char`\"{})
+\item 
+\mbox{\hyperlink{namespacemicroscope_1_1device__server_abd5ec66a3ef3a600c0a847332b00de77}{SERIALIZER}}
+\item 
+\mbox{\hyperlink{namespacemicroscope_1_1device__server_a68a94529201e13d76bb22c95f73c22cd}{REQUIRE\+\_\+\+EXPOSE}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a039da250d83e4d9e5fe37efb443c8873}\label{namespacemicroscope_1_1device__server_a039da250d83e4d9e5fe37efb443c8873}} 
+\index{microscope.device\_server@{microscope.device\_server}!\_\_main\_\_@{\_\_main\_\_}}
+\index{\_\_main\_\_@{\_\_main\_\_}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{\_\_main\_\_()}{\_\_main\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+device\+\_\+server.\+\_\+\+\_\+main\+\_\+\+\_\+ (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00624}{624}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00624 \textcolor{keyword}{def }\_\_main\_\_() -\/> None:}
+\DoxyCodeLine{00625     \textcolor{comment}{\# Kept for backwards compatibility.  It keeps the setuptools}}
+\DoxyCodeLine{00626     \textcolor{comment}{\# scripts from older editable mode installations.  Will be safe to}}
+\DoxyCodeLine{00627     \textcolor{comment}{\# remove soon.}}
+\DoxyCodeLine{00628     \_setuptools\_entry\_point()}
+\DoxyCodeLine{00629 }
+\DoxyCodeLine{00630 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a3ae40a0d7c733abb46179fe8b10d2ffb}\label{namespacemicroscope_1_1device__server_a3ae40a0d7c733abb46179fe8b10d2ffb}} 
+\index{microscope.device\_server@{microscope.device\_server}!device@{device}}
+\index{device@{device}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{device()}{device()}}
+{\footnotesize\ttfamily def microscope.\+device\+\_\+server.\+device (\begin{DoxyParamCaption}\item[{typing.\+Callable}]{cls,  }\item[{str}]{host,  }\item[{int}]{port,  }\item[{typing.\+Mapping\mbox{[}str, typing.\+Any\mbox{]} }]{conf = {\ttfamily \{\}},  }\item[{typing.\+Optional\mbox{[}str\mbox{]} }]{uid = {\ttfamily None} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Define devices and where to serve them.
+
+A device definition for use in deviceserver config files.
+
+Args:
+    cls: :class:`Device` class of device to serve or function that
+        returns a map of `Device` instances to wanted Pyro ID.
+        The device class will be constructed, or the function will
+        be called, with the arguments in ``conf``.
+    host: hostname or ip address serving the devices.
+    port: port number used to serve the devices.
+    conf: keyword arguments for ``cls``.  The device or function
+        are effectively constructed or called with `cls(**conf)`.
+    uid: used to identify "floating" devices (see documentation
+        for :class:`FloatingDeviceMixin`).  This must be specified
+        if ``cls`` is a floating device.
+
+Example
+
+.. code-block:: python
+
+    def construct_devices() -> typing.Dict[str, Device]:
+        camera = Camera(some, arguments)
+        # ... any other configuration that might be wanted
+        return {'RedCamera': camera}
+
+    DEVICES = [
+        # passing a function that returns devices
+        device(construct_devices, '127.0.0.1', 8000),
+        # passing a Device class
+        device(Camera, '127.0.0.1', 8001,
+               conf={'kwarg1': some, 'kwarg2': arguments})
+    ]\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00081}{81}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00087 ):}
+\DoxyCodeLine{00088     \textcolor{stringliteral}{"{}"{}"{}Define devices and where to serve them.}}
+\DoxyCodeLine{00089 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00090 \textcolor{stringliteral}{    A device definition }\textcolor{keywordflow}{for} use \textcolor{keywordflow}{in} deviceserver config files.}
+\DoxyCodeLine{00091 }
+\DoxyCodeLine{00092     Args:}
+\DoxyCodeLine{00093         cls: :\textcolor{keyword}{class}:`Device` \textcolor{keyword}{class }of device to serve or function that}
+\DoxyCodeLine{00094             returns a map of `Device` instances to wanted Pyro ID.}
+\DoxyCodeLine{00095             The device \textcolor{keyword}{class }will be constructed, or the function will}
+\DoxyCodeLine{00096             be called, \textcolor{keyword}{with} the arguments \textcolor{keywordflow}{in} ``conf``.}
+\DoxyCodeLine{00097         host: hostname \textcolor{keywordflow}{or} ip address serving the devices.}
+\DoxyCodeLine{00098         port: port number used to serve the devices.}
+\DoxyCodeLine{00099         conf: keyword arguments \textcolor{keywordflow}{for} ``cls``.  The device \textcolor{keywordflow}{or} function}
+\DoxyCodeLine{00100             are effectively constructed \textcolor{keywordflow}{or} called \textcolor{keyword}{with} `cls(**conf)`.}
+\DoxyCodeLine{00101         uid: used to identify \textcolor{stringliteral}{"{}floating"{}} devices (see documentation}
+\DoxyCodeLine{00102             \textcolor{keywordflow}{for} :\textcolor{keyword}{class}:`FloatingDeviceMixin`).  This must be specified}
+\DoxyCodeLine{00103             \textcolor{keywordflow}{if} ``cls`` \textcolor{keywordflow}{is} a floating device.}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105     Example}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107     .. code-\/block:: python}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109         \textcolor{keyword}{def }construct\_devices() -\/> typing.Dict[str, Device]:}
+\DoxyCodeLine{00110             camera = Camera(some, arguments)}
+\DoxyCodeLine{00111             \textcolor{comment}{\# ... any other configuration that might be wanted}}
+\DoxyCodeLine{00112             \textcolor{keywordflow}{return} \{\textcolor{stringliteral}{'RedCamera'}: camera\}}
+\DoxyCodeLine{00113 }
+\DoxyCodeLine{00114         DEVICES = [}
+\DoxyCodeLine{00115             \textcolor{comment}{\# passing a function that returns devices}}
+\DoxyCodeLine{00116             device(construct\_devices, \textcolor{stringliteral}{'127.0.0.1'}, 8000),}
+\DoxyCodeLine{00117             \textcolor{comment}{\# passing a Device class}}
+\DoxyCodeLine{00118             device(Camera, \textcolor{stringliteral}{'127.0.0.1'}, 8001,}
+\DoxyCodeLine{00119                    conf=\{\textcolor{stringliteral}{'kwarg1'}: some, \textcolor{stringliteral}{'kwarg2'}: arguments\})}
+\DoxyCodeLine{00120         ]}
+\DoxyCodeLine{00121 }
+\DoxyCodeLine{00122     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00123 \textcolor{stringliteral}{    }\textcolor{keywordflow}{if} \textcolor{keywordflow}{not} callable(cls):}
+\DoxyCodeLine{00124         \textcolor{keywordflow}{raise} TypeError(\textcolor{stringliteral}{"{}cls must be a callable"{}})}
+\DoxyCodeLine{00125     \textcolor{keywordflow}{elif} isinstance(cls, type):}
+\DoxyCodeLine{00126         \textcolor{keywordflow}{if} issubclass(cls, FloatingDeviceMixin) \textcolor{keywordflow}{and} uid \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00127             \textcolor{keywordflow}{raise} TypeError(\textcolor{stringliteral}{"{}uid must be specified for floating devices"{}})}
+\DoxyCodeLine{00128         \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} issubclass(cls, FloatingDeviceMixin) \textcolor{keywordflow}{and} uid \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00129             \textcolor{keywordflow}{raise} TypeError(\textcolor{stringliteral}{"{}uid must not be given for non floating devices"{}})}
+\DoxyCodeLine{00130     \textcolor{keywordflow}{return} dict(cls=cls, host=host, port=int(port), uid=uid, conf=conf)}
+\DoxyCodeLine{00131 }
+\DoxyCodeLine{00132 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a2656bc392b373a557deca7df3d8d9aa7}\label{namespacemicroscope_1_1device__server_a2656bc392b373a557deca7df3d8d9aa7}} 
+\index{microscope.device\_server@{microscope.device\_server}!main@{main}}
+\index{main@{main}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily  int microscope.\+device\+\_\+server.\+main (\begin{DoxyParamCaption}\item[{typing.\+Sequence\mbox{[}str\mbox{]}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00594}{594}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00594 \textcolor{keyword}{def }main(argv: typing.Sequence[str]) -\/> int:}
+\DoxyCodeLine{00595     options = \_parse\_cmd\_line\_args(argv[1:])}
+\DoxyCodeLine{00596 }
+\DoxyCodeLine{00597     root\_logger = logging.getLogger()}
+\DoxyCodeLine{00598     root\_logger.setLevel(options.logging\_level)}
+\DoxyCodeLine{00599 }
+\DoxyCodeLine{00600     stderr\_handler = StreamHandler(sys.stderr)}
+\DoxyCodeLine{00601     stderr\_handler.setFormatter(\_create\_log\_formatter(\textcolor{stringliteral}{"{}device-\/server"{}}))}
+\DoxyCodeLine{00602     root\_logger.addHandler(stderr\_handler)}
+\DoxyCodeLine{00603 }
+\DoxyCodeLine{00604     root\_logger.addFilter(Filter())}
+\DoxyCodeLine{00605 }
+\DoxyCodeLine{00606     devices = validate\_devices(options.config\_fpath)}
+\DoxyCodeLine{00607 }
+\DoxyCodeLine{00608     serve\_devices(devices, options)}
+\DoxyCodeLine{00609 }
+\DoxyCodeLine{00610     \textcolor{keywordflow}{return} 0}
+\DoxyCodeLine{00611 }
+\DoxyCodeLine{00612 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a99b4d716a66e5a533bdea3cab4802105}\label{namespacemicroscope_1_1device__server_a99b4d716a66e5a533bdea3cab4802105}} 
+\index{microscope.device\_server@{microscope.device\_server}!serve\_devices@{serve\_devices}}
+\index{serve\_devices@{serve\_devices}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{serve\_devices()}{serve\_devices()}}
+{\footnotesize\ttfamily def microscope.\+device\+\_\+server.\+serve\+\_\+devices (\begin{DoxyParamCaption}\item[{}]{devices,  }\item[{\mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{Device\+Server\+Options}}}]{options,  }\item[{}]{exit\+\_\+event = {\ttfamily None} }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00393}{393}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393 \textcolor{keyword}{def }serve\_devices(devices, options: DeviceServerOptions, exit\_event=\textcolor{keywordtype}{None}):}
+\DoxyCodeLine{00394     \textcolor{comment}{\# We make changes to `devices` (would be great if we didn't had}}
+\DoxyCodeLine{00395     \textcolor{comment}{\# to) so make a a copy of it because we don't want to make those}}
+\DoxyCodeLine{00396     \textcolor{comment}{\# changes on the caller.  See original issue on \#211 and PRs \#212}}
+\DoxyCodeLine{00397     \textcolor{comment}{\# and \#217 (most discussion happens on \#212).}}
+\DoxyCodeLine{00398     devices = copy.deepcopy(devices)}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400     root\_logger = logging.getLogger()}
+\DoxyCodeLine{00401 }
+\DoxyCodeLine{00402     log\_handler = RotatingFileHandler(\textcolor{stringliteral}{"{}\_\_MAIN\_\_.log"{}})}
+\DoxyCodeLine{00403     log\_handler.setFormatter(\_create\_log\_formatter(\textcolor{stringliteral}{"{}device-\/server"{}}))}
+\DoxyCodeLine{00404     root\_logger.addHandler(log\_handler)}
+\DoxyCodeLine{00405 }
+\DoxyCodeLine{00406     \textcolor{comment}{\# An event to trigger clean termination of subprocesses. This is the}}
+\DoxyCodeLine{00407     \textcolor{comment}{\# only way to ensure devices are shut down properly when processes}}
+\DoxyCodeLine{00408     \textcolor{comment}{\# exit, as \_\_del\_\_ is not necessarily called when the interpreter exits.}}
+\DoxyCodeLine{00409     \textcolor{keywordflow}{if} exit\_event \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00410         exit\_event = multiprocessing.Event()}
+\DoxyCodeLine{00411 }
+\DoxyCodeLine{00412     servers = (}
+\DoxyCodeLine{00413         []}
+\DoxyCodeLine{00414     )  \textcolor{comment}{\# DeviceServers instances that we need to wait for when exiting}}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416     \textcolor{comment}{\# Child processes inherit signal handling from the parent so we}}
+\DoxyCodeLine{00417     \textcolor{comment}{\# need to make sure that only the parent process sets the exit}}
+\DoxyCodeLine{00418     \textcolor{comment}{\# event and waits for the DeviceServers to exit.  See issue \#9.}}
+\DoxyCodeLine{00419     \textcolor{comment}{\# This won't work behind a Windows service wrapper, so we deal with}}
+\DoxyCodeLine{00420     \textcolor{comment}{\# clean shutdown on win32 elsewhere.}}
+\DoxyCodeLine{00421     parent = multiprocessing.current\_process()}
+\DoxyCodeLine{00422 }
+\DoxyCodeLine{00423     \textcolor{keyword}{def }term\_func(sig, frame):}
+\DoxyCodeLine{00424         \textcolor{stringliteral}{"{}"{}"{}Terminate subprocesses cleanly."{}"{}"{}}}
+\DoxyCodeLine{00425         \textcolor{keywordflow}{if} parent == multiprocessing.current\_process():}
+\DoxyCodeLine{00426             \_logger.debug(\textcolor{stringliteral}{"{}Shutting down all servers."{}})}
+\DoxyCodeLine{00427             exit\_event.set()}
+\DoxyCodeLine{00428             \textcolor{comment}{\# Join keep\_alive\_thread so that it can't modify the list}}
+\DoxyCodeLine{00429             \textcolor{comment}{\# of servers.}}
+\DoxyCodeLine{00430             keep\_alive\_thread.join()}
+\DoxyCodeLine{00431             \textcolor{keywordflow}{for} this\_server \textcolor{keywordflow}{in} servers:}
+\DoxyCodeLine{00432                 this\_server.join()}
+\DoxyCodeLine{00433             sys.exit()}
+\DoxyCodeLine{00434 }
+\DoxyCodeLine{00435     \textcolor{keywordflow}{if} sys.platform != \textcolor{stringliteral}{"{}win32"{}}:}
+\DoxyCodeLine{00436         signal.signal(signal.SIGTERM, term\_func)}
+\DoxyCodeLine{00437         signal.signal(signal.SIGINT, term\_func)}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439     \textcolor{comment}{\# Group devices by class.}}
+\DoxyCodeLine{00440     by\_class = \{\}}
+\DoxyCodeLine{00441     \textcolor{keywordflow}{for} dev \textcolor{keywordflow}{in} devices:}
+\DoxyCodeLine{00442         by\_class[dev[\textcolor{stringliteral}{"{}cls"{}}]] = by\_class.get(dev[\textcolor{stringliteral}{"{}cls"{}}], []) + [dev]}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} by\_class:}
+\DoxyCodeLine{00445         \_logger.warning(\textcolor{stringliteral}{"{}No valid devices specified. Maybe an empty list?"{}})}
+\DoxyCodeLine{00446 }
+\DoxyCodeLine{00447     \textcolor{keywordflow}{for} cls, devs \textcolor{keywordflow}{in} by\_class.items():}
+\DoxyCodeLine{00448         \textcolor{comment}{\# Floating devices are devices that can only be identified}}
+\DoxyCodeLine{00449         \textcolor{comment}{\# after having been initialized, so the constructor will}}
+\DoxyCodeLine{00450         \textcolor{comment}{\# return any device that it supports.  To work around this we}}
+\DoxyCodeLine{00451         \textcolor{comment}{\# map all device uid to host/port first.  After the}}
+\DoxyCodeLine{00452         \textcolor{comment}{\# DeviceServer constructs the device, it can check on the map}}
+\DoxyCodeLine{00453         \textcolor{comment}{\# where to serve it.  For non floating devices that}}
+\DoxyCodeLine{00454         \textcolor{comment}{\# information is part of the device definition, no map is}}
+\DoxyCodeLine{00455         \textcolor{comment}{\# needed.}}
+\DoxyCodeLine{00456         uid\_to\_host = \{\}}
+\DoxyCodeLine{00457         uid\_to\_port = \{\}}
+\DoxyCodeLine{00458         \textcolor{keywordflow}{if} isinstance(cls, type) \textcolor{keywordflow}{and} issubclass(cls, FloatingDeviceMixin):}
+\DoxyCodeLine{00459             \textcolor{comment}{\# In addition to the maps of uid to host/port, floating}}
+\DoxyCodeLine{00460             \textcolor{comment}{\# devices SDKs need the number of devices to index them.}}
+\DoxyCodeLine{00461             count = 0}
+\DoxyCodeLine{00462             \textcolor{keywordflow}{for} dev \textcolor{keywordflow}{in} devs:}
+\DoxyCodeLine{00463                 uid = dev[\textcolor{stringliteral}{"{}uid"{}}]}
+\DoxyCodeLine{00464                 uid\_to\_host[uid] = dev[\textcolor{stringliteral}{"{}host"{}}]}
+\DoxyCodeLine{00465                 uid\_to\_port[uid] = dev[\textcolor{stringliteral}{"{}port"{}}]}
+\DoxyCodeLine{00466 }
+\DoxyCodeLine{00467                 dev[\textcolor{stringliteral}{"{}conf"{}}][\textcolor{stringliteral}{"{}index"{}}] = count}
+\DoxyCodeLine{00468                 count += 1}
+\DoxyCodeLine{00469 }
+\DoxyCodeLine{00470         \textcolor{keywordflow}{for} dev \textcolor{keywordflow}{in} devs:}
+\DoxyCodeLine{00471             servers.append(}
+\DoxyCodeLine{00472                 DeviceServer(}
+\DoxyCodeLine{00473                     dev,}
+\DoxyCodeLine{00474                     options,}
+\DoxyCodeLine{00475                     uid\_to\_host,}
+\DoxyCodeLine{00476                     uid\_to\_port,}
+\DoxyCodeLine{00477                     exit\_event=exit\_event,}
+\DoxyCodeLine{00478                 )}
+\DoxyCodeLine{00479             )}
+\DoxyCodeLine{00480             servers[-\/1].start()}
+\DoxyCodeLine{00481 }
+\DoxyCodeLine{00482     \textcolor{comment}{\# Main thread must be idle to process signals correctly, so use another}}
+\DoxyCodeLine{00483     \textcolor{comment}{\# thread to check DeviceServers, restarting them where necessary. Define}}
+\DoxyCodeLine{00484     \textcolor{comment}{\# the thread target here so that it can access variables in \_\_main\_\_ scope.}}
+\DoxyCodeLine{00485     \textcolor{keyword}{def }keep\_alive():}
+\DoxyCodeLine{00486         \textcolor{stringliteral}{"{}"{}"{}Keep DeviceServers alive."{}"{}"{}}}
+\DoxyCodeLine{00487         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} exit\_event.is\_set():}
+\DoxyCodeLine{00488             \textcolor{keywordflow}{for} s \textcolor{keywordflow}{in} servers:}
+\DoxyCodeLine{00489                 \textcolor{keywordflow}{if} s.is\_alive():}
+\DoxyCodeLine{00490                     \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00491                 \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00492                     \_logger.info(}
+\DoxyCodeLine{00493                         \textcolor{stringliteral}{"{}DeviceServer Failure. Process \%s is dead with"{}}}
+\DoxyCodeLine{00494                         \textcolor{stringliteral}{"{} exitcode \%s. Restarting..."{}},}
+\DoxyCodeLine{00495                         s.pid,}
+\DoxyCodeLine{00496                         s.exitcode,}
+\DoxyCodeLine{00497                     )}
+\DoxyCodeLine{00498                     servers.remove(s)}
+\DoxyCodeLine{00499                     servers.append(s.clone())}
+\DoxyCodeLine{00500 }
+\DoxyCodeLine{00501                     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00502                         s.join(30)}
+\DoxyCodeLine{00503                     \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00504                         \_logger.error(\textcolor{stringliteral}{"{}... could not join PID \%s."{}}, s.pid)}
+\DoxyCodeLine{00505                     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00506                         old\_pid = s.pid}
+\DoxyCodeLine{00507                         del s}
+\DoxyCodeLine{00508                         servers[-\/1].start()}
+\DoxyCodeLine{00509                         \_logger.info(}
+\DoxyCodeLine{00510                             \textcolor{stringliteral}{"{}... DeviceServer with PID \%s restarted"{}}}
+\DoxyCodeLine{00511                             \textcolor{stringliteral}{"{} as PID \%s."{}},}
+\DoxyCodeLine{00512                             old\_pid,}
+\DoxyCodeLine{00513                             servers[-\/1].pid,}
+\DoxyCodeLine{00514                         )}
+\DoxyCodeLine{00515             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} servers:}
+\DoxyCodeLine{00516                 \textcolor{comment}{\# Log and exit if no servers running. May want to change this}}
+\DoxyCodeLine{00517                 \textcolor{comment}{\# if we add some interface to interactively restart servers.}}
+\DoxyCodeLine{00518                 \_logger.info(\textcolor{stringliteral}{"{}No servers running. Exiting."{}})}
+\DoxyCodeLine{00519                 exit\_event.set()}
+\DoxyCodeLine{00520             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00521                 \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00522                     time.sleep(5)}
+\DoxyCodeLine{00523                 \textcolor{keywordflow}{except} (KeyboardInterrupt, IOError):}
+\DoxyCodeLine{00524                     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00525 }
+\DoxyCodeLine{00526     keep\_alive\_thread = Thread(target=keep\_alive)}
+\DoxyCodeLine{00527     keep\_alive\_thread.start()}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529     \_logger.info(\textcolor{stringliteral}{"{}Device Server started. Press Ctrl+C to exit."{}})}
+\DoxyCodeLine{00530     \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} exit\_event.is\_set():}
+\DoxyCodeLine{00531         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00532             time.sleep(5)}
+\DoxyCodeLine{00533         \textcolor{keywordflow}{except} (KeyboardInterrupt, IOError):}
+\DoxyCodeLine{00534             \_logger.debug(\textcolor{stringliteral}{"{}KeyboardInterrupt or IOError"{}})}
+\DoxyCodeLine{00535             exit\_event.set()}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537     \_logger.debug(\textcolor{stringliteral}{"{}Shutting down servers ..."{}})}
+\DoxyCodeLine{00538     \textcolor{keywordflow}{while} servers:}
+\DoxyCodeLine{00539         \textcolor{keywordflow}{for} s \textcolor{keywordflow}{in} servers:}
+\DoxyCodeLine{00540             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} s.is\_alive():}
+\DoxyCodeLine{00541                 servers.remove(s)}
+\DoxyCodeLine{00542                 del s}
+\DoxyCodeLine{00543         time.sleep(1)}
+\DoxyCodeLine{00544     \_logger.info(\textcolor{stringliteral}{"{} ... No more servers running."{}})}
+\DoxyCodeLine{00545     \_logger.debug(\textcolor{stringliteral}{"{}Joining threads ..."{}})}
+\DoxyCodeLine{00546     keep\_alive\_thread.join()}
+\DoxyCodeLine{00547     \_logger.debug(\textcolor{stringliteral}{"{}... Threads joined. Exiting."{}})}
+\DoxyCodeLine{00548     \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00549 }
+\DoxyCodeLine{00550 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_af1e7050ec2d8f8db92b59c6f2491c771}\label{namespacemicroscope_1_1device__server_af1e7050ec2d8f8db92b59c6f2491c771}} 
+\index{microscope.device\_server@{microscope.device\_server}!validate\_devices@{validate\_devices}}
+\index{validate\_devices@{validate\_devices}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{validate\_devices()}{validate\_devices()}}
+{\footnotesize\ttfamily def microscope.\+device\+\_\+server.\+validate\+\_\+devices (\begin{DoxyParamCaption}\item[{}]{configfile }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00583}{583}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00583 \textcolor{keyword}{def }validate\_devices(configfile):}
+\DoxyCodeLine{00584     config = \_load\_source(configfile)}
+\DoxyCodeLine{00585     \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00586         devices = getattr(config, \textcolor{stringliteral}{"{}DEVICES"{}})}
+\DoxyCodeLine{00587     \textcolor{keywordflow}{except} AttributeError:}
+\DoxyCodeLine{00588         \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}No 'DEVICES=...' in config file."{}})}
+\DoxyCodeLine{00589     \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} isinstance(devices, Iterable):}
+\DoxyCodeLine{00590         \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Error in config: DEVICES should be an iterable."{}})}
+\DoxyCodeLine{00591     \textcolor{keywordflow}{return} devices}
+\DoxyCodeLine{00592 }
+\DoxyCodeLine{00593 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a782eda789a6c9717d4b64a9c9a17885f}\label{namespacemicroscope_1_1device__server_a782eda789a6c9717d4b64a9c9a17885f}} 
+\index{microscope.device\_server@{microscope.device\_server}!multiprocessing@{multiprocessing}}
+\index{multiprocessing@{multiprocessing}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{multiprocessing}{multiprocessing}}
+{\footnotesize\ttfamily microscope.\+device\+\_\+server.\+multiprocessing = multiprocessing.\+get\+\_\+context(\char`\"{}spawn\char`\"{})}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00066}{66}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_a68a94529201e13d76bb22c95f73c22cd}\label{namespacemicroscope_1_1device__server_a68a94529201e13d76bb22c95f73c22cd}} 
+\index{microscope.device\_server@{microscope.device\_server}!REQUIRE\_EXPOSE@{REQUIRE\_EXPOSE}}
+\index{REQUIRE\_EXPOSE@{REQUIRE\_EXPOSE}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{REQUIRE\_EXPOSE}{REQUIRE\_EXPOSE}}
+{\footnotesize\ttfamily microscope.\+device\+\_\+server.\+REQUIRE\+\_\+\+EXPOSE}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00078}{78}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+\mbox{\Hypertarget{namespacemicroscope_1_1device__server_abd5ec66a3ef3a600c0a847332b00de77}\label{namespacemicroscope_1_1device__server_abd5ec66a3ef3a600c0a847332b00de77}} 
+\index{microscope.device\_server@{microscope.device\_server}!SERIALIZER@{SERIALIZER}}
+\index{SERIALIZER@{SERIALIZER}!microscope.device\_server@{microscope.device\_server}}
+\doxysubsubsection{\texorpdfstring{SERIALIZER}{SERIALIZER}}
+{\footnotesize\ttfamily microscope.\+device\+\_\+server.\+SERIALIZER}
+
+
+
+Definition at line \mbox{\hyperlink{device__server_8py_source_l00071}{71}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+

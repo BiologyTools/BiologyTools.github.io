@@ -50,6 +50,37 @@ Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00014}{14}} of file \
 Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00054}{54}} of file \mbox{\hyperlink{_node_view_8cs_source}{Node\+View.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055         \{}
+\DoxyCodeLine{00056             List<string> sts = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{00057             sts.AddRange(args);}
+\DoxyCodeLine{00058             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < args.Length; i++)}
+\DoxyCodeLine{00059             \{}
+\DoxyCodeLine{00060                 \textcolor{keywordflow}{if} (args[i].Contains(\textcolor{stringliteral}{"{}-\/setup"{}}))}
+\DoxyCodeLine{00061                 \{}
+\DoxyCodeLine{00062                     setup = \textcolor{keyword}{true};}
+\DoxyCodeLine{00063                     sts.RemoveAt(i);}
+\DoxyCodeLine{00064                 \}}
+\DoxyCodeLine{00065             \}}
+\DoxyCodeLine{00066             App.nodeView = \textcolor{keyword}{this};}
+\DoxyCodeLine{00067             InitializeComponent();}
+\DoxyCodeLine{00068             \mbox{\hyperlink{class_bio_imager_1_1_node_view_a65fd511829952ee56e68faed18f3938c}{InitNodes}}();}
+\DoxyCodeLine{00069             Init();}
+\DoxyCodeLine{00070             \textcolor{keywordflow}{if} (args.Length > 0)}
+\DoxyCodeLine{00071             \{}
+\DoxyCodeLine{00072                 App.tabsView = \textcolor{keyword}{new} TabsView(sts.ToArray());}
+\DoxyCodeLine{00073                 App.tabsView.Show();}
+\DoxyCodeLine{00074             \}}
+\DoxyCodeLine{00075             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00076             \{}
+\DoxyCodeLine{00077                 App.tabsView = \textcolor{keyword}{new} TabsView();}
+\DoxyCodeLine{00078                 App.tabsView.Show();}
+\DoxyCodeLine{00079             \}}
+\DoxyCodeLine{00080             \textcolor{comment}{//timer.Start();}}
+\DoxyCodeLine{00081         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_node_view_aa9dcab7309eb54010f54ebcfebf9e457}\label{class_bio_imager_1_1_node_view_aa9dcab7309eb54010f54ebcfebf9e457}} 
@@ -71,6 +102,17 @@ Clean up any resources being used.
 
 Definition at line \mbox{\hyperlink{_node_view_8_designer_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_node_view_8_designer_8cs_source}{Node\+View.\+Designer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015         \{}
+\DoxyCodeLine{00016             \textcolor{keywordflow}{if} (disposing \&\& (components != \textcolor{keyword}{null}))}
+\DoxyCodeLine{00017             \{}
+\DoxyCodeLine{00018                 components.Dispose();}
+\DoxyCodeLine{00019             \}}
+\DoxyCodeLine{00020             base.Dispose(disposing);}
+\DoxyCodeLine{00021         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_node_view_a51bb37c6a0cf4379bd8f5705c9ccb87e}\label{class_bio_imager_1_1_node_view_a51bb37c6a0cf4379bd8f5705c9ccb87e}} 
 \index{BioImager.NodeView@{BioImager.NodeView}!Exit@{Exit}}
 \index{Exit@{Exit}!BioImager.NodeView@{BioImager.NodeView}}
@@ -81,6 +123,15 @@ Definition at line \mbox{\hyperlink{_node_view_8_designer_8cs_source_l00014}{14}
 
 Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00172}{172}} of file \mbox{\hyperlink{_node_view_8cs_source}{Node\+View.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173         \{}
+\DoxyCodeLine{00174             this.\mbox{\hyperlink{namespacemicroscope_1_1__wrappers_1_1_b_m_c_a154f5a2c339dc54c3eef0d330de99e66}{Close}}();}
+\DoxyCodeLine{00175             Application.Exit();}
+\DoxyCodeLine{00176             Application.ExitThread();}
+\DoxyCodeLine{00177         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_node_view_a65fd511829952ee56e68faed18f3938c}\label{class_bio_imager_1_1_node_view_a65fd511829952ee56e68faed18f3938c}} 
 \index{BioImager.NodeView@{BioImager.NodeView}!InitNodes@{InitNodes}}
 \index{InitNodes@{InitNodes}!BioImager.NodeView@{BioImager.NodeView}}
@@ -91,6 +142,45 @@ Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00172}{172}} of file 
 
 Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00098}{98}} of file \mbox{\hyperlink{_node_view_8cs_source}{Node\+View.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00099         \{}
+\DoxyCodeLine{00100             treeView.Nodes.Clear();}
+\DoxyCodeLine{00101             TreeNode images = \textcolor{keyword}{new} TreeNode();}
+\DoxyCodeLine{00102             images.Text = \textcolor{stringliteral}{"{}BioImages"{}};}
+\DoxyCodeLine{00103             images.ForeColor = System.Drawing.Color.White;}
+\DoxyCodeLine{00104             \textcolor{keywordflow}{foreach} (BioImage item \textcolor{keywordflow}{in} Images.images)}
+\DoxyCodeLine{00105             \{}
+\DoxyCodeLine{00106                 \textcolor{comment}{//TreeNode node = new TreeNode();}}
+\DoxyCodeLine{00107                 Node tree = \textcolor{keyword}{new} Node(item, Node.DataType.image);}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109                 Node implanes = \textcolor{keyword}{new} Node(item, Node.DataType.text);}
+\DoxyCodeLine{00110                 implanes.Text = \textcolor{stringliteral}{"{}Planes"{}};}
+\DoxyCodeLine{00111 }
+\DoxyCodeLine{00112                 \textcolor{keywordflow}{foreach} (AForge.Bitmap buf in item.Buffers)}
+\DoxyCodeLine{00113                 \{}
+\DoxyCodeLine{00114                     Node plane = \textcolor{keyword}{new} Node(buf, Node.DataType.buf);}
+\DoxyCodeLine{00115                     plane.Text = buf.ID + \textcolor{stringliteral}{"{}, "{}} + buf.Coordinate.ToString();}
+\DoxyCodeLine{00116                    }
+\DoxyCodeLine{00117                     implanes.node.Nodes.Add(plane.node);}
+\DoxyCodeLine{00118                 \}}
+\DoxyCodeLine{00119                 tree.node.Nodes.Add(implanes.node);}
+\DoxyCodeLine{00120 }
+\DoxyCodeLine{00121                 Node rois = \textcolor{keyword}{new} Node(item, Node.DataType.text);}
+\DoxyCodeLine{00122                 rois.Text = \textcolor{stringliteral}{"{}ROI"{}};}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124                 \textcolor{keywordflow}{foreach} (ROI an \textcolor{keywordflow}{in} item.Annotations)}
+\DoxyCodeLine{00125                 \{}
+\DoxyCodeLine{00126                     Node \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = \textcolor{keyword}{new} Node(an, Node.DataType.roi);}
+\DoxyCodeLine{00127                     rois.node.Nodes.Add(\mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.node);}
+\DoxyCodeLine{00128                 \}}
+\DoxyCodeLine{00129                 tree.node.Nodes.Add(rois.node);}
+\DoxyCodeLine{00130                 images.Nodes.Add(tree.node);}
+\DoxyCodeLine{00131             \}}
+\DoxyCodeLine{00132             treeView.Nodes.Add(images);}
+\DoxyCodeLine{00133         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_node_view_ae723bb583138b92c8981f5efc09d87a9}\label{class_bio_imager_1_1_node_view_ae723bb583138b92c8981f5efc09d87a9}} 
 \index{BioImager.NodeView@{BioImager.NodeView}!UpdateNodes@{UpdateNodes}}
 \index{UpdateNodes@{UpdateNodes}!BioImager.NodeView@{BioImager.NodeView}}
@@ -101,6 +191,45 @@ Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00098}{98}} of file \
 
 Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00135}{135}} of file \mbox{\hyperlink{_node_view_8cs_source}{Node\+View.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00136         \{}
+\DoxyCodeLine{00137             \textcolor{keywordflow}{if} (Images.images.Count != treeView.Nodes[0].Nodes.Count)}
+\DoxyCodeLine{00138             \{}
+\DoxyCodeLine{00139                 \textcolor{comment}{//If image count is not same as node count we refresh whole tree.}}
+\DoxyCodeLine{00140                 \mbox{\hyperlink{class_bio_imager_1_1_node_view_a65fd511829952ee56e68faed18f3938c}{InitNodes}}();}
+\DoxyCodeLine{00141                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00142             \}}
+\DoxyCodeLine{00143             TreeNode images = treeView.Nodes[0];}
+\DoxyCodeLine{00144             \textcolor{keywordflow}{foreach} (TreeNode item \textcolor{keywordflow}{in} images.Nodes)}
+\DoxyCodeLine{00145             \{}
+\DoxyCodeLine{00146                 \textcolor{comment}{//TreeNode node = new TreeNode();}}
+\DoxyCodeLine{00147                 Node node = (Node)item.Tag;}
+\DoxyCodeLine{00148                 BioImage im = (BioImage)node.Object;}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150                 TreeNode rois = node.node.Nodes[1];}
+\DoxyCodeLine{00151                 \textcolor{keywordflow}{if}(im.Annotations.Count != rois.Nodes.Count)}
+\DoxyCodeLine{00152                 \{}
+\DoxyCodeLine{00153                     \textcolor{comment}{//If ROI count is not same as node count we refresh annotations.}}
+\DoxyCodeLine{00154                     rois.Nodes.Clear();}
+\DoxyCodeLine{00155                     \textcolor{keywordflow}{foreach} (ROI an \textcolor{keywordflow}{in} im.Annotations)}
+\DoxyCodeLine{00156                     \{}
+\DoxyCodeLine{00157                         Node \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = \textcolor{keyword}{new} Node(an, Node.DataType.roi);}
+\DoxyCodeLine{00158                         rois.Nodes.Add(\mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.node);}
+\DoxyCodeLine{00159                     \}}
+\DoxyCodeLine{00160                 \}}
+\DoxyCodeLine{00161                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00162                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < im.Annotations.Count; i++)}
+\DoxyCodeLine{00163                 \{}
+\DoxyCodeLine{00164                     TreeNode \mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}} = rois.Nodes[i];}
+\DoxyCodeLine{00165                     Node n = (Node)\mbox{\hyperlink{namespacemicroscope_1_1getcamrect_ab7e5e26c0b7478e19dd4383576443c61}{roi}}.Tag;  }
+\DoxyCodeLine{00166                     ROI an = (ROI)n.Object;}
+\DoxyCodeLine{00167                     roi.Text = an.ToString();}
+\DoxyCodeLine{00168                 \}}
+\DoxyCodeLine{00169             \}}
+\DoxyCodeLine{00170         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_node_view_a724d0f995aada178381b14e302cf8c51}\label{class_bio_imager_1_1_node_view_a724d0f995aada178381b14e302cf8c51}} 
 \index{BioImager.NodeView@{BioImager.NodeView}!UpdateOverlay@{UpdateOverlay}}
 \index{UpdateOverlay@{UpdateOverlay}!BioImager.NodeView@{BioImager.NodeView}}
@@ -112,8 +241,16 @@ Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00135}{135}} of file 
 Definition at line \mbox{\hyperlink{_node_view_8cs_source_l00093}{93}} of file \mbox{\hyperlink{_node_view_8cs_source}{Node\+View.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094         \{}
+\DoxyCodeLine{00095             \textcolor{keywordflow}{if} (App.viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{00096                 App.viewer.UpdateOverlay();}
+\DoxyCodeLine{00097         \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Node\+View.\+cs\item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/Node\+View.\+Designer.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_node_view_8cs}{Node\+View.\+cs}}\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Source/\mbox{\hyperlink{_node_view_8_designer_8cs}{Node\+View.\+Designer.\+cs}}\end{DoxyCompactItemize}

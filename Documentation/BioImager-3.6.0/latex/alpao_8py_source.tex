@@ -1,0 +1,197 @@
+\hypertarget{alpao_8py_source}{}\doxysection{alpao.\+py}
+\label{alpao_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/mirror/alpao.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/mirror/alpao.py}}
+\mbox{\hyperlink{alpao_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1mirror}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00020}00020 \textcolor{keyword}{import} ctypes}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00021}00021 \textcolor{keyword}{import} warnings}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00023}00023 \textcolor{keyword}{import} numpy}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00025}00025 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00026}00026 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00029}00029 \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00030}00030     \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1__wrappers_1_1asdk}{microscope.\_wrappers.asdk}} \textcolor{keyword}{as} asdk}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00031}00031 \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00032}00032     \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_library_load_error}{microscope.LibraryLoadError}}(e) \textcolor{keyword}{from} e}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00035}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror}{00035}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror}{AlpaoDeformableMirror}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{microscope.abc.DeformableMirror}}):}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00036}00036     \textcolor{stringliteral}{"{}"{}"{}Alpao deformable mirror.}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00037}00037 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00038}00038 \textcolor{stringliteral}{    The Alpao mirrors support hardware triggers modes}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00039}00039 \textcolor{stringliteral}{    `TriggerMode.ONCE` }\textcolor{keywordflow}{and} `TriggerMode.START`.  By default, they will}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00040}00040     be set \textcolor{keywordflow}{for} software triggering, \textcolor{keywordflow}{and} trigger once.}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00042}00042     Args:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00043}00043         serial\_number: the serial number of the deformable mirror,}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00044}00044             something like `\textcolor{stringliteral}{"{}BIL103"{}}`.}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00045}00045     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00046}00046 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00047}00047 \textcolor{stringliteral}{    \_TriggerType\_to\_asdkTriggerIn = \{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00048}00048 \textcolor{stringliteral}{        microscope.TriggerType.SOFTWARE: 0,}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00049}00049 \textcolor{stringliteral}{        microscope.TriggerType.RISING\_EDGE: 1,}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00050}00050 \textcolor{stringliteral}{        microscope.TriggerType.FALLING\_EDGE: 2,}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00051}00051 \textcolor{stringliteral}{    \}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00052}00052 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00053}00053 \textcolor{stringliteral}{    \_supported\_TriggerModes = [}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00054}00054 \textcolor{stringliteral}{        microscope.TriggerMode.ONCE,}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00055}00055 \textcolor{stringliteral}{        microscope.TriggerMode.START,}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00056}00056 \textcolor{stringliteral}{    ]}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00057}00057 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00058}00058 \textcolor{stringliteral}{    }\textcolor{preprocessor}{@staticmethod}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00059}00059     \textcolor{keyword}{def }\_normalize\_patterns(patterns: numpy.ndarray) -\/> numpy.ndarray:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00060}00060         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00061}00061 \textcolor{stringliteral}{        Alpao SDK expects values }\textcolor{keywordflow}{in} the [-\/1 1] range, so we normalize}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00062}00062         them \textcolor{keyword}{from} the [0 1] range we expect \textcolor{keywordflow}{in} our interface.}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00063}00063         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00064}00064 \textcolor{stringliteral}{        patterns = (patterns * 2) -\/ 1}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00065}00065 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} patterns}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00067}00067     \textcolor{keyword}{def }\_find\_error\_str(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00068}00068         \textcolor{stringliteral}{"{}"{}"{}Get an error string from the Alpao SDK error stack.}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00069}00069 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00070}00070 \textcolor{stringliteral}{        Returns:}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00071}00071 \textcolor{stringliteral}{            A string }\textcolor{keyword}{with} error message.  An empty string \textcolor{keywordflow}{if} there was}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00072}00072             no error on the stack.}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00073}00073         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00074}00074 \textcolor{stringliteral}{        err\_msg\_buffer\_len = 64}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00075}00075 \textcolor{stringliteral}{        err\_msg\_buffer = ctypes.create\_string\_buffer(err\_msg\_buffer\_len)}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00076}00076 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00077}00077 \textcolor{stringliteral}{        err = ctypes.pointer(asdk.UInt(0))}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00078}00078 \textcolor{stringliteral}{        status = asdk.GetLastError(err, err\_msg\_buffer, err\_msg\_buffer\_len)}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00079}00079 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} status == asdk.SUCCESS:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00080}00080             msg = err\_msg\_buffer.value}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00081}00081             \textcolor{keywordflow}{if} len(msg) > err\_msg\_buffer\_len:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00082}00082                 msg = msg + b\textcolor{stringliteral}{"{}..."{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00083}00083             msg += b\textcolor{stringliteral}{"{} (error code \%i)"{}} \% (err.contents.value)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00084}00084             \textcolor{keywordflow}{return} msg.decode()}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00085}00085         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00086}00086             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00088}00088     \textcolor{keyword}{def }\_raise\_if\_error(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00089}00089         self, status: int, exception\_cls=\mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00090}00090     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00091}00091         \textcolor{keywordflow}{if} status != asdk.SUCCESS:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00092}00092             msg = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a6dbe877a5855a21a5705dc90d7113d93}{\_find\_error\_str}}()}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00093}00093             \textcolor{keywordflow}{if} msg:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00094}00094                 \textcolor{keywordflow}{raise} exception\_cls(msg)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00095}00095 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00096}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aec979bc9192cc907bad362250f8ad5fb}{00096}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aec979bc9192cc907bad362250f8ad5fb}{\_\_init\_\_}}(self, serial\_number: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00097}00097         super().\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aec979bc9192cc907bad362250f8ad5fb}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00098}00098         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}} = asdk.Init(serial\_number.encode())}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00099}00099         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00100}00100             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00101}00101                 \textcolor{stringliteral}{"{}Failed to initialise connection: don't know why"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00102}00102             )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00103}00103         \textcolor{comment}{\# In theory, asdkInit should return a NULL pointer in case of}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00104}00104         \textcolor{comment}{\# failure and that should be enough to check.  However, at least}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00105}00105         \textcolor{comment}{\# in the case of a missing configuration file it still returns a}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00106}00106         \textcolor{comment}{\# DM pointer so we still need to check for errors on the stack.}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00107}00107         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(asdk.FAILURE)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00109}00109         value = asdk.Scalar\_p(asdk.Scalar())}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00110}00110         status = asdk.Get(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}}, b\textcolor{stringliteral}{"{}NbOfActuator"{}}, value)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00111}00111         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(status)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00112}00112         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ac524b4962f4c57aff5cc93df3c38cd05}{\_n\_actuators}} = int(value.contents.value)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00113}00113         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a203ecf8cc91332f0611d7507c058f1c6}{\_trigger\_type}} = microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00114}00114         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}} = microscope.TriggerMode.ONCE}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00116}00116     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00117}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a2d58e03ce00f95642120bbdd9d3e2521}{00117}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a2d58e03ce00f95642120bbdd9d3e2521}{n\_actuators}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00118}00118         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ac524b4962f4c57aff5cc93df3c38cd05}{\_n\_actuators}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00120}00120     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00121}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a0da4d48042f67dcac6064fbbb12d6b4f}{00121}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a0da4d48042f67dcac6064fbbb12d6b4f}{trigger\_mode}}(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00122}00122         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00123}00123 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00124}00124     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00125}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a4f60fb094d2707f87c3b0c81ecec1d4b}{00125}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a4f60fb094d2707f87c3b0c81ecec1d4b}{trigger\_type}}(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00126}00126         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a203ecf8cc91332f0611d7507c058f1c6}{\_trigger\_type}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00128}00128     \textcolor{keyword}{def }\_do\_apply\_pattern(self, pattern: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00129}00129         pattern = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a57a628a9af0ec42dacc8b3a9d9530ab4}{\_normalize\_patterns}}(pattern)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00130}00130         data\_pointer = pattern.ctypes.data\_as(asdk.Scalar\_p)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00131}00131         status = asdk.Send(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}}, data\_pointer)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00132}00132         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(status)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00134}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aa40af0631d16ee4c1fc8b86f6c3e708b}{00134}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aa40af0631d16ee4c1fc8b86f6c3e708b}{set\_trigger}}(self, ttype, tmode):}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00135}00135         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ad6f5d01e79e538b0ca8cbd807b6a5a21}{\_supported\_TriggerModes}}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00136}00136             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00137}00137                 \textcolor{stringliteral}{"{}unsupported trigger of mode '\%s' for Alpao Mirrors"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00138}00138                 \% tmode.name}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00139}00139             )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00140}00140         \textcolor{keywordflow}{elif} (}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00141}00141             ttype == microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00142}00142             \textcolor{keywordflow}{and} tmode != microscope.TriggerMode.ONCE}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00143}00143         ):}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00144}00144             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00145}00145                 \textcolor{stringliteral}{"{}trigger mode '\%s' only supports trigger type ONCE"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00146}00146                 \% tmode.name}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00147}00147             )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00148}00148         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}} = tmode}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00149}00149 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00150}00150         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00151}00151             value = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_afbbfbe76bac33105202bba45adf508d1}{\_TriggerType\_to\_asdkTriggerIn}}[ttype]}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00152}00152         \textcolor{keywordflow}{except} KeyError:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00153}00153             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00154}00154                 \textcolor{stringliteral}{"{}unsupported trigger of type '\%s' for Alpao Mirrors"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00155}00155                 \% ttype.name}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00156}00156             )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00157}00157         status = asdk.Set(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}}, b\textcolor{stringliteral}{"{}TriggerIn"{}}, value)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00158}00158         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(status)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00159}00159         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a203ecf8cc91332f0611d7507c058f1c6}{\_trigger\_type}} = ttype}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00160}00160 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00161}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae6def33ab71adefe58aa7aec41a97829}{00161}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae6def33ab71adefe58aa7aec41a97829}{queue\_patterns}}(self, patterns: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00162}00162         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a203ecf8cc91332f0611d7507c058f1c6}{\_trigger\_type}} == microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00163}00163             super().\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae6def33ab71adefe58aa7aec41a97829}{queue\_patterns}}(patterns)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00164}00164             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00166}00166         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror_aa91f1ea3302142e8458b52591ee4bfc9}{\_validate\_patterns}}(patterns)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00167}00167         patterns = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a57a628a9af0ec42dacc8b3a9d9530ab4}{\_normalize\_patterns}}(patterns)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00168}00168         patterns = numpy.atleast\_2d(patterns)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00169}00169         n\_patterns: int = patterns.shape[0]}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00171}00171         \textcolor{comment}{\# The Alpao SDK seems to only support the trigger mode start.  It}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00172}00172         \textcolor{comment}{\# still has option called nRepeats that we can't really figure}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00173}00173         \textcolor{comment}{\# what is meant to do.  When set to 1, the mode is start.  What}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00174}00174         \textcolor{comment}{\# we want it is to have trigger mode once which was not}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00175}00175         \textcolor{comment}{\# supported.  We have received a modified version where if}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00176}00176         \textcolor{comment}{\# nRepeats is set to same number of patterns, does trigger mode}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00177}00177         \textcolor{comment}{\# once (not documented on Alpao SDK).}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00178}00178         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}} == microscope.TriggerMode.ONCE:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00179}00179             n\_repeats = n\_patterns}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00180}00180         \textcolor{keywordflow}{elif} self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}} == microscope.TriggerMode.START:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00181}00181             n\_repeats = 1}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00182}00182         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00183}00183             \textcolor{comment}{\# We should not get here in the first place since}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00184}00184             \textcolor{comment}{\# set\_trigger filters unsupported modes.}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00185}00185             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00186}00186                 \textcolor{stringliteral}{"{}trigger type '\%s' and trigger mode '\%s' is not supported"{}}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00187}00187                 \% (self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a203ecf8cc91332f0611d7507c058f1c6}{\_trigger\_type}}.name, self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae72f885d012d469ea7ec61ef46943b46}{\_trigger\_mode}}.name)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00188}00188             )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00189}00189 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00190}00190         data\_pointer = patterns.ctypes.data\_as(asdk.Scalar\_p)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00191}00191 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00192}00192         \textcolor{comment}{\# We don't know if the previous queue of pattern ran until the}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00193}00193         \textcolor{comment}{\# end, so we need to clear it before sending (see issue \#50)}}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00194}00194         status = asdk.Stop(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}})}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00195}00195         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(status)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00197}00197         status = asdk.SendPattern(}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00198}00198             self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}}, data\_pointer, n\_patterns, n\_repeats}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00199}00199         )}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00200}00200         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a62351fd3877c570deb7c141b1056c59e}{\_raise\_if\_error}}(status)}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00202}00202     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00203}00203         status = asdk.Release(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aab032faeebe84fb38e6049f4b4d0fa56}{\_dm}})}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00204}00204         \textcolor{keywordflow}{if} status != asdk.SUCCESS:}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00205}00205             msg = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a6dbe877a5855a21a5705dc90d7113d93}{\_find\_error\_str}}()}
+\DoxyCodeLine{\Hypertarget{alpao_8py_source_l00206}00206             warnings.warn(msg)}
+
+\end{DoxyCode}

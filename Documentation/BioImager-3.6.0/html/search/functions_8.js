@@ -1,15 +1,10 @@
 var searchData=
 [
-  ['imagestostack_0',['ImagesToStack',['../class_bio_imager_1_1_bio_image.html#ad10162379682fb2c0cf88a8d216b9af0',1,'BioImager::BioImage']]],
-  ['imagetoviewspace_1',['ImageToViewSpace',['../class_bio_imager_1_1_image_view.html#a187f1a0b832e38a4b73fd4194765203a',1,'BioImager::ImageView']]],
-  ['imageview_2',['ImageView',['../class_bio_imager_1_1_image_view.html#a5fe00f88dec1dd8286f3a607db3e9be2',1,'BioImager.ImageView.ImageView(BioImage im, bool OpenWithOpenSlide=true)'],['../class_bio_imager_1_1_image_view.html#aaaa142a88353e09b58e02406aab2c5af',1,'BioImager.ImageView.ImageView()']]],
-  ['imageview_5fkeydown_3',['ImageView_KeyDown',['../class_bio_imager_1_1_image_view.html#abf060b3c73d97d7e112c8874cfd63ce6',1,'BioImager::ImageView']]],
-  ['importroiscsv_4',['ImportROIsCSV',['../class_bio_imager_1_1_bio_image.html#ae2a0379becb5b02d07a676140a1cae78',1,'BioImager::BioImage']]],
-  ['init_5',['Init',['../class_bio_imager_1_1_filter.html#a1eab87617fb7866af3602b12278509ea',1,'BioImager::Filter']]],
-  ['initgui_6',['InitGUI',['../class_bio_imager_1_1_image_view.html#acd91244aa8511c64964a01c025df8448',1,'BioImager::ImageView']]],
-  ['initialize_7',['Initialize',['../class_bio_imager_1_1_app.html#aaa686df3ec0758d621ae35f1b00eb334',1,'BioImager.App.Initialize()'],['../class_bio_imager_1_1_bio_image.html#a46a37240bc4fefd9e4e8bbd7d92d58f0',1,'BioImager.BioImage.Initialize()'],['../class_bio_imager_1_1_function.html#af74c910091fd19e00b64926b65834c33',1,'BioImager.Function.Initialize()'],['../class_bio_imager_1_1_image_j.html#af1a11651297e5816ccef2dc25100993d',1,'BioImager.ImageJ.Initialize()']]],
-  ['invoke_8',['Invoke',['../class_bio_imager_1_1_lib.html#acb41b9bf4a0170036af735ebbb9d142c',1,'BioImager.Lib.Invoke(Type type, string name, object o, object[] args)'],['../class_bio_imager_1_1_lib.html#aede4def54dac19a6a0e3e26be2b8d3f5',1,'BioImager.Lib.Invoke(string st, string name, object o, object[] args)']]],
-  ['isome_9',['isOME',['../class_bio_imager_1_1_bio_image.html#ac0c4367ae7c7697cb933eb7a34b457dd',1,'BioImager::BioImage']]],
-  ['isomeseries_10',['isOMESeries',['../class_bio_imager_1_1_bio_image.html#adf292b21e01c08dc2e0acbfa5eadb8ad',1,'BioImager::BioImage']]],
-  ['istiffseries_11',['isTiffSeries',['../class_bio_imager_1_1_bio_image.html#a2504d26d783b4f654ba5f30eca56b145',1,'BioImager::BioImage']]]
+  ['handle_0',['handle',['../classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html#a0c312585629a108b56e9a42632342678',1,'microscope.testsuite.mock_devices.SerialMock.handle()'],['../classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock.html#a0a764e569a376e7bdafa08ce945515a5',1,'microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()'],['../classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock.html#a1db0f40adb9cfd5e2d6ba57e1707f906',1,'microscope.testsuite.mock_devices.CoboltLaserMock.handle()'],['../classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock.html#a27bccfc0aeba9296fda0342bc67e569b',1,'microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()'],['../classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_1_1_serial.html#a105b3d8c8ca4c300ba2e3c4d4cfda2c9',1,'microscope.testsuite.test_devices.TestSerialMock.Serial.handle()']]],
+  ['handle_5fcommand_5fline_1',['handle_command_line',['../namespacemicroscope_1_1win32.html#aad0ca3b6081357e8a25321373fe08792',1,'microscope::win32']]],
+  ['has_5ffilterwheel_2',['has_filterwheel',['../classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html#a913f53b7a04fd04b30b9aec497554b30',1,'microscope::controllers::prior::_ProScanIIIConnection']]],
+  ['hide_3',['Hide',['../class_bio_imager_1_1_app.html#a1d615bfb63c93aec00affd70291bcc3e',1,'BioImager::App']]],
+  ['histogramcontrol_4',['HistogramControl',['../class_bio_imager_1_1_histogram_control.html#aa379b5502f1f264a71ae0e1e23ddddf2',1,'BioImager::HistogramControl']]],
+  ['home_5',['home',['../classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection.html#a1a71a97faa12b185ecb36cc096929514',1,'microscope.controllers.zaber._ZaberDeviceConnection.home()'],['../classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis.html#a8374aadef47cfa3f023de0a77b9bdcc8',1,'microscope.stages.ludl._LudlStageAxis.home()']]],
+  ['hw_5ftrigger_6',['HW_trigger',['../classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a10272f036fb315426084e003b34775e9',1,'microscope::cameras::picam::PiCamera']]]
 ];

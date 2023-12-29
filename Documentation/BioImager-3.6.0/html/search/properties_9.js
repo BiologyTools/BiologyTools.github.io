@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['rchannel_0',['RChannel',['../class_bio_imager_1_1_image_view.html#a254cd6f481616f703218126672f4326c',1,'BioImager::ImageView']]],
-  ['resolution_1',['Resolution',['../class_bio_imager_1_1_image_view.html#afafa7176f8405d02f2ab33f283bb5e7a',1,'BioImager::ImageView']]]
+  ['key_0',['Key',['../class_bio_imager_1_1_automation_1_1_action.html#aa547f9c047d8800468e47bebc7b8014b',1,'BioImager.Automation.Action.Key()'],['../class_bio_imager_1_1_function.html#ac60311e12fd273f84e5f17ca60cd578d',1,'BioImager.Function.Key()']]]
 ];

@@ -3,6 +3,8 @@
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{class_bio_imager_1_1_d_camera_a6b681ab060bf545cbbf5ef2728c1f772}{DCamera}} ()
+\item 
 void \mbox{\hyperlink{class_bio_imager_1_1_d_camera_afdd57938b819ff3c9bcdc05d03c07d33}{Set\+Position}} (float x, float y, float z)
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_d_camera_a0807806da97bf36e28c8f47e93717d7d}{Render}} ()
@@ -33,6 +35,11 @@ Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00005}{5}} of file \mb
 Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_d_camera_8cs_source}{DCamera.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00017 \{ \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_camera_a0807806da97bf36e28c8f47e93717d7d}\label{class_bio_imager_1_1_d_camera_a0807806da97bf36e28c8f47e93717d7d}} 
@@ -45,6 +52,35 @@ Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00017}{17}} of file \m
 
 Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00026}{26}} of file \mbox{\hyperlink{_d_camera_8cs_source}{DCamera.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027         \{}
+\DoxyCodeLine{00028             \textcolor{comment}{// Setup the position of the camera in the world.}}
+\DoxyCodeLine{00029             Vector3 \mbox{\hyperlink{namespacemicroscope_1_1setfilterwheel_a217c7f5aaaf2dd7e6747b3ed925387b5}{position}} = \textcolor{keyword}{new} Vector3(PositionX, PositionY, PositionZ);}
+\DoxyCodeLine{00030 }
+\DoxyCodeLine{00031             \textcolor{comment}{// Setup where the camera is looking by default.}}
+\DoxyCodeLine{00032             Vector3 lookAt = \textcolor{keyword}{new} Vector3(0, 0, 1);}
+\DoxyCodeLine{00033 }
+\DoxyCodeLine{00034             \textcolor{comment}{// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.}}
+\DoxyCodeLine{00035             \textcolor{keywordtype}{float} pitch = RotationX * 0.0174532925f;}
+\DoxyCodeLine{00036             \textcolor{keywordtype}{float} yaw = RotationY * 0.0174532925f; ;}
+\DoxyCodeLine{00037             \textcolor{keywordtype}{float} roll = RotationZ * 0.0174532925f; ;}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039             \textcolor{comment}{// Create the rotation matrix from the yaw, pitch, and roll values.}}
+\DoxyCodeLine{00040             Matrix rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042             \textcolor{comment}{// Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.}}
+\DoxyCodeLine{00043             lookAt = Vector3.TransformCoordinate(lookAt, rotationMatrix);}
+\DoxyCodeLine{00044             Vector3 up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);}
+\DoxyCodeLine{00045 }
+\DoxyCodeLine{00046             \textcolor{comment}{// Translate the rotated camera position to the location of the viewer.}}
+\DoxyCodeLine{00047             lookAt = \mbox{\hyperlink{namespacemicroscope_1_1setfilterwheel_a217c7f5aaaf2dd7e6747b3ed925387b5}{position}} + lookAt;}
+\DoxyCodeLine{00048 }
+\DoxyCodeLine{00049             \textcolor{comment}{// Finally create the view matrix from the three updated vectors.}}
+\DoxyCodeLine{00050             \mbox{\hyperlink{class_bio_imager_1_1_d_camera_a3ad0d5db3ec57f68e275d69e62a6edab}{ViewMatrix}} = Matrix.LookAtLH(position, lookAt, up);}
+\DoxyCodeLine{00051         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_camera_afdd57938b819ff3c9bcdc05d03c07d33}\label{class_bio_imager_1_1_d_camera_afdd57938b819ff3c9bcdc05d03c07d33}} 
 \index{BioImager.DCamera@{BioImager.DCamera}!SetPosition@{SetPosition}}
 \index{SetPosition@{SetPosition}!BioImager.DCamera@{BioImager.DCamera}}
@@ -55,6 +91,15 @@ Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00026}{26}} of file \m
 
 Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00020}{20}} of file \mbox{\hyperlink{_d_camera_8cs_source}{DCamera.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00021         \{}
+\DoxyCodeLine{00022             PositionX = x;}
+\DoxyCodeLine{00023             PositionY = y;}
+\DoxyCodeLine{00024             PositionZ = z;}
+\DoxyCodeLine{00025         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Property Documentation}
@@ -69,7 +114,12 @@ Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00020}{20}} of file \m
 Definition at line \mbox{\hyperlink{_d_camera_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_d_camera_8cs_source}{DCamera.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/\+Graphics/DCamera.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/\+Graphics/\mbox{\hyperlink{_d_camera_8cs}{DCamera.\+cs}}\end{DoxyCompactItemize}

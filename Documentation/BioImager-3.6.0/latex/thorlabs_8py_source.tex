@@ -1,0 +1,146 @@
+\hypertarget{thorlabs_8py_source}{}\doxysection{thorlabs.\+py}
+\label{thorlabs_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/filterwheels/thorlabs.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/filterwheels/thorlabs.py}}
+\mbox{\hyperlink{thorlabs_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1filterwheels_1_1thorlabs}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00020}00020 \textcolor{keyword}{import} io}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00021}00021 \textcolor{keyword}{import} string}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00022}00022 \textcolor{keyword}{import} threading}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00023}00023 \textcolor{keyword}{import} warnings}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00025}00025 \textcolor{keyword}{import} serial}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00027}00027 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00028}00028 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00031}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{00031}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{ThorlabsFilterWheel}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{microscope.abc.FilterWheel}}):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00032}00032     \textcolor{stringliteral}{"{}"{}"{}Implements FilterServer wheel interface for Thorlabs FW102C.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00033}00033 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00034}00034 \textcolor{stringliteral}{    Note that the FW102C also has manual controls on the device, so clients}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00035}00035 \textcolor{stringliteral}{    should periodically query the current wheel position."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00036}00036 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00037}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a64a509c273ee3513bfdcdf44676e0421}{00037}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a64a509c273ee3513bfdcdf44676e0421}{\_\_init\_\_}}(self, com, baud=115200, timeout=2.0, **kwargs):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00038}00038         \textcolor{stringliteral}{"{}"{}"{}Create ThorlabsFilterWheel}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00039}00039 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00040}00040 \textcolor{stringliteral}{        :param com: COM port}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00041}00041 \textcolor{stringliteral}{        :param baud: baud rate}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00042}00042 \textcolor{stringliteral}{        :param timeout: serial timeout}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00043}00043 \textcolor{stringliteral}{        "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00044}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a486b94bf9dbb6f18cc4886a4dbea86cd}{00044}} \textcolor{stringliteral}{        self.\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a486b94bf9dbb6f18cc4886a4dbea86cd}{eol}} = "{}\(\backslash\)r"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00045}00045         rawSerial = serial.Serial(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00046}00046             port=com,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00047}00047             baudrate=baud,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00048}00048             timeout=timeout,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00049}00049             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00050}00050             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00051}00051             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00052}00052             xonxoff=0,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00053}00053         )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00054}00054         \textcolor{comment}{\# The Thorlabs controller serial implementation is strange.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00055}00055         \textcolor{comment}{\# Generally, it uses \(\backslash\)r as EOL, but error messages use \(\backslash\)n.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00056}00056         \textcolor{comment}{\# A readline after sending a 'pos?\(\backslash\)r' command always times out,}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00057}00057         \textcolor{comment}{\# but returns a string terminated by a newline.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00058}00058         \textcolor{comment}{\# We use TextIOWrapper with newline=None to perform EOL translation}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00059}00059         \textcolor{comment}{\# inbound, but must explicitly append \(\backslash\)r to outgoing commands.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00060}00060         \textcolor{comment}{\# The TextIOWrapper also deals with conversion between unicode}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00061}00061         \textcolor{comment}{\# and bytes.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00062}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a30c5d26ccb38a41b10bc39bdac4c46d2}{00062}}         self.\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a30c5d26ccb38a41b10bc39bdac4c46d2}{connection}} = io.TextIOWrapper(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00063}00063             rawSerial,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00064}00064             newline=\textcolor{keywordtype}{None},}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00065}00065             line\_buffering=\textcolor{keyword}{True},  \textcolor{comment}{\# flush on write}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00066}00066             write\_through=\textcolor{keyword}{True},  \textcolor{comment}{\# write out immediately}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00067}00067         )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00068}00068         \textcolor{comment}{\# A lock for the connection.  We should probably be using}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00069}00069         \textcolor{comment}{\# SharedSerial (maybe change it to SharedIO, and have it}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00070}00070         \textcolor{comment}{\# accept any IOBase implementation).}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00071}00071         self.\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_af824d194c280c81f3887ccebca1b4d5c}{\_lock}} = threading.RLock()}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00072}00072         position\_count = int(self.\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_ae0606f12ccd4927893870c9f1cd0af1f}{\_send\_command}}(\textcolor{stringliteral}{"{}pcount?"{}}))}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00073}00073         super().\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a64a509c273ee3513bfdcdf44676e0421}{\_\_init\_\_}}(positions=position\_count, **kwargs)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00075}00075     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00076}00076         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00077}00077 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00078}00078     \textcolor{keyword}{def }\_do\_set\_position(self, new\_position: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00079}00079         \textcolor{comment}{\# Thorlabs positions start at 1, hence the +1}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00080}00080         self.\_send\_command(\textcolor{stringliteral}{"{}pos=\%d"{}} \% (new\_position + 1))}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00082}00082     \textcolor{keyword}{def }\_do\_get\_position(self):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00083}00083         \textcolor{comment}{\# Thorlabs positions start at 1, hence the -\/1}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00084}00084         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00085}00085             \textcolor{keywordflow}{return} int(self.\_send\_command(\textcolor{stringliteral}{"{}pos?"{}})) -\/ 1}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00086}00086         \textcolor{keywordflow}{except} TypeError:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00087}00087             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00088}00088                 \textcolor{stringliteral}{"{}Unable to get position of \%s"{}}, self.\_\_class\_\_.\_\_name\_\_}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00089}00089             )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00091}00091     \textcolor{keyword}{def }\_readline(self):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00092}00092         \textcolor{stringliteral}{"{}"{}"{}Custom \_readline to overcome limitations of the serial implementation."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00093}00093         result = []}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00094}00094         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00095}00095             \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} result \textcolor{keywordflow}{or} result[-\/1] \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} (\textcolor{stringliteral}{"{}\(\backslash\)n"{}}, \textcolor{stringliteral}{"{}"{}}):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00096}00096                 char = self.connection.read()}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00097}00097                 \textcolor{comment}{\# Do not allow lines to be empty.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00098}00098                 \textcolor{keywordflow}{if} result \textcolor{keywordflow}{or} (char \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} string.whitespace):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00099}00099                     result.append(char)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00100}00100         \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}}.join(result)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00102}00102     \textcolor{keyword}{def }\_send\_command(self, command):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00103}00103         \textcolor{stringliteral}{"{}"{}"{}Send a command and return any result."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00104}00104         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00105}00105             self.connection.write(command + self.eol)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00106}00106             response = \textcolor{stringliteral}{"{}dummy"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00107}00107             \textcolor{keywordflow}{while} command \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} response \textcolor{keywordflow}{and} \textcolor{stringliteral}{"{}>"{}} \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} response:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00108}00108                 \textcolor{comment}{\# Read until we receive the command echo.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00109}00109                 response = self.\_readline().strip()}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00110}00110             \textcolor{keywordflow}{if} command.endswith(\textcolor{stringliteral}{"{}?"{}}):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00111}00111                 \textcolor{comment}{\# Last response was the command. Next is result.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00112}00112                 \textcolor{keywordflow}{return} self.\_readline().strip()}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00113}00113         \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00116}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c}{00116}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c}{ThorlabsFW102C}}(\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{ThorlabsFilterWheel}}):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00117}00117     \textcolor{stringliteral}{"{}"{}"{}Deprecated, use ThorlabsFilterWheel.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00118}00118 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00119}00119 \textcolor{stringliteral}{    This }\textcolor{keyword}{class }is from when \mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{ThorlabsFilterWheel}} did not automatically}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00120}00120     found its own number of positions \textcolor{keywordflow}{and} there was a separate \textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00121}00121     \textcolor{keywordflow}{for} each thorlabs filterwheel model.}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00122}00122     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00123}00123 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00124}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c_a3ca7bbe3f0d70b05046d98b172855df6}{00124}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c_a3ca7bbe3f0d70b05046d98b172855df6}{\_\_init\_\_}}(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00125}00125         warnings.warn(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00126}00126             \textcolor{stringliteral}{"{}Use ThorlabsFilterWheel instead of ThorlabsFW102C"{}},}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00127}00127             DeprecationWarning,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00128}00128             stacklevel=2,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00129}00129         )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00130}00130         super().\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c_a3ca7bbe3f0d70b05046d98b172855df6}{\_\_init\_\_}}(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00131}00131         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel_ae2fe23261c2f229532154c570e1e8011}{n\_positions}} != 6:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00132}00132             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00133}00133                 \textcolor{stringliteral}{"{}Does not look like a FW102C, it has \%d positions instead of 6"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00134}00134             )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00137}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c}{00137}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c}{ThorlabsFW212C}}(\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{ThorlabsFilterWheel}}):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00138}00138     \textcolor{stringliteral}{"{}"{}"{}Deprecated, use ThorlabsFilterWheel.}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00139}00139 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00140}00140 \textcolor{stringliteral}{    This }\textcolor{keyword}{class }is from when \mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel}{ThorlabsFilterWheel}} did not automatically}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00141}00141     found its own number of positions \textcolor{keywordflow}{and} there was a separate \textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00142}00142     \textcolor{keywordflow}{for} each thorlabs filterwheel model.}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00143}00143     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00144}00144 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00145}\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c_a7eb8e8dd8d386c50303ba75776f0d8b5}{00145}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c_a7eb8e8dd8d386c50303ba75776f0d8b5}{\_\_init\_\_}}(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00146}00146         warnings.warn(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00147}00147             \textcolor{stringliteral}{"{}Use ThorlabsFilterWheel instead of ThorlabsFW212C"{}},}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00148}00148             DeprecationWarning,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00149}00149             stacklevel=2,}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00150}00150         )}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00151}00151         super().\mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c_a7eb8e8dd8d386c50303ba75776f0d8b5}{\_\_init\_\_}}(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00152}00152         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel_ae2fe23261c2f229532154c570e1e8011}{n\_positions}} != 12:}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00153}00153             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00154}00154                 \textcolor{stringliteral}{"{}Does not look like a FW212C, it has \%d positions instead of 12"{}}}
+\DoxyCodeLine{\Hypertarget{thorlabs_8py_source_l00155}00155             )}
+
+\end{DoxyCode}

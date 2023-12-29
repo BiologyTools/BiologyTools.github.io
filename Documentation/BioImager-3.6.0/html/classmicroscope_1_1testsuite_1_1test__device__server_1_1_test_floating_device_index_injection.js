@@ -1,0 +1,4 @@
+var classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection =
+[
+    [ "test_injection_of_index_kwarg", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection.html#aad421b7a350257910fce49f21b4770bc", null ]
+];

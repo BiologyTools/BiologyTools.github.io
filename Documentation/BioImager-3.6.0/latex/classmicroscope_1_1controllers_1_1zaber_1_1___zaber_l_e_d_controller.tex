@@ -1,0 +1,102 @@
+\hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller}{}\doxysection{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController Class Reference}
+\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller}\index{microscope.controllers.zaber.\_ZaberLEDController@{microscope.controllers.zaber.\_ZaberLEDController}}
+Inheritance diagram for microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=1.800643cm]{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_aba6ef574a97cf201217437cba5c4e6e7}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection}{\+\_\+\+Zaber\+Connection}} conn, int device\+\_\+address, $\ast$$\ast$kwargs)
+\item 
+typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d}{\+\_\+\+Zaber\+LED}}\mbox{]} \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_a2d58c83884afa8e3b8f616be79af0e23}{devices}} (self)
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}This effectively means a Zaber X-LCA4 LED controller.
+
+The X-LCA4 series is so far the only LED controller Zaber has.
+Its documentation is not included on the ASCII protocol manual,
+see the `controller specific manual online
+<https://www.zaber.com/protocol-manual?device=X-LCA4>`_\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{zaber_8py_source_l00479}{479}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_aba6ef574a97cf201217437cba5c4e6e7}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_aba6ef574a97cf201217437cba5c4e6e7}} 
+\index{microscope.controllers.zaber.\_ZaberLEDController@{microscope.controllers.zaber.\_ZaberLEDController}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.controllers.zaber.\_ZaberLEDController@{microscope.controllers.zaber.\_ZaberLEDController}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection}{\+\_\+\+Zaber\+Connection}}}]{conn,  }\item[{int}]{device\+\_\+address,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a3016ccdfc0aee2a51004de9dd8b7caa9}{microscope.\+abc.\+Device}}.
+
+
+
+Definition at line \mbox{\hyperlink{zaber_8py_source_l00489}{489}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00491     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00492         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00493         self.\_dev\_conn = \_ZaberDeviceConnection(conn, device\_address)}
+\DoxyCodeLine{00494         self.\_leds: typing.Dict[str, \_ZaberLED] = \{\}}
+\DoxyCodeLine{00495 }
+\DoxyCodeLine{00496         all\_lamps = self.\_dev\_conn.command(b\textcolor{stringliteral}{"{}get lamp.status"{}}).response.split()}
+\DoxyCodeLine{00497         \textcolor{comment}{\# We get one status per peripheral connection.  Documentation}}
+\DoxyCodeLine{00498         \textcolor{comment}{\# states that a value of "{}0"{} means unplugged but with X-\/LCA4,}}
+\DoxyCodeLine{00499         \textcolor{comment}{\# firmware version 7.13 and build 8074, we get NA for}}
+\DoxyCodeLine{00500         \textcolor{comment}{\# unplugged.  Also not sure how 0 (unplugged) would differ}}
+\DoxyCodeLine{00501         \textcolor{comment}{\# from 5 (peripheral not connected).  So we count as valid}}
+\DoxyCodeLine{00502         \textcolor{comment}{\# those with status 1 (turned off), 2 (turned on), and 3}}
+\DoxyCodeLine{00503         \textcolor{comment}{\# (fault).}}
+\DoxyCodeLine{00504         \textcolor{keywordflow}{for} i, lamp\_state \textcolor{keywordflow}{in} enumerate(all\_lamps, start=1):}
+\DoxyCodeLine{00505             \textcolor{keywordflow}{if} lamp\_state \textcolor{keywordflow}{in} [b\textcolor{stringliteral}{"{}1"{}}, b\textcolor{stringliteral}{"{}2"{}}, b\textcolor{stringliteral}{"{}3"{}}]:}
+\DoxyCodeLine{00506                 \textcolor{comment}{\# The labels on the controller are LED1, LED2, etc, so}}
+\DoxyCodeLine{00507                 \textcolor{comment}{\# use the same for key.}}
+\DoxyCodeLine{00508                 self.\_leds[\textcolor{stringliteral}{"{}LED\%d"{}} \% i] = \_ZaberLED(self.\_dev\_conn, i)}
+\DoxyCodeLine{00509             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00510                 \_logger.info(\textcolor{stringliteral}{"{}no LED \%d, status is \%s"{}}, i, lamp\_state.decode())}
+\DoxyCodeLine{00511 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_a2d58c83884afa8e3b8f616be79af0e23}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller_a2d58c83884afa8e3b8f616be79af0e23}} 
+\index{microscope.controllers.zaber.\_ZaberLEDController@{microscope.controllers.zaber.\_ZaberLEDController}!devices@{devices}}
+\index{devices@{devices}!microscope.controllers.zaber.\_ZaberLEDController@{microscope.controllers.zaber.\_ZaberLEDController}}
+\doxysubsubsection{\texorpdfstring{devices()}{devices()}}
+{\footnotesize\ttfamily  typing.\+Dict\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d}{\+\_\+\+Zaber\+LED}}\mbox{]} microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+devices (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Map of names to the controlled devices.\end{DoxyVerb}
+ 
+
+Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a514852dc8a72c9cf2f0277660a32c555}{microscope.\+abc.\+Controller}}.
+
+
+
+Definition at line \mbox{\hyperlink{zaber_8py_source_l00513}{513}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00513     \textcolor{keyword}{def }devices(self) -\/> typing.Dict[str, \_ZaberLED]:}
+\DoxyCodeLine{00514         \textcolor{keywordflow}{return} self.\_leds}
+\DoxyCodeLine{00515 }
+\DoxyCodeLine{00516 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/controllers/\mbox{\hyperlink{zaber_8py}{zaber.\+py}}\end{DoxyCompactItemize}

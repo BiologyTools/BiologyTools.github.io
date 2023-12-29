@@ -1,0 +1,143 @@
+\hypertarget{classmicroscope_1_1gui_1_1_camera_widget}{}\doxysection{microscope.\+gui.\+Camera\+Widget Class Reference}
+\label{classmicroscope_1_1gui_1_1_camera_widget}\index{microscope.gui.CameraWidget@{microscope.gui.CameraWidget}}
+Inheritance diagram for microscope.\+gui.\+Camera\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classmicroscope_1_1gui_1_1_camera_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a514d50226eb5b268367ff27a98e0c72c}{\+\_\+\+\_\+init\+\_\+\+\_\+}} (self, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{microscope.\+abc.\+Camera}} device, $\ast$args, $\ast$$\ast$kwargs)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}{update\+Enable\+State}} (self)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a3011eb5ad92ee17a991b1bf2b0b21df0}{display\+Data}} (self, numpy.\+ndarray data)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}Display camera\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00180}{180}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+
+\doxysubsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_camera_widget_a514d50226eb5b268367ff27a98e0c72c}\label{classmicroscope_1_1gui_1_1_camera_widget_a514d50226eb5b268367ff27a98e0c72c}} 
+\index{microscope.gui.CameraWidget@{microscope.gui.CameraWidget}!\_\_init\_\_@{\_\_init\_\_}}
+\index{\_\_init\_\_@{\_\_init\_\_}!microscope.gui.CameraWidget@{microscope.gui.CameraWidget}}
+\doxysubsubsection{\texorpdfstring{\_\_init\_\_()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Camera\+Widget.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{microscope.\+abc.\+Camera}}}]{device,  }\item[{$\ast$}]{args,  }\item[{$\ast$$\ast$}]{kwargs }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00183}{183}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183     \textcolor{keyword}{def }\_\_init\_\_(self, device: microscope.abc.Camera, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00184         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00185         self.\_device = device}
+\DoxyCodeLine{00186         self.\_imager = \_Imager(self.\_device)}
+\DoxyCodeLine{00187         self.\_imager.imageAcquired.connect(self.displayData)}
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189         self.\_view = QtWidgets.QLabel(parent=self)}
+\DoxyCodeLine{00190         self.displayData(}
+\DoxyCodeLine{00191             numpy.zeros(self.\_device.get\_sensor\_shape(), dtype=numpy.uint8)}
+\DoxyCodeLine{00192         )}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194         self.\_enable\_check = QtWidgets.QCheckBox(\textcolor{stringliteral}{"{}Enabled"{}}, parent=self)}
+\DoxyCodeLine{00195         self.\_enable\_check.stateChanged.connect(self.updateEnableState)}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197         self.\_exposure\_box = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{00198         self.\_exposure\_box.setSuffix(\textcolor{stringliteral}{"{} sec"{}})}
+\DoxyCodeLine{00199         self.\_exposure\_box.setSingleStep(0.1)}
+\DoxyCodeLine{00200         self.\_exposure\_box.valueChanged.connect(self.\_device.set\_exposure\_time)}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202         self.\_snap\_button = QtWidgets.QPushButton(\textcolor{stringliteral}{"{}Snap"{}}, parent=self)}
+\DoxyCodeLine{00203         self.\_snap\_button.clicked.connect(self.\_imager.snap)}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205         self.updateEnableState()}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{00208         controls\_row = QtWidgets.QHBoxLayout()}
+\DoxyCodeLine{00209         \textcolor{keywordflow}{for} widget \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{00210             self.\_enable\_check,}
+\DoxyCodeLine{00211             self.\_exposure\_box,}
+\DoxyCodeLine{00212             self.\_snap\_button,}
+\DoxyCodeLine{00213         ]:}
+\DoxyCodeLine{00214             controls\_row.addWidget(widget)}
+\DoxyCodeLine{00215         layout.addLayout(controls\_row)}
+\DoxyCodeLine{00216         layout.addWidget(self.\_view)}
+\DoxyCodeLine{00217         self.setLayout(layout)}
+\DoxyCodeLine{00218 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_camera_widget_a3011eb5ad92ee17a991b1bf2b0b21df0}\label{classmicroscope_1_1gui_1_1_camera_widget_a3011eb5ad92ee17a991b1bf2b0b21df0}} 
+\index{microscope.gui.CameraWidget@{microscope.gui.CameraWidget}!displayData@{displayData}}
+\index{displayData@{displayData}!microscope.gui.CameraWidget@{microscope.gui.CameraWidget}}
+\doxysubsubsection{\texorpdfstring{displayData()}{displayData()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Camera\+Widget.\+display\+Data (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{numpy.\+ndarray}]{data }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00236}{236}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00236     \textcolor{keyword}{def }displayData(self, data: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00237         np\_to\_qt = \{}
+\DoxyCodeLine{00238             numpy.dtype(\textcolor{stringliteral}{"{}uint8"{}}): QtGui.QImage.Format\_Grayscale8,}
+\DoxyCodeLine{00239             numpy.dtype(\textcolor{stringliteral}{"{}uint16"{}}): QtGui.QImage.Format\_Grayscale16,}
+\DoxyCodeLine{00240         \}}
+\DoxyCodeLine{00241         qt\_img = QtGui.QImage(}
+\DoxyCodeLine{00242             data.tobytes(), *data.shape, np\_to\_qt[data.dtype]}
+\DoxyCodeLine{00243         )}
+\DoxyCodeLine{00244         self.\_view.setPixmap(QtGui.QPixmap.fromImage(qt\_img))}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}\label{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}} 
+\index{microscope.gui.CameraWidget@{microscope.gui.CameraWidget}!updateEnableState@{updateEnableState}}
+\index{updateEnableState@{updateEnableState}!microscope.gui.CameraWidget@{microscope.gui.CameraWidget}}
+\doxysubsubsection{\texorpdfstring{updateEnableState()}{updateEnableState()}}
+{\footnotesize\ttfamily  None microscope.\+gui.\+Camera\+Widget.\+update\+Enable\+State (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Update UI and camera state after enable check box\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00219}{219}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219     \textcolor{keyword}{def }updateEnableState(self) -\/> None:}
+\DoxyCodeLine{00220         \textcolor{stringliteral}{"{}"{}"{}Update UI and camera state after enable check box"{}"{}"{}}}
+\DoxyCodeLine{00221         \textcolor{keywordflow}{if} self.\_enable\_check.isChecked():}
+\DoxyCodeLine{00222             self.\_device.enable()}
+\DoxyCodeLine{00223         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00224             self.\_device.disable()}
+\DoxyCodeLine{00225 }
+\DoxyCodeLine{00226         \textcolor{keywordflow}{if} self.\_enable\_check.isChecked() != self.\_device.get\_is\_enabled():}
+\DoxyCodeLine{00227             self.\_enable\_check.setChecked(self.\_device.get\_is\_enabled())}
+\DoxyCodeLine{00228             \_logger.error(}
+\DoxyCodeLine{00229                 \textcolor{stringliteral}{"{}failed to \%s camera"{}},}
+\DoxyCodeLine{00230                 \textcolor{stringliteral}{"{}enable"{}} \textcolor{keywordflow}{if} self.\_enable\_check.isChecked() \textcolor{keywordflow}{else} \textcolor{stringliteral}{"{}disable"{}},}
+\DoxyCodeLine{00231             )}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233         self.\_snap\_button.setEnabled(self.\_device.get\_is\_enabled())}
+\DoxyCodeLine{00234         self.\_exposure\_box.setEnabled(self.\_device.get\_is\_enabled())}
+\DoxyCodeLine{00235 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/\mbox{\hyperlink{gui_8py}{gui.\+py}}\end{DoxyCompactItemize}

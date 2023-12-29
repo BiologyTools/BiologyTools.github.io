@@ -8,6 +8,8 @@ A queue of Flood\+Fill\+Ranges.
 \doxysubsection*{Public Member Functions}
 \begin{DoxyCompactItemize}
 \item 
+\mbox{\hyperlink{class_bio_imager_1_1_flood_fill_range_queue_ad0e5d0127573596d2f716c7960f46163}{Flood\+Fill\+Range\+Queue}} ()
+\item 
 \mbox{\hyperlink{class_bio_imager_1_1_flood_fill_range_queue_a07fb048863445999e60fd760d4a92b2e}{Flood\+Fill\+Range\+Queue}} (int initial\+Size)
 \item 
 void \mbox{\hyperlink{class_bio_imager_1_1_flood_fill_range_queue_a611fba263090c345dcdac1ea165449b5}{Enqueue}} (ref \mbox{\hyperlink{struct_bio_imager_1_1_flood_fill_range}{Flood\+Fill\+Range}} r)
@@ -41,6 +43,14 @@ Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00004}{4
 
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018                                      : \textcolor{keyword}{this}(10000)}
+\DoxyCodeLine{00019         \{}
+\DoxyCodeLine{00020 }
+\DoxyCodeLine{00021         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_flood_fill_range_queue_a07fb048863445999e60fd760d4a92b2e}\label{class_bio_imager_1_1_flood_fill_range_queue_a07fb048863445999e60fd760d4a92b2e}} 
 \index{BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}!FloodFillRangeQueue@{FloodFillRangeQueue}}
 \index{FloodFillRangeQueue@{FloodFillRangeQueue}!BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}}
@@ -51,6 +61,15 @@ Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00018}{1
 
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00024         \{}
+\DoxyCodeLine{00025             array = \textcolor{keyword}{new} FloodFillRange[initialSize];}
+\DoxyCodeLine{00026             head = 0;}
+\DoxyCodeLine{00027             size = 0;}
+\DoxyCodeLine{00028         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -68,6 +87,21 @@ Removes and returns the \mbox{\hyperlink{struct_bio_imager_1_1_flood_fill_range}
 
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00050}{50}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051         \{}
+\DoxyCodeLine{00052             FloodFillRange range = \textcolor{keyword}{new} FloodFillRange();}
+\DoxyCodeLine{00053             \textcolor{keywordflow}{if} (size > 0)}
+\DoxyCodeLine{00054             \{}
+\DoxyCodeLine{00055                 range = array[head];}
+\DoxyCodeLine{00056                 array[head] = \textcolor{keyword}{new} FloodFillRange();}
+\DoxyCodeLine{00057                 head++;\textcolor{comment}{//advance head position}}
+\DoxyCodeLine{00058                 size-\/-\/;\textcolor{comment}{//update size to exclude dequeued item}}
+\DoxyCodeLine{00059             \}}
+\DoxyCodeLine{00060             \textcolor{keywordflow}{return} range;}
+\DoxyCodeLine{00061         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_flood_fill_range_queue_a611fba263090c345dcdac1ea165449b5}\label{class_bio_imager_1_1_flood_fill_range_queue_a611fba263090c345dcdac1ea165449b5}} 
 \index{BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}!Enqueue@{Enqueue}}
 \index{Enqueue@{Enqueue}!BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}}
@@ -82,6 +116,20 @@ Adds a \mbox{\hyperlink{struct_bio_imager_1_1_flood_fill_range}{Flood\+Fill\+Ran
 
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00037}{37}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038         \{}
+\DoxyCodeLine{00039             \textcolor{keywordflow}{if} (size + head == array.Length)}
+\DoxyCodeLine{00040             \{}
+\DoxyCodeLine{00041                 FloodFillRange[] newArray = \textcolor{keyword}{new} FloodFillRange[2 * array.Length];}
+\DoxyCodeLine{00042                 Array.Copy(array, head, newArray, 0, size);}
+\DoxyCodeLine{00043                 array = newArray;}
+\DoxyCodeLine{00044                 head = 0;}
+\DoxyCodeLine{00045             \}}
+\DoxyCodeLine{00046             array[head + (size++)] = r;}
+\DoxyCodeLine{00047         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Property Documentation}
@@ -99,6 +147,13 @@ Returns the number of items currently in the queue.
 
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014         \{}
+\DoxyCodeLine{00015             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} size; \}}
+\DoxyCodeLine{00016         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_flood_fill_range_queue_a4774a7797b3706aedd01f573b22fdee4}\label{class_bio_imager_1_1_flood_fill_range_queue_a4774a7797b3706aedd01f573b22fdee4}} 
 \index{BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}!First@{First}}
 \index{First@{First}!BioImager.FloodFillRangeQueue@{BioImager.FloodFillRangeQueue}}
@@ -114,7 +169,14 @@ Gets the \mbox{\hyperlink{struct_bio_imager_1_1_flood_fill_range}{Flood\+Fill\+R
 Definition at line \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_flood_fill_range_queue_8cs_source}{Flood\+Fill\+Range\+Queue.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032         \{}
+\DoxyCodeLine{00033             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} array[head]; \}}
+\DoxyCodeLine{00034         \}}
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 
-F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/Flood\+Fill\+Range\+Queue.\+cs\end{DoxyCompactItemize}
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Graphics/\mbox{\hyperlink{_flood_fill_range_queue_8cs}{Flood\+Fill\+Range\+Queue.\+cs}}\end{DoxyCompactItemize}

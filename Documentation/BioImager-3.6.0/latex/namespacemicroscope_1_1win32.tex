@@ -1,0 +1,45 @@
+\hypertarget{namespacemicroscope_1_1win32}{}\doxysection{microscope.\+win32 Namespace Reference}
+\label{namespacemicroscope_1_1win32}\index{microscope.win32@{microscope.win32}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service}{Microscope\+Windows\+Service}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \mbox{\hyperlink{namespacemicroscope_1_1win32_aad0ca3b6081357e8a25321373fe08792}{handle\+\_\+command\+\_\+line}} ()
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1win32_aad0ca3b6081357e8a25321373fe08792}\label{namespacemicroscope_1_1win32_aad0ca3b6081357e8a25321373fe08792}} 
+\index{microscope.win32@{microscope.win32}!handle\_command\_line@{handle\_command\_line}}
+\index{handle\_command\_line@{handle\_command\_line}!microscope.win32@{microscope.win32}}
+\doxysubsubsection{\texorpdfstring{handle\_command\_line()}{handle\_command\_line()}}
+{\footnotesize\ttfamily def microscope.\+win32.\+handle\+\_\+command\+\_\+line (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{win32_8py_source_l00128}{128}} of file \mbox{\hyperlink{win32_8py_source}{win32.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00128 \textcolor{keyword}{def }handle\_command\_line():}
+\DoxyCodeLine{00129     \textcolor{keywordflow}{if} len(sys.argv) == 1:}
+\DoxyCodeLine{00130         print(\textcolor{stringliteral}{"{}\(\backslash\)nNo action specified.\(\backslash\)n"{}}, file=sys.stderr)}
+\DoxyCodeLine{00131         sys.exit(1)}
+\DoxyCodeLine{00132     \textcolor{keywordflow}{if} sys.argv[1].lower() \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}install"{}}, \textcolor{stringliteral}{"{}update"{}}]:}
+\DoxyCodeLine{00133         \textcolor{keywordflow}{if} len(sys.argv) == 2:}
+\DoxyCodeLine{00134             print(\textcolor{stringliteral}{"{}\(\backslash\)nNo config file specified.\(\backslash\)n"{}})}
+\DoxyCodeLine{00135             sys.exit(1)}
+\DoxyCodeLine{00136         configfile = sys.argv.pop()}
+\DoxyCodeLine{00137         win32serviceutil.HandleCommandLine(MicroscopeWindowsService)}
+\DoxyCodeLine{00138         \textcolor{comment}{\# Set persistent data on service}}
+\DoxyCodeLine{00139         MicroscopeWindowsService.set\_config\_file(configfile)}
+\DoxyCodeLine{00140     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00141         win32serviceutil.HandleCommandLine(MicroscopeWindowsService)}
+\DoxyCodeLine{00142 }
+\DoxyCodeLine{00143 }
+
+\end{DoxyCode}

@@ -1,0 +1,98 @@
+\hypertarget{clients_8py_source}{}\doxysection{clients.\+py}
+\label{clients_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/clients.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/clients.py}}
+\mbox{\hyperlink{clients_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1clients}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00020}00020 \textcolor{stringliteral}{"{}"{}"{}TODO: complete this docstring}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00021}00021 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00023}00023 \textcolor{keyword}{import} inspect}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00024}00024 \textcolor{keyword}{import} itertools}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00025}00025 \textcolor{keyword}{import} queue}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00026}00026 \textcolor{keyword}{import} socket}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00027}00027 \textcolor{keyword}{import} threading}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00029}00029 \textcolor{keyword}{import} Pyro4}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00032}00032 \textcolor{comment}{\# Pyro configuration. Use pickle because it can serialize numpy ndarrays.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00033}00033 Pyro4.config.SERIALIZERS\_ACCEPTED.add(\textcolor{stringliteral}{"{}pickle"{}})}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00034}\mbox{\hyperlink{namespacemicroscope_1_1clients_afd200b3e7bbd30aba99127bf6a129fcc}{00034}} Pyro4.config.SERIALIZER = \textcolor{stringliteral}{"{}pickle"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00036}\mbox{\hyperlink{namespacemicroscope_1_1clients_aac436f738c5bc3c6b416cdc6f4d5d7a0}{00036}} LISTENERS = \{\}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00039}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client}{00039}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client}{Client}}:}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00040}00040     \textcolor{stringliteral}{"{}"{}"{}Base Client object that makes methods on proxy available locally."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00042}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_ad2d2568159add9dc01e24b409c99f7db}{00042}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_ad2d2568159add9dc01e24b409c99f7db}{\_\_init\_\_}}(self, url):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00043}00043         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_abfcf3e7b96a157f861847aba4043260b}{\_url}} = url}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00044}00044         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}} = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00045}00045         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_a4c14e7057234d459b36092427f50427d}{\_connect}}()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00047}00047     \textcolor{keyword}{def }\_connect(self):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00048}00048         \textcolor{stringliteral}{"{}"{}"{}Connect to a proxy and set up self passthrough to proxy methods."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00049}00049         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}} = Pyro4.Proxy(self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_abfcf3e7b96a157f861847aba4043260b}{\_url}})}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00050}00050         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}}.\_pyroGetMetadata()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00052}00052         \textcolor{comment}{\# Derived classes may over-\/ride some methods. Leave these alone.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00053}00053         my\_methods = [}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00054}00054             m[0] \textcolor{keywordflow}{for} m \textcolor{keywordflow}{in} inspect.getmembers(self, predicate=inspect.ismethod)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00055}00055         ]}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00056}00056         methods = set(self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}}.\_pyroMethods).difference(my\_methods)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00057}00057         \textcolor{comment}{\# But in the case of propertyes, we need to inspect the class.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00058}00058         my\_properties = [}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00059}00059             m[0]}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00060}00060             \textcolor{keywordflow}{for} m \textcolor{keywordflow}{in} inspect.getmembers(}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00061}00061                 self.\_\_class\_\_, predicate=inspect.isdatadescriptor}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00062}00062             )}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00063}00063         ]}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00064}00064         properties = set(self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}}.\_pyroAttrs).difference(my\_properties)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00065}00065 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00066}00066         \textcolor{keywordflow}{for} attr \textcolor{keywordflow}{in} itertools.chain(methods, properties):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00067}00067             setattr(self, attr, getattr(self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}}, attr))}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00070}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client}{00070}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client}{DataClient}}(\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client}{Client}}):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00071}00071     \textcolor{stringliteral}{"{}"{}"{}A client that can receive and buffer data."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00073}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}{00073}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}{\_\_init\_\_}}(self, url):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00074}00074         super().\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_aa52e56504d83ab018c962390ea09527b}{\_\_init\_\_}}(url)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00075}00075         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a890617adb1bd2bb34633c6a464d7fb58}{\_buffer}} = queue.Queue()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00076}00076         \textcolor{comment}{\# Register self with a listener.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00077}00077         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_abfcf3e7b96a157f861847aba4043260b}{\_url}}.split(\textcolor{stringliteral}{"{}@"{}})[1].split(\textcolor{stringliteral}{"{}:"{}})[0] \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}127.0.0.1"{}}, \textcolor{stringliteral}{"{}localhost"{}}]:}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00078}00078             iface = \textcolor{stringliteral}{"{}127.0.0.1"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00079}00079         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00080}00080             \textcolor{comment}{\# TODO: support multiple interfaces. Could use ifaddr.get\_adapters() to}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00081}00081             \textcolor{comment}{\# query ip addresses then pick first interface on the same subnet.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00082}00082             iface = socket.gethostbyname(socket.gethostname())}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00083}00083         \textcolor{keywordflow}{if} iface \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} LISTENERS:}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00084}00084             LISTENERS[iface] = Pyro4.Daemon(host=iface)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00085}00085             lthread = threading.Thread(target=LISTENERS[iface].requestLoop)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00086}00086             lthread.daemon = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00087}00087             lthread.start()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00088}00088         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a17ee45a93330b99ce43d5e88503a8d8c}{\_client\_uri}} = LISTENERS[iface].register(self)}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00090}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}{00090}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}{enable}}(self):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00091}00091         \textcolor{stringliteral}{"{}"{}"{}Set the client on the remote and enable it."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00092}00092         self.set\_client(self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a17ee45a93330b99ce43d5e88503a8d8c}{\_client\_uri}})}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00093}00093         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client_af4192eb63a2da95382005752e759c4f2}{\_proxy}}.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a1d76f90265e458cff6a9c0e9dd17acce}{enable}}()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00095}00095     \textcolor{preprocessor}{@Pyro4.expose}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00096}00096     \textcolor{preprocessor}{@Pyro4.oneway}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00097}00097     \textcolor{comment}{\# noinspection PyPep8Naming}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00098}00098     \textcolor{comment}{\# Legacy naming convention.}}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00099}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a656ecc9571606ead52f8c8cd38310c65}{00099}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a656ecc9571606ead52f8c8cd38310c65}{receiveData}}(self, data, timestamp, *args):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00100}00100         del args}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00101}00101         self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a890617adb1bd2bb34633c6a464d7fb58}{\_buffer}}.put((data, timestamp))}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00103}\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a13f912c0bee1ee6c861a4ddc18241a27}{00103}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a13f912c0bee1ee6c861a4ddc18241a27}{trigger\_and\_wait}}(self):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00104}00104         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} hasattr(self, \textcolor{stringliteral}{"{}trigger"{}}):}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00105}00105             \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Device has no trigger method."{}})}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00106}00106         self.trigger()}
+\DoxyCodeLine{\Hypertarget{clients_8py_source_l00107}00107         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1clients_1_1_data_client_a890617adb1bd2bb34633c6a464d7fb58}{\_buffer}}.get(block=\textcolor{keyword}{True})}
+
+\end{DoxyCode}

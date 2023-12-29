@@ -1,0 +1,290 @@
+\hypertarget{controllers_2toptica_8py_source}{}\doxysection{toptica.\+py}
+\label{controllers_2toptica_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/controllers/toptica.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/controllers/toptica.py}}
+\mbox{\hyperlink{controllers_2toptica_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1controllers_1_1toptica}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00020}00020 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00021}00021 \textcolor{keyword}{import} typing}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00023}00023 \textcolor{keyword}{import} serial}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00025}00025 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00026}00026 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1__utils}{microscope.\_utils}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00027}00027 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00030}00030 \_LOGGER = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00032}00032 \_QUOTATION\_CODE = ord(b\textcolor{stringliteral}{'"{}'})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00035}00035 \textcolor{keyword}{def }\_parse\_string(answer: bytes) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00036}00036     \textcolor{keyword}{assert} answer[0] == \_QUOTATION\_CODE \textcolor{keywordflow}{and} answer[-\/1] == \_QUOTATION\_CODE}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00037}00037     \textcolor{keywordflow}{return} answer[1:-\/1].decode()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00040}00040 \textcolor{keyword}{def }\_parse\_bool(answer: bytes) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00041}00041     \textcolor{keyword}{assert} answer \textcolor{keywordflow}{in} [b\textcolor{stringliteral}{"{}\#f"{}}, b\textcolor{stringliteral}{"{}\#t"{}}]}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00042}00042     \textcolor{keywordflow}{return} answer == b\textcolor{stringliteral}{"{}\#t"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00045}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection}{00045}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection}{\_iChromeConnection}}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00046}00046     \textcolor{stringliteral}{"{}"{}"{}Connection to the iChrome MLE.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00047}00047 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00048}00048 \textcolor{stringliteral}{    This }\textcolor{keywordflow}{is} a simple wrapper to the iChrome MLE interface.  It only}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00049}00049     supports the parameter commands which reply \textcolor{keyword}{with} a single line}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00050}00050     which \textcolor{keywordflow}{is} all we need to support this on Python-\/Microscope.}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00052}00052     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00053}00053 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00054}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a8b1051699ad122038729ef1e7c8916a7}{00054}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a8b1051699ad122038729ef1e7c8916a7}{\_\_init\_\_}}(self, shared\_serial: microscope.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{\_utils.SharedSerial}}) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00055}00055         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a269c04cc7deada7bf1f5f9aa3abc1a92}{\_serial}} = shared\_serial}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00057}00057         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a269c04cc7deada7bf1f5f9aa3abc1a92}{\_serial}}.readlines()  \textcolor{comment}{\# discard anything that may be on the line}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00059}00059         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}{get\_system\_type}}() != \textcolor{stringliteral}{"{}iChrome-\/MLE"{}}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00060}00060             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}not an iChrome MLE device"{}})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00061}00061 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00062}00062     \textcolor{keyword}{def }\_param\_command(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00063}00063         \textcolor{stringliteral}{"{}"{}"{}Run command and return raw answer (minus prompt and echo)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00064}00064         command = command + b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00065}00065         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a269c04cc7deada7bf1f5f9aa3abc1a92}{\_serial}}.lock:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00066}00066             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a269c04cc7deada7bf1f5f9aa3abc1a92}{\_serial}}.write(command)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00067}00067             answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a269c04cc7deada7bf1f5f9aa3abc1a92}{\_serial}}.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n> "{}})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00069}00069         \textcolor{comment}{\# When we read, we are reading the whole command console}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00070}00070         \textcolor{comment}{\# including the prompt and even the command is echoed back.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00071}00071         \textcolor{keyword}{assert} answer[: len(command)] == command \textcolor{keywordflow}{and} answer[-\/4:] == b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n> "{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00072}00072 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00073}00073         \textcolor{comment}{\# Errors are indicated by the string "{}Error: "{} at the}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00074}00074         \textcolor{comment}{\# beginning of a new line.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00075}00075         \textcolor{keywordflow}{if} answer[len(command) : len(command) + 7] == b\textcolor{stringliteral}{"{}Error: "{}}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00076}00076             base\_command = command[:-\/2]}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00077}00077             error\_msg = answer[len(command) + 8 : -\/4]}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00078}00078             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00079}00079                 \textcolor{stringliteral}{"{}error on command '\%s': \%s"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00080}00080                 \% (base\_command.decode(), error\_msg.decode())}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00081}00081             )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00083}00083         \textcolor{comment}{\# Return the answer minus the "{}echoed"{} command and the prompt}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00084}00084         \textcolor{comment}{\# for the next command.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00085}00085         \textcolor{keywordflow}{return} answer[len(command) : -\/4]}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00087}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}{00087}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}{param\_ref}}(self, name: bytes) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00088}00088         \textcolor{stringliteral}{"{}"{}"{}Get parameter value (`param-\/ref` operator)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00089}00089         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ad088ec657b63e99e7729174d6de4a676}{\_param\_command}}(b\textcolor{stringliteral}{"{}(param-\/ref '\%s)"{}} \% name)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00091}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ac8103905c2e9d011dd16d8af1c2c474c}{00091}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ac8103905c2e9d011dd16d8af1c2c474c}{param\_set}}(self, name: bytes, value: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00092}00092         \textcolor{stringliteral}{"{}"{}"{}Change parameter (`param-\/set!` operator)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00093}00093         answer = self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_ad088ec657b63e99e7729174d6de4a676}{\_param\_command}}(b\textcolor{stringliteral}{"{}(param-\/set! '\%s \%s)"{}} \% (name, value))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00094}00094         status = int(answer)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00095}00095         \textcolor{keywordflow}{if} status < 0:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00096}00096             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00097}00097                 \textcolor{stringliteral}{"{}Failed to set parameter \%s (return value \%d)"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00098}00098                 \% (name.decode(), status)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00099}00099             )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00101}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a7c5f6217f87891cfea525bbdf366c1a9}{00101}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a7c5f6217f87891cfea525bbdf366c1a9}{get\_serial\_number}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00102}00102         \textcolor{keywordflow}{return} \_parse\_string(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}{param\_ref}}(b\textcolor{stringliteral}{"{}serial-\/number"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00103}00103 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00104}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}{00104}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a6a5f25268a02f4860e71410143191442}{get\_system\_type}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00105}00105         \textcolor{keywordflow}{return} \_parse\_string(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection_a51e2e27ce693f1ca6e658766fc3de452}{param\_ref}}(b\textcolor{stringliteral}{"{}system-\/type"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00106}00106 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00108}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection}{00108}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection}{\_iChromeLaserConnection}}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00109}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_acc42e1fc2a6935ffb88321a2d2c3dc81}{00109}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_acc42e1fc2a6935ffb88321a2d2c3dc81}{\_\_init\_\_}}(self, conn: \_iChromeConnection, laser\_number: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00110}00110         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4ce68aff35b55b7132bad479c50f3591}{\_conn}} = conn}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00111}00111         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ab1f7bdf20fe5d2d84fa25f4ffa320873}{\_param\_prefix}} = b\textcolor{stringliteral}{"{}laser\%d:"{}} \% laser\_number}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00113}00113         \textcolor{comment}{\# We Need to confirm that indeed there is a laser at this}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00114}00114         \textcolor{comment}{\# position.  There is no command to check this, we just try to}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00115}00115         \textcolor{comment}{\# read a parameter and check if it works.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00116}00116         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00117}00117             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_abf90f77d64b891054e6bbb020c525df3}{get\_label}}()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00118}00118         \textcolor{keywordflow}{except} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}} \textcolor{keyword}{as} ex:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00119}00119             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00120}00120                 \textcolor{stringliteral}{"{}failed to get label, probably no laser \%d"{}} \% laser\_number}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00121}00121             ) \textcolor{keyword}{from} ex}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00123}00123     \textcolor{keyword}{def }\_param\_ref(self, name: bytes) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00124}00124         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4ce68aff35b55b7132bad479c50f3591}{\_conn}}.param\_ref(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ab1f7bdf20fe5d2d84fa25f4ffa320873}{\_param\_prefix}} + name)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00126}00126     \textcolor{keyword}{def }\_param\_set(self, name: bytes, value: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00127}00127         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4ce68aff35b55b7132bad479c50f3591}{\_conn}}.param\_set(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ab1f7bdf20fe5d2d84fa25f4ffa320873}{\_param\_prefix}} + name, value)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00129}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_abf90f77d64b891054e6bbb020c525df3}{00129}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_abf90f77d64b891054e6bbb020c525df3}{get\_label}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00130}00130         \textcolor{keywordflow}{return} \_parse\_string(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}label"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00132}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a09d7f713ab92e4e7a400555b8e419128}{00132}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a09d7f713ab92e4e7a400555b8e419128}{get\_type}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00133}00133         \textcolor{keywordflow}{return} \_parse\_string(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}type"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00135}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a348a9278b276a5df8580ebade9d3677d}{00135}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a348a9278b276a5df8580ebade9d3677d}{get\_delay}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00136}00136         \textcolor{keywordflow}{return} int(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}delay"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00138}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a3718f10fb42db7d5adad8cca0719f104}{00138}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a3718f10fb42db7d5adad8cca0719f104}{get\_enable}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00139}00139         \textcolor{keywordflow}{return} \_parse\_bool(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}enable"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00141}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a5682644e4a25b66803554f9bde67bdd5}{00141}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a5682644e4a25b66803554f9bde67bdd5}{set\_enable}}(self, state: bool) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00142}00142         value = b\textcolor{stringliteral}{"{}\#t"{}} \textcolor{keywordflow}{if} state \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}\#f"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00143}00143         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a77d728220c37b70f4b68a74566269d73}{\_param\_set}}(b\textcolor{stringliteral}{"{}enable"{}}, value)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00145}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_abb0129220144718cdeaa702caa8e6397}{00145}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_abb0129220144718cdeaa702caa8e6397}{get\_cw}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00146}00146         \textcolor{keywordflow}{return} \_parse\_bool(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}cw"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00147}00147 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00148}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a90611bcee6e59bed65e63794adcc89dd}{00148}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a90611bcee6e59bed65e63794adcc89dd}{set\_cw}}(self, state: bool) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00149}00149         value = b\textcolor{stringliteral}{"{}\#t"{}} \textcolor{keywordflow}{if} state \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}\#f"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00150}00150         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a77d728220c37b70f4b68a74566269d73}{\_param\_set}}(b\textcolor{stringliteral}{"{}cw"{}}, value)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00151}00151 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00152}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ae88abc3356dcdc22a9ac7ae7f2cbe6b2}{00152}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ae88abc3356dcdc22a9ac7ae7f2cbe6b2}{get\_use\_ttl}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00153}00153         \textcolor{keywordflow}{return} \_parse\_bool(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}use-\/ttl"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00155}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ab8436300d72d097d6be915f9829ed46b}{00155}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_ab8436300d72d097d6be915f9829ed46b}{set\_use\_ttl}}(self, state: bool) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00156}00156         value = b\textcolor{stringliteral}{"{}\#t"{}} \textcolor{keywordflow}{if} state \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}\#f"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00157}00157         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a77d728220c37b70f4b68a74566269d73}{\_param\_set}}(b\textcolor{stringliteral}{"{}use-\/ttl"{}}, value)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00159}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_af0158646930efc824c67b94de7917279}{00159}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_af0158646930efc824c67b94de7917279}{get\_level}}(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00160}00160         \textcolor{keywordflow}{return} float(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}level"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00162}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a0186169f3b12602afca20fd612a5e4e0}{00162}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a0186169f3b12602afca20fd612a5e4e0}{set\_level}}(self, level: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00163}00163         value = b\textcolor{stringliteral}{"{}\%.1f"{}} \% level}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00164}00164         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a77d728220c37b70f4b68a74566269d73}{\_param\_set}}(b\textcolor{stringliteral}{"{}level"{}}, value)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00165}00165 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00166}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a209811160126c393c853676ac509c8d7}{00166}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a209811160126c393c853676ac509c8d7}{get\_status\_txt}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00167}00167         \textcolor{keywordflow}{return} \_parse\_string(self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection_a4cdc3528ca22278c7f7766dadead2e96}{\_param\_ref}}(b\textcolor{stringliteral}{"{}status-\/txt"{}}))}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00169}00169 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00170}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser}{00170}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser}{\_iChromeLaser}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}}):}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00171}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_ade2890811abab4f5b2f88da8c6903d97}{00171}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_ade2890811abab4f5b2f88da8c6903d97}{\_\_init\_\_}}(self, conn: \_iChromeConnection, laser\_number: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00172}00172         super().\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_ade2890811abab4f5b2f88da8c6903d97}{\_\_init\_\_}}()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00173}00173         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}} = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection}{\_iChromeLaserConnection}}(conn, laser\_number)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00175}00175         \textcolor{comment}{\# FIXME: set values to '0' because we need to pass an int as}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00176}00176         \textcolor{comment}{\# values for settings of type str.  Probably a bug on}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00177}00177         \textcolor{comment}{\# Device.set\_setting.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00178}00178         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(\textcolor{stringliteral}{"{}label"{}}, \textcolor{stringliteral}{"{}str"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_label, \textcolor{keywordtype}{None}, values=0)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00179}00179         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(\textcolor{stringliteral}{"{}type"{}}, \textcolor{stringliteral}{"{}str"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_type, \textcolor{keywordtype}{None}, values=0)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00180}00180 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00181}00181         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00182}00182             \textcolor{stringliteral}{"{}delay"{}}, \textcolor{stringliteral}{"{}int"{}}, self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_delay, \textcolor{keywordtype}{None}, values=tuple()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00183}00183         )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00185}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a61a8e4752bfe1ea09bf97a465ab0ce80}{00185}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a61a8e4752bfe1ea09bf97a465ab0ce80}{get\_status}}(self) -\/> typing.List[str]:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00186}00186         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_status\_txt().split()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00187}00187 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00188}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a5771e2538a8f92999f5eed37e6e7b4cf}{00188}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a5771e2538a8f92999f5eed37e6e7b4cf}{get\_is\_on}}(self) -\/> bool:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00189}00189         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_enable():}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00190}00190             \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_cw():}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00191}00191                 \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00192}00192             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00193}00193                 \textcolor{comment}{\# There doesn't seem to be command to check whether}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00194}00194                 \textcolor{comment}{\# the TTL line is currently high, so just return True}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00195}00195                 \textcolor{comment}{\# if set that way.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00196}00196                 \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_use\_ttl()}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00197}00197         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00198}00198             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00199}00199 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00200}00200     \textcolor{keyword}{def }\_do\_get\_power(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00201}00201         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_level() / 100.0}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00202}00202 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00203}00203     \textcolor{keyword}{def }\_do\_set\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00204}00204         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_level(power * 100.0)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00205}00205 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00206}00206     \textcolor{keyword}{def }\_do\_enable(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00207}00207         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_enable(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00208}00208 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00209}00209     \textcolor{keyword}{def }\_do\_disable(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00210}00210         self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_enable(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00212}00212     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00213}00213         \textcolor{keywordflow}{pass}  \textcolor{comment}{\# Nothing to do}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00214}00214 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00215}00215     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00216}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a3fe9ea761f8845570bbbf14c85d1450c}{00216}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a3fe9ea761f8845570bbbf14c85d1450c}{trigger\_mode}}(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00217}00217         \textcolor{keywordflow}{return} microscope.TriggerMode.BULB}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00219}00219     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00220}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_addad1b52c74a12de097be9b3a8912b91}{00220}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_addad1b52c74a12de097be9b3a8912b91}{trigger\_type}}(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00221}00221         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.get\_use\_ttl():}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00222}00222             \textcolor{keywordflow}{return} microscope.TriggerType.HIGH}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00223}00223         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00224}00224             \textcolor{keywordflow}{return} microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00226}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aaed40d5fe8b49ddb994eb22bc9e5dceb}{00226}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aaed40d5fe8b49ddb994eb22bc9e5dceb}{set\_trigger}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00227}00227         self, ttype: microscope.TriggerType, tmode: \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.TriggerMode}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00228}00228     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00229}00229         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.BULB:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00230}00230             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00231}00231                 \textcolor{stringliteral}{"{}only TriggerMode.BULB mode is supported"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00232}00232             )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00233}00233 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00234}00234         \textcolor{comment}{\# From the manual it seems that cw and ttl parameters are}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00235}00235         \textcolor{comment}{\# mutually exclusive but also still need to be set separately.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00236}00236         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} microscope.TriggerType.HIGH:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00237}00237             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_cw(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00238}00238             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_use\_ttl(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00239}00239         \textcolor{keywordflow}{elif} ttype \textcolor{keywordflow}{is} microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00240}00240             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_use\_ttl(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00241}00241             self.\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aeb48a43faa7742d9f1b0f35f61386bcc}{\_conn}}.set\_cw(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00242}00242         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00243}00243             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00244}00244                 \textcolor{stringliteral}{"{}only trigger type HIGH and SOFTWARE are supported"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00245}00245             )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00246}00246 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00247}00247     \textcolor{keyword}{def }\_do\_trigger(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00248}00248         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00249}00249             \textcolor{stringliteral}{"{}trigger does not make sense in trigger mode bulb, only enable"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00250}00250         )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00251}00251 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00252}00252 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00253}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e}{00253}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e}{iChromeMLE}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller}{microscope.abc.Controller}}):}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00254}00254     \textcolor{stringliteral}{"{}"{}"{}Toptica iChrome MLE (multi-\/laser engine).}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00255}00255 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00256}00256 \textcolor{stringliteral}{    The names of the light devices are `laser1`, `laser2`, `laser3`,}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00257}00257 \textcolor{stringliteral}{    ...}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00258}00258 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00259}00259 \textcolor{stringliteral}{    "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00260}00260 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00261}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a658a47c6acefba5724f9175afcb5195a}{00261}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a658a47c6acefba5724f9175afcb5195a}{\_\_init\_\_}}(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00262}00262         super().\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a658a47c6acefba5724f9175afcb5195a}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00263}00263         self.\_lasers: typing.Dict[str, \_iChromeLaser] = \{\}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00264}00264 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00265}00265         \textcolor{comment}{\# Setting specified on the manual (M-\/051 version 03)}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00266}00266         serial\_conn = serial.Serial(}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00267}00267             port=port,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00268}00268             baudrate=115200,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00269}00269             timeout=1,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00270}00270             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00271}00271             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00272}00272             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00273}00273             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00274}00274             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00275}00275             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00276}00276         )}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00277}00277         shared\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00278}00278         ichrome\_connection = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection}{\_iChromeConnection}}(shared\_serial)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00280}00280         \_LOGGER.info(\textcolor{stringliteral}{"{}Connected to \%s"{}}, ichrome\_connection.get\_serial\_number())}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00281}00281 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00282}00282         \textcolor{comment}{\# According to the manual the iChrome can have between 3 and 5}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00283}00283         \textcolor{comment}{\# lasers.  There doesn't seem to be a simple command to check}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00284}00284         \textcolor{comment}{\# what's installed, we'd have to parse the whole summary}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00285}00285         \textcolor{comment}{\# table.  So we try/except to each laser line.}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00286}00286         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(1, 6):}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00287}00287             name = \textcolor{stringliteral}{"{}laser\%d"{}} \% i}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00288}00288             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00289}00289                 laser = \mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser}{\_iChromeLaser}}(ichrome\_connection, i)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00290}00290             \textcolor{keywordflow}{except} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00291}00291                 \_LOGGER.info(\textcolor{stringliteral}{"{}no \%s available"{}}, name)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00292}00292                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00293}00293             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00294}00294                 \_LOGGER.info(\textcolor{stringliteral}{"{}found \%s on iChrome MLE"{}}, name)}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00295}00295                 self.\_lasers[name] = laser}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00296}00296 }
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00297}00297     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00298}\mbox{\hyperlink{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a270a351ac7b888f49836a8580a757492}{00298}}     \textcolor{keyword}{def }devices(self) -\/> typing.Dict[str, \_iChromeLaser]:}
+\DoxyCodeLine{\Hypertarget{controllers_2toptica_8py_source_l00299}00299         \textcolor{keywordflow}{return} self.\_lasers}
+
+\end{DoxyCode}

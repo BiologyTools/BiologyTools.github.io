@@ -1,0 +1,131 @@
+\hypertarget{__utils_8py_source}{}\doxysection{\+\_\+utils.\+py}
+\label{__utils_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/\_utils.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/\_utils.py}}
+\mbox{\hyperlink{__utils_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1__utils}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00020}00020 \textcolor{keyword}{import} threading}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00021}00021 \textcolor{keyword}{import} typing}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00023}00023 \textcolor{keyword}{import} serial}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00025}00025 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00026}00026 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00029}00029 \textcolor{comment}{\# Both pySerial and serial distribution packages install an import}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00030}00030 \textcolor{comment}{\# package named serial.  If both are installed we may have imported}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00031}00031 \textcolor{comment}{\# the wrong one.  Check it to provide a better error message.  See}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00032}00032 \textcolor{comment}{\# issue \#232.}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00033}00033 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} hasattr(serial, \textcolor{stringliteral}{"{}Serial"{}}):}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00034}00034     \textcolor{keywordflow}{if} hasattr(serial, \textcolor{stringliteral}{"{}marshall"{}}):}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00035}00035         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_microscope_error}{microscope.MicroscopeError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00036}00036             \textcolor{stringliteral}{"{}incorrect imported package serial.  It appears that the serial"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00037}00037             \textcolor{stringliteral}{"{} package from the distribution serial, instead of pyserial, was"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00038}00038             \textcolor{stringliteral}{"{} imported.  Consider uninstalling serial and installing pySerial."{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00039}00039         )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00040}00040     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00041}00041         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_microscope_error}{microscope.MicroscopeError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00042}00042             \textcolor{stringliteral}{"{}imported package serial does not have Serial class"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00043}00043         )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00046}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin}{00046}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin}{OnlyTriggersOnceOnSoftwareMixin}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin}{microscope.abc.TriggerTargetMixin}}):}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00047}00047     \textcolor{stringliteral}{"{}"{}"{}Utility mixin for devices that only trigger "{}once"{} with software.}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00048}00048 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00049}00049 \textcolor{stringliteral}{    This mixin avoids code duplication }\textcolor{keywordflow}{for} the many devices whose only}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00050}00050     supported trigger type \textcolor{keywordflow}{and} trigger mode are `TriggerType.SOFTWARE`}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00051}00051     \textcolor{keywordflow}{and} `TriggerMode.ONCE`.}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00053}00053     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00054}00054 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00055}00055 \textcolor{stringliteral}{    }\textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00056}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_aaf2cf32b19ad76ab483e073428409567}{00056}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_aaf2cf32b19ad76ab483e073428409567}{trigger\_type}}(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00057}00057         \textcolor{keywordflow}{return} microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00059}00059     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00060}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_a22e5c04ca35b26f8dbabc3eb0e9fa0ea}{00060}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_a22e5c04ca35b26f8dbabc3eb0e9fa0ea}{trigger\_mode}}(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00061}00061         \textcolor{keywordflow}{return} microscope.TriggerMode.ONCE}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00063}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_a726ecc1e9855345d59f0edca8e77820b}{00063}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin_a726ecc1e9855345d59f0edca8e77820b}{set\_trigger}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00064}00064         self, ttype: microscope.TriggerType, tmode: \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.TriggerMode}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00065}00065     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00066}00066         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00067}00067             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00068}00068                 \textcolor{stringliteral}{"{}the only trigger type supported is software"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00069}00069             )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00070}00070         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.ONCE:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00071}00071             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00072}00072                 \textcolor{stringliteral}{"{}the only trigger mode supported is 'once'"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00073}00073             )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00075}00075 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00076}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin}{00076}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin}{OnlyTriggersBulbOnSoftwareMixin}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mixin}{microscope.abc.TriggerTargetMixin}}):}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00077}00077     \textcolor{stringliteral}{"{}"{}"{}Utility mixin for devices that only trigger "{}bulb"{} with software.}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00078}00078 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00079}00079 \textcolor{stringliteral}{    This mixin avoids code duplication }\textcolor{keywordflow}{for} the many devices whose only}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00080}00080     supported trigger type \textcolor{keywordflow}{and} trigger mode are `TriggerType.SOFTWARE`}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00081}00081     \textcolor{keywordflow}{and} `TriggerMode.BULB`.}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00083}00083     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00084}00084 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00085}00085 \textcolor{stringliteral}{    }\textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00086}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_a26c0ddd5bed88e5d04f95422a73f6325}{00086}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_a26c0ddd5bed88e5d04f95422a73f6325}{trigger\_type}}(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00087}00087         \textcolor{keywordflow}{return} microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00089}00089     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00090}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_ae7e749cf68669b6a4df28a4c8c5c2b51}{00090}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_ae7e749cf68669b6a4df28a4c8c5c2b51}{trigger\_mode}}(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00091}00091         \textcolor{keywordflow}{return} microscope.TriggerMode.BULB}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00093}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_aa5a12f386cf2451ecaf77c9270952191}{00093}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_aa5a12f386cf2451ecaf77c9270952191}{set\_trigger}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00094}00094         self, ttype: microscope.TriggerType, tmode: \mbox{\hyperlink{classmicroscope_1_1_trigger_mode}{microscope.TriggerMode}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00095}00095     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00096}00096         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00097}00097             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00098}00098                 \textcolor{stringliteral}{"{}the only trigger type supported is software"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00099}00099             )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00100}00100         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.BULB:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00101}00101             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00102}00102                 \textcolor{stringliteral}{"{}the only trigger mode supported is 'bulb'"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00103}00103             )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00105}00105     \textcolor{keyword}{def }\_do\_trigger(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00106}00106         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00107}00107             \textcolor{stringliteral}{"{}trigger does not make sense in trigger mode bulb, only enable"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00108}00108         )}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00111}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{00111}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{SharedSerial}}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00112}00112     \textcolor{stringliteral}{"{}"{}"{}Wraps a `Serial` instance with a lock for synchronization."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00113}00113 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00114}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aaadd42fc1bbfcce4b2d12b529e6cd206}{00114}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aaadd42fc1bbfcce4b2d12b529e6cd206}{\_\_init\_\_}}(self, serial: serial.Serial) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00115}00115         self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a13211c14a89bc7ea7b602c979621f54f}{\_serial}} = serial}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00116}00116         self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}} = threading.RLock()}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00118}00118     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00119}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a0327c538a5acee66ec083c01b3752017}{00119}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a0327c538a5acee66ec083c01b3752017}{lock}}(self) -\/> threading.RLock:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00120}00120         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00122}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aff22c8fcd9422bc825633f2e85a4a7d8}{00122}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aff22c8fcd9422bc825633f2e85a4a7d8}{readline}}(self) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00123}00123         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00124}00124             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a13211c14a89bc7ea7b602c979621f54f}{\_serial}}.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aff22c8fcd9422bc825633f2e85a4a7d8}{readline}}()}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00126}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_acf705bb9c18b9ca3b5b0ee092affffaf}{00126}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_acf705bb9c18b9ca3b5b0ee092affffaf}{readlines}}(self, hint: int = -\/1) -\/> typing.List[bytes]:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00127}00127         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00128}00128             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a13211c14a89bc7ea7b602c979621f54f}{\_serial}}.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_acf705bb9c18b9ca3b5b0ee092affffaf}{readlines}}(hint)}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00130}00130     \textcolor{comment}{\# Beware: pySerial 3.5 changed the named of its first argument}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00131}00131     \textcolor{comment}{\# from terminator to expected.  See issue \#233.}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00132}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aca66151c41634c3ed1144baa27b94270}{00132}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aca66151c41634c3ed1144baa27b94270}{read\_until}}(}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00133}00133         self, terminator: bytes = b\textcolor{stringliteral}{"{}\(\backslash\)n"{}}, size: typing.Optional[int] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00134}00134     ) -\/> bytes:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00135}00135         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00136}00136             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a13211c14a89bc7ea7b602c979621f54f}{\_serial}}.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_aca66151c41634c3ed1144baa27b94270}{read\_until}}(terminator, size=size)}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00138}\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a720faa60599de312bf74c84f790318c3}{00138}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a720faa60599de312bf74c84f790318c3}{write}}(self, data: bytes) -\/> int:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00139}00139         \textcolor{keyword}{with} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a45ee21c674144807d029801ebb388391}{\_lock}}:}
+\DoxyCodeLine{\Hypertarget{__utils_8py_source_l00140}00140             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a13211c14a89bc7ea7b602c979621f54f}{\_serial}}.\mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial_a720faa60599de312bf74c84f790318c3}{write}}(data)}
+
+\end{DoxyCode}

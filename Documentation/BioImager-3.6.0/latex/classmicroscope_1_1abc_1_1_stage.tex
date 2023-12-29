@@ -1,0 +1,417 @@
+\hypertarget{classmicroscope_1_1abc_1_1_stage}{}\doxysection{microscope.\+abc.\+Stage Class Reference}
+\label{classmicroscope_1_1abc_1_1_stage}\index{microscope.abc.Stage@{microscope.abc.Stage}}
+Inheritance diagram for microscope.\+abc.\+Stage\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.129278cm]{classmicroscope_1_1abc_1_1_stage}
+\end{center}
+\end{figure}
+\doxysubsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+typing.\+Mapping\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis}{Stage\+Axis}}\mbox{]} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92dd2da8d928c166bc55b800}{axes}} (self)
+\item 
+bool \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a825ead0c6bb83d863e192314833dd8b4}{may\+\_\+move\+\_\+on\+\_\+enable}} (self)
+\item 
+typing.\+Mapping\mbox{[}str, float\mbox{]} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_abe4a9729a9a5c1541b0159a07b992711}{position}} (self)
+\item 
+typing.\+Mapping\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.\+Axis\+Limits}}\mbox{]} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a0dd6bdc7ce3afa46d24bab22c9fe6953}{limits}} (self)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a19a92bfdb551a1002c964cefb485ea42}{move\+\_\+by}} (self, typing.\+Mapping\mbox{[}str, float\mbox{]} delta)
+\item 
+None \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a98bb8b3835293b7f59a677bcf60f91ca}{move\+\_\+to}} (self, typing.\+Mapping\mbox{[}str, float\mbox{]} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_abe4a9729a9a5c1541b0159a07b992711}{position}})
+\end{DoxyCompactItemize}
+\doxysubsection*{Additional Inherited Members}
+
+
+\doxysubsection{Detailed Description}
+\begin{DoxyVerb}A stage device, composed of :class:`StageAxis` instances.
+
+A stage device can have any number of axes and dimensions.  For a
+single `StageDevice` instance each axis has a name that uniquely
+identifies it.  The names of the individual axes are hardware
+dependent and will be part of the concrete class documentation.
+They are typically strings such as `"x"` or `"y"`.
+
+.. code-block:: python
+
+    stage = SomeStageDevice()
+    stage.enable()  # may trigger a stage move
+
+    # move operations
+    stage.move_to({'x': 42.0, 'y': -5.1})
+    stage.move_by({'x': -5.3, 'y': 14.6})
+
+    # Individual StageAxis can be controlled directly.
+    x_axis = stage.axes['x']
+    y_axis = stage.axes['y']
+    x_axis.move_to(42.0)
+    y_axis.move_by(-5.3)
+
+Not all stage devices support simultaneous move of multiple axes.
+Because of this, there is no guarantee that move operations with
+multiple axes are done simultaneously.  Refer to the concrete
+class documentation for hardware specific details.
+
+If a move operation involves multiple axes and there is no support
+for simultaneous move, the order of the moves is undefined.  If a
+specific order is required, one can either call the move functions
+multiple times in the expected order, or do so via the individual
+axes, like so:
+
+.. code-block:: python
+
+    # Move the x axis first, then mvoe the y axis:
+    stage.move_by({'x': 10})
+    stage.move_by({'y': 4})
+
+    # The same thing but via the individual axes:
+    stage.axes['x'].move_by(10)
+    stage.axes['y'].move_by(4)
+
+Move operations will not attempt to move a stage beyond its
+limits.  If a call to the move functions would require the stage
+to move beyond its limits the move operation is clipped to the
+axes limits.  No exception is raised.
+
+.. code-block:: python
+
+    # Moves x axis to the its upper limit:
+    x_axis.move_to(x_axis.limits.upper)
+
+    # The same as above since the move operations are clipped to
+    # the axes limits automatically.
+    import math
+    x_axis.move_to(math.inf)
+    x_axis.move_by(math.inf)
+
+Some stages need to find a reference position, home, before being
+able to be moved.  If required, this happens automatically during
+:func:`enable` (see also :func:`may_move_on_enable`).
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01387}{1387}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+
+\doxysubsection{Member Function Documentation}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92dd2da8d928c166bc55b800}\label{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92dd2da8d928c166bc55b800}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!axes@{axes}}
+\index{axes@{axes}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{axes()}{axes()}}
+{\footnotesize\ttfamily  typing.\+Mapping\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis}{Stage\+Axis}}\mbox{]} microscope.\+abc.\+Stage.\+axes (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Map of axis names to the corresponding :class:`StageAxis`.
+
+.. code-block:: python
+
+    for name, axis in stage.axes.items():
+        print(f'moving axis named {name}')
+        axis.move_by(1)
+
+If an axis is not available then it is not included, i.e.,
+given a stage with optional axes the missing axes will *not*
+appear on the returned dict with a value of `None` or some
+other special `StageAxis` instance.
+\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_a12c908262361d8b6f9d8cb8e6983b9fe}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage}}, \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa09063d616ef150b85f237467ed3fd91}{microscope.\+simulators.\+Simulated\+Stage}}, and \mbox{\hyperlink{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a6f4a0400521692c019cf3095968aae98}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage}}.
+
+
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01455}{1455}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01455     \textcolor{keyword}{def }axes(self) -\/> typing.Mapping[str, StageAxis]:}
+\DoxyCodeLine{01456         \textcolor{stringliteral}{"{}"{}"{}Map of axis names to the corresponding :class:`StageAxis`.}}
+\DoxyCodeLine{01457 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01458 \textcolor{stringliteral}{        .. code-\/block:: python}}
+\DoxyCodeLine{01459 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01460 \textcolor{stringliteral}{            }\textcolor{keywordflow}{for} name, axis \textcolor{keywordflow}{in} stage.axes.items():}
+\DoxyCodeLine{01461                 print(f\textcolor{stringliteral}{'moving axis named \{name\}'})}
+\DoxyCodeLine{01462                 axis.move\_by(1)}
+\DoxyCodeLine{01463 }
+\DoxyCodeLine{01464         If an axis \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} available then it \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} included, i.e.,}
+\DoxyCodeLine{01465         given a stage \textcolor{keyword}{with} optional axes the missing axes will *\textcolor{keywordflow}{not}*}
+\DoxyCodeLine{01466         appear on the returned dict \textcolor{keyword}{with} a value of `\textcolor{keywordtype}{None}` \textcolor{keywordflow}{or} some}
+\DoxyCodeLine{01467         other special `StageAxis` instance.}
+\DoxyCodeLine{01468         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01469 \textcolor{stringliteral}{        }\textcolor{keywordflow}{raise} NotImplementedError()}
+\DoxyCodeLine{01470 }
+\DoxyCodeLine{01471 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_a0dd6bdc7ce3afa46d24bab22c9fe6953}\label{classmicroscope_1_1abc_1_1_stage_a0dd6bdc7ce3afa46d24bab22c9fe6953}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!limits@{limits}}
+\index{limits@{limits}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{limits()}{limits()}}
+{\footnotesize\ttfamily  typing.\+Mapping\mbox{[}str, \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.\+Axis\+Limits}}\mbox{]} microscope.\+abc.\+Stage.\+limits (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Map of axis name to its upper and lower limits.
+
+.. code-block:: python
+
+    for name, limits in stage.limits.items():
+        print(f'{name} axis lower limit is {limits.lower}')
+        print(f'{name} axis upper limit is {limits.upper}')
+
+These are the limits currently imposed by the device or
+underlying software and may change over the time of the
+`StageDevice` object.
+
+The units of the limits is the same as the ones being
+currently used for the move operations.\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01515}{1515}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01515     \textcolor{keyword}{def }limits(self) -\/> typing.Mapping[str, microscope.AxisLimits]:}
+\DoxyCodeLine{01516         \textcolor{stringliteral}{"{}"{}"{}Map of axis name to its upper and lower limits.}}
+\DoxyCodeLine{01517 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01518 \textcolor{stringliteral}{        .. code-\/block:: python}}
+\DoxyCodeLine{01519 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01520 \textcolor{stringliteral}{            }\textcolor{keywordflow}{for} name, limits \textcolor{keywordflow}{in} stage.limits.items():}
+\DoxyCodeLine{01521                 print(f\textcolor{stringliteral}{'\{name\} axis lower limit is \{limits.lower\}'})}
+\DoxyCodeLine{01522                 print(f\textcolor{stringliteral}{'\{name\} axis upper limit is \{limits.upper\}'})}
+\DoxyCodeLine{01523 }
+\DoxyCodeLine{01524         These are the limits currently imposed by the device \textcolor{keywordflow}{or}}
+\DoxyCodeLine{01525         underlying software \textcolor{keywordflow}{and} may change over the time of the}
+\DoxyCodeLine{01526         `StageDevice` object.}
+\DoxyCodeLine{01527 }
+\DoxyCodeLine{01528         The units of the limits \textcolor{keywordflow}{is} the same \textcolor{keyword}{as} the ones being}
+\DoxyCodeLine{01529         currently used \textcolor{keywordflow}{for} the move operations.}
+\DoxyCodeLine{01530 }
+\DoxyCodeLine{01531         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01532 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} \{name: axis.limits \textcolor{keywordflow}{for} name, axis \textcolor{keywordflow}{in} self.axes.items()\}}
+\DoxyCodeLine{01533 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_a825ead0c6bb83d863e192314833dd8b4}\label{classmicroscope_1_1abc_1_1_stage_a825ead0c6bb83d863e192314833dd8b4}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!may\_move\_on\_enable@{may\_move\_on\_enable}}
+\index{may\_move\_on\_enable@{may\_move\_on\_enable}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{may\_move\_on\_enable()}{may\_move\_on\_enable()}}
+{\footnotesize\ttfamily  bool microscope.\+abc.\+Stage.\+may\+\_\+move\+\_\+on\+\_\+enable (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Whether calling :func:`enable` is likely to make the stage move.
+
+Most stages need to be driven to their limits at startup to
+find a repeatable zero position and sometimes to find their
+limits as well.  This is typically called "homing".
+
+Stages that need to "home" differ on how often they need it
+but they only do it during :func:`enable`.  They may need to
+move each time `enable` is called, the first time after the
+`Stage` object has been created, or even only the first time
+since the device was powered up.
+
+Note the "*may*" on "may_move_on_enable".  This is because it
+can be difficult to know for certain if `enable` will cause
+the stage to home.  Still, knowing that the stage *may* move
+is essential for safety.  An unexpected movement of the stage,
+particularly large movements such as moving to the stage
+limits, can destroy a sample on the stage --- or even worse,
+it can damage an objective or the stage itself.  When in
+doubt, implementations should return `True`.\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_a68e535f0d7e2f94324d3d522969f88cf}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage}}, \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_aa2887476f57aa058e0c08fca054a2844}{microscope.\+simulators.\+Simulated\+Stage}}, and \mbox{\hyperlink{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_af736f9458ad0ea58992b8779f5936e59}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage}}.
+
+
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01473}{1473}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01473     \textcolor{keyword}{def }may\_move\_on\_enable(self) -\/> bool:}
+\DoxyCodeLine{01474         \textcolor{stringliteral}{"{}"{}"{}Whether calling :func:`enable` is likely to make the stage move.}}
+\DoxyCodeLine{01475 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01476 \textcolor{stringliteral}{        Most stages need to be driven to their limits at startup to}}
+\DoxyCodeLine{01477 \textcolor{stringliteral}{        find a repeatable zero position }\textcolor{keywordflow}{and} sometimes to find their}
+\DoxyCodeLine{01478         limits \textcolor{keyword}{as} well.  This \textcolor{keywordflow}{is} typically called \textcolor{stringliteral}{"{}homing"{}}.}
+\DoxyCodeLine{01479 }
+\DoxyCodeLine{01480         Stages that need to \textcolor{stringliteral}{"{}home"{}} differ on how often they need it}
+\DoxyCodeLine{01481         but they only do it during :func:`enable`.  They may need to}
+\DoxyCodeLine{01482         move each time `enable` \textcolor{keywordflow}{is} called, the first time after the}
+\DoxyCodeLine{01483         `Stage` object has been created, \textcolor{keywordflow}{or} even only the first time}
+\DoxyCodeLine{01484         since the device was powered up.}
+\DoxyCodeLine{01485 }
+\DoxyCodeLine{01486         Note the \textcolor{stringliteral}{"{}*may*"{}} on \textcolor{stringliteral}{"{}may\_move\_on\_enable"{}}.  This \textcolor{keywordflow}{is} because it}
+\DoxyCodeLine{01487         can be difficult to know \textcolor{keywordflow}{for} certain \textcolor{keywordflow}{if} `enable` will cause}
+\DoxyCodeLine{01488         the stage to home.  Still, knowing that the stage *may* move}
+\DoxyCodeLine{01489         \textcolor{keywordflow}{is} essential \textcolor{keywordflow}{for} safety.  An unexpected movement of the stage,}
+\DoxyCodeLine{01490         particularly large movements such \textcolor{keyword}{as} moving to the stage}
+\DoxyCodeLine{01491         limits, can destroy a sample on the stage -\/-\/-\/ \textcolor{keywordflow}{or} even worse,}
+\DoxyCodeLine{01492         it can damage an objective \textcolor{keywordflow}{or} the stage itself.  When \textcolor{keywordflow}{in}}
+\DoxyCodeLine{01493         doubt, implementations should \textcolor{keywordflow}{return} `\textcolor{keyword}{True}`.}
+\DoxyCodeLine{01494 }
+\DoxyCodeLine{01495         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01496 \textcolor{stringliteral}{        }\textcolor{keywordflow}{raise} NotImplementedError()}
+\DoxyCodeLine{01497 }
+\DoxyCodeLine{01498 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_a19a92bfdb551a1002c964cefb485ea42}\label{classmicroscope_1_1abc_1_1_stage_a19a92bfdb551a1002c964cefb485ea42}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!move\_by@{move\_by}}
+\index{move\_by@{move\_by}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{move\_by()}{move\_by()}}
+{\footnotesize\ttfamily  None microscope.\+abc.\+Stage.\+move\+\_\+by (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{typing.\+Mapping\mbox{[}str, float\mbox{]}}]{delta }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Move axes by the corresponding amounts.
+
+Args:
+    delta: map of axis name to the amount to be moved.
+
+.. code-block:: python
+
+    # Move 'x' axis by 10.2 units and the y axis by -5 units:
+    stage.move_by({'x': 10.2, 'y': -5})
+
+    # The above is equivalent, but possibly faster than:
+    stage.axes['x'].move_by(10.2)
+    stage.axes['y'].move_by(-5)
+
+The axes will not move beyond :func:`limits`.  If `delta`
+would move an axis beyond it limit, no exception is raised.
+Instead, the stage will move until the axis limit.\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_a79654dc9eb40386555d71c47b25c1aec}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage}}, \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a71580c0f72073e69d8265b0f823d31e0}{microscope.\+simulators.\+Simulated\+Stage}}, and \mbox{\hyperlink{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_abcbd10b185fb7a41db21988b4f8ca94d}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage}}.
+
+
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01535}{1535}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01535     \textcolor{keyword}{def }move\_by(self, delta: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{01536         \textcolor{stringliteral}{"{}"{}"{}Move axes by the corresponding amounts.}}
+\DoxyCodeLine{01537 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01538 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{01539 \textcolor{stringliteral}{            delta: map of axis name to the amount to be moved.}}
+\DoxyCodeLine{01540 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01541 \textcolor{stringliteral}{        .. code-\/block:: python}}
+\DoxyCodeLine{01542 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01543 \textcolor{stringliteral}{            }\textcolor{comment}{\# Move 'x' axis by 10.2 units and the y axis by -\/5 units:}}
+\DoxyCodeLine{01544             stage.move\_by(\{\textcolor{stringliteral}{'x'}: 10.2, \textcolor{stringliteral}{'y'}: -\/5\})}
+\DoxyCodeLine{01545 }
+\DoxyCodeLine{01546             \textcolor{comment}{\# The above is equivalent, but possibly faster than:}}
+\DoxyCodeLine{01547             stage.axes[\textcolor{stringliteral}{'x'}].move\_by(10.2)}
+\DoxyCodeLine{01548             stage.axes[\textcolor{stringliteral}{'y'}].move\_by(-\/5)}
+\DoxyCodeLine{01549 }
+\DoxyCodeLine{01550         The axes will \textcolor{keywordflow}{not} move beyond :func:`limits`.  If `delta`}
+\DoxyCodeLine{01551         would move an axis beyond it limit, no exception \textcolor{keywordflow}{is} raised.}
+\DoxyCodeLine{01552         Instead, the stage will move until the axis limit.}
+\DoxyCodeLine{01553 }
+\DoxyCodeLine{01554         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01555 \textcolor{stringliteral}{        }\textcolor{comment}{\# TODO: implement a software fallback that moves the}}
+\DoxyCodeLine{01556         \textcolor{comment}{\# individual axis, for stages that don't have provide}}
+\DoxyCodeLine{01557         \textcolor{comment}{\# simultaneous move of multiple axes.}}
+\DoxyCodeLine{01558         \textcolor{keywordflow}{raise} NotImplementedError()}
+\DoxyCodeLine{01559 }
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_a98bb8b3835293b7f59a677bcf60f91ca}\label{classmicroscope_1_1abc_1_1_stage_a98bb8b3835293b7f59a677bcf60f91ca}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!move\_to@{move\_to}}
+\index{move\_to@{move\_to}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{move\_to()}{move\_to()}}
+{\footnotesize\ttfamily  None microscope.\+abc.\+Stage.\+move\+\_\+to (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{typing.\+Mapping\mbox{[}str, float\mbox{]}}]{position }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Move axes to the corresponding positions.
+
+Args:
+    position: map of axis name to the positions to move to.
+
+.. code-block:: python
+
+    # Move 'x' axis to position 8 and the y axis to position -5.3
+    stage.move_to({'x': 8, 'y': -5.3})
+
+    # The above is equivalent to
+    stage.axes['x'].move_to(8)
+    stage.axes['y'].move_to(-5.3)
+
+The axes will not move beyond :func:`limits`.  If `positions`
+is beyond the limits, no exception is raised.  Instead, the
+stage will move until the axes limit.\end{DoxyVerb}
+ 
+
+Reimplemented in \mbox{\hyperlink{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_aec2ef145f73e401a4809ed45fda59d17}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage}}, \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage_a854836af5f917c28b88e6a630f8f741a}{microscope.\+simulators.\+Simulated\+Stage}}, and \mbox{\hyperlink{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a4b63a6c124822faad762eeb8886f229f}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage}}.
+
+
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01561}{1561}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01561     \textcolor{keyword}{def }move\_to(self, position: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{01562         \textcolor{stringliteral}{"{}"{}"{}Move axes to the corresponding positions.}}
+\DoxyCodeLine{01563 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01564 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{01565 \textcolor{stringliteral}{            position: map of axis name to the positions to move to.}}
+\DoxyCodeLine{01566 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01567 \textcolor{stringliteral}{        .. code-\/block:: python}}
+\DoxyCodeLine{01568 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01569 \textcolor{stringliteral}{            }\textcolor{comment}{\# Move 'x' axis to position 8 and the y axis to position -\/5.3}}
+\DoxyCodeLine{01570             stage.move\_to(\{\textcolor{stringliteral}{'x'}: 8, \textcolor{stringliteral}{'y'}: -\/5.3\})}
+\DoxyCodeLine{01571 }
+\DoxyCodeLine{01572             \textcolor{comment}{\# The above is equivalent to}}
+\DoxyCodeLine{01573             stage.axes[\textcolor{stringliteral}{'x'}].move\_to(8)}
+\DoxyCodeLine{01574             stage.axes[\textcolor{stringliteral}{'y'}].move\_to(-\/5.3)}
+\DoxyCodeLine{01575 }
+\DoxyCodeLine{01576         The axes will \textcolor{keywordflow}{not} move beyond :func:`limits`.  If `positions`}
+\DoxyCodeLine{01577         \textcolor{keywordflow}{is} beyond the limits, no exception \textcolor{keywordflow}{is} raised.  Instead, the}
+\DoxyCodeLine{01578         stage will move until the axes limit.}
+\DoxyCodeLine{01579 }
+\DoxyCodeLine{01580         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01581 \textcolor{stringliteral}{        }\textcolor{keywordflow}{raise} NotImplementedError()}
+
+\end{DoxyCode}
+\mbox{\Hypertarget{classmicroscope_1_1abc_1_1_stage_abe4a9729a9a5c1541b0159a07b992711}\label{classmicroscope_1_1abc_1_1_stage_abe4a9729a9a5c1541b0159a07b992711}} 
+\index{microscope.abc.Stage@{microscope.abc.Stage}!position@{position}}
+\index{position@{position}!microscope.abc.Stage@{microscope.abc.Stage}}
+\doxysubsubsection{\texorpdfstring{position()}{position()}}
+{\footnotesize\ttfamily  typing.\+Mapping\mbox{[}str, float\mbox{]} microscope.\+abc.\+Stage.\+position (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Map of axis name to their current position.
+
+.. code-block:: python
+
+    for name, position in stage.position.items():
+        print(f'{name} axis is at position {position}')
+
+The units of the position is the same as the ones being
+currently used for the absolute move (:func:`move_to`)
+operations.
+\end{DoxyVerb}
+ 
+
+Definition at line \mbox{\hyperlink{abc_8py_source_l01500}{1500}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01500     \textcolor{keyword}{def }position(self) -\/> typing.Mapping[str, float]:}
+\DoxyCodeLine{01501         \textcolor{stringliteral}{"{}"{}"{}Map of axis name to their current position.}}
+\DoxyCodeLine{01502 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01503 \textcolor{stringliteral}{        .. code-\/block:: python}}
+\DoxyCodeLine{01504 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01505 \textcolor{stringliteral}{            }\textcolor{keywordflow}{for} name, position \textcolor{keywordflow}{in} stage.position.items():}
+\DoxyCodeLine{01506                 print(f\textcolor{stringliteral}{'\{name\} axis is at position \{position\}'})}
+\DoxyCodeLine{01507 }
+\DoxyCodeLine{01508         The units of the position \textcolor{keywordflow}{is} the same \textcolor{keyword}{as} the ones being}
+\DoxyCodeLine{01509         currently used \textcolor{keywordflow}{for} the absolute move (:func:`move\_to`)}
+\DoxyCodeLine{01510         operations.}
+\DoxyCodeLine{01511         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01512 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} \{name: axis.position \textcolor{keywordflow}{for} name, axis \textcolor{keywordflow}{in} self.axes.items()\}}
+\DoxyCodeLine{01513 }
+
+\end{DoxyCode}
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+F\+:/repos/\+Bio\+Imager/\+Bio\+Imager/\+Python\+Microscope/microscope/\mbox{\hyperlink{abc_8py}{abc.\+py}}\end{DoxyCompactItemize}

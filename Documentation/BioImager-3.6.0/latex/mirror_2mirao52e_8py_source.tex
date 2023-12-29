@@ -1,0 +1,98 @@
+\hypertarget{mirror_2mirao52e_8py_source}{}\doxysection{mirao52e.\+py}
+\label{mirror_2mirao52e_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/mirror/mirao52e.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/mirror/mirao52e.py}}
+\mbox{\hyperlink{mirror_2mirao52e_8py}{Go to the documentation of this file.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00001}\mbox{\hyperlink{namespacemicroscope_1_1mirror_1_1mirao52e}{00001}} \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00021}00021 \textcolor{stringliteral}{"{}"{}"{}Imagine Optic Mirao 52-\/e deformable mirror.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00022}00022 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00023}00023 \textcolor{stringliteral}{The Mirao 52-\/e deformable mirror is not capable of receiving hardware}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00024}00024 \textcolor{stringliteral}{triggers.  It }\textcolor{keywordflow}{is} only capable of sending hardware triggers.  That}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00025}00025 sending of hardware triggers \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} implemented on this module because}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00026}00026 it\textcolor{stringliteral}{'s pointless.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00027}00027 \textcolor{stringliteral}{The Mirao 52-\/e deformable mirror has a limitation on valid patterns.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00028}00028 \textcolor{stringliteral}{From the vendor documentation (the command }\textcolor{keywordflow}{is} the pattern to be}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00029}00029 applied):}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00031}00031     [...] the sum of the absolute values defining the command must be}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00032}00032     lower than \textcolor{keywordflow}{or} equal to 24 \textcolor{keywordflow}{and} each value must be comprised between}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00033}00033     -\/1.0 \textcolor{keywordflow}{and} 1.0.}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00034}00034 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00035}00035 In microscope, a pattern must be specified \textcolor{keywordflow}{in} the [0 1] range.}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00036}00036 However, the limit of 24, after rescaling to [-\/1 1] range, still}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00037}00037 applies.}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00039}00039 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00040}00040 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00041}00041 \textcolor{stringliteral}{import ctypes}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00042}00042 \textcolor{stringliteral}{import typing}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00043}00043 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00044}00044 \textcolor{stringliteral}{import numpy}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00045}00045 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00046}00046 \textcolor{stringliteral}{import microscope}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00047}00047 \textcolor{stringliteral}{import microscope.\_utils}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00048}00048 \textcolor{stringliteral}{import microscope.abc}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00049}00049 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00050}00050 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00051}00051 \textcolor{stringliteral}{try:}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00052}00052 \textcolor{stringliteral}{    }\textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1__wrappers_1_1mirao52e}{microscope.\_wrappers.mirao52e}} \textcolor{keyword}{as} mro}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00053}00053 \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00054}00054     \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_library_load_error}{microscope.LibraryLoadError}}(e) \textcolor{keyword}{from} e}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00055}00055 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00056}00056 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00057}00057 \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e}{Mirao52e}}(}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00058}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e}{00058}}     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin}{microscope.\_utils.OnlyTriggersOnceOnSoftwareMixin}},}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00059}00059     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{microscope.abc.DeformableMirror}},}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00060}00060 ):}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00061}00061     \textcolor{stringliteral}{"{}"{}"{}Imagine Optic Mirao 52e deformable mirror.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00062}00062 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00063}00063 \textcolor{stringliteral}{    The Mirao 52e deformable mirrors only support software trigger.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00064}00064 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00065}00065 \textcolor{stringliteral}{    "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00066}00066 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00067}00067 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_af1ad66d2c7c1c0be7735fd50bce5b3a6}{\_\_init\_\_}}(self, **kwargs) -\/> None:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00068}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_af1ad66d2c7c1c0be7735fd50bce5b3a6}{00068}}         super().\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_af1ad66d2c7c1c0be7735fd50bce5b3a6}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00069}00069         \textcolor{comment}{\# Status is not the return code of the function calls.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00070}00070         \textcolor{comment}{\# Status is where we can find the error code in case a}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00071}00071         \textcolor{comment}{\# function call returns false.  This \_status variable will be}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00072}00072         \textcolor{comment}{\# an argument in all function calls.}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00073}00073         self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}} = ctypes.pointer(ctypes.c\_int(mro.OK))}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00074}00074         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} mro.open(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}}):}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00075}00075             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00076}00076                 \textcolor{stringliteral}{"{}failed to open mirao mirror (error code \%d)"{}}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00077}00077                 \% self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}}.contents.value}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00078}00078             )}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00080}00080     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00081}00081     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_a6b24b5522734d2b2d6ab821ef0866f25}{n\_actuators}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00082}\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_a6b24b5522734d2b2d6ab821ef0866f25}{00082}}         \textcolor{keywordflow}{return} mro.NB\_COMMAND\_VALUES}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00084}00084     \textcolor{preprocessor}{@staticmethod}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00085}00085     \textcolor{keyword}{def }\_normalize\_patterns(patterns: numpy.ndarray) -\/> numpy.ndarray:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00086}00086         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00087}00087 \textcolor{stringliteral}{        mirao52e SDK expects values }\textcolor{keywordflow}{in} the [-\/1 1] range, so we normalize}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00088}00088         them \textcolor{keyword}{from} the [0 1] range we expect \textcolor{keywordflow}{in} our interface.}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00089}00089         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00090}00090 \textcolor{stringliteral}{        patterns = (patterns * 2) -\/ 1}}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00091}00091 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} patterns}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00093}00093     \textcolor{keyword}{def }\_do\_apply\_pattern(self, pattern: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00094}00094         pattern = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_a36424bd7830a25384abbd6331ddab65a}{\_normalize\_patterns}}(pattern)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00095}00095         command = pattern.ctypes.data\_as(mro.Command)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00096}00096         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} mro.applyCommand(command, mro.FALSE, self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}}):}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00097}00097             self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_a7690f14129236cbafc002ae217b56ab0}{\_raise\_status}}(mro.applyCommand)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00098}00098 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00099}00099     \textcolor{keyword}{def }\_raise\_status(self, func: typing.Callable) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00100}00100         error\_code = self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}}.contents.value}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00101}00101         \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00102}00102             \textcolor{stringliteral}{"{}mro\_\%s() failed (error code \%d)"{}} \% (func.\_\_name\_\_, error\_code)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00103}00103         )}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00105}00105     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00106}00106         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} mro.close(self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_ad81bd2589b24992a0af4d6deb0c67035}{\_status}}):}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00107}00107             self.\mbox{\hyperlink{classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e_a7690f14129236cbafc002ae217b56ab0}{\_raise\_status}}(mro.close)}
+\DoxyCodeLine{\Hypertarget{mirror_2mirao52e_8py_source_l00108}00108 }
+
+\end{DoxyCode}

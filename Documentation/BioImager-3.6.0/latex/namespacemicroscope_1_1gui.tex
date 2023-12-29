@@ -1,0 +1,116 @@
+\hypertarget{namespacemicroscope_1_1gui}{}\doxysection{microscope.\+gui Namespace Reference}
+\label{namespacemicroscope_1_1gui}\index{microscope.gui@{microscope.gui}}
+\doxysubsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1___data_queue}{\+\_\+\+Data\+Queue}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager}{\+\_\+\+Imager}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget}{Camera\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget}{Controller\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget}{Deformable\+Mirror\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_device_settings_widget}{Device\+Settings\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget}{Filter\+Wheel\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget}{Light\+Source\+Widget}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_main_window}{Main\+Window}}
+\item 
+class \mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget}{Stage\+Widget}}
+\end{DoxyCompactItemize}
+\doxysubsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \mbox{\hyperlink{namespacemicroscope_1_1gui_a9650f552de61550bef92b3435418f755}{main}} (typing.\+Sequence\mbox{[}str\mbox{]} argv)
+\end{DoxyCompactItemize}
+\doxysubsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{namespacemicroscope_1_1gui_aca81d9cf0f21745fe25b0b4a9058a05d}{SERIALIZER}}
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Function Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1gui_a9650f552de61550bef92b3435418f755}\label{namespacemicroscope_1_1gui_a9650f552de61550bef92b3435418f755}} 
+\index{microscope.gui@{microscope.gui}!main@{main}}
+\index{main@{main}!microscope.gui@{microscope.gui}}
+\doxysubsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily  int microscope.\+gui.\+main (\begin{DoxyParamCaption}\item[{typing.\+Sequence\mbox{[}str\mbox{]}}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00487}{487}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00487 \textcolor{keyword}{def }main(argv: typing.Sequence[str]) -\/> int:}
+\DoxyCodeLine{00488     app = QtWidgets.QApplication(argv)}
+\DoxyCodeLine{00489     app.setApplicationName(\textcolor{stringliteral}{"{}Microscope GUI"{}})}
+\DoxyCodeLine{00490     app.setOrganizationDomain(\textcolor{stringliteral}{"{}python-\/microscope.org"{}})}
+\DoxyCodeLine{00491 }
+\DoxyCodeLine{00492     type\_to\_widget = \{}
+\DoxyCodeLine{00493         \textcolor{stringliteral}{"{}Camera"{}}: CameraWidget,}
+\DoxyCodeLine{00494         \textcolor{stringliteral}{"{}Controller"{}}: ControllerWidget,}
+\DoxyCodeLine{00495         \textcolor{stringliteral}{"{}DeformableMirror"{}}: DeformableMirrorWidget,}
+\DoxyCodeLine{00496         \textcolor{stringliteral}{"{}DeviceSettings"{}}: DeviceSettingsWidget,}
+\DoxyCodeLine{00497         \textcolor{stringliteral}{"{}FilterWheel"{}}: FilterWheelWidget,}
+\DoxyCodeLine{00498         \textcolor{stringliteral}{"{}LightSourceWidget"{}}: LightSourceWidget,}
+\DoxyCodeLine{00499         \textcolor{stringliteral}{"{}Stage"{}}: StageWidget,}
+\DoxyCodeLine{00500     \}}
+\DoxyCodeLine{00501 }
+\DoxyCodeLine{00502     parser = argparse.ArgumentParser(prog=\textcolor{stringliteral}{"{}microscope-\/gui"{}})}
+\DoxyCodeLine{00503 }
+\DoxyCodeLine{00504     \textcolor{comment}{\# Although we have a function that can guess the device type from}}
+\DoxyCodeLine{00505     \textcolor{comment}{\# the attributes on the proxy this is still useful.  For example,}}
+\DoxyCodeLine{00506     \textcolor{comment}{\# to display the device settings instead of the device UI.  Or}}
+\DoxyCodeLine{00507     \textcolor{comment}{\# maybe we're dealing with a device that implements more than one}}
+\DoxyCodeLine{00508     \textcolor{comment}{\# interface (earlier iterations of aurox Clarity were both a}}
+\DoxyCodeLine{00509     \textcolor{comment}{\# camera and a filterwheel).  This option provides a way to force}}
+\DoxyCodeLine{00510     \textcolor{comment}{\# a specific widget.}}
+\DoxyCodeLine{00511     parser.add\_argument(}
+\DoxyCodeLine{00512         \textcolor{stringliteral}{"{}type"{}},}
+\DoxyCodeLine{00513         action=\textcolor{stringliteral}{"{}store"{}},}
+\DoxyCodeLine{00514         type=str,}
+\DoxyCodeLine{00515         metavar=\textcolor{stringliteral}{"{}DEVICE-\/TYPE"{}},}
+\DoxyCodeLine{00516         choices=type\_to\_widget.keys(),}
+\DoxyCodeLine{00517         help=\textcolor{stringliteral}{"{}Type of device/widget to show"{}},}
+\DoxyCodeLine{00518     )}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520     parser.add\_argument(}
+\DoxyCodeLine{00521         \textcolor{stringliteral}{"{}uri"{}},}
+\DoxyCodeLine{00522         action=\textcolor{stringliteral}{"{}store"{}},}
+\DoxyCodeLine{00523         type=str,}
+\DoxyCodeLine{00524         metavar=\textcolor{stringliteral}{"{}DEVICE-\/URI"{}},}
+\DoxyCodeLine{00525         help=\textcolor{stringliteral}{"{}URI for device"{}},}
+\DoxyCodeLine{00526     )}
+\DoxyCodeLine{00527     args = parser.parse\_args(app.arguments()[1:])}
+\DoxyCodeLine{00528 }
+\DoxyCodeLine{00529     device = Pyro4.Proxy(args.uri)}
+\DoxyCodeLine{00530     widget\_cls = type\_to\_widget[args.type]}
+\DoxyCodeLine{00531     widget = widget\_cls(device)}
+\DoxyCodeLine{00532     window = MainWindow(widget)}
+\DoxyCodeLine{00533     window.show()}
+\DoxyCodeLine{00534 }
+\DoxyCodeLine{00535     \textcolor{keywordflow}{return} app.exec\_()}
+\DoxyCodeLine{00536 }
+\DoxyCodeLine{00537 }
+
+\end{DoxyCode}
+
+
+\doxysubsection{Variable Documentation}
+\mbox{\Hypertarget{namespacemicroscope_1_1gui_aca81d9cf0f21745fe25b0b4a9058a05d}\label{namespacemicroscope_1_1gui_aca81d9cf0f21745fe25b0b4a9058a05d}} 
+\index{microscope.gui@{microscope.gui}!SERIALIZER@{SERIALIZER}}
+\index{SERIALIZER@{SERIALIZER}!microscope.gui@{microscope.gui}}
+\doxysubsubsection{\texorpdfstring{SERIALIZER}{SERIALIZER}}
+{\footnotesize\ttfamily microscope.\+gui.\+SERIALIZER}
+
+
+
+Definition at line \mbox{\hyperlink{gui_8py_source_l00053}{53}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
