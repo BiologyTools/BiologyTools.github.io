@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['decode_0',['Decode',['../class_bio_g_t_k_1_1_s_a_m.html#a72cacedb9fda0ac393a5f3ec4402ff46',1,'BioGTK::SAM']]],
+  ['decode_0',['Decode',['../class_bio_g_t_k_1_1_s_a_m.html#a511abc4ff83855f522ff20827e347729',1,'BioGTK::SAM']]],
   ['dequeue_1',['Dequeue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html#a6c8a47fb9d20bc9ddd52fb2a63e1c09d',1,'Bio::Graphics::FloodFillRangeQueue']]],
   ['dispose_2',['Dispose',['../struct_bio_1_1_graphics_1_1_pen.html#a0a4360433f3c2698944cdcea6ad2e344',1,'Bio.Graphics.Pen.Dispose()'],['../class_bio_1_1_graphics_1_1_graphics.html#ac48d89029de6e6dbf132b0c8813d1962',1,'Bio.Graphics.Graphics.Dispose()'],['../class_bio_g_t_k_1_1_s_a_m.html#a9dcab8f988a7dd924528c2374baeec70',1,'BioGTK.SAM.Dispose()'],['../class_bio_g_t_k_1_1_bio_image.html#adc7c872efd42942ce2ef02830e791c35',1,'BioGTK.BioImage.Dispose()']]],
   ['drawellipse_3',['DrawEllipse',['../class_bio_1_1_graphics_1_1_graphics.html#aef1dbe883959fdc5ba849af40d372252',1,'Bio.Graphics.Graphics.DrawEllipse(Rectangle r)'],['../class_bio_1_1_graphics_1_1_graphics.html#abac78d563afee1a651e4043feaab1a5a',1,'Bio.Graphics.Graphics.DrawEllipse(RectangleF r)']]],

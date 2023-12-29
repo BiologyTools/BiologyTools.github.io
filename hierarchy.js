@@ -6,6 +6,8 @@ var hierarchy =
     [ "Gtk.Dialog", null, [
       [ "BioGTK.ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", null ],
       [ "BioGTK.ColorTool", "class_bio_g_t_k_1_1_color_tool.html", null ],
+      [ "BioGTK.ComboPicker", "class_bio_g_t_k_1_1_combo_picker.html", null ],
+      [ "BioGTK.NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
       [ "BioGTK.Progress", "class_bio_g_t_k_1_1_progress.html", null ],
       [ "BioGTK.Resolutions", "class_bio_g_t_k_1_1_resolutions.html", null ],
       [ "BioGTK.TextInput", "class_bio_g_t_k_1_1_text_input.html", null ],

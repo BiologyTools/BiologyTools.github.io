@@ -67,7 +67,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">3.9.1</span>
+   &#160;<span id="projectnumber">4.0.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -209,52 +209,43 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00077">77</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>                                                          : base(handle)</div>
-<div class="line"><span class="lineno">   78</span>        {</div>
-<div class="line"><span class="lineno">   79</span>            <span class="comment">//First lets make sure the model files are installed.</span></div>
-<div class="line"><span class="lineno">   80</span>            <span class="keywordtype">string</span> app = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);</div>
-<div class="line"><span class="lineno">   81</span>            <span class="keywordflow">if</span> (!File.Exists(app + <span class="stringliteral">&quot;/decoder-quant.onnx&quot;</span>) || !File.Exists(app + <span class="stringliteral">&quot;/encoder-quant.onnx&quot;</span>))</div>
-<div class="line"><span class="lineno">   82</span>            {</div>
-<div class="line"><span class="lineno">   83</span>                MessageDialog dialog = <span class="keyword">new</span> MessageDialog(</div>
-<div class="line"><span class="lineno">   84</span>             <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno">   85</span>             DialogFlags.Modal,</div>
-<div class="line"><span class="lineno">   86</span>             MessageType.Info,</div>
-<div class="line"><span class="lineno">   87</span>             ButtonsType.Ok,</div>
-<div class="line"><span class="lineno">   88</span>             <span class="stringliteral">&quot;Place Model files \&quot;decoder-quant.onnx\&quot; and \&quot;encoder-quant.onnx\&quot; in the application folder to use SAM Tool.&quot;</span>);</div>
-<div class="line"><span class="lineno">   89</span>                dialog.Run();</div>
-<div class="line"><span class="lineno">   90</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">   91</span>            }</div>
-<div class="line"><span class="lineno">   92</span>            <span class="comment">//Next lets make sure the image is a single plane as memory requirments make handling multiple images difficult.</span></div>
-<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.SizeZ != 1 || ImageView.SelectedImage.SizeC != 1 || ImageView.SelectedImage.SizeT != 1 || ImageView.SelectedBuffer.PixelFormat != PixelFormat.Format24bppRgb)</div>
-<div class="line"><span class="lineno">   94</span>            {</div>
-<div class="line"><span class="lineno">   95</span>                MessageDialog dialog = <span class="keyword">new</span> MessageDialog(</div>
-<div class="line"><span class="lineno">   96</span>             <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno">   97</span>             DialogFlags.Modal,</div>
-<div class="line"><span class="lineno">   98</span>             MessageType.Info,</div>
-<div class="line"><span class="lineno">   99</span>             ButtonsType.Ok,</div>
-<div class="line"><span class="lineno">  100</span>             <span class="stringliteral">&quot;SAM currently only supports single RGB24 plane images. Reduce image to single plane and ensure 24 bit RGB format.&quot;</span>);</div>
-<div class="line"><span class="lineno">  101</span>                dialog.Run();</div>
-<div class="line"><span class="lineno">  102</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  103</span>            }</div>
-<div class="line"><span class="lineno">  104</span>            view = App.viewer;</div>
-<div class="line"><span class="lineno">  105</span>            _builder = builder;</div>
-<div class="line"><span class="lineno">  106</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">  107</span>            thresholdBar.Adjustment.Lower = 0;</div>
-<div class="line"><span class="lineno">  108</span>            thresholdBar.Adjustment.Upper = 255;</div>
-<div class="line"><span class="lineno">  109</span>            Directory.CreateDirectory(<span class="stringliteral">&quot;Masks&quot;</span>);</div>
-<div class="line"><span class="lineno">  110</span>            filechooser =</div>
-<div class="line"><span class="lineno">  111</span>            <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>,</div>
-<div class="line"><span class="lineno">  112</span>            <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno">  113</span>            FileChooserAction.Open,</div>
-<div class="line"><span class="lineno">  114</span>            <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno">  115</span>            <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  116</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a9aaadde83df97800707a006cf5b3cbdc">SetupHandlers</a>();</div>
-<div class="line"><span class="lineno">  117</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e">Init</a>();</div>
-<div class="line"><span class="lineno">  118</span>            init = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  119</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a4be065b5b2d3f9c162c61e8b3aeb617e"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e">BioGTK.SAMTool.Init</a></div><div class="ttdeci">void Init()</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00248">SAMTool.cs:248</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a9aaadde83df97800707a006cf5b3cbdc"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a9aaadde83df97800707a006cf5b3cbdc">BioGTK.SAMTool.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">This function sets up the event handlers for the menu items.</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00126">SAMTool.cs:126</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00076">76</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   76</span>                                                          : base(handle)</div>
+<div class="line"><span class="lineno">   77</span>        {</div>
+<div class="line"><span class="lineno">   78</span>            <span class="comment">//First lets make sure the model files are installed.</span></div>
+<div class="line"><span class="lineno">   79</span>            <span class="keywordtype">string</span> app = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);</div>
+<div class="line"><span class="lineno">   80</span>            <span class="keywordflow">if</span> (!File.Exists(app + <span class="stringliteral">&quot;/decoder-quant.onnx&quot;</span>) || !File.Exists(app + <span class="stringliteral">&quot;/encoder-quant.onnx&quot;</span>))</div>
+<div class="line"><span class="lineno">   81</span>            {</div>
+<div class="line"><span class="lineno">   82</span>                MessageDialog dialog = <span class="keyword">new</span> MessageDialog(</div>
+<div class="line"><span class="lineno">   83</span>             <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno">   84</span>             DialogFlags.Modal,</div>
+<div class="line"><span class="lineno">   85</span>             MessageType.Info,</div>
+<div class="line"><span class="lineno">   86</span>             ButtonsType.Ok,</div>
+<div class="line"><span class="lineno">   87</span>             <span class="stringliteral">&quot;Place Model files \&quot;decoder-quant.onnx\&quot; and \&quot;encoder-quant.onnx\&quot; in the application folder to use SAM Tool.&quot;</span>);</div>
+<div class="line"><span class="lineno">   88</span>                dialog.Run();</div>
+<div class="line"><span class="lineno">   89</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   90</span>            }</div>
+<div class="line"><span class="lineno">   91</span>            view = App.viewer;</div>
+<div class="line"><span class="lineno">   92</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   93</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   94</span>            thresholdBar.Adjustment.Lower = 0;</div>
+<div class="line"><span class="lineno">   95</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.SelectedBuffer.BitsPerPixel &gt; 8)</div>
+<div class="line"><span class="lineno">   96</span>                thresholdBar.Adjustment.Upper = ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   97</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   98</span>                thresholdBar.Adjustment.Upper = 255;</div>
+<div class="line"><span class="lineno">   99</span>            Directory.CreateDirectory(<span class="stringliteral">&quot;Masks&quot;</span>);</div>
+<div class="line"><span class="lineno">  100</span>            filechooser =</div>
+<div class="line"><span class="lineno">  101</span>            <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>,</div>
+<div class="line"><span class="lineno">  102</span>            <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno">  103</span>            FileChooserAction.Open,</div>
+<div class="line"><span class="lineno">  104</span>            <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno">  105</span>            <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  106</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a9aaadde83df97800707a006cf5b3cbdc">SetupHandlers</a>();</div>
+<div class="line"><span class="lineno">  107</span>            <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e">Init</a>();</div>
+<div class="line"><span class="lineno">  108</span>            init = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  109</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a4be065b5b2d3f9c162c61e8b3aeb617e"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a4be065b5b2d3f9c162c61e8b3aeb617e">BioGTK.SAMTool.Init</a></div><div class="ttdeci">void Init()</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00238">SAMTool.cs:238</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a9aaadde83df97800707a006cf5b3cbdc"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a9aaadde83df97800707a006cf5b3cbdc">BioGTK.SAMTool.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">This function sets up the event handlers for the menu items.</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00116">SAMTool.cs:116</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -284,11 +275,11 @@ Protected Member Functions</h2></td></tr>
 <p >It creates a new instance of the <a class="el" href="class_bio_g_t_k_1_1_s_a_m_tool.html">SAMTool</a> class, which is a class that inherits from Gtk.Window</p>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_s_a_m_tool.html">SAMTool</a> class. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00070">70</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   71</span>        {</div>
-<div class="line"><span class="lineno">   72</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/SAM.glade&quot;</span>, FileMode.Open));</div>
-<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> SAMTool(builder, builder.GetObject(<span class="stringliteral">&quot;SAMTool&quot;</span>).Handle);</div>
-<div class="line"><span class="lineno">   74</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00069">69</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   70</span>        {</div>
+<div class="line"><span class="lineno">   71</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/SAM.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> SAMTool(builder, builder.GetObject(<span class="stringliteral">&quot;SAMTool&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   73</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,18 +308,18 @@ Protected Member Functions</h2></td></tr>
 <p >The Init function loads an ONNX model, calculates image embedding, and updates the status accordingly.</p>
 <dl class="section return"><dt>Returns</dt><dd>If the condition <code>ImageView.SelectedImage == null</code> is true, then nothing is being returned and the method will exit. If the condition is false, then the method will continue executing the remaining code without returning anything. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00248">248</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  249</span>        {</div>
-<div class="line"><span class="lineno">  250</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage == <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno">  251</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  252</span>            this.ShowStatus(<span class="stringliteral">&quot;Loading ONNX Model&quot;</span>);</div>
-<div class="line"><span class="lineno">  253</span>            this.mSam.<a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m.html#af5fce0cb0d6759ad651893b6ae0b1991">LoadONNXModel</a>();</div>
-<div class="line"><span class="lineno">  254</span>            this.ShowStatus(<span class="stringliteral">&quot;ONNX Model Loaded&quot;</span>);</div>
-<div class="line"><span class="lineno">  255</span>            this.mSam.<a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m.html#ab09f08c93c5ddd2b72c4d211464411b3">Encode</a>(ImageView.SelectedImage);<span class="comment">//Image Embedding</span></div>
-<div class="line"><span class="lineno">  256</span>            this.ShowStatus(<span class="stringliteral">&quot;Image Embedding Calculation Finished&quot;</span>);</div>
-<div class="line"><span class="lineno">  257</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_html_ab09f08c93c5ddd2b72c4d211464411b3"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m.html#ab09f08c93c5ddd2b72c4d211464411b3">BioGTK.SAM.Encode</a></div><div class="ttdeci">void Encode(BioImage b)</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_8cs_source.html#l00061">SAM.cs:61</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_html_af5fce0cb0d6759ad651893b6ae0b1991"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m.html#af5fce0cb0d6759ad651893b6ae0b1991">BioGTK.SAM.LoadONNXModel</a></div><div class="ttdeci">void LoadONNXModel()</div><div class="ttdoc">The function LoadONNXModel loads ONNX models for encoding and decoding.</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_8cs_source.html#l00039">SAM.cs:39</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00238">238</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  239</span>        {</div>
+<div class="line"><span class="lineno">  240</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  241</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  242</span>            this.ShowStatus(<span class="stringliteral">&quot;Loading ONNX Model&quot;</span>);</div>
+<div class="line"><span class="lineno">  243</span>            this.mSam.<a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m.html#af5fce0cb0d6759ad651893b6ae0b1991">LoadONNXModel</a>();</div>
+<div class="line"><span class="lineno">  244</span>            this.ShowStatus(<span class="stringliteral">&quot;ONNX Model Loaded&quot;</span>);</div>
+<div class="line"><span class="lineno">  245</span>            this.mSam.<a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m.html#ab09f08c93c5ddd2b72c4d211464411b3">Encode</a>(ImageView.SelectedImage);<span class="comment">//Image Embedding</span></div>
+<div class="line"><span class="lineno">  246</span>            this.ShowStatus(<span class="stringliteral">&quot;Image Embedding Calculation Finished&quot;</span>);</div>
+<div class="line"><span class="lineno">  247</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_html_ab09f08c93c5ddd2b72c4d211464411b3"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m.html#ab09f08c93c5ddd2b72c4d211464411b3">BioGTK.SAM.Encode</a></div><div class="ttdeci">void Encode(BioImage b)</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_8cs_source.html#l00062">SAM.cs:62</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_html_af5fce0cb0d6759ad651893b6ae0b1991"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m.html#af5fce0cb0d6759ad651893b6ae0b1991">BioGTK.SAM.LoadONNXModel</a></div><div class="ttdeci">void LoadONNXModel()</div><div class="ttdoc">The function LoadONNXModel loads ONNX models for encoding and decoding.</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_8cs_source.html#l00040">SAM.cs:40</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -375,30 +366,30 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00332">332</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  333</span>        {</div>
-<div class="line"><span class="lineno">  334</span>            filechooser.Action = FileChooserAction.Save;</div>
-<div class="line"><span class="lineno">  335</span>            <span class="comment">//Saving Tiff can cause a crash on Windows so we check the platform.</span></div>
-<div class="line"><span class="lineno">  336</span>            <span class="keywordflow">if</span> (Environment.OSVersion.Platform == PlatformID.Win32NT)</div>
-<div class="line"><span class="lineno">  337</span>            {</div>
-<div class="line"><span class="lineno">  338</span>                filechooser.Title = <span class="stringliteral">&quot;Save File PNG&quot;</span>;</div>
-<div class="line"><span class="lineno">  339</span>            }</div>
-<div class="line"><span class="lineno">  340</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  341</span>            {</div>
-<div class="line"><span class="lineno">  342</span>                filechooser.Title = <span class="stringliteral">&quot;Save File Tiff&quot;</span>;</div>
-<div class="line"><span class="lineno">  343</span>            }</div>
-<div class="line"><span class="lineno">  344</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  345</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  346</span>            <span class="keywordflow">if</span> (Environment.OSVersion.Platform == PlatformID.Win32NT)</div>
-<div class="line"><span class="lineno">  347</span>            {</div>
-<div class="line"><span class="lineno">  348</span>                mask.Save(filechooser.Filename, <span class="stringliteral">&quot;png&quot;</span>);</div>
-<div class="line"><span class="lineno">  349</span>            }</div>
-<div class="line"><span class="lineno">  350</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  351</span>            {</div>
-<div class="line"><span class="lineno">  352</span>                mask.Save(filechooser.Filename, <span class="stringliteral">&quot;tiff&quot;</span>);</div>
-<div class="line"><span class="lineno">  353</span>            }</div>
-<div class="line"><span class="lineno">  354</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno">  355</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00315">315</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  316</span>        {</div>
+<div class="line"><span class="lineno">  317</span>            filechooser.Action = FileChooserAction.Save;</div>
+<div class="line"><span class="lineno">  318</span>            <span class="comment">//Saving Tiff can cause a crash on Windows so we check the platform.</span></div>
+<div class="line"><span class="lineno">  319</span>            <span class="keywordflow">if</span> (Environment.OSVersion.Platform == PlatformID.Win32NT)</div>
+<div class="line"><span class="lineno">  320</span>            {</div>
+<div class="line"><span class="lineno">  321</span>                filechooser.Title = <span class="stringliteral">&quot;Save File PNG&quot;</span>;</div>
+<div class="line"><span class="lineno">  322</span>            }</div>
+<div class="line"><span class="lineno">  323</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  324</span>            {</div>
+<div class="line"><span class="lineno">  325</span>                filechooser.Title = <span class="stringliteral">&quot;Save File Tiff&quot;</span>;</div>
+<div class="line"><span class="lineno">  326</span>            }</div>
+<div class="line"><span class="lineno">  327</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno">  328</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  329</span>            <span class="keywordflow">if</span> (Environment.OSVersion.Platform == PlatformID.Win32NT)</div>
+<div class="line"><span class="lineno">  330</span>            {</div>
+<div class="line"><span class="lineno">  331</span>                SelectedROI.mask.Save(filechooser.Filename, <span class="stringliteral">&quot;png&quot;</span>);</div>
+<div class="line"><span class="lineno">  332</span>            }</div>
+<div class="line"><span class="lineno">  333</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  334</span>            {</div>
+<div class="line"><span class="lineno">  335</span>                SelectedROI.mask.Save(filechooser.Filename, <span class="stringliteral">&quot;tiff&quot;</span>);</div>
+<div class="line"><span class="lineno">  336</span>            }</div>
+<div class="line"><span class="lineno">  337</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno">  338</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -427,18 +418,18 @@ Protected Member Functions</h2></td></tr>
 
 <p>This function sets up the event handlers for the menu items. </p>
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00126">126</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  127</span>        {</div>
-<div class="line"><span class="lineno">  128</span>            saveSelected.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a6971a1206bfa3397242a8fb529e5783b">saveSelectedTiffClick</a>;</div>
-<div class="line"><span class="lineno">  129</span>            view.ButtonReleaseEvent += PictureBox_ButtonReleaseEvent;</div>
-<div class="line"><span class="lineno">  130</span>            addMaskMenu.ButtonPressEvent += AddMaskMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  131</span>            removeMaskMenu.ButtonPressEvent += RemoveMaskMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  132</span>            setAutoSave.ButtonPressEvent += SetAutoSave_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  133</span>            this.DeleteEvent += SAMTool_DeleteEvent;</div>
-<div class="line"><span class="lineno">  134</span>            textBox.Changed += TextBox_Changed;</div>
-<div class="line"><span class="lineno">  135</span>            toROIMenu.ButtonPressEvent += ToROIMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  136</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a6971a1206bfa3397242a8fb529e5783b"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a6971a1206bfa3397242a8fb529e5783b">BioGTK.SAMTool.saveSelectedTiffClick</a></div><div class="ttdeci">void saveSelectedTiffClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00332">SAMTool.cs:332</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00116">116</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  117</span>        {</div>
+<div class="line"><span class="lineno">  118</span>            saveSelected.ButtonPressEvent += <a class="code hl_function" href="class_bio_g_t_k_1_1_s_a_m_tool.html#a6971a1206bfa3397242a8fb529e5783b">saveSelectedTiffClick</a>;</div>
+<div class="line"><span class="lineno">  119</span>            view.ButtonReleaseEvent += PictureBox_ButtonReleaseEvent;</div>
+<div class="line"><span class="lineno">  120</span>            addMaskMenu.ButtonPressEvent += AddMaskMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  121</span>            removeMaskMenu.ButtonPressEvent += RemoveMaskMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  122</span>            setAutoSave.ButtonPressEvent += SetAutoSave_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  123</span>            this.DeleteEvent += SAMTool_DeleteEvent;</div>
+<div class="line"><span class="lineno">  124</span>            textBox.Changed += TextBox_Changed;</div>
+<div class="line"><span class="lineno">  125</span>            toROIMenu.ButtonPressEvent += ToROIMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  126</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_s_a_m_tool_html_a6971a1206bfa3397242a8fb529e5783b"><div class="ttname"><a href="class_bio_g_t_k_1_1_s_a_m_tool.html#a6971a1206bfa3397242a8fb529e5783b">BioGTK.SAMTool.saveSelectedTiffClick</a></div><div class="ttdeci">void saveSelectedTiffClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition:</b> <a href="_s_a_m_tool_8cs_source.html#l00315">SAMTool.cs:315</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -455,7 +446,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00023">23</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00022">22</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
 
 </div>
 </div>
@@ -471,7 +462,7 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00042">42</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_s_a_m_tool_8cs_source.html#l00041">41</a> of file <a class="el" href="_s_a_m_tool_8cs_source.html">SAMTool.cs</a>.</p>
 
 </div>
 </div>
