@@ -1,0 +1,346 @@
+\hypertarget{test__device__server_8py_source}{}\doxysection{test\+\_\+device\+\_\+server.\+py}
+\label{test__device__server_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/test\_device\_server.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/test\_device\_server.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00020}00020 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00021}00021 \textcolor{keyword}{import} multiprocessing}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00022}00022 \textcolor{keyword}{import} os}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00023}00023 \textcolor{keyword}{import} os.path}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00024}00024 \textcolor{keyword}{import} signal}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00025}00025 \textcolor{keyword}{import} tempfile}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00026}00026 \textcolor{keyword}{import} time}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00027}00027 \textcolor{keyword}{import} unittest}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00028}00028 \textcolor{keyword}{import} unittest.mock}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00030}00030 \textcolor{keyword}{import} Pyro4}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00031}00031 \textcolor{keyword}{import} Pyro4.errors}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00032}00032 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00033}00033 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00034}00034 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1clients}{microscope.clients}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00035}00035 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1device__server}{microscope.device\_server}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00036}00036 \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1testsuite_1_1devices}{microscope.testsuite.devices}} \textcolor{keyword}{import} (}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00037}00037     TestCamera,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00038}00038     TestDeformableMirror,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00039}00039     TestFilterWheel,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00040}00040     TestFloatingDevice,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00041}00041 )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00044}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device}{00044}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device}{ExposePIDDevice}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00045}00045     \textcolor{stringliteral}{"{}"{}"{}Test device for testing the device server keep alive."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00047}00047     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00048}00048         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00050}00050     \textcolor{keyword}{def }get\_pid(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00051}00051         \textcolor{keywordflow}{return} os.getpid()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00054}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue}{00054}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue}{DeviceServerExceptionQueue}}(\mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server}{microscope.device\_server.DeviceServer}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00055}00055     \textcolor{stringliteral}{"{}"{}"{}`DeviceServer` that queues an exception during `run`.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00056}00056 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00057}00057 \textcolor{stringliteral}{    A `DeviceServer` instance runs on another process so }\textcolor{keywordflow}{if} it fails}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00058}00058     we can\textcolor{stringliteral}{'t easily check why.  This subclass will put any exception}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00059}00059 \textcolor{stringliteral}{    that happens during `run()` into the given queue so that the}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00060}00060 \textcolor{stringliteral}{    parent process can check it.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00061}00061 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00062}00062 \textcolor{stringliteral}{    "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00063}00063 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00064}00064 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self, queue: multiprocessing.Queue, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00065}00065         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00066}00066         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue_a149cd7c1e9ceaad4eb69bdb9973b7a7d}{\_queue}} = queue}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00067}00067 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00068}00068     \textcolor{keyword}{def }run(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00069}00069         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00070}00070             super().run()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00071}00071         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} ex:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00072}00072             self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue_a149cd7c1e9ceaad4eb69bdb9973b7a7d}{\_queue}}.put(ex)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00075}00075 \textcolor{keyword}{def }\_patch\_out\_device\_server\_logs(func):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00076}00076     \textcolor{stringliteral}{"{}"{}"{}Decorator to run device server without noise from logs.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00077}00077 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00078}00078 \textcolor{stringliteral}{    The device server redirects the logger to stderr *}\textcolor{keywordflow}{and}* creates}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00079}00079     files on the current directory.  There \textcolor{keywordflow}{is} no options to control}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00080}00080     this behaviour so this patches the loggers.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00081}00081     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00082}00082 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00083}00083 \textcolor{stringliteral}{    }\textcolor{keyword}{def }null\_logs(*args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00084}00084         \textcolor{keywordflow}{return} logging.NullHandler()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00085}00085 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00086}00086     no\_file = unittest.mock.patch(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00087}00087         \textcolor{stringliteral}{"{}microscope.device\_server.RotatingFileHandler"{}}, null\_logs}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00088}00088     )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00089}00089     no\_stream = unittest.mock.patch(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00090}00090         \textcolor{stringliteral}{"{}microscope.device\_server.StreamHandler"{}}, null\_logs}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00091}00091     )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00092}00092     \textcolor{keywordflow}{return} no\_file(no\_stream(func))}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00095}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices}{00095}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices}{BaseTestServeDevices}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00096}00096     \textcolor{stringliteral}{"{}"{}"{}Handles start and termination of deviceserver.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00097}00097 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00098}00098 \textcolor{stringliteral}{    Subclasses may overload }\textcolor{keyword}{class }properties defaults as needed.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00099}00099 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00100}00100     Attributes:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00101}00101         DEVICES (list): list of :\textcolor{keyword}{class}:`\mbox{\hyperlink{namespacemicroscope_1_1devices}{microscope.devices}}` to initialise.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00102}00102         TIMEOUT (number): time given \textcolor{keywordflow}{for} service to terminate after}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00103}00103             receiving signal to terminate.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00104}00104         p (multiprocessing.Process): device server process.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00105}00105     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00106}00106 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00107}00107 \textcolor{stringliteral}{    DEVICES = []}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00108}00108 \textcolor{stringliteral}{    TIMEOUT = 5}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00109}00109 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00110}00110 \textcolor{stringliteral}{    }\textcolor{preprocessor}{@\_patch\_out\_device\_server\_logs}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00111}00111     \textcolor{keyword}{def }setUp(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00112}00112         options = \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{microscope.device\_server.DeviceServerOptions}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00113}00113             config\_fpath=\textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00114}00114             logging\_level=logging.INFO,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00115}00115         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00116}00116         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}} = multiprocessing.Process(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00117}00117             target=microscope.device\_server.serve\_devices,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00118}00118             args=(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_a3515ee3b25084ca777a4f0b1091992d7}{DEVICES}}, options),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00119}00119         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00120}00120         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.start()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00121}00121         time.sleep(1)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00123}00123     \textcolor{keyword}{def }tearDown(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00124}00124         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.terminate()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00125}00125         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.join(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_a73e2b6b13f32c65457bdec578086901e}{TIMEOUT}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00126}00126         self.assertFalse(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00127}00127             self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.is\_alive(), \textcolor{stringliteral}{"{}deviceserver not dead after SIGTERM"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00128}00128         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00131}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server}{00131}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server}{BaseTestDeviceServer}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00132}00132     \textcolor{stringliteral}{"{}"{}"{}TestCase that starts DeviceServer on separate process.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00133}00133 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00134}00134 \textcolor{stringliteral}{    Subclasses should define the }\textcolor{keyword}{class }attribute `args`, which \textcolor{keywordflow}{is} used}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00135}00135     to start the `DeviceServer` \textcolor{keywordflow}{and} implement `test\_*` methods.}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00137}00137     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00138}00138 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00139}00139 \textcolor{stringliteral}{    args = []  }\textcolor{comment}{\# args to construct DeviceServer}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00140}00140     TIMEOUT = 5  \textcolor{comment}{\# time to wait after join() during tearDown}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00142}00142     \textcolor{preprocessor}{@\_patch\_out\_device\_server\_logs}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00143}00143     \textcolor{keyword}{def }setUp(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00144}00144         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_ab7580a0bc1dde32447423466d584d642}{queue}} = multiprocessing.Queue()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00145}00145         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}} = \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue}{DeviceServerExceptionQueue}}(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_ab7580a0bc1dde32447423466d584d642}{queue}}, *self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_aac9e20e0af3d0db6309b469ef95ed5d8}{args}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00146}00146         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.start()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00147}00147         time.sleep(1)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00148}00148 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00149}00149     \textcolor{keyword}{def }tearDown(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00150}00150         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.terminate()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00151}00151         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.join(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a2a190d07d621c639df6494eee759e322}{TIMEOUT}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00152}00152         self.assertIsNotNone(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00153}00153             self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.exitcode, \textcolor{stringliteral}{"{}deviceserver not dead after SIGTERM"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00154}00154         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00157}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting}{00157}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting}{TestStarting}}(\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices}{BaseTestServeDevices}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00158}00158     DEVICES = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00159}00159         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00160}00160             TestCamera, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8001, \{\textcolor{stringliteral}{"{}buffer\_length"{}}: 0\}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00161}00161         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00162}00162         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00163}00163             TestFilterWheel, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8003, \{\textcolor{stringliteral}{"{}positions"{}}: 3\}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00164}00164         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00165}00165     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00167}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting_a15d4a69daf9b84e56f7966ecc1461cc4}{00167}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting_a15d4a69daf9b84e56f7966ecc1461cc4}{test\_standard}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00168}00168         \textcolor{stringliteral}{"{}"{}"{}Simplest case, start and exit, given enough time to start all devices"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00169}00169         self.assertTrue(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.is\_alive(), \textcolor{stringliteral}{"{}service dies at start"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00171}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting_af36957fcff45146d41e78733ef179a4e}{00171}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting_af36957fcff45146d41e78733ef179a4e}{test\_immediate\_interrupt}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00172}00172         \textcolor{stringliteral}{"{}"{}"{}Check issues on SIGTERM before starting all devices"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00173}00173         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00174}00174 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00175}00175 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00176}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check}{00176}} \textcolor{keyword}{class }TestInputCheck(BaseTestServeDevices):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00177}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check_a464d68dc997847094c58d9cf96bae020}{00177}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check_a464d68dc997847094c58d9cf96bae020}{test\_empty\_devices}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00178}00178         \textcolor{stringliteral}{"{}"{}"{}Check behaviour if there are no devices."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00179}00179         self.assertTrue(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00180}00180             \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices_aaa26c72948196803a21c71247adeb5d5}{p}}.is\_alive(), \textcolor{stringliteral}{"{}not dying for empty list of devices"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00181}00181         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00183}00183 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00184}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port}{00184}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port}{DeviceWithPort}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00185}00185     \textcolor{keyword}{def }\_\_init\_\_(self, port, **kwargs):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00186}00186         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00187}00187         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port_abb9422256c59d0bf36257192b9e002a1}{\_port}} = port}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00189}00189     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00190}00190     \textcolor{keyword}{def }port(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00191}00191         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port_abb9422256c59d0bf36257192b9e002a1}{\_port}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00192}00192 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00193}00193     \textcolor{keyword}{def }\_do\_shutdown(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00194}00194         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00195}00195 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00197}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_clashing_arguments}{00197}} \textcolor{keyword}{class }TestClashingArguments(BaseTestServeDevices):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00198}00198     \textcolor{stringliteral}{"{}"{}"{}Device server and device constructor arguments do not clash"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00199}00199 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00200}00200     DEVICES = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00201}00201         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00202}00202             DeviceWithPort, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8000, \{\textcolor{stringliteral}{"{}port"{}}: 7000\}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00203}00203         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00204}00204     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00205}00205 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00206}00206     \textcolor{keyword}{def }test\_port\_conflict(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00207}00207         client = \mbox{\hyperlink{classmicroscope_1_1clients_1_1_client}{microscope.clients.Client}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00208}00208             \textcolor{stringliteral}{"{}PYRO:DeviceWithPort@127.0.0.1:8000"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00209}00209         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00210}00210         self.assertEqual(client.port, 7000)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00212}00212 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00213}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader}{00213}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader}{TestConfigLoader}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00214}00214     \textcolor{keyword}{def }\_test\_load\_source(self, filename):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00215}00215         file\_contents = \textcolor{stringliteral}{"{}DEVICES = [1,2,3]"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00216}00216         \textcolor{keyword}{with} tempfile.TemporaryDirectory() \textcolor{keyword}{as} dirpath:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00217}00217             filepath = os.path.join(dirpath, filename)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00218}00218             \textcolor{keyword}{with} open(filepath, \textcolor{stringliteral}{"{}w"{}}) \textcolor{keyword}{as} fh:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00219}00219                 fh.write(file\_contents)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00220}00220 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00221}00221             module = \mbox{\hyperlink{device__server_8py_a4c4fffd5e0baa80fe0cff70f31047ed8}{microscope.device\_server.\_load\_source}}(filepath)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00222}00222             self.assertEqual(module.DEVICES, [1, 2, 3])}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00223}00223 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00224}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_ad01c711c58613e0b4257458016484e96}{00224}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_ad01c711c58613e0b4257458016484e96}{test\_py\_file\_extension}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00225}00225         \textcolor{stringliteral}{"{}"{}"{}Reading of config file module-\/like works"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00226}00226         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_a3b2ec50fabfc22ff254283fa81a5021a}{\_test\_load\_source}}(\textcolor{stringliteral}{"{}foobar.py"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00227}00227 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00228}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_ad80e908eb418c786094f4a98059e5ba2}{00228}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_ad80e908eb418c786094f4a98059e5ba2}{test\_cfg\_file\_extension}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00229}00229         \textcolor{stringliteral}{"{}"{}"{}Reading of config file does not require .py file extension"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00230}00230         \textcolor{comment}{\# Test for issue \#151.  Many importlib functions assume that}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00231}00231         \textcolor{comment}{\# the file has importlib.machinery.SOURCE\_SUFFIXES extension}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00232}00232         \textcolor{comment}{\# so we need a bit of extra work to work with none or .cfg.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00233}00233         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_a3b2ec50fabfc22ff254283fa81a5021a}{\_test\_load\_source}}(\textcolor{stringliteral}{"{}foobar.cfg"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00234}00234 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00235}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_aefc8a6a42e7a55c5a7d917ae31117281}{00235}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_aefc8a6a42e7a55c5a7d917ae31117281}{test\_no\_file\_extension}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00236}00236         \textcolor{stringliteral}{"{}"{}"{}Reading of config file does not require file extension"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00237}00237         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader_a3b2ec50fabfc22ff254283fa81a5021a}{\_test\_load\_source}}(\textcolor{stringliteral}{"{}foobar"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00238}00238 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00239}00239 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00240}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection}{00240}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection}{TestFloatingDeviceIndexInjection}}(\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices}{BaseTestServeDevices}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00241}00241     DEVICES = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00242}00242         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00243}00243             TestFloatingDevice, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8001, \{\textcolor{stringliteral}{"{}uid"{}}: \textcolor{stringliteral}{"{}foo"{}}\}, uid=\textcolor{stringliteral}{"{}foo"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00244}00244         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00245}00245         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00246}00246             TestFloatingDevice, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8002, \{\textcolor{stringliteral}{"{}uid"{}}: \textcolor{stringliteral}{"{}bar"{}}\}, uid=\textcolor{stringliteral}{"{}bar"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00247}00247         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00248}00248     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00249}00249 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00250}00250     \textcolor{keyword}{def }test\_injection\_of\_index\_kwarg(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00251}00251         floating\_1 = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:TestFloatingDevice@127.0.0.1:8001"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00252}00252         floating\_2 = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:TestFloatingDevice@127.0.0.1:8002"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00253}00253         self.assertEqual(floating\_1.get\_index(), 0)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00254}00254         self.assertEqual(floating\_2.get\_index(), 1)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00255}00255 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00256}00256 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00257}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_serving_floating_devices_with_wrong_u_i_d}{00257}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_serving_floating_devices_with_wrong_u_i_d}{TestServingFloatingDevicesWithWrongUID}}(\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server}{BaseTestDeviceServer}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00258}00258     \textcolor{comment}{\# This test will create a floating device with a UID different}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00259}00259     \textcolor{comment}{\# (foo) than what appears on the config (bar).  This is what}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00260}00260     \textcolor{comment}{\# happens if there are two floating devices on the system (foo and}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00261}00261     \textcolor{comment}{\# bar) but the config lists only one of them (bar) but the other}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00262}00262     \textcolor{comment}{\# one is served instead (foo).  See issue \#153.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00263}00263     args = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00264}00264         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00265}00265             TestFloatingDevice,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00266}00266             \textcolor{stringliteral}{"{}127.0.0.1"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00267}00267             8001,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00268}00268             \textcolor{comment}{\# The index kwarg is typically injected by serve\_devices}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00269}00269             \textcolor{comment}{\# but here we're only testing DeviceServer so we need to}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00270}00270             \textcolor{comment}{\# do it ourselves.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00271}00271             \{\textcolor{stringliteral}{"{}uid"{}}: \textcolor{stringliteral}{"{}foo"{}}, \textcolor{stringliteral}{"{}index"{}}: 0\},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00272}00272             uid=\textcolor{stringliteral}{"{}bar"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00273}00273         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00274}00274         \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{microscope.device\_server.DeviceServerOptions}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00275}00275             config\_fpath=\textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00276}00276             logging\_level=logging.INFO,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00277}00277         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00278}00278         \{\textcolor{stringliteral}{"{}bar"{}}: \textcolor{stringliteral}{"{}127.0.0.1"{}}\},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00279}00279         \{\textcolor{stringliteral}{"{}bar"{}}: 8001\},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00280}00280         multiprocessing.Event(),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00281}00281     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00282}00282 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00283}00283     \textcolor{keyword}{def }test\_fail\_with\_wrong\_uid(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00284}00284         \textcolor{stringliteral}{"{}"{}"{}DeviceServer fails if it gets a FloatingDevice with another UID"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00285}00285         self.assertFalse(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00286}00286             self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.is\_alive(),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00287}00287             \textcolor{stringliteral}{"{}expected DeviceServer to have errored and be dead"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00288}00288         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00289}00289         self.assertRegex(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00290}00290             str(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_ab7580a0bc1dde32447423466d584d642}{queue}}.get\_nowait()),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00291}00291             \textcolor{stringliteral}{"{}Host or port not found for device foo"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00292}00292         )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00293}00293 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00294}00294 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00295}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition}{00295}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition}{TestFunctionInDeviceDefinition}}(\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server}{BaseTestDeviceServer}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00296}00296     \textcolor{comment}{\# Test that with a function we can specify multiple devices and}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00297}00297     \textcolor{comment}{\# they get the expected Pyro URI.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00298}00298     args = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00299}00299         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00300}00300             \textcolor{keyword}{lambda} **kwargs: \{}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00301}00301                 \textcolor{stringliteral}{"{}dm1"{}}: TestDeformableMirror(10),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00302}00302                 \textcolor{stringliteral}{"{}dm2"{}}: TestDeformableMirror(20),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00303}00303             \},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00304}00304             \textcolor{stringliteral}{"{}localhost"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00305}00305             8001,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00306}00306         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00307}00307         \mbox{\hyperlink{classmicroscope_1_1device__server_1_1_device_server_options}{microscope.device\_server.DeviceServerOptions}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00308}00308             config\_fpath=\textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00309}00309             logging\_level=logging.INFO,}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00310}00310         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00311}00311         \{\},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00312}00312         \{\},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00313}00313         multiprocessing.Event(),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00314}00314     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00315}00315 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00316}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition_ae045c54ed0bc6291a334b6f47aa33b89}{00316}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition_ae045c54ed0bc6291a334b6f47aa33b89}{test\_function\_in\_device\_definition}}(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00317}00317         \textcolor{stringliteral}{"{}"{}"{}Function that constructs multiple devices in device definition"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00318}00318         self.assertTrue(self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server_a35c189a8b78789bd6aa46b433b95f6b5}{process}}.is\_alive())}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00319}00319         dm1 = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:dm1@127.0.0.1:8001"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00320}00320         dm2 = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:dm2@127.0.0.1:8001"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00321}00321         self.assertEqual(dm1.n\_actuators, 10)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00322}00322         self.assertEqual(dm2.n\_actuators, 20)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00323}00323 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00324}00324 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00325}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive}{00325}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive}{TestKeepDeviceServerAlive}}(\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices}{BaseTestServeDevices}}):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00326}00326     DEVICES = [}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00327}00327         \mbox{\hyperlink{device__server_8py_a3ae40a0d7c733abb46179fe8b10d2ffb}{microscope.device\_server.device}}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00328}00328             ExposePIDDevice, \textcolor{stringliteral}{"{}127.0.0.1"{}}, 8001, \{\}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00329}00329         ),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00330}00330     ]}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00331}00331 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00332}00332     \textcolor{preprocessor}{@unittest.skipUnless}(}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00333}00333         hasattr(signal, \textcolor{stringliteral}{"{}SIGKILL"{}}),}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00334}00334         \textcolor{stringliteral}{"{}can't test if we can't kill subprocess (windows)"{}},}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00335}00335     )}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00336}00336     \textcolor{keyword}{def }test\_keep\_alive(self):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00337}00337         device = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:ExposePIDDevice@127.0.0.1:8001"{}})}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00338}00338         initial\_pid = device.get\_pid()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00339}00339 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00340}00340         os.kill(initial\_pid, signal.SIGKILL)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00341}00341 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00342}00342         \textcolor{keyword}{with} self.assertRaises(Pyro4.errors.ConnectionClosedError):}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00343}00343             device.get\_pid()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00344}00344 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00345}00345         \textcolor{comment}{\# The device server checks every 5 seconds for a crashed}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00346}00346         \textcolor{comment}{\# device server so give it 6 seconds.}}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00347}00347         time.sleep(6)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00348}00348 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00349}00349         device.\_pyroReconnect(tries=1)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00350}00350         new\_pid = device.get\_pid()}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00351}00351         self.assertNotEqual(initial\_pid, new\_pid)}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00352}00352 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00353}00353 }
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00354}00354 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{test__device__server_8py_source_l00355}00355     unittest.main()}
+
+\end{DoxyCode}

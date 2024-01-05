@@ -1,0 +1,150 @@
+\hypertarget{stage__aware__camera_8py_source}{}\doxysection{stage\+\_\+aware\+\_\+camera.\+py}
+\label{stage__aware__camera_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/simulators/stage\_aware\_camera.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/simulators/stage\_aware\_camera.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00021}00021 \textcolor{stringliteral}{"{}"{}"{}Simulation of a full setup based on a given image file.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00022}00022 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00023}00023 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00024}00024 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00025}00025 \textcolor{keyword}{import} time}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00026}00026 \textcolor{keyword}{import} typing}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00028}00028 \textcolor{keyword}{import} numpy \textcolor{keyword}{as} np}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00029}00029 \textcolor{keyword}{import} PIL.Image}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00030}00030 \textcolor{keyword}{import} scipy.ndimage}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00032}00032 \textcolor{keyword}{import} microscope}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00033}00033 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00034}00034 \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1simulators}{microscope.simulators}} \textcolor{keyword}{import} (}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00035}00035     SimulatedCamera,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00036}00036     SimulatedFilterWheel,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00037}00037     SimulatedStage,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00038}00038 )}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00041}00041 \_logger = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00042}00042 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00043}00043 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00044}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera}{00044}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera}{StageAwareCamera}}(\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera}{SimulatedCamera}}):}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00045}00045     \textcolor{stringliteral}{"{}"{}"{}Simulated camera that returns subregions of image based on stage}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00046}00046 \textcolor{stringliteral}{    position.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00047}00047 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00048}00048 \textcolor{stringliteral}{    Instead of using this }\textcolor{keyword}{class }directly, consider using the}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00049}00049     :func:`simulated\_setup\_from\_image` function which will generate}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00050}00050     all the required simulated devices \textcolor{keywordflow}{for} a given image file.}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00051}00051 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00052}00052     Args:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00053}00053         image: the image \textcolor{keyword}{from} which regions will be cropped based on}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00054}00054             the stage \textcolor{keywordflow}{and} filter wheel positions.}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00055}00055         stage: stage to read coordinates \textcolor{keyword}{from}.  Must have an \textcolor{stringliteral}{"{}x"{}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00056}00056             \textcolor{stringliteral}{"{}y"{}}, \textcolor{keywordflow}{and} \textcolor{stringliteral}{"{}z"{}} axis.}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00057}00057         filterwheel: filter wheel to read position.}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00058}00058 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00059}00059     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00060}00060 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00061}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a5fa190172f9a8c7a93053942d69aa117}{00061}} \textcolor{stringliteral}{    }\textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a5fa190172f9a8c7a93053942d69aa117}{\_\_init\_\_}}(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00062}00062         self,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00063}00063         image: np.ndarray,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00064}00064         stage: \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage}{microscope.abc.Stage}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00065}00065         filterwheel: \mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{microscope.abc.FilterWheel}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00066}00066         **kwargs,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00067}00067     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00068}00068         super().\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a5fa190172f9a8c7a93053942d69aa117}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00069}00069         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0d922bc0d3db442eb822fa4f7c35fc34}{\_image}} = image}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00070}00070         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0a30e1bb32a30814cc0f203e062c6ff3}{\_stage}} = stage}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00071}00071         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a346ebba1e74cbed29c45adf07ed5591f}{\_filterwheel}} = filterwheel}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00072}00072         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_ad66a8ac59e85c432e26faf2dff0ab771}{\_pixel\_size}} = 1.0}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00074}00074         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} all([name \textcolor{keywordflow}{in} stage.axes.keys() \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}x"{}}, \textcolor{stringliteral}{"{}y"{}}, \textcolor{stringliteral}{"{}z"{}}]]):}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00075}00075             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00076}00076                 \textcolor{stringliteral}{"{}stage for StageAwareCamera requires x, y, and z axis"{}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00077}00077             )}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00078}00078         \textcolor{keywordflow}{if} image.shape[2] != self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a346ebba1e74cbed29c45adf07ed5591f}{\_filterwheel}}.n\_positions:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00079}00079             \textcolor{keywordflow}{raise} ValueError(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00080}00080                 \textcolor{stringliteral}{"{}image has \%d channels but filterwheel has \%d positions"{}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00081}00081             )}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00082}00082 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00083}00083         \textcolor{comment}{\# Empty the settings dict, most of them are for testing}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00084}00084         \textcolor{comment}{\# settings, and the rest is specific to the image generator}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00085}00085         \textcolor{comment}{\# which we don't need.  We probably should have a simpler}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00086}00086         \textcolor{comment}{\# SimulatedCamera that we could subclass.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00087}00087         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a1cffe9ec97116f5bf52078882d6ef668}{\_settings}} = \{\}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00089}00089         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00090}00090             \textcolor{stringliteral}{"{}pixel size"{}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00091}00091             \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00092}00092             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_ad66a8ac59e85c432e26faf2dff0ab771}{\_pixel\_size}},}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00093}00093             \textcolor{keyword}{lambda} pxsz: setattr(self, \textcolor{stringliteral}{"{}\_pixel\_size"{}}, pxsz),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00094}00094             \textcolor{comment}{\# technically should be: (nextafter(0.0, inf), nextafter(inf, 0.0))}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00095}00095             values=(0.0, float(\textcolor{stringliteral}{"{}inf"{}})),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00096}00096         )}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00097}00097 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00098}00098     \textcolor{keyword}{def }\_fetch\_data(self) -\/> typing.Optional[np.ndarray]:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00099}00099         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6118863efe8fbacccca3ca374c554426}{\_acquiring}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a57378b5f29b27bb8b7e900d0f60bcca6}{\_acquiring}} \textcolor{keywordflow}{or} self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a87a1c1cb83df76ba9407f9bada9b5f76}{\_triggered}} == 0:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00100}00100             \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00102}00102         time.sleep(self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a062113b855ad862074bf7fb454812500}{\_exposure\_time}})}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00103}00103         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a6c4495c28354fa031827ddeb64f464e1}{\_triggered}}\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a87a1c1cb83df76ba9407f9bada9b5f76}{\_triggered}} -\/= 1}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00104}00104         \_logger.info(\textcolor{stringliteral}{"{}Creating image"{}})}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00106}00106         \textcolor{comment}{\# Use stage position to compute bounding box.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00107}00107         width = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}}.width // self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}}.h}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00108}00108         height = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a3f2076ab7014ffbdccf433233445da6c}{\_roi}}.height // self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_a4f523c4113da462ff05430ee6ef9142b}{\_binning}}.v}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00109}00109         x = int((self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0a30e1bb32a30814cc0f203e062c6ff3}{\_stage}}.position[\textcolor{stringliteral}{"{}x"{}}] / self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_ad66a8ac59e85c432e26faf2dff0ab771}{\_pixel\_size}}) -\/ (width / 2))}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00110}00110         y = int((self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0a30e1bb32a30814cc0f203e062c6ff3}{\_stage}}.position[\textcolor{stringliteral}{"{}y"{}}] / self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_ad66a8ac59e85c432e26faf2dff0ab771}{\_pixel\_size}}) -\/ (height / 2))}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00111}00111 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00112}00112         \textcolor{comment}{\# Use filter wheel position to select the image channel.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00113}00113         channel = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a346ebba1e74cbed29c45adf07ed5591f}{\_filterwheel}}.position}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00114}00114 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00115}00115         subsection = self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0d922bc0d3db442eb822fa4f7c35fc34}{\_image}}[y : y + height, x : x + width, channel]}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00117}00117         \textcolor{comment}{\# Gaussian filter on abs Z position to simulate being out of}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00118}00118         \textcolor{comment}{\# focus (Z position zero is in focus).}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00119}00119         blur = abs((self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera_a0a30e1bb32a30814cc0f203e062c6ff3}{\_stage}}.position[\textcolor{stringliteral}{"{}z"{}}]) / 10.0)}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00120}00120         image = scipy.ndimage.gaussian\_filter(subsection, blur)}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00122}00122         self.\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera_affe459ac3f82841ace82a5c5dcb5580b}{\_sent}} += 1}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00123}00123         \textcolor{comment}{\# Not sure this flipping is correct but it's required to make}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00124}00124         \textcolor{comment}{\# cockpit mosaic work.  This is probably related to not having}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00125}00125         \textcolor{comment}{\# defined what the image origin should be (see issue \#89).}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00126}00126         \textcolor{keywordflow}{return} np.fliplr(np.flipud(image))}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00128}00128 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00129}00129 \textcolor{keyword}{def }simulated\_setup\_from\_image(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00130}00130     filepath: str, **kwargs}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00131}00131 ) -\/> typing.Dict[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}]:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00132}00132     \textcolor{stringliteral}{"{}"{}"{}Create simulated devices given an image file.}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00133}00133 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00134}00134 \textcolor{stringliteral}{    To use }\textcolor{keyword}{with} the `device-\/server`::}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00136}00136         DEVICES = [}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00137}00137             device(simulated\_setup\_from\_image, \textcolor{stringliteral}{'localhost'}, 8000,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00138}00138                    conf=\{\textcolor{stringliteral}{'filepath'}: path\_to\_image\_file\}),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00139}00139         ]}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00140}00140     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00141}00141 \textcolor{stringliteral}{    PIL.Image.MAX\_IMAGE\_PIXELS = }\textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00142}00142     image = np.array(PIL.Image.open(filepath))}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00143}00143     \textcolor{keywordflow}{if} len(image.shape) < 3:}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00144}00144         \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}not an RGB image"{}})}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00145}00145 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00146}00146     stage = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_stage}{SimulatedStage}}(}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00147}00147         \{}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00148}00148             \textcolor{stringliteral}{"{}x"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(0, image.shape[0]),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00149}00149             \textcolor{stringliteral}{"{}y"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(0, image.shape[1]),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00150}00150             \textcolor{stringliteral}{"{}z"{}}: \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(-\/50, 50),}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00151}00151         \}}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00152}00152     )}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00153}00153     filterwheel = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_filter_wheel}{SimulatedFilterWheel}}(positions=image.shape[2])}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00154}00154     camera = \mbox{\hyperlink{classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera}{StageAwareCamera}}(image, stage, filterwheel)}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00156}00156     \textcolor{keywordflow}{return} \{}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00157}00157         \textcolor{stringliteral}{"{}camera"{}}: camera,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00158}00158         \textcolor{stringliteral}{"{}filterwheel"{}}: filterwheel,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00159}00159         \textcolor{stringliteral}{"{}stage"{}}: stage,}
+\DoxyCodeLine{\Hypertarget{stage__aware__camera_8py_source_l00160}00160     \}}
+
+\end{DoxyCode}

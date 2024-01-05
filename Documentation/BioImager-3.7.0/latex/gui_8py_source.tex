@@ -1,0 +1,541 @@
+\hypertarget{gui_8py_source}{}\doxysection{gui.\+py}
+\label{gui_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/gui.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/gui.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00020}00020 \textcolor{stringliteral}{"{}"{}"{}Simple GUIs for individual devices.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00021}00021 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00022}00022 \textcolor{stringliteral}{This is meant as a simple GUIs for help during development.  It does}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00023}00023 \textcolor{stringliteral}{}\textcolor{keywordflow}{not} aim to be pretty; it aims to be simple, complete, \textcolor{keywordflow}{and} work on any}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00024}00024 OS \textcolor{keywordflow}{and} Python without extra work.  It \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} meant \textcolor{keyword}{as} the basis \textcolor{keywordflow}{for} a}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00025}00025 full-\/fledged microscope GUI.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00027}00027 This module requires qtpy which \textcolor{keywordflow}{is} a requirement \textcolor{keywordflow}{for} the microscope}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00028}00028 \textcolor{stringliteral}{"{}GUI"{}} extra, i.e., only installed by `pip` \textcolor{keywordflow}{if} microscope \textcolor{keywordflow}{is} installed}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00029}00029 \textcolor{keyword}{with} ``pip install microscope[GUI]``.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00031}00031 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00032}00032 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00033}00033 \textcolor{stringliteral}{import argparse}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00034}00034 \textcolor{stringliteral}{import logging}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00035}00035 \textcolor{stringliteral}{import queue}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00036}00036 \textcolor{stringliteral}{import sys}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00037}00037 \textcolor{stringliteral}{import threading}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00038}00038 \textcolor{stringliteral}{import typing}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00039}00039 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00040}00040 \textcolor{stringliteral}{import numpy}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00041}00041 \textcolor{stringliteral}{import Pyro4}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00042}00042 \textcolor{stringliteral}{from qtpy import QtCore, QtGui, QtWidgets}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00043}00043 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00044}00044 \textcolor{stringliteral}{import microscope.abc}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00045}00045 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00046}00046 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00047}00047 \textcolor{stringliteral}{\_logger = logging.getLogger(\_\_name\_\_)}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00048}00048 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00049}00049 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00050}00050 \textcolor{stringliteral}{\# We use pickle so we can serialize numpy arrays for camera images and}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00051}00051 \textcolor{stringliteral}{\# deformable mirrors patterns.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00052}00052 \textcolor{stringliteral}{Pyro4.config.SERIALIZERS\_ACCEPTED.add("{}pickle"{})}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00053}00053 \textcolor{stringliteral}{Pyro4.config.SERIALIZER = "{}pickle"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00054}00054 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00055}00055 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00056}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_device_settings_widget}{00056}} \textcolor{stringliteral}{class DeviceSettingsWidget(QtWidgets.QWidget):}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00057}00057 \textcolor{stringliteral}{    "{}"{}"{}Table of device settings and its values.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00058}00058 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00059}00059 \textcolor{stringliteral}{    This widget simply shows the available settings on the device }\textcolor{keywordflow}{and}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00060}00060     their current value.  In the future it may add the possibility to}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00061}00061     modify them.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00062}00062 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00063}00063     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00064}00064 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00065}00065 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{abc.Device}}, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00066}00066         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00067}00067         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_device_settings_widget_aaf45b3c6e4ad7f489c0714aa22f6cbdb}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00069}00069         layout = QtWidgets.QFormLayout(self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00070}00070         \textcolor{keywordflow}{for} key, value \textcolor{keywordflow}{in} sorted(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_device_settings_widget_aaf45b3c6e4ad7f489c0714aa22f6cbdb}{\_device}}.get\_all\_settings().items()):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00071}00071             layout.addRow(key, QtWidgets.QLabel(parent=self, text=str(value)))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00072}00072         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00075}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget}{00075}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget}{ControllerWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00076}00076     \textcolor{stringliteral}{"{}"{}"{}Show devices in a controller.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00077}00077 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00078}00078 \textcolor{stringliteral}{    This widget shows a series of buttons }\textcolor{keyword}{with} the name of the}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00079}00079     multiple devices \textcolor{keywordflow}{in} a controller.  Toggling those buttons displays}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00080}00080     \textcolor{keywordflow}{or} hides a widget \textcolor{keywordflow}{for} that controlled device.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00082}00082     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00083}00083 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00084}00084 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00085}00085         self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller}{abc.Controller}}, *args, **kwargs}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00086}00086     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00087}00087         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00088}00088         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_a77bf481f643e0abd912cd0b6504d2c6c}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00090}00090         self.\_button2window: typing.Dict[}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00091}00091             QtWidgets.QPushButton, typing.Optional[QtWidgets.QMainWindow]}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00092}00092         ] = \{\}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00093}00093         self.\_button2name: typing.Dict[QtWidgets.QPushButton, str] = \{\}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00094}00094 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00095}00095         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_ae3d88d61441f7e8873f69098cbc16600}{\_button\_grp}} = QtWidgets.QButtonGroup(self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00096}00096         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_ae3d88d61441f7e8873f69098cbc16600}{\_button\_grp}}.setExclusive(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00097}00097         \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_a77bf481f643e0abd912cd0b6504d2c6c}{\_device}}.devices.keys():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00098}00098             button = QtWidgets.QPushButton(name, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00099}00099             button.setCheckable(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00100}00100             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_ae3d88d61441f7e8873f69098cbc16600}{\_button\_grp}}.addButton(button)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00101}00101             self.\_button2name[button] = name}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00102}00102             self.\_button2window[button] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00103}00103         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_ae3d88d61441f7e8873f69098cbc16600}{\_button\_grp}}.buttonToggled.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_a522ca0ee8a7632b93012497804502b2d}{toggleDeviceWidget}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00105}00105         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00106}00106         \textcolor{keywordflow}{for} button \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_ae3d88d61441f7e8873f69098cbc16600}{\_button\_grp}}.buttons():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00107}00107             layout.addWidget(button)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00108}00108         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00110}00110     \textcolor{keyword}{def }toggleDeviceWidget(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00111}00111         self, button: QtWidgets.QAbstractButton, checked: bool}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00112}00112     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00113}00113         \textcolor{keywordflow}{if} checked:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00114}00114             device = self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_controller_widget_a77bf481f643e0abd912cd0b6504d2c6c}{\_device}}.devices[self.\_button2name[button]]}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00115}00115             widget\_cls = \_guess\_device\_widget(device)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00116}00116             widget = widget\_cls(device)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00117}00117             window = \mbox{\hyperlink{classmicroscope_1_1gui_1_1_main_window}{MainWindow}}(widget, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00118}00118             self.\_button2window[button] = window}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00119}00119             window.show()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00120}00120         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00121}00121             window = self.\_button2window[button]}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00122}00122             \textcolor{keywordflow}{if} window \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00123}00123                 \_logger.error(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00124}00124                     \textcolor{stringliteral}{"{}unchecking subdevice button but there's no window"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00125}00125                 )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00126}00126             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00127}00127                 window.close()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00128}00128                 self.\_button2window[button] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00131}\mbox{\hyperlink{classmicroscope_1_1gui_1_1___data_queue}{00131}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1___data_queue}{\_DataQueue}}(queue.Queue):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00132}00132     \textcolor{preprocessor}{@Pyro4.expose}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00133}00133     \textcolor{keyword}{def }put(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00134}00134         \textcolor{keywordflow}{return} super().put(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00135}00135 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00136}00136 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00137}\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager}{00137}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager}{\_Imager}}(QtCore.QObject):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00138}00138     \textcolor{stringliteral}{"{}"{}"{}Helper for CameraWidget handling the internals of the camera trigger."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00140}00140     imageAcquired = QtCore.Signal(numpy.ndarray)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00141}00141 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00142}00142     \textcolor{keyword}{def }\_\_init\_\_(self, camera: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{abc.Camera}}) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00143}00143         super().\_\_init\_\_()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00144}00144         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a24ba629b6f353c6c9eb273f46f9909d6}{\_camera}} = camera}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00145}00145         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}} = \mbox{\hyperlink{classmicroscope_1_1gui_1_1___data_queue}{\_DataQueue}}()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00146}00146         \textcolor{keywordflow}{if} isinstance(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a24ba629b6f353c6c9eb273f46f9909d6}{\_camera}}, Pyro4.Proxy):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00147}00147             pyro\_daemon = Pyro4.Daemon()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00148}00148             queue\_uri = pyro\_daemon.register(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00149}00149             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a24ba629b6f353c6c9eb273f46f9909d6}{\_camera}}.set\_client(queue\_uri)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00150}00150             data\_thread = threading.Thread(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00151}00151                 target=pyro\_daemon.requestLoop, daemon=\textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00152}00152             )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00153}00153             data\_thread.start()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00154}00154         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00155}00155             self.\_device.set\_client(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00156}00156         fetch\_thread = threading.Thread(target=self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a076673b9c57fbf23fdf6bc94dd8d5f19}{fetchLoop}}, daemon=\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00157}00157         fetch\_thread.start()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00159}00159         \textcolor{comment}{\# Depending on the Qt backend this might not get called (seems}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00160}00160         \textcolor{comment}{\# to work on PySide2 but not with PyQt5).  The device itself}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00161}00161         \textcolor{comment}{\# should be removing clients that no longer work anyway.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00162}00162         self.destroyed.connect(\textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a24ba629b6f353c6c9eb273f46f9909d6}{\_camera}}.set\_client(\textcolor{keywordtype}{None}))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00164}00164     \textcolor{keyword}{def }snap(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00165}00165         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a24ba629b6f353c6c9eb273f46f9909d6}{\_camera}}.trigger()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00167}00167     \textcolor{keyword}{def }fetchLoop(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00168}00168         \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00169}00169             \textcolor{comment}{\# We may be getting images faster than we can display so}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00170}00170             \textcolor{comment}{\# only get the last image in the queue and discard the}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00171}00171             \textcolor{comment}{\# rest (we could do with a class that only has one item}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00172}00172             \textcolor{comment}{\# and putting a new item will discard the previous instead}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00173}00173             \textcolor{comment}{\# of blocking/queue).}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00174}00174             data = self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}}.get()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00175}00175             \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}}.empty():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00176}00176                 data = self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_a6ae9960c29d528c364bc950188afc01c}{\_data\_queue}}.get()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00177}00177             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager_ae591e60c8d78b126f452537ad09c1c81}{imageAcquired}}.emit(data)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00179}00179 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00180}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget}{00180}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget}{CameraWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00181}00181     \textcolor{stringliteral}{"{}"{}"{}Display camera"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00182}00182 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00183}00183     \textcolor{keyword}{def }\_\_init\_\_(self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera}{abc.Camera}}, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00184}00184         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00185}00185         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00186}00186         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a68d6ac54d0c42b58134acfbdab6cc228}{\_imager}} = \mbox{\hyperlink{classmicroscope_1_1gui_1_1___imager}{\_Imager}}(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00187}00187         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a68d6ac54d0c42b58134acfbdab6cc228}{\_imager}}.imageAcquired.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a3011eb5ad92ee17a991b1bf2b0b21df0}{displayData}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00189}00189         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a501cd093a0c86b4a19760516e70e921a}{\_view}} = QtWidgets.QLabel(parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00190}00190         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a3011eb5ad92ee17a991b1bf2b0b21df0}{displayData}}(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00191}00191             numpy.zeros(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.get\_sensor\_shape(), dtype=numpy.uint8)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00192}00192         )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00194}00194         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}} = QtWidgets.QCheckBox(\textcolor{stringliteral}{"{}Enabled"{}}, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00195}00195         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}}.stateChanged.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}{updateEnableState}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00196}00196 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00197}00197         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}} = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00198}00198         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}}.setSuffix(\textcolor{stringliteral}{"{} sec"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00199}00199         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}}.setSingleStep(0.1)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00200}00200         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}}.valueChanged.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.set\_exposure\_time)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00201}00201 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00202}00202         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e77fb94b006fa5508e3df5de92386ad}{\_snap\_button}} = QtWidgets.QPushButton(\textcolor{stringliteral}{"{}Snap"{}}, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00203}00203         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e77fb94b006fa5508e3df5de92386ad}{\_snap\_button}}.clicked.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a68d6ac54d0c42b58134acfbdab6cc228}{\_imager}}.snap)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00204}00204 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00205}00205         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}{updateEnableState}}()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00206}00206 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00207}00207         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00208}00208         controls\_row = QtWidgets.QHBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00209}00209         \textcolor{keywordflow}{for} widget \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00210}00210             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00211}00211             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00212}00212             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e77fb94b006fa5508e3df5de92386ad}{\_snap\_button}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00213}00213         ]:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00214}00214             controls\_row.addWidget(widget)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00215}00215         layout.addLayout(controls\_row)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00216}00216         layout.addWidget(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a501cd093a0c86b4a19760516e70e921a}{\_view}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00217}00217         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00218}00218 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00219}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}{00219}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a93f7b018d4ca06253ca1ba5914d34e90}{updateEnableState}}(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00220}00220         \textcolor{stringliteral}{"{}"{}"{}Update UI and camera state after enable check box"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00221}00221         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}}.isChecked():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00222}00222             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.enable()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00223}00223         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00224}00224             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.disable()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00225}00225 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00226}00226         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}}.isChecked() != self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.get\_is\_enabled():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00227}00227             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}}.setChecked(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.get\_is\_enabled())}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00228}00228             \_logger.error(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00229}00229                 \textcolor{stringliteral}{"{}failed to \%s camera"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00230}00230                 \textcolor{stringliteral}{"{}enable"{}} \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a46a6e1c35a14f4fe7a0b12ecd621c213}{\_enable\_check}}.isChecked() \textcolor{keywordflow}{else} \textcolor{stringliteral}{"{}disable"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00231}00231             )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00232}00232 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00233}00233         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e77fb94b006fa5508e3df5de92386ad}{\_snap\_button}}.setEnabled(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.get\_is\_enabled())}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00234}00234         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a58f7825cf8c117f64a49ce41c96d2071}{\_exposure\_box}}.setEnabled(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a7e414d3869144d18785e26031f81022e}{\_device}}.get\_is\_enabled())}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00235}00235 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00236}00236     \textcolor{keyword}{def }displayData(self, data: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00237}00237         np\_to\_qt = \{}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00238}00238             numpy.dtype(\textcolor{stringliteral}{"{}uint8"{}}): QtGui.QImage.Format\_Grayscale8,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00239}00239             numpy.dtype(\textcolor{stringliteral}{"{}uint16"{}}): QtGui.QImage.Format\_Grayscale16,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00240}00240         \}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00241}00241         qt\_img = QtGui.QImage(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00242}00242             data.tobytes(), *data.shape, np\_to\_qt[data.dtype]}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00243}00243         )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00244}00244         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_camera_widget_a501cd093a0c86b4a19760516e70e921a}{\_view}}.setPixmap(QtGui.QPixmap.fromImage(qt\_img))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00246}00246 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00247}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget}{00247}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget}{DeformableMirrorWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00248}00248     \textcolor{stringliteral}{"{}"{}"{}Display a slider for each actuator.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00249}00249 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00250}00250 \textcolor{stringliteral}{    Constructing this widget will set all actuators to their mid-\/point}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00251}00251 \textcolor{stringliteral}{    since the actuators position are }\textcolor{keywordflow}{not} queryable..  The reset button}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00252}00252     does this too, i.e., it sets all actuators to their mid-\/point.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00253}00253     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00254}00254 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00255}00255 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00256}00256         self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror}{abc.DeformableMirror}}, *args, **kwargs}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00257}00257     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00258}00258         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00259}00259         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a31a2c58bb388f77a454b99bb8da429cb}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00260}00260 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00261}00261         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}} = numpy.ndarray(shape=(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a31a2c58bb388f77a454b99bb8da429cb}{\_device}}.n\_actuators))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00262}00262         self.\_actuators: typing.List[QtWidgets.QSlider] = []}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00263}00263         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a31a2c58bb388f77a454b99bb8da429cb}{\_device}}.n\_actuators):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00264}00264             actuator = QtWidgets.QSlider(QtCore.Qt.Horizontal, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00265}00265             actuator.setMinimum(0)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00266}00266             actuator.setMaximum(100)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00267}00267 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00268}00268             \textcolor{keyword}{def }setThisActuator(value, actuator\_index=i):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00269}00269                 self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a8fe0ac3eb0775d920057e97889735f67}{setActuatorValue}}(actuator\_index, value)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00270}00270 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00271}00271             actuator.valueChanged.connect(setThisActuator)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00272}00272             self.\_actuators.append(actuator)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00273}00273         \textcolor{comment}{\# We don't know the pattern currently applied to the mirror so}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00274}00274         \textcolor{comment}{\# we reset it which also updates the slider positions.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00275}00275         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}{resetPattern}}()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00276}00276 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00277}00277         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_ae3923f62f62856b230be231fe80f714c}{\_reset\_button}} = QtWidgets.QPushButton(\textcolor{stringliteral}{"{}Reset"{}}, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00278}00278         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_ae3923f62f62856b230be231fe80f714c}{\_reset\_button}}.clicked.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}{resetPattern}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00279}00279 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00280}00280         main\_layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00281}00281         main\_layout.addWidget(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_ae3923f62f62856b230be231fe80f714c}{\_reset\_button}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00282}00282 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00283}00283         actuators\_layout = QtWidgets.QFormLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00284}00284         actuators\_layout.setLabelAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00285}00285         \textcolor{keywordflow}{for} i, actuator \textcolor{keywordflow}{in} enumerate(self.\_actuators, start=1):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00286}00286             actuators\_layout.addRow(str(i), actuator)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00287}00287         main\_layout.addLayout(actuators\_layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00288}00288 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00289}00289         self.setLayout(main\_layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00290}00290 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00291}00291     \textcolor{keyword}{def }setActuatorValue(self, actuator\_index: int, value: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00292}00292         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} (0 < actuator\_index < self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}}.size):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00293}00293             \textcolor{keywordflow}{raise} ValueError(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00294}00294                 \textcolor{stringliteral}{"{}index \%d is invalid because DM has \%d actuators"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00295}00295                 \% (actuator\_index, self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}}.size)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00296}00296             )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00297}00297         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}}[actuator\_index] = value / 100.0}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00298}00298         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a31a2c58bb388f77a454b99bb8da429cb}{\_device}}.apply\_pattern(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00299}00299 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00300}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}{00300}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a69f6ad309d27fcd67e8b8fa3b3887df6}{resetPattern}}(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00301}00301         \textcolor{stringliteral}{"{}"{}"{}Set all actuators to their mid-\/point (0.5)."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00302}00302         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}}.fill(0.5)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00303}00303         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a31a2c58bb388f77a454b99bb8da429cb}{\_device}}.apply\_pattern(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00304}00304         \textcolor{keywordflow}{for} i, actuator \textcolor{keywordflow}{in} enumerate(self.\_actuators):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00305}00305             actuator.blockSignals(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00306}00306             actuator.setSliderPosition(int(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_deformable_mirror_widget_a00f56c2830b97138ab6b61aa0dffb842}{\_pattern}}[i] * 100))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00307}00307             actuator.blockSignals(\textcolor{keyword}{False})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00308}00308 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00309}00309 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00310}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget}{00310}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget}{FilterWheelWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00311}00311     \textcolor{stringliteral}{"{}"{}"{}Group of toggle push buttons to change filter position.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00312}00312 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00313}00313 \textcolor{stringliteral}{    This widget shows a table of toggle buttons }\textcolor{keyword}{with} the filterwheel}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00314}00314     position numbers.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00315}00315     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00316}00316 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00317}00317 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00318}00318         self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{abc.FilterWheel}}, *args, **kwargs}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00319}00319     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00320}00320         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00321}00321         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a349586bdd3116d117e06a8b9771b1949}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00322}00322 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00323}00323         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}} = QtWidgets.QButtonGroup(self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00324}00324         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a349586bdd3116d117e06a8b9771b1949}{\_device}}.n\_positions):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00325}00325             button = QtWidgets.QPushButton(str(i + 1), parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00326}00326             button.setCheckable(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00327}00327             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}}.addButton(button, i)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00328}00328         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}}.button(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a349586bdd3116d117e06a8b9771b1949}{\_device}}.position).setChecked(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00329}00329 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00330}00330         \textcolor{comment}{\# We use buttonClicked instead of idClicked because that}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00331}00331         \textcolor{comment}{\# requires Qt 5.15 which is too recent.  Once we can use}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00332}00332         \textcolor{comment}{\# idClicked, then the slot will automatically get the wanted}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00333}00333         \textcolor{comment}{\# position.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00334}00334         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}}.buttonClicked.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a76fa88dbc9af27a77a21c1bda86bb9fc}{setFilterWheelPosition}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00335}00335 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00336}00336         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00337}00337         \textcolor{keywordflow}{for} button \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}}.buttons():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00338}00338             layout.addWidget(button)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00339}00339         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00340}00340 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00341}00341     \textcolor{keyword}{def }setFilterWheelPosition(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00342}00342         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_a349586bdd3116d117e06a8b9771b1949}{\_device}}.position = self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_filter_wheel_widget_aeb8b1f4cbeea1c9ecefbae590e7aa0c8}{\_button\_grp}}.checkedId()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00343}00343 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00344}00344 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00345}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget}{00345}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget}{LightSourceWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00346}00346     \textcolor{keyword}{def }\_\_init\_\_(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00347}00347         self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{abc.LightSource}}, *args, **kwargs}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00348}00348     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00349}00349         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00350}00350         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00352}00352         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}} = QtWidgets.QCheckBox(\textcolor{stringliteral}{"{}Enabled"{}}, parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00353}00353         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}}.stateChanged.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}{updateEnableState}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00354}00354 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00355}00355         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}} = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00356}00356         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.setMinimum(0.0)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00357}00357         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.setMaximum(1.0)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00358}00358         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.setValue(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.power)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00359}00359         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.setSingleStep(0.01)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00360}00360         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.setAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00361}00361         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}}.valueChanged.connect(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00362}00362             \textcolor{keyword}{lambda} x: setattr(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}, \textcolor{stringliteral}{"{}power"{}}, x)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00363}00363         )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00364}00364 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00365}00365         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}} = QtWidgets.QLineEdit(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00366}00366             str(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.power), parent=self}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00367}00367         )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00368}00368         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}}.setReadOnly(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00369}00369         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}}.setAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00370}00370 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00371}00371         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a4e665b3337d6a5dc852cc26680196adb}{\_get\_power\_timer}} = QtCore.QTimer(self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00372}00372         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a4e665b3337d6a5dc852cc26680196adb}{\_get\_power\_timer}}.timeout.connect(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_aae580fbda9ae9b82f89e556d6f93914f}{updateCurrentPower}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00373}00373         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a4e665b3337d6a5dc852cc26680196adb}{\_get\_power\_timer}}.setInterval(500)  \textcolor{comment}{\# msec}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00374}00374 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00375}00375         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}{updateEnableState}}()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00376}00376 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00377}00377         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00378}00378         layout.addWidget(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00379}00379         power\_layout = QtWidgets.QFormLayout()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00380}00380         power\_layout.addRow(\textcolor{stringliteral}{"{}Set power"{}}, self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a477f04478603715750b59c61629a72aa}{\_set\_power\_box}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00381}00381         power\_layout.addRow(\textcolor{stringliteral}{"{}Current power"{}}, self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00382}00382         layout.addLayout(power\_layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00383}00383         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00384}00384 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00385}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}{00385}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}{updateEnableState}}(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00386}00386         \textcolor{stringliteral}{"{}"{}"{}Update UI and light source state after enable check box"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00387}00387         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}}.isChecked():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00388}00388             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.enable()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00389}00389         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00390}00390             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.disable()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00391}00391 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00392}00392         device\_is\_enabled = self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.get\_is\_enabled()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00393}00393 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00394}00394         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}}.isChecked() != device\_is\_enabled:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00395}00395             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}}.setChecked(device\_is\_enabled)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00396}00396             \_logger.error(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00397}00397                 \textcolor{stringliteral}{"{}failed to \%s light"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00398}00398                 \textcolor{stringliteral}{"{}enable"{}} \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_ab53ce8fc0d14ddf6547d7695872e8437}{\_enable\_check}}.isChecked() \textcolor{keywordflow}{else} \textcolor{stringliteral}{"{}disable"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00399}00399             )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00400}00400 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00401}00401         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}}.setEnabled(device\_is\_enabled)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00402}00402         \textcolor{keywordflow}{if} device\_is\_enabled:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00403}00403             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a4e665b3337d6a5dc852cc26680196adb}{\_get\_power\_timer}}.start()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00404}00404         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00405}00405             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a4e665b3337d6a5dc852cc26680196adb}{\_get\_power\_timer}}.stop()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00406}00406             self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}}.setText(\textcolor{stringliteral}{"{}0.0"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00407}00407 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00408}00408     \textcolor{keyword}{def }updateCurrentPower(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00409}00409         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_a5bffe05fd048da5c042816e65b10cd6d}{\_current\_power}}.setText(str(self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_light_source_widget_acb1dacdd487e5dc45fe4bfec9a83be30}{\_device}}.power))}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00410}00410 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00411}00411 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00412}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget}{00412}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget}{StageWidget}}(QtWidgets.QWidget):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00413}00413     \textcolor{stringliteral}{"{}"{}"{}Stage widget displaying each of the axis position.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00414}00414 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00415}00415 \textcolor{stringliteral}{    This widget shows each of the axis, their limits, }\textcolor{keywordflow}{and} a spin box}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00416}00416     to change the axis position.  This requires the stage to be}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00417}00417     enabled since otherwise it \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} able to move it \textcolor{keywordflow}{or} query the}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00418}00418     limits.}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00419}00419     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00420}00420 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00421}00421 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self, device: microscope.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage}{abc.Stage}}, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00422}00422         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00423}00423         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget_a2079b6aaa910b78afc73c49ad39a76e7}{\_device}} = device}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00424}00424 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00425}00425         layout = QtWidgets.QFormLayout(self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00426}00426         \textcolor{keywordflow}{for} name, axis \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget_a2079b6aaa910b78afc73c49ad39a76e7}{\_device}}.axes.items():}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00427}00427             label = \textcolor{stringliteral}{"{}\%s (\%s : \%s)"{}} \% (}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00428}00428                 name,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00429}00429                 axis.limits.lower,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00430}00430                 axis.limits.upper,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00431}00431             )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00432}00432 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00433}00433             position\_box = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00434}00434             position\_box.setMinimum(axis.limits.lower)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00435}00435             position\_box.setMaximum(axis.limits.upper)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00436}00436             position\_box.setValue(axis.position)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00437}00437             position\_box.setSingleStep(1.0)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00438}00438 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00439}00439             \textcolor{keyword}{def }setPositionSlot(position: float, name: str = name):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00440}00440                 \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget_afc9571f97559458f64045a1fd298f6dd}{setPosition}}(name, position)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00441}00441 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00442}00442             position\_box.valueChanged.connect(setPositionSlot)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00443}00443 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00444}00444             layout.addRow(label, position\_box)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00445}00445         self.setLayout(layout)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00446}00446 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00447}00447     \textcolor{keyword}{def }setPosition(self, name: str, position: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00448}00448         self.\mbox{\hyperlink{classmicroscope_1_1gui_1_1_stage_widget_a2079b6aaa910b78afc73c49ad39a76e7}{\_device}}.axes[name].move\_to(position)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00449}00449 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00450}00450 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00451}\mbox{\hyperlink{classmicroscope_1_1gui_1_1_main_window}{00451}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1gui_1_1_main_window}{MainWindow}}(QtWidgets.QMainWindow):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00452}00452     \textcolor{keyword}{def }\_\_init\_\_(self, widget: QtWidgets.QWidget, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00453}00453         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00454}00454 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00455}00455         scroll = QtWidgets.QScrollArea()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00456}00456         scroll.setWidgetResizable(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00457}00457         scroll.setWidget(widget)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00458}00458 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00459}00459         self.setCentralWidget(scroll)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00460}00460         \textcolor{keywordflow}{for} key, slot \textcolor{keywordflow}{in} (}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00461}00461             (QtGui.QKeySequence.Quit, self.close),}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00462}00462             (QtGui.QKeySequence.Close, self.close),}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00463}00463         ):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00464}00464             shortcut = QtWidgets.QShortcut(key, self)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00465}00465             shortcut.activated.connect(slot)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00466}00466 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00467}00467 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00468}00468 \textcolor{keyword}{def }\_guess\_device\_widget(device) -\/> QtWidgets.QWidget:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00469}00469     \textcolor{keywordflow}{if} hasattr(device, \textcolor{stringliteral}{"{}axes"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00470}00470         \textcolor{keywordflow}{return} StageWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00471}00471     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}devices"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00472}00472         \textcolor{keywordflow}{return} ControllerWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00473}00473     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}n\_positions"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00474}00474         \textcolor{keywordflow}{return} FilterWheelWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00475}00475     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}power"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00476}00476         \textcolor{keywordflow}{return} LightSourceWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00477}00477     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}n\_actuators"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00478}00478         \textcolor{keywordflow}{return} DeformableMirrorWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00479}00479     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}get\_sensor\_shape"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00480}00480         \textcolor{keywordflow}{return} CameraWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00481}00481     \textcolor{keywordflow}{elif} hasattr(device, \textcolor{stringliteral}{"{}get\_all\_settings"{}}):}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00482}00482         \textcolor{keywordflow}{return} DeviceSettingsWidget}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00483}00483     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00484}00484         \textcolor{keywordflow}{raise} TypeError(\textcolor{stringliteral}{"{}device is not a Microscope Device"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00485}00485 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00486}00486 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00487}00487 \textcolor{keyword}{def }main(argv: typing.Sequence[str]) -\/> int:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00488}00488     app = QtWidgets.QApplication(argv)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00489}00489     app.setApplicationName(\textcolor{stringliteral}{"{}Microscope GUI"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00490}00490     app.setOrganizationDomain(\textcolor{stringliteral}{"{}python-\/microscope.org"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00491}00491 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00492}00492     type\_to\_widget = \{}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00493}00493         \textcolor{stringliteral}{"{}Camera"{}}: CameraWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00494}00494         \textcolor{stringliteral}{"{}Controller"{}}: ControllerWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00495}00495         \textcolor{stringliteral}{"{}DeformableMirror"{}}: DeformableMirrorWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00496}00496         \textcolor{stringliteral}{"{}DeviceSettings"{}}: DeviceSettingsWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00497}00497         \textcolor{stringliteral}{"{}FilterWheel"{}}: FilterWheelWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00498}00498         \textcolor{stringliteral}{"{}LightSourceWidget"{}}: LightSourceWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00499}00499         \textcolor{stringliteral}{"{}Stage"{}}: StageWidget,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00500}00500     \}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00501}00501 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00502}00502     parser = argparse.ArgumentParser(prog=\textcolor{stringliteral}{"{}microscope-\/gui"{}})}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00503}00503 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00504}00504     \textcolor{comment}{\# Although we have a function that can guess the device type from}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00505}00505     \textcolor{comment}{\# the attributes on the proxy this is still useful.  For example,}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00506}00506     \textcolor{comment}{\# to display the device settings instead of the device UI.  Or}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00507}00507     \textcolor{comment}{\# maybe we're dealing with a device that implements more than one}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00508}00508     \textcolor{comment}{\# interface (earlier iterations of aurox Clarity were both a}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00509}00509     \textcolor{comment}{\# camera and a filterwheel).  This option provides a way to force}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00510}00510     \textcolor{comment}{\# a specific widget.}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00511}00511     parser.add\_argument(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00512}00512         \textcolor{stringliteral}{"{}type"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00513}00513         action=\textcolor{stringliteral}{"{}store"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00514}00514         type=str,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00515}00515         metavar=\textcolor{stringliteral}{"{}DEVICE-\/TYPE"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00516}00516         choices=type\_to\_widget.keys(),}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00517}00517         help=\textcolor{stringliteral}{"{}Type of device/widget to show"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00518}00518     )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00519}00519 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00520}00520     parser.add\_argument(}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00521}00521         \textcolor{stringliteral}{"{}uri"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00522}00522         action=\textcolor{stringliteral}{"{}store"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00523}00523         type=str,}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00524}00524         metavar=\textcolor{stringliteral}{"{}DEVICE-\/URI"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00525}00525         help=\textcolor{stringliteral}{"{}URI for device"{}},}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00526}00526     )}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00527}00527     args = parser.parse\_args(app.arguments()[1:])}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00528}00528 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00529}00529     device = Pyro4.Proxy(args.uri)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00530}00530     widget\_cls = type\_to\_widget[args.type]}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00531}00531     widget = widget\_cls(device)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00532}00532     window = \mbox{\hyperlink{classmicroscope_1_1gui_1_1_main_window}{MainWindow}}(widget)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00533}00533     window.show()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00534}00534 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00535}00535     \textcolor{keywordflow}{return} app.exec\_()}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00536}00536 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00537}00537 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00538}00538 \textcolor{keyword}{def }\_setuptools\_entry\_point() -\/> int:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00539}00539     \textcolor{comment}{\# The setuptools entry point must be a function, we can't simply}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00540}00540     \textcolor{comment}{\# name this module even if this module does work as a script.  We}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00541}00541     \textcolor{comment}{\# also do not want to set the default of main() to sys.argv}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00542}00542     \textcolor{comment}{\# because when the documentation is generated (with Sphinx's}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00543}00543     \textcolor{comment}{\# autodoc extension), then sys.argv gets replaced with the}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00544}00544     \textcolor{comment}{\# sys.argv value at the time docs were generated (see}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00545}00545     \textcolor{comment}{\# https://stackoverflow.com/a/12087750 )}}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00546}00546     \textcolor{keywordflow}{return} main(sys.argv)}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00547}00547 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00548}00548 }
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00549}00549 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{gui_8py_source_l00550}00550     sys.exit(main(sys.argv))}
+
+\end{DoxyCode}

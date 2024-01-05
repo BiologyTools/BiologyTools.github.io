@@ -1,0 +1,494 @@
+\hypertarget{_scripting_8cs_source}{}\doxysection{Scripting.\+cs}
+\label{_scripting_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Scripting.cs@{F:/repos/BioImager/BioImager/Source/Scripting.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00001}00001 \textcolor{keyword}{using }CSScriptLib;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00002}00002 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00003}00003 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00004}00004 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00005}\mbox{\hyperlink{class_bio_imager_1_1_scripting}{00005}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}} : Form}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00006}00006     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00007}00007         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} log;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00008}00008         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_code_view}{CodeView}} view = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00009}00009         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} ImageJPath = Properties.Settings.Default.ImageJPath;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00010}00010 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00011}00011         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} LogLine(\textcolor{keywordtype}{string} s)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00012}00012         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00013}00013             log += s + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00014}00014         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00015}00015         \textcolor{keyword}{public} \textcolor{keyword}{static} Dictionary<string, Script> Scripts = \textcolor{keyword}{new} Dictionary<string, Script>();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00016}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{00016}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00017}00017         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00018}00018             \textcolor{keyword}{public} \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00019}00019             \textcolor{keyword}{public} \textcolor{keywordtype}{string} file;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00020}00020             \textcolor{keyword}{public} \textcolor{keywordtype}{string} scriptString;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00021}00021             \textcolor{keyword}{public} dynamic script;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00022}00022             \textcolor{keyword}{public} \textcolor{keywordtype}{object} obj;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00023}00023             \textcolor{keyword}{public} \textcolor{keywordtype}{string} output = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00024}00024             \textcolor{keyword}{public} \textcolor{keywordtype}{bool} done = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00025}00025             \textcolor{keyword}{public} \textcolor{keyword}{static} List<string> usings = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00026}00026             \textcolor{keyword}{public} Exception ex = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00027}00027             \textcolor{keyword}{public} Thread thread;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00028}00028             \textcolor{keyword}{public} ScriptType type = ScriptType.script;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00029}00029             \textcolor{comment}{/* Creating a new script object. */}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00030}00030             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(\textcolor{keywordtype}{string} file, \textcolor{keywordtype}{string} scriptStr)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00031}00031             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00032}00032                 name = Path.GetFileName(file);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00033}00033                 scriptString = scriptStr;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00034}00034                 \textcolor{keywordflow}{if} (file.EndsWith(\textcolor{stringliteral}{"{}.txt"{}}) || file.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00035}00035                     type = ScriptType.imagej;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00036}00036             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00037}00037             \textcolor{comment}{/* Reading the file and storing the file name, file path, and file contents in the}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00038}00038 \textcolor{comment}{            variables name, file, and scriptString. */}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00039}00039             \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(\textcolor{keywordtype}{string} file)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00040}00040             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00041}00041                 name = Path.GetFileName(file);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00042}00042                 scriptString = File.ReadAllText(file);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00043}00043                 this.file = file;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00044}00044                 \textcolor{keywordflow}{if} (file.EndsWith(\textcolor{stringliteral}{"{}.txt"{}}) || file.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00045}00045                     type = ScriptType.imagej;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00046}00046             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00051}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aaef0cfb462ea92e6eb6425e59f1fd8b2}{00051}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aaef0cfb462ea92e6eb6425e59f1fd8b2}{Run}}(\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} rn)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00052}00052             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00053}00053                 scriptName = rn.name;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00054}00054                 Thread t = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} ThreadStart(RunScript));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00055}00055                 t.Start();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00056}00056             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00057}00057             \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{string} scriptName = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00058}00058             \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{string} str = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00060}00060             \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{void} RunScript()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00061}00061             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00062}00062                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} rn = Scripts[scriptName];}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00063}00063                 rn.ex = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00064}00064                 \textcolor{keywordflow}{if} (rn.type == ScriptType.imagej)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00065}00065                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00066}00066                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00067}00067                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00068}00068                         rn.done = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00069}00069                         \mbox{\hyperlink{class_bio_imager_1_1_image_j}{ImageJ}}.\mbox{\hyperlink{class_bio_imager_1_1_image_j_a88988cb11e1887bc2f071917b24749f9}{RunString}}(rn.scriptString, \textcolor{stringliteral}{"{}"{}}, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00070}00070                         rn.done = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00071}00071                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00072}00072                     \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00073}00073                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00074}00074                         rn.ex = e;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00075}00075                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00076}00076                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00077}00077                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00078}00078                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00079}00079                     \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00080}00080                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00081}00081                         rn.done = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00082}00082                         rn.script = CSScript.Evaluator.LoadCode(rn.scriptString);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00083}00083                         rn.obj = rn.script.Load();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00084}00084                         rn.output = rn.obj.ToString();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00085}00085                         rn.done = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00086}00086                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00087}00087                     \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00088}00088                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00089}00089                         rn.ex = e;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00090}00090                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00091}00091                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00092}00092             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00099}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a629e166dcb7a5471e3315fdac436403a}{00099}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{object} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a629e166dcb7a5471e3315fdac436403a}{RunString}}(\textcolor{keywordtype}{string} st)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00100}00100             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00101}00101                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00102}00102                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00103}00103                     \textcolor{keywordtype}{string} loader =}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00104}00104                   \textcolor{stringliteral}{@"{}//css\_reference "{}} + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + \textcolor{stringliteral}{@"{}.dll}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00105}00105 \textcolor{stringliteral}{                    using System;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00106}00106 \textcolor{stringliteral}{                    using System.Windows.Forms;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00107}00107 \textcolor{stringliteral}{                    using System.Drawing;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00108}00108 \textcolor{stringliteral}{                    using System.Threading;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00109}00109 \textcolor{stringliteral}{                    using Bio;"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00110}00110                     \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} usings)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00111}00111                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00112}00112                         loader += usings + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00113}00113                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00114}00114                     loader += \textcolor{stringliteral}{@"{}}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00115}00115 \textcolor{stringliteral}{                    public class Loader}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00116}00116 \textcolor{stringliteral}{                    \{}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00117}00117 \textcolor{stringliteral}{                        public object Load()}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00118}00118 \textcolor{stringliteral}{                        \{"{}} +}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00119}00119                             st + \textcolor{stringliteral}{@"{};}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00120}00120 \textcolor{stringliteral}{                            return true;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00121}00121 \textcolor{stringliteral}{                        \}}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00122}00122 \textcolor{stringliteral}{                    \}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00123}00123                     dynamic script = CSScript.Evaluator.LoadCode(loader);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00124}00124                     \textcolor{keywordflow}{return} script.Load();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00125}00125                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00126}00126                 \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00127}00127                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00128}00128                     MessageBox.Show(e.Message, e.Source);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00129}00129                     \textcolor{keywordflow}{return} e;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00130}00130                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00131}00131             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00133}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a8f985230cfdc3d3d9f8da7e87c206482}{00133}}             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a8f985230cfdc3d3d9f8da7e87c206482}{Run}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00134}00134             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00135}00135                 \textcolor{keywordflow}{if} (!Scripts.ContainsKey(name))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00136}00136                     Scripts.Add(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00137}00137                 scriptName = this.name;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00138}00138                 thread = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} ThreadStart(RunScript));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00139}00139                 thread.Start();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00140}00140             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00142}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a7c1e7807db2b1b7d769f9340d8c4b801}{00142}}             \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a7c1e7807db2b1b7d769f9340d8c4b801}{Stop}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00143}00143             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00144}00144                 \textcolor{keywordflow}{if} (thread != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00145}00145                     thread.Abort();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00146}00146             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00151}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{00151}}             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{ToString}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00152}00152             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00153}00153                 \textcolor{keywordflow}{if} (thread != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00154}00154                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00155}00155                     \textcolor{keywordflow}{return} name.ToString() + \textcolor{stringliteral}{"{}, "{}} + thread.ThreadState.ToString();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00156}00156                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00157}00157                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00158}00158                     \textcolor{keywordflow}{return} name.ToString();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00159}00159             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00160}00160         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00161}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{00161}}         \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00162}00162         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00163}00163             \textcolor{keyword}{public} Event type;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00171}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_ac54c1ddd27e45c5afa90c7cc017ad894}{00171}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_ac54c1ddd27e45c5afa90c7cc017ad894}{GetUp}}(PointD pf, MouseButtons mb)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00172}00172             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00173}00173                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} st = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00174}00174                 st.type = Event.Up;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00175}00175                 st.p = pf;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00176}00176                 st.buts = mb;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00177}00177                 \textcolor{keywordflow}{return} st;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00178}00178             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00186}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_a94e7a1c0470b1a767f4cd5679b85e3bd}{00186}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_a94e7a1c0470b1a767f4cd5679b85e3bd}{GetDown}}(PointD pf, MouseButtons mb)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00187}00187             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00188}00188                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} st = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00189}00189                 st.type = Event.Down;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00190}00190                 st.p = pf;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00191}00191                 st.buts = mb;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00192}00192                 \textcolor{keywordflow}{return} st;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00193}00193             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00201}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_aa4d275f6e9ddb9e52d2cb7d5899901aa}{00201}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_aa4d275f6e9ddb9e52d2cb7d5899901aa}{GetMove}}(PointD pf, MouseButtons mb)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00202}00202             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00203}00203                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} st = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00204}00204                 st.type = Event.Move;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00205}00205                 st.p = pf;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00206}00206                 st.buts = mb;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00207}00207                 \textcolor{keywordflow}{return} st;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00208}00208             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00214}\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_aa47eebfd91cebbf280006076a2f24201}{00214}}             \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state_aa47eebfd91cebbf280006076a2f24201}{GetNone}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00215}00215             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00216}00216                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} st = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00217}00217                 st.type = Event.None;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00218}00218                 st.p = \textcolor{keyword}{new} PointD();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00219}00219                 st.buts = MouseButtons.None;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00220}00220                 \textcolor{keywordflow}{return} st;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00221}00221             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00222}00222 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00223}00223             \textcolor{keyword}{public} PointD p;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00224}00224             \textcolor{keyword}{public} MouseButtons buts;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00225}00225             \textcolor{keyword}{public} \textcolor{keywordtype}{bool} processed = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00226}00226             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00227}00227             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00228}00228                 \textcolor{keywordflow}{return} type.ToString() + \textcolor{stringliteral}{"{} ,("{}} + p.X.ToString() + \textcolor{stringliteral}{"{}, "{}} + p.Y.ToString() + \textcolor{stringliteral}{"{}), "{}} + buts.ToString();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00229}00229             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00230}00230 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00231}00231         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00232}00232         \textcolor{keyword}{public} \textcolor{keyword}{enum} Event}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00233}00233         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00234}00234             Down,}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00235}00235             Up,}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00236}00236             Move,}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00237}00237             None}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00238}00238         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00239}00239         \textcolor{keyword}{public} \textcolor{keyword}{enum} ScriptType}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00240}00240         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00241}00241             tool,}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00242}00242             script,}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00243}00243             imagej}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00244}00244         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00245}00245         \textcolor{keyword}{private} \textcolor{keyword}{static} State state;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00249}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a9047e35119a5344d599dd0245a9f0a48}{00249}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a9047e35119a5344d599dd0245a9f0a48}{GetState}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00250}00250         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00251}00251             \textcolor{keywordflow}{return} state;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00252}00252         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00261}\mbox{\hyperlink{class_bio_imager_1_1_scripting_ae1ff106fe8d534242c5a371d9fb87af2}{00261}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_ae1ff106fe8d534242c5a371d9fb87af2}{UpdateState}}(\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_state}{State}} s)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00262}00262         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00263}00263             \textcolor{keywordflow}{if} (s == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00264}00264                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00265}00265             \textcolor{keywordflow}{if} (state == \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00266}00266                 state = s;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00267}00267             \textcolor{keywordflow}{if} (s.p.X == state.p.X \&\& s.p.Y == state.p.Y \&\& s.type == state.type)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00268}00268             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00269}00269                 state.processed = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00270}00270             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00271}00271             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00272}00272                 state = s;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00273}00273         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00275}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a71867cb0ee29ae78164f1b381f95efea}{00275}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a71867cb0ee29ae78164f1b381f95efea}{RefreshItems}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00276}00276         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00277}00277             Scripts.Clear();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00278}00278             \textcolor{keywordtype}{string} st = Application.StartupPath;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00279}00279             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} file \textcolor{keywordflow}{in} Directory.GetFiles(st + \textcolor{stringliteral}{"{}/Scripts"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00280}00280             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00281}00281                 \textcolor{keywordflow}{if} (!Scripts.ContainsKey(Path.GetFileName(file)))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00282}00282                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00283}00283                     \textcolor{comment}{//This is a script file.}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00284}00284                     \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(file, File.ReadAllText(file));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00285}00285                     ListViewItem lv = \textcolor{keyword}{new} ListViewItem();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00286}00286                     lv.Tag = sc;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00287}00287                     lv.Text = sc.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{ToString}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00288}00288                     scriptView.Items.Add(lv);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00289}00289                     Scripts.Add(lv.Text, sc);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00290}00290                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00291}00291             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00292}00292             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} file \textcolor{keywordflow}{in} Directory.GetFiles(st + \textcolor{stringliteral}{"{}/Tools"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00293}00293             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00294}00294                 \textcolor{keywordflow}{if} (file.EndsWith(\textcolor{stringliteral}{"{}.cs"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00295}00295                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00296}00296                     \textcolor{keywordflow}{if} (!Scripts.ContainsKey(Path.GetFileName(file)))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00297}00297                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00298}00298                         \textcolor{comment}{//This is a script file.}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00299}00299                         \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(file, File.ReadAllText(file));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00300}00300                         sc.type = ScriptType.tool;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00301}00301                         ListViewItem lv = \textcolor{keyword}{new} ListViewItem();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00302}00302                         lv.Tag = sc;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00303}00303                         lv.Text = sc.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{ToString}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00304}00304                         scriptView.Items.Add(lv);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00305}00305                         Scripts.Add(lv.Text, sc);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00306}00306                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00307}00307                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00308}00308             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00309}00309         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00311}\mbox{\hyperlink{class_bio_imager_1_1_scripting_ac84362359639c22fc255c4ab8a7e4805}{00311}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_ac84362359639c22fc255c4ab8a7e4805}{RefreshStatus}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00312}00312         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00313}00313             errorView.Clear();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00314}00314             \textcolor{keywordflow}{foreach} (ListViewItem item \textcolor{keywordflow}{in} scriptView.SelectedItems)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00315}00315             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00316}00316                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} s = (\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})item.Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00317}00317                 \textcolor{comment}{//We update item text to show Script status.}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00318}00318                 item.Text = s.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{ToString}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00319}00319                 outputBox.Text = s.output;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00320}00320                 \textcolor{keywordflow}{if} (s.ex != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00321}00321                 \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00322}00322                     \textcolor{keywordtype}{string}[] sps = s.ex.Message.Split(\textcolor{charliteral}{'>'});}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00323}00323                     \textcolor{comment}{//ListViewItem it = new ListViewItem(s.ex.ToString());}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00324}00324                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 1; i < sps.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00325}00325                     \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00326}00326                         ListViewItem er = \textcolor{keyword}{new} ListViewItem(sps[i]);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00327}00327                         er.Tag = s.ex;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00328}00328                         errorView.Items.Add(er);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00329}00329                     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00330}00330 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00331}00331                 \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00332}00332             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00333}00333             \textcolor{keywordflow}{foreach} (ListViewItem item \textcolor{keywordflow}{in} scriptView.SelectedItems)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00334}00334             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00335}00335                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} s = (\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})item.Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00336}00336                 \textcolor{comment}{//We update item text to show Script status.}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00337}00337                 item.Text = s.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}{ToString}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00338}00338             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00339}00339             logBox.Text = log;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00340}00340             \textcolor{comment}{//We scroll to end of text so we see latest log output.}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00341}00341             \textcolor{keywordflow}{if} (logBox.SelectionStart != logBox.Text.Length)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00342}00342             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00343}00343                 logBox.SelectionStart = logBox.Text.Length;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00344}00344                 logBox.ScrollToCaret();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00345}00345             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00346}00346         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00347}00347         \textcolor{keyword}{private} \mbox{\hyperlink{class_bio_imager_1_1_code_view}{CodeView}} codeview;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00348}00348         \textcolor{keyword}{private} RichTextBox textBox;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00349}00349 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00350}00350         \textcolor{comment}{/* Creating a new directory called Scripts and Tools. */}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00351}00351         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00352}00352         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00353}00353             \textcolor{keywordflow}{if} (!Directory.Exists(Application.StartupPath + \textcolor{stringliteral}{"{}//"{}} + \textcolor{stringliteral}{"{}Scripts"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00354}00354                 Directory.CreateDirectory(Application.StartupPath + \textcolor{stringliteral}{"{}//"{}} + \textcolor{stringliteral}{"{}Scripts"{}});}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00355}00355             \textcolor{keywordflow}{if} (!Directory.Exists(Application.StartupPath + \textcolor{stringliteral}{"{}//"{}} + \textcolor{stringliteral}{"{}Tools"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00356}00356                 Directory.CreateDirectory(Application.StartupPath + \textcolor{stringliteral}{"{}//"{}} + \textcolor{stringliteral}{"{}Tools"{}});}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00357}00357             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00358}00358             scriptView.MultiSelect = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00359}00359             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a71867cb0ee29ae78164f1b381f95efea}{RefreshItems}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00360}00360             timer.Start();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00361}00361             codeview = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_code_view}{CodeView}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00362}00362             codeview.Dock = DockStyle.Fill;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00363}00363             scriptLabel.Text = \textcolor{stringliteral}{"{}NewScript.cs"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00364}00364             \textcolor{comment}{//splitContainer.Dock = DockStyle.Fill;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00365}00365             textBox = codeview.TextBox;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00366}00366             splitContainer.Panel1.Controls.Add(codeview);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00367}00367         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00371}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a9e79f265bd2f431191830129376d30f8}{00371}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a9e79f265bd2f431191830129376d30f8}{RunScriptFile}}(\textcolor{keywordtype}{string} file)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00372}00372         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00373}00373             \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(file);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00374}00374             Scripts.Add(sc.name, sc);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00375}00375             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a71867cb0ee29ae78164f1b381f95efea}{RefreshItems}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00376}00376             \mbox{\hyperlink{class_bio_imager_1_1_scripting_ad575ef7b2ffe83dc4757438a278d3b7d}{RunByName}}(sc.name);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00377}00377         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00381}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a0e78485fb31801d59c021369dc54aa4b}{00381}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a0e78485fb31801d59c021369dc54aa4b}{RunScript}}(\textcolor{keywordtype}{string} file)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00382}00382         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00383}00383             \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}(file);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00384}00384             Scripts.Add(sc.name, sc);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00385}00385             \mbox{\hyperlink{class_bio_imager_1_1_scripting_ad575ef7b2ffe83dc4757438a278d3b7d}{RunByName}}(sc.name);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00386}00386         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00387}00387         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a0e78485fb31801d59c021369dc54aa4b}{RunScript}}(Script sc)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00388}00388         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00389}00389             \textcolor{keywordflow}{if}(!Scripts.ContainsKey(sc.name))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00390}00390             Scripts.Add(sc.name, sc);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00391}00391             \mbox{\hyperlink{class_bio_imager_1_1_scripting_ad575ef7b2ffe83dc4757438a278d3b7d}{RunByName}}(sc.name);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00392}00392         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00396}\mbox{\hyperlink{class_bio_imager_1_1_scripting_aa807b1838b356d7061a94a47ac11f842}{00396}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_aa807b1838b356d7061a94a47ac11f842}{RunString}}(\textcolor{keywordtype}{string} st)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00397}00397         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00398}00398             \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}}.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a629e166dcb7a5471e3315fdac436403a}{RunString}}(st);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00399}00399         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00403}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a5482026e1e3d93be229b149fdb8a52ec}{00403}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a5482026e1e3d93be229b149fdb8a52ec}{Run}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00404}00404         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00405}00405             log = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00406}00406             outputBox.Text = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00407}00407             logBox.Text = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00408}00408             \textcolor{keywordflow}{if} (scriptView.SelectedItems.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00409}00409                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00410}00410             \textcolor{keywordflow}{foreach} (ListViewItem item \textcolor{keywordflow}{in} scriptView.SelectedItems)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00411}00411             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00412}00412                 \textcolor{comment}{//We run this script}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00413}00413                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = (\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})item.Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00414}00414                 sc.scriptString = textBox.Text;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00415}00415                 sc.output = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00416}00416                 sc.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_aaef0cfb462ea92e6eb6425e59f1fd8b2}{Run}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00417}00417                 outputBox.Text = sc.output;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00418}00418                 logBox.Text = log;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00419}00419             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00420}00420         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00424}\mbox{\hyperlink{class_bio_imager_1_1_scripting_a76f3dd255da4336c101b8590d554cb82}{00424}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_a76f3dd255da4336c101b8590d554cb82}{Stop}}()}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00425}00425         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00426}00426             \textcolor{keywordflow}{if} (scriptView.SelectedItems.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00427}00427                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00428}00428             \textcolor{keywordflow}{foreach} (ListViewItem item \textcolor{keywordflow}{in} scriptView.SelectedItems)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00429}00429             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00430}00430                 \textcolor{comment}{//We run this script}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00431}00431                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} sc = (\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})item.Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00432}00432                 sc.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script_a7c1e7807db2b1b7d769f9340d8c4b801}{Stop}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00433}00433             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00434}00434         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00438}\mbox{\hyperlink{class_bio_imager_1_1_scripting_ad575ef7b2ffe83dc4757438a278d3b7d}{00438}}         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_scripting_ad575ef7b2ffe83dc4757438a278d3b7d}{RunByName}}(\textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00439}00439         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00440}00440             Scripts[name].Run();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00441}00441         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00442}00442 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00447}00447         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptView\_MouseDoubleClick(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00448}00448         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00449}00449             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a5482026e1e3d93be229b149fdb8a52ec}{Run}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00450}00450         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00451}00451 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00456}00456         \textcolor{keyword}{private} \textcolor{keywordtype}{void} runToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00457}00457         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00458}00458             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a5482026e1e3d93be229b149fdb8a52ec}{Run}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00459}00459         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00460}00460 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00465}00465         \textcolor{keyword}{private} \textcolor{keywordtype}{void} openScriptFolderToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00466}00466         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00467}00467             \textcolor{keywordtype}{string} path = Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Scripts"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00468}00468             System.Diagnostics.Process.Start(\textcolor{stringliteral}{"{}explorer.exe"{}}, path);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00469}00469         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00470}00470 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00475}00475         \textcolor{keyword}{private} \textcolor{keywordtype}{void} refreshToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00476}00476         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00477}00477             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a71867cb0ee29ae78164f1b381f95efea}{RefreshItems}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00478}00478             \mbox{\hyperlink{class_bio_imager_1_1_scripting_ac84362359639c22fc255c4ab8a7e4805}{RefreshStatus}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00479}00479         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00480}00480 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00485}00485         \textcolor{keyword}{private} \textcolor{keywordtype}{void} timer\_Tick(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00486}00486         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00487}00487             \textcolor{keywordflow}{if} (this.WindowState != FormWindowState.Minimized)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00488}00488             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00489}00489                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_ac84362359639c22fc255c4ab8a7e4805}{RefreshStatus}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00490}00490             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00491}00491         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00492}00492 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00497}00497         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ScriptRunner\_FormClosing(\textcolor{keywordtype}{object} sender, FormClosingEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00498}00498         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00499}00499             e.Cancel = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00500}00500             this.WindowState = FormWindowState.Minimized;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00501}00501         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00502}00502 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00510}00510         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptView\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00511}00511         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00512}00512             \textcolor{keywordflow}{if} (scriptView.SelectedItems.Count == 0)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00513}00513                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00514}00514             ListViewItem item = scriptView.SelectedItems[0];}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00515}00515             Script s = (Script)item.Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00516}00516             textBox.Text = s.scriptString;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00517}00517             scriptLabel.Text = s.name;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00518}00518         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00519}00519 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00524}00524         \textcolor{keyword}{private} \textcolor{keywordtype}{void} runButton\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00525}00525         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00526}00526             \textcolor{keywordflow}{if} (scriptLabel.Text.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00527}00527             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00528}00528                 ImageJ.RunString(textBox.Text, ImageView.SelectedImage.ID, headlessBox.Checked);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00529}00529             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00530}00530             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00531}00531                 \mbox{\hyperlink{class_bio_imager_1_1_scripting_a5482026e1e3d93be229b149fdb8a52ec}{Run}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00532}00532         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00533}00533 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00540}00540         \textcolor{keyword}{private} \textcolor{keywordtype}{void} scriptLoadBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00541}00541         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00542}00542             openFileDialog.InitialDirectory = Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Scripts"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00543}00543             \textcolor{keywordflow}{if} (openFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00544}00544                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00545}00545             Script script = \textcolor{keyword}{new} Script(openFileDialog.FileName, File.ReadAllText(openFileDialog.FileName));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00546}00546             script.name = Path.GetFileName(openFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00547}00547             textBox.Text = script.scriptString;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00548}00548             scriptLabel.Text = Path.GetFileName(openFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00549}00549             ListViewItem item = \textcolor{keyword}{new} ListViewItem();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00550}00550             item.Tag = script;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00551}00551             item.Text = script.name;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00552}00552             scriptView.Items.Add(item);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00553}00553         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00554}00554 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00564}00564         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveButton\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00565}00565         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00566}00566             saveFileDialog.InitialDirectory = Application.StartupPath + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)Scripts"{}};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00567}00567             saveFileDialog.FileName = scriptLabel.Text;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00568}00568             \textcolor{keywordflow}{if} (saveFileDialog.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00569}00569                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00570}00570             scriptLabel.Text = Path.GetFileName(saveFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00571}00571             File.WriteAllText(saveFileDialog.FileName, textBox.Text);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00572}00572         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00573}00573 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00578}00578         \textcolor{keyword}{private} \textcolor{keywordtype}{void} stopBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00579}00579         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00580}00580             \mbox{\hyperlink{class_bio_imager_1_1_scripting_a76f3dd255da4336c101b8590d554cb82}{Stop}}();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00581}00581         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00582}00582 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00587}00587         \textcolor{keyword}{private} \textcolor{keywordtype}{void} topMostBox\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00588}00588         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00589}00589             TopMost = topMostBox.Checked;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00590}00590         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00591}00591 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00597}00597         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Scripting\_KeyDown(\textcolor{keywordtype}{object} sender, KeyEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00598}00598         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00599}00599             \textcolor{keywordflow}{if} (e.KeyCode == Keys.S \&\& e.Modifiers == Keys.Control)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00600}00600             \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00601}00601                 saveButton.PerformClick();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00602}00602             \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00603}00603         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00604}00604 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00610}00610         \textcolor{keyword}{private} \textcolor{keywordtype}{void} errorBox\_SelectionChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00611}00611         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00612}00612             Script sc = (Script)scriptView.SelectedItems[0].Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00613}00613             Exception ex = sc.ex;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00614}00614         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00615}00615 }
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00621}00621         \textcolor{keyword}{private} \textcolor{keywordtype}{void} errorView\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00622}00622         \{}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00623}00623             Exception ex = (Exception)errorView.SelectedItems[0].Tag;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00624}00624             \textcolor{keywordtype}{string} exs = ex.Message.Substring(ex.Message.IndexOf(\textcolor{charliteral}{'('}), ex.Message.IndexOf(\textcolor{charliteral}{')'}));}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00625}00625             \textcolor{keywordtype}{string} ls = exs.Substring(1, exs.IndexOf(\textcolor{charliteral}{','}) -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00626}00626             \textcolor{keywordtype}{int} line = \textcolor{keywordtype}{int}.Parse(ls);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00627}00627             \textcolor{keywordtype}{string} c = exs.Substring(exs.IndexOf(\textcolor{charliteral}{','}) + 1, exs.IndexOf(\textcolor{stringliteral}{"{})"{}}) -\/ exs.IndexOf(\textcolor{charliteral}{','}) -\/ 1);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00628}00628             \textcolor{keywordtype}{int} cr = \textcolor{keywordtype}{int}.Parse(c);}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00629}00629             \textcolor{comment}{//textBox.SelectionLength = cr;}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00630}00630             textBox.SelectionStart = line;}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00631}00631             textBox.Focus();}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00632}00632         \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00633}00633     \}}
+\DoxyCodeLine{\Hypertarget{_scripting_8cs_source_l00634}00634 \}}
+
+\end{DoxyCode}
