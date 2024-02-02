@@ -1,0 +1,53 @@
+\hypertarget{_settings_8cs_source}{}\doxysection{Settings.\+cs}
+\label{_settings_8cs_source}\index{BioLib/BioLib/Source/Settings.cs@{BioLib/BioLib/Source/Settings.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00006}00006 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00007}00007 }
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00008}00008 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_lib}{BioLib}}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00009}00009 \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00010}00010     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }Settings}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00011}00011     \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00012}00012         \textcolor{comment}{/* Creating a new dictionary with a string as the key and a string as the value. */}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00013}00013         \textcolor{keyword}{static} Dictionary<string,string> Default = \textcolor{keyword}{new} Dictionary<string,string>();}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00024}00024         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} GetSettings(\textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00025}00025         \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00026}00026             \textcolor{keywordflow}{if}(Default.ContainsKey(name)) \textcolor{keywordflow}{return} Default[name];}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00027}00027             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00028}00028         \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00029}00029 }
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00037}00037         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} AddSettings(\textcolor{keywordtype}{string} name,\textcolor{keywordtype}{string} val)}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00038}00038         \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00039}00039             Default.Add(name, val);}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00040}00040         \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00041}00041         \textcolor{keyword}{static} \textcolor{keywordtype}{string} path = System.IO.Path.GetDirectoryName(Environment.ProcessPath);}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00045}00045         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Save()}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00046}00046         \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00047}00047             \textcolor{keywordtype}{string} val = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00048}00048             \textcolor{keywordflow}{foreach} (var item \textcolor{keywordflow}{in} Default)}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00049}00049             \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00050}00050                 val += item.Key + \textcolor{stringliteral}{"{}="{}} + item.Value + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00051}00051             \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00052}00052             File.WriteAllText(path + \textcolor{stringliteral}{"{}/Settings.txt"{}}, val);}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00053}00053         \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00061}00061         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Load()}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00062}00062         \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00063}00063             \textcolor{keywordflow}{if} (!File.Exists(path + \textcolor{stringliteral}{"{}/Settings.txt"{}}))}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00064}00064                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00065}00065             \textcolor{keywordtype}{string}[] sts = File.ReadAllLines(path + \textcolor{stringliteral}{"{}/Settings.txt"{}});}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00066}00066             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00067}00067             \{}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00068}00068                 \textcolor{keywordtype}{string}[] st = item.Split(\textcolor{charliteral}{'='});}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00069}00069                 Default.Add(st[0], st[1]);}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00070}00070             \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00071}00071         \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00072}00072     \}}
+\DoxyCodeLine{\Hypertarget{_settings_8cs_source_l00073}00073 \}}
+
+\end{DoxyCode}
