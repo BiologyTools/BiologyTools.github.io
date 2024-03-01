@@ -14,5 +14,8 @@ var searchData=
   ['initialiseerror_11',['InitialiseError',['../classmicroscope_1_1_initialise_error.html',1,'microscope']]],
   ['io_5flist_12',['io_list',['../classmicroscope_1_1cameras_1_1pvcam_1_1io__list.html',1,'microscope::cameras::pvcam']]],
   ['io_5fstruct_13',['io_struct',['../classmicroscope_1_1cameras_1_1pvcam_1_1io__struct.html',1,'microscope::cameras::pvcam']]],
-  ['iplugin_14',['IPlugin',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html',1,'BioImager::Plugin']]]
+  ['iplugin_14',['IPlugin',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html',1,'BioImager::Plugin']]],
+  ['isliceprovider_15',['ISliceProvider',['../interface_bio_imager_1_1_i_slice_provider.html',1,'BioImager']]],
+  ['islideexterninfo_16',['ISlideExternInfo',['../interface_bio_imager_1_1_i_slide_extern_info.html',1,'BioImager']]],
+  ['islidesource_17',['ISlideSource',['../interface_bio_imager_1_1_i_slide_source.html',1,'BioImager']]]
 ];

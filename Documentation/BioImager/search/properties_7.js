@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['origin_0',['Origin',['../class_bio_imager_1_1_image_view.html#a2f517343db7b1343c123766bfd3414af',1,'BioImager::ImageView']]]
+  ['level_0',['Level',['../class_bio_imager_1_1_image_view.html#add717aef7e5bb3d8475ecf08f3a74aff',1,'BioImager::ImageView']]],
+  ['levelcount_1',['LevelCount',['../class_bio_imager_1_1_slide_image.html#a1b9a761879415f61269d5f12755ebf0c',1,'BioImager::SlideImage']]]
 ];

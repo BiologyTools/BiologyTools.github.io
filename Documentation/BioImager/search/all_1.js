@@ -12,7 +12,7 @@ var searchData=
   ['addimage_9',['AddImage',['../class_bio_imager_1_1_image_view.html#ae7277ec634db3f2dd018fcd47cb89774',1,'BioImager::ImageView']]],
   ['addmenu_10',['AddMenu',['../class_bio_imager_1_1_app.html#adbed127fe7cf80e32aaea511c825ac2d',1,'BioImager.App.AddMenu(string menu)'],['../class_bio_imager_1_1_app.html#a1516d5bec101a0700fcc7ab336f6e6dc',1,'BioImager.App.AddMenu(string menu, Function f)']]],
   ['addpoint_11',['AddPoint',['../class_bio_imager_1_1_r_o_i.html#a93a062714521b3aaad197972bcf4e508',1,'BioImager::ROI']]],
-  ['addpoints_12',['AddPoints',['../class_bio_imager_1_1_r_o_i.html#addc777493d1d5debd4616b51e4aff0cc',1,'BioImager.ROI.AddPoints(float[] xp, float[] yp)'],['../class_bio_imager_1_1_r_o_i.html#a7b6e9ec4d0528ae7e3bfdcbacc7d4127',1,'BioImager.ROI.AddPoints(int[] xp, int[] yp)'],['../class_bio_imager_1_1_r_o_i.html#a6f8b1dd99e1dfc11c380bc68beb84c03',1,'BioImager.ROI.AddPoints(PointD[] p)']]],
+  ['addpoints_12',['AddPoints',['../class_bio_imager_1_1_r_o_i.html#a7b6e9ec4d0528ae7e3bfdcbacc7d4127',1,'BioImager.ROI.AddPoints(int[] xp, int[] yp)'],['../class_bio_imager_1_1_r_o_i.html#addc777493d1d5debd4616b51e4aff0cc',1,'BioImager.ROI.AddPoints(float[] xp, float[] yp)'],['../class_bio_imager_1_1_r_o_i.html#a6f8b1dd99e1dfc11c380bc68beb84c03',1,'BioImager.ROI.AddPoints(PointD[] p)']]],
   ['addproperty_13',['AddProperty',['../class_bio_imager_1_1_automation.html#a6cda9ad9123b9cfafe4f975888330c37',1,'BioImager::Automation']]],
   ['address_14',['address',['../classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply.html#ae7f3c620452df2bf72d80a29cf28e783',1,'microscope::controllers::zaber::_ZaberReply']]],
   ['addroi_15',['AddROI',['../class_bio_imager_1_1_app.html#ac1a0446edbda4050362cc19dce5fc0d4',1,'BioImager::App']]],

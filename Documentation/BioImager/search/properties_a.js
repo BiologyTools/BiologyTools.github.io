@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['scale_0',['Scale',['../class_bio_imager_1_1_image_view.html#a40ef5b7cbcefda00db5930051fafeac7',1,'BioImager::ImageView']]],
-  ['selectedindex_1',['SelectedIndex',['../class_bio_imager_1_1_image_view.html#ad8ba23b577c13188d8d1c18c1572d350',1,'BioImager::ImageView']]],
-  ['showcontrols_2',['ShowControls',['../class_bio_imager_1_1_image_view.html#a24d3d36836b688e599297db5f8ee4122',1,'BioImager::ImageView']]],
-  ['showstatus_3',['ShowStatus',['../class_bio_imager_1_1_image_view.html#a9e83ae1e2627dd93602e540fc83e7c08',1,'BioImager::ImageView']]]
+  ['path_0',['Path',['../class_bio_imager_1_1_image_view.html#ab45f8eef396eea7c90c1e0d1c378ffcf',1,'BioImager::ImageView']]],
+  ['pxhmicron_1',['PxHmicron',['../class_bio_imager_1_1_image_view.html#a773efe49ff932b4d604f6fe508eb14e9',1,'BioImager::ImageView']]],
+  ['pxwmicron_2',['PxWmicron',['../class_bio_imager_1_1_image_view.html#abbf4c20c726f9083ee7c83964d42e5b2',1,'BioImager::ImageView']]],
+  ['pyramidalorigin_3',['PyramidalOrigin',['../class_bio_imager_1_1_image_view.html#a4875f86fe3e56a77be557c4bda5afe06',1,'BioImager::ImageView']]]
 ];
