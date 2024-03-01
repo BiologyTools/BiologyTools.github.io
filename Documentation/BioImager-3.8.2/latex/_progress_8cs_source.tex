@@ -1,0 +1,58 @@
+\hypertarget{_progress_8cs_source}{}\doxysection{Progress.\+cs}
+\label{_progress_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Progress.cs@{F:/repos/BioImager/BioImager/Source/Progress.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00003}00003 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Data;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00012}00012 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00014}\mbox{\hyperlink{class_bio_imager_1_1_progress}{00014}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_progress}{Progress}} : Form}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00016}00016         Stopwatch watch = \textcolor{keyword}{new} Stopwatch();}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00017}00017         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_progress}{Progress}}(\textcolor{keywordtype}{string} file, \textcolor{keywordtype}{string} status)}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00019}00019             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00020}00020             watch.Start();}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00021}00021             statusLabel.Text = status;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00022}00022             fileLabel.Text = file;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00023}00023             timer.Start();}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00024}00024         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00025}00025         \textcolor{keyword}{public} \textcolor{keywordtype}{string} Status}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00026}00026         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00027}00027             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} statusLabel.Text; \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00028}00028             \textcolor{keyword}{set} \{ statusLabel.Text = value; \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00030}00030         \textcolor{keyword}{public} \textcolor{keywordtype}{float} ProgressValue}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00031}00031         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00032}00032             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} progressBar.Value; \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00033}00033             \textcolor{keyword}{set} \{ progressBar.Value = (int)(value * 100); \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00034}00034         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00035}00035 }
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00036}00036         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateProgress(\textcolor{keywordtype}{int} p)}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00037}00037         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00038}00038             progressBar.Value = p;}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00039}00039         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00040}00040         \textcolor{keyword}{public} \textcolor{keywordtype}{void} UpdateProgressF(\textcolor{keywordtype}{float} p)}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00042}00042             \textcolor{keywordflow}{if} (p * 100 > progressBar.Maximum)}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00043}00043                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00044}00044             progressBar.Value = (int)(p * 100);}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00045}00045         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00046}00046 }
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00047}00047         \textcolor{keyword}{private} \textcolor{keywordtype}{void} timer\_Tick(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00048}00048         \{}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00049}00049             timeLabel.Text = watch.Elapsed.Seconds + \textcolor{stringliteral}{"{}."{}} + watch.Elapsed.Milliseconds + \textcolor{stringliteral}{"{}s"{}};}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00051}00051     \}}
+\DoxyCodeLine{\Hypertarget{_progress_8cs_source_l00052}00052 \}}
+
+\end{DoxyCode}

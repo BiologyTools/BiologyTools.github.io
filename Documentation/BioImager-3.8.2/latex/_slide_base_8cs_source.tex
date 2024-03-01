@@ -1,0 +1,153 @@
+\hypertarget{_slide_base_8cs_source}{}\doxysection{Slide\+Base.\+cs}
+\label{_slide_base_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Bio/SlideBase.cs@{F:/repos/BioImager/BioImager/Source/Bio/SlideBase.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00001}00001 \textcolor{keyword}{using }BruTile;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00002}00002 \textcolor{keyword}{using }BruTile.Cache;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00003}00003 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00007}00007 \textcolor{keyword}{using }SixLabors.ImageSharp;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00008}00008 \textcolor{keyword}{using }SixLabors.ImageSharp.Processing;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00009}00009 \textcolor{keyword}{using }SixLabors.ImageSharp.PixelFormats;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00010}00010 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00012}00012 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00014}\mbox{\hyperlink{class_bio_imager_1_1_slide_base}{00014}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_slide_base}{SlideBase}} : \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base}{SlideSourceBase}}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00016}00016         \textcolor{keyword}{public} readonly \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}} \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00017}00017         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_slide_base}{SlideBase}}(\mbox{\hyperlink{class_bio_imager_1_1_bio_image}{BioImage}} source, \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}} im, \textcolor{keywordtype}{bool} enableCache = \textcolor{keyword}{true})}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00019}00019             \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_a9c5def53048e5841d713adb79e649077}{Source}} = source.file;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00020}00020             \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}} = im;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00021}00021             Image = im;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00022}00022             \textcolor{keywordtype}{double} minUnitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00023}00023             \textcolor{keywordflow}{if} (source.PhysicalSizeX < source.PhysicalSizeY) minUnitsPerPixel = source.PhysicalSizeX; \textcolor{keywordflow}{else} minUnitsPerPixel = source.PhysicalSizeY;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00024}00024             \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} = UseRealResolution ? minUnitsPerPixel : 1;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00025}00025             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} <= 0) \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} = 1;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00026}00026             var height = \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}}.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a57c6e672ac2aae589442fc5c360c5490}{Dimensions}}.Height;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00027}00027             var width = \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}}.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a57c6e672ac2aae589442fc5c360c5490}{Dimensions}}.Width;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00028}00028             \textcolor{comment}{//ExternInfo = GetInfo();}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00029}00029             Schema = \textcolor{keyword}{new} TileSchema}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00030}00030             \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00031}00031                 YAxis = YAxis.OSM,}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00032}00032                 Format = \textcolor{stringliteral}{"{}jpg"{}},}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00033}00033                 Extent = \textcolor{keyword}{new} Extent(0, -\/height, width, 0),}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00034}00034                 OriginX = 0,}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00035}00035                 OriginY = 0,}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00036}00036             \};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00037}00037             InitResolutions(Schema.Resolutions, 256, 256);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00038}00038         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00039}00039 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00040}00040         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} DetectVendor(\textcolor{keywordtype}{string} source)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00041}00041         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00042}00042             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_slide_image}{SlideImage}}.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a2dd7a756dbbfa217e73d517cb96eafc5}{DetectVendor}}(source);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00045}00045         }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00046}\mbox{\hyperlink{class_bio_imager_1_1_slide_base_a428a8dbae75b752475930f95ed6acc76}{00046}}         \textcolor{keyword}{public} \textcolor{keyword}{override} IReadOnlyDictionary<string, byte[]> \mbox{\hyperlink{class_bio_imager_1_1_slide_base_a428a8dbae75b752475930f95ed6acc76}{GetExternImages}}()}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00047}00047         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00048}00048             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotImplementedException();}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00049}00049             \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00050}00050 \textcolor{comment}{            Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00051}00051 \textcolor{comment}{            var r = Math.Max(Schema.Extent.Height, Schema.Extent.Width) / 512;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00052}00052 \textcolor{comment}{            images.Add("{}preview"{}, GetSlice(new SliceInfo \{ Extent = Schema.Extent, Resolution = r \}));}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00053}00053 \textcolor{comment}{            foreach (var item in SlideImage.GetAssociatedImages())}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00054}00054 \textcolor{comment}{            \{}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00055}00055 \textcolor{comment}{                var dim = item.Value.Dimensions;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00056}00056 \textcolor{comment}{                images.Add(item.Key, ImageUtil.GetJpeg(item.Value.Data, 4, 4 * (int)dim.Width, (int)dim.Width, (int)dim.Height));}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00057}00057 \textcolor{comment}{            \}}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00058}00058 \textcolor{comment}{            return images;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00059}00059 \textcolor{comment}{            */}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00060}00060         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00061}00061         \textcolor{keyword}{private} \textcolor{keyword}{static} Image<Rgb24> CreateImageFromRgbaData(\textcolor{keywordtype}{byte}[] rgbaData, \textcolor{keywordtype}{int} width, \textcolor{keywordtype}{int} height)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00062}00062         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00063}00063             Image<Rgb24> image = \textcolor{keyword}{new} Image<Rgb24>(width, height);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00065}00065             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00066}00066             \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00067}00067                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width; x++)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00068}00068                 \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00069}00069                     \textcolor{keywordtype}{int} index = (y * width + x) * 4;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00070}00070                     \textcolor{keywordtype}{byte} r = rgbaData[index];}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00071}00071                     \textcolor{keywordtype}{byte} g = rgbaData[index + 1];}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00072}00072                     \textcolor{keywordtype}{byte} b = rgbaData[index + 2];}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00073}00073                     \textcolor{comment}{// byte a = rgbaData[index + 3]; // Alpha channel, not used in Rgb24}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00075}00075                     image[x, y] = \textcolor{keyword}{new} Rgb24(r, g, b);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00076}00076                 \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00077}00077             \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00078}00078 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00079}00079             \textcolor{keywordflow}{return} image;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00080}00080         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00081}00081         \textcolor{keyword}{public} \textcolor{keywordtype}{byte}[] GetTile(TileInfo tileInfo)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00082}00082         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00083}00083             var r = Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00084}00084             var tileWidth = Schema.Resolutions[tileInfo.Index.Level].TileWidth;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00085}00085             var tileHeight = Schema.Resolutions[tileInfo.Index.Level].TileHeight;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00086}00086             var curLevelOffsetXPixel = tileInfo.Extent.MinX / \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00087}00087             var curLevelOffsetYPixel = -\/tileInfo.Extent.MaxY / \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00088}00088             var curTileWidth = (int)(tileInfo.Extent.MaxX > Schema.Extent.Width ? tileWidth -\/ (tileInfo.Extent.MaxX -\/ Schema.Extent.Width) / r : tileWidth);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00089}00089             var curTileHeight = (int)(-\/tileInfo.Extent.MinY > Schema.Extent.Height ? tileHeight -\/ (-\/tileInfo.Extent.MinY -\/ Schema.Extent.Height) / r : tileHeight);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00090}00090             var bgraData = SlideImage.ReadRegion(tileInfo.Index.Level, (\textcolor{keywordtype}{long})curLevelOffsetXPixel, (long)curLevelOffsetYPixel, curTileWidth, curTileHeight);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00091}00091             \textcolor{comment}{//We check to see if the data is valid.}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00092}00092             \textcolor{keywordflow}{if} (bgraData.Length != curTileWidth * curTileHeight * 4)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00093}00093                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00094}00094             \textcolor{keywordtype}{byte}[] bm = ConvertRgbaToRgb(bgraData);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00095}00095             \textcolor{keywordflow}{return} bm;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00096}00096         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00097}00097         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{byte}[] ConvertRgbaToRgb(\textcolor{keywordtype}{byte}[] rgbaArray)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00098}00098         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00099}00099             \textcolor{comment}{// Initialize a new byte array for RGB24 format}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00100}00100             \textcolor{keywordtype}{byte}[] rgbArray = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[(rgbaArray.Length / 4) * 3];}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00102}00102             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0, j = 0; i < rgbaArray.Length; i += 4, j += 3)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00103}00103             \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00104}00104                 \textcolor{comment}{// Copy the R, G, B values, skip the A value}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00105}00105                 rgbArray[j] = rgbaArray[i];     \textcolor{comment}{// B}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00106}00106                 rgbArray[j + 1] = rgbaArray[i + 1]; \textcolor{comment}{// G}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00107}00107                 rgbArray[j + 2] = rgbaArray[i + 2]; \textcolor{comment}{// R}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00108}00108             \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00110}00110             \textcolor{keywordflow}{return} rgbArray;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00111}00111         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00113}00113         \textcolor{keyword}{protected} \textcolor{keywordtype}{void} InitResolutions(IDictionary<int, BruTile.Resolution> resolutions, \textcolor{keywordtype}{int} tileWidth, \textcolor{keywordtype}{int} tileHeight)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00114}00114         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00115}00115             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < SlideImage.LevelCount; i++)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00116}00116             \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00117}00117                 \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00118}00118 \textcolor{comment}{                bool useInternalWidth = int.TryParse(ExternInfo.TryGetValue(\$"{}openslide.level[\{i\}].tile-\/width"{}, out var \_w) ? (string)\_w : null, out var w) \&\& w >= tileWidth;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00119}00119 \textcolor{comment}{                bool useInternalHeight = int.TryParse(ExternInfo.TryGetValue(\$"{}openslide.level[\{i\}].tile-\/height"{}, out var \_h) ? (string)\_h : null, out var h) \&\& h >= tileHeight;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00120}00120 \textcolor{comment}{}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00121}00121 \textcolor{comment}{                bool useInternalSize = useInternalHeight \&\& useInternalWidth;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00122}00122 \textcolor{comment}{                var tw = useInternalSize ? w : tileWidth;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00123}00123 \textcolor{comment}{                var th = useInternalSize ? h : tileHeight;}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00124}00124 \textcolor{comment}{                resolutions.Add(i, new Resolution(i, MinUnitsPerPixel * SlideImage.GetLevelDownsample(i), tw, th));}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00125}00125 \textcolor{comment}{                */}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00126}00126                 resolutions.Add(i, \textcolor{keyword}{new} BruTile.Resolution(i, SlideImage.BioImage.GetUnitPerPixel(i), tileWidth, tileHeight));}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00127}00127             \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00128}00128         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00129}00129 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00130}00130 \textcolor{preprocessor}{        \#region IDisposable}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00131}00131         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} disposedValue;}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00132}00132         \textcolor{keyword}{protected} \textcolor{keyword}{override} \textcolor{keywordtype}{void} Dispose(\textcolor{keywordtype}{bool} disposing)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00133}00133         \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00134}00134             \textcolor{keywordflow}{if} (!disposedValue)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00135}00135             \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00136}00136                 \textcolor{keywordflow}{if} (disposing)}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00137}00137                 \{}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00138}00138                     SlideImage.Dispose();}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00139}00139                 \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00140}00140                 disposedValue = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00141}00141             \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00142}00142             base.Dispose(disposing);}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00143}00143         \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00145}00145 \textcolor{preprocessor}{        \#endregion}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00146}00146     \}}
+\DoxyCodeLine{\Hypertarget{_slide_base_8cs_source_l00147}00147 \}}
+
+\end{DoxyCode}

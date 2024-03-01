@@ -1,0 +1,63 @@
+\hypertarget{_slide_slice_layer_8cs_source}{}\doxysection{Slide\+Slice\+Layer.\+cs}
+\label{_slide_slice_layer_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Bio/SlideSliceLayer.cs@{F:/repos/BioImager/BioImager/Source/Bio/SlideSliceLayer.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00001}00001 \textcolor{keyword}{using }BruTile;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00002}00002 \textcolor{keyword}{using }Mapsui;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00003}00003 \textcolor{keyword}{using }Mapsui.Fetcher;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00004}00004 \textcolor{keyword}{using }Mapsui.Layers;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00005}00005 \textcolor{keyword}{using }Mapsui.Providers;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00006}00006 \textcolor{keyword}{using }Mapsui.Styles;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00007}00007 \textcolor{keyword}{using }Mapsui.Tiling.Extensions;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00008}00008 \textcolor{keyword}{using }SixLabors.ImageSharp.Formats.Png;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00009}00009 \textcolor{keyword}{using }SixLabors.ImageSharp.PixelFormats;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00010}00010 \textcolor{keyword}{using }SixLabors.ImageSharp;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00011}00011 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00012}00012 \textcolor{keyword}{using }System.IO;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00013}00013 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00014}00014 }
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00015}00015 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00016}00016 \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00020}\mbox{\hyperlink{class_bio_imager_1_1_slide_slice_layer}{00020}}     \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_slide_slice_layer}{SlideSliceLayer}} : BaseLayer}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00021}00021     \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00022}00022         \textcolor{keyword}{private} \mbox{\hyperlink{interface_bio_imager_1_1_i_slide_source}{ISlideSource}} \_slideSource;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00023}00023         \textcolor{keyword}{private} \textcolor{keywordtype}{double} \_lastResolution = 0;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00024}00024         \textcolor{keyword}{private} IEnumerable<IFeature> \_lastFeatures = \textcolor{keyword}{new} List<IFeature>();\textcolor{comment}{//new Features(new[] \{ new Feature() \});}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00025}00025         \textcolor{keyword}{private} Extent \_lastExtent;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00027}00027         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_slide_slice_layer}{SlideSliceLayer}}(\mbox{\hyperlink{interface_bio_imager_1_1_i_slide_source}{ISlideSource}} slideSource) : base()}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00028}00028         \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00029}00029             \_slideSource = slideSource;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00030}00030             Name = \textcolor{stringliteral}{"{}SliceLayer"{}};}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00031}00031             Extent = slideSource.Schema.Extent.ToMRect();}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00032}00032         \}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00034}00034         \textcolor{keyword}{public} \textcolor{keyword}{override} IEnumerable<IFeature> GetFeatures(MRect box, \textcolor{keywordtype}{double} resolution)}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00035}00035         \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00036}00036             \textcolor{keywordflow}{if} (box is \textcolor{keyword}{null}) \textcolor{keywordflow}{return} Enumerable.Empty<IFeature>();}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00037}00037             \textcolor{comment}{// Repaint on debouncing, resolution changed(zoom map) or box changed(resize control) .}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00038}00038             \textcolor{keywordflow}{if} (\_lastExtent.ToMRect().Centroid.Distance(box.Centroid) > 2 * resolution || \_lastResolution != resolution || \_lastExtent.Width != box.Width || \_lastExtent.Height != box.Height)}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00039}00039             \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00040}00040                 \_lastExtent = box.ToExtent();}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00041}00041                 \_lastResolution = resolution;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00042}00042                 MRect box2 = box.Grow(SymbolStyle.DefaultWidth * 2.0 * resolution, SymbolStyle.DefaultHeight * 2.0 * resolution);}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00043}00043                 var sliceInfo = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_slice_info}{SliceInfo}}() \{ Extent = box2.ToExtent(), \mbox{\hyperlink{struct_bio_imager_1_1_resolution}{Resolution}} = resolution \};}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00044}00044                 var bytes = \_slideSource.\mbox{\hyperlink{interface_bio_imager_1_1_i_slice_provider_a7be2d4f5f71322e336c0cfb5663d8d8d}{GetSlice}}(sliceInfo);}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00045}00045                 \textcolor{keywordflow}{if} (bytes != \textcolor{keyword}{null} \&\& \_lastFeatures.FirstOrDefault() is IFeature feature)}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00046}00046                 \{}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00047}00047                     feature = \textcolor{keyword}{new} RasterFeature(\textcolor{keyword}{new} MRaster(bytes.Result, box2));}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00048}00048                 \}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00050}00050             \textcolor{keywordflow}{return} \_lastFeatures;}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00051}00051         \}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00052}00052 }
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00053}00053         \textcolor{comment}{/*}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00054}00054 \textcolor{comment}{        public override void RefreshData(MRect extent, double resolution, ChangeType changeType)}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00055}00055 \textcolor{comment}{        \{}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00056}00056 \textcolor{comment}{            OnDataChanged(new DataChangedEventArgs());}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00057}00057 \textcolor{comment}{        \}}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00058}00058 \textcolor{comment}{        */}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00059}00059     \}}
+\DoxyCodeLine{\Hypertarget{_slide_slice_layer_8cs_source_l00060}00060 \}}
+
+\end{DoxyCode}

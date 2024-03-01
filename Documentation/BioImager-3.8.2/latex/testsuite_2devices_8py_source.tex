@@ -1,0 +1,237 @@
+\hypertarget{testsuite_2devices_8py_source}{}\doxysection{devices.\+py}
+\label{testsuite_2devices_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/devices.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/devices.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00021}00021 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00022}00022 \textcolor{keyword}{import} time}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00023}00023 \textcolor{keyword}{from} enum \textcolor{keyword}{import} IntEnum}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00025}00025 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00026}00026 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00027}00027 \textcolor{comment}{\# These classes were originally in testsuite but have been moved to}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00028}00028 \textcolor{comment}{\# their own subpackage, these imports are for backwards compatibility.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00029}00029 \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1simulators}{microscope.simulators}} \textcolor{keyword}{import} (}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00030}00030     SimulatedCamera,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00031}00031     SimulatedController \textcolor{keyword}{as} TestController,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00032}00032     SimulatedDeformableMirror \textcolor{keyword}{as} TestDeformableMirror,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00033}00033     SimulatedFilterWheel \textcolor{keyword}{as} TestFilterWheel,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00034}00034     SimulatedLightSource,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00035}00035     SimulatedStage \textcolor{keyword}{as} TestStage,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00036}00036 )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00037}00037 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00038}00038 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00039}00039 \_logger = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00040}00040 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00042}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_cam_enum}{00042}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_cam_enum}{CamEnum}}(IntEnum):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00043}00043     A = 1}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00044}00044     B = 2}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00045}00045     C = 3}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00046}00046     D = 4}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00047}00047 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00048}00048 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00049}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera}{00049}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera}{TestCamera}}(\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_camera}{SimulatedCamera}}):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00050}00050     \textcolor{comment}{\# This adds a series of weird settings to the base simulated}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00051}00051     \textcolor{comment}{\# camera which are only useful to test settings in cockpit.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00052}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a2affa7aa4fc988edbd7337e4a305b8f6}{00052}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a2affa7aa4fc988edbd7337e4a305b8f6}{\_\_init\_\_}}(self, **kwargs) -\/> None:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00053}00053         super().\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a2affa7aa4fc988edbd7337e4a305b8f6}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00054}00054         \textcolor{comment}{\# Enum-\/setting tests}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00055}00055         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a169a812722da06b85a9d8443a2cb8b44}{\_intEnum}} = CamEnum.A}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00056}00056         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00057}00057             \textcolor{stringliteral}{"{}intEnum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00058}00058             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00059}00059             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a169a812722da06b85a9d8443a2cb8b44}{\_intEnum}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00060}00060             \textcolor{keyword}{lambda} val: setattr(self, \textcolor{stringliteral}{"{}\_intEnum"{}}, val),}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00061}00061             CamEnum,}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00062}00062         )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00063}00063         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a5484218fa23d0c92898236d7576c3aa2}{\_dictEnum}} = 0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00064}00064         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00065}00065             \textcolor{stringliteral}{"{}dictEnum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00066}00066             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00067}00067             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a5484218fa23d0c92898236d7576c3aa2}{\_dictEnum}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00068}00068             \textcolor{keyword}{lambda} val: setattr(self, \textcolor{stringliteral}{"{}\_dictEnum"{}}, val),}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00069}00069             \{0: \textcolor{stringliteral}{"{}A"{}}, 8: \textcolor{stringliteral}{"{}B"{}}, 13: \textcolor{stringliteral}{"{}C"{}}, 22: \textcolor{stringliteral}{"{}D"{}}\},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00070}00070         )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00071}00071         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a2c7679f4917504a56ff282b5ddf1c7a6}{\_listEnum}} = 0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00072}00072         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00073}00073             \textcolor{stringliteral}{"{}listEnum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00074}00074             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00075}00075             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a2c7679f4917504a56ff282b5ddf1c7a6}{\_listEnum}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00076}00076             \textcolor{keyword}{lambda} val: setattr(self, \textcolor{stringliteral}{"{}\_listEnum"{}}, val),}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00077}00077             [\textcolor{stringliteral}{"{}A"{}}, \textcolor{stringliteral}{"{}B"{}}, \textcolor{stringliteral}{"{}C"{}}, \textcolor{stringliteral}{"{}D"{}}],}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00078}00078         )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00079}00079         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a7c7fcdc50534e8e7560179e61f032636}{\_tupleEnum}} = 0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00080}00080         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00081}00081             \textcolor{stringliteral}{"{}tupleEnum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00082}00082             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00083}00083             \textcolor{keyword}{lambda}: self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_camera_a7c7fcdc50534e8e7560179e61f032636}{\_tupleEnum}},}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00084}00084             \textcolor{keyword}{lambda} val: setattr(self, \textcolor{stringliteral}{"{}\_tupleEnum"{}}, val),}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00085}00085             (\textcolor{stringliteral}{"{}A"{}}, \textcolor{stringliteral}{"{}B"{}}, \textcolor{stringliteral}{"{}C"{}}, \textcolor{stringliteral}{"{}D"{}}),}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00086}00086         )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00088}00088 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00089}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_laser}{00089}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_laser}{TestLaser}}(\mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_light_source}{SimulatedLightSource}}):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00090}00090     \textcolor{comment}{\# Deprecated, kept for backwards compatibility.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00091}00091     \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00094}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m}{00094}} \textcolor{keyword}{class }DummySLM(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00095}00095     \textcolor{comment}{\# This only exists to test cockpit.  There is no corresponding}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00096}00096     \textcolor{comment}{\# device type in microscope yet.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00097}00097     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00098}00098         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00099}00099         self.sim\_diffraction\_angle = 0.0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00100}00100         self.sequence\_params = []}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00101}00101         self.sequence\_index = 0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00103}00103     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00104}00104         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00106}00106     \textcolor{keyword}{def }set\_sim\_diffraction\_angle(self, theta):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00107}00107         \_logger.info(\textcolor{stringliteral}{"{}set\_sim\_diffraction\_angle \%f"{}}, theta)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00108}00108         self.sim\_diffraction\_angle = theta}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00109}00109 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00110}00110     \textcolor{keyword}{def }get\_sim\_diffraction\_angle(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00111}00111         \textcolor{keywordflow}{return} self.sim\_diffraction\_angle}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00113}00113     \textcolor{keyword}{def }run(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00114}00114         self.enabled = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00115}00115         \_logger.info(\textcolor{stringliteral}{"{}run"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00116}00116         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00117}00117 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00118}00118     \textcolor{keyword}{def }stop(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00119}00119         self.enabled = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00120}00120         \_logger.info(\textcolor{stringliteral}{"{}stop"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00121}00121         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00123}00123     \textcolor{keyword}{def }get\_sim\_sequence(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00124}00124         \textcolor{keywordflow}{return} self.sequence\_params}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00125}00125 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00126}00126     \textcolor{keyword}{def }set\_sim\_sequence(self, seq):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00127}00127         \_logger.info(\textcolor{stringliteral}{"{}set\_sim\_sequence"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00128}00128         self.sequence\_params = seq}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00129}00129         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00130}00130 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00131}00131     \textcolor{keyword}{def }get\_sequence\_index(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00132}00132         \textcolor{keywordflow}{return} self.sequence\_index}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00133}00133 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00134}00134 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00135}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p}{00135}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p}{DummyDSP}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00136}00136     \textcolor{comment}{\# This only exists to test cockpit.  There is no corresponding}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00137}00137     \textcolor{comment}{\# device type in microscope yet.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00138}00138     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00139}00139         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00140}00140         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p_a7f44bd68acad3965a324b6c439e7dbff}{\_digi}} = 0}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00141}00141         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p_a691a341d6c0c37f578ed6595cab81b26}{\_ana}} = [0, 0, 0, 0]}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00142}00142         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p_af298be11efaedc211b8896fdafc999ce}{\_client}} = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00143}00143         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p_a8bfeaa2dec93237e036ceabec2fe2286}{\_actions}} = []}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00144}00144 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00145}00145     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00146}00146         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00147}00147 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00148}00148     \textcolor{keyword}{def }Abort(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00149}00149         \_logger.info(\textcolor{stringliteral}{"{}Abort"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00151}00151     \textcolor{keyword}{def }WriteDigital(self, value):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00152}00152         \_logger.info(\textcolor{stringliteral}{"{}WriteDigital: \%s"{}}, bin(value))}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00153}00153         self.\_digi = value}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00154}00154 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00155}00155     \textcolor{keyword}{def }MoveAbsolute(self, aline, pos):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00156}00156         \_logger.info(\textcolor{stringliteral}{"{}MoveAbsoluteADU: line \%d, value \%d"{}}, aline, pos)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00157}00157         self.\_ana[aline] = pos}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00159}00159     \textcolor{keyword}{def }arcl(self, mask, pairs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00160}00160         \_logger.info(\textcolor{stringliteral}{"{}arcl: \%s, \%s"{}}, mask, pairs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00161}00161 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00162}00162     \textcolor{keyword}{def }profileSet(self, pstr, digitals, *analogs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00163}00163         \_logger.info(\textcolor{stringliteral}{"{}profileSet ..."{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00164}00164         \_logger.info(\textcolor{stringliteral}{"{}... "{}}, pstr)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00165}00165         \_logger.info(\textcolor{stringliteral}{"{}... "{}}, digitals)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00166}00166         \_logger.info(\textcolor{stringliteral}{"{}... "{}}, analogs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00167}00167 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00168}00168     \textcolor{keyword}{def }DownloadProfile(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00169}00169         \_logger.info(\textcolor{stringliteral}{"{}DownloadProfile"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00170}00170 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00171}00171     \textcolor{keyword}{def }InitProfile(self, numReps):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00172}00172         \_logger.info(\textcolor{stringliteral}{"{}InitProfile"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00173}00173 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00174}00174     \textcolor{keyword}{def }trigCollect(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00175}00175         \_logger.info(\textcolor{stringliteral}{"{}trigCollect: ... "{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00176}00176         \_logger.info(args)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00177}00177         \_logger.info(kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00178}00178 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00179}00179     \textcolor{keyword}{def }ReadPosition(self, aline):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00180}00180         \_logger.info(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00181}00181             \textcolor{stringliteral}{"{}ReadPosition   : line \%d, value \%d"{}}, aline, self.\_ana[aline]}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00182}00182         )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00183}00183         \textcolor{keywordflow}{return} self.\_ana[aline]}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00185}00185     \textcolor{keyword}{def }ReadDigital(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00186}00186         \_logger.info(\textcolor{stringliteral}{"{}ReadDigital: \%s"{}}, bin(self.\_digi))}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00187}00187         \textcolor{keywordflow}{return} self.\_digi}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00188}00188 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00189}00189     \textcolor{keyword}{def }PrepareActions(self, actions, numReps=1):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00190}00190         \_logger.info(\textcolor{stringliteral}{"{}PrepareActions"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00191}00191         self.\_actions = actions}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00192}00192         self.\_repeats = numReps}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00193}00193 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00194}00194     \textcolor{keyword}{def }RunActions(self):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00195}00195         \_logger.info(\textcolor{stringliteral}{"{}RunActions ..."{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00196}00196         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(self.\_repeats):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00197}00197             \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} self.\_actions:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00198}00198                 \_logger.info(a)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00199}00199                 time.sleep(a[0] / 1000.0)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00200}00200         \textcolor{keywordflow}{if} self.\_client:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00201}00201             self.\_client.receiveData(\textcolor{stringliteral}{"{}DSP done"{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00202}00202         \_logger.info(\textcolor{stringliteral}{"{}... RunActions done."{}})}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00203}00203 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00204}00204     \textcolor{keyword}{def }receiveClient(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00205}00205         \textcolor{comment}{\# XXX: maybe this should be on its own mixin instead of on DataDevice}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00206}00206         \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_abf9edf0bbc1c90e2ec2acc2932f39b94}{microscope.abc.DataDevice.receiveClient}}(self, *args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00207}00207 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00208}00208     \textcolor{keyword}{def }set\_client(self, *args, **kwargs):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00209}00209         \textcolor{comment}{\# XXX: maybe this should be on its own mixin instead of on DataDevice}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00210}00210         \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a6c277bf2aa063667909404cb2dba13b5}{microscope.abc.DataDevice.set\_client}}(self, *args, **kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00212}00212 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00213}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device}{00213}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device}{TestFloatingDevice}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00214}00214     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_floating_device_mixin}{microscope.abc.FloatingDeviceMixin}}, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00215}00215 ):}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00216}00216     \textcolor{stringliteral}{"{}"{}"{}Simple device with a UID after having been initialized.}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00217}00217 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00218}00218 \textcolor{stringliteral}{    Floating devices are devices where we can't specify which one to}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00219}00219 \textcolor{stringliteral}{    get, we can only construct it }\textcolor{keywordflow}{and} after initialisation check its}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00220}00220     UID.  In this \textcolor{keyword}{class }for test units we can check which UID to get.}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00221}00221 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00222}00222     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00223}00223 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00224}00224 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self, uid: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00225}00225         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00226}00226         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_ae7794e0906186a6ebf1da2ddc672bb0b}{\_initialized}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00227}00227         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_a73c8edae89219711120cdb2d9970050f}{\_uid}} = uid}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00228}00228         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}{initialize}}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_abb8d15f3acfb2ccc13ada1dd0d8381f4}{initialize}}()}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00229}00229 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00230}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_abb8d15f3acfb2ccc13ada1dd0d8381f4}{00230}}     \textcolor{keyword}{def }initialize(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00231}00231         super().initialize()}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00232}00232         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_ae7794e0906186a6ebf1da2ddc672bb0b}{\_initialized}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00233}00233 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00234}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_ab4951b305b0442d54b9413546e1fbf49}{00234}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_ab4951b305b0442d54b9413546e1fbf49}{get\_index}}(self) -\/> int:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00235}00235         \textcolor{stringliteral}{"{}"{}"{}Expose private \_index for testing purposes."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00236}00236         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_floating_device_mixin_a51e6edc5d0a3d0f47b9e640af51cb7ef}{\_index}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00237}00237 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00238}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_a337d0bffc5313a6589dc28b36b979874}{00238}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_a337d0bffc5313a6589dc28b36b979874}{get\_id}}(self) -\/> str:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00239}00239         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_ae7794e0906186a6ebf1da2ddc672bb0b}{\_initialized}}:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00240}00240             \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device_a73c8edae89219711120cdb2d9970050f}{\_uid}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00241}00241         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00242}00242             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}(}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00243}00243                 \textcolor{stringliteral}{"{}uid is not available until after initialisation"{}}}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00244}00244             )}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00246}00246     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{testsuite_2devices_8py_source_l00247}00247         \textcolor{keywordflow}{pass}}
+
+\end{DoxyCode}

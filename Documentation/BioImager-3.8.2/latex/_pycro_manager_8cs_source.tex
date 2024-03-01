@@ -1,0 +1,388 @@
+\hypertarget{_pycro_manager_8cs_source}{}\doxysection{Pycro\+Manager.\+cs}
+\label{_pycro_manager_8cs_source}\index{F:/repos/BioImager/BioImager/PycroManager/PycroManager.cs@{F:/repos/BioImager/BioImager/PycroManager/PycroManager.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00001}00001 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00002}00002 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Diagnostics;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00008}00008 \textcolor{keyword}{using }RectangleD = AForge.RectangleD;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00009}00009 }
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00010}00010 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00011}00011 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00012}00012     \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }PycroManager}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00013}00013     \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00014}00014         \textcolor{keyword}{public} \textcolor{keyword}{static} PointD location;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00015}00015         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double} focus;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00016}00016         \textcolor{keyword}{public} \textcolor{keyword}{static} Dictionary<string, List<Conf>> Config = \textcolor{keyword}{new} Dictionary<string, List<Conf>>();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00017}\mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{00017}}         \textcolor{keyword}{public} \textcolor{keyword}{struct }\mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{Conf}}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00018}00018         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00019}00019             \textcolor{keyword}{public} \textcolor{keywordtype}{string} Class \{  \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00020}00020             \textcolor{keyword}{public} \textcolor{keywordtype}{string} Type \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00021}00021             \textcolor{keyword}{public} \textcolor{keywordtype}{string}[] Values \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00022}00022             \textcolor{keyword}{public} \mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{Conf}}(\textcolor{keywordtype}{string} Class, \textcolor{keywordtype}{string} Type, \textcolor{keywordtype}{string}[] Values)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00023}00023             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00024}00024                 this.Class = Class;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00025}00025                 this.Type = Type;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00026}00026                 this.Values = Values;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00027}00027             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00028}00028             \textcolor{keyword}{public} \textcolor{keyword}{override} \textcolor{keywordtype}{string} ToString()}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00029}00029             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00030}00030                 \textcolor{keywordtype}{string} s = Class + \textcolor{stringliteral}{"{},"{}} + Type + \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00031}00031                 \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} item \textcolor{keywordflow}{in} Values)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00032}00032                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00033}00033                     s += item + \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00034}00034                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00035}00035                 \textcolor{keywordflow}{return} s;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00036}00036             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00037}00037         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00038}00038         \textcolor{keyword}{public} \textcolor{keyword}{static} \mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{Conf}}[] GetConfigs(\textcolor{keywordtype}{string} Class, \textcolor{keywordtype}{string} Type)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00039}00039         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00040}00040             List<Conf> configs = \textcolor{keyword}{new} List<Conf>();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00041}00041             \textcolor{keywordflow}{foreach} (var conf \textcolor{keywordflow}{in} Config[Class]) }
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00042}00042             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00043}00043                 \textcolor{keywordflow}{if}(conf.Type == Type) configs.Add(conf);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00044}00044             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00045}00045             \textcolor{keywordflow}{return} configs.ToArray();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00046}00046         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00047}00047         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} initialized = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00048}00048         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} TurretName = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00049}00049         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} Initialize(\textcolor{keywordtype}{string} config)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00050}00050         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00051}00051             \textcolor{keywordtype}{string}[] sts = File.ReadAllLines(config);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00052}00052             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00053}00053             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00054}00054                 \textcolor{keywordflow}{if}(!s.Replace(\textcolor{stringliteral}{"{} "{}},\textcolor{stringliteral}{"{}"{}}).StartsWith(\textcolor{stringliteral}{"{}\#"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00055}00055                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00056}00056                     \textcolor{keywordtype}{string}[] vals = s.Split(\textcolor{charliteral}{','});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00057}00057                     \textcolor{keywordflow}{if} (vals.Length == 1)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00058}00058                         \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00059}00059                     \textcolor{keywordflow}{if} (!Config.ContainsKey(vals[0]))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00060}00060                     Config.Add(vals[0],\textcolor{keyword}{new} List<Conf>());}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00061}00061                     List<string> vs = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00062}00062                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 2; j < vals.Length; j++)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00063}00063                     \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00064}00064                         vs.Add(vals[j]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00065}00065                     \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00066}00066                     Config[vals[0]].Add(\textcolor{keyword}{new} Conf(vals[0], vals[1], vs.ToArray()));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00067}00067                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00068}00068             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00069}00069             \textcolor{keywordflow}{if}(Config.ContainsKey(\textcolor{stringliteral}{"{}Device"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00070}00070             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00071}00071                 \textcolor{comment}{//We get the name of the objective turret required for changing objectives}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00072}00072                 \textcolor{keywordflow}{foreach} (Conf item \textcolor{keywordflow}{in} Config[\textcolor{stringliteral}{"{}Device"{}}])}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00073}00073                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00074}00074                     \textcolor{keywordflow}{if}(item.Type == \textcolor{stringliteral}{"{}Objective"{}})}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00075}00075                     \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00076}00076                         \textcolor{comment}{//We set the }}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00077}00077                         TurretName = \textcolor{stringliteral}{"{}Objective"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00078}00078                         initialized = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00079}00079                     \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00080}00080                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00081}00081             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00082}00082             Objectives.Initialize();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00083}00083             \textcolor{keywordflow}{if}(!initialized)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00084}00084             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00085}00085                 Console.WriteLine(\textcolor{stringliteral}{"{}Unable to find Objective Turret (DObjective) Label in MMConfig."{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00086}00086                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00087}00087             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00088}00088             Shutters.Initialize();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00089}00089             Point3D loc = \textcolor{keyword}{new} Point3D();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00090}00090             GetPosition3D(out loc, \textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00091}00091             focus = loc.Z;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00092}00092             location = \textcolor{keyword}{new} PointD(loc.X, loc.Y);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00093}00093             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00094}00094         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00095}00095         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{string} run\_cmd(\textcolor{keywordtype}{string} cmd, \textcolor{keywordtype}{string} args)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00096}00096         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00097}00097             ProcessStartInfo start = \textcolor{keyword}{new} ProcessStartInfo();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00098}00098             start.FileName = \textcolor{stringliteral}{"{}python.exe"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00099}00099             start.Arguments = \textcolor{keywordtype}{string}.Format(\textcolor{stringliteral}{"{}\{0\} \{1\}"{}}, cmd, args);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00100}00100             start.WorkingDirectory = Application.StartupPath + \textcolor{stringliteral}{"{}PycroManager"{}};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00101}00101             start.UseShellExecute = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00102}00102             start.RedirectStandardOutput = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00103}00103             start.CreateNoWindow = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00104}00104             \textcolor{keywordtype}{string} res;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00105}00105             \textcolor{keyword}{using} (Process process = Process.Start(start))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00106}00106             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00107}00107                 \textcolor{keyword}{using} (StreamReader reader = process.StandardOutput)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00108}00108                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00109}00109                     res = reader.ReadToEnd();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00110}00110 \textcolor{preprocessor}{\#if DEBUG}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00111}00111                     Console.Write(res);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00112}00112 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00113}00113                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00114}00114             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00115}00115             \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00116}00116         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00117}00117         \textcolor{keyword}{public} \textcolor{keyword}{static} BioImage TakeImage(\textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00118}00118         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00119}00119             \textcolor{keywordtype}{int} width, height, depth, bits, channels = 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00120}00120             AForge.Bitmap[] bm;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00121}00121             TakeImage(name,out width,out height,out depth,out bits,out channels, out bm);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00122}00122             BioImage im = \textcolor{keyword}{new} BioImage(name);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00123}00123             \textcolor{keywordflow}{foreach} (AForge.Bitmap item in bm)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00124}00124             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00125}00125                 Statistics.CalcStatistics(item);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00126}00126             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00127}00127             im.Buffers.AddRange(bm);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00128}00128             \textcolor{comment}{//Set the physical size based on objective view}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00129}00129             RectangleD rec = Microscope.GetViewRectangle(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00130}00130             Point3D p = Microscope.GetPosition();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00131}00131             Resolution res = \textcolor{keyword}{new} Resolution(width, height, im.Buffers[0].PixelFormat, rec.W / im.Buffers[0].SizeX, rec.H / im.Buffers[0].SizeY, 1, p.X, p.Y, p.Z);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00132}00132             im.Volume.Location = p;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00133}00133             im.Volume.Width = rec.W;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00134}00134             im.Volume.Height = rec.H;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00135}00135             im.bitsPerPixel = im.Buffers[0].BitsPerPixel;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00136}00136             im.UpdateCoords(1, 1, 1);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00137}00137             im.Resolutions.Add(res);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00138}00138             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} c = 0; c < bm.Length; c++)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00139}00139             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00140}00140                 im.Channels.Add(\textcolor{keyword}{new} Channel(c, bm[c].BitsPerPixel, bm[c].RGBChannelsCount));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00141}00141             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00142}00142             \textcolor{comment}{//We wait for threshold image statistics calculation}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00143}00143             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00144}00144             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00145}00145                 Thread.Sleep(50);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00146}00146             \} \textcolor{keywordflow}{while} (im.Buffers[im.Buffers.Count -\/ 1].Stats == \textcolor{keyword}{null});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00147}00147             Statistics.ClearCalcBuffer();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00148}00148             BioImage.AutoThreshold(im, \textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00149}00149             \textcolor{keywordflow}{return} im;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00150}00150         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00151}00151         \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} TakeImage(\textcolor{keywordtype}{string} file, out \textcolor{keywordtype}{int} width, out \textcolor{keywordtype}{int} height, out \textcolor{keywordtype}{int} depth, out \textcolor{keywordtype}{int} bits, out \textcolor{keywordtype}{int} channels, out AForge.Bitmap[] bm)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00152}00152         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00153}00153             \textcolor{keywordtype}{string} fil = Path.GetFileNameWithoutExtension(file);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00154}00154             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}TakeImage.py"{}},fil);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00155}00155             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00156}00156             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00157}00157                 \textcolor{keywordtype}{string}[] sts = s.Split();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00158}00158                 width = \textcolor{keywordtype}{int}.Parse(sts[0]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00159}00159                 height = \textcolor{keywordtype}{int}.Parse(sts[2]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00160}00160                 depth = \textcolor{keywordtype}{int}.Parse(sts[4]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00161}00161                 bits = \textcolor{keywordtype}{int}.Parse(sts[6]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00162}00162                 channels = \textcolor{keywordtype}{int}.Parse(sts[8]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00163}00163                 PixelFormat format = PixelFormat.Format8bppIndexed;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00164}00164                 \textcolor{keywordflow}{if} (depth > 8 \&\& bits == 2)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00165}00165                     format = PixelFormat.Format16bppGrayScale;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00166}00166                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(depth > 8 \&\& bits == 6)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00167}00167                     format = PixelFormat.Format48bppRgb;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00168}00168                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (depth == 8 \&\& bits == 3)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00169}00169                     format = PixelFormat.Format24bppRgb;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00170}00170                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (depth == 8 \&\& bits == 4)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00171}00171                     format = PixelFormat.Format32bppArgb;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00172}00172                 bm = \textcolor{keyword}{new} AForge.Bitmap[channels];}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00173}00173                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < channels; i++)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00174}00174                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00175}00175                     \textcolor{comment}{//Each channel is saved as a seperate file}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00176}00176                     bm[i] = \textcolor{keyword}{new} AForge.Bitmap(width,height,format,File.ReadAllBytes(Application.StartupPath + \textcolor{stringliteral}{"{}PycroManager/"{}} + fil + i),\textcolor{keyword}{new} ZCT(), \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00177}00177                     \textcolor{comment}{//We delete the temporary file.}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00178}00178                     File.Delete(file + i);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00179}00179                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00180}00180                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00181}00181             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00182}00182             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00183}00183             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00184}00184                 width = 0;height = 0; depth = 0;bits = 0;channels = 0;bm = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00185}00185                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00186}00186             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00187}00187         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00188}00188         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} SetExposure(\textcolor{keywordtype}{float} f)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00189}00189         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00190}00190             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}SetExposure.py"{}}, f.ToString());}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00191}00191             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00192}00192                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00193}00193             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00194}00194                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00195}00195         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00196}00196         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} SetPosition(Point3D p)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00197}00197         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00198}00198             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}SetStageXYZ.py"{}}, p.X + \textcolor{stringliteral}{"{} "{}} + p.Y + \textcolor{stringliteral}{"{} "{}} + p.Z);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00199}00199             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00200}00200             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00201}00201                 focus = p.Z;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00202}00202                 location = \textcolor{keyword}{new} PointD(p.X, p.Y);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00203}00203                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00204}00204             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00205}00205             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00206}00206                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00207}00207         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00208}00208         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} SetPosition(PointD p)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00209}00209         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00210}00210             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}SetStageXY.py"{}}, p.X + \textcolor{stringliteral}{"{} "{}} + p.Y);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00211}00211             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00212}00212             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00213}00213                 location = p;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00214}00214                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00215}00215             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00216}00216             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00217}00217                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00218}00218         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00219}00219         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} GetPosition3D(out Point3D p, \textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00220}00220         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00221}00221             \textcolor{keywordflow}{if} (!update)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00222}00222             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00223}00223                 p = \textcolor{keyword}{new} Point3D(location.X, location.Y, focus);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00224}00224                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00225}00225             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00226}00226             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}GetStageXYZ.py"{}}, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00227}00227             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00228}00228             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00229}00229                 \textcolor{keywordtype}{string}[] sts = s.Split();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00230}00230                 p = \textcolor{keyword}{new} Point3D(\textcolor{keywordtype}{double}.Parse(sts[0]), \textcolor{keywordtype}{double}.Parse(sts[2]), \textcolor{keywordtype}{double}.Parse(sts[4]));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00231}00231                 focus = p.Z;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00232}00232                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00233}00233             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00234}00234             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00235}00235             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00236}00236                 p = \textcolor{keyword}{new} Point3D();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00237}00237                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00238}00238             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00239}00239         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00240}00240         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} GetPosition(out PointD p, \textcolor{keywordtype}{bool} update)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00241}00241         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00242}00242             \textcolor{keywordflow}{if} (!update)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00243}00243             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00244}00244                 p = location;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00245}00245                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00246}00246             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00247}00247             \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}GetStageXY.py"{}}, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00248}00248             \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00249}00249             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00250}00250                 \textcolor{keywordtype}{string}[] sts = s.Split();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00251}00251                 p = \textcolor{keyword}{new} PointD(\textcolor{keywordtype}{double}.Parse(sts[0]), \textcolor{keywordtype}{double}.Parse(sts[2]));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00252}00252                 location = p;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00253}00253                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00254}00254             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00255}00255             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00256}00256             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00257}00257                 p = \textcolor{keyword}{new} PointD();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00258}00258                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00259}00259             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00260}00260         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00261}00261         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }Objectives}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00262}00262         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00266}00266             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} InstalledCount}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00267}00267             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00268}00268                 \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00269}00269                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00270}00270                     \textcolor{keywordflow}{return} GetConfigs(\textcolor{stringliteral}{"{}ConfigGroup"{}}, \textcolor{stringliteral}{"{}Objective"{}}).Length;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00271}00271                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00272}00272             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00273}00273             \textcolor{keyword}{public} \textcolor{keyword}{static} List<Objective> List = \textcolor{keyword}{new} List<Objective>();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00274}\mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_objectives_1_1_objective}{00274}}             \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_objectives_1_1_objective}{Objective}}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00275}00275             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00276}00276                 \textcolor{keyword}{public} \textcolor{keywordtype}{string} Name \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00277}00277                 \textcolor{keyword}{public} \textcolor{keywordtype}{int} Index \{  \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00278}00278                 \textcolor{keyword}{public} \textcolor{keywordtype}{int} Magnification \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00279}00279                 \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_objectives_1_1_objective}{Objective}}(\textcolor{keywordtype}{string} name, \textcolor{keywordtype}{int} index, \textcolor{keywordtype}{int} mag)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00280}00280                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00281}00281                     Name = name;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00282}00282                     Index = index;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00283}00283                     Magnification = mag;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00284}00284                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00285}00285             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00286}00286             \textcolor{keyword}{internal} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Initialize()}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00287}00287             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00288}00288                 \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00289}00289                 \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{Conf}} obj \textcolor{keywordflow}{in} GetConfigs(\textcolor{stringliteral}{"{}ConfigGroup"{}}, \textcolor{stringliteral}{"{}Objective"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00290}00290                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00291}00291                     List.Add(\textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_objectives_1_1_objective}{Objective}}(obj.Values[0], \textcolor{keywordtype}{int}.Parse(obj.Values[3]), \textcolor{keywordtype}{int}.Parse(obj.Values[0].Replace(\textcolor{stringliteral}{"{}X"{}}, \textcolor{stringliteral}{"{}"{}}))));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00292}00292                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00293}00293             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00294}00294 }
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00295}00295             \textcolor{keyword}{public} \textcolor{keyword}{static} Conf GetObjective(\textcolor{keywordtype}{int} index)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00296}00296             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00297}00297                 Conf[] cfs = GetConfigs(\textcolor{stringliteral}{"{}ConfigGroup"{}}, \textcolor{stringliteral}{"{}Objective"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00298}00298                 \textcolor{keywordflow}{return} cfs[index];}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00299}00299             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00300}00300             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} SetPosition(\textcolor{keywordtype}{int} i)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00301}00301             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00302}00302                 \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}SetObjective.py"{}}, TurretName + \textcolor{stringliteral}{"{} "{}} + GetObjective(i).Values[0]);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00303}00303                 \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00304}00304                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00305}00305                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00306}00306                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00307}00307                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00308}00308                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00309}00309             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00310}00310             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} GetPosition()}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00311}00311             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00312}00312                 \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}GetObjective.py"{}}, TurretName);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00313}00313                 \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00314}00314                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00315}00315                     \textcolor{keywordtype}{string}[] sts = s.Split();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00316}00316                     \textcolor{keywordflow}{foreach} (Objective o \textcolor{keywordflow}{in} List)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00317}00317                     \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00318}00318                         \textcolor{keywordflow}{if} (o.Name == sts[0])}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00319}00319                             \textcolor{keywordflow}{return} o.Index;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00320}00320                     \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00321}00321                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00322}00322                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00323}00323                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00324}00324                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00325}00325             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00326}00326         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00327}00327         \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keyword}{class }Shutters}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00328}00328         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00329}\mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_shutters_1_1_shutter}{00329}}             \textcolor{keyword}{public} \textcolor{keyword}{class }\mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_shutters_1_1_shutter}{Shutter}}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00330}00330             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00331}00331                 \textcolor{keyword}{public} \textcolor{keywordtype}{string} Name \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00332}00332                 \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_shutters_1_1_shutter}{Shutter}}(\textcolor{keywordtype}{string} name)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00333}00333                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00334}00334                     Name = name;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00335}00335                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00336}00336             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00337}00337             \textcolor{keyword}{public} \textcolor{keyword}{static} List<Shutter> List = \textcolor{keyword}{new} List<Shutter>();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00338}00338             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} Initialize()}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00339}00339             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00340}00340                 \textcolor{keywordflow}{if} (Config.ContainsKey(\textcolor{stringliteral}{"{}Device"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00341}00341                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00342}00342                     \textcolor{comment}{//We get the name of the shutters.}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00343}00343                     \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{struct_bio_imager_1_1_pycro_manager_1_1_conf}{Conf}} item \textcolor{keywordflow}{in} Config[\textcolor{stringliteral}{"{}Device"{}}])}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00344}00344                     \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00345}00345                         \textcolor{keywordflow}{if} (item.Values.Last().Contains(\textcolor{stringliteral}{"{}Shutter"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00346}00346                         \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00347}00347                             List.Add(\textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_pycro_manager_1_1_shutters_1_1_shutter}{Shutter}}(item.Type));}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00348}00348                         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00349}00349                     \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00350}00350                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00351}00351             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00352}00352             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int} GetPosition(\textcolor{keywordtype}{string} shutterName)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00353}00353             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00354}00354                 \textcolor{keywordtype}{string} s = run\_cmd(\textcolor{stringliteral}{"{}GetShutter.py"{}}, shutterName);}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00355}00355                 \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00356}00356                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00357}00357                     \textcolor{keywordtype}{string}[] sts = s.Split();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00358}00358                     \textcolor{keywordtype}{string} st = sts[0].ToLower();}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00359}00359                     \textcolor{keywordflow}{if} (\textcolor{keywordtype}{bool}.Parse(st))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00360}00360                         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00361}00361                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00362}00362                         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00363}00363                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00364}00364                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00365}00365                     \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00366}00366             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00367}00367             \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{bool} SetPosition(\textcolor{keywordtype}{string} shutterName, \textcolor{keywordtype}{int} state)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00368}00368             \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00369}00369                 \textcolor{keywordtype}{string} s;}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00370}00370                 \textcolor{keywordflow}{if}(state == 0)}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00371}00371                     s = run\_cmd(\textcolor{stringliteral}{"{}SetShutter.py"{}}, shutterName + \textcolor{stringliteral}{"{} 0"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00372}00372                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00373}00373                     s = run\_cmd(\textcolor{stringliteral}{"{}SetShutter.py"{}}, shutterName + \textcolor{stringliteral}{"{} 1"{}});}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00374}00374                 \textcolor{keywordflow}{if} (s.Contains(\textcolor{stringliteral}{"{}OK"{}}))}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00375}00375                 \{}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00376}00376                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00377}00377                 \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00378}00378                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00379}00379                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00380}00380             \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00381}00381         \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00382}00382         }
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00383}00383         }
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00384}00384     \}}
+\DoxyCodeLine{\Hypertarget{_pycro_manager_8cs_source_l00385}00385 \}}
+
+\end{DoxyCode}

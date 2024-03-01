@@ -1,0 +1,398 @@
+\hypertarget{_channels_tool_8cs_source}{}\doxysection{Channels\+Tool.\+cs}
+\label{_channels_tool_8cs_source}\index{F:/repos/BioImager/BioImager/Source/ChannelsTool.cs@{F:/repos/BioImager/BioImager/Source/ChannelsTool.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00001}00001 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00002}00002 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00004}00004 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Drawing.Imaging;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00006}00006 \textcolor{keyword}{using }AForge;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00007}00007 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00008}00008 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00009}\mbox{\hyperlink{class_bio_imager_1_1_channels_tool}{00009}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_channels_tool}{ChannelsTool}} : Form}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00010}00010     \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00011}00011         \textcolor{keyword}{private} \mbox{\hyperlink{class_bio_imager_1_1_histogram_control}{HistogramControl}} hist = \textcolor{keyword}{null};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00012}00012         \textcolor{keyword}{public} List<Channel> Channels}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00013}00013         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00014}00014             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00015}00015             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00016}00016                 \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_app}{App}}.Channels;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00017}00017             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00018}00018         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00019}00019         \textcolor{comment}{/* A property that returns the selected channel from the channelsBox. */}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00020}00020         \textcolor{keyword}{public} Channel SelectedChannel}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00021}00021         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00022}00022             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00023}00023             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00024}00024                 \textcolor{keywordflow}{if} (channelsBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00025}00025                     \textcolor{keywordflow}{return} Channels[channelsBox.SelectedIndex];}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00026}00026                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00027}00027                     \textcolor{keywordflow}{return} Channels[0];}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00028}00028             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00029}00029         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00030}00030         \textcolor{comment}{/* A property that is used to get and set the value of the sampleBox.Value. */}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00031}00031         \textcolor{keyword}{public} \textcolor{keywordtype}{int} SelectedSample}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00032}00032         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00033}00033             \textcolor{keyword}{get}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00034}00034             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00035}00035                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})sampleBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00036}00036             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00037}00037             \textcolor{keyword}{set}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00038}00038             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00039}00039                 sampleBox.Value = (decimal)value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00040}00040             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00041}00041         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00043}\mbox{\hyperlink{class_bio_imager_1_1_channels_tool_a296c218a6b0364f78ab489ce34907133}{00043}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_channels_tool_a296c218a6b0364f78ab489ce34907133}{UpdateItems}}()}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00044}00044         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00045}00045             channelsBox.Items.Clear();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00046}00046             \textcolor{keywordflow}{foreach} (Channel item \textcolor{keywordflow}{in} Channels)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00047}00047             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00048}00048                 channelsBox.Items.Add(item);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00049}00049             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00050}00050         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00051}00051         \textcolor{comment}{/* Creating a new instance of the ChannelsTool class. */}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00052}00052         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_channels_tool}{ChannelsTool}}(List<Channel> Channels)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00053}00053         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00054}00054             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00055}00055             \textcolor{keywordflow}{foreach} (Channel item \textcolor{keywordflow}{in} Channels)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00056}00056             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00057}00057                 channelsBox.Items.Add(item);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00058}00058             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00059}00059             channelsBox.SelectedIndex = 0;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00060}00060             minBox.Value = (int)Channels[0].stats[0].StackMin;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00061}00061             maxBox.Value = (int)Channels[0].stats[0].StackMax;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00062}00062             hist = \textcolor{keyword}{new} HistogramControl(Channels[channelsBox.SelectedIndex]);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00063}00063             hist.GraphMax = (int)maxBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00064}00064             maxGraphBox.Value = (\textcolor{keywordtype}{int})maxBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00065}00065             MouseWheel += \textcolor{keyword}{new} System.Windows.Forms.MouseEventHandler(ChannelsTool\_MouseWheel);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00066}00066             statsPanel.Controls.Add(hist);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00067}00067         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00076}00076         \textcolor{keyword}{private} \textcolor{keywordtype}{void} minBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00077}00077         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00078}00078             \textcolor{keywordflow}{if} (channelsBox.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00079}00079                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00080}00080             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00081}00081             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00082}00082                 hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8434166f720aed6abe735cd31d7647d5}{UpdateChannel}}(Channels[channelsBox.SelectedIndex]);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00083}00083                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00084}00084                 hist.Min = (int)minBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00085}00085             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00086}00086             App.Channels[channelsBox.SelectedIndex].range[(int)sampleBox.Value].Min = (\textcolor{keywordtype}{int})minBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00087}00087             App.viewer.UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00088}00088             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00089}00089         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00097}00097         \textcolor{keyword}{private} \textcolor{keywordtype}{void} maxBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00098}00098         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00099}00099             \textcolor{keywordflow}{if} (channelsBox.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00100}00100                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00101}00101             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00102}00102             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00103}00103                 hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8434166f720aed6abe735cd31d7647d5}{UpdateChannel}}(Channels[channelsBox.SelectedIndex]);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00104}00104                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00105}00105                 hist.Max = (int)maxBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00106}00106             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00107}00107             App.Channels[channelsBox.SelectedIndex].range[(int)sampleBox.Value].Min = (\textcolor{keywordtype}{int})minBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00108}00108             App.viewer.UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00109}00109             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00110}00110         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00118}00118         \textcolor{keyword}{private} \textcolor{keywordtype}{void} channelsBox\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00119}00119         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00120}00120             \textcolor{keywordflow}{if} (channelsBox.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00121}00121                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00122}00122             sampleBox.Value = 0;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00123}00123             sampleBox.Maximum = ((Channel)channelsBox.SelectedItem).range.Length -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00124}00124             \textcolor{keywordflow}{if} (minBox.Maximum < Channels[channelsBox.SelectedIndex].range[(\textcolor{keywordtype}{int})sampleBox.Value].Min || maxBox.Maximum < Channels[channelsBox.SelectedIndex].range[(int)sampleBox.Value].Max)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00125}00125             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00126}00126                 minBox.Value = 0;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00127}00127                 maxBox.Value = ushort.MaxValue;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00128}00128             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00129}00129             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00130}00130             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00131}00131                 minBox.Value = Channels[channelsBox.SelectedIndex].range[(int)sampleBox.Value].Min;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00132}00132                 maxBox.Value = Channels[channelsBox.SelectedIndex].range[(\textcolor{keywordtype}{int})sampleBox.Value].Max;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00133}00133             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00134}00134             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00135}00135             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00136}00136                 \textcolor{comment}{//hist.Statistics = Channels[channelsBox.SelectedIndex].statistics;}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00137}00137                 hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8434166f720aed6abe735cd31d7647d5}{UpdateChannel}}(SelectedChannel);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00138}00138                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00139}00139             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00140}00140             fluorBox.Text = SelectedChannel.Fluor;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00141}00141             emisBox.Value = (decimal)SelectedChannel.Emission;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00142}00142             excBox.Value = (decimal)SelectedChannel.Excitation;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00143}00143             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00144}00144         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00150}00150 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00151}00151         \textcolor{keyword}{private} \textcolor{keywordtype}{void} maxUintBox\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00152}00152         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00153}00153             \textcolor{keywordtype}{int} i = \textcolor{keywordtype}{int}.Parse((\textcolor{keywordtype}{string})maxUintBox.SelectedItem,System.Globalization.CultureInfo.InvariantCulture);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00154}00154             \textcolor{keywordflow}{if}(i<=maxBox.Maximum)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00155}00155             maxBox.Value = i;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00156}00156 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00157}00157         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00158}00158 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00163}00163         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_FormClosing(\textcolor{keywordtype}{object} sender, FormClosingEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00164}00164         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00165}00165             e.Cancel = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00166}00166             this.Hide();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00167}00167         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00168}00168 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00173}00173         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMaxAllBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00174}00174         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00175}00175             \textcolor{keywordflow}{foreach} (Channel c \textcolor{keywordflow}{in} Channels)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00176}00176             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00177}00177                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00178}00178                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00179}00179                     c.range[i].Max = (int)maxBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00180}00180                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00181}00181             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00182}00182             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00183}00183         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00184}00184 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00189}00189         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMinAllBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00190}00190         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00191}00191             \textcolor{keywordflow}{foreach} (Channel c \textcolor{keywordflow}{in} Channels)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00192}00192             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00193}00193                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < c.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00194}00194                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00195}00195                     c.range[i].Min = (int)minBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00196}00196                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00197}00197             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00198}00198             App.viewer.UpdateView();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00199}00199         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00200}00200 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00206}00206         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_Activated(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00207}00207         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00208}00208             sampleBox.Maximum = SelectedChannel.SamplesPerPixel -\/ 1;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00209}00209             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < SelectedChannel.range.Length; i++)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00210}00210             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00211}00211                 SelectedChannel.range[i].Min = (int)minBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00212}00212             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00213}00213             minBox.Value = SelectedChannel.range[(int)sampleBox.Value].Min;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00214}00214             maxBox.Value = SelectedChannel.range[(\textcolor{keywordtype}{int})sampleBox.Value].Max;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00215}00215             \mbox{\hyperlink{class_bio_imager_1_1_channels_tool_a296c218a6b0364f78ab489ce34907133}{UpdateItems}}();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00216}00216             hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8b0286a5192bf2a38bf657d8b8b8ed29}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00218}00218         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00219}00219 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00224}00224         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_ResizeEnd(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00225}00225         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00226}00226             hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8b0286a5192bf2a38bf657d8b8b8ed29}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00227}00227         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00228}00228 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00234}00234         \textcolor{keyword}{private} \textcolor{keywordtype}{void} maxUintBox2\_SelectedIndexChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00235}00235         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00236}00236             \textcolor{keywordtype}{int} i = \textcolor{keywordtype}{int}.Parse((\textcolor{keywordtype}{string})maxUintBox2.SelectedItem, System.Globalization.CultureInfo.InvariantCulture);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00237}00237             \textcolor{keywordflow}{if}(i <= maxGraphBox.Maximum)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00238}00238             maxGraphBox.Value = i;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00239}00239             \textcolor{keywordflow}{if} (i == 255)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00240}00240             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00241}00241                 maxGraphBox.Value = 255;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00242}00242                 binBox.Value = 1;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00243}00243             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00244}00244         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00245}00245 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00251}00251         \textcolor{keyword}{private} \textcolor{keywordtype}{void} minGraphBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00252}00252         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00253}00253             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00254}00254             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00255}00255                 hist.GraphMin = (int)minGraphBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00256}00256                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00257}00257             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00258}00258         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00265}00265         \textcolor{keyword}{private} \textcolor{keywordtype}{void} maxGraphBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00266}00266         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00267}00267             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00268}00268             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00269}00269                 hist.GraphMax = (int)maxGraphBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00270}00270                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00271}00271             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00272}00272         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00278}00278         \textcolor{keyword}{private} \textcolor{keywordtype}{void} binBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00279}00279         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00280}00280             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00281}00281             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00282}00282                 hist.Bin = (int)binBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00283}00283                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00284}00284             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00285}00285         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00286}00286 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00291}00291         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_MouseDown(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00292}00292         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00293}00293             }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00294}00294         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00295}00295         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} pressedX1 = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00296}00296         \textcolor{keyword}{private} \textcolor{keywordtype}{bool} pressedX2 = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00306}00306         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_MouseMove(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00307}00307         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00308}00308             \textcolor{keywordflow}{if} (e.Button == MouseButtons.XButton1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00309}00309             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00310}00310                 \textcolor{keywordflow}{if} (channelsBox.SelectedIndex < channelsBox.Items.Count-\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00311}00311                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00312}00312                     \textcolor{keywordflow}{if} (pressedX1 == \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00313}00313                     \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00314}00314                         channelsBox.SelectedIndex++;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00315}00315                         pressedX1 = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00316}00316                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00317}00317                     \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00318}00318                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00319}00319             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00320}00320             pressedX1 = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00321}00321             \textcolor{keywordflow}{if} (e.Button == MouseButtons.XButton2)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00322}00322             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00323}00323                 \textcolor{keywordflow}{if} (channelsBox.SelectedIndex > 0)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00324}00324                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00325}00325                     \textcolor{keywordflow}{if} (pressedX2 == \textcolor{keyword}{false})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00326}00326                     \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00327}00327                         channelsBox.SelectedIndex-\/-\/;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00328}00328                         pressedX2 = \textcolor{keyword}{true};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00329}00329                         \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00330}00330                     \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00331}00331                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00332}00332             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00333}00333             pressedX2 = \textcolor{keyword}{false};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00334}00334         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00335}00335 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00344}00344         \textcolor{keyword}{private} \textcolor{keywordtype}{void} ChannelsTool\_MouseWheel(\textcolor{keywordtype}{object} sender, MouseEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00345}00345         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00346}00346             \textcolor{keywordflow}{if} (e.Delta == 0)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00347}00347                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00348}00348             \textcolor{keywordtype}{int} i = 100;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00349}00349             \textcolor{keywordflow}{if} (maxGraphBox.Value < 255)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00350}00350                 i = 10;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00351}00351             \textcolor{keywordflow}{if} (e.Delta > 0)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00352}00352             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00353}00353                 \textcolor{keywordflow}{if} (maxGraphBox.Value + i < maxGraphBox.Maximum)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00354}00354                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00355}00355                     maxGraphBox.Value += i;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00356}00356                     hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00357}00357                     \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00358}00358                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00359}00359             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00360}00360             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00361}00361             \textcolor{keywordflow}{if} (maxGraphBox.Value -\/ i > maxGraphBox.Minimum)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00362}00362             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00363}00363                 maxGraphBox.Value -\/= i;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00364}00364                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00365}00365                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00366}00366             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00367}00367         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00368}00368 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00373}00373         \textcolor{keyword}{private} \textcolor{keywordtype}{void} stackHistoBox\_CheckedChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00374}00374         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00375}00375             hist.StackHistogram = stackHistoBox.Checked;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00376}00376             hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00377}00377         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00378}00378 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00384}00384         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMinToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00385}00385         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00386}00386             minBox.Value = (int)hist.MouseValX;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00387}00387         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00388}00388 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00394}00394         \textcolor{keyword}{private} \textcolor{keywordtype}{void} setMaxToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00395}00395         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00396}00396             maxBox.Value = (int)hist.MouseValX;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00397}00397         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00398}00398 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00404}00404         \textcolor{keyword}{private} \textcolor{keywordtype}{void} applyBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00405}00405         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00406}00406             ImageView.SelectedImage.Bake(ImageView.SelectedImage.RChannel.RangeR, ImageView.SelectedImage.GChannel.RangeG, ImageView.SelectedImage.BChannel.RangeB);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00407}00407         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00408}00408 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00409}00409         \textcolor{keyword}{private} \textcolor{keywordtype}{void} minToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00410}00410         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00411}00411             minBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMin;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00412}00412         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00413}00413 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00414}00414         \textcolor{keyword}{private} \textcolor{keywordtype}{void} maxToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00415}00415         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00416}00416             minBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMax;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00417}00417         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00418}00418 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00419}00419         \textcolor{keyword}{private} \textcolor{keywordtype}{void} medianToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00420}00420         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00421}00421             minBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMedian;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00422}00422         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00423}00423 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00424}00424         \textcolor{keyword}{private} \textcolor{keywordtype}{void} meanToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00425}00425         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00426}00426             minBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMean;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00427}00427         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00428}00428 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00429}00429         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toolStripMenuItem1\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00430}00430         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00431}00431             maxBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMin;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00432}00432         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00433}00433 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00434}00434         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toolStripMenuItem2\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00435}00435         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00436}00436             maxBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMax;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00437}00437         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00438}00438         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toolStripMenuItem3\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00439}00439         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00440}00440             maxBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMedian;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00441}00441         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00442}00442         \textcolor{keyword}{private} \textcolor{keywordtype}{void} toolStripMenuItem4\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00443}00443         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00444}00444             maxBox.Value = (decimal)SelectedChannel.stats[channelsBox.SelectedIndex].StackMean;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00445}00445         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00446}00446 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00451}00451         \textcolor{keyword}{private} \textcolor{keywordtype}{void} updateBut\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00452}00452         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00453}00453             \textcolor{keywordflow}{if} (ImageView.SelectedImage.bitsPerPixel > 8)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00454}00454             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00455}00455                 ImageView.SelectedImage.StackThreshold(\textcolor{keyword}{true});}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00456}00456                 \textcolor{keywordflow}{if} (ImageView.SelectedImage.RGBChannelCount == 1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00457}00457                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00458}00458                     maxBox.Value = (decimal)ImageView.SelectedImage.Channels[channelsBox.SelectedIndex].stats[0].StackMax;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00459}00459                     minBox.Value = (decimal)ImageView.SelectedImage.Channels[channelsBox.SelectedIndex].stats[0].StackMin;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00460}00460                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00461}00461                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00462}00462                 \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00463}00463                     maxBox.Value = (decimal)ImageView.SelectedImage.Channels[channelsBox.SelectedIndex].stats[channelsBox.SelectedIndex].StackMax;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00464}00464                     minBox.Value = (decimal)ImageView.SelectedImage.Channels[channelsBox.SelectedIndex].stats[channelsBox.SelectedIndex].StackMin;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00465}00465                 \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00466}00466             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00467}00467             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00468}00468             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00469}00469                 ImageView.SelectedImage.StackThreshold(\textcolor{keyword}{false});}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00470}00470             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00471}00471             App.viewer.UpdateImage();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00472}00472         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00473}00473 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00479}00479         \textcolor{keyword}{private} \textcolor{keywordtype}{void} sampleBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00480}00480         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00481}00481             \textcolor{keywordflow}{if} (channelsBox.SelectedIndex == -\/1)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00482}00482                 channelsBox.SelectedIndex = 0;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00483}00483             minBox.Value = Channels[channelsBox.SelectedIndex].range[(int)sampleBox.Value].Min;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00484}00484             maxBox.Value = Channels[channelsBox.SelectedIndex].range[(\textcolor{keywordtype}{int})sampleBox.Value].Max;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00485}00485             \textcolor{keywordflow}{if} (hist != \textcolor{keyword}{null})}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00486}00486             \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00487}00487                 \textcolor{comment}{//hist.Statistics = Channels[channelsBox.SelectedIndex].statistics;}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00488}00488                 hist.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8434166f720aed6abe735cd31d7647d5}{UpdateChannel}}(SelectedChannel);}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00489}00489                 hist.Invalidate();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00490}00490             \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00491}00491             App.viewer.\mbox{\hyperlink{class_bio_imager_1_1_histogram_control_a8b0286a5192bf2a38bf657d8b8b8ed29}{UpdateView}}();}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00492}00492         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00493}00493 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00494}00494         \textcolor{keyword}{private} \textcolor{keywordtype}{void} excBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00495}00495         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00496}00496             SelectedChannel.Excitation = (int)excBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00497}00497         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00498}00498 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00499}00499         \textcolor{keyword}{private} \textcolor{keywordtype}{void} emisBox\_ValueChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00500}00500         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00501}00501             SelectedChannel.Emission = (int)emisBox.Value;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00502}00502         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00503}00503 }
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00504}00504         \textcolor{keyword}{private} \textcolor{keywordtype}{void} fluorBox\_TextChanged(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00505}00505         \{}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00506}00506             SelectedChannel.Fluor = fluorBox.Text;}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00507}00507         \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00508}00508     \}}
+\DoxyCodeLine{\Hypertarget{_channels_tool_8cs_source_l00509}00509 \}}
+
+\end{DoxyCode}

@@ -1,0 +1,136 @@
+\hypertarget{win32_8py_source}{}\doxysection{win32.\+py}
+\label{win32_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/win32.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/win32.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00020}00020 \textcolor{stringliteral}{"{}"{}"{}Win32 specific microscope classes.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00021}00021 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00022}00022 \textcolor{stringliteral}{If called as a program, it will configure and control a Windows}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00023}00023 \textcolor{stringliteral}{service to serve devices, similar to the device-\/server program.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00024}00024 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00025}00025 \textcolor{stringliteral}{To configure and run as a Windows service use::}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00026}00026 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00027}00027 \textcolor{stringliteral}{    python -\/m \mbox{\hyperlink{namespacemicroscope_1_1win32}{microscope.win32}} \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00028}00028 \textcolor{stringliteral}{        [install,remove,update,start,stop,restart,status] \(\backslash\)}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00029}00029 \textcolor{stringliteral}{        CONFIG-\/FILE}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00030}00030 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00031}00031 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00032}00032 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00033}00033 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00034}00034 \textcolor{stringliteral}{import logging}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00035}00035 \textcolor{stringliteral}{import multiprocessing}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00036}00036 \textcolor{stringliteral}{import os}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00037}00037 \textcolor{stringliteral}{import sys}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00038}00038 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00039}00039 \textcolor{stringliteral}{import servicemanager}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00040}00040 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00041}00041 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00042}00042 \textcolor{stringliteral}{\# These win32* modules both import win32api which is a pyd file.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00043}00043 \textcolor{stringliteral}{\# Importing win32api can be problematic because of Windows things}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00044}00044 \textcolor{stringliteral}{\# specially when running as a Windows.  So }\textcolor{keywordflow}{if} it fails, add the}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00045}00045 \textcolor{comment}{\# executable path to the DLL search PATH.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00046}00046 \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00047}00047     \textcolor{keyword}{import} win32service}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00048}00048     \textcolor{keyword}{import} win32serviceutil}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00049}00049 \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00050}00050     os.environ[\textcolor{stringliteral}{"{}PATH"{}}] += \textcolor{stringliteral}{"{};"{}} + os.path.split(sys.executable)[0]}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00051}00051     \textcolor{keyword}{import} win32service}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00052}00052     \textcolor{keyword}{import} win32serviceutil}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00053}00053 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00054}00054 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00055}\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service}{00055}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service}{MicroscopeWindowsService}}(win32serviceutil.ServiceFramework):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00056}00056     \textcolor{stringliteral}{"{}"{}"{}Serves microscope devices via a Windows service.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00057}00057 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00058}00058 \textcolor{stringliteral}{    Win32 service manipulation relies on fetching \_svc\_name\_ without}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00059}00059 \textcolor{stringliteral}{    instantiating any object, so \_svc\_name\_ must be a }\textcolor{keyword}{class}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00060}00060     attribute. This means that only one MicroscopeService may be}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00061}00061     installed on any one system, \textcolor{keywordflow}{and} will be responsible \textcolor{keywordflow}{for} serving}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00062}00062     all microscope devices on that system.}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00063}00063     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00064}00064 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00065}00065 \textcolor{stringliteral}{    \_svc\_name\_ = "{}MicroscopeService"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00066}00066     \_svc\_display\_name\_ = \textcolor{stringliteral}{"{}Microscope device servers"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00067}00067     \_svc\_description\_ = \textcolor{stringliteral}{"{}Serves microscope devices."{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00069}00069     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00070}00070     \textcolor{keyword}{def }set\_config\_file(cls, path):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00071}00071         win32serviceutil.SetServiceCustomOption(}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00072}00072             cls.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a3a339ac52138952951c42122c840dcf9}{\_svc\_name\_}}, \textcolor{stringliteral}{"{}config"{}}, os.path.abspath(path)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00073}00073         )}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00074}00074 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00075}00075     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00076}00076     \textcolor{keyword}{def }get\_config\_file(cls):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00077}00077         \textcolor{keywordflow}{return} win32serviceutil.GetServiceCustomOption(}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00078}00078             cls.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a3a339ac52138952951c42122c840dcf9}{\_svc\_name\_}}, \textcolor{stringliteral}{"{}config"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00079}00079         )}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00080}00080 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00081}00081     \textcolor{keyword}{def }log(self, message, error=False):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00082}00082         \textcolor{keywordflow}{if} error:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00083}00083             logFunc = servicemanager.LogErrorMsg}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00084}00084         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00085}00085             logFunc = servicemanager.LogInfoMsg}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00086}00086         logFunc(\textcolor{stringliteral}{"{}\%s: \%s"{}} \% (self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a3a339ac52138952951c42122c840dcf9}{\_svc\_name\_}}, message))}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00087}00087 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00088}00088     \textcolor{keyword}{def }\_\_init\_\_(self, args):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00089}00089         \textcolor{comment}{\# Initialise service framework.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00090}00090         win32serviceutil.ServiceFramework.\_\_init\_\_(self, args)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00091}00091         self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a5a32338122e782a0660c7b7082372d13}{stop\_event}} = multiprocessing.Event()}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00093}00093     \textcolor{keyword}{def }SvcDoRun(self):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00094}00094         configfile = win32serviceutil.GetServiceCustomOption(}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00095}00095             self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a3a339ac52138952951c42122c840dcf9}{\_svc\_name\_}}, \textcolor{stringliteral}{"{}config"{}}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00096}00096         )}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00097}00097         os.chdir(os.path.dirname(configfile))}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00098}00098         self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_afaa4fc8726bfafb4f68a2cdec354e6df}{log}}(\textcolor{stringliteral}{"{}Using config file \%s."{}} \% configfile)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00099}00099         self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_afaa4fc8726bfafb4f68a2cdec354e6df}{log}}(\textcolor{stringliteral}{"{}Logging at \%s."{}} \% os.getcwd())}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00100}00100         self.ReportServiceStatus(win32service.SERVICE\_RUNNING)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00102}00102         \textcolor{keyword}{from} \mbox{\hyperlink{namespacemicroscope_1_1device__server}{microscope.device\_server}} \textcolor{keyword}{import} (}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00103}00103             serve\_devices,}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00104}00104             validate\_devices,}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00105}00105             DeviceServerOptions,}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00106}00106         )}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00108}00108         options = DeviceServerOptions(}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00109}00109             config\_fpath=configfile,}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00110}00110             logging\_level=logging.INFO,}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00111}00111         )}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00112}00112 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00113}00113         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00114}00114             devices = validate\_devices(configfile)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00115}00115             serve\_devices(devices, options, self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a5a32338122e782a0660c7b7082372d13}{stop\_event}})}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00116}00116         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00117}00117             servicemanager.LogErrorMsg(str(e))}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00118}00118             \textcolor{comment}{\# Exit with non-\/zero error code so Windows will attempt to restart.}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00119}00119             sys.exit(-\/1)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00120}00120         self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_afaa4fc8726bfafb4f68a2cdec354e6df}{log}}(\textcolor{stringliteral}{"{}Service shutdown complete."{}})}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00121}00121         self.ReportServiceStatus(win32service.SERVICE\_STOPPED)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00122}00122 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00123}00123     \textcolor{keyword}{def }SvcStop(self):}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00124}00124         self.ReportServiceStatus(win32service.SERVICE\_STOP\_PENDING)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00125}00125         self.\mbox{\hyperlink{classmicroscope_1_1win32_1_1_microscope_windows_service_a5a32338122e782a0660c7b7082372d13}{stop\_event}}.set()}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00126}00126 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00127}00127 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00128}00128 \textcolor{keyword}{def }handle\_command\_line():}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00129}00129     \textcolor{keywordflow}{if} len(sys.argv) == 1:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00130}00130         print(\textcolor{stringliteral}{"{}\(\backslash\)nNo action specified.\(\backslash\)n"{}}, file=sys.stderr)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00131}00131         sys.exit(1)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00132}00132     \textcolor{keywordflow}{if} sys.argv[1].lower() \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}install"{}}, \textcolor{stringliteral}{"{}update"{}}]:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00133}00133         \textcolor{keywordflow}{if} len(sys.argv) == 2:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00134}00134             print(\textcolor{stringliteral}{"{}\(\backslash\)nNo config file specified.\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00135}00135             sys.exit(1)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00136}00136         configfile = sys.argv.pop()}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00137}00137         win32serviceutil.HandleCommandLine(MicroscopeWindowsService)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00138}00138         \textcolor{comment}{\# Set persistent data on service}}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00139}00139         MicroscopeWindowsService.set\_config\_file(configfile)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00140}00140     \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00141}00141         win32serviceutil.HandleCommandLine(MicroscopeWindowsService)}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00142}00142 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00144}00144 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{win32_8py_source_l00145}00145     handle\_command\_line()}
+
+\end{DoxyCode}

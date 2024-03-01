@@ -1,0 +1,1520 @@
+\hypertarget{linkam_8py_source}{}\doxysection{linkam.\+py}
+\label{linkam_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/stages/linkam.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/stages/linkam.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00020}00020 \textcolor{stringliteral}{"{}"{}"{}A microscope interface to Linkam stages.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00021}00021 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00022}00022 \textcolor{stringliteral}{This module requires the LinkamSDK library and a license file, available}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00023}00023 \textcolor{stringliteral}{from Linkam Scientific Instruments.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00024}00024 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00025}00025 \textcolor{stringliteral}{Currently, this module supports on the the correlative microscopy stage,}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00026}00026 \textcolor{stringliteral}{but should be readily extensible to support other Linkam stages.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00027}00027 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00028}00028 \textcolor{stringliteral}{.. note::}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00029}00029 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00030}00030 \textcolor{stringliteral}{    This module does }\textcolor{keywordflow}{not} run correctly \textcolor{keyword}{with} python optimisations \textcolor{keywordflow}{in}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00031}00031     use.  When invoked \textcolor{keyword}{with} `python -\/O`, there seem to be issues \textcolor{keyword}{with}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00032}00032     accessing ctypes objects.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00033}00033 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00034}00034 * `get\_status()` throws `AttributeError` \textcolor{stringliteral}{"{}c\_ulonglong has no attribute 'flags'"{}};}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00035}00035 * `get\_id` returns an empty string, \textcolor{keywordflow}{not} the device serial number.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00036}00036 \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00037}00037 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00038}00038 \textcolor{stringliteral}{import ctypes}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00039}00039 \textcolor{stringliteral}{import datetime}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00040}00040 \textcolor{stringliteral}{import os}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00041}00041 \textcolor{stringliteral}{import os.path}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00042}00042 \textcolor{stringliteral}{import threading}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00043}00043 \textcolor{stringliteral}{import time}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00044}00044 \textcolor{stringliteral}{from ctypes import POINTER, byref}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00045}00045 \textcolor{stringliteral}{from enum import Enum, IntEnum}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00046}00046 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00047}00047 \textcolor{stringliteral}{import microscope}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00048}00048 \textcolor{stringliteral}{import microscope.abc}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00049}00049 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00050}00050 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00051}00051 \textcolor{stringliteral}{\_max\_version\_length = 20}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00052}00052 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00053}00053 \textcolor{stringliteral}{\# Typedefs from C headers}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00054}00054 \textcolor{stringliteral}{\_int8\_t = ctypes.c\_int8}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00055}00055 \textcolor{stringliteral}{\_uint8\_t = ctypes.c\_uint8}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00056}00056 \textcolor{stringliteral}{\_int16\_t = ctypes.c\_int16}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00057}00057 \textcolor{stringliteral}{\_uint16\_t = ctypes.c\_uint16}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00058}00058 \textcolor{stringliteral}{\_int32\_t = ctypes.c\_int32}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00059}00059 \textcolor{stringliteral}{\_uint32\_t = ctypes.c\_uint32}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00060}00060 \textcolor{stringliteral}{\_int64\_t = ctypes.c\_int64}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00061}00061 \textcolor{stringliteral}{\_uint64\_t = ctypes.c\_uint64}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00062}00062 \textcolor{stringliteral}{\_float64\_t = ctypes.c\_double}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00063}00063 \textcolor{stringliteral}{\_float32\_t = ctypes.c\_float}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00064}00064 \textcolor{stringliteral}{\_float64\_t = ctypes.c\_double}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00065}00065 \textcolor{stringliteral}{\_float32\_t = ctypes.c\_float}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00066}00066 \textcolor{stringliteral}{\_CommsHandle = ctypes.c\_uint64}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00067}00067 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00068}00068 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00069}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info}{00069}} \textcolor{stringliteral}{class \_CommsInfo(ctypes.Structure):}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00070}00070 \textcolor{stringliteral}{    "{}"{}"{}CommsInfo struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00071}00071 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00072}00072     \_fields\_ = [(\textcolor{stringliteral}{"{}type"{}}, ctypes.c\_uint), (\textcolor{stringliteral}{"{}info"{}}, ctypes.c\_char * 124)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00074}00074     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00075}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info_a07ea28b87bc708852b7605502256a164}{00075}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info_a07ea28b87bc708852b7605502256a164}{view\_of\_info}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00076}00076         \textcolor{stringliteral}{"{}"{}"{}Provide a view of the info field so that its subfields can be accessed"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00077}00077         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info_a98417d303f4607411e3691748ec8db11}{type}} == 0:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00078}00078             ptype = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00079}00079         \textcolor{keywordflow}{elif} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info_a98417d303f4607411e3691748ec8db11}{type}} == 1:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00080}00080             ptype = POINTER(\_SerialCommsInfo)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00081}00081         \textcolor{keywordflow}{elif} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info_a98417d303f4607411e3691748ec8db11}{type}} == 2:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00082}00082             ptype = POINTER(\_USBCommsInfo)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00083}00083 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00084}00084         \textcolor{keywordflow}{if} ptype \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00085}00085             \textcolor{keywordflow}{return} self.info}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00086}00086         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00087}00087             offset = getattr(\_CommsInfo, \textcolor{stringliteral}{"{}info"{}}).offset}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00088}00088             \textcolor{keywordflow}{return} \_USBCommsInfo.from\_buffer(self, offset)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00089}00089 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00090}00090 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00091}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___serial_comms_info}{00091}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___serial_comms_info}{\_SerialCommsInfo}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00092}00092     \textcolor{stringliteral}{"{}"{}"{}SerialCommsInfo struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00093}00093 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00094}00094     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00095}00095         (\textcolor{stringliteral}{"{}port"{}}, ctypes.c\_char * 64),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00096}00096         (\textcolor{stringliteral}{"{}baudrate"{}}, ctypes.c\_uint32),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00097}00097         (\textcolor{stringliteral}{"{}bytesize"{}}, ctypes.c\_uint),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00098}00098         (\textcolor{stringliteral}{"{}parity"{}}, ctypes.c\_uint),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00099}00099         (\textcolor{stringliteral}{"{}stopbits"{}}, ctypes.c\_uint),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00100}00100         (\textcolor{stringliteral}{"{}flowcontrol"{}}, ctypes.c\_uint),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00101}00101         (\textcolor{stringliteral}{"{}timeout"{}}, ctypes.c\_uint32),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00102}00102         (\textcolor{stringliteral}{"{}padding"{}}, ctypes.c\_uint8 * 36),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00103}00103     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00104}00104 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00106}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info}{00106}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info}{\_USBCommsInfo}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00107}00107     \textcolor{stringliteral}{"{}"{}"{}USBCommsInfo struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00108}00108 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00109}00109     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00110}00110         (\textcolor{stringliteral}{"{}vendorID"{}}, ctypes.c\_uint16),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00111}00111         (\textcolor{stringliteral}{"{}productID"{}}, ctypes.c\_uint16),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00112}00112         (\textcolor{stringliteral}{"{}serialNumber"{}}, ctypes.c\_char * 17),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00113}00113         (\textcolor{stringliteral}{"{}padding"{}}, ctypes.c\_uint8 * 83),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00114}00114     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00117}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_group}{00117}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_group}{\_StageGroup}}(Enum):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00118}00118     \textcolor{stringliteral}{"{}"{}"{}StageGroup enum from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00119}00119 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00120}00120     START = 0x0000}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00121}00121     Standard = 0x0000}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00122}00122     Peltier = 0x0001}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00123}00123     Gradient = 0x0002}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00124}00124     DifferentialScanningCalorimetry = 0x0003}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00125}00125     Vacuum = 0x0004}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00126}00126     Pressure = 0x0005}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00127}00127     MotorDriven = 0x0006}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00128}00128     TensileTest = 0x0007}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00129}00129     CambridgeShearingSystem = 0x0008}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00130}00130     TemperatureControlled = 0x0009}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00131}00131     Warm = 0x000A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00132}00132     CorrelativeMicroscopy = 0x000B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00133}00133     IndiumTinOxideWarm = 0x000C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00134}00134     TemperatureControlledVacuum = 0x000D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00135}00135     TensileTestV2 = 0x000E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00136}00136     DifferentialScanningCalorimetryV2 = 0x000F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00137}00137     FreezeDryingVialSystem = 0x0010}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00138}00138     MAX = 0x7FF}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00139}00139 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00140}00140 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00141}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags}{00141}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags}{\_StageConfigFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00142}00142     \textcolor{stringliteral}{"{}"{}"{}StageConfig.flags struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00144}00144     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00145}00145         (\textcolor{stringliteral}{"{}standardStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00146}00146         (\textcolor{stringliteral}{"{}highTempStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00147}00147         (\textcolor{stringliteral}{"{}peltierStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00148}00148         (\textcolor{stringliteral}{"{}gradedStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00149}00149         (\textcolor{stringliteral}{"{}tensileStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00150}00150         (\textcolor{stringliteral}{"{}dscStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00151}00151         (\textcolor{stringliteral}{"{}warmStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00152}00152         (\textcolor{stringliteral}{"{}itoStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00153}00153         (\textcolor{stringliteral}{"{}css450Stage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00154}00154         (\textcolor{stringliteral}{"{}correlativeStage"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00155}00155         (\textcolor{stringliteral}{"{}unused10"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00156}00156         (\textcolor{stringliteral}{"{}unused11"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00157}00157         (\textcolor{stringliteral}{"{}unused12"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00158}00158         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00159}00159         (\textcolor{stringliteral}{"{}unused14"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00160}00160         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00161}00161         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00162}00162         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00163}00163         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00164}00164         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00165}00165         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00166}00166         (\textcolor{stringliteral}{"{}coolingManual"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00167}00167         (\textcolor{stringliteral}{"{}coolingAutomatic"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00168}00168         (\textcolor{stringliteral}{"{}coolingDual"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00169}00169         (\textcolor{stringliteral}{"{}coolingDualSpeedIndependent"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00170}00170         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00171}00171         (\textcolor{stringliteral}{"{}heater1"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00172}00172         (\textcolor{stringliteral}{"{}heater1TempCtrl"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00173}00173         (\textcolor{stringliteral}{"{}heater1TempCtrlProbe"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00174}00174         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00175}00175         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00176}00176         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00177}00177         (\textcolor{stringliteral}{"{}unused32"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00178}00178         (\textcolor{stringliteral}{"{}unused33"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00179}00179         (\textcolor{stringliteral}{"{}unused34"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00180}00180         (\textcolor{stringliteral}{"{}unused35"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00181}00181         (\textcolor{stringliteral}{"{}heater2"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00182}00182         (\textcolor{stringliteral}{"{}heater12IndependentLimits"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00183}00183         (\textcolor{stringliteral}{"{}unused38"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00184}00184         (\textcolor{stringliteral}{"{}unused39"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00185}00185         (\textcolor{stringliteral}{"{}unused40"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00186}00186         (\textcolor{stringliteral}{"{}unused41"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00187}00187         (\textcolor{stringliteral}{"{}unused42"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00188}00188         (\textcolor{stringliteral}{"{}unused43"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00189}00189         (\textcolor{stringliteral}{"{}unused44"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00190}00190         (\textcolor{stringliteral}{"{}unused45"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00191}00191         (\textcolor{stringliteral}{"{}waterCoolingSensorFitted"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00192}00192         (\textcolor{stringliteral}{"{}home"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00193}00193         (\textcolor{stringliteral}{"{}supportsVacuum"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00194}00194         (\textcolor{stringliteral}{"{}motorX"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00195}00195         (\textcolor{stringliteral}{"{}motorY"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00196}00196         (\textcolor{stringliteral}{"{}motorZ"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00197}00197         (\textcolor{stringliteral}{"{}supportsHumidity"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00198}00198         (\textcolor{stringliteral}{"{}unused53"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00199}00199         (\textcolor{stringliteral}{"{}unused54"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00200}00200         (\textcolor{stringliteral}{"{}unused55"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00201}00201         (\textcolor{stringliteral}{"{}unused56"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00202}00202         (\textcolor{stringliteral}{"{}unused57"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00203}00203         (\textcolor{stringliteral}{"{}unused58"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00204}00204         (\textcolor{stringliteral}{"{}unused59"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00205}00205         (\textcolor{stringliteral}{"{}unused60"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00206}00206         (\textcolor{stringliteral}{"{}unused61"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00207}00207         (\textcolor{stringliteral}{"{}unused62"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00208}00208         (\textcolor{stringliteral}{"{}unused63"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00209}00209     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00210}00210 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00211}00211 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00212}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_config}{00212}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_config}{\_StageConfig}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00213}00213     \textcolor{stringliteral}{"{}"{}"{}StageConfig union from C headers."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00214}00214 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00215}00215     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_StageConfigFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint64\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00216}00216 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00217}00217 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00218}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status_flags}{00218}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status_flags}{\_CMSStatusFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00219}00219     \textcolor{stringliteral}{"{}"{}"{}CMSStatus.flags struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00220}00220 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00221}00221     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00222}00222         (\textcolor{stringliteral}{"{}on"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00223}00223         (\textcolor{stringliteral}{"{}onNoLN2"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00224}00224         (\textcolor{stringliteral}{"{}prime"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00225}00225         (\textcolor{stringliteral}{"{}autoTopUp"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00226}00226         (\textcolor{stringliteral}{"{}warmingUp"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00227}00227         (\textcolor{stringliteral}{"{}WarmingUpFromCupboard"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00228}00228         (\textcolor{stringliteral}{"{}unused6"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00229}00229         (\textcolor{stringliteral}{"{}unused7"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00230}00230         (\textcolor{stringliteral}{"{}light"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00231}00231         (\textcolor{stringliteral}{"{}sampleDewarFillSignal"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00232}00232         (\textcolor{stringliteral}{"{}mainDewarFillSignal"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00233}00233         (\textcolor{stringliteral}{"{}unused11"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00234}00234         (\textcolor{stringliteral}{"{}unused12"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00235}00235         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00236}00236         (\textcolor{stringliteral}{"{}unused14"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00237}00237         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00238}00238         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00239}00239         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00240}00240         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00241}00241         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00242}00242         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00243}00243         (\textcolor{stringliteral}{"{}unused21"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00244}00244         (\textcolor{stringliteral}{"{}unused22"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00245}00245         (\textcolor{stringliteral}{"{}unused23"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00246}00246         (\textcolor{stringliteral}{"{}unused24"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00247}00247         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00248}00248         (\textcolor{stringliteral}{"{}unused26"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00249}00249         (\textcolor{stringliteral}{"{}unused27"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00250}00250         (\textcolor{stringliteral}{"{}unused28"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00251}00251         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00252}00252         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00253}00253         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00254}00254     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00255}00255 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00256}00256 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00257}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status}{00257}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status}{\_CMSStatus}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00258}00258     \textcolor{stringliteral}{"{}"{}"{}CMSStatus union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00259}00259 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00260}00260     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_CMSStatusFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint32\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00261}00261 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00262}00262 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00263}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error_flags}{00263}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error_flags}{\_CMSErrorFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00264}00264     \textcolor{stringliteral}{"{}"{}"{}CMSError.flags struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00265}00265 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00266}00266     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00267}00267         (\textcolor{stringliteral}{"{}mainSensorOC"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00268}00268         (\textcolor{stringliteral}{"{}mainSensorOver"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00269}00269         (\textcolor{stringliteral}{"{}ln2SwitchSensorOC"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00270}00270         (\textcolor{stringliteral}{"{}ln2SwitchSensorOver"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00271}00271         (\textcolor{stringliteral}{"{}dewarSensorOC"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00272}00272         (\textcolor{stringliteral}{"{}dewarSensorOver"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00273}00273         (\textcolor{stringliteral}{"{}baseSensorOC"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00274}00274         (\textcolor{stringliteral}{"{}baseSensorOver"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00275}00275         (\textcolor{stringliteral}{"{}dewarEmpty"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00276}00276         (\textcolor{stringliteral}{"{}motorPosnError"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00277}00277         (\textcolor{stringliteral}{"{}unused10"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00278}00278         (\textcolor{stringliteral}{"{}unused11"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00279}00279         (\textcolor{stringliteral}{"{}unused12"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00280}00280         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00281}00281         (\textcolor{stringliteral}{"{}unused14"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00282}00282         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00283}00283         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00284}00284         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00285}00285         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00286}00286         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00287}00287         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00288}00288         (\textcolor{stringliteral}{"{}unused21"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00289}00289         (\textcolor{stringliteral}{"{}unused22"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00290}00290         (\textcolor{stringliteral}{"{}unused23"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00291}00291         (\textcolor{stringliteral}{"{}unused24"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00292}00292         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00293}00293         (\textcolor{stringliteral}{"{}unused26"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00294}00294         (\textcolor{stringliteral}{"{}unused27"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00295}00295         (\textcolor{stringliteral}{"{}unused28"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00296}00296         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00297}00297         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00298}00298         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00299}00299     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00300}00300 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00301}00301 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00302}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error}{00302}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error}{\_CMSError}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00303}00303     \textcolor{stringliteral}{"{}"{}"{}CMSError union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00304}00304 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00305}00305     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_CMSErrorFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint32\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00306}00306 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00307}00307 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00308}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___connection_status_flags}{00308}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___connection_status_flags}{\_ConnectionStatusFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00309}00309     \textcolor{stringliteral}{"{}"{}"{}ConnectionStatus.flags structure from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00310}00310 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00311}00311     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00312}00312         (\textcolor{stringliteral}{"{}connected"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00313}00313         (\textcolor{stringliteral}{"{}errorNoDeviceFound"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00314}00314         (\textcolor{stringliteral}{"{}errorMultipleDevicesFound"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00315}00315         (\textcolor{stringliteral}{"{}errorTimeout"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00316}00316         (\textcolor{stringliteral}{"{}errorHandleRegistrationFailed"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00317}00317         (\textcolor{stringliteral}{"{}errorAllocationFailed"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00318}00318         (\textcolor{stringliteral}{"{}errorSerialNumberRequired"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00319}00319         (\textcolor{stringliteral}{"{}errorAlreadyOpen"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00320}00320         (\textcolor{stringliteral}{"{}errorPropertiesIncorrect"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00321}00321         (\textcolor{stringliteral}{"{}errorPortConfig"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00322}00322         (\textcolor{stringliteral}{"{}errorCommsStreams"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00323}00323         (\textcolor{stringliteral}{"{}errorUnhandled"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00324}00324         (\textcolor{stringliteral}{"{}unused12"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00325}00325         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00326}00326         (\textcolor{stringliteral}{"{}unused14"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00327}00327         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00328}00328         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00329}00329         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00330}00330         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00331}00331         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00332}00332         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00333}00333         (\textcolor{stringliteral}{"{}unused21"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00334}00334         (\textcolor{stringliteral}{"{}unused22"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00335}00335         (\textcolor{stringliteral}{"{}unused23"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00336}00336         (\textcolor{stringliteral}{"{}unused24"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00337}00337         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00338}00338         (\textcolor{stringliteral}{"{}unused26"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00339}00339         (\textcolor{stringliteral}{"{}unused27"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00340}00340         (\textcolor{stringliteral}{"{}unused28"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00341}00341         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00342}00342         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00343}00343         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00344}00344     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00345}00345 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00346}00346 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00347}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___connection_status}{00347}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___connection_status}{\_ConnectionStatus}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00348}00348     \textcolor{stringliteral}{"{}"{}"{}ConnectionStatus union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00349}00349 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00350}00350     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_ConnectionStatusFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint32\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00351}00351 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00352}00352 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00353}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___controller_status_flags}{00353}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___controller_status_flags}{\_ControllerStatusFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00354}00354     \textcolor{stringliteral}{"{}"{}"{}ControllerStatus.flags struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00355}00355 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00356}00356     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00357}00357         (\textcolor{stringliteral}{"{}controllerError"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00358}00358         (\textcolor{stringliteral}{"{}heater1RampSetPoint"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00359}00359         (\textcolor{stringliteral}{"{}heater1Started"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00360}00360         (\textcolor{stringliteral}{"{}heater2RampSetPoint"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00361}00361         (\textcolor{stringliteral}{"{}heater2Started"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00362}00362         (\textcolor{stringliteral}{"{}vacuumRampSetPoint"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00363}00363         (\textcolor{stringliteral}{"{}vacuumCtrlStarted"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00364}00364         (\textcolor{stringliteral}{"{}vacuumValveClosed"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00365}00365         (\textcolor{stringliteral}{"{}vacuumValveOpen"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00366}00366         (\textcolor{stringliteral}{"{}humidityRampSetPoint"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00367}00367         (\textcolor{stringliteral}{"{}humidityCtrlStarted"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00368}00368         (\textcolor{stringliteral}{"{}lnpCoolingPumpOn"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00369}00369         (\textcolor{stringliteral}{"{}lnpCoolingPumpAuto"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00370}00370         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00371}00371         (\textcolor{stringliteral}{"{}HumidityDesiccantConditioning"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00372}00372         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00373}00373         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00374}00374         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00375}00375         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00376}00376         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00377}00377         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00378}00378         (\textcolor{stringliteral}{"{}unused21"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00379}00379         (\textcolor{stringliteral}{"{}unused22"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00380}00380         (\textcolor{stringliteral}{"{}unused23"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00381}00381         (\textcolor{stringliteral}{"{}unused24"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00382}00382         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00383}00383         (\textcolor{stringliteral}{"{}unused26"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00384}00384         (\textcolor{stringliteral}{"{}unused27"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00385}00385         (\textcolor{stringliteral}{"{}unused28"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00386}00386         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00387}00387         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00388}00388         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00389}00389         (\textcolor{stringliteral}{"{}unused32"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00390}00390         (\textcolor{stringliteral}{"{}unused33"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00391}00391         (\textcolor{stringliteral}{"{}unused34"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00392}00392         (\textcolor{stringliteral}{"{}unused35"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00393}00393         (\textcolor{stringliteral}{"{}unused36"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00394}00394         (\textcolor{stringliteral}{"{}unused37"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00395}00395         (\textcolor{stringliteral}{"{}unused38"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00396}00396         (\textcolor{stringliteral}{"{}unused39"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00397}00397         (\textcolor{stringliteral}{"{}unused40"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00398}00398         (\textcolor{stringliteral}{"{}motorTravelMinX"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00399}00399         (\textcolor{stringliteral}{"{}motorTravelMaxX"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00400}00400         (\textcolor{stringliteral}{"{}motorStoppedX"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00401}00401         (\textcolor{stringliteral}{"{}motorTravelMinY"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00402}00402         (\textcolor{stringliteral}{"{}motorTravelMaxY"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00403}00403         (\textcolor{stringliteral}{"{}motorStoppedY"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00404}00404         (\textcolor{stringliteral}{"{}motorTravelMinZ"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00405}00405         (\textcolor{stringliteral}{"{}motorTravelMaxZ"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00406}00406         (\textcolor{stringliteral}{"{}motorStoppedZ"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00407}00407         (\textcolor{stringliteral}{"{}sampleCal"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00408}00408         (\textcolor{stringliteral}{"{}motorDistanceCalTST"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00409}00409         (\textcolor{stringliteral}{"{}cssRotMotorStopped"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00410}00410         (\textcolor{stringliteral}{"{}cssGapMotorStopped"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00411}00411         (\textcolor{stringliteral}{"{}cssLidOn"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00412}00412         (\textcolor{stringliteral}{"{}cssRefLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00413}00413         (\textcolor{stringliteral}{"{}cssZeroLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00414}00414         (\textcolor{stringliteral}{"{}unused57"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00415}00415         (\textcolor{stringliteral}{"{}unused58"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00416}00416         (\textcolor{stringliteral}{"{}unused59"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00417}00417         (\textcolor{stringliteral}{"{}unused60"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00418}00418         (\textcolor{stringliteral}{"{}unused61"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00419}00419         (\textcolor{stringliteral}{"{}unused62"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00420}00420         (\textcolor{stringliteral}{"{}unused63"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00421}00421     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00422}00422 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00423}00423 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00424}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___controller_status}{00424}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___controller_status}{\_ControllerStatus}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00425}00425     \textcolor{stringliteral}{"{}"{}"{}ControllerStatus union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00426}00426 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00427}00427     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_ControllerStatusFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint64\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00428}00428 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00429}00429 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00430}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status_flags}{00430}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status_flags}{\_MDSStatusFlags}}(ctypes.Structure):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00431}00431     \textcolor{stringliteral}{"{}"{}"{}MDSStatus.flags struct from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00432}00432 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00433}00433     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00434}00434         (\textcolor{stringliteral}{"{}xMinLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00435}00435         (\textcolor{stringliteral}{"{}xMaxLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00436}00436         (\textcolor{stringliteral}{"{}xMoveDone"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00437}00437         (\textcolor{stringliteral}{"{}yMinLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00438}00438         (\textcolor{stringliteral}{"{}yMaxLimit"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00439}00439         (\textcolor{stringliteral}{"{}yMoveDone"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00440}00440         (\textcolor{stringliteral}{"{}unused6"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00441}00441         (\textcolor{stringliteral}{"{}unused7"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00442}00442         (\textcolor{stringliteral}{"{}unused8"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00443}00443         (\textcolor{stringliteral}{"{}unused9"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00444}00444         (\textcolor{stringliteral}{"{}unused10"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00445}00445         (\textcolor{stringliteral}{"{}unused11"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00446}00446         (\textcolor{stringliteral}{"{}unused12"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00447}00447         (\textcolor{stringliteral}{"{}unused13"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00448}00448         (\textcolor{stringliteral}{"{}unused14"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00449}00449         (\textcolor{stringliteral}{"{}unused15"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00450}00450         (\textcolor{stringliteral}{"{}unused16"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00451}00451         (\textcolor{stringliteral}{"{}unused17"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00452}00452         (\textcolor{stringliteral}{"{}unused18"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00453}00453         (\textcolor{stringliteral}{"{}unused19"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00454}00454         (\textcolor{stringliteral}{"{}unused20"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00455}00455         (\textcolor{stringliteral}{"{}unused21"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00456}00456         (\textcolor{stringliteral}{"{}unused22"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00457}00457         (\textcolor{stringliteral}{"{}unused23"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00458}00458         (\textcolor{stringliteral}{"{}unused24"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00459}00459         (\textcolor{stringliteral}{"{}unused25"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00460}00460         (\textcolor{stringliteral}{"{}unused26"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00461}00461         (\textcolor{stringliteral}{"{}unused27"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00462}00462         (\textcolor{stringliteral}{"{}unused28"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00463}00463         (\textcolor{stringliteral}{"{}unused29"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00464}00464         (\textcolor{stringliteral}{"{}unused30"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00465}00465         (\textcolor{stringliteral}{"{}unused31"{}}, ctypes.c\_uint, 1),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00466}00466     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00467}00467 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00468}00468 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00469}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status}{00469}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status}{\_MDSStatus}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00470}00470     \textcolor{stringliteral}{"{}"{}"{}MDSStatus union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00471}00471 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00472}00472     \_fields\_ = [(\textcolor{stringliteral}{"{}flags"{}}, \_MDSStatusFlags), (\textcolor{stringliteral}{"{}value"{}}, \_uint32\_t)]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00473}00473 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00474}00474 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00475}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_controller_error}{00475}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_controller_error}{ControllerError}}(Enum):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00476}00476     \textcolor{stringliteral}{"{}"{}"{}ControllerError enum from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00477}00477 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00478}00478     NoError = 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00479}00479     StageCableDisconnected = 1}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00480}00480     StageCableError = 2}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00481}00481     StageTempSensorOpenOverrange = 3}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00482}00482     LoadPowerOutputVoltageWrong = 4}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00483}00483     T95RelayMissing = 5}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00484}00484     T95OptionBoardWongConfig = 6}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00485}00485     OptionBoardCableDisconnect = 7}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00486}00486     LoadPowerIncorrectForStage = 8}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00487}00487     OptionBoardIncorrectCable = 9}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00488}00488     OptionBoardSensorOenOverrange = 10}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00489}00489     T95FanNotWorking = 11}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00490}00490     LNP95Error = 12}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00491}00491     CommsError = 13}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00492}00492     CoolingWaterTooWarmNotFlowing = 14}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00493}00493     CSS450MotorDriveOverTemp = 15}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00494}00494     CSS450MotorWindingError1 = 16}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00495}00495     CSS450MotorWindingError2 = 17}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00496}00496     Reserved1 = 18}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00497}00497     Reserved2 = 19}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00498}00498     Reserved3 = 20}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00499}00499     CMS196ChamberSensorOpen = 21}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00500}00500     CMS196ChamberSensorOverrange = 22}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00501}00501     CMS196LN2SwitchSensorOpen = 23}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00502}00502     CMS196LN2SwitchSensorOverrange = 24}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00503}00503     CMS196DewarSensorOpen = 25}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00504}00504     CMS196DewarSensorOverrange = 26}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00505}00505     CMS196DewarEmpty = 27}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00506}00506     CMS196BaseSensorOpen = 28}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00507}00507     CMS196BaseSensorOverrange = 29}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00508}00508     CMS196MotorPosnError = 30}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00509}00509 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00510}00510 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00511}00511 \textcolor{comment}{\# LinkamFunctionMsgCode enum from C headers.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00512}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_msg}{00512}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_msg}{Msg}}(IntEnum):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00513}00513     OpenComms = 0x00000001}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00514}00514     \textcolor{comment}{\# \(\backslash\)param[in]      hDevice     A valid handle to a comms device/port returned by eLinkamFunctionMsgCode\_OpenComms.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00515}00515     CloseComms = 0x00000002}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00516}00516     GetControllerConfig = 0x00000003}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00517}00517     GetControllerError = 0x00000004}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00518}00518     GetControllerName = 0x00000005}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00519}00519     GetControllerSerial = 0x00000006}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00520}00520     GetStatus = 0x00000007}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00521}00521     GetStageConfig = 0x00000008}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00522}00522     GetStageSerial = 0x00000009}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00523}00523     GetStageName = 0x0000000A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00524}00524     GetMaxValue = 0x0000000B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00525}00525     GetMinValue = 0x0000000C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00526}00526     GetResolution = 0x0000000D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00527}00527     ApplySampleCals = 0x0000000E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00528}00528     SaveSampleCals = 0x0000000F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00529}00529     StartHeating = 0x00000010}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00530}00530     StartVacuum = 0x00000011}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00531}00531     StartHumidity = 0x00000012}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00532}00532     StartHumidityDesiccantConditioning = 0x00000013}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00533}00533     StartMotors = 0x00000014}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00534}00534     GetValue = 0x00000015}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00535}00535     SetValue = 0x00000016}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00536}00536     TstCalibrateDistance = 0x00000017}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00537}00537     TstSetMode = 0x00000018}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00538}00538     TstZeroForce = 0x00000019}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00539}00539     TstZeroPosition = 0x0000001A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00540}00540     LnpSetMode = 0x0000001B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00541}00541     LnpSetSpeed = 0x0000001C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00542}00542     CssApplyValues = 0x0000001D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00543}00543     CssCheckValues = 0x0000001E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00544}00544     CssGotoReference = 0x0000001F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00545}00545     CssSensorCal = 0x00000020}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00546}00546     CssStartJogGap = 0x00000021}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00547}00547     CssStartJogRot = 0x00000022}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00548}00548     EnableLogging = 0x00000023}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00549}00549     DisableLogging = 0x00000024}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00550}00550     GetControllerFirmwareVersion = 0x00000025}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00551}00551     GetControllerHardwareVersion = 0x00000026}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00552}00552     GetStageFirmwareVersion = 0x00000027}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00553}00553     GetStageHardwareVersion = 0x00000028}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00554}00554     GetDataRate = 0x00000029}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00555}00555     SetDataRate = 0x0000002A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00556}00556     GetStageCableLimits = 0x0000002B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00557}00557     SendDscGainValues = 0x0000002C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00558}00558     SendDscPowerValue = 0x0000002D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00559}00559     SendDscBaselinePowerValues = 0x0000002E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00560}00560     SendDscTuaConstants = 0x0000002F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00561}00561     SetDSCModulationData = 0x00000030}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00562}00562     GetOptionCardType = 0x00000031}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00563}00563     GetOptionCardSlot = 0x00000032}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00564}00564     GetOptionCardName = 0x00000033}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00565}00565     GetOptionCardSerial = 0x00000034}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00566}00566     GetOptionCardHardwareVersion = 0x00000035}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00567}00567     DoesOptionCardSupportSensors = 0x00000036}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00568}00568     \textcolor{comment}{\# \(\backslash\)see            eLinkamFunctionMsgCode\_DoesOptionCardSupportSensors}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00569}00569     GetOptionCardSensorName = 0x00000037}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00570}00570     \textcolor{comment}{\# \(\backslash\)see            eLinkamFunctionMsgCode\_DoesOptionCardSupportSensors}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00571}00571     GetOptionCardSensorSerial = 0x00000038}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00572}00572     \textcolor{comment}{\# \(\backslash\)see            eLinkamFunctionMsgCode\_DoesOptionCardSupportSensors}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00573}00573     GetOptionCardSensorHardwareVersion = 0x00000039}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00574}00574     GetStageGroup = 0x0000003A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00575}00575     HaveInstrumentBusDeviceType = 0x0000003B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00576}00576     GetInstrumentBusDeviceName = 0x0000003C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00577}00577     GetInstrumentBusDeviceSerial = 0x0000003D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00578}00578     GetInstrumentBusDeviceFirmwareVersion = 0x0000003E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00579}00579     GetInstrumentBusDeviceHardwareVersion = 0x0000003F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00580}00580     GetHumidityControllerSensorName = 0x00000040}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00581}00581     GetHumidityControllerSensorSerial = 0x00000041}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00582}00582     GetHumidityControllerSensorHardwareVersion = 0x00000042}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00583}00583     IsControllerType = 0x00000043}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00584}00584     GetControllerPSUDetails = 0x00000044}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00585}00585     SetControllerTriggerSignalEnable = 0x00000045}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00586}00586     SetControllerTriggerSignalDisable = 0x00000046}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00587}00587     SetControllerMainsFrequency = 0x00000047}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00588}00588     InitialiseTriggerSignalPulse = 0x00000048}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00589}00589     SetTriggerSignalPulse = 0x00000049}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00590}00590     SetTriggerSignalPluseWidth = 0x0000004A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00591}00591     GetProgramState = 0x0000004B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00592}00592     GetStageConfiguration = 0x0000004C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00593}00593     GetControllerHeaterDetails = 0x0000004D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00594}00594     CssSendGapVelocity = 0x0000004E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00595}00595     CssSendGapOverride = 0x0000004F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00596}00596     CssSendGap = 0x00000050}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00597}00597     CssSendVelocity = 0x00000051}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00598}00598     CssSendRate = 0x00000052}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00599}00599     CssSendFrequency = 0x00000053}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00600}00600     CssSendStrain = 0x00000054}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00601}00601     CssSendDirection = 0x00000055}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00602}00602     CssSendForceStop = 0x00000056}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00603}00603     CssSendTorque = 0x00000057}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00604}00604     TstSetCalibrationForce = 0x00000058}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00605}00605     ForceHeating = 0x00000059}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00606}00606     ForceCooling = 0x0000005A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00607}00607     ForceHold = 0x0000005B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00608}00608     GetInstrumentBusDeviceIdent = 0x0000005C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00609}00609     GetStageIdent = 0x0000005D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00610}00610     GetControllerIdent = 0x0000005F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00611}00611     GetConnectionInformation = 0x00000060}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00612}00612     GetStageHeaterIdent = 0x00000061}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00613}00613     Max = 0x0FFFFFFF}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00614}00614 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00615}00615 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00616}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_error_code}{00616}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_error_code}{ErrorCode}}(Enum):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00617}00617     \textcolor{stringliteral}{"{}"{}"{}ErrorCode enum from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00618}00618 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00619}00619     NoError = 0xECF00000}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00620}00620     LibraryNotInitialised = 0xECF00001}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00621}00621     NoConnectionInfo = 0xECF00002}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00622}00622     DeviceRegistrationFailed = 0xECF00003}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00623}00623     DeviceCreationFailure = 0xECF00004}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00624}00624     SerialCommsInitialisationFailure = 0xECF00005}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00625}00625     SerialCommsHandshakeFailure = 0xECF00006}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00626}00626     SerialPortSocketCreationFailure = 0xECF00007}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00627}00627     SerialPortSocketConfigurationFailure = 0xECF00008}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00628}00628     SerialCommsRxError = 0xECF00009}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00629}00629     SerialCommsUnknownRxError = 0xECF0000A}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00630}00630     CommandBufferLimitReached = 0xECF0000B}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00631}00631     USBCommsInitialisationFailure = 0xECF0000C}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00632}00632     USBCommsHandshakeFailure = 0xECF0000D}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00633}00633     USBPortSocketCreationFailure = 0xECF0000E}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00634}00634     USBCommsRxError = 0xECF0000F}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00635}00635     USBCommsUnknownRxError = 0xECF00010}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00636}00636     USBCommsTxError = 0xECF00011}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00637}00637     USBCommsUnknownTxError = 0xECF00012}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00638}00638     SerialCommsTxError = 0xECF00013}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00639}00639     SerialCommsUnknownTxError = 0xECF00014}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00640}00640     Max = 0xECFFFFFF}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00641}00641 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00642}00642 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00643}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{00643}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{\_StageValueType}}(Enum):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00644}00644     \textcolor{stringliteral}{"{}"{}"{}StageValueType enum from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00645}00645 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00646}00646     Heater1Temp = 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00647}00647     HeaterRate = 1}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00648}00648     HeaterSetpoint = 2}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00649}00649     Heater1Power = 3}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00650}00650     Heater1LNPSpeed = 4}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00651}00651     Heater2Temp = 5}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00652}00652     Heater2Power = 8}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00653}00653     Heater2LNPSpeed = 9}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00654}00654     WaterCoolingTemp = 10}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00655}00655     HumidityTemp = 11}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00656}00656     Vacuum = 12}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00657}00657     VacuumSetpoint = 13}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00658}00658     Humidity = 14}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00659}00659     HumiditySetpoint = 15}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00660}00660     MotorPosX = 16}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00661}00661     MotorVelX = 17}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00662}00662     MotorSetpointX = 18}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00663}00663     MotorPosY = 19}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00664}00664     MotorVelY = 20}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00665}00665     MotorSetpointY = 21}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00666}00666     MotorPosZ = 22}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00667}00667     MotorVelZ = 23}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00668}00668     MotorSetpointZ = 24}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00669}00669     MotorDrivenStageStatus = 25}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00670}00670     VacuumBoardUnitOfMeasure = 26}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00671}00671     VacMotorValveStatus = 27}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00672}00672     VacMotorValvePos = 28}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00673}00673     VacMotorValveVel = 29}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00674}00674     VacMotorValveSetpoint = 30}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00675}00675     GradedMotorPos = 31}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00676}00676     GradedMotorVel = 32}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00677}00677     GradedMotorDistanceSetpoint = 33}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00678}00678     SampleRef1 = 34}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00679}00679     SampleAct1 = 35}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00680}00680     SampleRef2 = 36}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00681}00681     SampleAct2 = 37}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00682}00682     SampleRef3 = 38}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00683}00683     SampleAct3 = 39}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00684}00684     SampleRef4 = 40}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00685}00685     SampleAct4 = 41}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00686}00686     SampleRef5 = 42}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00687}00687     SampleAct5 = 43}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00688}00688     Heater3Temp = 44}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00689}00689     Dsc = 45}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00690}00690     TriggerSignalBlue = 46}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00691}00691     TriggerSignalGreen = 47}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00692}00692     TriggerSignalPink = 48}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00693}00693     TriggerSignalsEnabled = 49}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00694}00694     TemperatureResolution = 50}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00695}00695     Heater4Temp = 51}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00696}00696     CmsLight = 52}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00697}00697     CmsWarmingHeater = 53}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00698}00698     CmsSolenoidRefill = 54}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00699}00699     CmsSampleDewarFillSig = 55}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00700}00700     CmsStatus = 56}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00701}00701     CmsError = 57}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00702}00702     RampHoldTime = 58}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00703}00703     RampHoldRemaining = 59}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00704}00704     CmsMainDewarFillSig = 60}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00705}00705     CmsCondenserLEDLevel = 61}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00706}00706     TestMotion = 62}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00707}00707     MotorFeedbackYX = 63}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00708}00708     TstMotorPos = 64}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00709}00709     TstMotorVel = 65}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00710}00710     TstMotorDistanceSetpoint = 66}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00711}00711     TstForce = 67}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00712}00712     TstForceSetpoint = 68}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00713}00713     TstPidKp = 69}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00714}00714     TstPidKi = 70}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00715}00715     TstPidKd = 71}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00716}00716     TstForceGauge = 72}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00717}00717     CssMode = 73}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00718}00718     CssGapSetpoint = 74}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00719}00719     CssGapPos = 75}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00720}00720     CssStrainSetpoint = 76}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00721}00721     CssRateSetpoint = 77}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00722}00722     CssOcsFreq = 78}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00723}00723     CssDirn = 79}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00724}00724     CssJogRotVel = 80}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00725}00725     CssJogGapDis = 81}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00726}00726     CssDefaultGapRefVel = 82}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00727}00727     CssDefaultRotRefVel = 83}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00728}00728     CssStepDone = 84}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00729}00729     CssStepSuccess = 85}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00730}00730     CssStatus = 86}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00731}00731     CssForce = 87}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00732}00732     CssShareTime = 88}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00733}00733     CssRotMotorVelocitySetpoint = 89}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00734}00734     CssGapMotorVelocitySetpoint = 90}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00735}00735     CssOptionBoardSensorData = 91}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00736}00736     RS232OptionBoardSensorEnabled = 92}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00737}00737     VacuumOptionBoardSensor1Data = 93}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00738}00738     VacuumOptionBoardSensor1Enabled = 94}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00739}00739     VacuumOptionBoardSensor2Data = 95}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00740}00740     VacuumOptionBoardSensor2Enabled = 96}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00741}00741     VtoOptionBoardEnabled = 97}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00742}00742     CmsDewarTopTemperature = 98}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00743}00743     CmsAutoDewarFill = 99}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00744}00744     DscPower = 100}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00745}00745     DscGain1 = 101}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00746}00746     DscGain2 = 102}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00747}00747     DscGain3 = 103}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00748}00748     DscConstantTerm = 104}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00749}00749     DscPowerTerm1 = 105}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00750}00750     DscPowerTerm2 = 106}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00751}00751     DscPowerTerm3 = 107}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00752}00752     DscPowerTerm4 = 108}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00753}00753     DscPowerTerm5 = 109}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00754}00754     DscPowerTerm6 = 110}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00755}00755     DscBaselineConstTerm = 111}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00756}00756     DscBaselinePowerTerm1 = 112}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00757}00757     DscBaselinePowerTerm2 = 113}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00758}00758     DscBaselinePowerTerm3 = 114}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00759}00759     DscBaselinePowerTerm4 = 115}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00760}00760     DscTuaConst1 = 116}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00761}00761     DscTuaConst2 = 117}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00762}00762     DscOptionBoardSensorEnabled = 118}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00763}00763     TstJawToJawSize = 119}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00764}00764     TstTableDirection = 120}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00765}00765     TstSampleSize = 121}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00766}00766     TstStrainEngineeringUnits = 122}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00767}00767     TstStrainPercentage = 123}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00768}00768     TstShowAsForceDistance = 124}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00769}00769     TstCalForceValue = 125}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00770}00770     TstOptionBoardSensorEnabled = 126}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00771}00771     TstShowCalbData = 127}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00772}00772     TstStatus = 128}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00773}00773     TstJawPosition = 129}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00774}00774     TstStrain = 130}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00775}00775     TstStress = 131}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00776}00776     TstTableMode = 132}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00777}00777     StageHumidityUnitData = 133}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00778}00778     Pressure = 134}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00779}00779     MotorXOptionBoardSensorEnabled = 135}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00780}00780     MotorYOptionBoardSensorEnabled = 136}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00781}00781     MotorZOptionBoardSensorEnabled = 137}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00782}00782     MotorVacuumOptionBoardSensorEnabled = 138}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00783}00783     MotorFDVacuumOptionBoardSensorEnabled = 139}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00784}00784     MotorTstOptionBoardSensorEnabled = 140}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00785}00785     MotorGradientOptionBoardSensorEnabled = 141}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00786}00786     MotorXOptionBoardSensorData = 142}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00787}00787     MotorYOptionBoardSensorData = 143}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00788}00788     MotorZOptionBoardSensorData = 144}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00789}00789     MotorVacuumOptionBoardSensorData = 145}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00790}00790     MotorFDVacuumOptionBoardSensorData = 146}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00791}00791     MotorTstOptionBoardSensorData = 147}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00792}00792     MotorGradientOptionBoardSensorData = 148}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00793}00793     TtcOptionBoardEnabled = 149}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00794}00794     TtcOptionBoardSensor1Enabled = 150}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00795}00795     TtcOptionBoardSensor2Enabled = 151}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00796}00796     TtcOptionBoardSensor3Enabled = 152}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00797}00797     DtcOptionBoardSensor1Enabled = 153}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00798}00798     DtcOptionBoardSensor2Enabled = 154}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00799}00799     MotorXDefaultSpeed = 155}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00800}00800     MotorYDefaultSpeed = 156}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00801}00801     MotorZDefaultSpeed = 157}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00802}00802     MotorTstDefaultSpeed = 158}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00803}00803     MotorGsDefaultSpeed = 159}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00804}00804     MotorVacDefaultSpeed = 160}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00805}00805     MotorFDVacDefaultSpeed = 161}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00806}00806     HumidityDryingTimeSetpoint = 162}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00807}00807     HumiditySwapTimeSetpoint = 163}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00808}00808     HumidityPipeTempSetpoint = 164}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00809}00809     HumidityWaterTempSetpoint = 165}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00810}00810     HumidityDryingTimeLeft = 166}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00811}00811     HumiditySwapTimeLeft = 167}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00812}00812     HumidityWaterTemp = 168}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00813}00813     VtoVideoStandard = 169}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00814}00814     TriggerSignalPulseWidth = 170}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00815}00815     ConnectionType = 171}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00816}00816     VacuumSimulatorPlug = 172}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00817}00817     PressureSimulatorPlug = 173}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00818}00818     LNPSingle = 174}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00819}00819     LNPDual = 175}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00820}00820     LNP95 = 176}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00821}00821     LNP96 = 177}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00822}00822     UsingXenocsStageTestCables = 178}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00823}00823     UsingXenocsStageTestCableType1 = 179}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00824}00824     UsingXenocsStageTestCableType2 = 180}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00825}00825     UsingCalibrationPlug = 181}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00826}00826     UsingCalibrationCableB = 182}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00827}00827     UsingCalibrationCableC = 183}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00828}00828     UsingCalibrationCableA = 184}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00829}00829     VtoText = 185}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00830}00830     VtoTime = 186}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00831}00831     MotorZeroRefX = 187}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00832}00832     MotorZeroRefY = 188}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00833}00833     CmsXaxisGridCentre = 189}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00834}00834     CmsYaxisGridCentre = 190}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00835}00835     CmsLashWarning = 191}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00836}00836     CmsBaseHeaterLimit = 192}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00837}00837     CmsAlarmVolume = 193}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00838}00838     ManualHumiditySetpoint = 194}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00839}00839     FDVSColdTrapPumpSpeed = 195}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00840}00840     FDVSScanMotorPosition = 196}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00841}00841     ImagingStationBrightness = 197}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00842}00842     EnableJoyStick = 198}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00843}00843     DisableJoyStick = 199}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00844}00844     InvertJoyStickAxisX = 200}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00845}00845     InvertJoyStickAxisY = 201}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00846}00846     FDVSMotorVel = 202}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00847}00847     FDVSMotorDistanceSetpoint = 203}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00848}00848     CssDefaultGapChangeVel = 204}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00849}00849     MaxValue = 65535}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00850}00850 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00851}00851 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00852}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant}{00852}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant}{\_Variant}}(ctypes.Union):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00853}00853     \textcolor{stringliteral}{"{}"{}"{}Variant union from C headers"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00854}00854 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00855}00855     \_fields\_ = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00856}00856         (\textcolor{stringliteral}{"{}vChar"{}}, ctypes.c\_char),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00857}00857         (\textcolor{stringliteral}{"{}vUint8"{}}, \_uint8\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00858}00858         (\textcolor{stringliteral}{"{}vUint16"{}}, \_uint16\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00859}00859         (\textcolor{stringliteral}{"{}vUint32"{}}, \_uint32\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00860}00860         (\textcolor{stringliteral}{"{}vUint64"{}}, \_uint64\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00861}00861         (\textcolor{stringliteral}{"{}vInt8"{}}, \_int8\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00862}00862         (\textcolor{stringliteral}{"{}vInt16"{}}, \_int16\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00863}00863         (\textcolor{stringliteral}{"{}vInt32"{}}, \_int32\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00864}00864         (\textcolor{stringliteral}{"{}vInt64"{}}, \_int64\_t),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00865}00865         (\textcolor{stringliteral}{"{}vFloat32"{}}, ctypes.c\_float),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00866}00866         (\textcolor{stringliteral}{"{}vFloat64"{}}, ctypes.c\_double),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00867}00867         (\textcolor{stringliteral}{"{}vPtr"{}}, ctypes.c\_void\_p),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00868}00868         (\textcolor{stringliteral}{"{}vBoolean"{}}, ctypes.c\_bool),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00869}00869         \textcolor{comment}{\# ("{}vControllerConfig"{}, \_ControllerConfig),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00870}00870         (\textcolor{stringliteral}{"{}vControllerError"{}}, ctypes.c\_uint),  \textcolor{comment}{\# \_ControllerError enum}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00871}00871         (\textcolor{stringliteral}{"{}vControllerStatus"{}}, \_ControllerStatus),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00872}00872         (\textcolor{stringliteral}{"{}vConnectionStatus"{}}, \_ConnectionStatus),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00873}00873         \textcolor{comment}{\# ("{}vStageValueType"{}, \_StageValueType),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00874}00874         \textcolor{comment}{\# ("{}vStageCableConfig"{}, \_StageCableConfig),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00875}00875         (\textcolor{stringliteral}{"{}vStageConfig"{}}, \_StageConfig),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00876}00876         (\textcolor{stringliteral}{"{}vStageGroup"{}}, ctypes.c\_uint),  \textcolor{comment}{\# \_StageGroup enum}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00877}00877         \textcolor{comment}{\# ("{}vStageCableLimit"{}, \_StageCableLimit),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00878}00878         \textcolor{comment}{\# ("{}vCSSStatus"{}, \_CSSStatus),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00879}00879         \textcolor{comment}{\# ("{}vCSSCheckCodes"{}, \_CSSCheckCodes),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00880}00880         \textcolor{comment}{\# ("{}vCSSMode"{}, \_CSSMode),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00881}00881         \textcolor{comment}{\# ("{}vCSSState"{}, \_CSSState),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00882}00882         (\textcolor{stringliteral}{"{}vCMSStatus"{}}, \_CMSStatus),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00883}00883         (\textcolor{stringliteral}{"{}vCMSError"{}}, \_CMSError),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00884}00884         \textcolor{comment}{\# ("{}vOptionBoardType"{}, \_OptionBoardType),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00885}00885         \textcolor{comment}{\# ("{}vInstrumentBusDeviceType"{}, \_InstrumentBusDeviceType),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00886}00886         \textcolor{comment}{\# ("{}vControllerType"{}, \_ControllerType),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00887}00887         \textcolor{comment}{\# ("{}vTSTStatus"{}, \_TSTStatus),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00888}00888         \textcolor{comment}{\# ("{}vTSTMode"{}, \_TSTMode),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00889}00889         \textcolor{comment}{\# ("{}vTSTSampleSize"{}, \_TSTSampleSize),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00890}00890         \textcolor{comment}{\# ("{}vMVStatus"{}, \_MVStatus),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00891}00891         (\textcolor{stringliteral}{"{}vMDSStatus"{}}, \_MDSStatus),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00892}00892         \textcolor{comment}{\# ("{}vCommsType"{}, \_CommsType),}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00893}00893     ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00894}00894 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00895}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant_a76cb484e06f7d4effa7ea6a4ee0f314a}{00895}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant_a76cb484e06f7d4effa7ea6a4ee0f314a}{\_\_getattribute\_\_}}(self, name):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00896}00896         \textcolor{stringliteral}{"{}"{}"{}Wrap enum variants with their python Enum for convenience"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00897}00897         val = super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant_a76cb484e06f7d4effa7ea6a4ee0f314a}{\_\_getattribute\_\_}}(name)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00898}00898         \textcolor{keywordflow}{if} name == \textcolor{stringliteral}{"{}vStageGroup"{}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00899}00899             \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_group}{\_StageGroup}}(val)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00900}00900         \textcolor{keywordflow}{elif} name == \textcolor{stringliteral}{"{}vControllerError"{}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00901}00901             \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_controller_error}{ControllerError}}(val)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00902}00902         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00903}00903             \textcolor{keywordflow}{return} val}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00904}00904 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00905}00905 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00906}00906 \textcolor{comment}{\# Most GetValue calls return a Variant holding a float. A few pass back}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00907}00907 \textcolor{comment}{\# other types in the variant, so we map the StageValueType to the appropriate}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00908}00908 \textcolor{comment}{\# Variant member name.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00909}00909 \_StageValueTypeToVariant = \{}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00910}00910     \_StageValueType.MotorDrivenStageStatus: \textcolor{stringliteral}{"{}vMDSStatus"{}},  \textcolor{comment}{\# MDSStatus}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00911}00911     \_StageValueType.VacMotorValveStatus: \textcolor{stringliteral}{"{}vUint32"{}},  \textcolor{comment}{\# MVStatus -\/ flags not yet supported}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00912}00912     \_StageValueType.TriggerSignalsEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00913}00913     \_StageValueType.CmsLight: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00914}00914     \_StageValueType.CmsSampleDewarFillSig: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00915}00915     \_StageValueType.CmsStatus: \textcolor{stringliteral}{"{}vCMSStatus"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00916}00916     \_StageValueType.CmsError: \textcolor{stringliteral}{"{}vCMSError"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00917}00917     \_StageValueType.CmsMainDewarFillSig: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00918}00918     \_StageValueType.TestMotion: \textcolor{stringliteral}{"{}vUint16"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00919}00919     \_StageValueType.MotorFeedbackYX: \textcolor{stringliteral}{"{}vUint16"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00920}00920     \_StageValueType.CssMode: \textcolor{stringliteral}{"{}vUint32"{}},  \textcolor{comment}{\# CSSMode -\/ enum not yet supported}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00921}00921     \_StageValueType.CssDirn: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00922}00922     \_StageValueType.CssStepDone: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00923}00923     \_StageValueType.CssStepSuccess: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00924}00924     \_StageValueType.CssStatus: \textcolor{stringliteral}{"{}vUint32"{}},  \textcolor{comment}{\# CSSStatus -\/ flags not yet supported}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00925}00925     \_StageValueType.RS232OptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00926}00926     \_StageValueType.VacuumOptionBoardSensor1Enabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00927}00927     \_StageValueType.VacuumOptionBoardSensor2Enabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00928}00928     \_StageValueType.VtoOptionBoardEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00929}00929     \_StageValueType.DscOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00930}00930     \_StageValueType.TstTableDirection: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00931}00931     \textcolor{comment}{\# \_StageValueType.TstSampleSize: None, \# TSTSampleSize -\/ struct not yet supported}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00932}00932     \_StageValueType.TstStrainEngineeringUnits: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00933}00933     \_StageValueType.TstShowAsForceDistance: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00934}00934     \_StageValueType.TstOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00935}00935     \_StageValueType.TstStatus: \textcolor{stringliteral}{"{}vUint32"{}},  \textcolor{comment}{\# TSTStatus -\/ flags not yet supported}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00936}00936     \_StageValueType.TstTableMode: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00937}00937     \_StageValueType.MotorXOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00938}00938     \_StageValueType.MotorYOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00939}00939     \_StageValueType.MotorVacuumOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00940}00940     \_StageValueType.MotorFDVacuumOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00941}00941     \_StageValueType.MotorFDVacuumOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00942}00942     \_StageValueType.MotorGradientOptionBoardSensorEnabled: \textcolor{stringliteral}{"{}vBoolean"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00943}00943 \}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00944}00944 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00945}00945 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00946}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base}{00946}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base}{\_LinkamBase}}(\mbox{\hyperlink{classmicroscope_1_1abc_1_1_floating_device_mixin}{microscope.abc.FloatingDeviceMixin}}, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00947}00947     \textcolor{stringliteral}{"{}"{}"{}Base class for connecting to Linkam SDK devices.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00948}00948 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00949}00949 \textcolor{stringliteral}{    This }\textcolor{keyword}{class }deals with SDK initialisation and setting callbacks to}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00950}00950     handle SDK events. It maintains a map of SDK handle to device instance}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00951}00951     so that SDK events result \textcolor{keywordflow}{in} updates to the correct instance.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00952}00952     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00953}00953 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00954}00954 \textcolor{stringliteral}{    }\textcolor{comment}{\# The ctypes library object. Value is None until SDK initialised.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00955}00955     \textcolor{comment}{\# This is encapsulated within a class so that this module will not break}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00956}00956     \textcolor{comment}{\# tests on import in absence of the required library.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00957}00957     \_lib = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00958}00958     \textcolor{comment}{\# \_SDKInitialised = False}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00959}00959     \textcolor{comment}{\# Map SDK handles to device instances}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00960}00960     \_connectionMap = \{\}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00961}00961     \textcolor{comment}{\# We need to keep references to CFUNCTYPE callbacks.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00962}00962     \_callbacks = \{\}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00963}00963 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00964}00964     \textcolor{preprocessor}{@staticmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00965}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_af2aac9350afe833a46ed11721493cd98}{00965}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_af2aac9350afe833a46ed11721493cd98}{get\_sdk\_version}}():}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00966}00966         \textcolor{stringliteral}{"{}"{}"{}Fetch the SDK version."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00967}00967         b = ctypes.create\_string\_buffer(\_max\_version\_length)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00968}00968         \_\_class\_\_.\_lib.linkamGetVersion(b, \_max\_version\_length)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00969}00969         \textcolor{keywordflow}{return} b.value}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00970}00970 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00971}00971     \textcolor{preprocessor}{@staticmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00972}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_aa82c0ed4bb1ad7093652d8f0194fc8cc}{00972}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_aa82c0ed4bb1ad7093652d8f0194fc8cc}{init\_sdk}}():}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00973}00973         \textcolor{stringliteral}{"{}"{}"{}Initialise the SDK and set up event callbacks"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00974}00974         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00975}00975             \_\_class\_\_.\_lib = ctypes.WinDLL(\textcolor{stringliteral}{"{}LinkamSDK.dll"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00976}00976         \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00977}00977             \textcolor{comment}{\# Not tested}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00978}00978             \_\_class\_\_.\_lib = ctypes.CDLL(\textcolor{stringliteral}{"{}libLinkamSDK.so"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00979}00979         \_lib = \_\_class\_\_.\_lib}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00980}00980         \textcolor{stringliteral}{"{}"{}"{}Initialise the SDK, and create and set the callbacks."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00981}00981         \textcolor{comment}{\# Omit conditional pending a fix for ctypes issues when optimisations in use.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00982}00982         \textcolor{comment}{\# if \_\_debug\_\_:}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00983}00983         \textcolor{comment}{\#    sdk\_log = b''}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00984}00984         \textcolor{comment}{\# else:}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00985}00985 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00986}00986         sdk\_log = os.devnull}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00987}00987         lpaths = [}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00988}00988             os.path.dirname(microscope.abc.\_\_file\_\_),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00989}00989             os.path.dirname(\_\_file\_\_),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00990}00990             \textcolor{stringliteral}{"{}"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00991}00991         ]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00992}00992         \textcolor{keywordflow}{for} p \textcolor{keywordflow}{in} lpaths:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00993}00993             lskpath = os.path.join(p, \textcolor{stringliteral}{"{}Linkam.lsk"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00994}00994             \textcolor{keywordflow}{if} \_lib.linkamInitialiseSDK(sdk\_log, lskpath.encode(), \textcolor{keyword}{True}) == 1:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00995}00995                 \textcolor{keywordflow}{break}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00996}00996         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00997}00997             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_library_load_error}{microscope.LibraryLoadError}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00998}00998                 \textcolor{stringliteral}{"{}No linkam license file (Linkam.lsk) found in \%s."{}} \% lpaths}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l00999}00999             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01000}01000 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01001}01001         \textcolor{comment}{\# NewValue event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01002}01002         cfunc = ctypes.CFUNCTYPE(\_uint32\_t, \_CommsHandle, \_ControllerStatus)(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01003}01003             \_\_class\_\_.\_on\_new\_value}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01004}01004         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01005}01005         \_lib.linkamSetCallbackNewValue(cfunc)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01006}01006         \_\_class\_\_.\_callbacks[\_\_class\_\_.\_on\_new\_value] = cfunc}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01007}01007         \textcolor{comment}{\# Connection event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01008}01008         cfunc = ctypes.CFUNCTYPE(\textcolor{keywordtype}{None}, \_CommsHandle)(\_\_class\_\_.\_on\_connect)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01009}01009         \_lib.linkamSetCallbackControllerConnected(cfunc)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01010}01010         \_\_class\_\_.\_callbacks[\_\_class\_\_.\_on\_connect] = cfunc}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01011}01011         \textcolor{comment}{\# Disconnection event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01012}01012         cfunc = ctypes.CFUNCTYPE(\textcolor{keywordtype}{None}, \_CommsHandle)(\_\_class\_\_.\_on\_disconnect)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01013}01013         \_lib.linkamSetCallbackControllerDisconnected(cfunc)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01014}01014         \_\_class\_\_.\_callbacks[\_\_class\_\_.\_on\_disconnect] = cfunc}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01015}01015         \textcolor{comment}{\# Error event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01016}01016         cfunc = ctypes.CFUNCTYPE(\textcolor{keywordtype}{None}, \_CommsHandle, \_uint32\_t)(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01017}01017             \_\_class\_\_.\_on\_error}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01018}01018         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01019}01019         \_lib.linkamSetCallbackError(cfunc)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01020}01020         \_\_class\_\_.\_callbacks[\_\_class\_\_.\_on\_error] = cfunc}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01021}01021 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01022}01022     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01023}01023     \textcolor{keyword}{def }\_on\_new\_value(cls, h: \_CommsHandle, status: \_ControllerStatus):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01024}01024         \textcolor{stringliteral}{"{}"{}"{}NewValue callback"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01025}01025         stage = cls.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a910cde86a5ce397c30408ce67401e74c}{\_connectionMap}}.get(h, \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01026}01026         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} stage:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01027}01027             \textcolor{keywordflow}{return} 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01028}01028         stage.\_update\_status(status)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01029}01029         \textcolor{keywordflow}{return} 1}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01030}01030 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01031}01031     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01032}01032     \textcolor{keyword}{def }\_on\_error(cls, h: \_CommsHandle, errcode: \_uint32\_t):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01033}01033         \textcolor{stringliteral}{"{}"{}"{}Error event callback"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01034}01034         err = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_error_code}{ErrorCode}}(errcode)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01035}01035         stage = cls.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a910cde86a5ce397c30408ce67401e74c}{\_connectionMap}}.get(h, \textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01036}01036         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} stage:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01037}01037             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01038}01038         \textcolor{keywordflow}{if} err \textcolor{keywordflow}{in} (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01039}01039             ErrorCode.USBCommsTxError,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01040}01040             ErrorCode.USBCommsRxError,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01041}01041             ErrorCode.SerialCommsTxError,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01042}01042             ErrorCode.SerialCommsRxError,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01043}01043         ):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01044}01044             \textcolor{comment}{\# Try to re-\/establish comms.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01045}01045             stage.\_reopen\_comms()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01046}01046         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01047}01047 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01048}01048     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01049}01049     \textcolor{keyword}{def }\_on\_connect(cls, h: \_CommsHandle):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01050}01050         \textcolor{stringliteral}{"{}"{}"{}Connection event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01051}01051 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01052}01052 \textcolor{stringliteral}{        Connection event only seems to be generated by processing an}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01053}01053 \textcolor{stringliteral}{        OpenComms message -\/ USB connection }\textcolor{keywordflow}{is} \textcolor{keywordflow}{not} autodetected.\textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01054}01054 \textcolor{stringliteral}{        stage = cls.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a910cde86a5ce397c30408ce67401e74c}{\_connectionMap}}.get(h, }\textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01055}01055         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} stage:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01056}01056             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01057}01057         stage.\_post\_connect()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01058}01058         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01059}01059 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01060}01060     \textcolor{preprocessor}{@classmethod}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01061}01061     \textcolor{keyword}{def }\_on\_disconnect(cls, h: \_CommsHandle):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01062}01062         \textcolor{stringliteral}{"{}"{}"{}Disconnection event callback}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01063}01063 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01064}01064 \textcolor{stringliteral}{        Discconneciton event only seems to be generated by processing a}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01065}01065 \textcolor{stringliteral}{        CloseComms message."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01066}01066 \textcolor{stringliteral}{        stage = cls.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a910cde86a5ce397c30408ce67401e74c}{\_connectionMap}}.get(h, }\textcolor{keywordtype}{None})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01067}01067         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} stage:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01068}01068             \textcolor{keywordflow}{return} 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01069}01069         stage.\_connectionstatus.flags.connected = 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01070}01070         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01071}01071 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01072}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a5f1b35587bf81d7f0e8959297fdc2c12}{01072}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a5f1b35587bf81d7f0e8959297fdc2c12}{\_\_init\_\_}}(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01073}01073         \textcolor{stringliteral}{"{}"{}"{}Initalise the device and, if necessary, the SDK."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01074}01074         \textcolor{comment}{\# Connection handle, info struct and status struct.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01075}01075         super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a5f1b35587bf81d7f0e8959297fdc2c12}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01076}01076         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a42aa30d52de86b75f18d20061748cea5}{\_commsinfo}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___comms_info}{\_CommsInfo}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01077}01077         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a705759f357b7853f32d8742b20ea5c53}{\_h}} = \_CommsHandle()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01078}01078         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___connection_status}{\_ConnectionStatus}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01079}01079         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a748f7614537609c6b3eae74caf7563d6}{\_stageconfig}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_config}{\_StageConfig}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01080}01080         \textcolor{comment}{\# Stage status struct, updated by the NewValue callback.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01081}01081         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a33be400201bd7ff276670e2aae45c363}{\_status}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___controller_status}{\_ControllerStatus}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01082}01082         \textcolor{keywordflow}{if} \_\_class\_\_.\_lib \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01083}01083             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01084}01084                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_aa82c0ed4bb1ad7093652d8f0194fc8cc}{init\_sdk}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01085}01085             \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01086}01086                 \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_library_load_error}{microscope.LibraryLoadError}}(e) \textcolor{keyword}{from} e}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01087}01087         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a1c91c3218006e8c433673c709277e114}{\_reconnect\_thread}} = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01088}01088 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01089}01089     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01090}01090         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01091}01091 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01092}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a55a843127d81f73f7ec7cf20289d24e2}{01092}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a55a843127d81f73f7ec7cf20289d24e2}{\_\_del\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01093}01093         \textcolor{stringliteral}{"{}"{}"{}Close comms on object deletion"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01094}01094         self.\_process\_msg(Msg.CloseComms)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01095}01095 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01096}01096     \textcolor{keyword}{def }\_post\_connect(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01097}01097         \textcolor{stringliteral}{"{}"{}"{}Mixins should implement this method to do post-\/connection config."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01098}01098         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01099}01099 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01100}01100     \textcolor{keyword}{def }\_process\_msg(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01101}01101         self, msg, param1=None, param2=None, param3=None, result=None}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01102}01102     ):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01103}01103         \textcolor{stringliteral}{"{}"{}"{}As the SDK to process a message."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01104}01104         \textcolor{keywordflow}{if} result \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01105}01105             result = \_Variant()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01106}01106         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\_lib.linkamProcessMessage(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01107}01107             ctypes.c\_uint(msg), self.\_h, byref(result), param1, param2, param3}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01108}01108         ):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01109}01109             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}ProcessMessage error."{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01110}01110         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01111}01111 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01112}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab66d6b40e303c1d524897ed266c73e6d}{01112}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab66d6b40e303c1d524897ed266c73e6d}{check\_connection}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01113}01113         \textcolor{stringliteral}{"{}"{}"{}Raise an exception if the connection is down."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01114}01114         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}}.flags.connected:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01115}01115             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}Stage not connected."{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01116}01116 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01117}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ad5f9c147e34f953334b1e576411d9dc2}{01117}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ad5f9c147e34f953334b1e576411d9dc2}{get\_data\_rate}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01118}01118         \textcolor{stringliteral}{"{}"{}"{}Return the status update period in seconds."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01119}01119         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetDataRate).vUint32 / 1000}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01120}01120 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01121}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a5548b315826a6c2c3351fbd4d9f1c801}{01121}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a5548b315826a6c2c3351fbd4d9f1c801}{get\_error}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01122}01122         \textcolor{stringliteral}{"{}"{}"{}Fetch the controller error."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01123}01123         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetControllerError).vControllerError}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01124}01124 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01125}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_aa62aaa0a68a354f6b5dc24e553137cf6}{01125}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_aa62aaa0a68a354f6b5dc24e553137cf6}{get\_id}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01126}01126         \textcolor{stringliteral}{"{}"{}"{}Fetch the device's serial number"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01127}01127 \textcolor{stringliteral}{        buf = ctypes.create\_string\_buffer(18)}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01128}01128 \textcolor{stringliteral}{        self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetControllerSerial, byref(buf), 18)}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01129}01129 \textcolor{stringliteral}{        }\textcolor{comment}{\# Decode from bytes to string and strip trailing spaces.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01130}01130         \textcolor{keywordflow}{return} buf.value.decode().rstrip()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01131}01131 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01132}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{01132}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(self, svt, result=None):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01133}01133         \textcolor{stringliteral}{"{}"{}"{}Fetch a value from the device.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01134}01134 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01135}01135 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01136}01136 \textcolor{stringliteral}{            svt: a StageValueType}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01137}01137 \textcolor{stringliteral}{            result: an existing Variant to use to }\textcolor{keywordflow}{return} a result, \textcolor{keywordflow}{or} \textcolor{keywordtype}{None}.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01138}01138         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01139}01139 \textcolor{stringliteral}{        }\textcolor{comment}{\# Don't self.check\_connection on read as it can cause get\_status to throw exception.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01140}01140         \textcolor{comment}{\# Ensure svt is an Enum member (not a raw value), as it is used as a key.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01141}01141         \textcolor{keywordflow}{if} isinstance(svt, str):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01142}01142             \textcolor{comment}{\# Allow access using parameter names -\/ useful for Pyro.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01143}01143             svt = getattr(\_StageValueType, svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01144}01144         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01145}01145             svt = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{\_StageValueType}}(svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01146}01146         \textcolor{comment}{\# Determine the appropriate Variant member for the value type.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01147}01147         vtype = \_StageValueTypeToVariant.get(svt, \textcolor{stringliteral}{"{}vFloat32"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01148}01148         variant = self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetValue, svt.value, result=result)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01149}01149         \textcolor{keywordflow}{if} result \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01150}01150             \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01151}01151         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01152}01152             \textcolor{keywordflow}{return} getattr(variant, vtype)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01153}01153 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01154}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a13e2c6d3bfaa5ab34bf2fde9dbea074f}{01154}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a13e2c6d3bfaa5ab34bf2fde9dbea074f}{get\_value\_limits}}(self, svt):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01155}01155         \textcolor{stringliteral}{"{}"{}"{}Returns the bounds for a StageValueType"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01156}01156         \textcolor{keywordflow}{if} isinstance(svt, str):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01157}01157             \textcolor{comment}{\# Allow access using parameter names -\/ useful for Pyro.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01158}01158             svt = getattr(\_StageValueType, svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01159}01159         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01160}01160             svt = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{\_StageValueType}}(svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01161}01161         vtype = \_StageValueTypeToVariant.get(svt, \textcolor{stringliteral}{"{}vFloat32"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01162}01162         vmin = self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetMinValue, svt.value)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01163}01163         vmax = self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetMaxValue, svt.value)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01164}01164         \textcolor{keywordflow}{return} tuple(getattr(v, vtype) \textcolor{keywordflow}{for} v \textcolor{keywordflow}{in} (vmin, vmax))}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01165}01165 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01166}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{01166}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{set\_value}}(self, svt, val):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01167}01167         \textcolor{stringliteral}{"{}"{}"{}Set value identified by svt to val"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01168}01168         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab66d6b40e303c1d524897ed266c73e6d}{check\_connection}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01169}01169         \textcolor{keywordflow}{if} isinstance(svt, str):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01170}01170             \textcolor{comment}{\# Allow access using parameter names -\/ useful for Pyro.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01171}01171             svt = getattr(\_StageValueType, svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01172}01172         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01173}01173             svt = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{\_StageValueType}}(svt)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01174}01174         vtype = \_StageValueTypeToVariant.get(svt, \textcolor{stringliteral}{"{}vFloat32"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01175}01175         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01176}01176             Msg.SetValue, \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type}{\_StageValueType}}(svt).value, \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___variant}{\_Variant}}(**\{vtype: val\})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01177}01177         ).vBoolean}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01178}01178 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01179}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ac5ee274d9d0e9f64d56dc38018e7f905}{01179}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ac5ee274d9d0e9f64d56dc38018e7f905}{is\_moving}}(self, axis=None):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01180}01180         \textcolor{stringliteral}{"{}"{}"{}Returns True if the stage is moving, False if stopped}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01181}01181 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01182}01182 \textcolor{stringliteral}{        This method isn't on the LinkamMDSMixin because the StageStatus motor}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01183}01183 \textcolor{stringliteral}{        stopped flags appear to be more reliable than the MDSStatus MoveDone}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01184}01184 \textcolor{stringliteral}{        flags."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01185}01185 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} axis \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None} \textcolor{keywordflow}{and} axis.upper() \textcolor{keywordflow}{in} \textcolor{stringliteral}{"{}XYZ"{}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01186}01186             has\_motor = getattr(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01187}01187                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a748f7614537609c6b3eae74caf7563d6}{\_stageconfig}}.flags, \textcolor{stringliteral}{"{}motor"{}} + axis.upper()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01188}01188             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01189}01189             stopped = getattr(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01190}01190                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a33be400201bd7ff276670e2aae45c363}{\_status}}.flags, \textcolor{stringliteral}{"{}motorStopped"{}} + axis.upper()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01191}01191             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01192}01192             \textcolor{keywordflow}{return} has\_motor \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} stopped}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01193}01193         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01194}01194             \textcolor{keywordflow}{return} any(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ac5ee274d9d0e9f64d56dc38018e7f905}{is\_moving}}(ax) \textcolor{keywordflow}{for} ax \textcolor{keywordflow}{in} \textcolor{stringliteral}{"{}XYZ"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01195}01195 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01196}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a660678300157aa0a4963d0d05fcce5a5}{01196}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a660678300157aa0a4963d0d05fcce5a5}{close\_comms}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01197}01197         \textcolor{stringliteral}{"{}"{}"{}Close the comms link"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01198}01198         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.CloseComms, result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01199}01199 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01200}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab6f0e3b91ae845cd63ad4fe0c7bea70c}{01200}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab6f0e3b91ae845cd63ad4fe0c7bea70c}{open\_comms}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01201}01201         \textcolor{stringliteral}{"{}"{}"{}Open the comms link and store the comms handle."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01202}01202         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01203}01203             Msg.OpenComms,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01204}01204             byref(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a42aa30d52de86b75f18d20061748cea5}{\_commsinfo}}),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01205}01205             byref(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a705759f357b7853f32d8742b20ea5c53}{\_h}}),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01206}01206             result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01207}01207         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01208}01208         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a705759f357b7853f32d8742b20ea5c53}{\_h}}.value != 0:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01209}01209             \_\_class\_\_.\_connectionMap[self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a705759f357b7853f32d8742b20ea5c53}{\_h}}.value] = self}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01210}01210             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a388e89ab7c52224bbffc8182a90e29a2}{\_process\_msg}}(Msg.GetStageConfig, result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a748f7614537609c6b3eae74caf7563d6}{\_stageconfig}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01211}01211         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01212}01212             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(\textcolor{stringliteral}{"{}Could not connect to stage."{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01213}01213 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01214}01214     \textcolor{keyword}{def }\_reopen\_comms(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01215}01215         \textcolor{stringliteral}{"{}"{}"{}Reopen communications.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01216}01216 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01217}01217 \textcolor{stringliteral}{        This }\textcolor{keywordflow}{is} called by the error event callback, which runs \textcolor{keywordflow}{in} some thread \textcolor{keywordflow}{in}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01218}01218         the library. If comms\_close \textcolor{keywordflow}{is} called \textcolor{keywordflow}{in} that thread, the connection}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01219}01219         status isn\textcolor{stringliteral}{'t correctly updated, so reconnection must happen in another}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01220}01220 \textcolor{stringliteral}{        thread."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01221}01221 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01222}01222             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a1c91c3218006e8c433673c709277e114}{\_reconnect\_thread}} \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01223}01223             \textcolor{keywordflow}{and} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a1c91c3218006e8c433673c709277e114}{\_reconnect\_thread}}.is\_alive()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01224}01224         ):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01225}01225             \textcolor{comment}{\# Already trying to reconnect}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01226}01226             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01227}01227 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01228}01228         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a1c91c3218006e8c433673c709277e114}{\_reconnect\_thread}} = threading.Thread(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01229}01229             target=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a63f38ab1fd7f3f201de5f86dc04b62f0}{\_reopen\_loop}}, daemon=\textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01230}01230         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01231}01231         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a1c91c3218006e8c433673c709277e114}{\_reconnect\_thread}}.start()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01232}01232 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01233}01233     \textcolor{keyword}{def }\_reopen\_loop(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01234}01234         \textcolor{stringliteral}{"{}"{}"{}Attempt to reopen comms."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01235}01235         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a660678300157aa0a4963d0d05fcce5a5}{close\_comms}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01236}01236         \textcolor{comment}{\# Need a small delay to avoid false positive connected status.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01237}01237         time.sleep(0.1)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01238}01238         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}}.flags.connected:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01239}01239             time.sleep(0.5)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01240}01240             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01241}01241                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab6f0e3b91ae845cd63ad4fe0c7bea70c}{open\_comms}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01242}01242             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01243}01243                 \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01244}01244 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01245}01245     \textcolor{keyword}{def }\_update\_status(self, status):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01246}01246         \textcolor{stringliteral}{"{}"{}"{}Update status structures."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01247}01247         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a33be400201bd7ff276670e2aae45c363}{\_status}} = status}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01248}01248 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01249}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a2f9d9e0d26d9c8c52ae82eb3ca7dfd52}{01249}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a2f9d9e0d26d9c8c52ae82eb3ca7dfd52}{init\_usb}}(self, uid):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01250}01250         \textcolor{stringliteral}{"{}"{}"{}Populate commsinfo struct with default USBCommsInfo"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01251}01251         \textcolor{comment}{\# The uid is used to set serialNumber on the info object. The docs}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01252}01252         \textcolor{comment}{\# suggest that an OpenComms message should open a connection to the}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01253}01253         \textcolor{comment}{\# device with that serial number; with only one stage attached, it}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01254}01254         \textcolor{comment}{\# appears that OpenComms ignores the value of serialNumber.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01255}01255         \textcolor{keywordflow}{if} uid \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01256}01256             uid = b\textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01257}01257         \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} isinstance(uid, bytes):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01258}01258             uid = uid.encode()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01259}01259         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a65d3264eaef4aca8cff43e11cd37f099}{\_lib}}.linkamInitialiseUSBCommsInfo(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01260}01260             byref(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a42aa30d52de86b75f18d20061748cea5}{\_commsinfo}}), ctypes.c\_char\_p(uid)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01261}01261         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01262}01262 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01263}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a831f858fcc5ef671a84814bd152d1c69}{01263}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a831f858fcc5ef671a84814bd152d1c69}{init\_serial}}(self, port):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01264}01264         \textcolor{stringliteral}{"{}"{}"{}Populate commsinfo struct with default SerialCommsInfo for given port"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01265}01265         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a65d3264eaef4aca8cff43e11cd37f099}{\_lib}}.linkamInitialiseSerialCommsInfo(byref(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a42aa30d52de86b75f18d20061748cea5}{\_commsinfo}}), port)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01266}01266 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01267}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab56f7db058911151081d5255d602724d}{01267}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab56f7db058911151081d5255d602724d}{get\_status}}(self, *args):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01268}01268         \textcolor{stringliteral}{"{}"{}"{}Called by a client to fetch status in a dict.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01269}01269 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01270}01270 \textcolor{stringliteral}{        Derived classes }\textcolor{keywordflow}{and} mixins should implement this to add their own status.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01271}01271 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01272}01272         status = super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab56f7db058911151081d5255d602724d}{get\_status}}(*args, status\_structure, ...) \textcolor{keywordflow}{in} derived classes.}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01273}01273         \textcolor{comment}{\# then add any other values with}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01274}01274         status[key] = ...}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01275}01275         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01276}01276 \textcolor{stringliteral}{        structs = args + (self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a33be400201bd7ff276670e2aae45c363}{\_status}}, self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a619b21f44d3e5af2f6021ba1803c883c}{\_connectionstatus}})}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01277}01277 \textcolor{stringliteral}{        status = \{\}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01278}01278 \textcolor{stringliteral}{        }\textcolor{keywordflow}{for} s \textcolor{keywordflow}{in} structs:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01279}01279             names = filter(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01280}01280                 \textcolor{keyword}{lambda} n: \textcolor{keywordflow}{not} n.startswith(\textcolor{stringliteral}{"{}unused"{}}),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01281}01281                 (f[0] \textcolor{keywordflow}{for} f \textcolor{keywordflow}{in} s.flags.\_fields\_),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01282}01282             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01283}01283             status.update(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01284}01284                 dict(map(\textcolor{keyword}{lambda} n: (n, bool(getattr(s.flags, n))), names))}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01285}01285             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01286}01286         \textcolor{keywordflow}{return} status}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01287}01287 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01288}01288 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01289}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin}{01289}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin}{\_LinkamMDSMixin}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01290}01290     \textcolor{stringliteral}{"{}"{}"{}A mixin for motor-\/driven stages"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01291}01291 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01292}01292     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01293}01293         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01294}01294         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a6048cc07bd35143bb23dfd0d1f63fcf8}{\_mdsstatus}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status}{\_MDSStatus}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01295}01295 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01296}01296     \textcolor{keyword}{def }\_post\_connect(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01297}01297         \textcolor{stringliteral}{"{}"{}"{}Set up motors: set velocities and add velocity settings."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01298}01298         \textcolor{keywordflow}{for} name, flag, svt \textcolor{keywordflow}{in} (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01299}01299             (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01300}01300                 \textcolor{stringliteral}{"{}X\_velocity"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01301}01301                 self.\_stageconfig.flags.motorX,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01302}01302                 \_StageValueType.MotorVelX,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01303}01303             ),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01304}01304             (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01305}01305                 \textcolor{stringliteral}{"{}Y\_velocity"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01306}01306                 self.\_stageconfig.flags.motorY,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01307}01307                 \_StageValueType.MotorVelY,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01308}01308             ),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01309}01309             (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01310}01310                 \textcolor{stringliteral}{"{}Z\_velocity"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01311}01311                 self.\_stageconfig.flags.motorZ,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01312}01312                 \_StageValueType.MotorVelZ,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01313}01313             ),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01314}01314         ):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01315}01315             \textcolor{keywordflow}{if} flag:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01316}01316                 \textcolor{comment}{\# Motors don't move unless their velocities have been written to,}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01317}01317                 \textcolor{comment}{\# despite velocities having a non-\/zero power-\/on default. There's no}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01318}01318                 \textcolor{comment}{\# way to tell if they've been written to, so write them once here.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01319}01319                 self.set\_value(svt, self.get\_value(svt))}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01320}01320                 \textcolor{comment}{\# Also add a Setting that clients can use to modify the velocity.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01321}01321                 self.add\_setting(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01322}01322                     name,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01323}01323                     \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01324}01324                     \textcolor{keyword}{lambda} svt=svt: self.get\_value(svt),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01325}01325                     \textcolor{keyword}{lambda} val, svt=svt, s=self: self.set\_value(svt, val),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01326}01326                     \textcolor{keyword}{lambda} svt=svt: self.get\_value\_limits(svt),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01327}01327                 )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01328}01328 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01329}01329         super().\_post\_connect()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01330}01330 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01331}01331     \textcolor{keyword}{def }\_update\_status(self, status):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01332}01332         \textcolor{stringliteral}{"{}"{}"{}Call parent class update\_status, then update MDS status structure."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01333}01333         super().\_update\_status(status)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01334}01334         self.get\_value(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01335}01335             \_StageValueType.MotorDrivenStageStatus, result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a6048cc07bd35143bb23dfd0d1f63fcf8}{\_mdsstatus}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01336}01336         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01337}01337 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01338}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a49701213b27683aea9a00dfff9d216a3}{01338}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a49701213b27683aea9a00dfff9d216a3}{move\_to}}(self, x=None, y=None, z=None):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01339}01339         \textcolor{stringliteral}{"{}"{}"{}Move to co-\/ordinates given by x and y"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01340}01340         \textcolor{comment}{\# The default position set points are zero. If the motors are started without}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01341}01341         \textcolor{comment}{\# writing to a set point, that motor will move to zero, so only start motors}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01342}01342         \textcolor{comment}{\# if a target has been provided.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01343}01343         \textcolor{keywordflow}{if} x \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01344}01344             self.set\_value(\_StageValueType.MotorSetpointX, x)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01345}01345             self.\_process\_msg(Msg.StartMotors, \textcolor{keyword}{True}, 0)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01346}01346         \textcolor{keywordflow}{if} y \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01347}01347             self.set\_value(\_StageValueType.MotorSetpointY, y)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01348}01348             self.\_process\_msg(Msg.StartMotors, \textcolor{keyword}{True}, 1)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01349}01349         \textcolor{keywordflow}{if} z \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01350}01350             self.set\_value(\_StageValueType.MotorSetpointZ, z)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01351}01351             self.\_process\_msg(Msg.StartMotors, \textcolor{keyword}{True}, 2)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01352}01352         \textcolor{comment}{\# Allow time for status structures to indicate stage is moving}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01353}01353         time.sleep(5 * self.get\_data\_rate())}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01354}01354 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01355}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_ae1ad8a303f640c1cb3d07daf5a6519d1}{01355}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_ae1ad8a303f640c1cb3d07daf5a6519d1}{get\_status}}(self, *args):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01356}01356         \textcolor{stringliteral}{"{}"{}"{}Includes MDSStatus in the get\_status call."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01357}01357         \textcolor{keywordflow}{return} super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_ae1ad8a303f640c1cb3d07daf5a6519d1}{get\_status}}(*args, self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a6048cc07bd35143bb23dfd0d1f63fcf8}{\_mdsstatus}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01358}01358 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01359}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a98b839817e6dfe4ac9426ab5c116512f}{01359}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin_a98b839817e6dfe4ac9426ab5c116512f}{get\_position}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01360}01360         \textcolor{stringliteral}{"{}"{}"{}Return the stage's position."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01361}01361         pos = \{\}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01362}01362         \textcolor{keywordflow}{for} axis \textcolor{keywordflow}{in} \textcolor{stringliteral}{"{}ZYX"{}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01363}01363             \textcolor{keywordflow}{if} getattr(self.\_stageconfig.flags, \textcolor{stringliteral}{"{}motor"{}} + axis):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01364}01364                 pos[axis] = self.get\_value(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01365}01365                     getattr(\_StageValueType, \textcolor{stringliteral}{"{}MotorPos"{}} + axis)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01366}01366                 )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01367}01367             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01368}01368                 pos[axis] = float(\textcolor{stringliteral}{"{}nan"{}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01369}01369         \textcolor{keywordflow}{return} pos}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01370}01370 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01371}01371 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01372}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s}{01372}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s}{LinkamCMS}}(\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin}{\_LinkamMDSMixin}}, \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base}{\_LinkamBase}}):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01373}01373     \textcolor{stringliteral}{"{}"{}"{}Linkam correlative-\/microscopy stage."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01374}01374 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01375}01375     \_refill\_map = \{}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01376}01376         \textcolor{stringliteral}{"{}sample"{}}: \textcolor{stringliteral}{"{}sampleDewarFillSignal"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01377}01377         \textcolor{stringliteral}{"{}external"{}}: \textcolor{stringliteral}{"{}mainDewarFillSignal"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01378}01378     \}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01379}01379     \_heater\_map = \{}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01380}01380         \textcolor{stringliteral}{"{}t\_bridge"{}}: \_StageValueType.Heater1Temp,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01381}01381         \textcolor{stringliteral}{"{}t\_chamber"{}}: \_StageValueType.Heater2Temp,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01382}01382         \textcolor{stringliteral}{"{}t\_dewar"{}}: \_StageValueType.Heater3Temp,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01383}01383         \textcolor{stringliteral}{"{}t\_base"{}}: \_StageValueType.Heater4Temp,}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01384}01384     \}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01385}01385 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01386}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker}{01386}}     \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker}{RefillTracker}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01387}01387         \textcolor{comment}{\# Is refill in progress?}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01388}01388         refilling = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01389}01389         \textcolor{comment}{\# Time between last refills.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01390}01390         dt = datetime.timedelta(0)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01391}01391         \textcolor{comment}{\# Last refill time.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01392}01392         t = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01393}01393 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01394}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_aa2ffe805aa5f6426cbee3d88a329358d}{01394}}         \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_aa2ffe805aa5f6426cbee3d88a329358d}{start\_refill}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01395}01395             \textcolor{stringliteral}{"{}"{}"{}Start a refill: update status flag and last cycle time."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01396}01396             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ac15823893391979d1153f711ac034217}{refilling}}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a610ac6c8dd858bea6061ba602f59caae}{refilling}} = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01397}01397             \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a6bf17c01092b4e52c838410b4fc295c9}{t}} \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01398}01398                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a2be4fd1e3f7a23ee8efc3272859603f2}{dt}} = datetime.datetime.now() -\/ self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a6bf17c01092b4e52c838410b4fc295c9}{t}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01399}01399 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01400}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a9cd18641281b1596fbf3251774fbbd25}{01400}}         \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a9cd18641281b1596fbf3251774fbbd25}{end\_refill}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01401}01401             \textcolor{stringliteral}{"{}"{}"{}End a refill: update status flag and last refill time."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01402}01402             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ac15823893391979d1153f711ac034217}{refilling}}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a610ac6c8dd858bea6061ba602f59caae}{refilling}} = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01403}01403             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a6bf17c01092b4e52c838410b4fc295c9}{t}} = datetime.datetime.now()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01404}01404 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01405}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ae3e335ea44c9d5946383467aa0b6d460}{01405}}         \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ae3e335ea44c9d5946383467aa0b6d460}{as\_dict}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01406}01406             \textcolor{stringliteral}{"{}"{}"{}Represent this object as a dict for status queries."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01407}01407             \textcolor{keywordflow}{return} dict(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01408}01408                 refilling=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ac15823893391979d1153f711ac034217}{refilling}}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a610ac6c8dd858bea6061ba602f59caae}{refilling}}, last=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a6bf17c01092b4e52c838410b4fc295c9}{t}}, between\_last=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a2be4fd1e3f7a23ee8efc3272859603f2}{dt}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01409}01409             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01410}01410 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01411}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a0e375b912894f039b6fad7dcbbfe7f65}{01411}}         \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a0e375b912894f039b6fad7dcbbfe7f65}{\_\_repr\_\_}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01412}01412             \textcolor{stringliteral}{"{}"{}"{}Display tracker properties in representation."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01413}01413             \textcolor{keywordflow}{return} \textcolor{stringliteral}{"{}refilling: \%s, t: \%s, dt: \%s"{}} \% (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01414}01414                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_ac15823893391979d1153f711ac034217}{refilling}}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a610ac6c8dd858bea6061ba602f59caae}{refilling}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01415}01415                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a6bf17c01092b4e52c838410b4fc295c9}{t}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01416}01416                 self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker_a2be4fd1e3f7a23ee8efc3272859603f2}{dt}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01417}01417             )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01418}01418 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01419}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_af7575373fa50d5ba2d93821b09605d92}{01419}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_af7575373fa50d5ba2d93821b09605d92}{\_\_init\_\_}}(self, uid="{}"{}, **kwargs):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01420}01420         super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_af7575373fa50d5ba2d93821b09605d92}{\_\_init\_\_}}(**kwargs)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01421}01421         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ab33636668e04b99d36b258beca5b196e}{uid}} = uid}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01422}01422         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a2f9d9e0d26d9c8c52ae82eb3ca7dfd52}{init\_usb}}(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ab33636668e04b99d36b258beca5b196e}{uid}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01423}01423         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a7bd3d466a7165bd37d41730b698f8524}{\_cmsstatus}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status}{\_CMSStatus}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01424}01424         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a35e0545862cb102c9a6f742fb478423d}{\_cmserror}} = \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error}{\_CMSError}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01425}01425         \textcolor{comment}{\# Refill tracking}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01426}01426         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a91b4610dae1546928135062803fd8683}{\_refills}} = dict(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01427}01427             \{k: self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker}{RefillTracker}}() \textcolor{keywordflow}{for} k \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_adc1782f5f2a27acf107136ca59201302}{\_refill\_map}}\}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01428}01428         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01429}01429         \textcolor{comment}{\# Condensor LED level when on}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01430}01430         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a8977781ac350ef38f11501bccc5f285d}{\_condensor\_level}} = 100}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01431}01431         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a0252c8e32f95c4f8c19bedc1d96c1669}{add\_setting}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01432}01432             \textcolor{stringliteral}{"{}condensor"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01433}01433             \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01434}01434             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_aad446ab274f7151e59abd69d7f2254eb}{get\_condensor\_level}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01435}01435             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a157d844a6ed720696fa6e646f0162a06}{set\_condensor\_level}},}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01436}01436             (0, 100),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01437}01437         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01438}01438         \textcolor{comment}{\# Connect to the stage.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01439}01439         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ab33636668e04b99d36b258beca5b196e}{uid}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01440}01440             \textcolor{comment}{\# Deviceserver needs uid to associate device to address, so call}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01441}01441             \textcolor{comment}{\# open\_comms directly to throw an exception on connection error.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01442}01442             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_ab6f0e3b91ae845cd63ad4fe0c7bea70c}{open\_comms}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01443}01443         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01444}01444             \textcolor{comment}{\# Device id not required -\/ just keep trying to connect until success.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01445}01445             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_afb9cc98463c96315e95c767e9c525982}{\_reopen\_comms}}()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01446}01446 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01447}01447     \textcolor{keyword}{def }\_update\_status(self, status):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01448}01448         \textcolor{stringliteral}{"{}"{}"{}Update status structures."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01449}01449         super().\_update\_status(status)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01450}01450         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(\_StageValueType.CmsStatus, result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a7bd3d466a7165bd37d41730b698f8524}{\_cmsstatus}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01451}01451         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(\_StageValueType.CmsError, result=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a35e0545862cb102c9a6f742fb478423d}{\_cmserror}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01452}01452         \textcolor{comment}{\# Update the refill timers.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01453}01453         \textcolor{keywordflow}{for} (key, flagname) \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_adc1782f5f2a27acf107136ca59201302}{\_refill\_map}}.items():}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01454}01454             tracker = self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a91b4610dae1546928135062803fd8683}{\_refills}}[key]}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01455}01455             is\_refilling = getattr(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a7bd3d466a7165bd37d41730b698f8524}{\_cmsstatus}}.flags, flagname)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01456}01456             \textcolor{keywordflow}{if} is\_refilling \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} tracker.refilling:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01457}01457                 tracker.start\_refill()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01458}01458             \textcolor{keywordflow}{elif} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a91b4610dae1546928135062803fd8683}{\_refills}}[key].refilling \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} is\_refilling:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01459}01459                 tracker.end\_refill()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01460}01460 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01461}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a1dd70b4fc63d08273a564ae26acfc957}{01461}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a1dd70b4fc63d08273a564ae26acfc957}{temperatures}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01462}01462         \textcolor{stringliteral}{"{}"{}"{}Return a dict of temperature sensor readings."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01463}01463         \textcolor{keywordflow}{return} dict(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01464}01464             (key, self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(svt)) \textcolor{keywordflow}{for} key, svt \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_abef32fa23e89daf4ae455d4708cfa464}{\_heater\_map}}.items()}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01465}01465         )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01466}01466 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01467}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ae8751c859e60185a6281030cb029c131}{01467}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ae8751c859e60185a6281030cb029c131}{set\_light}}(self, state):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01468}01468         \textcolor{stringliteral}{"{}"{}"{}Set the state of the chamber light."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01469}01469         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{set\_value}}(\_StageValueType.CmsLight, state)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01470}01470 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01471}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a6aae25276dee270857c0b68fa34ef2fa}{01471}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a6aae25276dee270857c0b68fa34ef2fa}{get\_light}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01472}01472         \textcolor{stringliteral}{"{}"{}"{}Report the state of the chamber light."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01473}01473         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(\_StageValueType.CmsLight)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01474}01474 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01475}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a70aa528c4c8a0eeddbe0619e01f43670}{01475}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a70aa528c4c8a0eeddbe0619e01f43670}{set\_condensor}}(self, state):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01476}01476         \textcolor{stringliteral}{"{}"{}"{}Turn the condensor LED on or off."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01477}01477         \textcolor{keywordflow}{if} state:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01478}01478             level = self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a8977781ac350ef38f11501bccc5f285d}{\_condensor\_level}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01479}01479         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01480}01480             level = 0}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01481}01481         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{set\_value}}(\_StageValueType.CmsCondenserLEDLevel, level)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01482}01482 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01483}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a157d844a6ed720696fa6e646f0162a06}{01483}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a157d844a6ed720696fa6e646f0162a06}{set\_condensor\_level}}(self, level):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01484}01484         \textcolor{stringliteral}{"{}"{}"{}Set the condensor LED level"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01485}01485         self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a8977781ac350ef38f11501bccc5f285d}{\_condensor\_level}} = level}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01486}01486         \textcolor{keywordflow}{if} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(\_StageValueType.CmsCondenserLEDLevel) > 0:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01487}01487             \textcolor{comment}{\# Condnesor LED is on, so write out new level immediately.}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01488}01488             self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a70aa528c4c8a0eeddbe0619e01f43670}{set\_condensor}}(\textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01489}01489 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01490}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_aad446ab274f7151e59abd69d7f2254eb}{01490}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_aad446ab274f7151e59abd69d7f2254eb}{get\_condensor\_level}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01491}01491         \textcolor{stringliteral}{"{}"{}"{}Return the condensor level"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01492}01492         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a8977781ac350ef38f11501bccc5f285d}{\_condensor\_level}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01493}01493 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01494}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a361b18e0bdc86d31ee7d6d969cac468e}{01494}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a361b18e0bdc86d31ee7d6d969cac468e}{get\_motors}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01495}01495         \textcolor{stringliteral}{"{}"{}"{}Return the position, set point and stopped status of available motors."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01496}01496         res = \{\}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01497}01497         \textcolor{keywordflow}{for} axis \textcolor{keywordflow}{in} \textcolor{stringliteral}{"{}XYZ"{}}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01498}01498             \textcolor{keywordflow}{if} getattr(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a748f7614537609c6b3eae74caf7563d6}{\_stageconfig}}.flags, \textcolor{stringliteral}{"{}motor"{}} + axis):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01499}01499                 res[axis] = (}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01500}01500                     self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01501}01501                         getattr(\_StageValueType, \textcolor{stringliteral}{"{}MotorPos"{}} + axis)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01502}01502                     ),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01503}01503                     self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a4acd3c4eeea757fd435604d1e3f37d66}{get\_value}}(}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01504}01504                         getattr(\_StageValueType, \textcolor{stringliteral}{"{}MotorSetpoint"{}} + axis)}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01505}01505                     ),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01506}01506                     getattr(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_a33be400201bd7ff276670e2aae45c363}{\_status}}.flags, \textcolor{stringliteral}{"{}motorStopped"{}} + axis),}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01507}01507                 )}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01508}01508             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01509}01509                 res[axis] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01510}01510         \textcolor{keywordflow}{return} res}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01511}01511 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01512}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_adc564625c44ef2a33356be0ebcdea105}{01512}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_adc564625c44ef2a33356be0ebcdea105}{refill\_dewar}}(self, state=True):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01513}01513         \textcolor{stringliteral}{"{}"{}"{}Start a refill of the internal dewar from an external reservoir"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01514}01514 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{set\_value}}(\_StageValueType.CmsMainDewarFillSig, \textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01515}01515 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01516}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ad6e6627e7a4f2c50619863987319921c}{01516}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ad6e6627e7a4f2c50619863987319921c}{refill\_chamber}}(self, state=True):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01517}01517         \textcolor{stringliteral}{"{}"{}"{}Start a refill of the sample chamber from the internal dewar"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01518}01518 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___linkam_base_accd551aed5c73fe3db6f5ee654a8ff80}{set\_value}}(\_StageValueType.CmsSampleDewarFillSig, \textcolor{keyword}{True})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01519}01519 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01520}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a0aa30ebf01c6765b3d4be0b1b3d48231}{01520}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a0aa30ebf01c6765b3d4be0b1b3d48231}{refill\_stats}}(self):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01521}01521         \textcolor{stringliteral}{"{}"{}"{}Return information about refill times and cycle lengths."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01522}01522         \textcolor{keywordflow}{return} dict([(k, v.as\_dict()) \textcolor{keywordflow}{for} k, v \textcolor{keywordflow}{in} self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a91b4610dae1546928135062803fd8683}{\_refills}}.items()])}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01523}01523 }
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01524}\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ad5aa9a0f8fc607890ba67b51dcaea2d1}{01524}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ad5aa9a0f8fc607890ba67b51dcaea2d1}{get\_status}}(self, *args):}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01525}01525         \textcolor{stringliteral}{"{}"{}"{}Return a dict containing aggregated stage status."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01526}01526         status = super().\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_ad5aa9a0f8fc607890ba67b51dcaea2d1}{get\_status}}(*args, self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a7bd3d466a7165bd37d41730b698f8524}{\_cmsstatus}})}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01527}01527         status.update(self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a1dd70b4fc63d08273a564ae26acfc957}{temperatures}}())}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01528}01528         status.update(refills=self.\mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_a0aa30ebf01c6765b3d4be0b1b3d48231}{refill\_stats}}())}
+\DoxyCodeLine{\Hypertarget{linkam_8py_source_l01529}01529         \textcolor{keywordflow}{return} status}
+
+\end{DoxyCode}

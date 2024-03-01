@@ -1,0 +1,142 @@
+\hypertarget{_plot_8cs_source}{}\doxysection{Plot.\+cs}
+\label{_plot_8cs_source}\index{F:/repos/BioImager/BioImager/Source/Plot.cs@{F:/repos/BioImager/BioImager/Source/Plot.cs}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00001}00001 \textcolor{keyword}{using }ScottPlot;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00002}00002 \textcolor{keyword}{using }System;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00003}00003 \textcolor{keyword}{using }System.Collections.Generic;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00004}00004 \textcolor{keyword}{using }System.ComponentModel;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00005}00005 \textcolor{keyword}{using }System.Data;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00006}00006 \textcolor{keyword}{using }System.Drawing;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00007}00007 \textcolor{keyword}{using }System.Linq;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00008}00008 \textcolor{keyword}{using }System.Text;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00009}00009 \textcolor{keyword}{using }System.Threading.Tasks;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00010}00010 \textcolor{keyword}{using }System.Windows.Forms;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00011}00011 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00012}00012 \textcolor{keyword}{namespace }\mbox{\hyperlink{namespace_bio_imager}{BioImager}}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00013}00013 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00014}\mbox{\hyperlink{class_bio_imager_1_1_plot}{00014}}     \textcolor{keyword}{public} \textcolor{keyword}{partial class }\mbox{\hyperlink{class_bio_imager_1_1_plot}{Plot}} : Form}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00015}00015     \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00016}00016         ScottPlot.Plot model;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00017}00017         \textcolor{keywordtype}{string} file;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00018}00018         \textcolor{keywordtype}{string} name;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00019}00019         Bitmap bitmap;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00020}00020         List<double[]> data = \textcolor{keyword}{new} List<double[]>();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00021}00021         \textcolor{keyword}{static} Dictionary<string, Plot> plots = \textcolor{keyword}{new} Dictionary<string, Plot>();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00022}00022         \textcolor{keyword}{public} \mbox{\hyperlink{class_bio_imager_1_1_plot}{Plot}}(\textcolor{keywordtype}{double}[] vals, \textcolor{keywordtype}{string} name, PlotType typ)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00023}00023         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00024}00024             InitializeComponent();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00025}00025             model = \textcolor{keyword}{new} ScottPlot.Plot();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00026}00026             data.Add(vals);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00027}00027             \textcolor{keywordflow}{if} (typ == PlotType.Scatter)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00028}00028                 InitScatter();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00029}00029             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00030}00030             \textcolor{keywordflow}{if} (typ == PlotType.Bar)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00031}00031                 InitBars();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00032}00032         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00033}00033         \textcolor{keyword}{public} \textcolor{keyword}{enum} PlotType}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00034}00034         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00035}00035             Bar,}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00036}00036             Scatter}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00037}00037         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00038}00038         PlotType type;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00039}00039         \textcolor{keyword}{public} PlotType Type}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00040}00040         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00041}00041             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} type; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00042}00042             \textcolor{keyword}{set} \{ type = value; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00043}00043         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00044}00044         \textcolor{keyword}{public} \textcolor{keyword}{static} Dictionary<string, Plot> Plots}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00045}00045         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00046}00046             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} plots; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00047}00047         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00048}00048         \textcolor{keyword}{public} List<double[]> Data}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00049}00049         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00050}00050             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} data; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00051}00051             \textcolor{keyword}{set} \{ data = value; \mbox{\hyperlink{class_bio_imager_1_1_plot_a29f940b471ed3bbe5a9f16de5047d806}{UpdateImage}}(); \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00052}00052         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00053}00053         \textcolor{keyword}{public} Bitmap Image}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00054}00054         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00055}00055             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} bitmap; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00056}00056             \textcolor{keyword}{set} \{ bitmap = value; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00057}00057         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00058}00058         \textcolor{keyword}{public} ScottPlot.Plot Model}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00059}00059         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00060}00060             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} model; \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00061}00061             \textcolor{keyword}{set} \{ model = value; \mbox{\hyperlink{class_bio_imager_1_1_plot_a29f940b471ed3bbe5a9f16de5047d806}{UpdateImage}}(); \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00062}00062         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00065}\mbox{\hyperlink{class_bio_imager_1_1_plot_a29f940b471ed3bbe5a9f16de5047d806}{00065}}         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \mbox{\hyperlink{class_bio_imager_1_1_plot_a29f940b471ed3bbe5a9f16de5047d806}{UpdateImage}}()}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00066}00066         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00067}00067             model.SavePng(file, Width, Height);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00068}00068             this.Text = name;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00069}00069             bitmap = (Bitmap)Bitmap.FromFile(file);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00070}00070         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00072}00072         \textcolor{keyword}{private} \textcolor{keywordtype}{void} InitScatter()}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00073}00073         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00074}00074             model.Clear();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00075}00075             List<Coordinates> cs = \textcolor{keyword}{new} List<Coordinates>();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00076}00076             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < data.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00077}00077             \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00078}00078                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < data[i].Length; x++)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00079}00079                 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00080}00080                     cs.Add(\textcolor{keyword}{new} ScottPlot.Coordinates(x, data[i][x]));}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00081}00081                 \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00082}00082             \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00083}00083             model.Add.Scatter(cs);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00084}00084         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00087}00087         \textcolor{keyword}{private} \textcolor{keywordtype}{void} InitBars()}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00088}00088         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00089}00089             model.Clear();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00090}00090             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{double}[] items \textcolor{keywordflow}{in} data)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00091}00091             \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00092}00092                 \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00093}00093                 List<Bar> bars = \textcolor{keyword}{new} List<Bar>();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00094}00094                 \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{double} item \textcolor{keywordflow}{in} items)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00095}00095                 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00096}00096                     Bar b = \textcolor{keyword}{new} Bar();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00097}00097                     b.Value = item;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00098}00098                     b.Position = i;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00099}00099                     bars.Add(b);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00100}00100                     i++;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00101}00101                 \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00102}00102                 model.Add.Bars(bars);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00103}00103             \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00104}00104         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00105}00105 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00106}00106         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Plot\_ResizeEnd(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00107}00107         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00108}00108             \mbox{\hyperlink{class_bio_imager_1_1_plot_a29f940b471ed3bbe5a9f16de5047d806}{UpdateImage}}();}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00109}00109         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00110}00110 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00111}00111         \textcolor{keyword}{private} \textcolor{keywordtype}{void} Plot\_Paint(\textcolor{keywordtype}{object} sender, PaintEventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00112}00112         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00113}00113             e.Graphics.DrawImage(Image, 0, 0);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00114}00114         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00115}00115 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00116}00116         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00117}00117         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00118}00118             \textcolor{keywordflow}{if} (saveFileDialog.ShowDialog() != DialogResult.OK) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00119}00119             Image.Save(saveFileDialog.FileName);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00120}00120         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00121}00121 }
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00122}00122         \textcolor{keyword}{private} \textcolor{keywordtype}{void} saveCSVToolStripMenuItem\_Click(\textcolor{keywordtype}{object} sender, EventArgs e)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00123}00123         \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00124}00124             \textcolor{keywordflow}{if} (saveCSVFileDialog.ShowDialog() != DialogResult.OK) \textcolor{keywordflow}{return};}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00125}00125             \textcolor{keywordtype}{string} s = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00126}00126             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{double}[] item \textcolor{keywordflow}{in} data)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00127}00127             \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00128}00128                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < data.Count; i++)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00129}00129                 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00130}00130                     s += i + \textcolor{stringliteral}{"{},"{}};}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00131}00131                 \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00132}00132                 s += Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00133}00133                 \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{double} d \textcolor{keywordflow}{in} item)}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00134}00134                 \{}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00135}00135                     s += d + \textcolor{stringliteral}{"{},"{}} + Environment.NewLine;}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00136}00136                 \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00137}00137             \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00138}00138             File.WriteAllText(saveCSVFileDialog.FileName, s);}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00139}00139         \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00140}00140     \}}
+\DoxyCodeLine{\Hypertarget{_plot_8cs_source_l00141}00141 \}}
+
+\end{DoxyCode}

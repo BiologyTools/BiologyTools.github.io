@@ -1,0 +1,158 @@
+\hypertarget{lights_2cobolt_8py_source}{}\doxysection{cobolt.\+py}
+\label{lights_2cobolt_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/lights/cobolt.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/lights/cobolt.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00020}00020 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00021}00021 \textcolor{keyword}{import} logging}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00023}00023 \textcolor{keyword}{import} serial}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00025}00025 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1__utils}{microscope.\_utils}}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00026}00026 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1abc}{microscope.abc}}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00029}00029 \_logger = logging.getLogger(\_\_name\_\_)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00030}00030 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00031}00031 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00032}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser}{00032}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser}{CoboltLaser}}(}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00033}00033     \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin}{microscope.\_utils.OnlyTriggersBulbOnSoftwareMixin}},}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00034}00034     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin}{microscope.abc.SerialDeviceMixin}},}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00035}00035     \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}},}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00036}00036 ):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00037}00037     \textcolor{stringliteral}{"{}"{}"{}Cobolt lasers.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00038}00038 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00039}00039 \textcolor{stringliteral}{    The cobolt lasers are diode pumped lasers }\textcolor{keywordflow}{and} only supports}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00040}00040     `TriggerMode.SOFTWARE` (this \textcolor{keywordflow}{is} probably \textcolor{keywordflow}{not} completely true, some}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00041}00041     cobolt lasers are probably \textcolor{keywordflow}{not} diode pumped \textcolor{keywordflow}{and} those should be}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00042}00042     able to support other trigger modes, but we only got access to the}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00043}00043     04 series).}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00044}00044 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00045}00045     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00046}00046 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00047}00047 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self, com=None, baud=115200, timeout=0.1, **kwargs):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00048}00048         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00049}00049         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a47b70f03303cca0bca8bbdd73d94bc4e}{connection}} = serial.Serial(}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00050}00050             port=com,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00051}00051             baudrate=baud,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00052}00052             timeout=timeout,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00053}00053             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00054}00054             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00055}00055             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00056}00056         )}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00057}00057         \textcolor{comment}{\# Start a logger.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00058}00058         response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}sn?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00059}00059         \_logger.info(\textcolor{stringliteral}{"{}Cobolt laser serial number: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00060}00060         \textcolor{comment}{\# We need to ensure that autostart is disabled so that we can switch emission}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00061}00061         \textcolor{comment}{\# on/off remotely.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00062}00062         response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}@cobas 0"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00063}00063         \_logger.info(\textcolor{stringliteral}{"{}Response to @cobas 0 [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00065}00065         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad82c6a6312dcc37438a35541c9d33f48}{\_max\_power\_mw}} = float(self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}gmlp?"{}}))}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00066}00066 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00067}00067         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}{initialize}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a12000ac844b3a356ec150e76af96668f}{initialize}}()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00068}00068 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00069}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{00069}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(self, command):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00070}00070         \textcolor{stringliteral}{"{}"{}"{}Send command and retrieve response."{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00071}00071         success = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00072}00072         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} success:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00073}00073             self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a8e3761fe687e216f753641d3bf57400a}{\_write}}(command)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00074}00074             response = self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a205a23113fc38758669bcd395f2e04e0}{\_readline}}()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00075}00075             \textcolor{comment}{\# Catch zero-\/length responses to queries and retry.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00076}00076             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} command.endswith(b\textcolor{stringliteral}{"{}?"{}}):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00077}00077                 success = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00078}00078             \textcolor{keywordflow}{elif} len(response) > 0:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00079}00079                 success = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00080}00080         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00081}00081 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00082}00082     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00083}00083     \textcolor{keyword}{def }clearFault(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00084}00084         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}cf"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00085}00085         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{get\_status}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}{get\_status}}()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00086}00086 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00087}00087     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00088}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}{00088}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}{get\_status}}(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00089}00089         result = []}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00090}00090         \textcolor{keywordflow}{for} cmd, stat \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00091}00091             (b\textcolor{stringliteral}{"{}l?"{}}, \textcolor{stringliteral}{"{}Emission on?"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00092}00092             (b\textcolor{stringliteral}{"{}p?"{}}, \textcolor{stringliteral}{"{}Target power:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00093}00093             (b\textcolor{stringliteral}{"{}pa?"{}}, \textcolor{stringliteral}{"{}Measured power:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00094}00094             (b\textcolor{stringliteral}{"{}f?"{}}, \textcolor{stringliteral}{"{}Fault?"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00095}00095             (b\textcolor{stringliteral}{"{}hrs?"{}}, \textcolor{stringliteral}{"{}Head operating hours:"{}}),}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00096}00096         ]:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00097}00097             response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(cmd)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00098}00098             result.append(stat + \textcolor{stringliteral}{"{} "{}} + response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00099}00099         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00100}00100 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00101}00101     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00102}00102     \textcolor{keyword}{def }\_do\_shutdown(self) -\/> None:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00103}00103         \textcolor{comment}{\# Disable laser.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00104}00104         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_add8e7f466e7a28137d6e0ceede74e15e}{disable}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ab9154c84c3ebd43632c250df6b8c7f8a}{disable}}()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00105}00105         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}@cob0"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00106}00106         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a47b70f03303cca0bca8bbdd73d94bc4e}{connection}}.flushInput()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00107}00107 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00108}00108     \textcolor{comment}{\#  Initialization to do when cockpit connects.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00109}00109     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00110}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a12000ac844b3a356ec150e76af96668f}{00110}}     \textcolor{keyword}{def }initialize(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00111}00111         self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}{connection}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a47b70f03303cca0bca8bbdd73d94bc4e}{connection}}.flushInput()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00112}00112         \textcolor{comment}{\# We don't want 'direct control' mode.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00113}00113         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}@cobasdr 0"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00114}00114         \textcolor{comment}{\# Force laser into autostart mode.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00115}00115         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}@cob1"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00116}00116 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00117}00117     \textcolor{comment}{\# Turn the laser ON. Return True if we succeeded, False otherwise.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00118}00118     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00119}00119     \textcolor{keyword}{def }\_do\_enable(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00120}00120         \_logger.info(\textcolor{stringliteral}{"{}Turning laser ON."{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00121}00121         \textcolor{comment}{\# Turn on emission.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00122}00122         response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}l1"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00123}00123         \_logger.info(\textcolor{stringliteral}{"{}l1: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00124}00124 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00125}00125         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{get\_is\_on}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}{get\_is\_on}}():}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00126}00126             \textcolor{comment}{\# Something went wrong.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00127}00127             \_logger.error(\textcolor{stringliteral}{"{}Failed to turn on. Current status:\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00128}00128             \_logger.error(self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89d3b36b76fa78d2617794df95502b2}{get\_status}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}{get\_status}}())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00129}00129             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00130}00130         \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00131}00131 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00132}00132     \textcolor{comment}{\# Turn the laser OFF.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00133}00133     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00134}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ab9154c84c3ebd43632c250df6b8c7f8a}{00134}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ab9154c84c3ebd43632c250df6b8c7f8a}{disable}}(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00135}00135         \_logger.info(\textcolor{stringliteral}{"{}Turning laser OFF."{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00136}00136         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}l0"{}}).decode()}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00137}00137 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00138}00138     \textcolor{comment}{\# Return True if the laser is currently able to produce light.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00139}00139     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00140}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}{00140}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}{get\_is\_on}}(self):}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00141}00141         response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}l?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00142}00142         \textcolor{keywordflow}{return} response == b\textcolor{stringliteral}{"{}1"{}}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00143}00143 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00144}00144     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00145}00145     \textcolor{keyword}{def }\_get\_power\_mw(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00146}00146         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368b7bf7f4d13f9176d467fcb0dbf6f3}{get\_is\_on}}\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}{get\_is\_on}}():}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00147}00147             \textcolor{keywordflow}{return} 0.0}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00148}00148         success = \textcolor{keyword}{False}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00149}00149         \textcolor{comment}{\# Sometimes the controller returns b'1' rather than the power.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00150}00150         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} success:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00151}00151             response = self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}pa?"{}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00152}00152             \textcolor{keywordflow}{if} response != b\textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00153}00153                 success = \textcolor{keyword}{True}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00154}00154         \textcolor{keywordflow}{return} 1000 * float(response)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00155}00155 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00156}00156     \textcolor{preprocessor}{@microscope.abc.SerialDeviceMixin.lock\_comms}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00157}00157     \textcolor{keyword}{def }\_set\_power\_mw(self, mW: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00158}00158         \textcolor{comment}{\# There is no minimum power in cobolt lasers.  Any}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00159}00159         \textcolor{comment}{\# non-\/negative number is accepted.}}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00160}00160         W\_str = \textcolor{stringliteral}{"{}\%.4f"{}} \% (mW / 1000.0)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00161}00161         \_logger.info(\textcolor{stringliteral}{"{}Setting laser power to \%s W."{}}, W\_str)}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00162}00162         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}{send}}(b\textcolor{stringliteral}{"{}@cobasp "{}} + W\_str.encode())}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00163}00163 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00164}00164     \textcolor{keyword}{def }\_do\_set\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00165}00165         self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_af0609eb0ceeffe7c03438d41d144b0c7}{\_set\_power\_mw}}(power * self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad82c6a6312dcc37438a35541c9d33f48}{\_max\_power\_mw}})}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00166}00166 }
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00167}00167     \textcolor{keyword}{def }\_do\_get\_power(self) -\/> float:}
+\DoxyCodeLine{\Hypertarget{lights_2cobolt_8py_source_l00168}00168         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac0ea24e9154e63887e5850c13fec6057}{\_get\_power\_mw}}() / self.\mbox{\hyperlink{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad82c6a6312dcc37438a35541c9d33f48}{\_max\_power\_mw}}}
+
+\end{DoxyCode}

@@ -1,0 +1,95 @@
+\hypertarget{test__client_8py_source}{}\doxysection{test\+\_\+client.\+py}
+\label{test__client_8py_source}\index{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/test\_client.py@{F:/repos/BioImager/BioImager/PythonMicroscope/microscope/testsuite/test\_client.py}}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00001}00001 \textcolor{comment}{\#!/usr/bin/env python3}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00002}00002 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00003}00003 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00019}00019 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00020}00020 \textcolor{keyword}{import} threading}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00021}00021 \textcolor{keyword}{import} unittest}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00022}00022 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00023}00023 \textcolor{keyword}{import} Pyro4}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00024}00024 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00025}00025 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1clients}{microscope.clients}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00026}00026 \textcolor{keyword}{import} \mbox{\hyperlink{namespacemicroscope_1_1testsuite_1_1devices}{microscope.testsuite.devices}} \textcolor{keyword}{as} dummies}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00027}00027 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00028}00028 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00029}00029 \textcolor{preprocessor}{@Pyro4.expose}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00030}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service}{00030}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service}{PyroService}}:}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00031}00031     \textcolor{stringliteral}{"{}"{}"{}Simple class to test serving via Pyro.}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00032}00032 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00033}00033 \textcolor{stringliteral}{    We can use one of our own test devices but the idea }\textcolor{keywordflow}{is} to have}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00034}00034     this tests independent \textcolor{keyword}{from} the devices.  We should be able to}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00035}00035     test the Client \textcolor{keyword}{with} any Python object \textcolor{keywordflow}{and} weird cases, even \textcolor{keywordflow}{if} we}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00036}00036     don\textcolor{stringliteral}{'t yet make use of them in the devices.}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00037}00037 \textcolor{stringliteral}{    "{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00038}00038 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00039}00039 \textcolor{stringliteral}{    }\textcolor{keyword}{def }\_\_init\_\_(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00040}00040         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service_a9c12e090ba56d19f6609110f6df8e87b}{\_value}} = 42  \textcolor{comment}{\# not exposed}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00041}00041 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00042}00042     \textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00043}00043     \textcolor{keyword}{def }attr(self):  \textcolor{comment}{\# exposed as 'proxy.attr' remote attribute}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00044}00044         \textcolor{keywordflow}{return} self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service_a9c12e090ba56d19f6609110f6df8e87b}{\_value}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00045}00045 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00046}00046     \textcolor{preprocessor}{@attr.setter}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00047}00047     \textcolor{keyword}{def }attr(self, value):  \textcolor{comment}{\# exposed as 'proxy.attr' writable}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00048}00048         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service_a9c12e090ba56d19f6609110f6df8e87b}{\_value}} = value}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00049}00049 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00050}00050 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00051}00051 \textcolor{preprocessor}{@Pyro4.expose}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00052}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror}{00052}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror}{ExposedDeformableMirror}}(dummies.TestDeformableMirror):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00053}00053     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00054}00054 \textcolor{stringliteral}{    Microscope device server }\textcolor{keywordflow}{is} configure to \textcolor{keywordflow}{not} require \textcolor{preprocessor}{@expose} but}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00055}00055     this \textcolor{keywordflow}{is} to test our client \textcolor{keyword}{with} Pyro4\textcolor{stringliteral}{'s own Daemon.  We need to}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00056}00056 \textcolor{stringliteral}{    subclass }\textcolor{keywordflow}{and} have the passthrough because the property comes \textcolor{keyword}{from}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00057}00057     the Abstract Base \textcolor{keyword}{class}, \textcolor{keywordflow}{not} the TestDeformableMirror \textcolor{keyword}{class}.}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00058}00058     \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00059}00059 \textcolor{stringliteral}{}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00060}00060 \textcolor{stringliteral}{    }\textcolor{preprocessor}{@property}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00061}00061     \textcolor{keyword}{def }n\_actuators(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00062}00062         \textcolor{keywordflow}{return} super().n\_actuators}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00063}00063 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00064}00064 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00065}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client}{00065}} \textcolor{keyword}{class }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client}{TestClient}}(unittest.TestCase):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00066}00066     \textcolor{keyword}{def }setUp(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00067}00067         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_ac09adef32136d1209508c295272b7d09}{daemon}} = Pyro4.Daemon()}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00068}00068         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_a464dd59f438d0c344fb84067b00cfb7c}{thread}} = threading.Thread(target=self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_ac09adef32136d1209508c295272b7d09}{daemon}}.requestLoop)}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00069}00069 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00070}00070     \textcolor{keyword}{def }tearDown(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00071}00071         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_ac09adef32136d1209508c295272b7d09}{daemon}}.shutdown()}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00072}00072         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_a464dd59f438d0c344fb84067b00cfb7c}{thread}}.join()}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00073}00073 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00074}00074     \textcolor{keyword}{def }\_serve\_objs(self, objs):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00075}00075         uris = [self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_ac09adef32136d1209508c295272b7d09}{daemon}}.register(obj) \textcolor{keywordflow}{for} obj \textcolor{keywordflow}{in} objs]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00076}00076         self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_a464dd59f438d0c344fb84067b00cfb7c}{thread}}.start()}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00077}00077         clients = [\mbox{\hyperlink{classmicroscope_1_1clients_1_1_client}{microscope.clients.Client}}(uri) \textcolor{keywordflow}{for} uri \textcolor{keywordflow}{in} uris]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00078}00078         \textcolor{keywordflow}{return} clients}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00079}00079 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00080}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_afad2c9c1db6e72458f9766cfa9df3114}{00080}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_afad2c9c1db6e72458f9766cfa9df3114}{test\_property\_access}}(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00081}00081         \textcolor{stringliteral}{"{}"{}"{}Test we can read properties via the Client"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00082}00082         \textcolor{comment}{\# list of (object-\/to-\/serve, property-\/name-\/to-\/test)}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00083}00083         objs2prop = [}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00084}00084             (\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service}{PyroService}}(), \textcolor{stringliteral}{"{}attr"{}}),}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00085}00085             (\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror}{ExposedDeformableMirror}}(10), \textcolor{stringliteral}{"{}n\_actuators"{}}),}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00086}00086         ]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00087}00087         clients = self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_a1d91239cd096fa92c5b9f5aed3cf38e9}{\_serve\_objs}}([x[0] \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} objs2prop])}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00088}00088         \textcolor{keywordflow}{for} client, obj\_prop \textcolor{keywordflow}{in} zip(clients, objs2prop):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00089}00089             obj = obj\_prop[0]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00090}00090             name = obj\_prop[1]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00091}00091             self.assertTrue(getattr(client, name), getattr(obj, name))}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00092}00092 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00093}\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_af09f2273f94cee05482f7eeadb3d2330}{00093}}     \textcolor{keyword}{def }\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_af09f2273f94cee05482f7eeadb3d2330}{test\_property\_writing}}(self):}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00094}00094         \textcolor{stringliteral}{"{}"{}"{}Test we can write properties via the Client"{}"{}"{}}}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00095}00095         obj = \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service}{PyroService}}()}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00096}00096         client = (self.\mbox{\hyperlink{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_a1d91239cd096fa92c5b9f5aed3cf38e9}{\_serve\_objs}}([obj]))[0]}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00097}00097         self.assertTrue(client.attr, 42)}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00098}00098         client.attr = 10}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00099}00099         self.assertTrue(client.attr, 10)}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00100}00100         self.assertTrue(obj.attr, 10)}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00101}00101 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00102}00102 }
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00103}00103 \textcolor{keywordflow}{if} \_\_name\_\_ == \textcolor{stringliteral}{"{}\_\_main\_\_"{}}:}
+\DoxyCodeLine{\Hypertarget{test__client_8py_source_l00104}00104     unittest.main()}
+
+\end{DoxyCode}
