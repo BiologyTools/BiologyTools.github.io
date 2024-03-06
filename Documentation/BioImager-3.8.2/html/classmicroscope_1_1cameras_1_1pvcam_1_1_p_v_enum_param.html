@@ -210,6 +210,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html#a9b7df8a9395306bdd8ca430f9d4a775f">microscope.cameras.pvcam.PVParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01365">1365</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1365</span>    <span class="keyword">def </span>current(self):</div>
+<div class="line"><span class="lineno"> 1366</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current (or cached) enum parameter value.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1367</span>        <span class="comment"># c_void_p(0) is None, so replace with 0</span></div>
+<div class="line"><span class="lineno"> 1368</span>        <span class="keywordflow">return</span> int(self._query() <span class="keywordflow">or</span> 0)</div>
+<div class="line"><span class="lineno"> 1369</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01252">microscope.cameras.pvcam.PVParam._query()</a>.</p>
 
 </div>
 </div>
@@ -242,6 +249,33 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html#a74b4ec460741f7ecc65ab365a733b8e0">microscope.cameras.pvcam.PVParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01341">1341</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1341</span>    <span class="keyword">def </span>set_value(self, new_value):</div>
+<div class="line"><span class="lineno"> 1342</span>        <span class="stringliteral">&quot;&quot;&quot;Set an enum parameter value.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1343</span>        <span class="comment"># We may be passed a value, a description string, or a tuple of</span></div>
+<div class="line"><span class="lineno"> 1344</span>        <span class="comment"># (value, string).</span></div>
+<div class="line"><span class="lineno"> 1345</span>        values, descriptions = list(zip(*self.values.items()))</div>
+<div class="line"><span class="lineno"> 1346</span>        <span class="keywordflow">if</span> hasattr(new_value, <span class="stringliteral">&quot;__iter__&quot;</span>):</div>
+<div class="line"><span class="lineno"> 1347</span>            desc = str(new_value[1])</div>
+<div class="line"><span class="lineno"> 1348</span>        <span class="keywordflow">elif</span> isinstance(new_value, str):</div>
+<div class="line"><span class="lineno"> 1349</span>            desc = str(new_value)</div>
+<div class="line"><span class="lineno"> 1350</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1351</span>            desc = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1352</span>        <span class="comment"># If we have a description, rely on that, as this avoids any confusion</span></div>
+<div class="line"><span class="lineno"> 1353</span>        <span class="comment"># of index and value.</span></div>
+<div class="line"><span class="lineno"> 1354</span>        <span class="keywordflow">if</span> desc <span class="keywordflow">and</span> desc <span class="keywordflow">in</span> descriptions:</div>
+<div class="line"><span class="lineno"> 1355</span>            new_index = descriptions.index(desc)</div>
+<div class="line"><span class="lineno"> 1356</span>            new_value = values[new_index]</div>
+<div class="line"><span class="lineno"> 1357</span>        <span class="keywordflow">elif</span> desc:</div>
+<div class="line"><span class="lineno"> 1358</span>            <span class="keywordflow">raise</span> Exception(</div>
+<div class="line"><span class="lineno"> 1359</span>                <span class="stringliteral">&quot;Could not find description &#39;%s&#39; for enum %s.&quot;</span></div>
+<div class="line"><span class="lineno"> 1360</span>                % (desc, self.name)</div>
+<div class="line"><span class="lineno"> 1361</span>            )</div>
+<div class="line"><span class="lineno"> 1362</span>        super().set_value(new_value)</div>
+<div class="line"><span class="lineno"> 1363</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00108">microscope.abc._Setting.name</a>, <a class="el" href="___s_d_k3_8py_source.html#l00176">microscope.cameras._SDK3.dllFunction.name</a>, <a class="el" href="atmcd_8py_source.html#l00639">microscope.cameras.atmcd.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l00745">microscope.cameras.pvcam.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l01228">microscope.cameras.pvcam.PVParam.name</a>, <a class="el" href="_automation_8cs_source.html#l00023">BioImager.Automation.Action.name</a>, <a class="el" href="_automation_8cs_source.html#l00286">BioImager.Automation.Recording.name</a>, <a class="el" href="_bio_8cs_source.html#l01102">BioImager.Filt.name</a>, <a class="el" href="_function_form_8cs_source.html#l00508">BioImager.Function.name</a>, <a class="el" href="_image_j_8cs_source.html#l00364">BioImager.ImageJ.RoiDecoder.name</a>, <a class="el" href="_microscope_8cs_source.html#l00661">BioImager.LightSource.name</a>, <a class="el" href="_plot_8cs_source.html#l00018">BioImager.Plot.name</a>, <a class="el" href="_scripting_8cs_source.html#l00018">BioImager.Scripting.Script.name</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="abc_8py_source.html#l00173">microscope.abc._Setting.values()</a>, <a class="el" href="pvcam_8py_source.html#l01324">microscope.cameras.pvcam.PVParam.values()</a>, <a class="el" href="pvcam_8py_source.html#l01371">microscope.cameras.pvcam.PVEnumParam.values()</a>, and <a class="el" href="pvcam_8py_source.html#l01398">microscope.cameras.pvcam.PVStringParam.values()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01338">microscope.stages.linkam._LinkamMDSMixin.move_to()</a>, <a class="el" href="linkam_8py_source.html#l01516">microscope.stages.linkam.LinkamCMS.refill_chamber()</a>, <a class="el" href="linkam_8py_source.html#l01512">microscope.stages.linkam.LinkamCMS.refill_dewar()</a>, <a class="el" href="linkam_8py_source.html#l01475">microscope.stages.linkam.LinkamCMS.set_condensor()</a>, <a class="el" href="linkam_8py_source.html#l01467">microscope.stages.linkam.LinkamCMS.set_light()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -264,6 +298,22 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html#aeb9ce561b3d89852f547ac3ac2ca7986">microscope.cameras.pvcam.PVParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01371">1371</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1371</span>    <span class="keyword">def </span>values(self):</div>
+<div class="line"><span class="lineno"> 1372</span>        <span class="stringliteral">&quot;&quot;&quot;Get allowable enum values&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1373</span>        values = {}</div>
+<div class="line"><span class="lineno"> 1374</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(self.count):</div>
+<div class="line"><span class="lineno"> 1375</span>            length = _enum_str_length(self.cam.handle, self.param_id, i)</div>
+<div class="line"><span class="lineno"> 1376</span>            value, desc = _get_enum_param(</div>
+<div class="line"><span class="lineno"> 1377</span>                self.cam.handle, self.param_id, i, length</div>
+<div class="line"><span class="lineno"> 1378</span>            )</div>
+<div class="line"><span class="lineno"> 1379</span>            values[value.value] = desc.value.decode()</div>
+<div class="line"><span class="lineno"> 1380</span>        <span class="keywordflow">return</span> values</div>
+<div class="line"><span class="lineno"> 1381</span> </div>
+<div class="line"><span class="lineno"> 1382</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, <a class="el" href="pvcam_8py_source.html#l01317">microscope.cameras.pvcam.PVParam.count()</a>, <a class="el" href="device__server_8py_source.html#l00155">microscope.device_server.Filter.count</a>, <a class="el" href="_bio_8cs_source.html#l02266">BioImager.BioImage.ImageJDesc.count</a>, <a class="el" href="_slide_imager_8cs_source.html#l00309">BioImager.SlideImager.count</a>, and <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>

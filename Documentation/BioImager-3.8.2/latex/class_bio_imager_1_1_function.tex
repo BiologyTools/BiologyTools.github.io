@@ -75,6 +75,14 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00397}{397}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00431}{431}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00432         \{}
+\DoxyCodeLine{00433             Pressed,}
+\DoxyCodeLine{00434             Released}
+\DoxyCodeLine{00435         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a32edf51b4d2b15e5c9b4f308a35c6402}\label{class_bio_imager_1_1_function_a32edf51b4d2b15e5c9b4f308a35c6402}} 
 \index{BioImager.Function@{BioImager.Function}!FunctionType@{FunctionType}}
 \index{FunctionType@{FunctionType}!BioImager.Function@{BioImager.Function}}
@@ -85,6 +93,38 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00431}{431}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00401}{401}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00402         \{}
+\DoxyCodeLine{00403             Key,}
+\DoxyCodeLine{00404             StageUp,}
+\DoxyCodeLine{00405             StageRight,}
+\DoxyCodeLine{00406             StageDown,}
+\DoxyCodeLine{00407             StageLeft,}
+\DoxyCodeLine{00408             FocusUp,}
+\DoxyCodeLine{00409             FocusDown,}
+\DoxyCodeLine{00410             StageFieldUp,}
+\DoxyCodeLine{00411             StageFieldRight,}
+\DoxyCodeLine{00412             StageFieldDown,}
+\DoxyCodeLine{00413             StageFieldLeft,}
+\DoxyCodeLine{00414             TakeImage,}
+\DoxyCodeLine{00415             TakeImageStack,}
+\DoxyCodeLine{00416             RL,}
+\DoxyCodeLine{00417             TL,}
+\DoxyCodeLine{00418             Objective,}
+\DoxyCodeLine{00419             StoreCoordinate,}
+\DoxyCodeLine{00420             NextCoordinate,}
+\DoxyCodeLine{00421             PreviousCoordinate,}
+\DoxyCodeLine{00422             NextSnapCoordinate,}
+\DoxyCodeLine{00423             PreviousSnapCoordinate,}
+\DoxyCodeLine{00424             Recording,}
+\DoxyCodeLine{00425             Property,}
+\DoxyCodeLine{00426             ImageJ,}
+\DoxyCodeLine{00427             Script,}
+\DoxyCodeLine{00428             None}
+\DoxyCodeLine{00429         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -98,6 +138,29 @@ It reads all the files in the Functions folder, parses them into \mbox{\hyperlin
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00718}{718}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00719         \{}
+\DoxyCodeLine{00720             \textcolor{keywordtype}{string} st = Application.StartupPath + \textcolor{stringliteral}{"{}/Functions"{}};}
+\DoxyCodeLine{00721             \textcolor{keywordflow}{if} (!Directory.Exists(st))}
+\DoxyCodeLine{00722                 Directory.CreateDirectory(st);}
+\DoxyCodeLine{00723             \textcolor{keywordtype}{string}[] sts = Directory.GetFiles(st);}
+\DoxyCodeLine{00724             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < sts.Length; i++)}
+\DoxyCodeLine{00725             \{}
+\DoxyCodeLine{00726                 \textcolor{keywordtype}{string} fs = System.IO.File.ReadAllText(sts[i]);}
+\DoxyCodeLine{00727                 Function f = Function.Parse(fs);}
+\DoxyCodeLine{00728                 \textcolor{keywordflow}{if}(!Functions.ContainsKey(f.Name))}
+\DoxyCodeLine{00729                 Functions.Add(f.Name, f);}
+\DoxyCodeLine{00730                 App.AddMenu(f.MenuPath, f);}
+\DoxyCodeLine{00731                 App.AddContextMenu(f.ContextPath, f);}
+\DoxyCodeLine{00732             \}}
+\DoxyCodeLine{00733         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_app_8cs_source_l00375}{Bio\+Imager.\+App.\+Add\+Context\+Menu()}}, and \mbox{\hyperlink{_app_8cs_source_l00367}{Bio\+Imager.\+App.\+Add\+Menu()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a0bf203ca3029c8ea73a7d939a25d5045}\label{class_bio_imager_1_1_function_a0bf203ca3029c8ea73a7d939a25d5045}} 
 \index{BioImager.Function@{BioImager.Function}!Parse@{Parse}}
 \index{Parse@{Parse}!BioImager.Function@{BioImager.Function}}
@@ -108,6 +171,22 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00718}{718}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00561}{561}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00562         \{}
+\DoxyCodeLine{00563             \textcolor{keywordflow}{if} (s == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00564                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} Function();}
+\DoxyCodeLine{00565             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00566             \{}
+\DoxyCodeLine{00567                 \textcolor{keywordflow}{return} JsonConvert.DeserializeObject<Function>(s);}
+\DoxyCodeLine{00568             \}}
+\DoxyCodeLine{00569             \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00570             \{}
+\DoxyCodeLine{00571                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} Function();}
+\DoxyCodeLine{00572             \}}
+\DoxyCodeLine{00573         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a1e36f4c80af293cc36551615fb690f73}\label{class_bio_imager_1_1_function_a1e36f4c80af293cc36551615fb690f73}} 
 \index{BioImager.Function@{BioImager.Function}!PerformFunction@{PerformFunction}}
 \index{PerformFunction@{PerformFunction}!BioImager.Function@{BioImager.Function}}
@@ -128,6 +207,143 @@ The return value is the object that is being returned.
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00586}{586}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00587         \{}
+\DoxyCodeLine{00588             \textcolor{keywordflow}{if}(FuncType == FunctionType.Key \&\& Script!=\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00589             \textcolor{keywordflow}{if}(imagej)}
+\DoxyCodeLine{00590             \{}
+\DoxyCodeLine{00591                 FuncType = FunctionType.ImageJ;}
+\DoxyCodeLine{00592             \}}
+\DoxyCodeLine{00593             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00594                 FuncType = FunctionType.Script;}
+\DoxyCodeLine{00595             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.Script)}
+\DoxyCodeLine{00596             \{}
+\DoxyCodeLine{00597                 Scripting.RunString(script);}
+\DoxyCodeLine{00598             \}}
+\DoxyCodeLine{00599             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.ImageJ)}
+\DoxyCodeLine{00600             \{}
+\DoxyCodeLine{00601                 ImageJ.RunOnImage(script, \textcolor{keyword}{false}, BioConsole.onTab, BioConsole.useBioformats, BioConsole.newTab);}
+\DoxyCodeLine{00602             \}}
+\DoxyCodeLine{00603             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.Property)}
+\DoxyCodeLine{00604             \{}
+\DoxyCodeLine{00605                 \textcolor{keywordflow}{if} (Name.StartsWith(\textcolor{stringliteral}{"{}Get"{}}))}
+\DoxyCodeLine{00606                 \{}
+\DoxyCodeLine{00607                     Automation.Recording r = (Automation.Recording)Automation.Properties[System.IO.Path.GetFileNameWithoutExtension(File)];}
+\DoxyCodeLine{00608                     \textcolor{keywordflow}{return} r.Get();}
+\DoxyCodeLine{00609                 \}}
+\DoxyCodeLine{00610                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Name.StartsWith(\textcolor{stringliteral}{"{}Set"{}}))}
+\DoxyCodeLine{00611                 \{}
+\DoxyCodeLine{00612                     Automation.Recording r = (Automation.Recording)Automation.Properties[System.IO.Path.GetFileNameWithoutExtension(File)];}
+\DoxyCodeLine{00613                     r.Set(Value.ToString());}
+\DoxyCodeLine{00614                 \}}
+\DoxyCodeLine{00615 }
+\DoxyCodeLine{00616             \}}
+\DoxyCodeLine{00617             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.Key)}
+\DoxyCodeLine{00618             \{}
+\DoxyCodeLine{00619                 \textcolor{keywordflow}{if} (Modifier != VirtualKeyCode.NONAME)}
+\DoxyCodeLine{00620                 \{}
+\DoxyCodeLine{00621                     input.Keyboard.ModifiedKeyStroke(Modifier, Key);}
+\DoxyCodeLine{00622                 \}}
+\DoxyCodeLine{00623                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00624                 \{}
+\DoxyCodeLine{00625                     input.Keyboard.KeyPress(Key);}
+\DoxyCodeLine{00626                 \}}
+\DoxyCodeLine{00627                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00628             \}}
+\DoxyCodeLine{00629             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.Recording)}
+\DoxyCodeLine{00630             \{}
+\DoxyCodeLine{00631                 Automation.Recording r = (Automation.Recording)Automation.Recordings[System.IO.Path.GetFileNameWithoutExtension(File)];}
+\DoxyCodeLine{00632                 r.Run();}
+\DoxyCodeLine{00633             \}}
+\DoxyCodeLine{00634             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.Objective)}
+\DoxyCodeLine{00635             \{}
+\DoxyCodeLine{00636                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00637             \}}
+\DoxyCodeLine{00638             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StoreCoordinate)}
+\DoxyCodeLine{00639             \{}
+\DoxyCodeLine{00640                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00641             \}}
+\DoxyCodeLine{00642             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.NextCoordinate)}
+\DoxyCodeLine{00643             \{}
+\DoxyCodeLine{00644                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00645             \}}
+\DoxyCodeLine{00646             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.PreviousCoordinate)}
+\DoxyCodeLine{00647             \{}
+\DoxyCodeLine{00648                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00649             \}}
+\DoxyCodeLine{00650             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.NextSnapCoordinate)}
+\DoxyCodeLine{00651             \{}
+\DoxyCodeLine{00652                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00653             \}}
+\DoxyCodeLine{00654             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.PreviousSnapCoordinate)}
+\DoxyCodeLine{00655             \{}
+\DoxyCodeLine{00656                 App.imager.PerformFunction(\textcolor{keyword}{this});}
+\DoxyCodeLine{00657             \}}
+\DoxyCodeLine{00658             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageUp)}
+\DoxyCodeLine{00659             \{}
+\DoxyCodeLine{00660                 Microscope.MoveUp(Value);}
+\DoxyCodeLine{00661             \}}
+\DoxyCodeLine{00662             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageRight)}
+\DoxyCodeLine{00663             \{}
+\DoxyCodeLine{00664                 Microscope.MoveRight(Value);}
+\DoxyCodeLine{00665             \}}
+\DoxyCodeLine{00666             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageDown)}
+\DoxyCodeLine{00667             \{}
+\DoxyCodeLine{00668                 Microscope.MoveDown(Value);}
+\DoxyCodeLine{00669             \}}
+\DoxyCodeLine{00670             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageLeft)}
+\DoxyCodeLine{00671             \{}
+\DoxyCodeLine{00672                 Microscope.MoveLeft(Value);}
+\DoxyCodeLine{00673             \}}
+\DoxyCodeLine{00674             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.FocusUp)}
+\DoxyCodeLine{00675             \{}
+\DoxyCodeLine{00676                 Microscope.SetFocus(Value);}
+\DoxyCodeLine{00677             \}}
+\DoxyCodeLine{00678             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.FocusDown)}
+\DoxyCodeLine{00679             \{}
+\DoxyCodeLine{00680                 Microscope.SetFocus(-\/Value);}
+\DoxyCodeLine{00681             \}}
+\DoxyCodeLine{00682             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageFieldUp)}
+\DoxyCodeLine{00683             \{}
+\DoxyCodeLine{00684                 Microscope.MoveFieldUp();}
+\DoxyCodeLine{00685             \}}
+\DoxyCodeLine{00686             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageFieldRight)}
+\DoxyCodeLine{00687             \{}
+\DoxyCodeLine{00688                 Microscope.MoveFieldRight();}
+\DoxyCodeLine{00689             \}}
+\DoxyCodeLine{00690             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageFieldDown)}
+\DoxyCodeLine{00691             \{}
+\DoxyCodeLine{00692                 Microscope.MoveFieldDown();}
+\DoxyCodeLine{00693             \}}
+\DoxyCodeLine{00694             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.StageFieldLeft)}
+\DoxyCodeLine{00695             \{}
+\DoxyCodeLine{00696                 Microscope.MoveFieldLeft();}
+\DoxyCodeLine{00697             \}}
+\DoxyCodeLine{00698             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.TakeImage)}
+\DoxyCodeLine{00699             \{}
+\DoxyCodeLine{00700                 Microscope.TakeImage();}
+\DoxyCodeLine{00701             \}}
+\DoxyCodeLine{00702             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.TakeImageStack)}
+\DoxyCodeLine{00703             \{}
+\DoxyCodeLine{00704                 Microscope.TakeImageStack();}
+\DoxyCodeLine{00705             \}}
+\DoxyCodeLine{00706             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.RL)}
+\DoxyCodeLine{00707             \{}
+\DoxyCodeLine{00708                 Microscope.RLShutter.SetPosition((\textcolor{keywordtype}{int})Value);}
+\DoxyCodeLine{00709             \}}
+\DoxyCodeLine{00710             \textcolor{keywordflow}{if} (FuncType == Function.FunctionType.TL)}
+\DoxyCodeLine{00711             \{}
+\DoxyCodeLine{00712                 Microscope.TLShutter.SetPosition((\textcolor{keywordtype}{int})Value);}
+\DoxyCodeLine{00713             \}}
+\DoxyCodeLine{00714             \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00715         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_imager_8cs_source_l01338}{Bio\+Imager.\+Imager.\+Perform\+Function()}}, \mbox{\hyperlink{_image_j_8cs_source_l00189}{Bio\+Imager.\+Image\+J.\+Run\+On\+Image()}}, and \mbox{\hyperlink{_scripting_8cs_source_l00396}{Bio\+Imager.\+Scripting.\+Run\+String()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_function_ad83595e357e126e6adfe93917e75aca9}\label{class_bio_imager_1_1_function_ad83595e357e126e6adfe93917e75aca9}} 
 \index{BioImager.Function@{BioImager.Function}!Save@{Save}}
 \index{Save@{Save}!BioImager.Function@{BioImager.Function}}
@@ -142,6 +358,22 @@ It saves all the functions in the Functions dictionary to a file.
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00735}{735}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00736         \{}
+\DoxyCodeLine{00737             \textcolor{keywordtype}{string} st = Application.StartupPath;}
+\DoxyCodeLine{00738             }
+\DoxyCodeLine{00739             \textcolor{keywordflow}{if}(!Directory.Exists(st + \textcolor{stringliteral}{"{}/Functions"{}}))}
+\DoxyCodeLine{00740             \{}
+\DoxyCodeLine{00741                 Directory.CreateDirectory(st + \textcolor{stringliteral}{"{}/Functions"{}});}
+\DoxyCodeLine{00742             \}}
+\DoxyCodeLine{00743             \textcolor{keywordflow}{foreach} (Function f \textcolor{keywordflow}{in} Functions.Values)}
+\DoxyCodeLine{00744             \{}
+\DoxyCodeLine{00745                 System.IO.File.WriteAllText(st + \textcolor{stringliteral}{"{}/Functions/"{}} + f.Name + \textcolor{stringliteral}{"{}.func"{}},f.Serialize());}
+\DoxyCodeLine{00746             \}}
+\DoxyCodeLine{00747         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a59929b0d575c0e15df1a45efb8c66c0d}\label{class_bio_imager_1_1_function_a59929b0d575c0e15df1a45efb8c66c0d}} 
 \index{BioImager.Function@{BioImager.Function}!Serialize@{Serialize}}
 \index{Serialize@{Serialize}!BioImager.Function@{BioImager.Function}}
@@ -152,6 +384,13 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00735}{735}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00575}{575}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00576         \{}
+\DoxyCodeLine{00577             \textcolor{keywordflow}{return} JsonConvert.SerializeObject(\textcolor{keyword}{this});}
+\DoxyCodeLine{00578         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a697f707e2645848df131c260abbaedf1}\label{class_bio_imager_1_1_function_a697f707e2645848df131c260abbaedf1}} 
 \index{BioImager.Function@{BioImager.Function}!ToString@{ToString}}
 \index{ToString@{ToString}!BioImager.Function@{BioImager.Function}}
@@ -162,6 +401,13 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00575}{575}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00557}{557}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00558         \{}
+\DoxyCodeLine{00559             \textcolor{keywordflow}{return} name + \textcolor{stringliteral}{"{}, "{}} + MenuPath;}
+\DoxyCodeLine{00560         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -198,6 +444,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00580}{580}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00533}{533}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00534         \{}
+\DoxyCodeLine{00535             \textcolor{keyword}{get}}
+\DoxyCodeLine{00536             \{}
+\DoxyCodeLine{00537                 \textcolor{keywordflow}{return} menuPath;}
+\DoxyCodeLine{00538             \}}
+\DoxyCodeLine{00539             \textcolor{keyword}{set}}
+\DoxyCodeLine{00540             \{}
+\DoxyCodeLine{00541                 menuPath = value;}
+\DoxyCodeLine{00542             \}}
+\DoxyCodeLine{00543         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_ab4f609fdad43e3ae4362abe2a43dc7c1}\label{class_bio_imager_1_1_function_ab4f609fdad43e3ae4362abe2a43dc7c1}} 
 \index{BioImager.Function@{BioImager.Function}!File@{File}}
 \index{File@{File}!BioImager.Function@{BioImager.Function}}
@@ -208,6 +468,14 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00533}{533}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00492}{492}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00493         \{}
+\DoxyCodeLine{00494             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} file; \}}
+\DoxyCodeLine{00495             \textcolor{keyword}{set} \{ file = value; \}}
+\DoxyCodeLine{00496         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a6e06a16f3784704505bb6065af198e53}\label{class_bio_imager_1_1_function_a6e06a16f3784704505bb6065af198e53}} 
 \index{BioImager.Function@{BioImager.Function}!FuncType@{FuncType}}
 \index{FuncType@{FuncType}!BioImager.Function@{BioImager.Function}}
@@ -218,6 +486,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00492}{492}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00479}{479}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480         \{}
+\DoxyCodeLine{00481             \textcolor{keyword}{get}}
+\DoxyCodeLine{00482             \{}
+\DoxyCodeLine{00483                 \textcolor{keywordflow}{return} functionType;}
+\DoxyCodeLine{00484             \}}
+\DoxyCodeLine{00485             \textcolor{keyword}{set}}
+\DoxyCodeLine{00486             \{}
+\DoxyCodeLine{00487                 functionType = value;}
+\DoxyCodeLine{00488             \}}
+\DoxyCodeLine{00489         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_ac60311e12fd273f84e5f17ca60cd578d}\label{class_bio_imager_1_1_function_ac60311e12fd273f84e5f17ca60cd578d}} 
 \index{BioImager.Function@{BioImager.Function}!Key@{Key}}
 \index{Key@{Key}!BioImager.Function@{BioImager.Function}}
@@ -228,6 +510,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00479}{479}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00453}{453}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00454         \{}
+\DoxyCodeLine{00455             \textcolor{keyword}{get}}
+\DoxyCodeLine{00456             \{}
+\DoxyCodeLine{00457                 \textcolor{keywordflow}{return} key;}
+\DoxyCodeLine{00458             \}}
+\DoxyCodeLine{00459             \textcolor{keyword}{set}}
+\DoxyCodeLine{00460             \{}
+\DoxyCodeLine{00461                 key = value;}
+\DoxyCodeLine{00462             \}}
+\DoxyCodeLine{00463         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_a97a94526cff9fec54b23494143153609}\label{class_bio_imager_1_1_function_a97a94526cff9fec54b23494143153609}} 
 \index{BioImager.Function@{BioImager.Function}!MenuPath@{MenuPath}}
 \index{MenuPath@{MenuPath}!BioImager.Function@{BioImager.Function}}
@@ -238,6 +534,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00453}{453}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00521}{521}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00522         \{}
+\DoxyCodeLine{00523             \textcolor{keyword}{get}}
+\DoxyCodeLine{00524             \{}
+\DoxyCodeLine{00525                 \textcolor{keywordflow}{return} menuPath;}
+\DoxyCodeLine{00526             \}}
+\DoxyCodeLine{00527             \textcolor{keyword}{set}}
+\DoxyCodeLine{00528             \{}
+\DoxyCodeLine{00529                 menuPath = value;}
+\DoxyCodeLine{00530             \}}
+\DoxyCodeLine{00531         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_aaa97cd6facfa057115492c3ba3353176}\label{class_bio_imager_1_1_function_aaa97cd6facfa057115492c3ba3353176}} 
 \index{BioImager.Function@{BioImager.Function}!Modifier@{Modifier}}
 \index{Modifier@{Modifier}!BioImager.Function@{BioImager.Function}}
@@ -248,6 +558,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00521}{521}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00466}{466}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00467         \{}
+\DoxyCodeLine{00468             \textcolor{keyword}{get}}
+\DoxyCodeLine{00469             \{}
+\DoxyCodeLine{00470                 \textcolor{keywordflow}{return} modifier;}
+\DoxyCodeLine{00471             \}}
+\DoxyCodeLine{00472             \textcolor{keyword}{set}}
+\DoxyCodeLine{00473             \{}
+\DoxyCodeLine{00474                 modifier = value;}
+\DoxyCodeLine{00475             \}}
+\DoxyCodeLine{00476         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_aa7a278269fb959ba371d15461c0172d8}\label{class_bio_imager_1_1_function_aa7a278269fb959ba371d15461c0172d8}} 
 \index{BioImager.Function@{BioImager.Function}!Name@{Name}}
 \index{Name@{Name}!BioImager.Function@{BioImager.Function}}
@@ -258,6 +582,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00466}{466}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00509}{509}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00510         \{}
+\DoxyCodeLine{00511             \textcolor{keyword}{get}}
+\DoxyCodeLine{00512             \{}
+\DoxyCodeLine{00513                 \textcolor{keywordflow}{return} name;}
+\DoxyCodeLine{00514             \}}
+\DoxyCodeLine{00515             \textcolor{keyword}{set}}
+\DoxyCodeLine{00516             \{}
+\DoxyCodeLine{00517                 name = value;}
+\DoxyCodeLine{00518             \}}
+\DoxyCodeLine{00519         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_af7a5214105fadad09db22f005c4ba44a}\label{class_bio_imager_1_1_function_af7a5214105fadad09db22f005c4ba44a}} 
 \index{BioImager.Function@{BioImager.Function}!Script@{Script}}
 \index{Script@{Script}!BioImager.Function@{BioImager.Function}}
@@ -268,6 +606,17 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00509}{509}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00499}{499}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00500         \{}
+\DoxyCodeLine{00501             \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} script; \}}
+\DoxyCodeLine{00502             \textcolor{keyword}{set} }
+\DoxyCodeLine{00503             \{ }
+\DoxyCodeLine{00504                 script = value;}
+\DoxyCodeLine{00505             \}}
+\DoxyCodeLine{00506         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_acc711362e8c8163faaac6365c44177c0}\label{class_bio_imager_1_1_function_acc711362e8c8163faaac6365c44177c0}} 
 \index{BioImager.Function@{BioImager.Function}!State@{State}}
 \index{State@{State}!BioImager.Function@{BioImager.Function}}
@@ -278,6 +627,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00499}{499}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00439}{439}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00440         \{}
+\DoxyCodeLine{00441             \textcolor{keyword}{get}}
+\DoxyCodeLine{00442             \{}
+\DoxyCodeLine{00443                 \textcolor{keywordflow}{return} buttonState;}
+\DoxyCodeLine{00444             \}}
+\DoxyCodeLine{00445             \textcolor{keyword}{set}}
+\DoxyCodeLine{00446             \{}
+\DoxyCodeLine{00447                 buttonState = value;}
+\DoxyCodeLine{00448             \}}
+\DoxyCodeLine{00449         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_function_aa3f2738a11a6fbdaac4e5b70a91968f1}\label{class_bio_imager_1_1_function_aa3f2738a11a6fbdaac4e5b70a91968f1}} 
 \index{BioImager.Function@{BioImager.Function}!Value@{Value}}
 \index{Value@{Value}!BioImager.Function@{BioImager.Function}}
@@ -288,6 +651,20 @@ Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00439}{439}} of f
 
 Definition at line \mbox{\hyperlink{_function_form_8cs_source_l00546}{546}} of file \mbox{\hyperlink{_function_form_8cs_source}{Function\+Form.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00547         \{}
+\DoxyCodeLine{00548             \textcolor{keyword}{get}}
+\DoxyCodeLine{00549             \{}
+\DoxyCodeLine{00550                 \textcolor{keywordflow}{return} val;}
+\DoxyCodeLine{00551             \}}
+\DoxyCodeLine{00552             \textcolor{keyword}{set}}
+\DoxyCodeLine{00553             \{}
+\DoxyCodeLine{00554                 val = value;}
+\DoxyCodeLine{00555             \}}
+\DoxyCodeLine{00556         \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

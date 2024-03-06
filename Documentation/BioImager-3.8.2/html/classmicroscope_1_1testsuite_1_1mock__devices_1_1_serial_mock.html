@@ -228,7 +228,20 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00049">49</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   49</span>    <span class="keyword">def </span>__init__(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">   50</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">   51</span>        self.in_buffer = io.BytesIO()</div>
+<div class="line"><span class="lineno">   52</span>        self.out_buffer = io.BytesIO()</div>
+<div class="line"><span class="lineno">   53</span> </div>
+<div class="line"><span class="lineno">   54</span>        <span class="comment"># Number of bytes in out buffer pending &#39;interpretation&#39;.  A</span></div>
+<div class="line"><span class="lineno">   55</span>        <span class="comment"># command is only interpreted and handled when EOL is seen.</span></div>
+<div class="line"><span class="lineno">   56</span>        self.out_pending_bytes = 0</div>
+<div class="line"><span class="lineno">   57</span>        self.out_parsed_bytes = 0</div>
+<div class="line"><span class="lineno">   58</span> </div>
+<div class="line"><span class="lineno">   59</span>        <span class="comment"># Number of bytes in the input buffer that have been read</span></div>
+<div class="line"><span class="lineno">   60</span>        self.in_read_bytes = 0</div>
+<div class="line"><span class="lineno">   61</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -249,7 +262,11 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00065">65</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   65</span>    <span class="keyword">def </span>close(self):</div>
+<div class="line"><span class="lineno">   66</span>        self.in_buffer.close()</div>
+<div class="line"><span class="lineno">   67</span>        self.out_buffer.close()</div>
+<div class="line"><span class="lineno">   68</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a0c312585629a108b56e9a42632342678" name="a0c312585629a108b56e9a42632342678"></a>
@@ -279,6 +296,11 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00069">69</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>    <span class="keyword">def </span>handle(self, command):</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">raise</span> NotImplementedError(<span class="stringliteral">&quot;sub classes need to implement handle()&quot;</span>)</div>
+<div class="line"><span class="lineno">   71</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>
@@ -299,7 +321,10 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00062">62</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    <span class="keyword">def </span>open(self):</div>
+<div class="line"><span class="lineno">   63</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">   64</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1291ff3db25c2fdc90de1eca639a758f" name="a1291ff3db25c2fdc90de1eca639a758f"></a>
@@ -329,7 +354,10 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00093">93</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>read(self, size=1):</div>
+<div class="line"><span class="lineno">   94</span>        <span class="keywordflow">return</span> self._readx_wrapper(self.in_buffer.read, size)</div>
+<div class="line"><span class="lineno">   95</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a72a55c76d642c9cdc3ccba65fd28a691" name="a72a55c76d642c9cdc3ccba65fd28a691"></a>
@@ -359,6 +387,11 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00096">96</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   96</span>    <span class="keyword">def </span>readline(self, size=-1):</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">return</span> self._readx_wrapper(self.in_buffer.readline, size)</div>
+<div class="line"><span class="lineno">   98</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, and <a class="el" href="ludl_8py_source.html#l00147">microscope.stages.ludl._LudlController.readline()</a>.</p>
 
 </div>
 </div>
@@ -379,7 +412,11 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00099">99</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   99</span>    <span class="keyword">def </span>reset_input_buffer(self):</div>
+<div class="line"><span class="lineno">  100</span>        self.in_read_bytes = self.in_buffer.getbuffer().nbytes</div>
+<div class="line"><span class="lineno">  101</span>        self.in_buffer.seek(0, 2)</div>
+<div class="line"><span class="lineno">  102</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6d18fb12da1174678dfa2999b7320cb3" name="a6d18fb12da1174678dfa2999b7320cb3"></a>
@@ -399,7 +436,11 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00103">103</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  103</span>    <span class="keyword">def </span>reset_output_buffer(self):</div>
+<div class="line"><span class="lineno">  104</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab8a494b1f2cf99f30ce057b2ad99b8fc" name="ab8a494b1f2cf99f30ce057b2ad99b8fc"></a>
@@ -429,7 +470,21 @@ input buffer and changing state of the device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00072">72</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   72</span>    <span class="keyword">def </span>write(self, data):</div>
+<div class="line"><span class="lineno">   73</span>        self.out_buffer.write(data)</div>
+<div class="line"><span class="lineno">   74</span>        self.out_pending_bytes += len(data)</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span>        <span class="keywordflow">if</span> self.out_pending_bytes &gt; len(data):</div>
+<div class="line"><span class="lineno">   77</span>            <span class="comment"># we need to retrieve data from a previous write</span></div>
+<div class="line"><span class="lineno">   78</span>            self.out_buffer.seek(-self.out_pending_bytes, 2)</div>
+<div class="line"><span class="lineno">   79</span>            data = self.out_buffer.read(self.out_pending_bytes)</div>
+<div class="line"><span class="lineno">   80</span> </div>
+<div class="line"><span class="lineno">   81</span>        <span class="keywordflow">for</span> msg <span class="keywordflow">in</span> data.split(self.eol)[:-1]:</div>
+<div class="line"><span class="lineno">   82</span>            self.handle(msg)</div>
+<div class="line"><span class="lineno">   83</span>            self.out_pending_bytes -= len(msg) + len(self.eol)</div>
+<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">return</span> len(data)</div>
+<div class="line"><span class="lineno">   85</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

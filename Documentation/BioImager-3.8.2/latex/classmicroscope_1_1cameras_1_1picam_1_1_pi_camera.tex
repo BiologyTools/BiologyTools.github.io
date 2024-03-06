@@ -81,6 +81,86 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_aa83a5fbd2
 Definition at line \mbox{\hyperlink{picam_8py_source_l00051}{51}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051     \textcolor{keyword}{def }\_\_init\_\_(self, *args, **kwargs):}
+\DoxyCodeLine{00052         super(PiCamera, self).\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00053         \textcolor{comment}{\# example parameter to allow setting.}}
+\DoxyCodeLine{00054         \textcolor{comment}{\#        self.add\_setting('\_error\_percent', 'int',}}
+\DoxyCodeLine{00055         \textcolor{comment}{\#                         lambda: self.\_error\_percent,}}
+\DoxyCodeLine{00056         \textcolor{comment}{\#                         self.\_set\_error\_percent,}}
+\DoxyCodeLine{00057         \textcolor{comment}{\#                         lambda: (0, 100))}}
+\DoxyCodeLine{00058         self.\_acquiring = \textcolor{keyword}{False}}
+\DoxyCodeLine{00059         self.\_exposure\_time = 0.1}
+\DoxyCodeLine{00060         self.\_triggered = \textcolor{keyword}{False}}
+\DoxyCodeLine{00061         self.camera = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00062         \textcolor{comment}{\# Region of interest.}}
+\DoxyCodeLine{00063         self.roi = ROI(\textcolor{keywordtype}{None}, \textcolor{keywordtype}{None}, \textcolor{keywordtype}{None}, \textcolor{keywordtype}{None})}
+\DoxyCodeLine{00064         \textcolor{comment}{\# Cycle time}}
+\DoxyCodeLine{00065         self.exposure\_time = 0.001  \textcolor{comment}{\# in seconds}}
+\DoxyCodeLine{00066         self.cycle\_time = self.exposure\_time}
+\DoxyCodeLine{00067         \textcolor{comment}{\# initialise in soft trigger mode}}
+\DoxyCodeLine{00068         self.\_trigger\_type = TriggerType.SOFTWARE}
+\DoxyCodeLine{00069         \textcolor{comment}{\# setup hardware triggerline}}
+\DoxyCodeLine{00070         GPIO.setmode(GPIO.BCM)}
+\DoxyCodeLine{00071         \textcolor{comment}{\# GPIO trigger line is an input}}
+\DoxyCodeLine{00072         GPIO.setup(GPIO\_Trigger, GPIO.IN)}
+\DoxyCodeLine{00073         \textcolor{comment}{\# GPIO control over camera LED is an output}}
+\DoxyCodeLine{00074         GPIO.setup(GPIO\_CAMLED, GPIO.OUT)}
+\DoxyCodeLine{00075         \textcolor{comment}{\# add trigger to settings}}
+\DoxyCodeLine{00076         trg\_source\_names = [x.name \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} TrgSourceMap]}
+\DoxyCodeLine{00077         \textcolor{comment}{\# set up queue to store images as they are acquired}}
+\DoxyCodeLine{00078         self.\_queue = queue.Queue()}
+\DoxyCodeLine{00079         self.\_awb\_modes = picamera.PiCamera.AWB\_MODES}
+\DoxyCodeLine{00080         self.\_iso\_modes = [0, 100, 200, 320, 400, 500, 640, 800]}
+\DoxyCodeLine{00081 }
+\DoxyCodeLine{00082         \textcolor{keyword}{def }\_trigger\_source\_setter(index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00083             trigger\_type = TrgSourceMap[trg\_source\_names[index]].value}
+\DoxyCodeLine{00084             self.set\_trigger(trigger\_type, self.trigger\_mode)}
+\DoxyCodeLine{00085 }
+\DoxyCodeLine{00086         self.add\_setting(}
+\DoxyCodeLine{00087             \textcolor{stringliteral}{"{}trig source"{}},}
+\DoxyCodeLine{00088             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00089             \textcolor{keyword}{lambda}: TrgSourceMap(self.\_trigger\_type).name,}
+\DoxyCodeLine{00090             \_trigger\_source\_setter,}
+\DoxyCodeLine{00091             trg\_source\_names,}
+\DoxyCodeLine{00092         )}
+\DoxyCodeLine{00093         self.add\_setting(}
+\DoxyCodeLine{00094             \textcolor{stringliteral}{"{}AWB"{}},}
+\DoxyCodeLine{00095             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00096             \textcolor{keyword}{lambda}: self.\_awb\_modes[self.get\_awb\_mode()],}
+\DoxyCodeLine{00097             \textcolor{keyword}{lambda} awb: self.set\_awb\_mode(awb),}
+\DoxyCodeLine{00098             values=(list(self.\_awb\_modes.keys())),}
+\DoxyCodeLine{00099         )}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101         self.add\_setting(}
+\DoxyCodeLine{00102             \textcolor{stringliteral}{"{}ISO"{}},}
+\DoxyCodeLine{00103             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00104             \textcolor{keyword}{lambda}: self.\_iso\_modes.index(self.camera.iso),}
+\DoxyCodeLine{00105             \textcolor{keyword}{lambda} iso: self.set\_iso\_mode(iso),}
+\DoxyCodeLine{00106             values=(self.\_iso\_modes),}
+\DoxyCodeLine{00107         )}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109         \textcolor{comment}{\# self.add\_setting(}}
+\DoxyCodeLine{00110         \textcolor{comment}{\#     "{}pixel size"{},}}
+\DoxyCodeLine{00111         \textcolor{comment}{\#     "{}float"{},}}
+\DoxyCodeLine{00112         \textcolor{comment}{\#     lambda: self.\_pixel\_size,}}
+\DoxyCodeLine{00113         \textcolor{comment}{\#     lambda pxsz: setattr(self, "{}\_pixel\_size"{}, pxsz),}}
+\DoxyCodeLine{00114         \textcolor{comment}{\#     \# technically should be: (nextafter(0.0, inf), nextafter(inf, 0.0))}}
+\DoxyCodeLine{00115         \textcolor{comment}{\#     values=(0.0, float("{}inf"{})),}}
+\DoxyCodeLine{00116         \textcolor{comment}{\# )}}
+\DoxyCodeLine{00117         self.initialize()}
+\DoxyCodeLine{00118 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{picam_8py_source_l00079}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+awb\+\_\+modes}}, \mbox{\hyperlink{andorsdk3_8py_source_l00262}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{picam_8py_source_l00059}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00211}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{picam_8py_source_l00080}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+iso\+\_\+modes}}, \mbox{\hyperlink{picam_8py_source_l00078}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+queue}}, \mbox{\hyperlink{test__device__server_8py_source_l00066}{microscope.\+testsuite.\+test\+\_\+device\+\_\+server.\+Device\+Server\+Exception\+Queue.\+\_\+queue}}, \mbox{\hyperlink{picam_8py_source_l00068}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{alpao_8py_source_l00113}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{picam_8py_source_l00060}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+triggered}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00212}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+triggered}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00099}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+triggered}}, \mbox{\hyperlink{abc_8py_source_l00407}{microscope.\+abc.\+Device.\+add\+\_\+setting()}}, \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}, \mbox{\hyperlink{picam_8py_source_l00066}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+cycle\+\_\+time}}, \mbox{\hyperlink{pvcam_8py_source_l01428}{microscope.\+cameras.\+pvcam.\+PVCamera.\+cycle\+\_\+time}}, \mbox{\hyperlink{picam_8py_source_l00065}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+exposure\+\_\+time}}, \mbox{\hyperlink{pvcam_8py_source_l01426}{microscope.\+cameras.\+pvcam.\+PVCamera.\+exposure\+\_\+time}}, \mbox{\hyperlink{picam_8py_source_l00119}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+get\+\_\+awb\+\_\+mode()}}, \mbox{\hyperlink{abc_8py_source_l00339}{microscope.\+abc.\+Device.\+initialize()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00452}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+initialize()}}, \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00230}{microscope.\+testsuite.\+devices.\+Test\+Floating\+Device.\+initialize()}}, \mbox{\hyperlink{picam_8py_source_l00063}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+roi}}, \mbox{\hyperlink{pvcam_8py_source_l01422}{microscope.\+cameras.\+pvcam.\+PVCamera.\+roi}}, \mbox{\hyperlink{picam_8py_source_l00122}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+awb\+\_\+mode()}}, \mbox{\hyperlink{picam_8py_source_l00127}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+iso\+\_\+mode()}}, \mbox{\hyperlink{__utils_8py_source_l00065}{microscope.\+\_\+utils.\+Only\+Triggers\+Once\+On\+Software\+Mixin.\+set\+\_\+trigger()}}, \mbox{\hyperlink{__utils_8py_source_l00095}{microscope.\+\_\+utils.\+Only\+Triggers\+Bulb\+On\+Software\+Mixin.\+set\+\_\+trigger()}}, \mbox{\hyperlink{abc_8py_source_l00249}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+set\+\_\+trigger()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00588}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+set\+\_\+trigger()}}, \mbox{\hyperlink{atmcd_8py_source_l01770}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+set\+\_\+trigger()}}, \mbox{\hyperlink{pvcam_8py_source_l01885}{microscope.\+cameras.\+pvcam.\+PVCamera.\+set\+\_\+trigger()}}, \mbox{\hyperlink{ximea_8py_source_l00457}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+set\+\_\+trigger()}}, \mbox{\hyperlink{coolled_8py_source_l00212}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+set\+\_\+trigger()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00228}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+set\+\_\+trigger()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00183}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+set\+\_\+trigger()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00204}{microscope.\+lights.\+obis.\+Obis\+Laser.\+set\+\_\+trigger()}}, \mbox{\hyperlink{picam_8py_source_l00193}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+trigger()}}, \mbox{\hyperlink{alpao_8py_source_l00134}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+set\+\_\+trigger()}}, \mbox{\hyperlink{__utils_8py_source_l00060}{microscope.\+\_\+utils.\+Only\+Triggers\+Once\+On\+Software\+Mixin.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{__utils_8py_source_l00090}{microscope.\+\_\+utils.\+Only\+Triggers\+Bulb\+On\+Software\+Mixin.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{abc_8py_source_l00238}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00577}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{atmcd_8py_source_l01761}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{picam_8py_source_l00209}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{pvcam_8py_source_l01876}{microscope.\+cameras.\+pvcam.\+PVCamera.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{ximea_8py_source_l00434}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{coolled_8py_source_l00207}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00216}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00178}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+trigger\+\_\+mode()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00199}{microscope.\+lights.\+obis.\+Obis\+Laser.\+trigger\+\_\+mode()}}, and \mbox{\hyperlink{alpao_8py_source_l00121}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+trigger\+\_\+mode()}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa91b849a389efbfe431c43470439046b}} 
@@ -98,6 +178,23 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a3695
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00186}{186}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186     \textcolor{keyword}{def }abort(self):}
+\DoxyCodeLine{00187         \_logger.info(\textcolor{stringliteral}{"{}Disabling acquisition."{}})}
+\DoxyCodeLine{00188         \textcolor{keywordflow}{if} self.\_acquiring:}
+\DoxyCodeLine{00189             self.\_acquiring = \textcolor{keyword}{False}}
+\DoxyCodeLine{00190 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}.
+
+
+
+Referenced by \mbox{\hyperlink{simulators_2____init_____8py_source_l00253}{microscope.\+simulators.\+Simulated\+Camera.\+abort()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00527}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+get\+\_\+id()}}, \mbox{\hyperlink{atmcd_8py_source_l01618}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+get\+\_\+id()}}, \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}, \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00588}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+set\+\_\+trigger()}}, and \mbox{\hyperlink{abc_8py_source_l00484}{microscope.\+abc.\+Device.\+update\+\_\+settings()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ad945b87e0b6058a21825d201198fe07d}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ad945b87e0b6058a21825d201198fe07d}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!get\_awb\_mode@{get\_awb\_mode}}
 \index{get\_awb\_mode@{get\_awb\_mode}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -107,6 +204,17 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00186}{186}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00119}{119}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119     \textcolor{keyword}{def }get\_awb\_mode(self):}
+\DoxyCodeLine{00120         \textcolor{keywordflow}{return} self.camera.awb\_mode}
+\DoxyCodeLine{00121 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af4e4b15508e4330c289592e9d0438e35}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af4e4b15508e4330c289592e9d0438e35}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!get\_cycle\_time@{get\_cycle\_time}}
@@ -123,6 +231,19 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_a2048ad36a
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00247}{247}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00247     \textcolor{keyword}{def }get\_cycle\_time(self):}
+\DoxyCodeLine{00248         \textcolor{comment}{\# fudge to make it work initially}}
+\DoxyCodeLine{00249         \textcolor{comment}{\# exposure times are in us, so multiple by 1E-\/6 to get seconds.}}
+\DoxyCodeLine{00250         \textcolor{keywordflow}{return} self.camera.exposure\_speed * 1.0e-\/6 + 0.1}
+\DoxyCodeLine{00251 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{picam_8py_source_l00078}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+queue}}, \mbox{\hyperlink{test__device__server_8py_source_l00066}{microscope.\+testsuite.\+test\+\_\+device\+\_\+server.\+Device\+Server\+Exception\+Queue.\+\_\+queue}}, \mbox{\hyperlink{picam_8py_source_l00231}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{abc_8py_source_l00970}{microscope.\+abc.\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{ximea_8py_source_l00394}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00626}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{atmcd_8py_source_l01798}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{pvcam_8py_source_l01650}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00305}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}, \mbox{\hyperlink{picam_8py_source_l00155}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camversion}}, \mbox{\hyperlink{andorsdk3_8py_source_l00572}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+soft\+\_\+trigger()}}, \mbox{\hyperlink{atmcd_8py_source_l01752}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+soft\+\_\+trigger()}}, \mbox{\hyperlink{picam_8py_source_l00263}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+soft\+\_\+trigger()}}, \mbox{\hyperlink{pvcam_8py_source_l01847}{microscope.\+cameras.\+pvcam.\+PVCamera.\+soft\+\_\+trigger()}}, \mbox{\hyperlink{ximea_8py_source_l00365}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+soft\+\_\+trigger()}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00283}{microscope.\+simulators.\+Simulated\+Camera.\+soft\+\_\+trigger()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af63aa3bf60461bb5b66285998de897c8}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_af63aa3bf60461bb5b66285998de897c8}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!get\_exposure\_time@{get\_exposure\_time}}
 \index{get\_exposure\_time@{get\_exposure\_time}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -138,6 +259,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_a16e161a6b
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00243}{243}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00243     \textcolor{keyword}{def }get\_exposure\_time(self):}
+\DoxyCodeLine{00244         \textcolor{comment}{\# exposure times are in us, so multiple by 1E-\/6 to get seconds.}}
+\DoxyCodeLine{00245         \textcolor{keywordflow}{return} self.camera.exposure\_speed * 1.0e-\/6}
+\DoxyCodeLine{00246 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a10272f036fb315426084e003b34775e9}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a10272f036fb315426084e003b34775e9}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!HW\_trigger@{HW\_trigger}}
 \index{HW\_trigger@{HW\_trigger}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -148,6 +281,24 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00243}{243}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00130}{130}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00130     \textcolor{keyword}{def }HW\_trigger(self, channel):}
+\DoxyCodeLine{00131         \textcolor{stringliteral}{"{}"{}"{}Function called by GPIO interupt, needs to trigger image capture"{}"{}"{}}}
+\DoxyCodeLine{00132         \textcolor{keyword}{with} picamera.array.PiYUVArray(self.camera) \textcolor{keyword}{as} output:}
+\DoxyCodeLine{00133             self.camera.capture(output, format=\textcolor{stringliteral}{"{}yuv"{}}, use\_video\_port=\textcolor{keyword}{False})}
+\DoxyCodeLine{00134             self.\_queue.put(output.array[:, :, 0])}
+\DoxyCodeLine{00135 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00078}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+queue}}, \mbox{\hyperlink{test__device__server_8py_source_l00066}{microscope.\+testsuite.\+test\+\_\+device\+\_\+server.\+Device\+Server\+Exception\+Queue.\+\_\+queue}}, and \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00193}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+trigger()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3e6e25f9daf0f4fcb42f40474f2b45b8}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3e6e25f9daf0f4fcb42f40474f2b45b8}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!initialize@{initialize}}
@@ -166,6 +317,38 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00144}{144}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00144     \textcolor{keyword}{def }initialize(self):}
+\DoxyCodeLine{00145         \textcolor{stringliteral}{"{}"{}"{}Initialise the Pi Camera camera.}}
+\DoxyCodeLine{00146 \textcolor{stringliteral}{        Open the connection, connect properties }\textcolor{keywordflow}{and} populate settings dict.}
+\DoxyCodeLine{00147         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00148 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.camera:}
+\DoxyCodeLine{00149             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00150                 \textcolor{comment}{\# initialise camera in still image mode.}}
+\DoxyCodeLine{00151                 self.camera = picamera.PiCamera(sensor\_mode=2)}
+\DoxyCodeLine{00152             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00153                 \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{"{}Problem opening camera."{}})}
+\DoxyCodeLine{00154         \_logger.info(\textcolor{stringliteral}{"{}Initializing camera."{}})}
+\DoxyCodeLine{00155         self.camversion = self.camera.revision}
+\DoxyCodeLine{00156         \_logger.info(\textcolor{stringliteral}{"{}cam version "{}} + self.camversion)}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158         \textcolor{comment}{\# create img buffer to hold images.}}
+\DoxyCodeLine{00159         \textcolor{comment}{\# disable camera LED by default}}
+\DoxyCodeLine{00160         self.setLED(\textcolor{keyword}{False})}
+\DoxyCodeLine{00161         self.set\_awb\_mode(0)  \textcolor{comment}{\# set auto white balance to off}}
+\DoxyCodeLine{00162         self.\_get\_sensor\_shape()}
+\DoxyCodeLine{00163 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{abc_8py_source_l00298}{microscope.\+abc.\+Device.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00534}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{atmcd_8py_source_l01650}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{picam_8py_source_l00168}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{pvcam_8py_source_l01613}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{ximea_8py_source_l00335}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00209}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{zaber_8py_source_l00466}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{aurox_8py_source_l00172}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00128}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00152}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00258}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00358}{microscope.\+simulators.\+Simulated\+Light\+Source.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00916}{microscope.\+abc.\+Camera.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00566}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{atmcd_8py_source_l01742}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{picam_8py_source_l00252}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{pvcam_8py_source_l01631}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{ximea_8py_source_l00362}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00280}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+get\+\_\+sensor\+\_\+shape()}}, \mbox{\hyperlink{abc_8py_source_l00588}{microscope.\+abc.\+Data\+Device.\+abort()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00446}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+abort()}}, \mbox{\hyperlink{atmcd_8py_source_l01424}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+abort()}}, \mbox{\hyperlink{picam_8py_source_l00186}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+abort()}}, \mbox{\hyperlink{pvcam_8py_source_l01664}{microscope.\+cameras.\+pvcam.\+PVCamera.\+abort()}}, \mbox{\hyperlink{ximea_8py_source_l00246}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+abort()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00253}{microscope.\+simulators.\+Simulated\+Camera.\+abort()}}, \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}, \mbox{\hyperlink{picam_8py_source_l00155}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camversion}}, \mbox{\hyperlink{abc_8py_source_l00339}{microscope.\+abc.\+Device.\+initialize()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00452}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+initialize()}}, \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00230}{microscope.\+testsuite.\+devices.\+Test\+Floating\+Device.\+initialize()}}, \mbox{\hyperlink{picam_8py_source_l00122}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+awb\+\_\+mode()}}, and \mbox{\hyperlink{picam_8py_source_l00236}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+LED()}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa8ee8ee605be37cfcad0104dab8df7ef}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_aa8ee8ee605be37cfcad0104dab8df7ef}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!make\_safe@{make\_safe}}
 \index{make\_safe@{make\_safe}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -176,6 +359,14 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00144}{144}} of file \mbox
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00164}{164}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164     \textcolor{keyword}{def }make\_safe(self):}
+\DoxyCodeLine{00165         \textcolor{keywordflow}{if} self.\_acquiring:}
+\DoxyCodeLine{00166             self.abort()}
+\DoxyCodeLine{00167 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a12a5bf8d2d3713d48126bc7d26cd390a}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!set\_awb\_mode@{set\_awb\_mode}}
 \index{set\_awb\_mode@{set\_awb\_mode}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -185,6 +376,19 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00164}{164}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00122}{122}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122     \textcolor{keyword}{def }set\_awb\_mode(self, val):}
+\DoxyCodeLine{00123         \textcolor{keywordflow}{for} key, value \textcolor{keywordflow}{in} self.\_awb\_modes.items():}
+\DoxyCodeLine{00124             \textcolor{keywordflow}{if} value == val:}
+\DoxyCodeLine{00125                 self.camera.awb\_mode = key}
+\DoxyCodeLine{00126 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab3d50b09994deb47585bae7360958eb8}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab3d50b09994deb47585bae7360958eb8}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!set\_exposure\_time@{set\_exposure\_time}}
@@ -201,6 +405,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_a925b8831a
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00239}{239}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239     \textcolor{keyword}{def }set\_exposure\_time(self, value):}
+\DoxyCodeLine{00240         \textcolor{comment}{\# exposure times are set in us.}}
+\DoxyCodeLine{00241         self.camera.shutter\_speed = int(value * 1.0e6)}
+\DoxyCodeLine{00242 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00061}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+camera}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3a4164a20cf8fba15dea133db765847c}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a3a4164a20cf8fba15dea133db765847c}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!set\_iso\_mode@{set\_iso\_mode}}
 \index{set\_iso\_mode@{set\_iso\_mode}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -210,6 +426,17 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00239}{239}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00127}{127}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00127     \textcolor{keyword}{def }set\_iso\_mode(self, val):}
+\DoxyCodeLine{00128         self.camera.iso = self.\_iso\_modes[val]}
+\DoxyCodeLine{00129 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab4591ad6076c8afe5f6201a35bae2c2c}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab4591ad6076c8afe5f6201a35bae2c2c}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!set\_trigger@{set\_trigger}}
@@ -226,6 +453,33 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00191}{191}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00194         \textcolor{keywordflow}{if} ttype == self.\_trigger\_type:}
+\DoxyCodeLine{00195             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00196         \textcolor{keywordflow}{elif} ttype == TriggerType.SOFTWARE:}
+\DoxyCodeLine{00197             GPIO.remove\_event\_detect(GPIO\_Trigger)}
+\DoxyCodeLine{00198             self.\_trigger\_type = TriggerType.SOFTWARE}
+\DoxyCodeLine{00199         \textcolor{keywordflow}{elif} ttype == TriggerType.RISING\_EDGE:}
+\DoxyCodeLine{00200             GPIO.add\_event\_detect(}
+\DoxyCodeLine{00201                 GPIO\_Trigger,}
+\DoxyCodeLine{00202                 GPIO.RISING,}
+\DoxyCodeLine{00203                 callback=self.HW\_trigger,}
+\DoxyCodeLine{00204                 bouncetime=10,}
+\DoxyCodeLine{00205             )}
+\DoxyCodeLine{00206             self.\_trigger\_type = TriggerType.RISING\_EDGE}
+\DoxyCodeLine{00207 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00068}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{alpao_8py_source_l00113}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{picam_8py_source_l00130}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+HW\+\_\+trigger()}}, \mbox{\hyperlink{picam_8py_source_l00063}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+roi}}, and \mbox{\hyperlink{pvcam_8py_source_l01422}{microscope.\+cameras.\+pvcam.\+PVCamera.\+roi}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afd91e9e24cc4f9d4704a9fc9c46eac63}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afd91e9e24cc4f9d4704a9fc9c46eac63}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!setLED@{setLED}}
 \index{setLED@{setLED}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -236,6 +490,17 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00191}{191}} of file \mbox
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00236}{236}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00236     \textcolor{keyword}{def }setLED(self, state=False):}
+\DoxyCodeLine{00237         GPIO.output(GPIO\_CAMLED, state)}
+\DoxyCodeLine{00238 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6eb964846db1ee269c82b8191fa03e6e}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a6eb964846db1ee269c82b8191fa03e6e}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!soft\_trigger@{soft\_trigger}}
 \index{soft\_trigger@{soft\_trigger}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -245,6 +510,33 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00236}{236}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00263}{263}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00263     \textcolor{keyword}{def }soft\_trigger(self):}
+\DoxyCodeLine{00264         \_logger.info(}
+\DoxyCodeLine{00265             \textcolor{stringliteral}{"{}Trigger received; self.\_acquiring is \%s."{}} \% self.\_acquiring}
+\DoxyCodeLine{00266         )}
+\DoxyCodeLine{00267         \textcolor{keywordflow}{if} self.\_acquiring:}
+\DoxyCodeLine{00268             \textcolor{keyword}{with} picamera.array.PiYUVArray(self.camera) \textcolor{keyword}{as} output:}
+\DoxyCodeLine{00269                 self.camera.capture(output, format=\textcolor{stringliteral}{"{}yuv"{}}, use\_video\_port=\textcolor{keyword}{False})}
+\DoxyCodeLine{00270                 self.\_queue.put(output.array[:, :, 0])}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272 }
+\DoxyCodeLine{00273 \textcolor{comment}{\# ongoing implemetation notes}}
+\DoxyCodeLine{00274 }
+\DoxyCodeLine{00275 \textcolor{comment}{\# should be able to use rotation and hflip to set specific output image}}
+\DoxyCodeLine{00276 \textcolor{comment}{\# rotations}}
+\DoxyCodeLine{00277 }
+\DoxyCodeLine{00278 \textcolor{comment}{\# roi's can be set with the zoom function, default is (0,0,1,1) meaning all the data.}}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280 \textcolor{comment}{\# Need to setup a buffer for harware triggered data aquisition so we can}}
+\DoxyCodeLine{00281 \textcolor{comment}{\# call the acquisition and then download the data at our leasure}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00247}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+get\+\_\+cycle\+\_\+time()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4aace40298ffebdd7a50a3c531725c63}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a4aace40298ffebdd7a50a3c531725c63}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!trigger\_mode@{trigger\_mode}}
@@ -259,6 +551,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00209}{209}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209     \textcolor{keyword}{def }trigger\_mode(self) -\/> TriggerMode:}
+\DoxyCodeLine{00210         \textcolor{comment}{\#        if self.\_trigger\_type==devices.TRIGGER\_BEFORE:}}
+\DoxyCodeLine{00211         \textcolor{keywordflow}{return} TriggerMode.ONCE}
+\DoxyCodeLine{00212 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a28e85b1efe105cb26a86d61c4af7b0b0}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a28e85b1efe105cb26a86d61c4af7b0b0}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!trigger\_type@{trigger\_type}}
@@ -275,6 +579,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 Definition at line \mbox{\hyperlink{picam_8py_source_l00217}{217}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217     \textcolor{keyword}{def }trigger\_type(self) -\/> TriggerType:}
+\DoxyCodeLine{00218         \textcolor{keywordflow}{return} self.\_trigger\_type}
+\DoxyCodeLine{00219 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l01113}{microscope.\+abc.\+Deformable\+Mirror.\+apply\+\_\+pattern()}}, and \mbox{\hyperlink{abc_8py_source_l00263}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger()}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5440654a2f2c2592685ea6ea8bec05b0}} 
@@ -287,6 +602,10 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00217}{217}} of file \mbox
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00061}{61}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{picam_8py_source_l00247}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+get\+\_\+cycle\+\_\+time()}}, \mbox{\hyperlink{picam_8py_source_l00243}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+get\+\_\+exposure\+\_\+time()}}, \mbox{\hyperlink{picam_8py_source_l00130}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+HW\+\_\+trigger()}}, \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}, and \mbox{\hyperlink{picam_8py_source_l00239}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+exposure\+\_\+time()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5454b69673ffe603dc77edf73c87a8a2}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!camversion@{camversion}}
 \index{camversion@{camversion}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -296,6 +615,10 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00061}{61}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00155}{155}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00247}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+get\+\_\+cycle\+\_\+time()}}, and \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab76b89bc864bb541ffcbe9ebbc017b47}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_ab76b89bc864bb541ffcbe9ebbc017b47}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!cycle\_time@{cycle\_time}}
@@ -307,6 +630,10 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00155}{155}} of file \mbox
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00066}{66}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{pvcam_8py_source_l01839}{microscope.\+cameras.\+pvcam.\+PVCamera.\+get\+\_\+cycle\+\_\+time()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afafc78e1f3659591dc9d422a7f554e3b}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_afafc78e1f3659591dc9d422a7f554e3b}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!exposure\_time@{exposure\_time}}
 \index{exposure\_time@{exposure\_time}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -317,6 +644,10 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00066}{66}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00065}{65}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{pvcam_8py_source_l01832}{microscope.\+cameras.\+pvcam.\+PVCamera.\+get\+\_\+exposure\+\_\+time()}}, and \mbox{\hyperlink{pvcam_8py_source_l01828}{microscope.\+cameras.\+pvcam.\+PVCamera.\+set\+\_\+exposure\+\_\+time()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}\label{classmicroscope_1_1cameras_1_1picam_1_1_pi_camera_a5ec69cf5f7b1f86758c2a814cf01d633}} 
 \index{microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}!roi@{roi}}
 \index{roi@{roi}!microscope.cameras.picam.PiCamera@{microscope.cameras.picam.PiCamera}}
@@ -326,6 +657,10 @@ Definition at line \mbox{\hyperlink{picam_8py_source_l00065}{65}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{picam_8py_source_l00063}{63}} of file \mbox{\hyperlink{picam_8py_source}{picam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, and \mbox{\hyperlink{picam_8py_source_l00193}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+set\+\_\+trigger()}}.
 
 
 

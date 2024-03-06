@@ -195,7 +195,15 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00062">62</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   62</span>    <span class="keyword">def </span>setUp(self):</div>
+<div class="line"><span class="lineno">   63</span>        self.serial = TestSerialMock.Serial()</div>
+<div class="line"><span class="lineno">   64</span>        patcher = unittest.mock.patch.object(</div>
+<div class="line"><span class="lineno">   65</span>            TestSerialMock.Serial, <span class="stringliteral">&quot;handle&quot;</span>, wraps=self.serial.handle</div>
+<div class="line"><span class="lineno">   66</span>        )</div>
+<div class="line"><span class="lineno">   67</span>        self.addCleanup(patcher.stop)</div>
+<div class="line"><span class="lineno">   68</span>        self.mock = patcher.start()</div>
+<div class="line"><span class="lineno">   69</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a38662fecd9967893c91dfe745d2ecbd4" name="a38662fecd9967893c91dfe745d2ecbd4"></a>
@@ -215,7 +223,12 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00080">80</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   80</span>    <span class="keyword">def </span>test_multiple_commands(self):</div>
+<div class="line"><span class="lineno">   81</span>        self.serial.write(b<span class="stringliteral">&quot;foo\r\nbar\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   82</span>        calls = [unittest.mock.call(x) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> [b<span class="stringliteral">&quot;foo&quot;</span>, b<span class="stringliteral">&quot;bar&quot;</span>]]</div>
+<div class="line"><span class="lineno">   83</span>        self.assertEqual(self.serial.handle.mock_calls, calls)</div>
+<div class="line"><span class="lineno">   84</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2e8db0cddbb71d703e90cd7901953536" name="a2e8db0cddbb71d703e90cd7901953536"></a>
@@ -235,7 +248,13 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00074">74</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>test_partial_commands(self):</div>
+<div class="line"><span class="lineno">   75</span>        self.serial.write(b<span class="stringliteral">&quot;fo&quot;</span>)</div>
+<div class="line"><span class="lineno">   76</span>        self.serial.write(b<span class="stringliteral">&quot;o&quot;</span>)</div>
+<div class="line"><span class="lineno">   77</span>        self.serial.write(b<span class="stringliteral">&quot;\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   78</span>        self.serial.handle.assert_called_once_with(b<span class="stringliteral">&quot;foo&quot;</span>)</div>
+<div class="line"><span class="lineno">   79</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a3df65cb4bad9fc2d242f8a24ec82296a" name="a3df65cb4bad9fc2d242f8a24ec82296a"></a>
@@ -255,7 +274,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00070">70</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   70</span>    <span class="keyword">def </span>test_simple_commands(self):</div>
+<div class="line"><span class="lineno">   71</span>        self.serial.write(b<span class="stringliteral">&quot;foo\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   72</span>        self.mock.assert_called_once_with(b<span class="stringliteral">&quot;foo&quot;</span>)</div>
+<div class="line"><span class="lineno">   73</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a241c7d2ae18df532a7b8c4a851955c10" name="a241c7d2ae18df532a7b8c4a851955c10"></a>
@@ -275,7 +298,13 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00085">85</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   85</span>    <span class="keyword">def </span>test_unix_eol(self):</div>
+<div class="line"><span class="lineno">   86</span>        self.serial.eol = b<span class="stringliteral">&quot;\n&quot;</span></div>
+<div class="line"><span class="lineno">   87</span>        self.serial.write(b<span class="stringliteral">&quot;foo\nbar\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   88</span>        calls = [unittest.mock.call(x) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> [b<span class="stringliteral">&quot;foo&quot;</span>, b<span class="stringliteral">&quot;bar&quot;</span>]]</div>
+<div class="line"><span class="lineno">   89</span>        self.assertEqual(self.serial.handle.mock_calls, calls)</div>
+<div class="line"><span class="lineno">   90</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a54b671d815e94d51e86fe4a14431c290" name="a54b671d815e94d51e86fe4a14431c290"></a>
@@ -295,7 +324,12 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00091">91</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   91</span>    <span class="keyword">def </span>test_write(self):</div>
+<div class="line"><span class="lineno">   92</span>        self.serial.write(b<span class="stringliteral">&quot;echo qux\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   93</span>        self.assertEqual(self.serial.readline(), b<span class="stringliteral">&quot;qux\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   94</span> </div>
+<div class="line"><span class="lineno">   95</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

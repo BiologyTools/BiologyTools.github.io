@@ -40,6 +40,29 @@ issue #84.
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00505}{505}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00505     \textcolor{keyword}{def }test\_unexpected\_kwargs\_raise\_exception(self):}
+\DoxyCodeLine{00506         \textcolor{stringliteral}{"{}"{}"{}Unexpected kwargs on constructor raise exception.}}
+\DoxyCodeLine{00507 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00508 \textcolor{stringliteral}{        Test first that we can construct the device.  Then test that}}
+\DoxyCodeLine{00509 \textcolor{stringliteral}{        it fails }\textcolor{keywordflow}{if} there are unused kwargs.  This \textcolor{keywordflow}{is} an issue when}
+\DoxyCodeLine{00510         there are default arguments, there\textcolor{stringliteral}{'s a typo on the argument}}
+\DoxyCodeLine{00511 \textcolor{stringliteral}{        name, }\textcolor{keywordflow}{and} the \textcolor{keyword}{class }uses the default instead of an error.  See}
+\DoxyCodeLine{00512         issue \textcolor{comment}{\#84.}}
+\DoxyCodeLine{00513         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00514 \textcolor{stringliteral}{        simulators.SimulatedLightSource()}}
+\DoxyCodeLine{00515 \textcolor{stringliteral}{        }\textcolor{comment}{\# XXX: Device.\_\_del\_\_ calls shutdown().  However, if \_\_init\_\_}}
+\DoxyCodeLine{00516         \textcolor{comment}{\# failed the device is not complete and shutdown() fails}}
+\DoxyCodeLine{00517         \textcolor{comment}{\# because the logger has not been created.  See comments on}}
+\DoxyCodeLine{00518         \textcolor{comment}{\# issue \#69.  patch \_\_del\_\_ to workaround this issue.}}
+\DoxyCodeLine{00519         \textcolor{keyword}{with} unittest.mock.patch(\textcolor{stringliteral}{"{}microscope.devices.Device.\_\_del\_\_"{}}):}
+\DoxyCodeLine{00520             \textcolor{keyword}{with} self.assertRaisesRegex(TypeError, \textcolor{stringliteral}{"{}argument 'power'"{}}):}
+\DoxyCodeLine{00521                 simulators.SimulatedLightSource(power=2)}
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523 }
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

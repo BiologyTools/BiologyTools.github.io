@@ -39,6 +39,28 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00041}{41}} of file \mb
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00050}{50}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00050     \textcolor{keyword}{def }\_\_init\_\_(self, serial: microscope.\_utils.SharedSerial) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00051         self.\_serial = serial}
+\DoxyCodeLine{00052         \textcolor{comment}{\# If the Spectra has just been powered up the first command}}
+\DoxyCodeLine{00053         \textcolor{comment}{\# will fail with UNKNOWNCMD.  So just send an empty command}}
+\DoxyCodeLine{00054         \textcolor{comment}{\# and ignore the result.}}
+\DoxyCodeLine{00055         self.\_serial.write(b\textcolor{stringliteral}{"{}\(\backslash\)n"{}})}
+\DoxyCodeLine{00056         self.\_serial.readline()}
+\DoxyCodeLine{00057 }
+\DoxyCodeLine{00058         \textcolor{comment}{\# We use command() and readline() instead of get\_command() in}}
+\DoxyCodeLine{00059         \textcolor{comment}{\# case this is not a Lumencor and won't even give a standard}}
+\DoxyCodeLine{00060         \textcolor{comment}{\# answer and raises an exception during the answer validation.}}
+\DoxyCodeLine{00061         self.\_serial.write(b\textcolor{stringliteral}{"{}GET MODEL\(\backslash\)n"{}})}
+\DoxyCodeLine{00062         answer = self.\_serial.readline()}
+\DoxyCodeLine{00063         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}A MODEL Spectra III"{}}):}
+\DoxyCodeLine{00064             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00065                 \textcolor{stringliteral}{"{}Not a Lumencor Spectra III Light Engine"{}}}
+\DoxyCodeLine{00066             )}
+\DoxyCodeLine{00067 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a6d18ae51817ced9a239eaefc4fd2c2fc}} 
@@ -51,6 +73,39 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00050}{50}} of file \mb
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00068}{68}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068     \textcolor{keyword}{def }command\_and\_answer(self, *TX\_tokens: bytes) -\/> bytes:}
+\DoxyCodeLine{00069         \textcolor{comment}{\# Command contains two or more tokens.  The first token for a}}
+\DoxyCodeLine{00070         \textcolor{comment}{\# TX (transmitted) command string is one of the two keywords}}
+\DoxyCodeLine{00071         \textcolor{comment}{\# GET, SET (to query or to set).  The second token is the}}
+\DoxyCodeLine{00072         \textcolor{comment}{\# command name.}}
+\DoxyCodeLine{00073         \textcolor{keyword}{assert} len(TX\_tokens) >= 2, \textcolor{stringliteral}{"{}invalid command with less than two tokens"{}}}
+\DoxyCodeLine{00074         \textcolor{keyword}{assert} TX\_tokens[0] \textcolor{keywordflow}{in} (}
+\DoxyCodeLine{00075             b\textcolor{stringliteral}{"{}GET"{}},}
+\DoxyCodeLine{00076             b\textcolor{stringliteral}{"{}SET"{}},}
+\DoxyCodeLine{00077         ), \textcolor{stringliteral}{"{}invalid command (not SET/GET)"{}}}
+\DoxyCodeLine{00078 }
+\DoxyCodeLine{00079         TX\_command = b\textcolor{stringliteral}{"{} "{}}.join(TX\_tokens) + b\textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{00080         \textcolor{keyword}{with} self.\_serial.lock:}
+\DoxyCodeLine{00081             self.\_serial.write(TX\_command)}
+\DoxyCodeLine{00082             answer = self.\_serial.readline()}
+\DoxyCodeLine{00083         RX\_tokens = answer.split(maxsplit=2)}
+\DoxyCodeLine{00084         \textcolor{comment}{\# A received answer has at least two tokens.  The first token}}
+\DoxyCodeLine{00085         \textcolor{comment}{\# is A or E (for success or failure).  The second token is the}}
+\DoxyCodeLine{00086         \textcolor{comment}{\# command name (second token of the transmitted command).}}
+\DoxyCodeLine{00087         \textcolor{keywordflow}{if} (}
+\DoxyCodeLine{00088             len(RX\_tokens) < 2}
+\DoxyCodeLine{00089             \textcolor{keywordflow}{or} RX\_tokens[0] != b\textcolor{stringliteral}{"{}A"{}}}
+\DoxyCodeLine{00090             \textcolor{keywordflow}{or} RX\_tokens[1] != TX\_tokens[1]}
+\DoxyCodeLine{00091         ):}
+\DoxyCodeLine{00092             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00093                 \textcolor{stringliteral}{"{}command \%s failed: \%s"{}} \% (TX\_command, answer)}
+\DoxyCodeLine{00094             )}
+\DoxyCodeLine{00095         \textcolor{keywordflow}{return} answer}
+\DoxyCodeLine{00096 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aa2f74cb0b3beeb9f027047cd192759b5}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aa2f74cb0b3beeb9f027047cd192759b5}} 
 \index{microscope.controllers.lumencor.\_SpectraIIIConnection@{microscope.controllers.lumencor.\_SpectraIIIConnection}!get\_channel\_map@{get\_channel\_map}}
 \index{get\_channel\_map@{get\_channel\_map}!microscope.controllers.lumencor.\_SpectraIIIConnection@{microscope.controllers.lumencor.\_SpectraIIIConnection}}
@@ -61,6 +116,15 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00068}{68}} of file \mb
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00107}{107}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107     \textcolor{keyword}{def }get\_channel\_map(self) -\/> typing.List[typing.Tuple[int, str]]:}
+\DoxyCodeLine{00108         answer = self.get\_command(b\textcolor{stringliteral}{"{}CHMAP"{}})}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{return} list(enumerate(answer.decode().split()))}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aee9568d06479f4906a905e187204d831}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_aee9568d06479f4906a905e187204d831}} 
 \index{microscope.controllers.lumencor.\_SpectraIIIConnection@{microscope.controllers.lumencor.\_SpectraIIIConnection}!get\_command@{get\_command}}
 \index{get\_command@{get\_command}!microscope.controllers.lumencor.\_SpectraIIIConnection@{microscope.controllers.lumencor.\_SpectraIIIConnection}}
@@ -70,6 +134,21 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00107}{107}} of file \m
 
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00097}{97}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00097     \textcolor{keyword}{def }get\_command(self, command: bytes, *args: bytes) -\/> bytes:}
+\DoxyCodeLine{00098         answer = self.command\_and\_answer(b\textcolor{stringliteral}{"{}GET"{}}, command, *args)}
+\DoxyCodeLine{00099         \textcolor{comment}{\# The three bytes we remove at the start are the 'A ' before}}
+\DoxyCodeLine{00100         \textcolor{comment}{\# the command, and the space after the command.  The last two}}
+\DoxyCodeLine{00101         \textcolor{comment}{\# bytes are '\(\backslash\)r\(\backslash\)n'.}}
+\DoxyCodeLine{00102         \textcolor{keywordflow}{return} answer[3 + len(command) : -\/2]}
+\DoxyCodeLine{00103 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00175}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+wait\+\_\+until\+\_\+idle()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a849c3ffdd84fb9628c10c4beba43a77f}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection_a849c3ffdd84fb9628c10c4beba43a77f}} 
 \index{microscope.controllers.lumencor.\_SpectraIIIConnection@{microscope.controllers.lumencor.\_SpectraIIIConnection}!set\_command@{set\_command}}
@@ -81,6 +160,13 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00097}{97}} of file \mb
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00104}{104}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104     \textcolor{keyword}{def }set\_command(self, command: bytes, *args: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00105         self.command\_and\_answer(b\textcolor{stringliteral}{"{}SET"{}}, command, *args)}
+\DoxyCodeLine{00106 }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

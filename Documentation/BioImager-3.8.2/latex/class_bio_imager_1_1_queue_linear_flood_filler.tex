@@ -49,6 +49,11 @@ Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00008
 Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source}{Queue\+Linear\+Flood\+Filler.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016 : base(configSource) \{ \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_queue_linear_flood_filler_a94f6be5b7151c860d00106174c8abe89}\label{class_bio_imager_1_1_queue_linear_flood_filler_a94f6be5b7151c860d00106174c8abe89}} 
@@ -63,6 +68,10 @@ param name=\char`\"{}y\char`\"{}\texorpdfstring{$>$}{>}The y coordinate of the p
 
 Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00207}{207}} of file \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source}{Queue\+Linear\+Flood\+Filler.\+cs}}.
 
+
+
+Referenced by \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00022}{Bio\+Imager.\+Queue\+Linear\+Flood\+Filler.\+Flood\+Fill()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_queue_linear_flood_filler_ac9ec9f54045165d3c2cc767a42b63c7c}\label{class_bio_imager_1_1_queue_linear_flood_filler_ac9ec9f54045165d3c2cc767a42b63c7c}} 
 \index{BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}!CoordsToByteIndex@{CoordsToByteIndex}}
 \index{CoordsToByteIndex@{CoordsToByteIndex}!BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}}
@@ -73,6 +82,13 @@ Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00207
 
 Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00257}{257}} of file \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source}{Queue\+Linear\+Flood\+Filler.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00258         \{}
+\DoxyCodeLine{00259             \textcolor{keywordflow}{return} (bitmapStride * y) + (x * bitmapPixelFormatSize);}
+\DoxyCodeLine{00260         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_queue_linear_flood_filler_ae413f3ddb1217fdc884773515321a4a7}\label{class_bio_imager_1_1_queue_linear_flood_filler_ae413f3ddb1217fdc884773515321a4a7}} 
 \index{BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}!CoordsToPixelIndex@{CoordsToPixelIndex}}
 \index{CoordsToPixelIndex@{CoordsToPixelIndex}!BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}}
@@ -97,6 +113,13 @@ Returns the linear index for a pixel, given its x and y coordinates.
 
 Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00268}{268}} of file \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source}{Queue\+Linear\+Flood\+Filler.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00269         \{}
+\DoxyCodeLine{00270             \textcolor{keywordflow}{return} (bitmapWidth * y) + x;}
+\DoxyCodeLine{00271         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_queue_linear_flood_filler_ac8d0e7790f8df341f8d4debcbc16728f}\label{class_bio_imager_1_1_queue_linear_flood_filler_ac8d0e7790f8df341f8d4debcbc16728f}} 
 \index{BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}!FloodFill@{FloodFill}}
 \index{FloodFill@{FloodFill}!BioImager.QueueLinearFloodFiller@{BioImager.QueueLinearFloodFiller}}
@@ -115,6 +138,66 @@ Fills the specified point on the bitmap with the currently selected fill color.
 
 
 Definition at line \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00022}{22}} of file \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source}{Queue\+Linear\+Flood\+Filler.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023         \{}
+\DoxyCodeLine{00024             watch.Reset();}
+\DoxyCodeLine{00025             watch.Start();}
+\DoxyCodeLine{00026 }
+\DoxyCodeLine{00027             \textcolor{comment}{//***Prepare for fill.}}
+\DoxyCodeLine{00028             PrepareForFloodFill(pt);}
+\DoxyCodeLine{00029 }
+\DoxyCodeLine{00030             ranges = \textcolor{keyword}{new} FloodFillRangeQueue(((bitmapWidth + bitmapHeight) / 2) * 5);\textcolor{comment}{//new Queue<FloodFillRange>();}}
+\DoxyCodeLine{00031 }
+\DoxyCodeLine{00032             \textcolor{comment}{//***Get starting color.}}
+\DoxyCodeLine{00033             \textcolor{keywordtype}{int} x = (int)pt.X; \textcolor{keywordtype}{int} y = (\textcolor{keywordtype}{int})pt.Y;}
+\DoxyCodeLine{00034             \textcolor{keywordtype}{int} idx = CoordsToByteIndex(ref x, ref y);}
+\DoxyCodeLine{00035             startColor = bitmap.GetPixel((\textcolor{keywordtype}{int})pt.X,(\textcolor{keywordtype}{int})pt.Y);}
+\DoxyCodeLine{00036 }
+\DoxyCodeLine{00037             \textcolor{keywordtype}{bool}[] pixelsChecked = this.pixelsChecked;}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039             \textcolor{comment}{//***Do first call to floodfill.}}
+\DoxyCodeLine{00040             LinearFill(ref x, ref y);}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042             \textcolor{comment}{//***Call floodfill routine while floodfill ranges still exist on the queue}}
+\DoxyCodeLine{00043             \textcolor{keywordflow}{while} (ranges.\mbox{\hyperlink{class_bio_imager_1_1_flood_fill_range_queue_afa471285501923cc0cdf103fd910df5a}{Count}} > 0)}
+\DoxyCodeLine{00044             \{}
+\DoxyCodeLine{00045                 \textcolor{comment}{//**Get Next Range Off the Queue}}
+\DoxyCodeLine{00046                 FloodFillRange range = ranges.\mbox{\hyperlink{class_bio_imager_1_1_flood_fill_range_queue_a39c67294e355577a7249084949b69dce}{Dequeue}}();}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048                 \textcolor{comment}{//**Check Above and Below Each Pixel in the Floodfill Range}}
+\DoxyCodeLine{00049                 \textcolor{keywordtype}{int} downPxIdx = (bitmapWidth * (range.Y + 1)) + range.StartX;\textcolor{comment}{//CoordsToPixelIndex(lFillLoc,y+1);}}
+\DoxyCodeLine{00050                 \textcolor{keywordtype}{int} upPxIdx = (bitmapWidth * (range.Y -\/ 1)) + range.StartX;\textcolor{comment}{//CoordsToPixelIndex(lFillLoc, y -\/ 1);}}
+\DoxyCodeLine{00051                 \textcolor{keywordtype}{int} upY = range.Y -\/ 1;\textcolor{comment}{//so we can pass the y coord by ref}}
+\DoxyCodeLine{00052                 \textcolor{keywordtype}{int} downY = range.Y + 1;}
+\DoxyCodeLine{00053                 \textcolor{keywordtype}{int} tempIdx;}
+\DoxyCodeLine{00054                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = range.StartX; i <= range.EndX; i++)}
+\DoxyCodeLine{00055                 \{}
+\DoxyCodeLine{00056                     \textcolor{comment}{//*Start Fill Upwards}}
+\DoxyCodeLine{00057                     \textcolor{comment}{//if we're not above the top of the bitmap and the pixel above this one is within the color tolerance}}
+\DoxyCodeLine{00058                     tempIdx = CoordsToByteIndex(ref i, ref upY);}
+\DoxyCodeLine{00059                     \textcolor{keywordflow}{if} (range.Y > 0 \&\& (!pixelsChecked[upPxIdx]) \&\& \mbox{\hyperlink{class_bio_imager_1_1_queue_linear_flood_filler_a94f6be5b7151c860d00106174c8abe89}{CheckPixel}}(ref tempIdx))}
+\DoxyCodeLine{00060                         LinearFill(ref i, ref upY);}
+\DoxyCodeLine{00061 }
+\DoxyCodeLine{00062                     \textcolor{comment}{//*Start Fill Downwards}}
+\DoxyCodeLine{00063                     \textcolor{comment}{//if we're not below the bottom of the bitmap and the pixel below this one is within the color tolerance}}
+\DoxyCodeLine{00064                     tempIdx = CoordsToByteIndex(ref i, ref downY);}
+\DoxyCodeLine{00065                     \textcolor{keywordflow}{if} (range.Y < (bitmapHeight -\/ 1) \&\& (!pixelsChecked[downPxIdx]) \&\& \mbox{\hyperlink{class_bio_imager_1_1_queue_linear_flood_filler_a94f6be5b7151c860d00106174c8abe89}{CheckPixel}}(ref tempIdx))}
+\DoxyCodeLine{00066                         LinearFill(ref i, ref downY);}
+\DoxyCodeLine{00067                     downPxIdx++;}
+\DoxyCodeLine{00068                     upPxIdx++;}
+\DoxyCodeLine{00069                 \}}
+\DoxyCodeLine{00070 }
+\DoxyCodeLine{00071             \}}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073             watch.Stop();}
+\DoxyCodeLine{00074         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_queue_linear_flood_filler_8cs_source_l00207}{Bio\+Imager.\+Queue\+Linear\+Flood\+Filler.\+Check\+Pixel()}}, \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00014}{Bio\+Imager.\+Flood\+Fill\+Range\+Queue.\+Count}}, and \mbox{\hyperlink{_flood_fill_range_queue_8cs_source_l00050}{Bio\+Imager.\+Flood\+Fill\+Range\+Queue.\+Dequeue()}}.
 
 
 

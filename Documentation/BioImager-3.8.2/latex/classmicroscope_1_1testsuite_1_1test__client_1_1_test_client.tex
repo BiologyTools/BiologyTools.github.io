@@ -44,6 +44,14 @@ Definition at line \mbox{\hyperlink{test__client_8py_source_l00065}{65}} of file
 
 Definition at line \mbox{\hyperlink{test__client_8py_source_l00066}{66}} of file \mbox{\hyperlink{test__client_8py_source}{test\+\_\+client.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00066     \textcolor{keyword}{def }setUp(self):}
+\DoxyCodeLine{00067         self.daemon = Pyro4.Daemon()}
+\DoxyCodeLine{00068         self.thread = threading.Thread(target=self.daemon.requestLoop)}
+\DoxyCodeLine{00069 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_acce7531bad4e4c728191cffd2975b7a4}\label{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_acce7531bad4e4c728191cffd2975b7a4}} 
 \index{microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}!tearDown@{tearDown}}
 \index{tearDown@{tearDown}!microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}}
@@ -54,6 +62,14 @@ Definition at line \mbox{\hyperlink{test__client_8py_source_l00066}{66}} of file
 
 Definition at line \mbox{\hyperlink{test__client_8py_source_l00070}{70}} of file \mbox{\hyperlink{test__client_8py_source}{test\+\_\+client.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070     \textcolor{keyword}{def }tearDown(self):}
+\DoxyCodeLine{00071         self.daemon.shutdown()}
+\DoxyCodeLine{00072         self.thread.join()}
+\DoxyCodeLine{00073 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_afad2c9c1db6e72458f9766cfa9df3114}\label{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_afad2c9c1db6e72458f9766cfa9df3114}} 
 \index{microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}!test\_property\_access@{test\_property\_access}}
 \index{test\_property\_access@{test\_property\_access}!microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}}
@@ -65,6 +81,27 @@ Definition at line \mbox{\hyperlink{test__client_8py_source_l00070}{70}} of file
 
 Definition at line \mbox{\hyperlink{test__client_8py_source_l00080}{80}} of file \mbox{\hyperlink{test__client_8py_source}{test\+\_\+client.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080     \textcolor{keyword}{def }test\_property\_access(self):}
+\DoxyCodeLine{00081         \textcolor{stringliteral}{"{}"{}"{}Test we can read properties via the Client"{}"{}"{}}}
+\DoxyCodeLine{00082         \textcolor{comment}{\# list of (object-\/to-\/serve, property-\/name-\/to-\/test)}}
+\DoxyCodeLine{00083         objs2prop = [}
+\DoxyCodeLine{00084             (PyroService(), \textcolor{stringliteral}{"{}attr"{}}),}
+\DoxyCodeLine{00085             (ExposedDeformableMirror(10), \textcolor{stringliteral}{"{}n\_actuators"{}}),}
+\DoxyCodeLine{00086         ]}
+\DoxyCodeLine{00087         clients = self.\_serve\_objs([x[0] \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} objs2prop])}
+\DoxyCodeLine{00088         \textcolor{keywordflow}{for} client, obj\_prop \textcolor{keywordflow}{in} zip(clients, objs2prop):}
+\DoxyCodeLine{00089             obj = obj\_prop[0]}
+\DoxyCodeLine{00090             name = obj\_prop[1]}
+\DoxyCodeLine{00091             self.assertTrue(getattr(client, name), getattr(obj, name))}
+\DoxyCodeLine{00092 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{test__client_8py_source_l00074}{microscope.\+testsuite.\+test\+\_\+client.\+Test\+Client.\+\_\+serve\+\_\+objs()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_af09f2273f94cee05482f7eeadb3d2330}\label{classmicroscope_1_1testsuite_1_1test__client_1_1_test_client_af09f2273f94cee05482f7eeadb3d2330}} 
 \index{microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}!test\_property\_writing@{test\_property\_writing}}
 \index{test\_property\_writing@{test\_property\_writing}!microscope.testsuite.test\_client.TestClient@{microscope.testsuite.test\_client.TestClient}}
@@ -75,6 +112,24 @@ Definition at line \mbox{\hyperlink{test__client_8py_source_l00080}{80}} of file
  
 
 Definition at line \mbox{\hyperlink{test__client_8py_source_l00093}{93}} of file \mbox{\hyperlink{test__client_8py_source}{test\+\_\+client.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093     \textcolor{keyword}{def }test\_property\_writing(self):}
+\DoxyCodeLine{00094         \textcolor{stringliteral}{"{}"{}"{}Test we can write properties via the Client"{}"{}"{}}}
+\DoxyCodeLine{00095         obj = PyroService()}
+\DoxyCodeLine{00096         client = (self.\_serve\_objs([obj]))[0]}
+\DoxyCodeLine{00097         self.assertTrue(client.attr, 42)}
+\DoxyCodeLine{00098         client.attr = 10}
+\DoxyCodeLine{00099         self.assertTrue(client.attr, 10)}
+\DoxyCodeLine{00100         self.assertTrue(obj.attr, 10)}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{test__client_8py_source_l00074}{microscope.\+testsuite.\+test\+\_\+client.\+Test\+Client.\+\_\+serve\+\_\+objs()}}.
 
 
 

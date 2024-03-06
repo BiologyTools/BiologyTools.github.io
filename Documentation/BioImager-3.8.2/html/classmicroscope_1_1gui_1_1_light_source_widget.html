@@ -197,7 +197,44 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00346">346</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  348</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  349</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  350</span>        self._device = device</div>
+<div class="line"><span class="lineno">  351</span> </div>
+<div class="line"><span class="lineno">  352</span>        self._enable_check = QtWidgets.QCheckBox(<span class="stringliteral">&quot;Enabled&quot;</span>, parent=self)</div>
+<div class="line"><span class="lineno">  353</span>        self._enable_check.stateChanged.connect(self.updateEnableState)</div>
+<div class="line"><span class="lineno">  354</span> </div>
+<div class="line"><span class="lineno">  355</span>        self._set_power_box = QtWidgets.QDoubleSpinBox(parent=self)</div>
+<div class="line"><span class="lineno">  356</span>        self._set_power_box.setMinimum(0.0)</div>
+<div class="line"><span class="lineno">  357</span>        self._set_power_box.setMaximum(1.0)</div>
+<div class="line"><span class="lineno">  358</span>        self._set_power_box.setValue(self._device.power)</div>
+<div class="line"><span class="lineno">  359</span>        self._set_power_box.setSingleStep(0.01)</div>
+<div class="line"><span class="lineno">  360</span>        self._set_power_box.setAlignment(QtCore.Qt.AlignRight)</div>
+<div class="line"><span class="lineno">  361</span>        self._set_power_box.valueChanged.connect(</div>
+<div class="line"><span class="lineno">  362</span>            <span class="keyword">lambda</span> x: setattr(self._device, <span class="stringliteral">&quot;power&quot;</span>, x)</div>
+<div class="line"><span class="lineno">  363</span>        )</div>
+<div class="line"><span class="lineno">  364</span> </div>
+<div class="line"><span class="lineno">  365</span>        self._current_power = QtWidgets.QLineEdit(</div>
+<div class="line"><span class="lineno">  366</span>            str(self._device.power), parent=self</div>
+<div class="line"><span class="lineno">  367</span>        )</div>
+<div class="line"><span class="lineno">  368</span>        self._current_power.setReadOnly(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  369</span>        self._current_power.setAlignment(QtCore.Qt.AlignRight)</div>
+<div class="line"><span class="lineno">  370</span> </div>
+<div class="line"><span class="lineno">  371</span>        self._get_power_timer = QtCore.QTimer(self)</div>
+<div class="line"><span class="lineno">  372</span>        self._get_power_timer.timeout.connect(self.updateCurrentPower)</div>
+<div class="line"><span class="lineno">  373</span>        self._get_power_timer.setInterval(500)  <span class="comment"># msec</span></div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>        self.updateEnableState()</div>
+<div class="line"><span class="lineno">  376</span> </div>
+<div class="line"><span class="lineno">  377</span>        layout = QtWidgets.QVBoxLayout()</div>
+<div class="line"><span class="lineno">  378</span>        layout.addWidget(self._enable_check)</div>
+<div class="line"><span class="lineno">  379</span>        power_layout = QtWidgets.QFormLayout()</div>
+<div class="line"><span class="lineno">  380</span>        power_layout.addRow(<span class="stringliteral">&quot;Set power&quot;</span>, self._set_power_box)</div>
+<div class="line"><span class="lineno">  381</span>        power_layout.addRow(<span class="stringliteral">&quot;Current power&quot;</span>, self._current_power)</div>
+<div class="line"><span class="lineno">  382</span>        layout.addLayout(power_layout)</div>
+<div class="line"><span class="lineno">  383</span>        self.setLayout(layout)</div>
+<div class="line"><span class="lineno">  384</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -218,7 +255,11 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00408">408</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  408</span>    <span class="keyword">def </span>updateCurrentPower(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  409</span>        self._current_power.setText(str(self._device.power))</div>
+<div class="line"><span class="lineno">  410</span> </div>
+<div class="line"><span class="lineno">  411</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a59f279bc62db9299289b210437013987" name="a59f279bc62db9299289b210437013987"></a>
@@ -238,6 +279,31 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Update UI and light source state after enable check box</pre> 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00385">385</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  385</span>    <span class="keyword">def </span>updateEnableState(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  386</span>        <span class="stringliteral">&quot;&quot;&quot;Update UI and light source state after enable check box&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">if</span> self._enable_check.isChecked():</div>
+<div class="line"><span class="lineno">  388</span>            self._device.enable()</div>
+<div class="line"><span class="lineno">  389</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  390</span>            self._device.disable()</div>
+<div class="line"><span class="lineno">  391</span> </div>
+<div class="line"><span class="lineno">  392</span>        device_is_enabled = self._device.get_is_enabled()</div>
+<div class="line"><span class="lineno">  393</span> </div>
+<div class="line"><span class="lineno">  394</span>        <span class="keywordflow">if</span> self._enable_check.isChecked() != device_is_enabled:</div>
+<div class="line"><span class="lineno">  395</span>            self._enable_check.setChecked(device_is_enabled)</div>
+<div class="line"><span class="lineno">  396</span>            _logger.error(</div>
+<div class="line"><span class="lineno">  397</span>                <span class="stringliteral">&quot;failed to %s light&quot;</span>,</div>
+<div class="line"><span class="lineno">  398</span>                <span class="stringliteral">&quot;enable&quot;</span> <span class="keywordflow">if</span> self._enable_check.isChecked() <span class="keywordflow">else</span> <span class="stringliteral">&quot;disable&quot;</span>,</div>
+<div class="line"><span class="lineno">  399</span>            )</div>
+<div class="line"><span class="lineno">  400</span> </div>
+<div class="line"><span class="lineno">  401</span>        self._current_power.setEnabled(device_is_enabled)</div>
+<div class="line"><span class="lineno">  402</span>        <span class="keywordflow">if</span> device_is_enabled:</div>
+<div class="line"><span class="lineno">  403</span>            self._get_power_timer.start()</div>
+<div class="line"><span class="lineno">  404</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  405</span>            self._get_power_timer.stop()</div>
+<div class="line"><span class="lineno">  406</span>            self._current_power.setText(<span class="stringliteral">&quot;0.0&quot;</span>)</div>
+<div class="line"><span class="lineno">  407</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="gui_8py_source.html#l00365">microscope.gui.LightSourceWidget._current_power</a>, <a class="el" href="gui_8py_source.html#l00067">microscope.gui.DeviceSettingsWidget._device</a>, <a class="el" href="gui_8py_source.html#l00088">microscope.gui.ControllerWidget._device</a>, <a class="el" href="gui_8py_source.html#l00185">microscope.gui.CameraWidget._device</a>, <a class="el" href="gui_8py_source.html#l00259">microscope.gui.DeformableMirrorWidget._device</a>, <a class="el" href="gui_8py_source.html#l00321">microscope.gui.FilterWheelWidget._device</a>, <a class="el" href="gui_8py_source.html#l00350">microscope.gui.LightSourceWidget._device</a>, <a class="el" href="gui_8py_source.html#l00423">microscope.gui.StageWidget._device</a>, <a class="el" href="gui_8py_source.html#l00194">microscope.gui.CameraWidget._enable_check</a>, <a class="el" href="gui_8py_source.html#l00352">microscope.gui.LightSourceWidget._enable_check</a>, and <a class="el" href="gui_8py_source.html#l00371">microscope.gui.LightSourceWidget._get_power_timer</a>.</p>
 
 </div>
 </div>

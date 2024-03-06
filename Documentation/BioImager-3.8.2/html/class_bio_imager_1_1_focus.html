@@ -180,7 +180,10 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00248">248</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  249</span>        {</div>
+<div class="line"><span class="lineno">  250</span> </div>
+<div class="line"><span class="lineno">  251</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -202,6 +205,14 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The z-axis position of the microscope. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00291">291</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  292</span>        {</div>
+<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">return</span> <a class="code hl_function" href="class_bio_imager_1_1_focus.html#a3cca66b920dadb0649c9bffeb87a0ac0">GetFocus</a>(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  294</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_focus_html_a3cca66b920dadb0649c9bffeb87a0ac0"><div class="ttname"><a href="class_bio_imager_1_1_focus.html#a3cca66b920dadb0649c9bffeb87a0ac0">BioImager.Focus.GetFocus</a></div><div class="ttdeci">double GetFocus()</div><div class="ttdef"><b>Definition:</b> <a href="_microscope_8cs_source.html#l00291">Microscope.cs:291</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_microscope_8cs_source.html#l00291">BioImager.Focus.GetFocus()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_microscope_8cs_source.html#l00291">BioImager.Focus.GetFocus()</a>.</p>
 
 </div>
 </div>
@@ -230,6 +241,40 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The z position of the microscope. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00303">303</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  304</span>        {</div>
+<div class="line"><span class="lineno">  305</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.PMicroscope)</div>
+<div class="line"><span class="lineno">  306</span>            {</div>
+<div class="line"><span class="lineno">  307</span>                Point3D p;</div>
+<div class="line"><span class="lineno">  308</span>                Microscope.pMicroscope.GetPosition3D(out p, update);</div>
+<div class="line"><span class="lineno">  309</span>                <span class="keywordflow">return</span> p.Z;</div>
+<div class="line"><span class="lineno">  310</span>            }</div>
+<div class="line"><span class="lineno">  311</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span>(Properties.Settings.Default.PycroManager)</div>
+<div class="line"><span class="lineno">  312</span>            {</div>
+<div class="line"><span class="lineno">  313</span>                Point3D p;</div>
+<div class="line"><span class="lineno">  314</span>                PycroManager.GetPosition3D(out p, update);</div>
+<div class="line"><span class="lineno">  315</span>                <span class="keywordflow">return</span> p.Z;</div>
+<div class="line"><span class="lineno">  316</span>            }</div>
+<div class="line"><span class="lineno">  317</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;MTB&quot;</span>))</div>
+<div class="line"><span class="lineno">  318</span>            {</div>
+<div class="line"><span class="lineno">  319</span>                <a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">BioImager.MicroscopeConsole.Command</a> com = BioImager.MicroscopeConsole.RunCommand</div>
+<div class="line"><span class="lineno">  320</span>                    (<span class="keyword">new</span> <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>(<a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>.Type.GetFocus, <span class="keyword">null</span>));</div>
+<div class="line"><span class="lineno">  321</span>                <span class="keywordflow">return</span> com.doubles[0];</div>
+<div class="line"><span class="lineno">  322</span>            }</div>
+<div class="line"><span class="lineno">  323</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;Prio&quot;</span>))</div>
+<div class="line"><span class="lineno">  324</span>            {</div>
+<div class="line"><span class="lineno">  325</span>                <span class="keywordflow">return</span> Microscope.sdk.GetZ();</div>
+<div class="line"><span class="lineno">  326</span>            }</div>
+<div class="line"><span class="lineno">  327</span>            <span class="keywordflow">if</span>(Automation.Properties.ContainsKey(<span class="stringliteral">&quot;GetFocus&quot;</span>))</div>
+<div class="line"><span class="lineno">  328</span>            {</div>
+<div class="line"><span class="lineno">  329</span>                <span class="keywordflow">return</span> (<span class="keywordtype">double</span>)Automation.GetProperty(<span class="stringliteral">&quot;GetFocus&quot;</span>);</div>
+<div class="line"><span class="lineno">  330</span>            }</div>
+<div class="line"><span class="lineno">  331</span>            <span class="keywordflow">return</span> z;</div>
+<div class="line"><span class="lineno">  332</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_microscope_console_html"><div class="ttname"><a href="class_bio_imager_1_1_microscope_console.html">BioImager.MicroscopeConsole</a></div><div class="ttdef"><b>Definition:</b> <a href="_microscope_console_8cs_source.html#l00008">MicroscopeConsole.cs:9</a></div></div>
+<div class="ttc" id="anamespace_bio_imager_html"><div class="ttname"><a href="namespace_bio_imager.html">BioImager</a></div><div class="ttdef"><b>Definition:</b> <a href="_abstract_flood_filler_8cs_source.html#l00010">AbstractFloodFiller.cs:11</a></div></div>
+<div class="ttc" id="astruct_bio_imager_1_1_microscope_console_1_1_command_html"><div class="ttname"><a href="struct_bio_imager_1_1_microscope_console_1_1_command.html">BioImager.MicroscopeConsole.Command</a></div><div class="ttdef"><b>Definition:</b> <a href="_microscope_console_8cs_source.html#l00013">MicroscopeConsole.cs:14</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_automation_8cs_source.html#l00450">BioImager.Automation.GetProperty()</a>.</p>
 
 </div>
 </div>
@@ -251,7 +296,18 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value is a PointD object. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00337">337</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  338</span>        {</div>
+<div class="line"><span class="lineno">  339</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;MTB&quot;</span>))</div>
+<div class="line"><span class="lineno">  340</span>            {</div>
+<div class="line"><span class="lineno">  341</span>                <a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">BioImager.MicroscopeConsole.Command</a> com = <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.RunCommand(</div>
+<div class="line"><span class="lineno">  342</span>                    <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>(<a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>.Type.GetStageSWLimit, <span class="keyword">null</span>));</div>
+<div class="line"><span class="lineno">  343</span>                upperLimit = com.doubles[0];</div>
+<div class="line"><span class="lineno">  344</span>                lowerLimit = com.doubles[1];</div>
+<div class="line"><span class="lineno">  345</span>                <span class="keywordflow">return</span> <span class="keyword">new</span> PointD(upperLimit,lowerLimit);</div>
+<div class="line"><span class="lineno">  346</span>            }</div>
+<div class="line"><span class="lineno">  347</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> PointD(lowerLimit, upperLimit);</div>
+<div class="line"><span class="lineno">  348</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a987ece342f70bcd2ae93b36d0b727e68" name="a987ece342f70bcd2ae93b36d0b727e68"></a>
@@ -278,6 +334,38 @@ Static Public Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00256">256</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  257</span>        {</div>
+<div class="line"><span class="lineno">  258</span>            <span class="keywordflow">if</span> (Recorder.recordMicroscope)</div>
+<div class="line"><span class="lineno">  259</span>                Recorder.AddLine(<span class="stringliteral">&quot;Microscope.Focus.SetFocus(&quot;</span> + f + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  260</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.PMicroscope)</div>
+<div class="line"><span class="lineno">  261</span>            {</div>
+<div class="line"><span class="lineno">  262</span>                PointD p = Microscope.Stage.GetPosition(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  263</span>                Microscope.pMicroscope.SetPosition(<span class="keyword">new</span> Point3D(p.X,p.Y,f));</div>
+<div class="line"><span class="lineno">  264</span>            }</div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  266</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.PycroManager)</div>
+<div class="line"><span class="lineno">  267</span>            {</div>
+<div class="line"><span class="lineno">  268</span>                PointD p = Microscope.Stage.GetPosition(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  269</span>                PycroManager.SetPosition(<span class="keyword">new</span> Point3D(p.X, p.Y, f));</div>
+<div class="line"><span class="lineno">  270</span>            }</div>
+<div class="line"><span class="lineno">  271</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  272</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;MTB&quot;</span>))</div>
+<div class="line"><span class="lineno">  273</span>            {</div>
+<div class="line"><span class="lineno">  274</span>                <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.RunCommand(</div>
+<div class="line"><span class="lineno">  275</span>                    <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>(<a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>.Type.SetFocus,<span class="keyword">new</span> <span class="keywordtype">double</span>[] { f}));</div>
+<div class="line"><span class="lineno">  276</span>                z = f;</div>
+<div class="line"><span class="lineno">  277</span>            }</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">else</span> <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;Prio&quot;</span>))</div>
+<div class="line"><span class="lineno">  279</span>            {</div>
+<div class="line"><span class="lineno">  280</span>                Microscope.sdk.SetZ(f);</div>
+<div class="line"><span class="lineno">  281</span>            }</div>
+<div class="line"><span class="lineno">  282</span>            <span class="keywordflow">if</span> (Automation.Properties.ContainsKey(<span class="stringliteral">&quot;SetFocus&quot;</span>))</div>
+<div class="line"><span class="lineno">  283</span>            {</div>
+<div class="line"><span class="lineno">  284</span>                Automation.SetProperty(<span class="stringliteral">&quot;SetFocus&quot;</span>, f.ToString());</div>
+<div class="line"><span class="lineno">  285</span>            }</div>
+<div class="line"><span class="lineno">  286</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_automation_8cs_source.html#l00459">BioImager.Automation.SetProperty()</a>.</p>
 
 </div>
 </div>
@@ -316,7 +404,19 @@ Static Public Attributes</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_microscope_8cs_source.html#l00355">355</a> of file <a class="el" href="_microscope_8cs_source.html">Microscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  356</span>        {</div>
+<div class="line"><span class="lineno">  357</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.LibPath.Contains(<span class="stringliteral">&quot;MTB&quot;</span>))</div>
+<div class="line"><span class="lineno">  358</span>            {</div>
+<div class="line"><span class="lineno">  359</span>                <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.RunCommand(</div>
+<div class="line"><span class="lineno">  360</span>                   <span class="keyword">new</span> <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>(<a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_microscope_console.html">MicroscopeConsole</a>.<a class="code hl_struct" href="struct_bio_imager_1_1_microscope_console_1_1_command.html">Command</a>.Type.SetFocusSWLimit,</div>
+<div class="line"><span class="lineno">  361</span>                   <span class="keyword">new</span> <span class="keywordtype">double</span>[] { xd, yd }));</div>
+<div class="line"><span class="lineno">  362</span>            }</div>
+<div class="line"><span class="lineno">  363</span>            upperLimit = xd;</div>
+<div class="line"><span class="lineno">  364</span>            lowerLimit = yd;</div>
+<div class="line"><span class="lineno">  365</span>            <span class="keywordflow">if</span> (Recorder.recordMicroscope)</div>
+<div class="line"><span class="lineno">  366</span>                Recorder.AddLine(<span class="stringliteral">&quot;Microscope.Focus.SetSWLimit(&quot;</span> + xd + <span class="stringliteral">&quot;,&quot;</span> + yd + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  367</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

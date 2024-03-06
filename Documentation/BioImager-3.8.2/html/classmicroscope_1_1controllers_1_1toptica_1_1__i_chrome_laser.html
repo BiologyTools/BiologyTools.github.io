@@ -261,7 +261,21 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00171">171</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  171</span>    <span class="keyword">def </span>__init__(self, conn: _iChromeConnection, laser_number: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  172</span>        super().__init__()</div>
+<div class="line"><span class="lineno">  173</span>        self._conn = _iChromeLaserConnection(conn, laser_number)</div>
+<div class="line"><span class="lineno">  174</span> </div>
+<div class="line"><span class="lineno">  175</span>        <span class="comment"># FIXME: set values to &#39;0&#39; because we need to pass an int as</span></div>
+<div class="line"><span class="lineno">  176</span>        <span class="comment"># values for settings of type str.  Probably a bug on</span></div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment"># Device.set_setting.</span></div>
+<div class="line"><span class="lineno">  178</span>        self.add_setting(<span class="stringliteral">&quot;label&quot;</span>, <span class="stringliteral">&quot;str&quot;</span>, self._conn.get_label, <span class="keywordtype">None</span>, values=0)</div>
+<div class="line"><span class="lineno">  179</span>        self.add_setting(<span class="stringliteral">&quot;type&quot;</span>, <span class="stringliteral">&quot;str&quot;</span>, self._conn.get_type, <span class="keywordtype">None</span>, values=0)</div>
+<div class="line"><span class="lineno">  180</span> </div>
+<div class="line"><span class="lineno">  181</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  182</span>            <span class="stringliteral">&quot;delay&quot;</span>, <span class="stringliteral">&quot;int&quot;</span>, self._conn.get_delay, <span class="keywordtype">None</span>, values=tuple()</div>
+<div class="line"><span class="lineno">  183</span>        )</div>
+<div class="line"><span class="lineno">  184</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -284,6 +298,22 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#a368b7bf7f4d13f9176d467fcb0dbf6f3">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00188">188</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>    <span class="keyword">def </span>get_is_on(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  189</span>        <span class="keywordflow">if</span> self._conn.get_enable():</div>
+<div class="line"><span class="lineno">  190</span>            <span class="keywordflow">if</span> self._conn.get_cw():</div>
+<div class="line"><span class="lineno">  191</span>                <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  192</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  193</span>                <span class="comment"># There doesn&#39;t seem to be command to check whether</span></div>
+<div class="line"><span class="lineno">  194</span>                <span class="comment"># the TTL line is currently high, so just return True</span></div>
+<div class="line"><span class="lineno">  195</span>                <span class="comment"># if set that way.</span></div>
+<div class="line"><span class="lineno">  196</span>                <span class="keywordflow">return</span> self._conn.get_use_ttl()</div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  199</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, and <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00136">microscope.lights.deepstar.DeepstarLaser.get_is_on()</a>, <a class="el" href="lights_2obis_8py_source.html#l00166">microscope.lights.obis.ObisLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>.</p>
 
 </div>
 </div>
@@ -306,6 +336,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#ad89d3b36b76fa78d2617794df95502b2">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00185">185</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  185</span>    <span class="keyword">def </span>get_status(self) -&gt; typing.List[str]:</div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">return</span> self._conn.get_status_txt().split()</div>
+<div class="line"><span class="lineno">  187</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, and <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -345,6 +382,30 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00226">226</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  228</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">if</span> tmode <span class="keywordflow">is</span> <span class="keywordflow">not</span> microscope.TriggerMode.BULB:</div>
+<div class="line"><span class="lineno">  230</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  231</span>                <span class="stringliteral">&quot;only TriggerMode.BULB mode is supported&quot;</span></div>
+<div class="line"><span class="lineno">  232</span>            )</div>
+<div class="line"><span class="lineno">  233</span> </div>
+<div class="line"><span class="lineno">  234</span>        <span class="comment"># From the manual it seems that cw and ttl parameters are</span></div>
+<div class="line"><span class="lineno">  235</span>        <span class="comment"># mutually exclusive but also still need to be set separately.</span></div>
+<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">if</span> ttype <span class="keywordflow">is</span> microscope.TriggerType.HIGH:</div>
+<div class="line"><span class="lineno">  237</span>            self._conn.set_cw(<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  238</span>            self._conn.set_use_ttl(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  239</span>        <span class="keywordflow">elif</span> ttype <span class="keywordflow">is</span> microscope.TriggerType.SOFTWARE:</div>
+<div class="line"><span class="lineno">  240</span>            self._conn.set_use_ttl(<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  241</span>            self._conn.set_cw(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  242</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  243</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  244</span>                <span class="stringliteral">&quot;only trigger type HIGH and SOFTWARE are supported&quot;</span></div>
+<div class="line"><span class="lineno">  245</span>            )</div>
+<div class="line"><span class="lineno">  246</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, and <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -367,6 +428,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00216">216</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  216</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">return</span> microscope.TriggerMode.BULB</div>
+<div class="line"><span class="lineno">  218</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -389,6 +455,14 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00220">220</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  220</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">if</span> self._conn.get_use_ttl():</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">return</span> microscope.TriggerType.HIGH</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  224</span>            <span class="keywordflow">return</span> microscope.TriggerType.SOFTWARE</div>
+<div class="line"><span class="lineno">  225</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>

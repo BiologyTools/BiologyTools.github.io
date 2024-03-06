@@ -300,6 +300,40 @@ acquired data in the processing step.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a657d93b584e6915a33f4a853529330b4">microscope.simulators.SimulatedCamera</a>, <a class="el" href="classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html#a2affa7aa4fc988edbd7337e4a305b8f6">microscope.testsuite.devices.TestCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a8958fbb797332a875b157cfc782b1012">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html#a5fa190172f9a8c7a93053942d69aa117">microscope.simulators.stage_aware_camera.StageAwareCamera</a>, and <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a5187efcee41e91c498c4b07b9a30842c">microscope.cameras.ximea.XimeaCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00829">829</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  829</span>    <span class="keyword">def </span>__init__(self, **kwargs) -&gt; None:</div>
+<div class="line"><span class="lineno">  830</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  831</span>        <span class="comment"># A list of readout mode descriptions.</span></div>
+<div class="line"><span class="lineno">  832</span>        self._readout_modes = [<span class="stringliteral">&quot;default&quot;</span>]</div>
+<div class="line"><span class="lineno">  833</span>        <span class="comment"># The index of the current readout mode.</span></div>
+<div class="line"><span class="lineno">  834</span>        self._readout_mode = 0</div>
+<div class="line"><span class="lineno">  835</span>        <span class="comment"># Transforms to apply to data (fliplr, flipud, rot90)</span></div>
+<div class="line"><span class="lineno">  836</span>        <span class="comment"># Transform to correct for readout order.</span></div>
+<div class="line"><span class="lineno">  837</span>        self._readout_transform = (<span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  838</span>        <span class="comment"># Transform supplied by client to correct for system geometry.</span></div>
+<div class="line"><span class="lineno">  839</span>        self._client_transform = (<span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  840</span>        <span class="comment"># Result of combining client and readout transforms</span></div>
+<div class="line"><span class="lineno">  841</span>        self._transform = (<span class="keyword">False</span>, <span class="keyword">False</span>, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  842</span>        <span class="comment"># A transform provided by the client.</span></div>
+<div class="line"><span class="lineno">  843</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  844</span>            <span class="stringliteral">&quot;transform&quot;</span>,</div>
+<div class="line"><span class="lineno">  845</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno">  846</span>            <span class="keyword">lambda</span>: Camera.ALLOWED_TRANSFORMS.index(self._transform),</div>
+<div class="line"><span class="lineno">  847</span>            <span class="keyword">lambda</span> index: self.set_transform(Camera.ALLOWED_TRANSFORMS[index]),</div>
+<div class="line"><span class="lineno">  848</span>            Camera.ALLOWED_TRANSFORMS,</div>
+<div class="line"><span class="lineno">  849</span>        )</div>
+<div class="line"><span class="lineno">  850</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  851</span>            <span class="stringliteral">&quot;readout mode&quot;</span>,</div>
+<div class="line"><span class="lineno">  852</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno">  853</span>            <span class="keyword">lambda</span>: self._readout_mode,</div>
+<div class="line"><span class="lineno">  854</span>            self.set_readout_mode,</div>
+<div class="line"><span class="lineno">  855</span>            <span class="keyword">lambda</span>: self._readout_modes,</div>
+<div class="line"><span class="lineno">  856</span>        )</div>
+<div class="line"><span class="lineno">  857</span>        self.add_setting(<span class="stringliteral">&quot;roi&quot;</span>, <span class="stringliteral">&quot;tuple&quot;</span>, self.get_roi, self.set_roi, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  858</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, <a class="el" href="abc_8py_source.html#l00839">microscope.abc.Camera._client_transform</a>, <a class="el" href="abc_8py_source.html#l00834">microscope.abc.Camera._readout_mode</a>, <a class="el" href="pvcam_8py_source.html#l01817">microscope.cameras.pvcam.PVCamera._readout_mode</a>, <a class="el" href="abc_8py_source.html#l00832">microscope.abc.Camera._readout_modes</a>, <a class="el" href="atmcd_8py_source.html#l01479">microscope.cameras.atmcd.AndorAtmcd._readout_modes</a>, <a class="el" href="pvcam_8py_source.html#l01780">microscope.cameras.pvcam.PVCamera._readout_modes</a>, <a class="el" href="abc_8py_source.html#l00837">microscope.abc.Camera._readout_transform</a>, <a class="el" href="abc_8py_source.html#l00841">microscope.abc.Camera._transform</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="abc_8py_source.html#l00961">microscope.abc.Camera.get_roi()</a>, <a class="el" href="abc_8py_source.html#l00876">microscope.abc.Camera.set_readout_mode()</a>, <a class="el" href="pvcam_8py_source.html#l01812">microscope.cameras.pvcam.PVCamera.set_readout_mode()</a>, <a class="el" href="abc_8py_source.html#l00974">microscope.abc.Camera.set_roi()</a>, and <a class="el" href="abc_8py_source.html#l00884">microscope.abc.Camera.set_transform()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -321,6 +355,17 @@ acquired data in the processing step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return the current binning corrected for transform.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00933">933</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  933</span>    <span class="keyword">def </span>get_binning(self) -&gt; microscope.Binning:</div>
+<div class="line"><span class="lineno">  934</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current binning corrected for transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  935</span>        binning = self._get_binning()</div>
+<div class="line"><span class="lineno">  936</span>        <span class="keywordflow">if</span> self._transform[2]:</div>
+<div class="line"><span class="lineno">  937</span>            <span class="comment"># 90 degree rotation</span></div>
+<div class="line"><span class="lineno">  938</span>            binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(binning[1], binning[0])</div>
+<div class="line"><span class="lineno">  939</span>        <span class="keywordflow">return</span> binning</div>
+<div class="line"><span class="lineno">  940</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_binning_html"><div class="ttname"><a href="classmicroscope_1_1_binning.html">microscope.Binning</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00137">__init__.py:137</a></div></div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, and <a class="el" href="abc_8py_source.html#l00974">microscope.abc.Camera.set_roi()</a>.</p>
 
 </div>
 </div>
@@ -343,7 +388,11 @@ acquired data in the processing step.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#a354cbec40487ef2c7b8f70c7e619d00b">microscope.cameras.andorsdk3.AndorSDK3</a>, <a class="el" href="classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#aa93a9fdab13ce9d82702c761616e2d4c">microscope.cameras.atmcd.AndorAtmcd</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#af4e4b15508e4330c289592e9d0438e35">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a12069127466cc9354d37ec22888de936">microscope.cameras.pvcam.PVCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a434c32b877b16a368e89ef4f58c1de3a">microscope.cameras.ximea.XimeaCamera</a>, and <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a3bc2f4a77edbd2a6fba31e8a950827f6">microscope.simulators.SimulatedCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00911">911</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  911</span>    <span class="keyword">def </span>get_cycle_time(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  912</span>        <span class="stringliteral">&quot;&quot;&quot;Return the cycle time in seconds.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  913</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  914</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a16e161a6bd61f3968a072971285eb017" name="a16e161a6bd61f3968a072971285eb017"></a>
@@ -365,7 +414,11 @@ acquired data in the processing step.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#a9ab976e675de8a92e88b226cbeaa5a34">microscope.cameras.andorsdk3.AndorSDK3</a>, <a class="el" href="classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#adfa130debfb7cb4c318d80c994c70788">microscope.cameras.atmcd.AndorAtmcd</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#af63aa3bf60461bb5b66285998de897c8">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ad273b3698320841302f733e600776dbf">microscope.cameras.pvcam.PVCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a0871c3a944a7176ad762ea615762fc99">microscope.cameras.ximea.XimeaCamera</a>, and <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a1c63fc13e73960dc4fb657f5c799f38e">microscope.simulators.SimulatedCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00907">907</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  907</span>    <span class="keyword">def </span>get_exposure_time(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  908</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current exposure time in seconds.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  909</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  910</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a23985107b0809645061cc5b6570e924b" name="a23985107b0809645061cc5b6570e924b"></a>
@@ -385,6 +438,19 @@ acquired data in the processing step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return current ROI.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00961">961</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  961</span>    <span class="keyword">def </span>get_roi(self) -&gt; microscope.ROI:</div>
+<div class="line"><span class="lineno">  962</span>        <span class="stringliteral">&quot;&quot;&quot;Return current ROI.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  963</span>        roi = self._get_roi()</div>
+<div class="line"><span class="lineno">  964</span>        <span class="keywordflow">if</span> self._transform[2]:</div>
+<div class="line"><span class="lineno">  965</span>            <span class="comment"># 90 degree rotation</span></div>
+<div class="line"><span class="lineno">  966</span>            roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(roi[1], roi[0], roi[3], roi[2])</div>
+<div class="line"><span class="lineno">  967</span>        <span class="keywordflow">return</span> roi</div>
+<div class="line"><span class="lineno">  968</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_r_o_i_html"><div class="ttname"><a href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00144">__init__.py:144</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00957">microscope.abc.Camera._get_roi()</a>, <a class="el" href="andorsdk3_8py_source.html#l00617">microscope.cameras.andorsdk3.AndorSDK3._get_roi()</a>, <a class="el" href="atmcd_8py_source.html#l01793">microscope.cameras.atmcd.AndorAtmcd._get_roi()</a>, <a class="el" href="picam_8py_source.html#l00220">microscope.cameras.picam.PiCamera._get_roi()</a>, <a class="el" href="pvcam_8py_source.html#l01645">microscope.cameras.pvcam.PVCamera._get_roi()</a>, <a class="el" href="ximea_8py_source.html#l00385">microscope.cameras.ximea.XimeaCamera._get_roi()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00301">microscope.simulators.SimulatedCamera._get_roi()</a>, and <a class="el" href="abc_8py_source.html#l00841">microscope.abc.Camera._transform</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, and <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>.</p>
 
 </div>
 </div>
@@ -405,6 +471,16 @@ acquired data in the processing step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return a tuple of `(width, height)` corrected for transform.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00920">920</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  920</span>    <span class="keyword">def </span>get_sensor_shape(self) -&gt; typing.Tuple[int, int]:</div>
+<div class="line"><span class="lineno">  921</span>        <span class="stringliteral">&quot;&quot;&quot;Return a tuple of `(width, height)` corrected for transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  922</span>        shape = self._get_sensor_shape()</div>
+<div class="line"><span class="lineno">  923</span>        <span class="keywordflow">if</span> self._transform[2]:</div>
+<div class="line"><span class="lineno">  924</span>            <span class="comment"># 90 degree rotation</span></div>
+<div class="line"><span class="lineno">  925</span>            shape = (shape[1], shape[0])</div>
+<div class="line"><span class="lineno">  926</span>        <span class="keywordflow">return</span> shape</div>
+<div class="line"><span class="lineno">  927</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00974">microscope.abc.Camera.set_roi()</a>.</p>
 
 </div>
 </div>
@@ -425,7 +501,11 @@ acquired data in the processing step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return the current transform without readout transform.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00880">880</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  880</span>    <span class="keyword">def </span>get_transform(self):</div>
+<div class="line"><span class="lineno">  881</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current transform without readout transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  882</span>        <span class="keywordflow">return</span> self._client_transform</div>
+<div class="line"><span class="lineno">  883</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a01c44d08b0f7dcb152a211c98858f6d3" name="a01c44d08b0f7dcb152a211c98858f6d3"></a>
@@ -455,6 +535,20 @@ acquired data in the processing step.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Set binning along both axes.  Return `True` if successful.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00946">946</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  946</span>    <span class="keyword">def </span>set_binning(self, binning: microscope.Binning) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  947</span>        <span class="stringliteral">&quot;&quot;&quot;Set binning along both axes.  Return `</span><span class="keyword">True</span>` <span class="keywordflow">if</span> successful.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  948</span><span class="stringliteral">        h_bin, v_bin = binning</span></div>
+<div class="line"><span class="lineno">  949</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self._transform[2]:</div>
+<div class="line"><span class="lineno">  950</span>            <span class="comment"># 90 degree rotation</span></div>
+<div class="line"><span class="lineno">  951</span>            binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(v_bin, h_bin)</div>
+<div class="line"><span class="lineno">  952</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  953</span>            binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(h_bin, v_bin)</div>
+<div class="line"><span class="lineno">  954</span>        <span class="keywordflow">return</span> self._set_binning(binning)</div>
+<div class="line"><span class="lineno">  955</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00607">microscope.cameras.andorsdk3.AndorSDK3._set_binning()</a>, <a class="el" href="atmcd_8py_source.html#l01788">microscope.cameras.atmcd.AndorAtmcd._set_binning()</a>, <a class="el" href="pvcam_8py_source.html#l01640">microscope.cameras.pvcam.PVCamera._set_binning()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00298">microscope.simulators.SimulatedCamera._set_binning()</a>, <a class="el" href="picam_8py_source.html#l00224">microscope.cameras.picam.PiCamera._set_binning()</a>, <a class="el" href="abc_8py_source.html#l00942">microscope.abc.Camera._set_binning()</a>, <a class="el" href="ximea_8py_source.html#l00376">microscope.cameras.ximea.XimeaCamera._set_binning()</a>, and <a class="el" href="abc_8py_source.html#l00841">microscope.abc.Camera._transform</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>
@@ -487,7 +581,11 @@ acquired data in the processing step.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a9a2ce2c562da7aed8eeecf398e3e9c4a">microscope.cameras.ximea.XimeaCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#afafb04d7ff203521376c6b10aef77f8c">microscope.cameras.andorsdk3.AndorSDK3</a>, <a class="el" href="classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a4849cb42298cefed55fa11e61f4c3d4c">microscope.cameras.atmcd.AndorAtmcd</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#ab3d50b09994deb47585bae7360958eb8">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a7e4607381e866e5a73e56162b10099c4">microscope.cameras.pvcam.PVCamera</a>, and <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#aa056a4f4ce7fd13acec9c778846b8a5e">microscope.simulators.SimulatedCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00903">903</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  903</span>    <span class="keyword">def </span>set_exposure_time(self, value: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  904</span>        <span class="stringliteral">&quot;&quot;&quot;Set the exposure time on the device in seconds.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  905</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  906</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ace2ff70daf5a7c4a8ec53b375e5da73f" name="ace2ff70daf5a7c4a8ec53b375e5da73f"></a>
@@ -519,6 +617,12 @@ acquired data in the processing step.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ab5036922175a849b792d3395f6606ae7">microscope.cameras.pvcam.PVCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00876">876</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  876</span>    <span class="keyword">def </span>set_readout_mode(self, description):</div>
+<div class="line"><span class="lineno">  877</span>        <span class="stringliteral">&quot;&quot;&quot;Set the readout mode and _readout_transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  878</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  879</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, and <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -552,6 +656,29 @@ acquired data in the processing step.</pre>
 Return True if ROI set correctly, False otherwise.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00974">974</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  974</span>    <span class="keyword">def </span>set_roi(self, roi: microscope.ROI) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  975</span>        <span class="stringliteral">&quot;&quot;&quot;Set the ROI according to the provided rectangle.</span></div>
+<div class="line"><span class="lineno">  976</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  977</span><span class="stringliteral">        Return </span><span class="keyword">True</span> <span class="keywordflow">if</span> ROI set correctly, <span class="keyword">False</span> otherwise.</div>
+<div class="line"><span class="lineno">  978</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  979</span><span class="stringliteral">        maxw, maxh = self.get_sensor_shape()</span></div>
+<div class="line"><span class="lineno">  980</span><span class="stringliteral">        binning = self.get_binning()</span></div>
+<div class="line"><span class="lineno">  981</span><span class="stringliteral">        left, top, width, height = roi</span></div>
+<div class="line"><span class="lineno">  982</span><span class="stringliteral">        </span><span class="keywordflow">if</span> <span class="keywordflow">not</span> width:  <span class="comment"># 0 or None</span></div>
+<div class="line"><span class="lineno">  983</span>            width = maxw // binning.h</div>
+<div class="line"><span class="lineno">  984</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> height:  <span class="comment"># 0 or None</span></div>
+<div class="line"><span class="lineno">  985</span>            height = maxh // binning.v</div>
+<div class="line"><span class="lineno">  986</span>        <span class="keywordflow">if</span> self._transform[2]:</div>
+<div class="line"><span class="lineno">  987</span>            roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(left, top, height, width)</div>
+<div class="line"><span class="lineno">  988</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  989</span>            roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(left, top, width, height)</div>
+<div class="line"><span class="lineno">  990</span>        <span class="keywordflow">return</span> self._set_roi(roi)</div>
+<div class="line"><span class="lineno">  991</span> </div>
+<div class="line"><span class="lineno">  992</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="picam_8py_source.html#l00231">microscope.cameras.picam.PiCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00970">microscope.abc.Camera._set_roi()</a>, <a class="el" href="ximea_8py_source.html#l00394">microscope.cameras.ximea.XimeaCamera._set_roi()</a>, <a class="el" href="andorsdk3_8py_source.html#l00626">microscope.cameras.andorsdk3.AndorSDK3._set_roi()</a>, <a class="el" href="atmcd_8py_source.html#l01798">microscope.cameras.atmcd.AndorAtmcd._set_roi()</a>, <a class="el" href="pvcam_8py_source.html#l01650">microscope.cameras.pvcam.PVCamera._set_roi()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00305">microscope.simulators.SimulatedCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00841">microscope.abc.Camera._transform</a>, <a class="el" href="abc_8py_source.html#l00933">microscope.abc.Camera.get_binning()</a>, and <a class="el" href="abc_8py_source.html#l00920">microscope.abc.Camera.get_sensor_shape()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -582,6 +709,23 @@ Return True if ROI set correctly, False otherwise.
 </div><div class="memdoc">
 <pre class="fragment">Combine provided transform with readout transform.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00884">884</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  884</span>    <span class="keyword">def </span>set_transform(self, transform):</div>
+<div class="line"><span class="lineno">  885</span>        <span class="stringliteral">&quot;&quot;&quot;Combine provided transform with readout transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  886</span>        <span class="keywordflow">if</span> isinstance(transform, str):</div>
+<div class="line"><span class="lineno">  887</span>            transform = literal_eval(transform)</div>
+<div class="line"><span class="lineno">  888</span>        self._client_transform = transform</div>
+<div class="line"><span class="lineno">  889</span>        lr, ud, rot = (</div>
+<div class="line"><span class="lineno">  890</span>            self._readout_transform[i] ^ transform[i] <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(3)</div>
+<div class="line"><span class="lineno">  891</span>        )</div>
+<div class="line"><span class="lineno">  892</span>        <span class="keywordflow">if</span> self._readout_transform[2] <span class="keywordflow">and</span> self._client_transform[2]:</div>
+<div class="line"><span class="lineno">  893</span>            lr = <span class="keywordflow">not</span> lr</div>
+<div class="line"><span class="lineno">  894</span>            ud = <span class="keywordflow">not</span> ud</div>
+<div class="line"><span class="lineno">  895</span>        self._transform = (lr, ud, rot)</div>
+<div class="line"><span class="lineno">  896</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00839">microscope.abc.Camera._client_transform</a>, <a class="el" href="abc_8py_source.html#l00837">microscope.abc.Camera._readout_transform</a>, <a class="el" href="abc_8py_source.html#l00841">microscope.abc.Camera._transform</a>, and <a class="el" href="abc_8py_source.html#l00884">microscope.abc.Camera.set_transform()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, and <a class="el" href="abc_8py_source.html#l00884">microscope.abc.Camera.set_transform()</a>.</p>
 
 </div>
 </div>

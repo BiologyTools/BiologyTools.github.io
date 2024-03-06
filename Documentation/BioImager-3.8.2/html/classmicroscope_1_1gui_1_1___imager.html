@@ -191,7 +191,29 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00142">142</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  142</span>    <span class="keyword">def </span>__init__(self, camera: microscope.abc.Camera) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  143</span>        super().__init__()</div>
+<div class="line"><span class="lineno">  144</span>        self._camera = camera</div>
+<div class="line"><span class="lineno">  145</span>        self._data_queue = _DataQueue()</div>
+<div class="line"><span class="lineno">  146</span>        <span class="keywordflow">if</span> isinstance(self._camera, Pyro4.Proxy):</div>
+<div class="line"><span class="lineno">  147</span>            pyro_daemon = Pyro4.Daemon()</div>
+<div class="line"><span class="lineno">  148</span>            queue_uri = pyro_daemon.register(self._data_queue)</div>
+<div class="line"><span class="lineno">  149</span>            self._camera.set_client(queue_uri)</div>
+<div class="line"><span class="lineno">  150</span>            data_thread = threading.Thread(</div>
+<div class="line"><span class="lineno">  151</span>                target=pyro_daemon.requestLoop, daemon=<span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  152</span>            )</div>
+<div class="line"><span class="lineno">  153</span>            data_thread.start()</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  155</span>            self._device.set_client(self._data_queue)</div>
+<div class="line"><span class="lineno">  156</span>        fetch_thread = threading.Thread(target=self.fetchLoop, daemon=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  157</span>        fetch_thread.start()</div>
+<div class="line"><span class="lineno">  158</span> </div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment"># Depending on the Qt backend this might not get called (seems</span></div>
+<div class="line"><span class="lineno">  160</span>        <span class="comment"># to work on PySide2 but not with PyQt5).  The device itself</span></div>
+<div class="line"><span class="lineno">  161</span>        <span class="comment"># should be removing clients that no longer work anyway.</span></div>
+<div class="line"><span class="lineno">  162</span>        self.destroyed.connect(<span class="keyword">lambda</span>: self._camera.set_client(<span class="keywordtype">None</span>))</div>
+<div class="line"><span class="lineno">  163</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -212,7 +234,20 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00167">167</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  167</span>    <span class="keyword">def </span>fetchLoop(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">while</span> <span class="keyword">True</span>:</div>
+<div class="line"><span class="lineno">  169</span>            <span class="comment"># We may be getting images faster than we can display so</span></div>
+<div class="line"><span class="lineno">  170</span>            <span class="comment"># only get the last image in the queue and discard the</span></div>
+<div class="line"><span class="lineno">  171</span>            <span class="comment"># rest (we could do with a class that only has one item</span></div>
+<div class="line"><span class="lineno">  172</span>            <span class="comment"># and putting a new item will discard the previous instead</span></div>
+<div class="line"><span class="lineno">  173</span>            <span class="comment"># of blocking/queue).</span></div>
+<div class="line"><span class="lineno">  174</span>            data = self._data_queue.get()</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">while</span> <span class="keywordflow">not</span> self._data_queue.empty():</div>
+<div class="line"><span class="lineno">  176</span>                data = self._data_queue.get()</div>
+<div class="line"><span class="lineno">  177</span>            self.imageAcquired.emit(data)</div>
+<div class="line"><span class="lineno">  178</span> </div>
+<div class="line"><span class="lineno">  179</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a50aa41da864a5a43c784a00df5392c55" name="a50aa41da864a5a43c784a00df5392c55"></a>
@@ -232,7 +267,10 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00164">164</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  164</span>    <span class="keyword">def </span>snap(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  165</span>        self._camera.trigger()</div>
+<div class="line"><span class="lineno">  166</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

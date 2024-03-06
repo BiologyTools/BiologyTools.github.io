@@ -39,6 +39,16 @@ Definition at line \mbox{\hyperlink{_slide_slice_layer_8cs_source_l00020}{20}} o
 Definition at line \mbox{\hyperlink{_slide_slice_layer_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_slide_slice_layer_8cs_source}{Slide\+Slice\+Layer.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00027                                                          : base()}
+\DoxyCodeLine{00028         \{}
+\DoxyCodeLine{00029             \_slideSource = slideSource;}
+\DoxyCodeLine{00030             Name = \textcolor{stringliteral}{"{}SliceLayer"{}};}
+\DoxyCodeLine{00031             Extent = slideSource.Schema.Extent.ToMRect();}
+\DoxyCodeLine{00032         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_slice_layer_a3fa58d1ccad65ce0d6f63d517194e3ba}\label{class_bio_imager_1_1_slide_slice_layer_a3fa58d1ccad65ce0d6f63d517194e3ba}} 
@@ -51,6 +61,27 @@ Definition at line \mbox{\hyperlink{_slide_slice_layer_8cs_source_l00027}{27}} o
 
 Definition at line \mbox{\hyperlink{_slide_slice_layer_8cs_source_l00034}{34}} of file \mbox{\hyperlink{_slide_slice_layer_8cs_source}{Slide\+Slice\+Layer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00035         \{}
+\DoxyCodeLine{00036             \textcolor{keywordflow}{if} (box is \textcolor{keyword}{null}) \textcolor{keywordflow}{return} Enumerable.Empty<IFeature>();}
+\DoxyCodeLine{00037             \textcolor{comment}{// Repaint on debouncing, resolution changed(zoom map) or box changed(resize control) .}}
+\DoxyCodeLine{00038             \textcolor{keywordflow}{if} (\_lastExtent.ToMRect().Centroid.Distance(box.Centroid) > 2 * resolution || \_lastResolution != resolution || \_lastExtent.Width != box.Width || \_lastExtent.Height != box.Height)}
+\DoxyCodeLine{00039             \{}
+\DoxyCodeLine{00040                 \_lastExtent = box.ToExtent();}
+\DoxyCodeLine{00041                 \_lastResolution = resolution;}
+\DoxyCodeLine{00042                 MRect box2 = box.Grow(SymbolStyle.DefaultWidth * 2.0 * resolution, SymbolStyle.DefaultHeight * 2.0 * resolution);}
+\DoxyCodeLine{00043                 var sliceInfo = \textcolor{keyword}{new} SliceInfo() \{ Extent = box2.ToExtent(), Resolution = resolution \};}
+\DoxyCodeLine{00044                 var bytes = \_slideSource.\mbox{\hyperlink{interface_bio_imager_1_1_i_slice_provider_a7be2d4f5f71322e336c0cfb5663d8d8d}{GetSlice}}(sliceInfo);}
+\DoxyCodeLine{00045                 \textcolor{keywordflow}{if} (bytes != \textcolor{keyword}{null} \&\& \_lastFeatures.FirstOrDefault() is IFeature feature)}
+\DoxyCodeLine{00046                 \{}
+\DoxyCodeLine{00047                     feature = \textcolor{keyword}{new} RasterFeature(\textcolor{keyword}{new} MRaster(bytes.Result, box2));}
+\DoxyCodeLine{00048                 \}}
+\DoxyCodeLine{00049             \}}
+\DoxyCodeLine{00050             \textcolor{keywordflow}{return} \_lastFeatures;}
+\DoxyCodeLine{00051         \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

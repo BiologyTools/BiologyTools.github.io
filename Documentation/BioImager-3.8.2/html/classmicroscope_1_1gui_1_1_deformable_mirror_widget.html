@@ -202,7 +202,41 @@ does this too, i.e., it sets all actuators to their mid-point.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00255">255</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  257</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  258</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  259</span>        self._device = device</div>
+<div class="line"><span class="lineno">  260</span> </div>
+<div class="line"><span class="lineno">  261</span>        self._pattern = numpy.ndarray(shape=(self._device.n_actuators))</div>
+<div class="line"><span class="lineno">  262</span>        self._actuators: typing.List[QtWidgets.QSlider] = []</div>
+<div class="line"><span class="lineno">  263</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(self._device.n_actuators):</div>
+<div class="line"><span class="lineno">  264</span>            actuator = QtWidgets.QSlider(QtCore.Qt.Horizontal, parent=self)</div>
+<div class="line"><span class="lineno">  265</span>            actuator.setMinimum(0)</div>
+<div class="line"><span class="lineno">  266</span>            actuator.setMaximum(100)</div>
+<div class="line"><span class="lineno">  267</span> </div>
+<div class="line"><span class="lineno">  268</span>            <span class="keyword">def </span>setThisActuator(value, actuator_index=i):</div>
+<div class="line"><span class="lineno">  269</span>                self.setActuatorValue(actuator_index, value)</div>
+<div class="line"><span class="lineno">  270</span> </div>
+<div class="line"><span class="lineno">  271</span>            actuator.valueChanged.connect(setThisActuator)</div>
+<div class="line"><span class="lineno">  272</span>            self._actuators.append(actuator)</div>
+<div class="line"><span class="lineno">  273</span>        <span class="comment"># We don&#39;t know the pattern currently applied to the mirror so</span></div>
+<div class="line"><span class="lineno">  274</span>        <span class="comment"># we reset it which also updates the slider positions.</span></div>
+<div class="line"><span class="lineno">  275</span>        self.resetPattern()</div>
+<div class="line"><span class="lineno">  276</span> </div>
+<div class="line"><span class="lineno">  277</span>        self._reset_button = QtWidgets.QPushButton(<span class="stringliteral">&quot;Reset&quot;</span>, parent=self)</div>
+<div class="line"><span class="lineno">  278</span>        self._reset_button.clicked.connect(self.resetPattern)</div>
+<div class="line"><span class="lineno">  279</span> </div>
+<div class="line"><span class="lineno">  280</span>        main_layout = QtWidgets.QVBoxLayout()</div>
+<div class="line"><span class="lineno">  281</span>        main_layout.addWidget(self._reset_button)</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>        actuators_layout = QtWidgets.QFormLayout()</div>
+<div class="line"><span class="lineno">  284</span>        actuators_layout.setLabelAlignment(QtCore.Qt.AlignRight)</div>
+<div class="line"><span class="lineno">  285</span>        <span class="keywordflow">for</span> i, actuator <span class="keywordflow">in</span> enumerate(self._actuators, start=1):</div>
+<div class="line"><span class="lineno">  286</span>            actuators_layout.addRow(str(i), actuator)</div>
+<div class="line"><span class="lineno">  287</span>        main_layout.addLayout(actuators_layout)</div>
+<div class="line"><span class="lineno">  288</span> </div>
+<div class="line"><span class="lineno">  289</span>        self.setLayout(main_layout)</div>
+<div class="line"><span class="lineno">  290</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -223,6 +257,18 @@ does this too, i.e., it sets all actuators to their mid-point.
 </div><div class="memdoc">
 <pre class="fragment">Set all actuators to their mid-point (0.5).</pre> 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00300">300</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  300</span>    <span class="keyword">def </span>resetPattern(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  301</span>        <span class="stringliteral">&quot;&quot;&quot;Set all actuators to their mid-point (0.5).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  302</span>        self._pattern.fill(0.5)</div>
+<div class="line"><span class="lineno">  303</span>        self._device.apply_pattern(self._pattern)</div>
+<div class="line"><span class="lineno">  304</span>        <span class="keywordflow">for</span> i, actuator <span class="keywordflow">in</span> enumerate(self._actuators):</div>
+<div class="line"><span class="lineno">  305</span>            actuator.blockSignals(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  306</span>            actuator.setSliderPosition(int(self._pattern[i] * 100))</div>
+<div class="line"><span class="lineno">  307</span>            actuator.blockSignals(<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">  308</span> </div>
+<div class="line"><span class="lineno">  309</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="gui_8py_source.html#l00067">microscope.gui.DeviceSettingsWidget._device</a>, <a class="el" href="gui_8py_source.html#l00088">microscope.gui.ControllerWidget._device</a>, <a class="el" href="gui_8py_source.html#l00185">microscope.gui.CameraWidget._device</a>, <a class="el" href="gui_8py_source.html#l00259">microscope.gui.DeformableMirrorWidget._device</a>, <a class="el" href="gui_8py_source.html#l00321">microscope.gui.FilterWheelWidget._device</a>, <a class="el" href="gui_8py_source.html#l00350">microscope.gui.LightSourceWidget._device</a>, <a class="el" href="gui_8py_source.html#l00423">microscope.gui.StageWidget._device</a>, and <a class="el" href="gui_8py_source.html#l00261">microscope.gui.DeformableMirrorWidget._pattern</a>.</p>
 
 </div>
 </div>
@@ -259,7 +305,16 @@ does this too, i.e., it sets all actuators to their mid-point.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00291">291</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  291</span>    <span class="keyword">def </span>setActuatorValue(self, actuator_index: int, value: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  292</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> (0 &lt; actuator_index &lt; self._pattern.size):</div>
+<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><span class="lineno">  294</span>                <span class="stringliteral">&quot;index %d is invalid because DM has %d actuators&quot;</span></div>
+<div class="line"><span class="lineno">  295</span>                % (actuator_index, self._pattern.size)</div>
+<div class="line"><span class="lineno">  296</span>            )</div>
+<div class="line"><span class="lineno">  297</span>        self._pattern[actuator_index] = value / 100.0</div>
+<div class="line"><span class="lineno">  298</span>        self._device.apply_pattern(self._pattern)</div>
+<div class="line"><span class="lineno">  299</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

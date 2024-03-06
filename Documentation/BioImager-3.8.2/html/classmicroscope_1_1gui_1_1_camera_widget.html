@@ -197,7 +197,43 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00183">183</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  183</span>    <span class="keyword">def </span>__init__(self, device: microscope.abc.Camera, *args, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  184</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  185</span>        self._device = device</div>
+<div class="line"><span class="lineno">  186</span>        self._imager = _Imager(self._device)</div>
+<div class="line"><span class="lineno">  187</span>        self._imager.imageAcquired.connect(self.displayData)</div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span>        self._view = QtWidgets.QLabel(parent=self)</div>
+<div class="line"><span class="lineno">  190</span>        self.displayData(</div>
+<div class="line"><span class="lineno">  191</span>            numpy.zeros(self._device.get_sensor_shape(), dtype=numpy.uint8)</div>
+<div class="line"><span class="lineno">  192</span>        )</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>        self._enable_check = QtWidgets.QCheckBox(<span class="stringliteral">&quot;Enabled&quot;</span>, parent=self)</div>
+<div class="line"><span class="lineno">  195</span>        self._enable_check.stateChanged.connect(self.updateEnableState)</div>
+<div class="line"><span class="lineno">  196</span> </div>
+<div class="line"><span class="lineno">  197</span>        self._exposure_box = QtWidgets.QDoubleSpinBox(parent=self)</div>
+<div class="line"><span class="lineno">  198</span>        self._exposure_box.setSuffix(<span class="stringliteral">&quot; sec&quot;</span>)</div>
+<div class="line"><span class="lineno">  199</span>        self._exposure_box.setSingleStep(0.1)</div>
+<div class="line"><span class="lineno">  200</span>        self._exposure_box.valueChanged.connect(self._device.set_exposure_time)</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>        self._snap_button = QtWidgets.QPushButton(<span class="stringliteral">&quot;Snap&quot;</span>, parent=self)</div>
+<div class="line"><span class="lineno">  203</span>        self._snap_button.clicked.connect(self._imager.snap)</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>        self.updateEnableState()</div>
+<div class="line"><span class="lineno">  206</span> </div>
+<div class="line"><span class="lineno">  207</span>        layout = QtWidgets.QVBoxLayout()</div>
+<div class="line"><span class="lineno">  208</span>        controls_row = QtWidgets.QHBoxLayout()</div>
+<div class="line"><span class="lineno">  209</span>        <span class="keywordflow">for</span> widget <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">  210</span>            self._enable_check,</div>
+<div class="line"><span class="lineno">  211</span>            self._exposure_box,</div>
+<div class="line"><span class="lineno">  212</span>            self._snap_button,</div>
+<div class="line"><span class="lineno">  213</span>        ]:</div>
+<div class="line"><span class="lineno">  214</span>            controls_row.addWidget(widget)</div>
+<div class="line"><span class="lineno">  215</span>        layout.addLayout(controls_row)</div>
+<div class="line"><span class="lineno">  216</span>        layout.addWidget(self._view)</div>
+<div class="line"><span class="lineno">  217</span>        self.setLayout(layout)</div>
+<div class="line"><span class="lineno">  218</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -228,7 +264,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00236">236</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  236</span>    <span class="keyword">def </span>displayData(self, data: numpy.ndarray) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  237</span>        np_to_qt = {</div>
+<div class="line"><span class="lineno">  238</span>            numpy.dtype(<span class="stringliteral">&quot;uint8&quot;</span>): QtGui.QImage.Format_Grayscale8,</div>
+<div class="line"><span class="lineno">  239</span>            numpy.dtype(<span class="stringliteral">&quot;uint16&quot;</span>): QtGui.QImage.Format_Grayscale16,</div>
+<div class="line"><span class="lineno">  240</span>        }</div>
+<div class="line"><span class="lineno">  241</span>        qt_img = QtGui.QImage(</div>
+<div class="line"><span class="lineno">  242</span>            data.tobytes(), *data.shape, np_to_qt[data.dtype]</div>
+<div class="line"><span class="lineno">  243</span>        )</div>
+<div class="line"><span class="lineno">  244</span>        self._view.setPixmap(QtGui.QPixmap.fromImage(qt_img))</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a93f7b018d4ca06253ca1ba5914d34e90" name="a93f7b018d4ca06253ca1ba5914d34e90"></a>
@@ -248,6 +295,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Update UI and camera state after enable check box</pre> 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00219">219</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  219</span>    <span class="keyword">def </span>updateEnableState(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  220</span>        <span class="stringliteral">&quot;&quot;&quot;Update UI and camera state after enable check box&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  221</span>        <span class="keywordflow">if</span> self._enable_check.isChecked():</div>
+<div class="line"><span class="lineno">  222</span>            self._device.enable()</div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  224</span>            self._device.disable()</div>
+<div class="line"><span class="lineno">  225</span> </div>
+<div class="line"><span class="lineno">  226</span>        <span class="keywordflow">if</span> self._enable_check.isChecked() != self._device.get_is_enabled():</div>
+<div class="line"><span class="lineno">  227</span>            self._enable_check.setChecked(self._device.get_is_enabled())</div>
+<div class="line"><span class="lineno">  228</span>            _logger.error(</div>
+<div class="line"><span class="lineno">  229</span>                <span class="stringliteral">&quot;failed to %s camera&quot;</span>,</div>
+<div class="line"><span class="lineno">  230</span>                <span class="stringliteral">&quot;enable&quot;</span> <span class="keywordflow">if</span> self._enable_check.isChecked() <span class="keywordflow">else</span> <span class="stringliteral">&quot;disable&quot;</span>,</div>
+<div class="line"><span class="lineno">  231</span>            )</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>        self._snap_button.setEnabled(self._device.get_is_enabled())</div>
+<div class="line"><span class="lineno">  234</span>        self._exposure_box.setEnabled(self._device.get_is_enabled())</div>
+<div class="line"><span class="lineno">  235</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="gui_8py_source.html#l00067">microscope.gui.DeviceSettingsWidget._device</a>, <a class="el" href="gui_8py_source.html#l00088">microscope.gui.ControllerWidget._device</a>, <a class="el" href="gui_8py_source.html#l00185">microscope.gui.CameraWidget._device</a>, <a class="el" href="gui_8py_source.html#l00259">microscope.gui.DeformableMirrorWidget._device</a>, <a class="el" href="gui_8py_source.html#l00321">microscope.gui.FilterWheelWidget._device</a>, <a class="el" href="gui_8py_source.html#l00350">microscope.gui.LightSourceWidget._device</a>, <a class="el" href="gui_8py_source.html#l00423">microscope.gui.StageWidget._device</a>, <a class="el" href="gui_8py_source.html#l00194">microscope.gui.CameraWidget._enable_check</a>, <a class="el" href="gui_8py_source.html#l00352">microscope.gui.LightSourceWidget._enable_check</a>, <a class="el" href="gui_8py_source.html#l00197">microscope.gui.CameraWidget._exposure_box</a>, <a class="el" href="gui_8py_source.html#l00202">microscope.gui.CameraWidget._snap_button</a>, and <a class="el" href="gui_8py_source.html#l00189">microscope.gui.CameraWidget._view</a>.</p>
 
 </div>
 </div>

@@ -290,7 +290,19 @@ of device addresses to device types is required.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00588">588</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  593</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  594</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  595</span>        self._conn = _ZaberConnection(port, baudrate=115200, timeout=0.5)</div>
+<div class="line"><span class="lineno">  596</span>        self._devices: typing.Dict[str, <a class="code hl_class" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>] = {}</div>
+<div class="line"><span class="lineno">  597</span> </div>
+<div class="line"><span class="lineno">  598</span>        <span class="keywordflow">for</span> address, device_type <span class="keywordflow">in</span> address2type.items():</div>
+<div class="line"><span class="lineno">  599</span>            <span class="keywordflow">if</span> address &lt; 1 <span class="keywordflow">or</span> address &gt; 99:</div>
+<div class="line"><span class="lineno">  600</span>                <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;address must be an integer between 1-99&quot;</span>)</div>
+<div class="line"><span class="lineno">  601</span>            dev_cls = device_type.value</div>
+<div class="line"><span class="lineno">  602</span>            self._devices[str(address)] = dev_cls(self._conn, address)</div>
+<div class="line"><span class="lineno">  603</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1abc_1_1_device_html"><div class="ttname"><a href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a></div><div class="ttdef"><b>Definition:</b> <a href="abc_8py_source.html#l00285">abc.py:285</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -313,6 +325,12 @@ of device addresses to device types is required.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_controller.html#a514852dc8a72c9cf2f0277660a32c555">microscope.abc.Controller</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00605">605</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  605</span>    <span class="keyword">def </span>devices(self) -&gt; typing.Dict[str, microscope.abc.Device]:</div>
+<div class="line"><span class="lineno">  606</span>        <span class="keywordflow">return</span> self._devices</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="device__server_8py_source.html#l00323">microscope.device_server.DeviceServer._devices</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00316">microscope.simulators.SimulatedController._devices</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01342">microscope.abc.Controller.devices()</a>.</p>
 
 </div>
 </div>

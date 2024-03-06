@@ -55,6 +55,20 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00273}{273}} of file \mbox{
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00274}{274}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00274     \textcolor{keyword}{def }\_\_init\_\_(self, dev\_conn: \_LudlController, axis: str) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00275         super().\_\_init\_\_()}
+\DoxyCodeLine{00276         self.\_dev\_conn = dev\_conn}
+\DoxyCodeLine{00277         self.\_axis = axis}
+\DoxyCodeLine{00278         \textcolor{comment}{\# not a good solution as min/max are used to build the stage map in}}
+\DoxyCodeLine{00279         \textcolor{comment}{\# mosaic etc... Maybe we just need to know it! }}
+\DoxyCodeLine{00280         self.min\_limit = 0.0}
+\DoxyCodeLine{00281         self.max\_limit = 100000.0}
+\DoxyCodeLine{00282         self.set\_speed(100000)}
+\DoxyCodeLine{00283 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_aad42c7589762a13a1fb49f23f470ba98}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_aad42c7589762a13a1fb49f23f470ba98}} 
@@ -67,6 +81,32 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00274}{274}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00313}{313}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00313     \textcolor{keyword}{def }find\_limits(self,speed = 100000):}
+\DoxyCodeLine{00314         \textcolor{comment}{\#drive axis to minimum pos, zero and then drive to max position}}
+\DoxyCodeLine{00315         self.\_dev\_conn.move\_to\_limit(self.\_axis,-\/speed)}
+\DoxyCodeLine{00316         \textcolor{comment}{\# spin moves dont set the status info need to query the motor}}
+\DoxyCodeLine{00317         \textcolor{comment}{\# status byte}}
+\DoxyCodeLine{00318         self.\_dev\_conn.wait\_for\_motor\_stop(self.\_axis)}
+\DoxyCodeLine{00319         \textcolor{comment}{\# reset positon to zero.}}
+\DoxyCodeLine{00320         print(self.position)}
+\DoxyCodeLine{00321         self.\_dev\_conn.reset\_position(self.\_axis)}
+\DoxyCodeLine{00322         self.min\_limit=0.0}
+\DoxyCodeLine{00323         self.\_dev\_conn.homed = \textcolor{keyword}{True}}
+\DoxyCodeLine{00324         \textcolor{comment}{\# move to positive limit}}
+\DoxyCodeLine{00325         self.\_dev\_conn.move\_to\_limit(self.\_axis,speed)}
+\DoxyCodeLine{00326         self.\_dev\_conn.wait\_for\_motor\_stop(self.\_axis)}
+\DoxyCodeLine{00327         self.max\_limit=self.position}
+\DoxyCodeLine{00328         \textcolor{keywordflow}{return} self.limits}
+\DoxyCodeLine{00329 }
+\DoxyCodeLine{00330 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a8374aadef47cfa3f023de0a77b9bdcc8}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a8374aadef47cfa3f023de0a77b9bdcc8}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!home@{home}}
 \index{home@{home}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -77,6 +117,14 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00313}{313}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00305}{305}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00305     \textcolor{keyword}{def }home(self) -\/> None:}
+\DoxyCodeLine{00306         self.find\_limits()}
+\DoxyCodeLine{00307         self.move\_to(self.max\_limit/2)}
+\DoxyCodeLine{00308 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a7f17397b728c325edec168527bee8fd7}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a7f17397b728c325edec168527bee8fd7}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!limits@{limits}}
 \index{limits@{limits}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -91,6 +139,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis_a538a8
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00298}{298}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00298     \textcolor{keyword}{def }limits(self) -\/> microscope.AxisLimits:}
+\DoxyCodeLine{00299         \textcolor{keywordflow}{return} \mbox{\hyperlink{classmicroscope_1_1_axis_limits}{microscope.AxisLimits}}(lower=self.min\_limit, upper=self.max\_limit)}
+\DoxyCodeLine{00300 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00303}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{ludl_8py_source_l00277}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00313}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+find\+\_\+limits()}}, \mbox{\hyperlink{abc_8py_source_l01382}{microscope.\+abc.\+Stage\+Axis.\+limits()}}, \mbox{\hyperlink{abc_8py_source_l01515}{microscope.\+abc.\+Stage.\+limits()}}, \mbox{\hyperlink{zaber_8py_source_l00321}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+limits()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00417}{microscope.\+simulators.\+Simulated\+Stage\+Axis.\+limits()}}, \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}, \mbox{\hyperlink{ludl_8py_source_l00281}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+max\+\_\+limit}}, \mbox{\hyperlink{ludl_8py_source_l00280}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+min\+\_\+limit}}, \mbox{\hyperlink{abc_8py_source_l01370}{microscope.\+abc.\+Stage\+Axis.\+move\+\_\+to()}}, \mbox{\hyperlink{zaber_8py_source_l00309}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+move\+\_\+to()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00423}{microscope.\+simulators.\+Simulated\+Stage\+Axis.\+move\+\_\+to()}}, \mbox{\hyperlink{ludl_8py_source_l00287}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+move\+\_\+to()}}, \mbox{\hyperlink{abc_8py_source_l01561}{microscope.\+abc.\+Stage.\+move\+\_\+to()}}, \mbox{\hyperlink{zaber_8py_source_l00365}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+move\+\_\+to()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00477}{microscope.\+simulators.\+Simulated\+Stage.\+move\+\_\+to()}}, \mbox{\hyperlink{ludl_8py_source_l00375}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+move\+\_\+to()}}, \mbox{\hyperlink{linkam_8py_source_l01338}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+MDSMixin.\+move\+\_\+to()}}, \mbox{\hyperlink{_d_color_shader_8cs_source_l00016}{Bio\+Imager.\+DColor\+Shader.\+DVertex.\+position}}, \mbox{\hyperlink{abc_8py_source_l01319}{microscope.\+abc.\+Filter\+Wheel.\+position}}, \mbox{\hyperlink{abc_8py_source_l01376}{microscope.\+abc.\+Stage\+Axis.\+position()}}, \mbox{\hyperlink{abc_8py_source_l01500}{microscope.\+abc.\+Stage.\+position()}}, \mbox{\hyperlink{zaber_8py_source_l00314}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+position()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00413}{microscope.\+simulators.\+Simulated\+Stage\+Axis.\+position()}}, \mbox{\hyperlink{ludl_8py_source_l00291}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+position()}}, \mbox{\hyperlink{_microscope_8cs_source_l00541}{Bio\+Imager.\+TLShutter.\+position}}, \mbox{\hyperlink{_microscope_8cs_source_l00583}{Bio\+Imager.\+HXPShutter.\+position}}, \mbox{\hyperlink{_microscope_8cs_source_l00621}{Bio\+Imager.\+RLShutter.\+position}}, \mbox{\hyperlink{_microscope_8cs_source_l00659}{Bio\+Imager.\+Light\+Source.\+position}}, \mbox{\hyperlink{_microscope_8cs_source_l00729}{Bio\+Imager.\+Filter\+Wheel.\+position}}, \mbox{\hyperlink{atmcd_8py_source_l01332}{microscope.\+cameras.\+atmcd.\+Readout\+Mode.\+speed}}, and \mbox{\hyperlink{ludl_8py_source_l00310}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+speed}}.
+
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a3247c605c276fe72e3e0cd9e44cac8c8}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a3247c605c276fe72e3e0cd9e44cac8c8}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!move\_by@{move\_by}}
@@ -107,6 +170,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis_a4c2f8
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00284}{284}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00284     \textcolor{keyword}{def }move\_by(self, delta: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00285         self.\_dev\_conn.move\_by\_relative\_position(self.\_axis, int(delta))}
+\DoxyCodeLine{00286 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00303}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{ludl_8py_source_l00277}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a12cf3dee41dd65b008a005eea13ac05f}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a12cf3dee41dd65b008a005eea13ac05f}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!move\_to@{move\_to}}
 \index{move\_to@{move\_to}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -121,6 +195,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis_a14b52
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00287}{287}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00287     \textcolor{keyword}{def }move\_to(self, pos: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00288         self.\_dev\_conn.move\_to\_absolute\_position(self.\_axis, int(pos))}
+\DoxyCodeLine{00289 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00303}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{ludl_8py_source_l00277}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00420}{microscope.\+simulators.\+Simulated\+Stage\+Axis.\+move\+\_\+by()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a014a41eec051a20a3b2cf125c0e845ec}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a014a41eec051a20a3b2cf125c0e845ec}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!position@{position}}
@@ -137,6 +226,24 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_axis_a9bd5d
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00291}{291}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00291     \textcolor{keyword}{def }position(self) -\/> float:}
+\DoxyCodeLine{00292         \textcolor{keywordflow}{if} self.\_dev\_conn.is\_busy():}
+\DoxyCodeLine{00293             \_logger.warning(\textcolor{stringliteral}{"{}querying stage axis position but device is busy"{}})}
+\DoxyCodeLine{00294             self.\_dev\_conn.wait\_until\_idle()}
+\DoxyCodeLine{00295         \textcolor{keywordflow}{return} float(self.\_dev\_conn.get\_absolute\_position(self.\_axis))}
+\DoxyCodeLine{00296 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00303}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{ludl_8py_source_l00277}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+axis}}, \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01311}{microscope.\+abc.\+Filter\+Wheel.\+get\+\_\+num\+\_\+positions()}}, and \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a08450add0e35aaed4277e4564a0eaf0c}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a08450add0e35aaed4277e4564a0eaf0c}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!set\_speed@{set\_speed}}
 \index{set\_speed@{set\_speed}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -147,6 +254,14 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00291}{291}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00309}{309}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00309     \textcolor{keyword}{def }set\_speed(self, speed: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00310         self.speed = speed}
+\DoxyCodeLine{00311         self.\_dev\_conn.set\_speed(self.\_axis, speed)}
+\DoxyCodeLine{00312 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -160,6 +275,10 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00309}{309}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00281}{281}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a0273d79dff0e810305675b45a48c9299}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a0273d79dff0e810305675b45a48c9299}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!min\_limit@{min\_limit}}
 \index{min\_limit@{min\_limit}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -170,6 +289,10 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00281}{281}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00280}{280}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a9dffc71caa3ad46e8e7b74462c43491b}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis_a9dffc71caa3ad46e8e7b74462c43491b}} 
 \index{microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}!speed@{speed}}
 \index{speed@{speed}!microscope.stages.ludl.\_LudlStageAxis@{microscope.stages.ludl.\_LudlStageAxis}}
@@ -179,6 +302,10 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00280}{280}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00310}{310}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}.
 
 
 

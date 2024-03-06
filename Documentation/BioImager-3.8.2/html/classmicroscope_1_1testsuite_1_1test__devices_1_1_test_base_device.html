@@ -178,7 +178,26 @@ name, and the class uses the default instead of an error.  See
 issue #84.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00505">505</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  505</span>    <span class="keyword">def </span>test_unexpected_kwargs_raise_exception(self):</div>
+<div class="line"><span class="lineno">  506</span>        <span class="stringliteral">&quot;&quot;&quot;Unexpected kwargs on constructor raise exception.</span></div>
+<div class="line"><span class="lineno">  507</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  508</span><span class="stringliteral">        Test first that we can construct the device.  Then test that</span></div>
+<div class="line"><span class="lineno">  509</span><span class="stringliteral">        it fails </span><span class="keywordflow">if</span> there are unused kwargs.  This <span class="keywordflow">is</span> an issue when</div>
+<div class="line"><span class="lineno">  510</span>        there are default arguments, there<span class="stringliteral">&#39;s a typo on the argument</span></div>
+<div class="line"><span class="lineno">  511</span><span class="stringliteral">        name, </span><span class="keywordflow">and</span> the <span class="keyword">class </span>uses the default instead of an error.  See</div>
+<div class="line"><span class="lineno">  512</span>        issue <span class="comment">#84.</span></div>
+<div class="line"><span class="lineno">  513</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  514</span><span class="stringliteral">        simulators.SimulatedLightSource()</span></div>
+<div class="line"><span class="lineno">  515</span><span class="stringliteral">        </span><span class="comment"># XXX: Device.__del__ calls shutdown().  However, if __init__</span></div>
+<div class="line"><span class="lineno">  516</span>        <span class="comment"># failed the device is not complete and shutdown() fails</span></div>
+<div class="line"><span class="lineno">  517</span>        <span class="comment"># because the logger has not been created.  See comments on</span></div>
+<div class="line"><span class="lineno">  518</span>        <span class="comment"># issue #69.  patch __del__ to workaround this issue.</span></div>
+<div class="line"><span class="lineno">  519</span>        <span class="keyword">with</span> unittest.mock.patch(<span class="stringliteral">&quot;microscope.devices.Device.__del__&quot;</span>):</div>
+<div class="line"><span class="lineno">  520</span>            <span class="keyword">with</span> self.assertRaisesRegex(TypeError, <span class="stringliteral">&quot;argument &#39;power&#39;&quot;</span>):</div>
+<div class="line"><span class="lineno">  521</span>                simulators.SimulatedLightSource(power=2)</div>
+<div class="line"><span class="lineno">  522</span> </div>
+<div class="line"><span class="lineno">  523</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

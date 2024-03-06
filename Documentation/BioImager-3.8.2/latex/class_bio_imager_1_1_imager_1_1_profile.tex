@@ -41,6 +41,18 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00087}{87}} of file \mbo
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00103}{103}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00104             \{}
+\DoxyCodeLine{00105                 FilePath = path;}
+\DoxyCodeLine{00106                 \textcolor{keywordflow}{if} (path != \textcolor{stringliteral}{"{}Default"{}})}
+\DoxyCodeLine{00107                 \{}
+\DoxyCodeLine{00108                     Name = Path.GetFileNameWithoutExtension(FilePath);}
+\DoxyCodeLine{00109                     DirName = Path.GetDirectoryName(FilePath);}
+\DoxyCodeLine{00110                 \}}
+\DoxyCodeLine{00111             \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_1_1_profile_a4aa4f00172fa7aa6e47331eb39f2af42}\label{class_bio_imager_1_1_imager_1_1_profile_a4aa4f00172fa7aa6e47331eb39f2af42}} 
@@ -53,6 +65,26 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00103}{103}} of file \mb
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00113}{113}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114             \{}
+\DoxyCodeLine{00115                 \textcolor{keywordtype}{string}[] sts = File.ReadAllLines(FilePath);}
+\DoxyCodeLine{00116                 \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} sts)}
+\DoxyCodeLine{00117                 \{}
+\DoxyCodeLine{00118                     \textcolor{keywordtype}{string}[] ss = s.Split(\textcolor{charliteral}{'='});}
+\DoxyCodeLine{00119                     \textcolor{keywordflow}{if} (Settings.Default[ss[0]].GetType() == typeof(\textcolor{keywordtype}{double}))}
+\DoxyCodeLine{00120                     \{}
+\DoxyCodeLine{00121                         Settings.Default[ss[0]] = \textcolor{keywordtype}{double}.Parse(ss[1]);}
+\DoxyCodeLine{00122                     \}}
+\DoxyCodeLine{00123                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00124                         \textcolor{keywordflow}{if} (Settings.Default[ss[0]].GetType() == typeof(\textcolor{keywordtype}{string}))}
+\DoxyCodeLine{00125                     \{}
+\DoxyCodeLine{00126                         Settings.Default[ss[0]] = ss[1];}
+\DoxyCodeLine{00127                     \}}
+\DoxyCodeLine{00128                 \}}
+\DoxyCodeLine{00129             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_1_1_profile_a18a88b62caa7bdf09977dfa9ac9e5f65}\label{class_bio_imager_1_1_imager_1_1_profile_a18a88b62caa7bdf09977dfa9ac9e5f65}} 
 \index{BioImager.Imager.Profile@{BioImager.Imager.Profile}!Save@{Save}}
 \index{Save@{Save}!BioImager.Imager.Profile@{BioImager.Imager.Profile}}
@@ -63,6 +95,19 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00113}{113}} of file \mb
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00092}{92}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00093             \{}
+\DoxyCodeLine{00094                 List<string> sts = \textcolor{keyword}{new} List<string>();}
+\DoxyCodeLine{00095                 \textcolor{keywordflow}{foreach} (SettingsProperty currentProperty \textcolor{keywordflow}{in} Settings.Default.Properties)}
+\DoxyCodeLine{00096                 \{}
+\DoxyCodeLine{00097                     \textcolor{keywordtype}{string} s = currentProperty.Name + \textcolor{stringliteral}{"{}="{}} + Settings.Default[currentProperty.Name].ToString();}
+\DoxyCodeLine{00098                     sts.Add(s);}
+\DoxyCodeLine{00099                 \}}
+\DoxyCodeLine{00100                 File.WriteAllLines(path, sts.ToArray());}
+\DoxyCodeLine{00101             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_imager_1_1_profile_a527e60186c05733debb9aa3c177afdaa}\label{class_bio_imager_1_1_imager_1_1_profile_a527e60186c05733debb9aa3c177afdaa}} 
 \index{BioImager.Imager.Profile@{BioImager.Imager.Profile}!ToString@{ToString}}
 \index{ToString@{ToString}!BioImager.Imager.Profile@{BioImager.Imager.Profile}}
@@ -73,6 +118,13 @@ Definition at line \mbox{\hyperlink{_imager_8cs_source_l00092}{92}} of file \mbo
 
 Definition at line \mbox{\hyperlink{_imager_8cs_source_l00131}{131}} of file \mbox{\hyperlink{_imager_8cs_source}{Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132             \{}
+\DoxyCodeLine{00133                 \textcolor{keywordflow}{return} Name + \textcolor{stringliteral}{"{} "{}} + DirName;}
+\DoxyCodeLine{00134             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

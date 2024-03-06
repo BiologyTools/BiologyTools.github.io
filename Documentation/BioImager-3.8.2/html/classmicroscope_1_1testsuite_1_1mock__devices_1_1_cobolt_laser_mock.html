@@ -266,7 +266,22 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00333">333</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  333</span>    <span class="keyword">def </span>__init__(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  334</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  335</span> </div>
+<div class="line"><span class="lineno">  336</span>        self.power = CoboltLaserMock.default_power</div>
+<div class="line"><span class="lineno">  337</span>        self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  338</span> </div>
+<div class="line"><span class="lineno">  339</span>        self.interlock_open = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  340</span> </div>
+<div class="line"><span class="lineno">  341</span>        self.auto_start = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  342</span>        self.direct_control = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  343</span> </div>
+<div class="line"><span class="lineno">  344</span>        self.on_after_interlock = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  345</span> </div>
+<div class="line"><span class="lineno">  346</span>        self.fault = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  347</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -299,6 +314,134 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00348">348</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  348</span>    <span class="keyword">def </span>handle(self, command):</div>
+<div class="line"><span class="lineno">  349</span>        <span class="comment"># Leading and trailing whitespace is ignored.</span></div>
+<div class="line"><span class="lineno">  350</span>        command = command.strip()</div>
+<div class="line"><span class="lineno">  351</span> </div>
+<div class="line"><span class="lineno">  352</span>        <span class="comment"># Acknowledgment string if command is not a query and there</span></div>
+<div class="line"><span class="lineno">  353</span>        <span class="comment"># is no error.</span></div>
+<div class="line"><span class="lineno">  354</span>        answer = b<span class="stringliteral">&quot;OK&quot;</span></div>
+<div class="line"><span class="lineno">  355</span> </div>
+<div class="line"><span class="lineno">  356</span>        <span class="keywordflow">if</span> command == b<span class="stringliteral">&quot;sn?&quot;</span>:  <span class="comment"># serial number</span></div>
+<div class="line"><span class="lineno">  357</span>            answer = b<span class="stringliteral">&quot;7863&quot;</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;gcn?&quot;</span>:</div>
+<div class="line"><span class="lineno">  359</span>            answer = b<span class="stringliteral">&quot;Macro-Gen5b-SHG-0501_4W-RevA&quot;</span></div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;ver?&quot;</span> <span class="keywordflow">or</span> command == b<span class="stringliteral">&quot;gfv?&quot;</span>:</div>
+<div class="line"><span class="lineno">  361</span>            answer = b<span class="stringliteral">&quot;50070&quot;</span></div>
+<div class="line"><span class="lineno">  362</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;gfvlas?&quot;</span>:</div>
+<div class="line"><span class="lineno">  363</span>            answer = b<span class="stringliteral">&quot;This laser head does not have firmware.&quot;</span></div>
+<div class="line"><span class="lineno">  364</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;hrs?&quot;</span>:  <span class="comment"># System operating hours</span></div>
+<div class="line"><span class="lineno">  365</span>            answer = b<span class="stringliteral">&quot;828.98&quot;</span></div>
+<div class="line"><span class="lineno">  366</span> </div>
+<div class="line"><span class="lineno">  367</span>        <span class="comment"># TODO: This whole @cob0 and @cob1 need better testing on</span></div>
+<div class="line"><span class="lineno">  368</span>        <span class="comment"># what it actually does.  Documentation says that @cob1 is</span></div>
+<div class="line"><span class="lineno">  369</span>        <span class="comment"># &quot;Laser ON after interlock.  Forces laser into</span></div>
+<div class="line"><span class="lineno">  370</span>        <span class="comment"># autostart. without checking if autostart is enabled&quot;.</span></div>
+<div class="line"><span class="lineno">  371</span>        <span class="comment"># @cob0 is undocumented.</span></div>
+<div class="line"><span class="lineno">  372</span> </div>
+<div class="line"><span class="lineno">  373</span>        <span class="comment"># May be a bug but the commands @cob0 and @cob1 both have the</span></div>
+<div class="line"><span class="lineno">  374</span>        <span class="comment"># effect of also turning off the laser.</span></div>
+<div class="line"><span class="lineno">  375</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cob1&quot;</span>:</div>
+<div class="line"><span class="lineno">  376</span>            self.on_after_interlock = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  377</span>            self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  378</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cob0&quot;</span>:</div>
+<div class="line"><span class="lineno">  379</span>            self.on_after_interlock = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  380</span>            self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  381</span> </div>
+<div class="line"><span class="lineno">  382</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobas?&quot;</span>:</div>
+<div class="line"><span class="lineno">  383</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.auto_start <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  384</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobas 0&quot;</span>:</div>
+<div class="line"><span class="lineno">  385</span>            self.auto_start = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  386</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobas 1&quot;</span>:</div>
+<div class="line"><span class="lineno">  387</span>            self.auto_start = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  388</span> </div>
+<div class="line"><span class="lineno">  389</span>        <span class="comment"># Laser state</span></div>
+<div class="line"><span class="lineno">  390</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;l?&quot;</span>:</div>
+<div class="line"><span class="lineno">  391</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.light <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  392</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;l1&quot;</span>:</div>
+<div class="line"><span class="lineno">  393</span>            <span class="keywordflow">if</span> self.auto_start:</div>
+<div class="line"><span class="lineno">  394</span>                answer = b<span class="stringliteral">&quot;Syntax error: not allowed in autostart mode.&quot;</span></div>
+<div class="line"><span class="lineno">  395</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  396</span>                self.light = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  397</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;l0&quot;</span>:</div>
+<div class="line"><span class="lineno">  398</span>            self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  399</span> </div>
+<div class="line"><span class="lineno">  400</span>        <span class="comment"># Output power</span></div>
+<div class="line"><span class="lineno">  401</span>        <span class="keywordflow">elif</span> command.startswith(b<span class="stringliteral">&quot;p &quot;</span>):</div>
+<div class="line"><span class="lineno">  402</span>            <span class="comment"># The p command takes values in W so convert to mW</span></div>
+<div class="line"><span class="lineno">  403</span>            new_power = float(command[2:]) * 1000.0</div>
+<div class="line"><span class="lineno">  404</span>            <span class="keywordflow">if</span> new_power &gt; self.max_power <span class="keywordflow">or</span> new_power &lt; self.min_power:</div>
+<div class="line"><span class="lineno">  405</span>                answer = b<span class="stringliteral">&quot;Syntax error: Value is out of range.&quot;</span></div>
+<div class="line"><span class="lineno">  406</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  407</span>                self.power = new_power</div>
+<div class="line"><span class="lineno">  408</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;p?&quot;</span>:</div>
+<div class="line"><span class="lineno">  409</span>            answer = b<span class="stringliteral">&quot;%.4f&quot;</span> % (self.power / 1000.0)</div>
+<div class="line"><span class="lineno">  410</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;pa?&quot;</span>:</div>
+<div class="line"><span class="lineno">  411</span>            <span class="keywordflow">if</span> self.light:</div>
+<div class="line"><span class="lineno">  412</span>                answer = b<span class="stringliteral">&quot;%.4f&quot;</span> % (self.power / 1000.0)</div>
+<div class="line"><span class="lineno">  413</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  414</span>                answer = b<span class="stringliteral">&quot;0.0000&quot;</span></div>
+<div class="line"><span class="lineno">  415</span> </div>
+<div class="line"><span class="lineno">  416</span>        <span class="comment"># Undocumented.  Seems to be the same as &#39;p ...&#39;</span></div>
+<div class="line"><span class="lineno">  417</span>        <span class="keywordflow">elif</span> command.startswith(b<span class="stringliteral">&quot;@cobasp &quot;</span>):</div>
+<div class="line"><span class="lineno">  418</span>            <span class="keywordflow">return</span> self.handle(command[6:])</div>
+<div class="line"><span class="lineno">  419</span> </div>
+<div class="line"><span class="lineno">  420</span>        <span class="comment"># Direct control</span></div>
+<div class="line"><span class="lineno">  421</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobasdr?&quot;</span>:</div>
+<div class="line"><span class="lineno">  422</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.direct_control <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  423</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobasdr 0&quot;</span>:</div>
+<div class="line"><span class="lineno">  424</span>            self.direct_control = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  425</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;@cobasdr 1&quot;</span>:</div>
+<div class="line"><span class="lineno">  426</span>            self.direct_control = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  427</span> </div>
+<div class="line"><span class="lineno">  428</span>        <span class="comment"># Undocumented.  Seems to returns maximum laser power in mW.</span></div>
+<div class="line"><span class="lineno">  429</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;gmlp?&quot;</span>:</div>
+<div class="line"><span class="lineno">  430</span>            answer = b<span class="stringliteral">&quot;600.000000&quot;</span></div>
+<div class="line"><span class="lineno">  431</span> </div>
+<div class="line"><span class="lineno">  432</span>        <span class="comment"># Are you there?</span></div>
+<div class="line"><span class="lineno">  433</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?&quot;</span>:</div>
+<div class="line"><span class="lineno">  434</span>            answer = b<span class="stringliteral">&quot;OK&quot;</span></div>
+<div class="line"><span class="lineno">  435</span> </div>
+<div class="line"><span class="lineno">  436</span>        <span class="comment"># Get operating fault</span></div>
+<div class="line"><span class="lineno">  437</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;f?&quot;</span>:</div>
+<div class="line"><span class="lineno">  438</span>            <span class="comment"># The errors (which we don&#39;t model yet) are:</span></div>
+<div class="line"><span class="lineno">  439</span>            <span class="comment">#   1 = temperature error</span></div>
+<div class="line"><span class="lineno">  440</span>            <span class="comment">#   3 = interlock</span></div>
+<div class="line"><span class="lineno">  441</span>            <span class="comment">#   4 = constant power fault</span></div>
+<div class="line"><span class="lineno">  442</span>            answer = b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  443</span> </div>
+<div class="line"><span class="lineno">  444</span>        <span class="comment"># Interlock state</span></div>
+<div class="line"><span class="lineno">  445</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;ilk?&quot;</span>:</div>
+<div class="line"><span class="lineno">  446</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.interlock_open <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  447</span> </div>
+<div class="line"><span class="lineno">  448</span>        <span class="comment"># Autostart program state</span></div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;cobast?&quot;</span>:</div>
+<div class="line"><span class="lineno">  450</span>            <span class="comment"># This is completely undocumented.  Manual</span></div>
+<div class="line"><span class="lineno">  451</span>            <span class="comment"># experimentation seems to be:</span></div>
+<div class="line"><span class="lineno">  452</span>            <span class="comment"># 0 = laser off with @cob0</span></div>
+<div class="line"><span class="lineno">  453</span>            <span class="comment"># 1 = laser off with @cob1</span></div>
+<div class="line"><span class="lineno">  454</span>            <span class="comment"># 2 = waiting for temperature</span></div>
+<div class="line"><span class="lineno">  455</span>            <span class="comment"># 3 = warming up</span></div>
+<div class="line"><span class="lineno">  456</span>            <span class="comment"># 4 = completed (laser on)</span></div>
+<div class="line"><span class="lineno">  457</span>            <span class="comment"># 5 = fault (such as interlock)</span></div>
+<div class="line"><span class="lineno">  458</span>            <span class="comment"># 6 = aborted</span></div>
+<div class="line"><span class="lineno">  459</span>            <span class="keywordflow">if</span> self.light:</div>
+<div class="line"><span class="lineno">  460</span>                answer = b<span class="stringliteral">&quot;4&quot;</span></div>
+<div class="line"><span class="lineno">  461</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  462</span>                answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.on_after_interlock <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  463</span> </div>
+<div class="line"><span class="lineno">  464</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  465</span>            <span class="keywordflow">raise</span> NotImplementedError(</div>
+<div class="line"><span class="lineno">  466</span>                <span class="stringliteral">&quot;no handling for command &#39;%s&#39;&quot;</span> % command.decode(<span class="stringliteral">&quot;utf-8&quot;</span>)</div>
+<div class="line"><span class="lineno">  467</span>            )</div>
+<div class="line"><span class="lineno">  468</span> </div>
+<div class="line"><span class="lineno">  469</span>        <span class="comment"># Sending a command is done with &#39;\r&#39; only.  However,</span></div>
+<div class="line"><span class="lineno">  470</span>        <span class="comment"># responses from the hardware end with &#39;\r\n&#39;.</span></div>
+<div class="line"><span class="lineno">  471</span>        self.in_buffer.write(answer + b<span class="stringliteral">&quot;\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>
@@ -452,6 +595,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00319">319</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>.</p>
 
 </div>
 </div>

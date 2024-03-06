@@ -177,7 +177,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00063">63</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   64</span>        {</div>
+<div class="line"><span class="lineno">   65</span>            this.source = source;</div>
+<div class="line"><span class="lineno">   66</span>            this.capacity = capacity;</div>
+<div class="line"><span class="lineno">   67</span>            this.cache = <span class="keyword">new</span> LruCache&lt;TileIndex, byte[]&gt;(capacity);</div>
+<div class="line"><span class="lineno">   68</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -198,7 +203,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00070">70</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   71</span>        {</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordtype">byte</span>[] data = cache.Get(info.Index);</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">if</span> (data != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">   74</span>            {</div>
+<div class="line"><span class="lineno">   75</span>                <span class="keywordflow">return</span> data;</div>
+<div class="line"><span class="lineno">   76</span>            }</div>
+<div class="line"><span class="lineno">   77</span>            <span class="keywordtype">byte</span>[] tile = await LoadTile(info);</div>
+<div class="line"><span class="lineno">   78</span>            AddTile(info.Index, tile);</div>
+<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">return</span> tile;</div>
+<div class="line"><span class="lineno">   80</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

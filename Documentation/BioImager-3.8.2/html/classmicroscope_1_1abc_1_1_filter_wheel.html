@@ -258,7 +258,25 @@ Args:
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c.html#a3ca7bbe3f0d70b05046d98b172855df6">microscope.filterwheels.thorlabs.ThorlabsFW102C</a>, <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c.html#a7eb8e8dd8d386c50303ba75776f0d8b5">microscope.filterwheels.thorlabs.ThorlabsFW212C</a>, and <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel.html#a64a509c273ee3513bfdcdf44676e0421">microscope.filterwheels.thorlabs.ThorlabsFilterWheel</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01264">1264</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1264</span>    <span class="keyword">def </span>__init__(self, positions: int, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1265</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno"> 1266</span>        <span class="keywordflow">if</span> positions &lt; 1:</div>
+<div class="line"><span class="lineno"> 1267</span>            <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><span class="lineno"> 1268</span>                <span class="stringliteral">&quot;positions must be a positive number (was %d)&quot;</span> % positions</div>
+<div class="line"><span class="lineno"> 1269</span>            )</div>
+<div class="line"><span class="lineno"> 1270</span>        self._positions = positions</div>
+<div class="line"><span class="lineno"> 1271</span>        <span class="comment"># The position as an integer.</span></div>
+<div class="line"><span class="lineno"> 1272</span>        <span class="comment"># Deprecated: clients should call get_position and set_position;</span></div>
+<div class="line"><span class="lineno"> 1273</span>        <span class="comment"># still exposed as a setting until cockpit uses set_position.</span></div>
+<div class="line"><span class="lineno"> 1274</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1275</span>            <span class="stringliteral">&quot;position&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1276</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1277</span>            self.get_position,</div>
+<div class="line"><span class="lineno"> 1278</span>            self.set_position,</div>
+<div class="line"><span class="lineno"> 1279</span>            <span class="keyword">lambda</span>: (0, self.get_num_positions()),</div>
+<div class="line"><span class="lineno"> 1280</span>        )</div>
+<div class="line"><span class="lineno"> 1281</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -279,6 +297,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Deprecated, use the `n_positions` property.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01311">1311</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1311</span>    <span class="keyword">def </span>get_num_positions(self) -&gt; int:</div>
+<div class="line"><span class="lineno"> 1312</span>        <span class="stringliteral">&quot;&quot;&quot;Deprecated, use the `n_positions` property.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1313</span>        <span class="keywordflow">return</span> self.n_positions</div>
+<div class="line"><span class="lineno"> 1314</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01283">microscope.abc.FilterWheel.n_positions()</a>, <a class="el" href="_d_color_shader_8cs_source.html#l00016">BioImager.DColorShader.DVertex.position</a>, <a class="el" href="abc_8py_source.html#l01319">microscope.abc.FilterWheel.position</a>, <a class="el" href="abc_8py_source.html#l01376">microscope.abc.StageAxis.position()</a>, <a class="el" href="abc_8py_source.html#l01500">microscope.abc.Stage.position()</a>, <a class="el" href="zaber_8py_source.html#l00314">microscope.controllers.zaber._ZaberStageAxis.position()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00413">microscope.simulators.SimulatedStageAxis.position()</a>, <a class="el" href="ludl_8py_source.html#l00291">microscope.stages.ludl._LudlStageAxis.position()</a>, <a class="el" href="_microscope_8cs_source.html#l00541">BioImager.TLShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00583">BioImager.HXPShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00621">BioImager.RLShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00659">BioImager.LightSource.position</a>, and <a class="el" href="_microscope_8cs_source.html#l00729">BioImager.FilterWheel.position</a>.</p>
 
 </div>
 </div>
@@ -299,6 +323,11 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01315">1315</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1315</span>    <span class="keyword">def </span>get_position(self) -&gt; int:</div>
+<div class="line"><span class="lineno"> 1316</span>        <span class="keywordflow">return</span> self.position</div>
+<div class="line"><span class="lineno"> 1317</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="aurox_8py_source.html#l00249">microscope.filterwheels.aurox.Clarity.moving()</a>.</p>
 
 </div>
 </div>
@@ -319,6 +348,14 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Number of wheel positions.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01283">1283</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1283</span>    <span class="keyword">def </span>n_positions(self) -&gt; int:</div>
+<div class="line"><span class="lineno"> 1284</span>        <span class="stringliteral">&quot;&quot;&quot;Number of wheel positions.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1285</span>        <span class="keywordflow">return</span> self._positions</div>
+<div class="line"><span class="lineno"> 1286</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01270">microscope.abc.FilterWheel._positions</a>, and <a class="el" href="aurox_8py_source.html#l00090">microscope.filterwheels.aurox.Clarity._positions</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00124">microscope.filterwheels.thorlabs.ThorlabsFW102C.__init__()</a>, <a class="el" href="thorlabs_8py_source.html#l00145">microscope.filterwheels.thorlabs.ThorlabsFW212C.__init__()</a>, <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="abc_8py_source.html#l01288">microscope.abc.FilterWheel.position()</a>.</p>
 
 </div>
 </div>
@@ -339,6 +376,14 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Number of wheel positions (zero-based).</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01288">1288</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1288</span>    <span class="keyword">def </span>position(self) -&gt; int:</div>
+<div class="line"><span class="lineno"> 1289</span>        <span class="stringliteral">&quot;&quot;&quot;Number of wheel positions (zero-based).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1290</span>        <span class="keywordflow">return</span> self._do_get_position()</div>
+<div class="line"><span class="lineno"> 1291</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01303">microscope.abc.FilterWheel._do_get_position()</a>, <a class="el" href="prior_8py_source.html#l00235">microscope.controllers.prior._ProScanIIIFilterWheel._do_get_position()</a>, <a class="el" href="zaber_8py_source.html#l00408">microscope.controllers.zaber._ZaberFilterWheel._do_get_position()</a>, <a class="el" href="aurox_8py_source.html#l00267">microscope.filterwheels.aurox.Clarity._do_get_position()</a>, <a class="el" href="thorlabs_8py_source.html#l00082">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._do_get_position()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00328">microscope.simulators.SimulatedFilterWheel._do_get_position()</a>, <a class="el" href="thorlabs_8py_source.html#l00078">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._do_set_position()</a>, <a class="el" href="abc_8py_source.html#l01307">microscope.abc.FilterWheel._do_set_position()</a>, <a class="el" href="prior_8py_source.html#l00238">microscope.controllers.prior._ProScanIIIFilterWheel._do_set_position()</a>, <a class="el" href="zaber_8py_source.html#l00415">microscope.controllers.zaber._ZaberFilterWheel._do_set_position()</a>, <a class="el" href="aurox_8py_source.html#l00274">microscope.filterwheels.aurox.Clarity._do_set_position()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00331">microscope.simulators.SimulatedFilterWheel._do_set_position()</a>, and <a class="el" href="abc_8py_source.html#l01283">microscope.abc.FilterWheel.n_positions()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -369,6 +414,17 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01293">1293</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1293</span>    <span class="keyword">def </span>position(self, new_position: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1294</span>        <span class="keywordflow">if</span> 0 &lt;= new_position &lt; self.n_positions:</div>
+<div class="line"><span class="lineno"> 1295</span>            <span class="keywordflow">return</span> self._do_set_position(new_position)</div>
+<div class="line"><span class="lineno"> 1296</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1297</span>            <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><span class="lineno"> 1298</span>                <span class="stringliteral">&quot;can&#39;t move to position %d, limits are [0 %d]&quot;</span></div>
+<div class="line"><span class="lineno"> 1299</span>                % (new_position, self.n_positions - 1)</div>
+<div class="line"><span class="lineno"> 1300</span>            )</div>
+<div class="line"><span class="lineno"> 1301</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -399,7 +455,11 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01318">1318</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1318</span>    <span class="keyword">def </span>set_position(self, position: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1319</span>        self.position = position</div>
+<div class="line"><span class="lineno"> 1320</span> </div>
+<div class="line"><span class="lineno"> 1321</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -416,6 +476,8 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01319">1319</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>

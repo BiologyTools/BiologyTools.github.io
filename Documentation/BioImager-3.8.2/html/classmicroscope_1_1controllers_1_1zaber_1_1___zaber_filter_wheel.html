@@ -252,7 +252,33 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_filter_wheel.html">microscope.abc.FilterWheel</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00378">378</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  380</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  381</span>        self._dev_conn = _ZaberDeviceConnection(conn, device_address)</div>
+<div class="line"><span class="lineno">  382</span> </div>
+<div class="line"><span class="lineno">  383</span>        <span class="keywordflow">if</span> self._dev_conn.get_number_axes() != 1:</div>
+<div class="line"><span class="lineno">  384</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">  385</span>                <span class="stringliteral">&quot;Device with address %d is not a filter wheel&quot;</span> % device_address</div>
+<div class="line"><span class="lineno">  386</span>            )</div>
+<div class="line"><span class="lineno">  387</span> </div>
+<div class="line"><span class="lineno">  388</span>        rotation_length = self._dev_conn.get_rotation_length(1)</div>
+<div class="line"><span class="lineno">  389</span>        <span class="keywordflow">if</span> rotation_length &lt;= 0:</div>
+<div class="line"><span class="lineno">  390</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">  391</span>                <span class="stringliteral">&quot;Device with address %d is not a filter wheel&quot;</span> % device_address</div>
+<div class="line"><span class="lineno">  392</span>            )</div>
+<div class="line"><span class="lineno">  393</span>        positions = int(rotation_length / self._dev_conn.get_index_distance(1))</div>
+<div class="line"><span class="lineno">  394</span> </div>
+<div class="line"><span class="lineno">  395</span>        super().__init__(positions, **kwargs)</div>
+<div class="line"><span class="lineno">  396</span> </div>
+<div class="line"><span class="lineno">  397</span>        <span class="comment"># Before a device can moved, it first needs to establish a</span></div>
+<div class="line"><span class="lineno">  398</span>        <span class="comment"># reference to the home position.  We won&#39;t be able to move</span></div>
+<div class="line"><span class="lineno">  399</span>        <span class="comment"># unless we home it first.  On a stage this happens during</span></div>
+<div class="line"><span class="lineno">  400</span>        <span class="comment"># enable because the stage movemenet can be dangerous but on a</span></div>
+<div class="line"><span class="lineno">  401</span>        <span class="comment"># filter wheel this is fine.</span></div>
+<div class="line"><span class="lineno">  402</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._dev_conn.been_homed():</div>
+<div class="line"><span class="lineno">  403</span>            self._dev_conn.home()</div>
+<div class="line"><span class="lineno">  404</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

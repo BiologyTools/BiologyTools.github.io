@@ -282,7 +282,20 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00516">516</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  516</span>    <span class="keyword">def </span>__init__(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  517</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  518</span> </div>
+<div class="line"><span class="lineno">  519</span>        self.power = self.default_power</div>
+<div class="line"><span class="lineno">  520</span> </div>
+<div class="line"><span class="lineno">  521</span>        self.state = self.State.S1  <span class="comment"># default dependent on &#39;ASx&#39; command</span></div>
+<div class="line"><span class="lineno">  522</span>        self.mode = self.Mode.blackout</div>
+<div class="line"><span class="lineno">  523</span> </div>
+<div class="line"><span class="lineno">  524</span>        self.internal_peak_power = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  525</span>        self.analog2digital = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  526</span>        self.bias_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  527</span>        self.digital_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  528</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -315,6 +328,181 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00548">548</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  548</span>    <span class="keyword">def </span>handle(self, command):</div>
+<div class="line"><span class="lineno">  549</span>        <span class="keywordflow">if</span> len(command) != 16 <span class="keywordflow">and</span> (</div>
+<div class="line"><span class="lineno">  550</span>            len(command) != 7 <span class="keywordflow">and</span> self.state != self.State.S2</div>
+<div class="line"><span class="lineno">  551</span>        ):</div>
+<div class="line"><span class="lineno">  552</span>            <span class="comment"># Such a thing will make the laser go into S0 state which</span></div>
+<div class="line"><span class="lineno">  553</span>            <span class="comment"># will also turns it off..  We don&#39;t model this because</span></div>
+<div class="line"><span class="lineno">  554</span>            <span class="comment"># we don&#39;t know well how the reset (RST command) works.</span></div>
+<div class="line"><span class="lineno">  555</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;invalid Omicron Deepstar command&quot;</span>)</div>
+<div class="line"><span class="lineno">  556</span>        <span class="keywordflow">elif</span> command[-2:] != b<span class="stringliteral">&quot;\r\n&quot;</span>:</div>
+<div class="line"><span class="lineno">  557</span>            <span class="comment"># Even if a command is correct, the last two characters</span></div>
+<div class="line"><span class="lineno">  558</span>            <span class="comment"># need to be \r\n.</span></div>
+<div class="line"><span class="lineno">  559</span>            <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;command does not end in &#39;\\r\\n&#39;&quot;</span>)</div>
+<div class="line"><span class="lineno">  560</span> </div>
+<div class="line"><span class="lineno">  561</span>        command = command[:-2].rstrip(b<span class="stringliteral">&quot; &quot;</span>)</div>
+<div class="line"><span class="lineno">  562</span>        answer = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  563</span> </div>
+<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">if</span> command == b<span class="stringliteral">&quot;S?&quot;</span>:</div>
+<div class="line"><span class="lineno">  565</span>            answer = self.state.name.encode()</div>
+<div class="line"><span class="lineno">  566</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;STAT0&quot;</span>:</div>
+<div class="line"><span class="lineno">  567</span>            <span class="comment"># Model-code of the connected lasersystem:</span></div>
+<div class="line"><span class="lineno">  568</span>            answer = (</div>
+<div class="line"><span class="lineno">  569</span>                b<span class="stringliteral">&quot;MC&quot;</span></div>
+<div class="line"><span class="lineno">  570</span>                + b<span class="stringliteral">&quot; 488&quot;</span>  <span class="comment"># wavelength</span></div>
+<div class="line"><span class="lineno">  571</span>                + b<span class="stringliteral">&quot; &quot;</span>  <span class="comment"># empty for single diode system (D for double)</span></div>
+<div class="line"><span class="lineno">  572</span>                + b<span class="stringliteral">&quot; %3d&quot;</span> % (self.max_power)  <span class="comment"># in mw</span></div>
+<div class="line"><span class="lineno">  573</span>                + b<span class="stringliteral">&quot; TA   &quot;</span></div>
+<div class="line"><span class="lineno">  574</span>            )  <span class="comment"># controller version / operating mode</span></div>
+<div class="line"><span class="lineno">  575</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;STAT1&quot;</span>:</div>
+<div class="line"><span class="lineno">  576</span>            answer = (</div>
+<div class="line"><span class="lineno">  577</span>                b<span class="stringliteral">&quot;SL&quot;</span></div>
+<div class="line"><span class="lineno">  578</span>                + b<span class="stringliteral">&quot; 6AB&quot;</span>  <span class="comment"># actual bias (hexadecimal)</span></div>
+<div class="line"><span class="lineno">  579</span>                + b<span class="stringliteral">&quot; 600&quot;</span>  <span class="comment"># modulated bias-level (hexadecimal)</span></div>
+<div class="line"><span class="lineno">  580</span>                + b<span class="stringliteral">&quot; 868&quot;</span>  <span class="comment"># mod-level internal set for drive max. current</span></div>
+<div class="line"><span class="lineno">  581</span>                + b<span class="stringliteral">&quot; T249&quot;</span>  <span class="comment"># diode temperature (in celcius * 10)</span></div>
+<div class="line"><span class="lineno">  582</span>                + b<span class="stringliteral">&quot; V117&quot;</span></div>
+<div class="line"><span class="lineno">  583</span>            )  <span class="comment"># control voltage (in volts * 10)</span></div>
+<div class="line"><span class="lineno">  584</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;STAT2&quot;</span>:</div>
+<div class="line"><span class="lineno">  585</span>            answer = (</div>
+<div class="line"><span class="lineno">  586</span>                b<span class="stringliteral">&quot;R111&quot;</span>  <span class="comment"># firmware release</span></div>
+<div class="line"><span class="lineno">  587</span>                + b<span class="stringliteral">&quot; N02&quot;</span>  <span class="comment"># No used laserpen</span></div>
+<div class="line"><span class="lineno">  588</span>                + b<span class="stringliteral">&quot; SNP131056&quot;</span>  <span class="comment"># S/No of laserhead</span></div>
+<div class="line"><span class="lineno">  589</span>                + b<span class="stringliteral">&quot; SNC131056&quot;</span>  <span class="comment"># S/No of controller</span></div>
+<div class="line"><span class="lineno">  590</span>                + b<span class="stringliteral">&quot; WH 04667&quot;</span>  <span class="comment"># working hours</span></div>
+<div class="line"><span class="lineno">  591</span>                + b<span class="stringliteral">&quot; SLS B9C 500&quot;</span></div>
+<div class="line"><span class="lineno">  592</span>            )  <span class="comment"># start values for the diode parameters</span></div>
+<div class="line"><span class="lineno">  593</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;STAT3&quot;</span>:</div>
+<div class="line"><span class="lineno">  594</span>            <span class="comment"># Stored option code flags.</span></div>
+<div class="line"><span class="lineno">  595</span>            answer = (</div>
+<div class="line"><span class="lineno">  596</span>                b<span class="stringliteral">&quot;OC &quot;</span></div>
+<div class="line"><span class="lineno">  597</span>                + b<span class="stringliteral">&quot;AS1&quot;</span>  <span class="comment"># autostart option</span></div>
+<div class="line"><span class="lineno">  598</span>                + b<span class="stringliteral">&quot;TH0&quot;</span>  <span class="comment"># TTL-logic-high</span></div>
+<div class="line"><span class="lineno">  599</span>                + b<span class="stringliteral">&quot;AP0&quot;</span>  <span class="comment"># auto power correction</span></div>
+<div class="line"><span class="lineno">  600</span>                + b<span class="stringliteral">&quot;FK0&quot;</span>  <span class="comment"># fiber coupling single mode</span></div>
+<div class="line"><span class="lineno">  601</span>                + b<span class="stringliteral">&quot;AC0&quot;</span>  <span class="comment"># analog modulation for CW-lasers</span></div>
+<div class="line"><span class="lineno">  602</span>                + b<span class="stringliteral">&quot;AM0&quot;</span>  <span class="comment"># analog modulation for modulated lasers</span></div>
+<div class="line"><span class="lineno">  603</span>                + b<span class="stringliteral">&quot;SU0&quot;</span>  <span class="comment"># subtractive analog modulation for modulated lasers</span></div>
+<div class="line"><span class="lineno">  604</span>                + b<span class="stringliteral">&quot;CO0&quot;</span>  <span class="comment"># collimator optic</span></div>
+<div class="line"><span class="lineno">  605</span>                + b<span class="stringliteral">&quot;FO0&quot;</span>  <span class="comment"># focusing optic</span></div>
+<div class="line"><span class="lineno">  606</span>                + b<span class="stringliteral">&quot;MO0&quot;</span>  <span class="comment"># highspeed monitoring</span></div>
+<div class="line"><span class="lineno">  607</span>                + b<span class="stringliteral">&quot;US0&quot;</span>  <span class="comment"># USB interface</span></div>
+<div class="line"><span class="lineno">  608</span>                + b<span class="stringliteral">&quot;LA1&quot;</span>  <span class="comment"># RS232 interface</span></div>
+<div class="line"><span class="lineno">  609</span>                + b<span class="stringliteral">&quot;FA0&quot;</span></div>
+<div class="line"><span class="lineno">  610</span>            )  <span class="comment"># fiber coupling single mode</span></div>
+<div class="line"><span class="lineno">  611</span> </div>
+<div class="line"><span class="lineno">  612</span>        <span class="comment"># Changing mode</span></div>
+<div class="line"><span class="lineno">  613</span>        <span class="keywordflow">elif</span> command <span class="keywordflow">in</span> self.command2mode.keys():</div>
+<div class="line"><span class="lineno">  614</span>            <span class="keywordflow">if</span> self.state == self.State.S2:</div>
+<div class="line"><span class="lineno">  615</span>                self.mode = self.command2mode[command]</div>
+<div class="line"><span class="lineno">  616</span>                answer = b<span class="stringliteral">&quot;&gt;&quot;</span></div>
+<div class="line"><span class="lineno">  617</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  618</span>                answer = b<span class="stringliteral">&quot;UK&quot;</span></div>
+<div class="line"><span class="lineno">  619</span> </div>
+<div class="line"><span class="lineno">  620</span>        <span class="comment"># Current mode (undocumented)</span></div>
+<div class="line"><span class="lineno">  621</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;L?&quot;</span>:</div>
+<div class="line"><span class="lineno">  622</span>            <span class="keywordflow">if</span> self.state == self.State.S2:</div>
+<div class="line"><span class="lineno">  623</span>                answer = self.mode2answer[self.mode]</div>
+<div class="line"><span class="lineno">  624</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  625</span>                answer = b<span class="stringliteral">&quot;UK&quot;</span></div>
+<div class="line"><span class="lineno">  626</span> </div>
+<div class="line"><span class="lineno">  627</span>        <span class="comment"># Laser on</span></div>
+<div class="line"><span class="lineno">  628</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;LON&quot;</span>:</div>
+<div class="line"><span class="lineno">  629</span>            <span class="keywordflow">if</span> self.state == self.State.S1:</div>
+<div class="line"><span class="lineno">  630</span>                self.state = self.State.S2</div>
+<div class="line"><span class="lineno">  631</span>                answer = b<span class="stringliteral">&quot;LONOK&quot;</span></div>
+<div class="line"><span class="lineno">  632</span>            <span class="keywordflow">elif</span> self.mode == self.Mode.S2:</div>
+<div class="line"><span class="lineno">  633</span>                answer = b<span class="stringliteral">&quot;UK&quot;</span></div>
+<div class="line"><span class="lineno">  634</span>            <span class="keywordflow">else</span>:  <span class="comment"># in S0 state</span></div>
+<div class="line"><span class="lineno">  635</span>                <span class="comment"># This is undocumented and it&#39;s probably a bug on</span></div>
+<div class="line"><span class="lineno">  636</span>                <span class="comment"># their firmware.  Should probably be returning UK.</span></div>
+<div class="line"><span class="lineno">  637</span>                answer = b<span class="stringliteral">&quot;INT&quot;</span></div>
+<div class="line"><span class="lineno">  638</span> </div>
+<div class="line"><span class="lineno">  639</span>        <span class="comment"># Laser off</span></div>
+<div class="line"><span class="lineno">  640</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;LF&quot;</span>:</div>
+<div class="line"><span class="lineno">  641</span>            <span class="keywordflow">if</span> self.state == self.State.S2:</div>
+<div class="line"><span class="lineno">  642</span>                self.state = self.State.S1</div>
+<div class="line"><span class="lineno">  643</span>                answer = b<span class="stringliteral">&quot;LOFFOK&quot;</span></div>
+<div class="line"><span class="lineno">  644</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  645</span>                answer = b<span class="stringliteral">&quot;UK&quot;</span></div>
+<div class="line"><span class="lineno">  646</span> </div>
+<div class="line"><span class="lineno">  647</span>        <span class="comment"># Peak Power</span></div>
+<div class="line"><span class="lineno">  648</span>        <span class="keywordflow">elif</span> command.startswith(b<span class="stringliteral">&quot;PP&quot;</span>):</div>
+<div class="line"><span class="lineno">  649</span>            <span class="comment"># peak power values are a 3 byte char hexadecimal number,</span></div>
+<div class="line"><span class="lineno">  650</span>            <span class="comment"># scale to the range of possible power:</span></div>
+<div class="line"><span class="lineno">  651</span>            <span class="comment">#     000[hex] =    0[dec] =   0% =   0 mW</span></div>
+<div class="line"><span class="lineno">  652</span>            <span class="comment">#     FFF[hex] = 4095[dec] = 100% = 200 mW</span></div>
+<div class="line"><span class="lineno">  653</span>            <span class="keywordflow">if</span> command == b<span class="stringliteral">&quot;PP?&quot;</span>:</div>
+<div class="line"><span class="lineno">  654</span>                level = self.power / self.max_power</div>
+<div class="line"><span class="lineno">  655</span>                answer = b<span class="stringliteral">&quot;PP%03X&quot;</span> % round(float(0xFFF) * level)</div>
+<div class="line"><span class="lineno">  656</span>            <span class="keywordflow">elif</span> len(command) == 5:</div>
+<div class="line"><span class="lineno">  657</span>                level = int(command[2:], 16) / float(0xFFF)</div>
+<div class="line"><span class="lineno">  658</span>                self.power = level * self.max_power</div>
+<div class="line"><span class="lineno">  659</span>                answer = command</div>
+<div class="line"><span class="lineno">  660</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  661</span>                <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;invalid command &#39;%&#39;&quot;</span> % command)</div>
+<div class="line"><span class="lineno">  662</span> </div>
+<div class="line"><span class="lineno">  663</span>        <span class="comment"># Power level</span></div>
+<div class="line"><span class="lineno">  664</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;P?&quot;</span>:</div>
+<div class="line"><span class="lineno">  665</span>            <span class="comment"># TODO: get a laser that supports this command to test.</span></div>
+<div class="line"><span class="lineno">  666</span>            <span class="comment"># This is only based on the documentation.</span></div>
+<div class="line"><span class="lineno">  667</span>            <span class="comment">#</span></div>
+<div class="line"><span class="lineno">  668</span>            <span class="comment"># Actual laser power is a 4 byte char heaxadecimal</span></div>
+<div class="line"><span class="lineno">  669</span>            <span class="comment"># number.  Range for actual laser power is:</span></div>
+<div class="line"><span class="lineno">  670</span>            <span class="comment">#     0x0000 =    0 [dec] =   0% =   0 mW</span></div>
+<div class="line"><span class="lineno">  671</span>            <span class="comment">#     0x0CCC = 3276 [dec] = 100% = 200 mW</span></div>
+<div class="line"><span class="lineno">  672</span>            <span class="comment">#     0x0FFF = 4095 [dec] = 120% = 240 mW</span></div>
+<div class="line"><span class="lineno">  673</span>            level = self.power / self.max_power</div>
+<div class="line"><span class="lineno">  674</span>            answer = b<span class="stringliteral">&quot;P%04X&quot;</span> % round(float(0xCCC) * level)</div>
+<div class="line"><span class="lineno">  675</span> </div>
+<div class="line"><span class="lineno">  676</span>        <span class="comment"># Internal peak power</span></div>
+<div class="line"><span class="lineno">  677</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;IPO&quot;</span>:</div>
+<div class="line"><span class="lineno">  678</span>            self.internal_peak_power = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  679</span>            answer = command</div>
+<div class="line"><span class="lineno">  680</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;IPF&quot;</span>:</div>
+<div class="line"><span class="lineno">  681</span>            self.internal_peak_power = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  682</span>            answer = command</div>
+<div class="line"><span class="lineno">  683</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;IP?&quot;</span>:</div>
+<div class="line"><span class="lineno">  684</span>            answer = b<span class="stringliteral">&quot;IPO&quot;</span> <span class="keywordflow">if</span> self.internal_peak_power <span class="keywordflow">else</span> b<span class="stringliteral">&quot;IPF&quot;</span></div>
+<div class="line"><span class="lineno">  685</span> </div>
+<div class="line"><span class="lineno">  686</span>        <span class="comment"># Analogue modulation path or signal linked to the digital</span></div>
+<div class="line"><span class="lineno">  687</span>        <span class="comment"># modulation path.</span></div>
+<div class="line"><span class="lineno">  688</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;A2DO&quot;</span>:</div>
+<div class="line"><span class="lineno">  689</span>            self.analog2digital = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  690</span>            answer = b<span class="stringliteral">&quot;A2D ON&quot;</span></div>
+<div class="line"><span class="lineno">  691</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;A2DF&quot;</span>:</div>
+<div class="line"><span class="lineno">  692</span>            self.analog2digital = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  693</span>            answer = b<span class="stringliteral">&quot;A2D OFF&quot;</span></div>
+<div class="line"><span class="lineno">  694</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;A2D?&quot;</span>:</div>
+<div class="line"><span class="lineno">  695</span>            answer = b<span class="stringliteral">&quot;A2D ON&quot;</span> <span class="keywordflow">if</span> self.analog2digital <span class="keywordflow">else</span> b<span class="stringliteral">&quot;A2D OFF&quot;</span></div>
+<div class="line"><span class="lineno">  696</span> </div>
+<div class="line"><span class="lineno">  697</span>        <span class="comment"># Bias and Digital modulation</span></div>
+<div class="line"><span class="lineno">  698</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;MF&quot;</span>:</div>
+<div class="line"><span class="lineno">  699</span>            self.bias_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  700</span>            self.digital_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  701</span>            answer = command</div>
+<div class="line"><span class="lineno">  702</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;MO1&quot;</span>:</div>
+<div class="line"><span class="lineno">  703</span>            self.bias_modulation = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  704</span>            self.digital_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  705</span>            answer = command</div>
+<div class="line"><span class="lineno">  706</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;MO2&quot;</span>:</div>
+<div class="line"><span class="lineno">  707</span>            self.bias_modulation = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  708</span>            self.digital_modulation = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  709</span>            answer = command</div>
+<div class="line"><span class="lineno">  710</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;MO3&quot;</span>:</div>
+<div class="line"><span class="lineno">  711</span>            self.bias_modulation = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  712</span>            self.digital_modulation = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  713</span>            answer = command</div>
+<div class="line"><span class="lineno">  714</span> </div>
+<div class="line"><span class="lineno">  715</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  716</span>            <span class="keywordflow">raise</span> NotImplementedError(</div>
+<div class="line"><span class="lineno">  717</span>                <span class="stringliteral">&quot;no handling for command &#39;%s&#39;&quot;</span> % command.decode(<span class="stringliteral">&quot;utf-8&quot;</span>)</div>
+<div class="line"><span class="lineno">  718</span>            )</div>
+<div class="line"><span class="lineno">  719</span> </div>
+<div class="line"><span class="lineno">  720</span>        self.in_buffer.write(answer + self.eol)</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>
@@ -335,7 +523,17 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00530">530</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  530</span>    <span class="keyword">def </span>light(self):</div>
+<div class="line"><span class="lineno">  531</span>        <span class="keywordflow">if</span> (</div>
+<div class="line"><span class="lineno">  532</span>            self.state != self.State.S2</div>
+<div class="line"><span class="lineno">  533</span>            <span class="keywordflow">or</span> self.mode == self.mode.blackout</div>
+<div class="line"><span class="lineno">  534</span>            <span class="keywordflow">or</span> <span class="keywordflow">not</span> self.internal_peak_power</div>
+<div class="line"><span class="lineno">  535</span>            <span class="keywordflow">or</span> (self.analog2digital <span class="keywordflow">and</span> <span class="keywordflow">not</span> self.digital_modulation)</div>
+<div class="line"><span class="lineno">  536</span>        ):</div>
+<div class="line"><span class="lineno">  537</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  538</span>        <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  539</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a93fed163593028460938158583499d83" name="a93fed163593028460938158583499d83"></a>
@@ -367,7 +565,15 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00540">540</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  540</span>    <span class="keyword">def </span>write(self, data):</div>
+<div class="line"><span class="lineno">  541</span>        <span class="comment"># This connection does not wait for an eol to parse the</span></div>
+<div class="line"><span class="lineno">  542</span>        <span class="comment"># command.  It only looks at 16 or 7 bit (depending on</span></div>
+<div class="line"><span class="lineno">  543</span>        <span class="comment"># state).  Sending a message one character at a time will not</span></div>
+<div class="line"><span class="lineno">  544</span>        <span class="comment"># work so just send the whole data to be handled.</span></div>
+<div class="line"><span class="lineno">  545</span>        self.handle(data)</div>
+<div class="line"><span class="lineno">  546</span>        <span class="keywordflow">return</span> len(data)</div>
+<div class="line"><span class="lineno">  547</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -560,6 +766,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00477">477</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>.</p>
 
 </div>
 </div>

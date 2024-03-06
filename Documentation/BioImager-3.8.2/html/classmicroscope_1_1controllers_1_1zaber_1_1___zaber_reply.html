@@ -185,7 +185,16 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00064">64</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   64</span>    <span class="keyword">def </span>__init__(self, data: bytes) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   65</span>        self._data = data</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">if</span> (</div>
+<div class="line"><span class="lineno">   67</span>            data[0] != _AT_CODE</div>
+<div class="line"><span class="lineno">   68</span>            <span class="keywordflow">or</span> data[-2:] != b<span class="stringliteral">&quot;\r\n&quot;</span></div>
+<div class="line"><span class="lineno">   69</span>            <span class="keywordflow">or</span> any([data[i] != _SPACE_CODE <span class="keywordflow">for</span> i <span class="keywordflow">in</span> (3, 5, 8, 13, 16)])</div>
+<div class="line"><span class="lineno">   70</span>        ):</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Not a valid reply from a Zaber device&quot;</span>)</div>
+<div class="line"><span class="lineno">   72</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -206,6 +215,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">The start of reply with device address and space.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00074">74</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   74</span>    <span class="keyword">def </span>address(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">   75</span>        <span class="stringliteral">&quot;&quot;&quot;The start of reply with device address and space.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   76</span>        <span class="keywordflow">return</span> self._data[1:3]</div>
+<div class="line"><span class="lineno">   77</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00065">microscope.controllers.zaber._ZaberReply._data</a>.</p>
 
 </div>
 </div>
@@ -230,6 +245,16 @@ Can be `b"OK"` (accepted) or `b"RJ"` (rejected).  If rejected,
 the response property will be one word with the reason why.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00079">79</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>    <span class="keyword">def </span>flag(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">   80</span>        <span class="stringliteral">&quot;&quot;&quot;The reply flag indicates if the message was accepted or rejected.</span></div>
+<div class="line"><span class="lineno">   81</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   82</span><span class="stringliteral">        Can be `b&quot;OK&quot;</span>` (accepted) <span class="keywordflow">or</span> `b<span class="stringliteral">&quot;RJ&quot;</span>` (rejected).  If rejected,</div>
+<div class="line"><span class="lineno">   83</span>        the response property will be one word <span class="keyword">with</span> the reason why.</div>
+<div class="line"><span class="lineno">   84</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   85</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self._data[6:8]</div>
+<div class="line"><span class="lineno">   86</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00065">microscope.controllers.zaber._ZaberReply._data</a>.</p>
 
 </div>
 </div>
@@ -250,7 +275,12 @@ the response property will be one word with the reason why.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00107">107</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    <span class="keyword">def </span>response(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  108</span>        <span class="comment"># Assumes no checksum</span></div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">return</span> self._data[17:-2]</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a81992e5250ab015586a7b4ba35afd80e" name="a81992e5250ab015586a7b4ba35afd80e"></a>
@@ -275,6 +305,17 @@ is `b"BUSY"` if any axis is busy and `b"IDLE"` if all axes are
 idle.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00088">88</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>    <span class="keyword">def </span>status(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">   89</span>        <span class="stringliteral">&quot;&quot;&quot;``b&quot;BUSY&quot;`` when the axis is moving and ``b&quot;IDLE&quot;`` otherwise.</span></div>
+<div class="line"><span class="lineno">   90</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   91</span><span class="stringliteral">        If the reply message applies to the whole device, the status</span></div>
+<div class="line"><span class="lineno">   92</span><span class="stringliteral">        </span><span class="keywordflow">is</span> `b<span class="stringliteral">&quot;BUSY&quot;</span>` <span class="keywordflow">if</span> any axis <span class="keywordflow">is</span> busy <span class="keywordflow">and</span> `b<span class="stringliteral">&quot;IDLE&quot;</span>` <span class="keywordflow">if</span> all axes are</div>
+<div class="line"><span class="lineno">   93</span>        idle.</div>
+<div class="line"><span class="lineno">   94</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   95</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self._data[9:13]</div>
+<div class="line"><span class="lineno">   96</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00065">microscope.controllers.zaber._ZaberReply._data</a>.</p>
 
 </div>
 </div>
@@ -299,6 +340,16 @@ This will be `b'--'` under normal conditions.  Anything else
 is a warning.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00098">98</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   98</span>    <span class="keyword">def </span>warning(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">   99</span>        <span class="stringliteral">&quot;&quot;&quot;The highest priority warning currently active.</span></div>
+<div class="line"><span class="lineno">  100</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  101</span><span class="stringliteral">        This will be `b&#39;--&#39;</span>` under normal conditions.  Anything <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">is</span> a warning.</div>
+<div class="line"><span class="lineno">  103</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  104</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self._data[14:16]</div>
+<div class="line"><span class="lineno">  105</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00065">microscope.controllers.zaber._ZaberReply._data</a>.</p>
 
 </div>
 </div>

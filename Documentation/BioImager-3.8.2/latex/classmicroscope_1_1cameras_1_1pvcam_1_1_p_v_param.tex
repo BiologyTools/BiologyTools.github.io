@@ -61,6 +61,24 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01199}{1199}} of file \mbo
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01224}{1224}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01224     \textcolor{keyword}{def }\_\_init\_\_(self, camera, param\_id):}
+\DoxyCodeLine{01225         \textcolor{comment}{\# Use a weakref back to the camera to avoid circular dependency.}}
+\DoxyCodeLine{01226         self.cam = weakref.proxy(camera)}
+\DoxyCodeLine{01227         self.param\_id = param\_id}
+\DoxyCodeLine{01228         self.name = \_param\_to\_name[param\_id]}
+\DoxyCodeLine{01229         self.\_pvtype = param\_id >> 24 \& 255}
+\DoxyCodeLine{01230         \textcolor{keywordflow}{if} self.name == \textcolor{stringliteral}{"{}PARAM\_READOUT\_TIME"{}}:}
+\DoxyCodeLine{01231             \textcolor{comment}{\# Bugged. Here is what the SDK says: "{}The parameter type is}}
+\DoxyCodeLine{01232             \textcolor{comment}{\# incorrectly defined. The actual type is TYPE\_UNS32."{}}}
+\DoxyCodeLine{01233             self.\_pvtype = TYPE\_UNS32}
+\DoxyCodeLine{01234         self.dtype = \_dtypemap[self.\_pvtype]}
+\DoxyCodeLine{01235         self.\_ctype = \_typemap[self.\_pvtype]}
+\DoxyCodeLine{01236         self.\_\_cache = \{\}}
+\DoxyCodeLine{01237 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_ac6f5efa4236ef61d67375c600a782921}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_ac6f5efa4236ef61d67375c600a782921}} 
@@ -74,6 +92,20 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01224}{1224}} of file \mbo
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01303}{1303}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01303     \textcolor{keyword}{def }access(self):}
+\DoxyCodeLine{01304         \textcolor{stringliteral}{"{}"{}"{}Return parameter access attribute."{}"{}"{}}}
+\DoxyCodeLine{01305         \textcolor{keywordflow}{return} int(}
+\DoxyCodeLine{01306             \_get\_param(self.cam.handle, self.param\_id, ATTR\_ACCESS).value}
+\DoxyCodeLine{01307         )}
+\DoxyCodeLine{01308 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01226}{microscope.\+cameras.\+pvcam.\+PVParam.\+cam}}, and \mbox{\hyperlink{pvcam_8py_source_l01227}{microscope.\+cameras.\+pvcam.\+PVParam.\+param\+\_\+id}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_afa881f6559133ed7161ac26c336241a1}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_afa881f6559133ed7161ac26c336241a1}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!available@{available}}
 \index{available@{available}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -85,6 +117,24 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01303}{1303}} of file \mbo
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01310}{1310}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01310     \textcolor{keyword}{def }available(self):}
+\DoxyCodeLine{01311         \textcolor{stringliteral}{"{}"{}"{}Return whether or not parameter is available on hardware."{}"{}"{}}}
+\DoxyCodeLine{01312         \textcolor{keywordflow}{return} bool(}
+\DoxyCodeLine{01313             \_get\_param(self.cam.handle, self.param\_id, ATTR\_AVAIL).value}
+\DoxyCodeLine{01314         )}
+\DoxyCodeLine{01315 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01226}{microscope.\+cameras.\+pvcam.\+PVParam.\+cam}}, and \mbox{\hyperlink{pvcam_8py_source_l01227}{microscope.\+cameras.\+pvcam.\+PVParam.\+param\+\_\+id}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aaf108048617d643c8254b54125a67c4c}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aaf108048617d643c8254b54125a67c4c}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!count@{count}}
 \index{count@{count}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -95,6 +145,24 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01310}{1310}} of file \mbo
  
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01317}{1317}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01317     \textcolor{keyword}{def }count(self):}
+\DoxyCodeLine{01318         \textcolor{stringliteral}{"{}"{}"{}Return count of parameter enum entries."{}"{}"{}}}
+\DoxyCodeLine{01319         \textcolor{keywordflow}{return} int(}
+\DoxyCodeLine{01320             \_get\_param(self.cam.handle, self.param\_id, ATTR\_COUNT).value}
+\DoxyCodeLine{01321         )}
+\DoxyCodeLine{01322 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01226}{microscope.\+cameras.\+pvcam.\+PVParam.\+cam}}, and \mbox{\hyperlink{pvcam_8py_source_l01227}{microscope.\+cameras.\+pvcam.\+PVParam.\+param\+\_\+id}}.
+
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}, and \mbox{\hyperlink{pvcam_8py_source_l01371}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+values()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a9b7df8a9395306bdd8ca430f9d4a775f}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a9b7df8a9395306bdd8ca430f9d4a775f}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!current@{current}}
@@ -113,6 +181,21 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_en
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01331}{1331}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01331     \textcolor{keyword}{def }current(self):}
+\DoxyCodeLine{01332         \textcolor{stringliteral}{"{}"{}"{}Return the current (or cached) parameter value.}}
+\DoxyCodeLine{01333 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01334 \textcolor{stringliteral}{        Subclasses should override this }\textcolor{keywordflow}{for} more complex data types.\textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01335 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\_query()}
+\DoxyCodeLine{01336 }
+\DoxyCodeLine{01337 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01252}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+query()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a436183684fe79a6677b11f7dde1c0250}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a436183684fe79a6677b11f7dde1c0250}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!factory@{factory}}
 \index{factory@{factory}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -123,6 +206,35 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01331}{1331}} of file \mbo
  
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01203}{1203}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01203     \textcolor{keyword}{def }factory(camera, param\_id):}
+\DoxyCodeLine{01204         \textcolor{stringliteral}{"{}"{}"{}Create a PVParam or appropriate subclass"{}"{}"{}}}
+\DoxyCodeLine{01205         \textcolor{comment}{\# A mapping of pv parameters types to python types.}}
+\DoxyCodeLine{01206         \textcolor{comment}{\#   None means unsupported.}}
+\DoxyCodeLine{01207         \textcolor{comment}{\#   Parameters omitted from the mapping will default to PVParam.}}
+\DoxyCodeLine{01208         \_\_types\_\_ = \{}
+\DoxyCodeLine{01209             TYPE\_SMART\_STREAM\_TYPE: \textcolor{keywordtype}{None},}
+\DoxyCodeLine{01210             TYPE\_SMART\_STREAM\_TYPE\_PTR: \textcolor{keywordtype}{None},}
+\DoxyCodeLine{01211             TYPE\_VOID\_PTR: \textcolor{keywordtype}{None},}
+\DoxyCodeLine{01212             TYPE\_VOID\_PTR\_PTR: \textcolor{keywordtype}{None},}
+\DoxyCodeLine{01213             TYPE\_ENUM: PVEnumParam,}
+\DoxyCodeLine{01214             TYPE\_CHAR\_PTR: PVStringParam,}
+\DoxyCodeLine{01215         \}}
+\DoxyCodeLine{01216         \textcolor{comment}{\# Determine the appropiate type from its id.}}
+\DoxyCodeLine{01217         pvtype = \_\_types\_\_.get(param\_id >> 24 \& 255, PVParam)}
+\DoxyCodeLine{01218         \textcolor{keywordflow}{if} pvtype \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{01219             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_library_load_error}{microscope.LibraryLoadError}}(}
+\DoxyCodeLine{01220                 \textcolor{stringliteral}{"{}Parameter \%s not supported"{}} \% \_param\_to\_name[param\_id]}
+\DoxyCodeLine{01221             )}
+\DoxyCodeLine{01222         \textcolor{keywordflow}{return} pvtype(camera, param\_id)}
+\DoxyCodeLine{01223 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01236}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+\+\_\+cache}}, \mbox{\hyperlink{pvcam_8py_source_l01235}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+ctype}}, \mbox{\hyperlink{pvcam_8py_source_l01229}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+pvtype}}, \mbox{\hyperlink{pvcam_8py_source_l01226}{microscope.\+cameras.\+pvcam.\+PVParam.\+cam}}, \mbox{\hyperlink{abc_8py_source_l00116}{microscope.\+abc.\+\_\+\+Setting.\+dtype}}, \mbox{\hyperlink{pvcam_8py_source_l01234}{microscope.\+cameras.\+pvcam.\+PVParam.\+dtype}}, \mbox{\hyperlink{abc_8py_source_l00108}{microscope.\+abc.\+\_\+\+Setting.\+name}}, \mbox{\hyperlink{___s_d_k3_8py_source_l00176}{microscope.\+cameras.\+\_\+\+SDK3.\+dll\+Function.\+name}}, \mbox{\hyperlink{atmcd_8py_source_l00639}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+name}}, \mbox{\hyperlink{pvcam_8py_source_l00745}{microscope.\+cameras.\+pvcam.\+dll\+Function.\+name}}, \mbox{\hyperlink{pvcam_8py_source_l01228}{microscope.\+cameras.\+pvcam.\+PVParam.\+name}}, \mbox{\hyperlink{_automation_8cs_source_l00023}{Bio\+Imager.\+Automation.\+Action.\+name}}, \mbox{\hyperlink{_automation_8cs_source_l00286}{Bio\+Imager.\+Automation.\+Recording.\+name}}, \mbox{\hyperlink{_bio_8cs_source_l01102}{Bio\+Imager.\+Filt.\+name}}, \mbox{\hyperlink{_function_form_8cs_source_l00508}{Bio\+Imager.\+Function.\+name}}, \mbox{\hyperlink{_image_j_8cs_source_l00364}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+name}}, \mbox{\hyperlink{_microscope_8cs_source_l00661}{Bio\+Imager.\+Light\+Source.\+name}}, \mbox{\hyperlink{_plot_8cs_source_l00018}{Bio\+Imager.\+Plot.\+name}}, \mbox{\hyperlink{_scripting_8cs_source_l00018}{Bio\+Imager.\+Scripting.\+Script.\+name}}, and \mbox{\hyperlink{pvcam_8py_source_l01227}{microscope.\+cameras.\+pvcam.\+PVParam.\+param\+\_\+id}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a74b4ec460741f7ecc65ab365a733b8e0}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a74b4ec460741f7ecc65ab365a733b8e0}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!set\_value@{set\_value}}
@@ -142,6 +254,32 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_en
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01238}{1238}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01238     \textcolor{keyword}{def }set\_value(self, new\_value):}
+\DoxyCodeLine{01239         \textcolor{stringliteral}{"{}"{}"{}Set a parameter value.}}
+\DoxyCodeLine{01240 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01241 \textcolor{stringliteral}{        Subclasses should do whatever processing they need on new\_value,}}
+\DoxyCodeLine{01242 \textcolor{stringliteral}{        then call super().set\_value(new\_value)"{}"{}"{}}}
+\DoxyCodeLine{01243 \textcolor{stringliteral}{        }\textcolor{keywordflow}{try}:}
+\DoxyCodeLine{01244             ref = ctypes.byref(new\_value)}
+\DoxyCodeLine{01245         \textcolor{keywordflow}{except} TypeError:}
+\DoxyCodeLine{01246             \textcolor{comment}{\# Need to convert python type to ctype first.}}
+\DoxyCodeLine{01247             ref = ctypes.byref(self.\_ctype(new\_value))}
+\DoxyCodeLine{01248         \_set\_param(self.cam.handle, self.param\_id, ref)}
+\DoxyCodeLine{01249         \textcolor{comment}{\# Read back the value to update cache.}}
+\DoxyCodeLine{01250         self.\_query(force\_query=\textcolor{keyword}{True})}
+\DoxyCodeLine{01251 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01236}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+\+\_\+cache}}, \mbox{\hyperlink{pvcam_8py_source_l01235}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+ctype}}, \mbox{\hyperlink{pvcam_8py_source_l01252}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+query()}}, \mbox{\hyperlink{pvcam_8py_source_l01310}{microscope.\+cameras.\+pvcam.\+PVParam.\+available()}}, \mbox{\hyperlink{pvcam_8py_source_l01226}{microscope.\+cameras.\+pvcam.\+PVParam.\+cam}}, \mbox{\hyperlink{abc_8py_source_l00108}{microscope.\+abc.\+\_\+\+Setting.\+name}}, \mbox{\hyperlink{___s_d_k3_8py_source_l00176}{microscope.\+cameras.\+\_\+\+SDK3.\+dll\+Function.\+name}}, \mbox{\hyperlink{atmcd_8py_source_l00639}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+name}}, \mbox{\hyperlink{pvcam_8py_source_l00745}{microscope.\+cameras.\+pvcam.\+dll\+Function.\+name}}, \mbox{\hyperlink{pvcam_8py_source_l01228}{microscope.\+cameras.\+pvcam.\+PVParam.\+name}}, \mbox{\hyperlink{_automation_8cs_source_l00023}{Bio\+Imager.\+Automation.\+Action.\+name}}, \mbox{\hyperlink{_automation_8cs_source_l00286}{Bio\+Imager.\+Automation.\+Recording.\+name}}, \mbox{\hyperlink{_bio_8cs_source_l01102}{Bio\+Imager.\+Filt.\+name}}, \mbox{\hyperlink{_function_form_8cs_source_l00508}{Bio\+Imager.\+Function.\+name}}, \mbox{\hyperlink{_image_j_8cs_source_l00364}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+name}}, \mbox{\hyperlink{_microscope_8cs_source_l00661}{Bio\+Imager.\+Light\+Source.\+name}}, \mbox{\hyperlink{_plot_8cs_source_l00018}{Bio\+Imager.\+Plot.\+name}}, \mbox{\hyperlink{_scripting_8cs_source_l00018}{Bio\+Imager.\+Scripting.\+Script.\+name}}, \mbox{\hyperlink{pvcam_8py_source_l01227}{microscope.\+cameras.\+pvcam.\+PVParam.\+param\+\_\+id}}, and \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}.
+
+
+
+Referenced by \mbox{\hyperlink{linkam_8py_source_l01338}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+MDSMixin.\+move\+\_\+to()}}, \mbox{\hyperlink{linkam_8py_source_l01516}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+refill\+\_\+chamber()}}, \mbox{\hyperlink{linkam_8py_source_l01512}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+refill\+\_\+dewar()}}, \mbox{\hyperlink{linkam_8py_source_l01475}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+set\+\_\+condensor()}}, \mbox{\hyperlink{linkam_8py_source_l01467}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+set\+\_\+light()}}, and \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aeb9ce561b3d89852f547ac3ac2ca7986}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aeb9ce561b3d89852f547ac3ac2ca7986}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!values@{values}}
 \index{values@{values}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -160,6 +298,24 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_en
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01324}{1324}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01324     \textcolor{keyword}{def }values(self):}
+\DoxyCodeLine{01325         \textcolor{stringliteral}{"{}"{}"{}Get parameter min and max values.}}
+\DoxyCodeLine{01326 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01327 \textcolor{stringliteral}{        Subclasses }\textcolor{keywordflow}{for} strings \textcolor{keywordflow}{and} enum override this.\textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01328 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} (self.\_query(ATTR\_MIN), self.\_query(ATTR\_MAX))}
+\DoxyCodeLine{01329 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{pvcam_8py_source_l01252}{microscope.\+cameras.\+pvcam.\+PVParam.\+\_\+query()}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aa85c3d6cc94c5bdb4a84feb2bed09c36}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aa85c3d6cc94c5bdb4a84feb2bed09c36}} 
@@ -172,6 +328,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01324}{1324}} of file \mbo
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01226}{1226}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01303}{microscope.\+cameras.\+pvcam.\+PVParam.\+access()}}, \mbox{\hyperlink{pvcam_8py_source_l01310}{microscope.\+cameras.\+pvcam.\+PVParam.\+available()}}, \mbox{\hyperlink{pvcam_8py_source_l01317}{microscope.\+cameras.\+pvcam.\+PVParam.\+count()}}, \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01371}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+values()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a97af9281a266b5be48a1e41ea534ea53}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a97af9281a266b5be48a1e41ea534ea53}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!dtype@{dtype}}
 \index{dtype@{dtype}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -181,6 +341,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01226}{1226}} of file \mbo
 
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01234}{1234}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, and \mbox{\hyperlink{abc_8py_source_l00164}{microscope.\+abc.\+\_\+\+Setting.\+set()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aca119823355743a943bf55c4a4b16e6d}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_aca119823355743a943bf55c4a4b16e6d}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!name@{name}}
@@ -192,6 +356,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01234}{1234}} of file \mbo
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01228}{1228}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a37193721899bc9694435fdde41f040b5}\label{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param_a37193721899bc9694435fdde41f040b5}} 
 \index{microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}!param\_id@{param\_id}}
 \index{param\_id@{param\_id}!microscope.cameras.pvcam.PVParam@{microscope.cameras.pvcam.PVParam}}
@@ -201,6 +369,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l01228}{1228}} of file \mbo
 
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l01227}{1227}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01303}{microscope.\+cameras.\+pvcam.\+PVParam.\+access()}}, \mbox{\hyperlink{pvcam_8py_source_l01310}{microscope.\+cameras.\+pvcam.\+PVParam.\+available()}}, \mbox{\hyperlink{pvcam_8py_source_l01317}{microscope.\+cameras.\+pvcam.\+PVParam.\+count()}}, \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, \mbox{\hyperlink{pvcam_8py_source_l01371}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+values()}}, and \mbox{\hyperlink{pvcam_8py_source_l01398}{microscope.\+cameras.\+pvcam.\+PVString\+Param.\+values()}}.
 
 
 

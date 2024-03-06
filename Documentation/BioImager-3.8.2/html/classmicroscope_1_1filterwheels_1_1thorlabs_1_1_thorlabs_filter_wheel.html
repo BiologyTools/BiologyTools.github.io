@@ -275,6 +275,48 @@ should periodically query the current wheel position.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c.html#a3ca7bbe3f0d70b05046d98b172855df6">microscope.filterwheels.thorlabs.ThorlabsFW102C</a>, and <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c.html#a7eb8e8dd8d386c50303ba75776f0d8b5">microscope.filterwheels.thorlabs.ThorlabsFW212C</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="thorlabs_8py_source.html#l00037">37</a> of file <a class="el" href="thorlabs_8py_source.html">thorlabs.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    <span class="keyword">def </span>__init__(self, com, baud=115200, timeout=2.0, **kwargs):</div>
+<div class="line"><span class="lineno">   38</span>        <span class="stringliteral">&quot;&quot;&quot;Create ThorlabsFilterWheel</span></div>
+<div class="line"><span class="lineno">   39</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">   40</span><span class="stringliteral">        :param com: COM port</span></div>
+<div class="line"><span class="lineno">   41</span><span class="stringliteral">        :param baud: baud rate</span></div>
+<div class="line"><span class="lineno">   42</span><span class="stringliteral">        :param timeout: serial timeout</span></div>
+<div class="line"><span class="lineno">   43</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   44</span><span class="stringliteral">        self.eol = &quot;\r&quot;</span></div>
+<div class="line"><span class="lineno">   45</span>        rawSerial = serial.Serial(</div>
+<div class="line"><span class="lineno">   46</span>            port=com,</div>
+<div class="line"><span class="lineno">   47</span>            baudrate=baud,</div>
+<div class="line"><span class="lineno">   48</span>            timeout=timeout,</div>
+<div class="line"><span class="lineno">   49</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><span class="lineno">   50</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">   51</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">   52</span>            xonxoff=0,</div>
+<div class="line"><span class="lineno">   53</span>        )</div>
+<div class="line"><span class="lineno">   54</span>        <span class="comment"># The Thorlabs controller serial implementation is strange.</span></div>
+<div class="line"><span class="lineno">   55</span>        <span class="comment"># Generally, it uses \r as EOL, but error messages use \n.</span></div>
+<div class="line"><span class="lineno">   56</span>        <span class="comment"># A readline after sending a &#39;pos?\r&#39; command always times out,</span></div>
+<div class="line"><span class="lineno">   57</span>        <span class="comment"># but returns a string terminated by a newline.</span></div>
+<div class="line"><span class="lineno">   58</span>        <span class="comment"># We use TextIOWrapper with newline=None to perform EOL translation</span></div>
+<div class="line"><span class="lineno">   59</span>        <span class="comment"># inbound, but must explicitly append \r to outgoing commands.</span></div>
+<div class="line"><span class="lineno">   60</span>        <span class="comment"># The TextIOWrapper also deals with conversion between unicode</span></div>
+<div class="line"><span class="lineno">   61</span>        <span class="comment"># and bytes.</span></div>
+<div class="line"><span class="lineno">   62</span>        self.connection = io.TextIOWrapper(</div>
+<div class="line"><span class="lineno">   63</span>            rawSerial,</div>
+<div class="line"><span class="lineno">   64</span>            newline=<span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">   65</span>            line_buffering=<span class="keyword">True</span>,  <span class="comment"># flush on write</span></div>
+<div class="line"><span class="lineno">   66</span>            write_through=<span class="keyword">True</span>,  <span class="comment"># write out immediately</span></div>
+<div class="line"><span class="lineno">   67</span>        )</div>
+<div class="line"><span class="lineno">   68</span>        <span class="comment"># A lock for the connection.  We should probably be using</span></div>
+<div class="line"><span class="lineno">   69</span>        <span class="comment"># SharedSerial (maybe change it to SharedIO, and have it</span></div>
+<div class="line"><span class="lineno">   70</span>        <span class="comment"># accept any IOBase implementation).</span></div>
+<div class="line"><span class="lineno">   71</span>        self._lock = threading.RLock()</div>
+<div class="line"><span class="lineno">   72</span>        position_count = int(self._send_command(<span class="stringliteral">&quot;pcount?&quot;</span>))</div>
+<div class="line"><span class="lineno">   73</span>        super().__init__(positions=position_count, **kwargs)</div>
+<div class="line"><span class="lineno">   74</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>, <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00102">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._send_command()</a>, <a class="el" href="aurox_8py_source.html#l00113">microscope.filterwheels.aurox.Clarity._send_command()</a>, <a class="el" href="abc_8py_source.html#l01013">microscope.abc.SerialDeviceMixin.connection</a>, <a class="el" href="thorlabs_8py_source.html#l00062">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.connection</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00049">microscope.lights.cobolt.CoboltLaser.connection</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00046">microscope.lights.deepstar.DeepstarLaser.connection</a>, <a class="el" href="lights_2obis_8py_source.html#l00036">microscope.lights.obis.ObisLaser.connection</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00060">microscope.lights.sapphire.SapphireLaser.connection</a>, <a class="el" href="thorlabs_8py_source.html#l00044">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.eol</a>, <a class="el" href="mock__devices_8py_source.html#l00121">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.eol</a>, <a class="el" href="mock__devices_8py_source.html#l00319">microscope.testsuite.mock_devices.CoboltLaserMock.eol</a>, <a class="el" href="mock__devices_8py_source.html#l00477">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.eol</a>, and <a class="el" href="test__devices_8py_source.html#l00052">microscope.testsuite.test_devices.TestSerialMock.Serial.eol</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>.</p>
 
 </div>
 </div>
@@ -293,6 +335,8 @@ should periodically query the current wheel position.</pre>
 
 <p class="definition">Definition at line <a class="el" href="thorlabs_8py_source.html#l00062">62</a> of file <a class="el" href="thorlabs_8py_source.html">thorlabs.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, and <a class="el" href="abc_8py_source.html#l01030">microscope.abc.SerialDeviceMixin.lock_comms()</a>.</p>
+
 </div>
 </div>
 <a id="a486b94bf9dbb6f18cc4886a4dbea86cd" name="a486b94bf9dbb6f18cc4886a4dbea86cd"></a>
@@ -308,6 +352,8 @@ should periodically query the current wheel position.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="thorlabs_8py_source.html#l00044">44</a> of file <a class="el" href="thorlabs_8py_source.html">thorlabs.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>.</p>
 
 </div>
 </div>

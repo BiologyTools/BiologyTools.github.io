@@ -37,6 +37,29 @@ Definition at line \mbox{\hyperlink{_cell_imager_8cs_source_l00018}{18}} of file
 Definition at line \mbox{\hyperlink{_cell_imager_8cs_source_l00025}{25}} of file \mbox{\hyperlink{_cell_imager_8cs_source}{Cell\+Imager.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026         \{}
+\DoxyCodeLine{00027             InitializeComponent();}
+\DoxyCodeLine{00028             viewer = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_view}{ImageView}}();}
+\DoxyCodeLine{00029             viewer.ShowControls = \textcolor{keyword}{false};}
+\DoxyCodeLine{00030             imageSplitContainer.Panel2.Controls.Add(viewer);}
+\DoxyCodeLine{00031             \textcolor{keywordflow}{foreach} (var item \textcolor{keywordflow}{in} Microscope.Objectives.List)}
+\DoxyCodeLine{00032             \{}
+\DoxyCodeLine{00033                 objectivesBox.Items.Add(item.Name);}
+\DoxyCodeLine{00034             \}}
+\DoxyCodeLine{00035             objectivesBox.SelectedIndex = Microscope.Objectives.Index;}
+\DoxyCodeLine{00036             maxWidthLabel.Text = \textcolor{stringliteral}{"{}Max Width:"{}} + maxWidthBar.Value;}
+\DoxyCodeLine{00037             maxHeightLabel.Text = \textcolor{stringliteral}{"{}Max Height:"{}} + maxHeightBar.Value;}
+\DoxyCodeLine{00038             minHeightLabel.Text = \textcolor{stringliteral}{"{}Min Height:"{}} + minHeightBar.Value;}
+\DoxyCodeLine{00039             minWidthLabel.Text = \textcolor{stringliteral}{"{}Min Width:"{}} + minWidthBar.Value;}
+\DoxyCodeLine{00040             \textcolor{keywordflow}{foreach} (\mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}}.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}} item in \mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}}.Scripts.Values)}
+\DoxyCodeLine{00041             \{}
+\DoxyCodeLine{00042                 comboBox.Items.Add(item);}
+\DoxyCodeLine{00043             \}}
+\DoxyCodeLine{00044         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_cell_imager_a68eb441b27ea6ef72b976e3d18ad75fa}\label{class_bio_imager_1_1_cell_imager_a68eb441b27ea6ef72b976e3d18ad75fa}} 
@@ -58,6 +81,17 @@ Clean up any resources being used.
 
 Definition at line \mbox{\hyperlink{_cell_imager_8_designer_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_cell_imager_8_designer_8cs_source}{Cell\+Imager.\+Designer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015         \{}
+\DoxyCodeLine{00016             \textcolor{keywordflow}{if} (disposing \&\& (components != \textcolor{keyword}{null}))}
+\DoxyCodeLine{00017             \{}
+\DoxyCodeLine{00018                 components.Dispose();}
+\DoxyCodeLine{00019             \}}
+\DoxyCodeLine{00020             base.Dispose(disposing);}
+\DoxyCodeLine{00021         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_cell_imager_a13e96b4d9831ad123ef6ee2e46bbd348}\label{class_bio_imager_1_1_cell_imager_a13e96b4d9831ad123ef6ee2e46bbd348}} 
 \index{BioImager.CellImager@{BioImager.CellImager}!Image@{Image}}
 \index{Image@{Image}!BioImager.CellImager@{BioImager.CellImager}}
@@ -68,6 +102,47 @@ Definition at line \mbox{\hyperlink{_cell_imager_8_designer_8cs_source_l00014}{1
 
 Definition at line \mbox{\hyperlink{_cell_imager_8cs_source_l00132}{132}} of file \mbox{\hyperlink{_cell_imager_8cs_source}{Cell\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133         \{}
+\DoxyCodeLine{00134             Point3D p = Microscope.GetPosition();}
+\DoxyCodeLine{00135             \textcolor{keywordtype}{int} o = Microscope.Objectives.Index;}
+\DoxyCodeLine{00136             \textcolor{keywordflow}{foreach} (Blob blob \textcolor{keywordflow}{in} blobs)}
+\DoxyCodeLine{00137             \{}
+\DoxyCodeLine{00138                 \textcolor{keywordflow}{if} (blob.Rectangle.Width < minWidthBar.Value || blob.Rectangle.Height < minHeightBar.Value || blob.Rectangle.Width > maxWidthBar.Value || blob.Rectangle.Height > maxHeightBar.Value)}
+\DoxyCodeLine{00139                     \textcolor{keywordflow}{continue};}
+\DoxyCodeLine{00140                 PointD loc = \textcolor{keyword}{new} PointD(b.StageSizeX + (blob.Rectangle.X * b.PhysicalSizeX), b.StageSizeY + (blob.Rectangle.Y * b.PhysicalSizeY));}
+\DoxyCodeLine{00141                 Microscope.Objectives.SetPosition(objectivesBox.SelectedIndex);}
+\DoxyCodeLine{00142                 Microscope.SetPosition(loc);}
+\DoxyCodeLine{00143                 \textcolor{keywordflow}{if} (tileBox.Checked)}
+\DoxyCodeLine{00144                 \{}
+\DoxyCodeLine{00145                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < tileYBox.Value; y++)}
+\DoxyCodeLine{00146                     \{}
+\DoxyCodeLine{00147                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < tileXBox.Value; x++)}
+\DoxyCodeLine{00148                         \{}
+\DoxyCodeLine{00149                             \textcolor{keywordflow}{if} (comboBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{00150                                 ((\mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}}.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})comboBox.SelectedItem).Run();}
+\DoxyCodeLine{00151                             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00152                                 images.AddRange(Microscope.TakeTiles((\textcolor{keywordtype}{int})tileXBox.Value, (int)tileYBox.Value));}
+\DoxyCodeLine{00153                         \}}
+\DoxyCodeLine{00154                     \}}
+\DoxyCodeLine{00155                 \}}
+\DoxyCodeLine{00156                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00157                 \{}
+\DoxyCodeLine{00158                     \textcolor{keywordflow}{if} (comboBox.SelectedIndex != -\/1)}
+\DoxyCodeLine{00159                         ((\mbox{\hyperlink{class_bio_imager_1_1_scripting}{Scripting}}.\mbox{\hyperlink{class_bio_imager_1_1_scripting_1_1_script}{Script}})comboBox.SelectedItem).Run();}
+\DoxyCodeLine{00160                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00161                         images.Add(Microscope.TakeImage(\textcolor{keyword}{false}, \textcolor{keyword}{false}, \textcolor{keyword}{false}));}
+\DoxyCodeLine{00162                 \}}
+\DoxyCodeLine{00163             \}}
+\DoxyCodeLine{00164             Microscope.Objectives.SetPosition(o);}
+\DoxyCodeLine{00165             Microscope.SetPosition(p);}
+\DoxyCodeLine{00166             viewer.Images.Clear();}
+\DoxyCodeLine{00167             viewer.Images.AddRange(images);}
+\DoxyCodeLine{00168             viewer.\mbox{\hyperlink{class_bio_imager_1_1_image_view_adc65e6e60745ab28f68c3e63642f547e}{UpdateView}}();}
+\DoxyCodeLine{00169         \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following files\+:\begin{DoxyCompactItemize}

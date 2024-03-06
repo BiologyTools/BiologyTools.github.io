@@ -205,7 +205,21 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00149">149</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  150</span>        {</div>
+<div class="line"><span class="lineno">  151</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;getfilterwheel.py&quot;</span>, Properties.Settings.Default.PFilterWheel);</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  153</span>            {</div>
+<div class="line"><span class="lineno">  154</span>                <span class="keywordtype">string</span>[] sts = s.Split();</div>
+<div class="line"><span class="lineno">  155</span>                p = <span class="keywordtype">int</span>.Parse(sts[2]);</div>
+<div class="line"><span class="lineno">  156</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  157</span>            }</div>
+<div class="line"><span class="lineno">  158</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  159</span>            {</div>
+<div class="line"><span class="lineno">  160</span>                p = -1;</div>
+<div class="line"><span class="lineno">  161</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  162</span>            }</div>
+<div class="line"><span class="lineno">  163</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8252a565c312218675d2defb13abc56d" name="a8252a565c312218675d2defb13abc56d"></a>
@@ -235,7 +249,27 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00120">120</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  121</span>        {</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">if</span> (!update)</div>
+<div class="line"><span class="lineno">  123</span>            {</div>
+<div class="line"><span class="lineno">  124</span>                p = location;</div>
+<div class="line"><span class="lineno">  125</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  126</span>            }</div>
+<div class="line"><span class="lineno">  127</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;getstagexy.py&quot;</span>, Properties.Settings.Default.PStage);</div>
+<div class="line"><span class="lineno">  128</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  129</span>            {</div>
+<div class="line"><span class="lineno">  130</span>                <span class="keywordtype">string</span>[] sts = s.Split();</div>
+<div class="line"><span class="lineno">  131</span>                p = <span class="keyword">new</span> PointD(<span class="keywordtype">double</span>.Parse(sts[0]), <span class="keywordtype">double</span>.Parse(sts[2]));</div>
+<div class="line"><span class="lineno">  132</span>                location = p;</div>
+<div class="line"><span class="lineno">  133</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  134</span>            }</div>
+<div class="line"><span class="lineno">  135</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  136</span>            {</div>
+<div class="line"><span class="lineno">  137</span>                p = <span class="keyword">new</span> PointD();</div>
+<div class="line"><span class="lineno">  138</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  139</span>            }</div>
+<div class="line"><span class="lineno">  140</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a62f4b0618aac040a1b1926ee322b0ce6" name="a62f4b0618aac040a1b1926ee322b0ce6"></a>
@@ -265,7 +299,27 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00099">99</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  100</span>        {</div>
+<div class="line"><span class="lineno">  101</span>            <span class="keywordflow">if</span>(!update)</div>
+<div class="line"><span class="lineno">  102</span>            {</div>
+<div class="line"><span class="lineno">  103</span>                p = <span class="keyword">new</span> Point3D(location.X, location.Y, focus);</div>
+<div class="line"><span class="lineno">  104</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  105</span>            }</div>
+<div class="line"><span class="lineno">  106</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;getstagexyz.py&quot;</span>, Properties.Settings.Default.PStage);</div>
+<div class="line"><span class="lineno">  107</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  108</span>            {</div>
+<div class="line"><span class="lineno">  109</span>                <span class="keywordtype">string</span>[] sts = s.Split();</div>
+<div class="line"><span class="lineno">  110</span>                p = <span class="keyword">new</span> Point3D(<span class="keywordtype">double</span>.Parse(sts[0]), <span class="keywordtype">double</span>.Parse(sts[2]), <span class="keywordtype">double</span>.Parse(sts[4]));</div>
+<div class="line"><span class="lineno">  111</span>                focus = p.Z;</div>
+<div class="line"><span class="lineno">  112</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  113</span>            }</div>
+<div class="line"><span class="lineno">  114</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  115</span>            {</div>
+<div class="line"><span class="lineno">  116</span>                p = <span class="keyword">new</span> Point3D();</div>
+<div class="line"><span class="lineno">  117</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  118</span>            }</div>
+<div class="line"><span class="lineno">  119</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac20a3ba5bcdec3eac74fb423fa9fa968" name="ac20a3ba5bcdec3eac74fb423fa9fa968"></a>
@@ -295,7 +349,18 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00180">180</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  181</span>        {</div>
+<div class="line"><span class="lineno">  182</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;getcamrect.py&quot;</span>,Properties.Settings.Default.PCamera);</div>
+<div class="line"><span class="lineno">  183</span>            width = 0;</div>
+<div class="line"><span class="lineno">  184</span>            height = 0;</div>
+<div class="line"><span class="lineno">  185</span>            <span class="keywordflow">if</span> (!s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  186</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keywordtype">string</span>[] sts = s.Split();</div>
+<div class="line"><span class="lineno">  188</span>            width = <span class="keywordtype">int</span>.Parse(sts[0]);</div>
+<div class="line"><span class="lineno">  189</span>            height = <span class="keywordtype">int</span>.Parse(sts[2]);</div>
+<div class="line"><span class="lineno">  190</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  191</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1c7e557a90263f8de3a083993d9778d1" name="a1c7e557a90263f8de3a083993d9778d1"></a>
@@ -314,7 +379,15 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00066">66</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   67</span>        {</div>
+<div class="line"><span class="lineno">   68</span>            <span class="comment">//We start the device server</span></div>
+<div class="line"><span class="lineno">   69</span>            Start();</div>
+<div class="line"><span class="lineno">   70</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;initialize.py&quot;</span>, Properties.Settings.Default.PStage);</div>
+<div class="line"><span class="lineno">   71</span>            <span class="keywordflow">if</span> (!s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">   72</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   74</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae31be03cbfc14e01360b6fe0ead038cd" name="ae31be03cbfc14e01360b6fe0ead038cd"></a>
@@ -352,7 +425,27 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00018">18</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   19</span>        {</div>
+<div class="line"><span class="lineno">   20</span>            ProcessStartInfo start = <span class="keyword">new</span> ProcessStartInfo();</div>
+<div class="line"><span class="lineno">   21</span>            start.FileName = <span class="stringliteral">&quot;python.exe&quot;</span>;</div>
+<div class="line"><span class="lineno">   22</span>            start.Arguments = <span class="keywordtype">string</span>.Format(<span class="stringliteral">&quot;{0} {1}&quot;</span>, cmd, args);</div>
+<div class="line"><span class="lineno">   23</span>            start.WorkingDirectory = Application.StartupPath + <span class="stringliteral">&quot;/PythonMicroscope/microscope&quot;</span>;</div>
+<div class="line"><span class="lineno">   24</span>            start.UseShellExecute = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   25</span>            start.RedirectStandardOutput = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   26</span>            start.CreateNoWindow = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   27</span>            <span class="keywordtype">string</span> res;</div>
+<div class="line"><span class="lineno">   28</span>            <span class="keyword">using</span> (Process process = Process.Start(start))</div>
+<div class="line"><span class="lineno">   29</span>            {</div>
+<div class="line"><span class="lineno">   30</span>                <span class="keyword">using</span> (StreamReader reader = process.StandardOutput)</div>
+<div class="line"><span class="lineno">   31</span>                {</div>
+<div class="line"><span class="lineno">   32</span>                    res = reader.ReadToEnd();</div>
+<div class="line"><span class="lineno">   33</span>                    Console.Write(res);</div>
+<div class="line"><span class="lineno">   34</span>                }</div>
+<div class="line"><span class="lineno">   35</span>            }</div>
+<div class="line"><span class="lineno">   36</span>            Application.DoEvents();</div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordflow">return</span> res;</div>
+<div class="line"><span class="lineno">   38</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab0805e244778169e98de268b48b4e8f3" name="ab0805e244778169e98de268b48b4e8f3"></a>
@@ -372,7 +465,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00172">172</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  173</span>        {</div>
+<div class="line"><span class="lineno">  174</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;setexposure.py&quot;</span>, f.ToString());</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  176</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  177</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  178</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  179</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acacc6b8dbc139963533b5a24c51f47be" name="acacc6b8dbc139963533b5a24c51f47be"></a>
@@ -392,7 +492,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00141">141</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  142</span>        {</div>
+<div class="line"><span class="lineno">  143</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;setfilterwheel.py&quot;</span>, Properties.Settings.Default.PFilterWheel + <span class="stringliteral">&quot; &quot;</span> + p);</div>
+<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  145</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  146</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  147</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  148</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abe2293301ba086a450d5dc0e81dd4dca" name="abe2293301ba086a450d5dc0e81dd4dca"></a>
@@ -412,7 +519,18 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00076">76</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   77</span>        {</div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;setstagexyz.py&quot;</span>, Properties.Settings.Default.PStage + <span class="stringliteral">&quot; &quot;</span> + p.X + <span class="stringliteral">&quot; &quot;</span> + p.Y + <span class="stringliteral">&quot; &quot;</span> + p.Z);</div>
+<div class="line"><span class="lineno">   79</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">   80</span>            {</div>
+<div class="line"><span class="lineno">   81</span>                focus = p.Z;</div>
+<div class="line"><span class="lineno">   82</span>                location = <span class="keyword">new</span> PointD(p.X, p.Y);</div>
+<div class="line"><span class="lineno">   83</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   84</span>            }</div>
+<div class="line"><span class="lineno">   85</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   86</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   87</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a7970c0632e2b41d6ff0c806855ba0d30" name="a7970c0632e2b41d6ff0c806855ba0d30"></a>
@@ -432,7 +550,17 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00088">88</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   89</span>        {</div>
+<div class="line"><span class="lineno">   90</span>            <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;setstagexy.py&quot;</span>, Properties.Settings.Default.PStage + <span class="stringliteral">&quot; &quot;</span> + p.X + <span class="stringliteral">&quot; &quot;</span> + p.Y);</div>
+<div class="line"><span class="lineno">   91</span>            <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">   92</span>            {</div>
+<div class="line"><span class="lineno">   93</span>                location = p;</div>
+<div class="line"><span class="lineno">   94</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   95</span>            }</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   97</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   98</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae52038d9df4153ad46198c7ee0340e34" name="ae52038d9df4153ad46198c7ee0340e34"></a>
@@ -459,7 +587,17 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00049">49</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   50</span>        {</div>
+<div class="line"><span class="lineno">   51</span>            ProcessStartInfo start = <span class="keyword">new</span> ProcessStartInfo();</div>
+<div class="line"><span class="lineno">   52</span>            start.FileName = <span class="stringliteral">&quot;python.exe&quot;</span>;</div>
+<div class="line"><span class="lineno">   53</span>            start.Arguments = <span class="keywordtype">string</span>.Format(<span class="stringliteral">&quot;{0} {1}&quot;</span>, <span class="stringliteral">&quot;device_server.py&quot;</span>, <span class="stringliteral">&quot;config.txt&quot;</span>);</div>
+<div class="line"><span class="lineno">   54</span>            start.WorkingDirectory = Application.StartupPath + <span class="stringliteral">&quot;/PythonMicroscope/microscope&quot;</span>;</div>
+<div class="line"><span class="lineno">   55</span>            start.UseShellExecute = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   56</span>            start.RedirectStandardOutput = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   57</span>            start.CreateNoWindow = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   58</span>            deviceServer = Process.Start(start);</div>
+<div class="line"><span class="lineno">   59</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a946602cdb2044e3613e39bc521224f8e" name="a946602cdb2044e3613e39bc521224f8e"></a>
@@ -497,7 +635,16 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00039">39</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   40</span>        {</div>
+<div class="line"><span class="lineno">   41</span>            ProcessStartInfo start = <span class="keyword">new</span> ProcessStartInfo();</div>
+<div class="line"><span class="lineno">   42</span>            start.FileName = <span class="stringliteral">&quot;python.exe&quot;</span>;</div>
+<div class="line"><span class="lineno">   43</span>            start.Arguments = <span class="keywordtype">string</span>.Format(<span class="stringliteral">&quot;{0} {1}&quot;</span>, cmd, args);</div>
+<div class="line"><span class="lineno">   44</span>            start.WorkingDirectory = Application.StartupPath + <span class="stringliteral">&quot;/PythonMicroscope/microscope&quot;</span>;</div>
+<div class="line"><span class="lineno">   45</span>            start.UseShellExecute = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   46</span>            start.RedirectStandardOutput = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   47</span>            start.CreateNoWindow = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   48</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aea5c4f0dd1adc7d6ce2a240c4b4bbef1" name="aea5c4f0dd1adc7d6ce2a240c4b4bbef1"></a>
@@ -524,7 +671,12 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00060">60</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   61</span>        {</div>
+<div class="line"><span class="lineno">   62</span>            <span class="keywordflow">if</span>(deviceServer!=<span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">   63</span>            <span class="keywordflow">if</span>(!deviceServer.HasExited)</div>
+<div class="line"><span class="lineno">   64</span>            deviceServer.Kill();</div>
+<div class="line"><span class="lineno">   65</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4f22147ab3fc5d466b8df093cb681ac4" name="a4f22147ab3fc5d466b8df093cb681ac4"></a>
@@ -544,7 +696,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_python_microscope_8cs_source.html#l00164">164</a> of file <a class="el" href="_python_microscope_8cs_source.html">PythonMicroscope.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  165</span>        {</div>
+<div class="line"><span class="lineno">  166</span>           <span class="keywordtype">string</span> s = run_cmd(<span class="stringliteral">&quot;takeimage.py&quot;</span>, path);</div>
+<div class="line"><span class="lineno">  167</span>           <span class="keywordflow">if</span> (s.Contains(<span class="stringliteral">&quot;OK&quot;</span>))</div>
+<div class="line"><span class="lineno">  168</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  169</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  170</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  171</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

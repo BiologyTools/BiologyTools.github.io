@@ -192,7 +192,11 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#af7575373fa50d5ba2d93821b09605d92">microscope.stages.linkam.LinkamCMS</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01292">1292</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1292</span>    <span class="keyword">def </span>__init__(self, **kwargs):</div>
+<div class="line"><span class="lineno"> 1293</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno"> 1294</span>        self._mdsstatus = _MDSStatus()</div>
+<div class="line"><span class="lineno"> 1295</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -213,6 +217,23 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return the stage's position.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01359">1359</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1359</span>    <span class="keyword">def </span>get_position(self):</div>
+<div class="line"><span class="lineno"> 1360</span>        <span class="stringliteral">&quot;&quot;&quot;Return the stage&#39;s position.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1361</span>        pos = {}</div>
+<div class="line"><span class="lineno"> 1362</span>        <span class="keywordflow">for</span> axis <span class="keywordflow">in</span> <span class="stringliteral">&quot;ZYX&quot;</span>:</div>
+<div class="line"><span class="lineno"> 1363</span>            <span class="keywordflow">if</span> getattr(self._stageconfig.flags, <span class="stringliteral">&quot;motor&quot;</span> + axis):</div>
+<div class="line"><span class="lineno"> 1364</span>                pos[axis] = self.get_value(</div>
+<div class="line"><span class="lineno"> 1365</span>                    getattr(_StageValueType, <span class="stringliteral">&quot;MotorPos&quot;</span> + axis)</div>
+<div class="line"><span class="lineno"> 1366</span>                )</div>
+<div class="line"><span class="lineno"> 1367</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1368</span>                pos[axis] = float(<span class="stringliteral">&quot;nan&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1369</span>        <span class="keywordflow">return</span> pos</div>
+<div class="line"><span class="lineno"> 1370</span> </div>
+<div class="line"><span class="lineno"> 1371</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01079">microscope.stages.linkam._LinkamBase._stageconfig</a>, and <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="aurox_8py_source.html#l00249">microscope.filterwheels.aurox.Clarity.moving()</a>.</p>
 
 </div>
 </div>
@@ -245,6 +266,14 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#ad5aa9a0f8fc607890ba67b51dcaea2d1">microscope.stages.linkam.LinkamCMS</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01355">1355</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1355</span>    <span class="keyword">def </span>get_status(self, *args):</div>
+<div class="line"><span class="lineno"> 1356</span>        <span class="stringliteral">&quot;&quot;&quot;Includes MDSStatus in the get_status call.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1357</span>        <span class="keywordflow">return</span> super().get_status(*args, self._mdsstatus)</div>
+<div class="line"><span class="lineno"> 1358</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01294">microscope.stages.linkam._LinkamMDSMixin._mdsstatus</a>, and <a class="el" href="linkam_8py_source.html#l01355">microscope.stages.linkam._LinkamMDSMixin.get_status()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01355">microscope.stages.linkam._LinkamMDSMixin.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -287,6 +316,27 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Move to co-ordinates given by x and y</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01338">1338</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1338</span>    <span class="keyword">def </span>move_to(self, x=None, y=None, z=None):</div>
+<div class="line"><span class="lineno"> 1339</span>        <span class="stringliteral">&quot;&quot;&quot;Move to co-ordinates given by x and y&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1340</span>        <span class="comment"># The default position set points are zero. If the motors are started without</span></div>
+<div class="line"><span class="lineno"> 1341</span>        <span class="comment"># writing to a set point, that motor will move to zero, so only start motors</span></div>
+<div class="line"><span class="lineno"> 1342</span>        <span class="comment"># if a target has been provided.</span></div>
+<div class="line"><span class="lineno"> 1343</span>        <span class="keywordflow">if</span> x <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1344</span>            self.set_value(_StageValueType.MotorSetpointX, x)</div>
+<div class="line"><span class="lineno"> 1345</span>            self._process_msg(Msg.StartMotors, <span class="keyword">True</span>, 0)</div>
+<div class="line"><span class="lineno"> 1346</span>        <span class="keywordflow">if</span> y <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1347</span>            self.set_value(_StageValueType.MotorSetpointY, y)</div>
+<div class="line"><span class="lineno"> 1348</span>            self._process_msg(Msg.StartMotors, <span class="keyword">True</span>, 1)</div>
+<div class="line"><span class="lineno"> 1349</span>        <span class="keywordflow">if</span> z <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1350</span>            self.set_value(_StageValueType.MotorSetpointZ, z)</div>
+<div class="line"><span class="lineno"> 1351</span>            self._process_msg(Msg.StartMotors, <span class="keyword">True</span>, 2)</div>
+<div class="line"><span class="lineno"> 1352</span>        <span class="comment"># Allow time for status structures to indicate stage is moving</span></div>
+<div class="line"><span class="lineno"> 1353</span>        time.sleep(5 * self.get_data_rate())</div>
+<div class="line"><span class="lineno"> 1354</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01102">microscope.stages.linkam._LinkamBase._process_msg()</a>, <a class="el" href="linkam_8py_source.html#l01117">microscope.stages.linkam._LinkamBase.get_data_rate()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01386">microscope.cameras.pvcam.PVStringParam.set_value()</a>, and <a class="el" href="linkam_8py_source.html#l01166">microscope.stages.linkam._LinkamBase.set_value()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00420">microscope.simulators.SimulatedStageAxis.move_by()</a>.</p>
 
 </div>
 </div>

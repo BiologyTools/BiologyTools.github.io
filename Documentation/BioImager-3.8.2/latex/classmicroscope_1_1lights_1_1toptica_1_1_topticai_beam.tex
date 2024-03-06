@@ -51,6 +51,26 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{mic
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00216}{216}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00217         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00218         self.\_conn = \_iBeamConnection(port)}
+\DoxyCodeLine{00219         \textcolor{comment}{\# The Toptica iBeam has up to five operation modes, named}}
+\DoxyCodeLine{00220         \textcolor{comment}{\# "{}channels"{} on the documentation.  Only the first three}}
+\DoxyCodeLine{00221         \textcolor{comment}{\# channels have any sort of documentation:}}
+\DoxyCodeLine{00222         \textcolor{comment}{\#}}
+\DoxyCodeLine{00223         \textcolor{comment}{\#   Ch 1: bias level channel}}
+\DoxyCodeLine{00224         \textcolor{comment}{\#   Ch 2: normal operating level channel}}
+\DoxyCodeLine{00225         \textcolor{comment}{\#   Ch 3: only used at high-\/power models}}
+\DoxyCodeLine{00226         \textcolor{comment}{\#}}
+\DoxyCodeLine{00227         \textcolor{comment}{\# We haven't come across a laser with a channel 3 so we are}}
+\DoxyCodeLine{00228         \textcolor{comment}{\# ignoring it until then.  So we just leave the bias channel}}
+\DoxyCodeLine{00229         \textcolor{comment}{\# (1) alone and control power via the normal channel (2).}}
+\DoxyCodeLine{00230         self.\_max\_power = self.\_conn.show\_max\_power()}
+\DoxyCodeLine{00231 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_ace72a4800f613b245fa2f35c0683fd21}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_ace72a4800f613b245fa2f35c0683fd21}} 
@@ -68,6 +88,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_add8e7f466
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00242}{242}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00242     \textcolor{keyword}{def }disable(self) -\/> None:}
+\DoxyCodeLine{00243         self.\_conn.laser\_off()}
+\DoxyCodeLine{00244 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00558}{microscope.\+abc.\+Data\+Device.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, and \mbox{\hyperlink{abc_8py_source_l00349}{microscope.\+abc.\+Device.\+shutdown()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a6c8e9ce41dfba25d8201d0a566e9ac94}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a6c8e9ce41dfba25d8201d0a566e9ac94}} 
 \index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!enable@{enable}}
 \index{enable@{enable}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
@@ -82,6 +117,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_ac7759ad4e
 
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00239}{239}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00239     \textcolor{keyword}{def }enable(self) -\/> None:}
+\DoxyCodeLine{00240         self.\_conn.laser\_on()}
+\DoxyCodeLine{00241 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_aa0222648ea020139d63f50f3255a3171}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_aa0222648ea020139d63f50f3255a3171}} 
 \index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!get\_is\_on@{get\_is\_on}}
@@ -98,6 +144,29 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00245}{245}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00245     \textcolor{keyword}{def }get\_is\_on(self) -\/> bool:}
+\DoxyCodeLine{00246         state = self.\_conn.status\_laser()}
+\DoxyCodeLine{00247         \textcolor{keywordflow}{if} state == b\textcolor{stringliteral}{"{}ON"{}}:}
+\DoxyCodeLine{00248             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00249         \textcolor{keywordflow}{elif} state == b\textcolor{stringliteral}{"{}OFF"{}}:}
+\DoxyCodeLine{00250             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00251         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00252             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00253                 \textcolor{stringliteral}{"{}Unexpected laser status: \%s"{}} \% state.decode()}
+\DoxyCodeLine{00254             )}
+\DoxyCodeLine{00255 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00256}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+get\+\_\+max\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00145}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00174}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00183}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00259}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00230}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+max\+\_\+power}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00157}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00262}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00182}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00187}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a25f933681399dd9d794cf591c7f370ab}\label{classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam_a25f933681399dd9d794cf591c7f370ab}} 
 \index{microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}!get\_status@{get\_status}}
 \index{get\_status@{get\_status}!microscope.lights.toptica.TopticaiBeam@{microscope.lights.toptica.TopticaiBeam}}
@@ -112,6 +181,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89
 
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00235}{235}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00235     \textcolor{keyword}{def }get\_status(self) -\/> typing.List[str]:}
+\DoxyCodeLine{00236         status: typing.List[str] = []}
+\DoxyCodeLine{00237         \textcolor{keywordflow}{return} status}
+\DoxyCodeLine{00238 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
 
 
 

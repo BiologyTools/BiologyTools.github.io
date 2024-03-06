@@ -137,7 +137,22 @@ $(document).ready(function(){initNavTree('lights_2toptica_8py_source.html',''); 
 <div class="contents">
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">#!/usr/bin/env python3</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span> </div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">## Copyright (C) 2020 David Miguel Susano Pinto &lt;carandraug@gmail.com&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">##</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">## This file is part of Microscope.</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">##</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">## Microscope is free software: you can redistribute it and/or modify</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">## it under the terms of the GNU General Public License as published by</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">## the Free Software Foundation, either version 3 of the License, or</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">## (at your option) any later version.</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">##</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">## Microscope is distributed in the hope that it will be useful,</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">## but WITHOUT ANY WARRANTY; without even the implied warranty of</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="comment">## MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span><span class="comment">## GNU General Public License for more details.</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="comment">##</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span><span class="comment">## You should have received a copy of the GNU General Public License</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="comment">## along with Microscope.  If not, see &lt;http://www.gnu.org/licenses/&gt;.</span></div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">import</span> logging</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span><span class="keyword">import</span> re</div>
@@ -158,237 +173,237 @@ $(document).ready(function(){initNavTree('lights_2toptica_8py_source.html',''); 
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="stringliteral"></span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span><span class="stringliteral">    Some commands </span><span class="keywordflow">return</span> something like a table of key/values.  There</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    may be even empty lines on this table.  This searches <span class="keywordflow">for</span> the</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    first line <span class="keyword">with</span> a specific key (hopefully there<span class="stringliteral">&#39;s only one line    </span><span class="keyword">with</span> such key) <span class="keywordflow">and</span> returns the associated value.</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="stringliteral">    </span><span class="comment"># Key might be the first line, hence &#39;(?:^|\r\n)&#39;</span></div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    match = re.search(b<span class="stringliteral">&quot;(?:^|\r\n) *&quot;</span> + key + b<span class="stringliteral">&quot;: (.*)\r\n&quot;</span>, table)</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordflow">if</span> match <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="stringliteral">&quot;failed to find key %s on table: %s&quot;</span> % (key, table)</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        )</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="keywordflow">return</span> match.group(1)</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    first line <span class="keyword">with</span> a specific key (hopefully there<span class="stringliteral">&#39;s only one line</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="stringliteral">    </span><span class="keyword">with</span> such key) <span class="keywordflow">and</span> returns the associated value.</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span><span class="stringliteral">    </span><span class="comment"># Key might be the first line, hence &#39;(?:^|\r\n)&#39;</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    match = re.search(b<span class="stringliteral">&quot;(?:^|\r\n) *&quot;</span> + key + b<span class="stringliteral">&quot;: (.*)\r\n&quot;</span>, table)</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordflow">if</span> match <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="stringliteral">&quot;failed to find key %s on table: %s&quot;</span> % (key, table)</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        )</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keywordflow">return</span> match.group(1)</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="keyword">class </span>_iBeamConnection:</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html">   51</a></span>    <span class="stringliteral">&quot;&quot;&quot;Connection to a specific Toptica iBeam smart laser.</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral">    This </span><span class="keyword">class </span>wraps the <a class="code hl_namespace" href="namespaceserial.html">serial</a> connection to the device, and provides</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>    access to some of its commands performing most of the parsing <span class="keywordflow">and</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    validation.</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    Args:</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        port: port name (Windows) <span class="keywordflow">or</span> path to port (everything <span class="keywordflow">else</span>) to</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            connect to.  For example, `/dev/ttyS1`, `COM1`, <span class="keywordflow">or</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            `/dev/cuad1`.</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral">    </span><span class="keyword">def </span>__init__(self, port: str):</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="comment"># From the Toptica iBeam SMART manual:</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment"># Direct connection via COMx with 115200,8,N,1 and serial</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment"># interface handshake &quot;none&quot;. That means that no hardware</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment"># handshake (DTR, RTS) and no software handshake (XON,XOFF) of</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment"># the underlying operating system is supported.</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        serial_conn = serial.Serial(</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            port=port,</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            baudrate=115200,</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            timeout=1.0,</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            bytesize=serial.EIGHTBITS,</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            stopbits=serial.STOPBITS_ONE,</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            parity=serial.PARITY_NONE,</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            xonxoff=<span class="keyword">False</span>,</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            rtscts=<span class="keyword">False</span>,</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            dsrdtr=<span class="keyword">False</span>,</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        )</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a> = <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a>(serial_conn)</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="comment"># We don&#39;t know what is the current verbosity state and so we</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="comment"># don&#39;t know yet what we should be reading back.  So blindly</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="comment"># set to the level we want, flush all output, and then check</span></div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment"># if indeed this is a Toptica iBeam device.</span></div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.lock:</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;echo off\r\n&quot;</span>)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;prompt off\r\n&quot;</span>)</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="comment"># The talk level we want is &#39;usual&#39;.  In theory we should</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="comment"># be able to use &#39;quiet&#39; which only answers queries but in</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="comment"># practice &#39;quiet&#39; does not answer some queries like &#39;show</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="comment"># serial&#39;.</span></div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;talk usual\r\n&quot;</span>)</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.readlines()  <span class="comment"># discard all pending lines</span></div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        <span class="comment"># Empty command does nothing and returns nothing extra so we</span></div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="comment"># use it to ensure this at least behaves like a Toptica iBeam.</span></div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="keywordflow">try</span>:</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">except</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a> <span class="keyword">as</span> e:</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                <span class="stringliteral">&quot;Failed to confirm Toptica iBeam on %s&quot;</span> % (port)</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            ) <span class="keyword">from</span> e</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span> </div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        answer = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show serial&quot;</span>)</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;SN: &quot;</span>):</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="stringliteral">&quot;Failed to parse serial from %s&quot;</span> % answer</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            )</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        _logger.info(<span class="stringliteral">&quot;got connection to Toptica iBeam %s&quot;</span>, answer.decode())</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(self, command: bytes) -&gt; bytes:</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">  114</a></span>        <span class="stringliteral">&quot;&quot;&quot;Run command and return answer after minimal validation.</span></div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="stringliteral">        The output of a command has the format::</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="stringliteral">            \r\nANSWER\r\n[OK]\r\n</span></div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="stringliteral">        The returned bytes only include `ANSWER` without its own final</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="stringliteral">        `\r\n`.  This means that the </span><span class="keywordflow">return</span> value might be an empty</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        array of bytes.</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span><span class="stringliteral">        </span><span class="comment"># We expect to be on &#39;talk usual&#39; mode without prompt so each</span></div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="comment"># command will end with [OK] on its own line.</span></div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.lock:</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(command + b<span class="stringliteral">&quot;\r\n&quot;</span>)</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="comment"># An answer always starts with \r\n so there will be one</span></div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="comment"># before [OK] even if this command is not a query.</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            answer = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.read_until(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>)</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;\r\n&quot;</span>):</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                <span class="stringliteral">&quot;answer to command %s does not start with CRLF.&quot;</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                <span class="stringliteral">&quot; This may be leftovers from a previous command:&quot;</span></div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                <span class="stringliteral">&quot; %s&quot;</span> % (command, answer)</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            )</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>):</div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <span class="stringliteral">&quot;Command %s failed or failed to read answer: %s&quot;</span></div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                % (command, answer)</div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            )</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="comment"># If an error occurred, the answer still ends in [OK].  We</span></div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment"># need to check if the second line (first line is \r\n) is an</span></div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="comment"># error code with the format &quot;%SYS-L-XXX, error description&quot;</span></div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="comment"># where L is the error level (I for Information, W for</span></div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="comment"># Warning, E for Error, and F for Fatal), and XXX is the error</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="comment"># code number.</span></div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="keywordflow">if</span> answer[2:7] == b<span class="stringliteral">&quot;%SYS-&quot;</span> <span class="keywordflow">and</span> answer[7] != ord(b<span class="stringliteral">&quot;I&quot;</span>):</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>            <span class="comment"># Errors of level I (information) should not raise an</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="comment"># exception since they can be replies to normal commands.</span></div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                <span class="stringliteral">&quot;Command %s failed: %s&quot;</span> % (command, answer)</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            )</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="comment"># Exclude the first \r\n, the \r\n from a possible answer, and</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="comment"># the final [OK]\r\n</span></div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="keywordflow">return</span> answer[2:-8]</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span> </div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c">laser_on</a>(self) -&gt; None:</div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c">  162</a></span>        <span class="stringliteral">&quot;&quot;&quot;Activate LD driver.&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;laser on&quot;</span>)</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span> </div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d">laser_off</a>(self) -&gt; None:</div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d">  166</a></span>        <span class="stringliteral">&quot;&quot;&quot;Deactivate LD driver.&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;laser off&quot;</span>)</div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a8cb2fee603f800679afd2cd29f8aac4c">set_normal_channel_power</a>(self, power: float) -&gt; <span class="keywordtype">None</span>:</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a8cb2fee603f800679afd2cd29f8aac4c">  170</a></span>        <span class="stringliteral">&quot;&quot;&quot;Set power in mW for channel 2 (normal operating level channel).</span></div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="stringliteral">        We don&#39;t have channel number as an argument because we only</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="stringliteral">        want to be setting the power via channel 2 (channel 1 </span><span class="keywordflow">is</span> the</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        bias <span class="keywordflow">and</span> we haven<span class="stringliteral">&#39;t seen a laser with a channel 3 yet).</span></div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="stringliteral">        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b&quot;channel 2 power %f&quot;</span> % power)</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a1ae907c9f13da8ebdbc00aed7c40f122">show_power_uW</a>(self) -&gt; float:</div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a1ae907c9f13da8ebdbc00aed7c40f122">  179</a></span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual laser power in µW.&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        answer = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show power&quot;</span>)</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;PIC  = &quot;</span>) <span class="keywordflow">and</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot; uW  &quot;</span>):</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>                <span class="stringliteral">&quot;failed to parse power from answer: %s&quot;</span> % answer</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            )</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="keywordflow">return</span> float(answer[7:-5])</div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#aef2726bafd493cb8ea6249c2d9cb2eb1">status_laser</a>(self) -&gt; bytes:</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#aef2726bafd493cb8ea6249c2d9cb2eb1">  188</a></span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual status of the LD driver (ON or OFF).&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;status laser&quot;</span>)</div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    <span class="keyword">def </span>show_max_power(self) -&gt; float:</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="comment"># There should be a cleaner way to get these, right?  We can</span></div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="comment"># query the current limits (mA) but how do we go from there to</span></div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="comment"># the power limits (mW)?</span></div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        table = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show satellite&quot;</span>)</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        value = _get_table_value(table, key=b<span class="stringliteral">&quot;Pmax&quot;</span>)</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> value.endswith(b<span class="stringliteral">&quot; mW&quot;</span>):</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>                <span class="stringliteral">&quot;failed to parse power from %s&quot;</span> % value</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            )</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        <span class="keywordflow">return</span> float(value[:-3])</div>
-<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html">   51</a></span><span class="keyword">class </span><a class="code hl_class" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html">_iBeamConnection</a>:</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="stringliteral">&quot;&quot;&quot;Connection to a specific Toptica iBeam smart laser.</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="stringliteral">    This </span><span class="keyword">class </span>wraps the <a class="code hl_namespace" href="namespaceserial.html">serial</a> connection to the device, and provides</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    access to some of its commands performing most of the parsing <span class="keywordflow">and</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    validation.</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    Args:</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        port: port name (Windows) <span class="keywordflow">or</span> path to port (everything <span class="keywordflow">else</span>) to</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            connect to.  For example, `/dev/ttyS1`, `COM1`, <span class="keywordflow">or</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            `/dev/cuad1`.</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="stringliteral">    </span><span class="keyword">def </span>__init__(self, port: str):</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment"># From the Toptica iBeam SMART manual:</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment"># Direct connection via COMx with 115200,8,N,1 and serial</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment"># interface handshake &quot;none&quot;. That means that no hardware</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment"># handshake (DTR, RTS) and no software handshake (XON,XOFF) of</span></div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="comment"># the underlying operating system is supported.</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        serial_conn = serial.Serial(</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            port=port,</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            baudrate=115200,</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            timeout=1.0,</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            xonxoff=<span class="keyword">False</span>,</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            rtscts=<span class="keyword">False</span>,</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            dsrdtr=<span class="keyword">False</span>,</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        )</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a> = <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a>(serial_conn)</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="comment"># We don&#39;t know what is the current verbosity state and so we</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="comment"># don&#39;t know yet what we should be reading back.  So blindly</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="comment"># set to the level we want, flush all output, and then check</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="comment"># if indeed this is a Toptica iBeam device.</span></div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.lock:</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;echo off\r\n&quot;</span>)</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;prompt off\r\n&quot;</span>)</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="comment"># The talk level we want is &#39;usual&#39;.  In theory we should</span></div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="comment"># be able to use &#39;quiet&#39; which only answers queries but in</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="comment"># practice &#39;quiet&#39; does not answer some queries like &#39;show</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <span class="comment"># serial&#39;.</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(b<span class="stringliteral">&quot;talk usual\r\n&quot;</span>)</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.readlines()  <span class="comment"># discard all pending lines</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        <span class="comment"># Empty command does nothing and returns nothing extra so we</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        <span class="comment"># use it to ensure this at least behaves like a Toptica iBeam.</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>        <span class="keywordflow">except</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a> <span class="keyword">as</span> e:</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="stringliteral">&quot;Failed to confirm Toptica iBeam on %s&quot;</span> % (port)</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            ) <span class="keyword">from</span> e</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        answer = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show serial&quot;</span>)</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;SN: &quot;</span>):</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <span class="stringliteral">&quot;Failed to parse serial from %s&quot;</span> % answer</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            )</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        _logger.info(<span class="stringliteral">&quot;got connection to Toptica iBeam %s&quot;</span>, answer.decode())</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">  114</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(self, command: bytes) -&gt; bytes:</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="stringliteral">&quot;&quot;&quot;Run command and return answer after minimal validation.</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span><span class="stringliteral">        The output of a command has the format::</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span><span class="stringliteral">            \r\nANSWER\r\n[OK]\r\n</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="stringliteral">        The returned bytes only include `ANSWER` without its own final</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span><span class="stringliteral">        `\r\n`.  This means that the </span><span class="keywordflow">return</span> value might be an empty</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        array of bytes.</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="stringliteral">        </span><span class="comment"># We expect to be on &#39;talk usual&#39; mode without prompt so each</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="comment"># command will end with [OK] on its own line.</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keyword">with</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.lock:</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.write(command + b<span class="stringliteral">&quot;\r\n&quot;</span>)</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="comment"># An answer always starts with \r\n so there will be one</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="comment"># before [OK] even if this command is not a query.</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            answer = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a067e5de46110f554bd22d4187ef8a99b">_serial</a>.read_until(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>)</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;\r\n&quot;</span>):</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                <span class="stringliteral">&quot;answer to command %s does not start with CRLF.&quot;</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                <span class="stringliteral">&quot; This may be leftovers from a previous command:&quot;</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="stringliteral">&quot; %s&quot;</span> % (command, answer)</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            )</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>):</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="stringliteral">&quot;Command %s failed or failed to read answer: %s&quot;</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                % (command, answer)</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            )</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment"># If an error occurred, the answer still ends in [OK].  We</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="comment"># need to check if the second line (first line is \r\n) is an</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="comment"># error code with the format &quot;%SYS-L-XXX, error description&quot;</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        <span class="comment"># where L is the error level (I for Information, W for</span></div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="comment"># Warning, E for Error, and F for Fatal), and XXX is the error</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <span class="comment"># code number.</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        <span class="keywordflow">if</span> answer[2:7] == b<span class="stringliteral">&quot;%SYS-&quot;</span> <span class="keywordflow">and</span> answer[7] != ord(b<span class="stringliteral">&quot;I&quot;</span>):</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            <span class="comment"># Errors of level I (information) should not raise an</span></div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>            <span class="comment"># exception since they can be replies to normal commands.</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                <span class="stringliteral">&quot;Command %s failed: %s&quot;</span> % (command, answer)</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            )</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="comment"># Exclude the first \r\n, the \r\n from a possible answer, and</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        <span class="comment"># the final [OK]\r\n</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="keywordflow">return</span> answer[2:-8]</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c">  162</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c">laser_on</a>(self) -&gt; None:</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="stringliteral">&quot;&quot;&quot;Activate LD driver.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;laser on&quot;</span>)</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d">  166</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d">laser_off</a>(self) -&gt; None:</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>        <span class="stringliteral">&quot;&quot;&quot;Deactivate LD driver.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;laser off&quot;</span>)</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a8cb2fee603f800679afd2cd29f8aac4c">  170</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a8cb2fee603f800679afd2cd29f8aac4c">set_normal_channel_power</a>(self, power: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="stringliteral">&quot;&quot;&quot;Set power in mW for channel 2 (normal operating level channel).</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span><span class="stringliteral">        We don&#39;t have channel number as an argument because we only</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span><span class="stringliteral">        want to be setting the power via channel 2 (channel 1 </span><span class="keywordflow">is</span> the</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        bias <span class="keywordflow">and</span> we haven<span class="stringliteral">&#39;t seen a laser with a channel 3 yet).</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span><span class="stringliteral">        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b&quot;channel 2 power %f&quot;</span> % power)</div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a1ae907c9f13da8ebdbc00aed7c40f122">  179</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a1ae907c9f13da8ebdbc00aed7c40f122">show_power_uW</a>(self) -&gt; float:</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual laser power in µW.&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        answer = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show power&quot;</span>)</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;PIC  = &quot;</span>) <span class="keywordflow">and</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot; uW  &quot;</span>):</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>                <span class="stringliteral">&quot;failed to parse power from answer: %s&quot;</span> % answer</div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            )</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keywordflow">return</span> float(answer[7:-5])</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span> </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#aef2726bafd493cb8ea6249c2d9cb2eb1">  188</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#aef2726bafd493cb8ea6249c2d9cb2eb1">status_laser</a>(self) -&gt; bytes:</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual status of the LD driver (ON or OFF).&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;status laser&quot;</span>)</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>    <span class="keyword">def </span>show_max_power(self) -&gt; float:</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>        <span class="comment"># There should be a cleaner way to get these, right?  We can</span></div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>        <span class="comment"># query the current limits (mA) but how do we go from there to</span></div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="comment"># the power limits (mW)?</span></div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        table = self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#ad7451ff2b3be0d9c1f474526d96d935a">command</a>(b<span class="stringliteral">&quot;show satellite&quot;</span>)</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        value = _get_table_value(table, key=b<span class="stringliteral">&quot;Pmax&quot;</span>)</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> value.endswith(b<span class="stringliteral">&quot; mW&quot;</span>):</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>                <span class="stringliteral">&quot;failed to parse power from %s&quot;</span> % value</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>            )</div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>        <span class="keywordflow">return</span> float(value[:-3])</div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="keyword">class </span><a class="code hl_class" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html">TopticaiBeam</a>(</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html">  205</a></span>    <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin.html">microscope._utils.OnlyTriggersBulbOnSoftwareMixin</a>,</div>
-<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <a class="code hl_class" href="classmicroscope_1_1abc_1_1_light_source.html">microscope.abc.LightSource</a>,</div>
-<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>):</div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    <span class="stringliteral">&quot;&quot;&quot;Toptica iBeam smart laser.</span></div>
-<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="stringliteral">    Control of laser power </span><span class="keywordflow">is</span> performed by setting the power level on</div>
-<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    the normal channel (<span class="comment">#2) only.  The bias channel (#1) is left</span></div>
-<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    unmodified <span class="keywordflow">and</span> so defines the lowest level power.</div>
-<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
-<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span><span class="stringliteral"></span> </div>
-<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="stringliteral">    </span><span class="keyword">def </span>__init__(self, port: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
-<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>        super().__init__(**kwargs)</div>
-<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a> = <a class="code hl_class" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html">_iBeamConnection</a>(port)</div>
-<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        <span class="comment"># The Toptica iBeam has up to five operation modes, named</span></div>
-<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="comment"># &quot;channels&quot; on the documentation.  Only the first three</span></div>
-<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="comment"># channels have any sort of documentation:</span></div>
-<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="comment">#</span></div>
-<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="comment">#   Ch 1: bias level channel</span></div>
-<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="comment">#   Ch 2: normal operating level channel</span></div>
-<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="comment">#   Ch 3: only used at high-power models</span></div>
-<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="comment">#</span></div>
-<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        <span class="comment"># We haven&#39;t come across a laser with a channel 3 so we are</span></div>
-<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="comment"># ignoring it until then.  So we just leave the bias channel</span></div>
-<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="comment"># (1) alone and control power via the normal channel (2).</span></div>
-<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a39bfdc13e6f1ae701ecc636a0339b7d9">_max_power</a> = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.show_max_power()</div>
-<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span> </div>
-<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span>    <span class="keyword">def </span>_do_shutdown(self) -&gt; None:</div>
-<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>        <span class="keywordflow">pass</span></div>
-<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span> </div>
-<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a25f933681399dd9d794cf591c7f370ab">get_status</a>(self) -&gt; typing.List[str]:</div>
-<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a25f933681399dd9d794cf591c7f370ab">  235</a></span>        status: typing.List[str] = []</div>
-<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        <span class="keywordflow">return</span> status</div>
-<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span> </div>
-<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94">enable</a>(self) -&gt; None:</div>
-<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94">  239</a></span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.laser_on()</div>
-<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span> </div>
-<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ace72a4800f613b245fa2f35c0683fd21">disable</a>(self) -&gt; None:</div>
-<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ace72a4800f613b245fa2f35c0683fd21">  242</a></span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.laser_off()</div>
-<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
-<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#aa0222648ea020139d63f50f3255a3171">get_is_on</a>(self) -&gt; bool:</div>
-<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#aa0222648ea020139d63f50f3255a3171">  245</a></span>        state = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.status_laser()</div>
-<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        <span class="keywordflow">if</span> state == b<span class="stringliteral">&quot;ON&quot;</span>:</div>
-<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
-<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>        <span class="keywordflow">elif</span> state == b<span class="stringliteral">&quot;OFF&quot;</span>:</div>
-<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
-<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>        <span class="keywordflow">else</span>:</div>
-<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
-<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>                <span class="stringliteral">&quot;Unexpected laser status: %s&quot;</span> % state.decode()</div>
-<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>            )</div>
-<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span> </div>
-<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span>    <span class="keyword">def </span>_get_max_power_mw(self) -&gt; float:</div>
-<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a39bfdc13e6f1ae701ecc636a0339b7d9">_max_power</a></div>
-<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span> </div>
-<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    <span class="keyword">def </span>_get_power_mw(self) -&gt; float:</div>
-<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.show_power_uW() * (10**-3)</div>
-<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span> </div>
-<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span>    <span class="keyword">def </span>_set_power_mw(self, mw: float) -&gt; <span class="keywordtype">None</span>:</div>
-<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.set_normal_channel_power(mw)</div>
-<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span> </div>
-<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>    <span class="keyword">def </span>_do_set_power(self, power: float) -&gt; <span class="keywordtype">None</span>:</div>
-<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a59bd0328e5c31dfe83cd21b66450550c">_set_power_mw</a>(power * self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a1d3f9299b606fea1329b5b5a1439a16b">_get_max_power_mw</a>())</div>
-<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span> </div>
-<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>    <span class="keyword">def </span>_do_get_power(self) -&gt; float:</div>
-<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ab2acab57c9a9eec7583078138a580edf">_get_power_mw</a>() / self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a1d3f9299b606fea1329b5b5a1439a16b">_get_max_power_mw</a>()</div>
-<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html">  205</a></span><span class="keyword">class </span><a class="code hl_class" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html">TopticaiBeam</a>(</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin.html">microscope._utils.OnlyTriggersBulbOnSoftwareMixin</a>,</div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <a class="code hl_class" href="classmicroscope_1_1abc_1_1_light_source.html">microscope.abc.LightSource</a>,</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>):</div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span>    <span class="stringliteral">&quot;&quot;&quot;Toptica iBeam smart laser.</span></div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span><span class="stringliteral">    Control of laser power </span><span class="keywordflow">is</span> performed by setting the power level on</div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span>    the normal channel (<span class="comment">#2) only.  The bias channel (#1) is left</span></div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span>    unmodified <span class="keywordflow">and</span> so defines the lowest level power.</div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span><span class="stringliteral"></span> </div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span><span class="stringliteral">    </span><span class="keyword">def </span>__init__(self, port: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>        super().__init__(**kwargs)</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a> = <a class="code hl_class" href="classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html">_iBeamConnection</a>(port)</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>        <span class="comment"># The Toptica iBeam has up to five operation modes, named</span></div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>        <span class="comment"># &quot;channels&quot; on the documentation.  Only the first three</span></div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>        <span class="comment"># channels have any sort of documentation:</span></div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>        <span class="comment">#</span></div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>        <span class="comment">#   Ch 1: bias level channel</span></div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>        <span class="comment">#   Ch 2: normal operating level channel</span></div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>        <span class="comment">#   Ch 3: only used at high-power models</span></div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span>        <span class="comment">#</span></div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span>        <span class="comment"># We haven&#39;t come across a laser with a channel 3 so we are</span></div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span>        <span class="comment"># ignoring it until then.  So we just leave the bias channel</span></div>
+<div class="line"><a id="l00229" name="l00229"></a><span class="lineno">  229</span>        <span class="comment"># (1) alone and control power via the normal channel (2).</span></div>
+<div class="line"><a id="l00230" name="l00230"></a><span class="lineno">  230</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a39bfdc13e6f1ae701ecc636a0339b7d9">_max_power</a> = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.show_max_power()</div>
+<div class="line"><a id="l00231" name="l00231"></a><span class="lineno">  231</span> </div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno">  232</span>    <span class="keyword">def </span>_do_shutdown(self) -&gt; None:</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span> </div>
+<div class="line"><a id="l00235" name="l00235"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a25f933681399dd9d794cf591c7f370ab">  235</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a25f933681399dd9d794cf591c7f370ab">get_status</a>(self) -&gt; typing.List[str]:</div>
+<div class="line"><a id="l00236" name="l00236"></a><span class="lineno">  236</span>        status: typing.List[str] = []</div>
+<div class="line"><a id="l00237" name="l00237"></a><span class="lineno">  237</span>        <span class="keywordflow">return</span> status</div>
+<div class="line"><a id="l00238" name="l00238"></a><span class="lineno">  238</span> </div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94">  239</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94">enable</a>(self) -&gt; None:</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.laser_on()</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span> </div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ace72a4800f613b245fa2f35c0683fd21">  242</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ace72a4800f613b245fa2f35c0683fd21">disable</a>(self) -&gt; None:</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.laser_off()</div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span> </div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno"><a class="line" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#aa0222648ea020139d63f50f3255a3171">  245</a></span>    <span class="keyword">def </span><a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#aa0222648ea020139d63f50f3255a3171">get_is_on</a>(self) -&gt; bool:</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>        state = self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.status_laser()</div>
+<div class="line"><a id="l00247" name="l00247"></a><span class="lineno">  247</span>        <span class="keywordflow">if</span> state == b<span class="stringliteral">&quot;ON&quot;</span>:</div>
+<div class="line"><a id="l00248" name="l00248"></a><span class="lineno">  248</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><a id="l00249" name="l00249"></a><span class="lineno">  249</span>        <span class="keywordflow">elif</span> state == b<span class="stringliteral">&quot;OFF&quot;</span>:</div>
+<div class="line"><a id="l00250" name="l00250"></a><span class="lineno">  250</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno">  251</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>                <span class="stringliteral">&quot;Unexpected laser status: %s&quot;</span> % state.decode()</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>            )</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keyword">def </span>_get_max_power_mw(self) -&gt; float:</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a39bfdc13e6f1ae701ecc636a0339b7d9">_max_power</a></div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span> </div>
+<div class="line"><a id="l00259" name="l00259"></a><span class="lineno">  259</span>    <span class="keyword">def </span>_get_power_mw(self) -&gt; float:</div>
+<div class="line"><a id="l00260" name="l00260"></a><span class="lineno">  260</span>        <span class="keywordflow">return</span> self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.show_power_uW() * (10**-3)</div>
+<div class="line"><a id="l00261" name="l00261"></a><span class="lineno">  261</span> </div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno">  262</span>    <span class="keyword">def </span>_set_power_mw(self, mw: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>        self.<a class="code hl_variable" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#acefee1a0877b55b815f6502e419e95fd">_conn</a>.set_normal_channel_power(mw)</div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span> </div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    <span class="keyword">def </span>_do_set_power(self, power: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>        self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a59bd0328e5c31dfe83cd21b66450550c">_set_power_mw</a>(power * self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a1d3f9299b606fea1329b5b5a1439a16b">_get_max_power_mw</a>())</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span> </div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    <span class="keyword">def </span>_do_get_power(self) -&gt; float:</div>
+<div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>        <span class="keywordflow">return</span> self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ab2acab57c9a9eec7583078138a580edf">_get_power_mw</a>() / self.<a class="code hl_function" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a1d3f9299b606fea1329b5b5a1439a16b">_get_max_power_mw</a>()</div>
 <div class="ttc" id="aclassmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin_html"><div class="ttname"><a href="classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin.html">microscope._utils.OnlyTriggersBulbOnSoftwareMixin</a></div><div class="ttdef"><b>Definition:</b> <a href="__utils_8py_source.html#l00076">_utils.py:76</a></div></div>
 <div class="ttc" id="aclassmicroscope_1_1__utils_1_1_shared_serial_html"><div class="ttname"><a href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a></div><div class="ttdef"><b>Definition:</b> <a href="__utils_8py_source.html#l00111">_utils.py:111</a></div></div>
 <div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>

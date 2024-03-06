@@ -255,7 +255,15 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00328">328</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  330</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  331</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  332</span>        self._dev_conn = _ZaberDeviceConnection(conn, device_address)</div>
+<div class="line"><span class="lineno">  333</span>        self._axes = {</div>
+<div class="line"><span class="lineno">  334</span>            str(i): _ZaberStageAxis(self._dev_conn, i)</div>
+<div class="line"><span class="lineno">  335</span>            <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(1, self._dev_conn.get_number_axes() + 1)</div>
+<div class="line"><span class="lineno">  336</span>        }</div>
+<div class="line"><span class="lineno">  337</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -290,6 +298,13 @@ other special `StageAxis` instance.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage.html#a4cf92f2e92dd2da8d928c166bc55b800">microscope.abc.Stage</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00353">353</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  353</span>    <span class="keyword">def </span>axes(self) -&gt; typing.Mapping[str, microscope.abc.StageAxis]:</div>
+<div class="line"><span class="lineno">  354</span>        <span class="keywordflow">return</span> self._axes</div>
+<div class="line"><span class="lineno">  355</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00333">microscope.controllers.zaber._ZaberStage._axes</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00459">microscope.simulators.SimulatedStage._axes</a>, and <a class="el" href="ludl_8py_source.html#l00338">microscope.stages.ludl._LudlStage._axes</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01515">microscope.abc.Stage.limits()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00473">microscope.simulators.SimulatedStage.move_by()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00477">microscope.simulators.SimulatedStage.move_to()</a>, and <a class="el" href="abc_8py_source.html#l01500">microscope.abc.Stage.position()</a>.</p>
 
 </div>
 </div>
@@ -331,6 +346,11 @@ doubt, implementations should return `True`.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage.html#a825ead0c6bb83d863e192314833dd8b4">microscope.abc.Stage</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00349">349</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  349</span>    <span class="keyword">def </span>may_move_on_enable(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">return</span> <span class="keywordflow">not</span> self._dev_conn.been_homed()</div>
+<div class="line"><span class="lineno">  351</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
 
 </div>
 </div>
@@ -363,6 +383,17 @@ doubt, implementations should return `True`.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage.html#a19a92bfdb551a1002c964cefb485ea42">microscope.abc.Stage</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00356">356</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  356</span>    <span class="keyword">def </span>move_by(self, delta: typing.Mapping[str, float]) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  357</span>        <span class="stringliteral">&quot;&quot;&quot;Move specified axes by the specified distance.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  358</span>        <span class="keywordflow">for</span> axis_name, axis_delta <span class="keywordflow">in</span> delta.items():</div>
+<div class="line"><span class="lineno">  359</span>            self._dev_conn.move_by_relative_position(</div>
+<div class="line"><span class="lineno">  360</span>                int(axis_name),</div>
+<div class="line"><span class="lineno">  361</span>                int(axis_delta),</div>
+<div class="line"><span class="lineno">  362</span>            )</div>
+<div class="line"><span class="lineno">  363</span>        self._dev_conn.wait_until_idle()</div>
+<div class="line"><span class="lineno">  364</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
 
 </div>
 </div>
@@ -395,6 +426,20 @@ doubt, implementations should return `True`.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage.html#a98bb8b3835293b7f59a677bcf60f91ca">microscope.abc.Stage</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00365">365</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  365</span>    <span class="keyword">def </span>move_to(self, position: typing.Mapping[str, float]) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  366</span>        <span class="stringliteral">&quot;&quot;&quot;Move specified axes by the specified distance.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  367</span>        <span class="keywordflow">for</span> axis_name, axis_position <span class="keywordflow">in</span> position.items():</div>
+<div class="line"><span class="lineno">  368</span>            self._dev_conn.move_to_absolute_position(</div>
+<div class="line"><span class="lineno">  369</span>                int(axis_name),</div>
+<div class="line"><span class="lineno">  370</span>                int(axis_position),</div>
+<div class="line"><span class="lineno">  371</span>            )</div>
+<div class="line"><span class="lineno">  372</span>        self._dev_conn.wait_until_idle()</div>
+<div class="line"><span class="lineno">  373</span> </div>
+<div class="line"><span class="lineno">  374</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00420">microscope.simulators.SimulatedStageAxis.move_by()</a>.</p>
 
 </div>
 </div>

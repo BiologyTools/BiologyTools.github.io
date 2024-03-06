@@ -269,7 +269,28 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_deformable_mirror.html">microscope.abc.DeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00096">96</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   96</span>    <span class="keyword">def </span>__init__(self, serial_number: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   97</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">   98</span>        self._dm = asdk.Init(serial_number.encode())</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._dm:</div>
+<div class="line"><span class="lineno">  100</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">  101</span>                <span class="stringliteral">&quot;Failed to initialise connection: don&#39;t know why&quot;</span></div>
+<div class="line"><span class="lineno">  102</span>            )</div>
+<div class="line"><span class="lineno">  103</span>        <span class="comment"># In theory, asdkInit should return a NULL pointer in case of</span></div>
+<div class="line"><span class="lineno">  104</span>        <span class="comment"># failure and that should be enough to check.  However, at least</span></div>
+<div class="line"><span class="lineno">  105</span>        <span class="comment"># in the case of a missing configuration file it still returns a</span></div>
+<div class="line"><span class="lineno">  106</span>        <span class="comment"># DM pointer so we still need to check for errors on the stack.</span></div>
+<div class="line"><span class="lineno">  107</span>        self._raise_if_error(asdk.FAILURE)</div>
+<div class="line"><span class="lineno">  108</span> </div>
+<div class="line"><span class="lineno">  109</span>        value = asdk.Scalar_p(asdk.Scalar())</div>
+<div class="line"><span class="lineno">  110</span>        status = asdk.Get(self._dm, b<span class="stringliteral">&quot;NbOfActuator&quot;</span>, value)</div>
+<div class="line"><span class="lineno">  111</span>        self._raise_if_error(status)</div>
+<div class="line"><span class="lineno">  112</span>        self._n_actuators = int(value.contents.value)</div>
+<div class="line"><span class="lineno">  113</span>        self._trigger_type = microscope.TriggerType.SOFTWARE</div>
+<div class="line"><span class="lineno">  114</span>        self._trigger_mode = microscope.TriggerMode.ONCE</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -292,7 +313,10 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_deformable_mirror.html">microscope.abc.DeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00117">117</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  117</span>    <span class="keyword">def </span>n_actuators(self) -&gt; int:</div>
+<div class="line"><span class="lineno">  118</span>        <span class="keywordflow">return</span> self._n_actuators</div>
+<div class="line"><span class="lineno">  119</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae6def33ab71adefe58aa7aec41a97829" name="ae6def33ab71adefe58aa7aec41a97829"></a>
@@ -332,6 +356,52 @@ provided.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_deformable_mirror.html#aabc55f14c48d6e983aa07f6de760c0da">microscope.abc.DeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00161">161</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  161</span>    <span class="keyword">def </span>queue_patterns(self, patterns: numpy.ndarray) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">if</span> self._trigger_type == microscope.TriggerType.SOFTWARE:</div>
+<div class="line"><span class="lineno">  163</span>            super().queue_patterns(patterns)</div>
+<div class="line"><span class="lineno">  164</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  165</span> </div>
+<div class="line"><span class="lineno">  166</span>        self._validate_patterns(patterns)</div>
+<div class="line"><span class="lineno">  167</span>        patterns = self._normalize_patterns(patterns)</div>
+<div class="line"><span class="lineno">  168</span>        patterns = numpy.atleast_2d(patterns)</div>
+<div class="line"><span class="lineno">  169</span>        n_patterns: int = patterns.shape[0]</div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span>        <span class="comment"># The Alpao SDK seems to only support the trigger mode start.  It</span></div>
+<div class="line"><span class="lineno">  172</span>        <span class="comment"># still has option called nRepeats that we can&#39;t really figure</span></div>
+<div class="line"><span class="lineno">  173</span>        <span class="comment"># what is meant to do.  When set to 1, the mode is start.  What</span></div>
+<div class="line"><span class="lineno">  174</span>        <span class="comment"># we want it is to have trigger mode once which was not</span></div>
+<div class="line"><span class="lineno">  175</span>        <span class="comment"># supported.  We have received a modified version where if</span></div>
+<div class="line"><span class="lineno">  176</span>        <span class="comment"># nRepeats is set to same number of patterns, does trigger mode</span></div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment"># once (not documented on Alpao SDK).</span></div>
+<div class="line"><span class="lineno">  178</span>        <span class="keywordflow">if</span> self._trigger_mode == microscope.TriggerMode.ONCE:</div>
+<div class="line"><span class="lineno">  179</span>            n_repeats = n_patterns</div>
+<div class="line"><span class="lineno">  180</span>        <span class="keywordflow">elif</span> self._trigger_mode == microscope.TriggerMode.START:</div>
+<div class="line"><span class="lineno">  181</span>            n_repeats = 1</div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  183</span>            <span class="comment"># We should not get here in the first place since</span></div>
+<div class="line"><span class="lineno">  184</span>            <span class="comment"># set_trigger filters unsupported modes.</span></div>
+<div class="line"><span class="lineno">  185</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  186</span>                <span class="stringliteral">&quot;trigger type &#39;%s&#39; and trigger mode &#39;%s&#39; is not supported&quot;</span></div>
+<div class="line"><span class="lineno">  187</span>                % (self._trigger_type.name, self._trigger_mode.name)</div>
+<div class="line"><span class="lineno">  188</span>            )</div>
+<div class="line"><span class="lineno">  189</span> </div>
+<div class="line"><span class="lineno">  190</span>        data_pointer = patterns.ctypes.data_as(asdk.Scalar_p)</div>
+<div class="line"><span class="lineno">  191</span> </div>
+<div class="line"><span class="lineno">  192</span>        <span class="comment"># We don&#39;t know if the previous queue of pattern ran until the</span></div>
+<div class="line"><span class="lineno">  193</span>        <span class="comment"># end, so we need to clear it before sending (see issue #50)</span></div>
+<div class="line"><span class="lineno">  194</span>        status = asdk.Stop(self._dm)</div>
+<div class="line"><span class="lineno">  195</span>        self._raise_if_error(status)</div>
+<div class="line"><span class="lineno">  196</span> </div>
+<div class="line"><span class="lineno">  197</span>        status = asdk.SendPattern(</div>
+<div class="line"><span class="lineno">  198</span>            self._dm, data_pointer, n_patterns, n_repeats</div>
+<div class="line"><span class="lineno">  199</span>        )</div>
+<div class="line"><span class="lineno">  200</span>        self._raise_if_error(status)</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="alpao_8py_source.html#l00098">microscope.mirror.alpao.AlpaoDeformableMirror._dm</a>, <a class="el" href="mirror_2bmc_8py_source.html#l00051">microscope.mirror.bmc.BMCDeformableMirror._dm</a>, <a class="el" href="alpao_8py_source.html#l00067">microscope.mirror.alpao.AlpaoDeformableMirror._find_error_str()</a>, <a class="el" href="alpao_8py_source.html#l00059">microscope.mirror.alpao.AlpaoDeformableMirror._normalize_patterns()</a>, <a class="el" href="mirror_2mirao52e_8py_source.html#l00086">microscope.mirror.mirao52e.Mirao52e._normalize_patterns()</a>, <a class="el" href="alpao_8py_source.html#l00090">microscope.mirror.alpao.AlpaoDeformableMirror._raise_if_error()</a>, <a class="el" href="andorsdk3_8py_source.html#l00307">microscope.cameras.andorsdk3.AndorSDK3._trigger_mode</a>, <a class="el" href="alpao_8py_source.html#l00114">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_mode</a>, <a class="el" href="picam_8py_source.html#l00068">microscope.cameras.picam.PiCamera._trigger_type</a>, <a class="el" href="alpao_8py_source.html#l00113">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_type</a>, <a class="el" href="abc_8py_source.html#l01086">microscope.abc.DeformableMirror._validate_patterns()</a>, and <a class="el" href="alpao_8py_source.html#l00161">microscope.mirror.alpao.AlpaoDeformableMirror.queue_patterns()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="alpao_8py_source.html#l00161">microscope.mirror.alpao.AlpaoDeformableMirror.queue_patterns()</a>.</p>
 
 </div>
 </div>
@@ -370,6 +440,37 @@ provided.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00134">134</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>    <span class="keyword">def </span>set_trigger(self, ttype, tmode):</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">if</span> tmode <span class="keywordflow">not</span> <span class="keywordflow">in</span> self._supported_TriggerModes:</div>
+<div class="line"><span class="lineno">  136</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  137</span>                <span class="stringliteral">&quot;unsupported trigger of mode &#39;%s&#39; for Alpao Mirrors&quot;</span></div>
+<div class="line"><span class="lineno">  138</span>                % tmode.name</div>
+<div class="line"><span class="lineno">  139</span>            )</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">elif</span> (</div>
+<div class="line"><span class="lineno">  141</span>            ttype == microscope.TriggerType.SOFTWARE</div>
+<div class="line"><span class="lineno">  142</span>            <span class="keywordflow">and</span> tmode != microscope.TriggerMode.ONCE</div>
+<div class="line"><span class="lineno">  143</span>        ):</div>
+<div class="line"><span class="lineno">  144</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  145</span>                <span class="stringliteral">&quot;trigger mode &#39;%s&#39; only supports trigger type ONCE&quot;</span></div>
+<div class="line"><span class="lineno">  146</span>                % tmode.name</div>
+<div class="line"><span class="lineno">  147</span>            )</div>
+<div class="line"><span class="lineno">  148</span>        self._trigger_mode = tmode</div>
+<div class="line"><span class="lineno">  149</span> </div>
+<div class="line"><span class="lineno">  150</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  151</span>            value = self._TriggerType_to_asdkTriggerIn[ttype]</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno">  153</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  154</span>                <span class="stringliteral">&quot;unsupported trigger of type &#39;%s&#39; for Alpao Mirrors&quot;</span></div>
+<div class="line"><span class="lineno">  155</span>                % ttype.name</div>
+<div class="line"><span class="lineno">  156</span>            )</div>
+<div class="line"><span class="lineno">  157</span>        status = asdk.Set(self._dm, b<span class="stringliteral">&quot;TriggerIn&quot;</span>, value)</div>
+<div class="line"><span class="lineno">  158</span>        self._raise_if_error(status)</div>
+<div class="line"><span class="lineno">  159</span>        self._trigger_type = ttype</div>
+<div class="line"><span class="lineno">  160</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="alpao_8py_source.html#l00098">microscope.mirror.alpao.AlpaoDeformableMirror._dm</a>, <a class="el" href="mirror_2bmc_8py_source.html#l00051">microscope.mirror.bmc.BMCDeformableMirror._dm</a>, <a class="el" href="alpao_8py_source.html#l00090">microscope.mirror.alpao.AlpaoDeformableMirror._raise_if_error()</a>, <a class="el" href="alpao_8py_source.html#l00053">microscope.mirror.alpao.AlpaoDeformableMirror._supported_TriggerModes</a>, <a class="el" href="andorsdk3_8py_source.html#l00307">microscope.cameras.andorsdk3.AndorSDK3._trigger_mode</a>, <a class="el" href="alpao_8py_source.html#l00114">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_mode</a>, <a class="el" href="picam_8py_source.html#l00068">microscope.cameras.picam.PiCamera._trigger_type</a>, <a class="el" href="alpao_8py_source.html#l00113">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_type</a>, and <a class="el" href="alpao_8py_source.html#l00047">microscope.mirror.alpao.AlpaoDeformableMirror._TriggerType_to_asdkTriggerIn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -392,6 +493,11 @@ provided.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00121">121</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  121</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">return</span> self._trigger_mode</div>
+<div class="line"><span class="lineno">  123</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -414,6 +520,11 @@ provided.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="alpao_8py_source.html#l00125">125</a> of file <a class="el" href="alpao_8py_source.html">alpao.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">return</span> self._trigger_type</div>
+<div class="line"><span class="lineno">  127</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>

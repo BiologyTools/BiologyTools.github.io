@@ -253,7 +253,43 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00099">99</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  107</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  108</span>        self.name = name</div>
+<div class="line"><span class="lineno">  109</span>        <span class="keywordflow">if</span> dtype <span class="keywordflow">not</span> <span class="keywordflow">in</span> DTYPES:</div>
+<div class="line"><span class="lineno">  110</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Unsupported dtype.&quot;</span>)</div>
+<div class="line"><span class="lineno">  111</span>        <span class="keywordflow">elif</span> <span class="keywordflow">not</span> (isinstance(values, DTYPES[dtype]) <span class="keywordflow">or</span> callable(values)):</div>
+<div class="line"><span class="lineno">  112</span>            <span class="keywordflow">raise</span> TypeError(</div>
+<div class="line"><span class="lineno">  113</span>                <span class="stringliteral">&quot;Invalid values type for %s &#39;%s&#39;: expected function or %s&quot;</span></div>
+<div class="line"><span class="lineno">  114</span>                % (dtype, name, DTYPES[dtype])</div>
+<div class="line"><span class="lineno">  115</span>            )</div>
+<div class="line"><span class="lineno">  116</span>        self.dtype = dtype</div>
+<div class="line"><span class="lineno">  117</span>        self._get = get_func</div>
+<div class="line"><span class="lineno">  118</span>        self._values = values</div>
+<div class="line"><span class="lineno">  119</span>        self._last_written = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">if</span> self._get <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  121</span>            self._set = set_func</div>
+<div class="line"><span class="lineno">  122</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  123</span>            <span class="comment"># Cache last written value for write-only settings.</span></div>
+<div class="line"><span class="lineno">  124</span>            <span class="keyword">def </span>w(value):</div>
+<div class="line"><span class="lineno">  125</span>                self._last_written = value</div>
+<div class="line"><span class="lineno">  126</span>                set_func(value)</div>
+<div class="line"><span class="lineno">  127</span> </div>
+<div class="line"><span class="lineno">  128</span>            self._set = w</div>
+<div class="line"><span class="lineno">  129</span> </div>
+<div class="line"><span class="lineno">  130</span>        <span class="keywordflow">if</span> readonly <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  131</span>            <span class="keywordflow">if</span> self._set <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  132</span>                self._readonly = <span class="keyword">lambda</span>: <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  134</span>                self._readonly = <span class="keyword">lambda</span>: <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  136</span>            <span class="keywordflow">if</span> self._set <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  137</span>                <span class="keywordflow">raise</span> ValueError(</div>
+<div class="line"><span class="lineno">  138</span>                    <span class="stringliteral">&quot;`readonly` is not `None` but `set_func` is `None`&quot;</span></div>
+<div class="line"><span class="lineno">  139</span>                )</div>
+<div class="line"><span class="lineno">  140</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  141</span>                self._readonly = readonly</div>
+<div class="line"><span class="lineno">  142</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -274,7 +310,15 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00143">143</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  143</span>    <span class="keyword">def </span>describe(self):</div>
+<div class="line"><span class="lineno">  144</span>        <span class="keywordflow">return</span> {</div>
+<div class="line"><span class="lineno">  145</span>            <span class="stringliteral">&quot;type&quot;</span>: self.dtype,</div>
+<div class="line"><span class="lineno">  146</span>            <span class="stringliteral">&quot;values&quot;</span>: self.values(),</div>
+<div class="line"><span class="lineno">  147</span>            <span class="stringliteral">&quot;readonly&quot;</span>: self.readonly(),</div>
+<div class="line"><span class="lineno">  148</span>            <span class="stringliteral">&quot;cached&quot;</span>: self._last_written <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  149</span>        }</div>
+<div class="line"><span class="lineno">  150</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5b85b40907ba9571570d1c9c3f675cba" name="a5b85b40907ba9571570d1c9c3f675cba"></a>
@@ -294,7 +338,17 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00151">151</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  151</span>    <span class="keyword">def </span>get(self):</div>
+<div class="line"><span class="lineno">  152</span>        <span class="keywordflow">if</span> self._get <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  153</span>            value = self._get()</div>
+<div class="line"><span class="lineno">  154</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  155</span>            value = self._last_written</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">if</span> isinstance(self._values, EnumMeta):</div>
+<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">return</span> self._values(value).value</div>
+<div class="line"><span class="lineno">  158</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  159</span>            <span class="keywordflow">return</span> value</div>
+<div class="line"><span class="lineno">  160</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8c39fd9909af771934d316dcfb01c801" name="a8c39fd9909af771934d316dcfb01c801"></a>
@@ -314,7 +368,10 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00161">161</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  161</span>    <span class="keyword">def </span>readonly(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">return</span> self._readonly()</div>
+<div class="line"><span class="lineno">  163</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abc38af17db5f27b4448cbb305f02c6ed" name="abc38af17db5f27b4448cbb305f02c6ed"></a>
@@ -344,6 +401,17 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 <pre class="fragment">Set a setting.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00164">164</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  164</span>    <span class="keyword">def </span>set(self, value) -&gt; None:</div>
+<div class="line"><span class="lineno">  165</span>        <span class="stringliteral">&quot;&quot;&quot;Set a setting.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  166</span>        <span class="keywordflow">if</span> self._set <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  167</span>            <span class="keywordflow">raise</span> NotImplementedError()</div>
+<div class="line"><span class="lineno">  168</span>        <span class="comment"># TODO further validation.</span></div>
+<div class="line"><span class="lineno">  169</span>        <span class="keywordflow">if</span> isinstance(self._values, EnumMeta):</div>
+<div class="line"><span class="lineno">  170</span>            value = self._values(value)</div>
+<div class="line"><span class="lineno">  171</span>        self._set(value)</div>
+<div class="line"><span class="lineno">  172</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00121">microscope.abc._Setting._set</a>, <a class="el" href="abc_8py_source.html#l00118">microscope.abc._Setting._values</a>, <a class="el" href="abc_8py_source.html#l00116">microscope.abc._Setting.dtype</a>, and <a class="el" href="pvcam_8py_source.html#l01234">microscope.cameras.pvcam.PVParam.dtype</a>.</p>
 
 </div>
 </div>
@@ -364,6 +432,23 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00173">173</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  173</span>    <span class="keyword">def </span>values(self):</div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">if</span> isinstance(self._values, EnumMeta):</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">return</span> [(v.value, v.name) <span class="keywordflow">for</span> v <span class="keywordflow">in</span> self._values]</div>
+<div class="line"><span class="lineno">  176</span>        values = _call_if_callable(self._values)</div>
+<div class="line"><span class="lineno">  177</span>        <span class="keywordflow">if</span> values <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  178</span>            <span class="keywordflow">if</span> self.dtype == <span class="stringliteral">&quot;enum&quot;</span>:</div>
+<div class="line"><span class="lineno">  179</span>                <span class="keywordflow">if</span> isinstance(values, dict):</div>
+<div class="line"><span class="lineno">  180</span>                    <span class="keywordflow">return</span> list(values.items())</div>
+<div class="line"><span class="lineno">  181</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  182</span>                    <span class="comment"># self._values is a list or tuple</span></div>
+<div class="line"><span class="lineno">  183</span>                    <span class="keywordflow">return</span> list(enumerate(values))</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">elif</span> self._values <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  185</span>                <span class="keywordflow">return</span> values</div>
+<div class="line"><span class="lineno">  186</span> </div>
+<div class="line"><span class="lineno">  187</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -382,6 +467,8 @@ Setters and getters accept or return:
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00116">116</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, and <a class="el" href="abc_8py_source.html#l00164">microscope.abc._Setting.set()</a>.</p>
+
 </div>
 </div>
 <a id="a354652a39947995ab02aeaf646820e45" name="a354652a39947995ab02aeaf646820e45"></a>
@@ -397,6 +484,8 @@ Setters and getters accept or return:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00108">108</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>

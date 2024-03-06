@@ -221,7 +221,21 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01224">1224</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1224</span>    <span class="keyword">def </span>__init__(self, camera, param_id):</div>
+<div class="line"><span class="lineno"> 1225</span>        <span class="comment"># Use a weakref back to the camera to avoid circular dependency.</span></div>
+<div class="line"><span class="lineno"> 1226</span>        self.cam = weakref.proxy(camera)</div>
+<div class="line"><span class="lineno"> 1227</span>        self.param_id = param_id</div>
+<div class="line"><span class="lineno"> 1228</span>        self.name = _param_to_name[param_id]</div>
+<div class="line"><span class="lineno"> 1229</span>        self._pvtype = param_id &gt;&gt; 24 &amp; 255</div>
+<div class="line"><span class="lineno"> 1230</span>        <span class="keywordflow">if</span> self.name == <span class="stringliteral">&quot;PARAM_READOUT_TIME&quot;</span>:</div>
+<div class="line"><span class="lineno"> 1231</span>            <span class="comment"># Bugged. Here is what the SDK says: &quot;The parameter type is</span></div>
+<div class="line"><span class="lineno"> 1232</span>            <span class="comment"># incorrectly defined. The actual type is TYPE_UNS32.&quot;</span></div>
+<div class="line"><span class="lineno"> 1233</span>            self._pvtype = TYPE_UNS32</div>
+<div class="line"><span class="lineno"> 1234</span>        self.dtype = _dtypemap[self._pvtype]</div>
+<div class="line"><span class="lineno"> 1235</span>        self._ctype = _typemap[self._pvtype]</div>
+<div class="line"><span class="lineno"> 1236</span>        self.__cache = {}</div>
+<div class="line"><span class="lineno"> 1237</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -242,6 +256,14 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return parameter access attribute.</pre> 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01303">1303</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1303</span>    <span class="keyword">def </span>access(self):</div>
+<div class="line"><span class="lineno"> 1304</span>        <span class="stringliteral">&quot;&quot;&quot;Return parameter access attribute.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1305</span>        <span class="keywordflow">return</span> int(</div>
+<div class="line"><span class="lineno"> 1306</span>            _get_param(self.cam.handle, self.param_id, ATTR_ACCESS).value</div>
+<div class="line"><span class="lineno"> 1307</span>        )</div>
+<div class="line"><span class="lineno"> 1308</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, and <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>.</p>
 
 </div>
 </div>
@@ -262,6 +284,16 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return whether or not parameter is available on hardware.</pre> 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01310">1310</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1310</span>    <span class="keyword">def </span>available(self):</div>
+<div class="line"><span class="lineno"> 1311</span>        <span class="stringliteral">&quot;&quot;&quot;Return whether or not parameter is available on hardware.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1312</span>        <span class="keywordflow">return</span> bool(</div>
+<div class="line"><span class="lineno"> 1313</span>            _get_param(self.cam.handle, self.param_id, ATTR_AVAIL).value</div>
+<div class="line"><span class="lineno"> 1314</span>        )</div>
+<div class="line"><span class="lineno"> 1315</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, and <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -282,6 +314,16 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return count of parameter enum entries.</pre> 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01317">1317</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1317</span>    <span class="keyword">def </span>count(self):</div>
+<div class="line"><span class="lineno"> 1318</span>        <span class="stringliteral">&quot;&quot;&quot;Return count of parameter enum entries.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1319</span>        <span class="keywordflow">return</span> int(</div>
+<div class="line"><span class="lineno"> 1320</span>            _get_param(self.cam.handle, self.param_id, ATTR_COUNT).value</div>
+<div class="line"><span class="lineno"> 1321</span>        )</div>
+<div class="line"><span class="lineno"> 1322</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, and <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>, and <a class="el" href="pvcam_8py_source.html#l01371">microscope.cameras.pvcam.PVEnumParam.values()</a>.</p>
 
 </div>
 </div>
@@ -306,6 +348,15 @@ Subclasses should override this for more complex data types.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html#a2556928f69c5f7ee0011e56985049f91">microscope.cameras.pvcam.PVEnumParam</a>, and <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html#a758da5287780e8413846ba6706fef77b">microscope.cameras.pvcam.PVStringParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01331">1331</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1331</span>    <span class="keyword">def </span>current(self):</div>
+<div class="line"><span class="lineno"> 1332</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current (or cached) parameter value.</span></div>
+<div class="line"><span class="lineno"> 1333</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1334</span><span class="stringliteral">        Subclasses should override this </span><span class="keywordflow">for</span> more complex data types.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1335</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self._query()</div>
+<div class="line"><span class="lineno"> 1336</span> </div>
+<div class="line"><span class="lineno"> 1337</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01252">microscope.cameras.pvcam.PVParam._query()</a>.</p>
 
 </div>
 </div>
@@ -344,6 +395,30 @@ Subclasses should override this for more complex data types.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Create a PVParam or appropriate subclass</pre> 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01203">1203</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1203</span>    <span class="keyword">def </span>factory(camera, param_id):</div>
+<div class="line"><span class="lineno"> 1204</span>        <span class="stringliteral">&quot;&quot;&quot;Create a PVParam or appropriate subclass&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1205</span>        <span class="comment"># A mapping of pv parameters types to python types.</span></div>
+<div class="line"><span class="lineno"> 1206</span>        <span class="comment">#   None means unsupported.</span></div>
+<div class="line"><span class="lineno"> 1207</span>        <span class="comment">#   Parameters omitted from the mapping will default to PVParam.</span></div>
+<div class="line"><span class="lineno"> 1208</span>        __types__ = {</div>
+<div class="line"><span class="lineno"> 1209</span>            TYPE_SMART_STREAM_TYPE: <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1210</span>            TYPE_SMART_STREAM_TYPE_PTR: <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1211</span>            TYPE_VOID_PTR: <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1212</span>            TYPE_VOID_PTR_PTR: <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1213</span>            TYPE_ENUM: PVEnumParam,</div>
+<div class="line"><span class="lineno"> 1214</span>            TYPE_CHAR_PTR: PVStringParam,</div>
+<div class="line"><span class="lineno"> 1215</span>        }</div>
+<div class="line"><span class="lineno"> 1216</span>        <span class="comment"># Determine the appropiate type from its id.</span></div>
+<div class="line"><span class="lineno"> 1217</span>        pvtype = __types__.get(param_id &gt;&gt; 24 &amp; 255, PVParam)</div>
+<div class="line"><span class="lineno"> 1218</span>        <span class="keywordflow">if</span> pvtype <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1219</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_library_load_error.html">microscope.LibraryLoadError</a>(</div>
+<div class="line"><span class="lineno"> 1220</span>                <span class="stringliteral">&quot;Parameter %s not supported&quot;</span> % _param_to_name[param_id]</div>
+<div class="line"><span class="lineno"> 1221</span>            )</div>
+<div class="line"><span class="lineno"> 1222</span>        <span class="keywordflow">return</span> pvtype(camera, param_id)</div>
+<div class="line"><span class="lineno"> 1223</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_library_load_error_html"><div class="ttname"><a href="classmicroscope_1_1_library_load_error.html">microscope.LibraryLoadError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00106">__init__.py:106</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01236">microscope.cameras.pvcam.PVParam.__cache</a>, <a class="el" href="pvcam_8py_source.html#l01235">microscope.cameras.pvcam.PVParam._ctype</a>, <a class="el" href="pvcam_8py_source.html#l01229">microscope.cameras.pvcam.PVParam._pvtype</a>, <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, <a class="el" href="abc_8py_source.html#l00116">microscope.abc._Setting.dtype</a>, <a class="el" href="pvcam_8py_source.html#l01234">microscope.cameras.pvcam.PVParam.dtype</a>, <a class="el" href="abc_8py_source.html#l00108">microscope.abc._Setting.name</a>, <a class="el" href="___s_d_k3_8py_source.html#l00176">microscope.cameras._SDK3.dllFunction.name</a>, <a class="el" href="atmcd_8py_source.html#l00639">microscope.cameras.atmcd.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l00745">microscope.cameras.pvcam.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l01228">microscope.cameras.pvcam.PVParam.name</a>, <a class="el" href="_automation_8cs_source.html#l00023">BioImager.Automation.Action.name</a>, <a class="el" href="_automation_8cs_source.html#l00286">BioImager.Automation.Recording.name</a>, <a class="el" href="_bio_8cs_source.html#l01102">BioImager.Filt.name</a>, <a class="el" href="_function_form_8cs_source.html#l00508">BioImager.Function.name</a>, <a class="el" href="_image_j_8cs_source.html#l00364">BioImager.ImageJ.RoiDecoder.name</a>, <a class="el" href="_microscope_8cs_source.html#l00661">BioImager.LightSource.name</a>, <a class="el" href="_plot_8cs_source.html#l00018">BioImager.Plot.name</a>, <a class="el" href="_scripting_8cs_source.html#l00018">BioImager.Scripting.Script.name</a>, and <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>.</p>
 
 </div>
 </div>
@@ -379,6 +454,24 @@ then call super().set_value(new_value)</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html#abfd4546d56a82dc0d45d5a8f35fc345d">microscope.cameras.pvcam.PVEnumParam</a>, and <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html#a1f345b4776c6503950ce2396a8a0a537">microscope.cameras.pvcam.PVStringParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01238">1238</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1238</span>    <span class="keyword">def </span>set_value(self, new_value):</div>
+<div class="line"><span class="lineno"> 1239</span>        <span class="stringliteral">&quot;&quot;&quot;Set a parameter value.</span></div>
+<div class="line"><span class="lineno"> 1240</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1241</span><span class="stringliteral">        Subclasses should do whatever processing they need on new_value,</span></div>
+<div class="line"><span class="lineno"> 1242</span><span class="stringliteral">        then call super().set_value(new_value)&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1243</span><span class="stringliteral">        </span><span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1244</span>            ref = ctypes.byref(new_value)</div>
+<div class="line"><span class="lineno"> 1245</span>        <span class="keywordflow">except</span> TypeError:</div>
+<div class="line"><span class="lineno"> 1246</span>            <span class="comment"># Need to convert python type to ctype first.</span></div>
+<div class="line"><span class="lineno"> 1247</span>            ref = ctypes.byref(self._ctype(new_value))</div>
+<div class="line"><span class="lineno"> 1248</span>        _set_param(self.cam.handle, self.param_id, ref)</div>
+<div class="line"><span class="lineno"> 1249</span>        <span class="comment"># Read back the value to update cache.</span></div>
+<div class="line"><span class="lineno"> 1250</span>        self._query(force_query=<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno"> 1251</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01236">microscope.cameras.pvcam.PVParam.__cache</a>, <a class="el" href="pvcam_8py_source.html#l01235">microscope.cameras.pvcam.PVParam._ctype</a>, <a class="el" href="pvcam_8py_source.html#l01252">microscope.cameras.pvcam.PVParam._query()</a>, <a class="el" href="pvcam_8py_source.html#l01310">microscope.cameras.pvcam.PVParam.available()</a>, <a class="el" href="pvcam_8py_source.html#l01226">microscope.cameras.pvcam.PVParam.cam</a>, <a class="el" href="abc_8py_source.html#l00108">microscope.abc._Setting.name</a>, <a class="el" href="___s_d_k3_8py_source.html#l00176">microscope.cameras._SDK3.dllFunction.name</a>, <a class="el" href="atmcd_8py_source.html#l00639">microscope.cameras.atmcd.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l00745">microscope.cameras.pvcam.dllFunction.name</a>, <a class="el" href="pvcam_8py_source.html#l01228">microscope.cameras.pvcam.PVParam.name</a>, <a class="el" href="_automation_8cs_source.html#l00023">BioImager.Automation.Action.name</a>, <a class="el" href="_automation_8cs_source.html#l00286">BioImager.Automation.Recording.name</a>, <a class="el" href="_bio_8cs_source.html#l01102">BioImager.Filt.name</a>, <a class="el" href="_function_form_8cs_source.html#l00508">BioImager.Function.name</a>, <a class="el" href="_image_j_8cs_source.html#l00364">BioImager.ImageJ.RoiDecoder.name</a>, <a class="el" href="_microscope_8cs_source.html#l00661">BioImager.LightSource.name</a>, <a class="el" href="_plot_8cs_source.html#l00018">BioImager.Plot.name</a>, <a class="el" href="_scripting_8cs_source.html#l00018">BioImager.Scripting.Script.name</a>, <a class="el" href="pvcam_8py_source.html#l01227">microscope.cameras.pvcam.PVParam.param_id</a>, and <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01338">microscope.stages.linkam._LinkamMDSMixin.move_to()</a>, <a class="el" href="linkam_8py_source.html#l01516">microscope.stages.linkam.LinkamCMS.refill_chamber()</a>, <a class="el" href="linkam_8py_source.html#l01512">microscope.stages.linkam.LinkamCMS.refill_dewar()</a>, <a class="el" href="linkam_8py_source.html#l01475">microscope.stages.linkam.LinkamCMS.set_condensor()</a>, <a class="el" href="linkam_8py_source.html#l01467">microscope.stages.linkam.LinkamCMS.set_light()</a>, and <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -403,6 +496,16 @@ Subclasses for strings and enum override this.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html#af38296177f19d2da4b89864d0b3a7305">microscope.cameras.pvcam.PVEnumParam</a>, and <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html#a1f64a0b90fce45c5eb489b0423f73b3f">microscope.cameras.pvcam.PVStringParam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01324">1324</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1324</span>    <span class="keyword">def </span>values(self):</div>
+<div class="line"><span class="lineno"> 1325</span>        <span class="stringliteral">&quot;&quot;&quot;Get parameter min and max values.</span></div>
+<div class="line"><span class="lineno"> 1326</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1327</span><span class="stringliteral">        Subclasses </span><span class="keywordflow">for</span> strings <span class="keywordflow">and</span> enum override this.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1328</span><span class="stringliteral">        </span><span class="keywordflow">return</span> (self._query(ATTR_MIN), self._query(ATTR_MAX))</div>
+<div class="line"><span class="lineno"> 1329</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01252">microscope.cameras.pvcam.PVParam._query()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -421,6 +524,8 @@ Subclasses for strings and enum override this.</pre>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01226">1226</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01303">microscope.cameras.pvcam.PVParam.access()</a>, <a class="el" href="pvcam_8py_source.html#l01310">microscope.cameras.pvcam.PVParam.available()</a>, <a class="el" href="pvcam_8py_source.html#l01317">microscope.cameras.pvcam.PVParam.count()</a>, <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01371">microscope.cameras.pvcam.PVEnumParam.values()</a>.</p>
+
 </div>
 </div>
 <a id="a97af9281a266b5be48a1e41ea534ea53" name="a97af9281a266b5be48a1e41ea534ea53"></a>
@@ -436,6 +541,8 @@ Subclasses for strings and enum override this.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01234">1234</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, and <a class="el" href="abc_8py_source.html#l00164">microscope.abc._Setting.set()</a>.</p>
 
 </div>
 </div>
@@ -453,6 +560,8 @@ Subclasses for strings and enum override this.</pre>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01228">1228</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
+
 </div>
 </div>
 <a id="a37193721899bc9694435fdde41f040b5" name="a37193721899bc9694435fdde41f040b5"></a>
@@ -468,6 +577,8 @@ Subclasses for strings and enum override this.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01227">1227</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01303">microscope.cameras.pvcam.PVParam.access()</a>, <a class="el" href="pvcam_8py_source.html#l01310">microscope.cameras.pvcam.PVParam.available()</a>, <a class="el" href="pvcam_8py_source.html#l01317">microscope.cameras.pvcam.PVParam.count()</a>, <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01371">microscope.cameras.pvcam.PVEnumParam.values()</a>, and <a class="el" href="pvcam_8py_source.html#l01398">microscope.cameras.pvcam.PVStringParam.values()</a>.</p>
 
 </div>
 </div>

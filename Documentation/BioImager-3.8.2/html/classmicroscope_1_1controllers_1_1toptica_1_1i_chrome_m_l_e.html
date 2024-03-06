@@ -235,7 +235,45 @@ The names of the light devices are `laser1`, `laser2`, `laser3`,
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00261">261</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  261</span>    <span class="keyword">def </span>__init__(self, port: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  262</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  263</span>        self._lasers: typing.Dict[str, _iChromeLaser] = {}</div>
+<div class="line"><span class="lineno">  264</span> </div>
+<div class="line"><span class="lineno">  265</span>        <span class="comment"># Setting specified on the manual (M-051 version 03)</span></div>
+<div class="line"><span class="lineno">  266</span>        serial_conn = serial.Serial(</div>
+<div class="line"><span class="lineno">  267</span>            port=port,</div>
+<div class="line"><span class="lineno">  268</span>            baudrate=115200,</div>
+<div class="line"><span class="lineno">  269</span>            timeout=1,</div>
+<div class="line"><span class="lineno">  270</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">  271</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><span class="lineno">  272</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">  273</span>            xonxoff=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  274</span>            rtscts=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  275</span>            dsrdtr=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  276</span>        )</div>
+<div class="line"><span class="lineno">  277</span>        shared_serial = <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a>(serial_conn)</div>
+<div class="line"><span class="lineno">  278</span>        ichrome_connection = _iChromeConnection(shared_serial)</div>
+<div class="line"><span class="lineno">  279</span> </div>
+<div class="line"><span class="lineno">  280</span>        _LOGGER.info(<span class="stringliteral">&quot;Connected to %s&quot;</span>, ichrome_connection.get_serial_number())</div>
+<div class="line"><span class="lineno">  281</span> </div>
+<div class="line"><span class="lineno">  282</span>        <span class="comment"># According to the manual the iChrome can have between 3 and 5</span></div>
+<div class="line"><span class="lineno">  283</span>        <span class="comment"># lasers.  There doesn&#39;t seem to be a simple command to check</span></div>
+<div class="line"><span class="lineno">  284</span>        <span class="comment"># what&#39;s installed, we&#39;d have to parse the whole summary</span></div>
+<div class="line"><span class="lineno">  285</span>        <span class="comment"># table.  So we try/except to each laser line.</span></div>
+<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(1, 6):</div>
+<div class="line"><span class="lineno">  287</span>            name = <span class="stringliteral">&quot;laser%d&quot;</span> % i</div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  289</span>                laser = _iChromeLaser(ichrome_connection, i)</div>
+<div class="line"><span class="lineno">  290</span>            <span class="keywordflow">except</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>:</div>
+<div class="line"><span class="lineno">  291</span>                _LOGGER.info(<span class="stringliteral">&quot;no %s available&quot;</span>, name)</div>
+<div class="line"><span class="lineno">  292</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  294</span>                _LOGGER.info(<span class="stringliteral">&quot;found %s on iChrome MLE&quot;</span>, name)</div>
+<div class="line"><span class="lineno">  295</span>                self._lasers[name] = laser</div>
+<div class="line"><span class="lineno">  296</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1__utils_1_1_shared_serial_html"><div class="ttname"><a href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a></div><div class="ttdef"><b>Definition:</b> <a href="__utils_8py_source.html#l00111">_utils.py:111</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -258,6 +296,10 @@ The names of the light devices are `laser1`, `laser2`, `laser3`,
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_controller.html#a514852dc8a72c9cf2f0277660a32c555">microscope.abc.Controller</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="controllers_2toptica_8py_source.html#l00298">298</a> of file <a class="el" href="controllers_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  298</span>    <span class="keyword">def </span>devices(self) -&gt; typing.Dict[str, _iChromeLaser]:</div>
+<div class="line"><span class="lineno">  299</span>        <span class="keywordflow">return</span> self._lasers</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01342">microscope.abc.Controller.devices()</a>.</p>
 
 </div>
 </div>

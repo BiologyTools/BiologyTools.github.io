@@ -200,7 +200,15 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00404">404</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  404</span>    <span class="keyword">def </span>__init__(self, limits: microscope.AxisLimits) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  405</span>        super().__init__()</div>
+<div class="line"><span class="lineno">  406</span>        self._limits = limits</div>
+<div class="line"><span class="lineno">  407</span>        <span class="comment"># Start axis in the middle of its range.</span></div>
+<div class="line"><span class="lineno">  408</span>        self._position = self._limits.lower + (</div>
+<div class="line"><span class="lineno">  409</span>            (self._limits.upper - self._limits.lower) / 2.0</div>
+<div class="line"><span class="lineno">  410</span>        )</div>
+<div class="line"><span class="lineno">  411</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -223,6 +231,13 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a538a855a503270a2f367d1ba6e9b0274">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00417">417</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  417</span>    <span class="keyword">def </span>limits(self) -&gt; microscope.AxisLimits:</div>
+<div class="line"><span class="lineno">  418</span>        <span class="keywordflow">return</span> self._limits</div>
+<div class="line"><span class="lineno">  419</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="simulators_2____init_____8py_source.html#l00406">microscope.simulators.SimulatedStageAxis._limits</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -255,6 +270,11 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a4c2f896778b7c7d9717b48f22f06c95a">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00420">420</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  420</span>    <span class="keyword">def </span>move_by(self, delta: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  421</span>        self.move_to(self._position + delta)</div>
+<div class="line"><span class="lineno">  422</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="simulators_2____init_____8py_source.html#l00326">microscope.simulators.SimulatedFilterWheel._position</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00408">microscope.simulators.SimulatedStageAxis._position</a>, <a class="el" href="abc_8py_source.html#l01370">microscope.abc.StageAxis.move_to()</a>, <a class="el" href="zaber_8py_source.html#l00309">microscope.controllers.zaber._ZaberStageAxis.move_to()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00423">microscope.simulators.SimulatedStageAxis.move_to()</a>, <a class="el" href="ludl_8py_source.html#l00287">microscope.stages.ludl._LudlStageAxis.move_to()</a>, <a class="el" href="abc_8py_source.html#l01561">microscope.abc.Stage.move_to()</a>, <a class="el" href="zaber_8py_source.html#l00365">microscope.controllers.zaber._ZaberStage.move_to()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00477">microscope.simulators.SimulatedStage.move_to()</a>, <a class="el" href="ludl_8py_source.html#l00375">microscope.stages.ludl._LudlStage.move_to()</a>, and <a class="el" href="linkam_8py_source.html#l01338">microscope.stages.linkam._LinkamMDSMixin.move_to()</a>.</p>
 
 </div>
 </div>
@@ -287,6 +307,19 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a14b522d41fec9cc65afb5a8297ead8c1">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00423">423</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  423</span>    <span class="keyword">def </span>move_to(self, pos: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  424</span>        <span class="keywordflow">if</span> pos &lt; self._limits.lower:</div>
+<div class="line"><span class="lineno">  425</span>            self._position = self._limits.lower</div>
+<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">elif</span> pos &gt; self._limits.upper:</div>
+<div class="line"><span class="lineno">  427</span>            self._position = self._limits.upper</div>
+<div class="line"><span class="lineno">  428</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  429</span>            self._position = pos</div>
+<div class="line"><span class="lineno">  430</span> </div>
+<div class="line"><span class="lineno">  431</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="simulators_2____init_____8py_source.html#l00406">microscope.simulators.SimulatedStageAxis._limits</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00326">microscope.simulators.SimulatedFilterWheel._position</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00408">microscope.simulators.SimulatedStageAxis._position</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00420">microscope.simulators.SimulatedStageAxis.move_by()</a>.</p>
 
 </div>
 </div>
@@ -309,6 +342,13 @@ Public Member Functions</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a9bd5dbb04c2cb24282ff839d82e2acf3">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00413">413</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  413</span>    <span class="keyword">def </span>position(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  414</span>        <span class="keywordflow">return</span> self._position</div>
+<div class="line"><span class="lineno">  415</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="simulators_2____init_____8py_source.html#l00326">microscope.simulators.SimulatedFilterWheel._position</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00408">microscope.simulators.SimulatedStageAxis._position</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>

@@ -57,6 +57,35 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00172}{172}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00172     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00173         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00174         self.\_lights: typing.Mapping[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}] = \{\}}
+\DoxyCodeLine{00175 }
+\DoxyCodeLine{00176         \textcolor{comment}{\# We use standard (not legacy) mode communication so 115200,8,N,1}}
+\DoxyCodeLine{00177         serial\_conn = serial.Serial(}
+\DoxyCodeLine{00178             port=port,}
+\DoxyCodeLine{00179             baudrate=115200,}
+\DoxyCodeLine{00180             timeout=1,}
+\DoxyCodeLine{00181             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00182             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00183             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00184             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00185             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00186             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00187         )}
+\DoxyCodeLine{00188         shared\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{00189         connection = \_SpectraIIIConnection(shared\_serial)}
+\DoxyCodeLine{00190 }
+\DoxyCodeLine{00191         \textcolor{keywordflow}{for} index, name \textcolor{keywordflow}{in} connection.get\_channel\_map():}
+\DoxyCodeLine{00192             \textcolor{keyword}{assert} (}
+\DoxyCodeLine{00193                 name \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_lights}
+\DoxyCodeLine{00194             ), \textcolor{stringliteral}{"{}light with name '\%s' already mapped"{}}}
+\DoxyCodeLine{00195             self.\_lights[name] = \_SpectraIIILightChannel(connection, index)}
+\DoxyCodeLine{00196 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_af2a1b1b538b366b85d576fcd9e9b2fe2}\label{classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine_af2a1b1b538b366b85d576fcd9e9b2fe2}} 
@@ -73,6 +102,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a51485
 
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00198}{198}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198     \textcolor{keyword}{def }devices(self) -\/> typing.Mapping[str, microscope.abc.Device]:}
+\DoxyCodeLine{00199         \textcolor{keywordflow}{return} self.\_lights}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01342}{microscope.\+abc.\+Controller.\+devices()}}.
 
 
 

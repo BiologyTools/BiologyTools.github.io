@@ -223,7 +223,13 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00030">30</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   31</span>            {</div>
+<div class="line"><span class="lineno">   32</span>                name = Path.GetFileName(file);</div>
+<div class="line"><span class="lineno">   33</span>                scriptString = scriptStr;</div>
+<div class="line"><span class="lineno">   34</span>                <span class="keywordflow">if</span> (file.EndsWith(<span class="stringliteral">&quot;.txt&quot;</span>) || file.EndsWith(<span class="stringliteral">&quot;.ijm&quot;</span>))</div>
+<div class="line"><span class="lineno">   35</span>                    type = ScriptType.imagej;</div>
+<div class="line"><span class="lineno">   36</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a0e05636c723f0887dade9df2446f3adf" name="a0e05636c723f0887dade9df2446f3adf"></a>
@@ -243,7 +249,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00039">39</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   40</span>            {</div>
+<div class="line"><span class="lineno">   41</span>                name = Path.GetFileName(file);</div>
+<div class="line"><span class="lineno">   42</span>                scriptString = File.ReadAllText(file);</div>
+<div class="line"><span class="lineno">   43</span>                this.file = file;</div>
+<div class="line"><span class="lineno">   44</span>                <span class="keywordflow">if</span> (file.EndsWith(<span class="stringliteral">&quot;.txt&quot;</span>) || file.EndsWith(<span class="stringliteral">&quot;.ijm&quot;</span>))</div>
+<div class="line"><span class="lineno">   45</span>                    type = ScriptType.imagej;</div>
+<div class="line"><span class="lineno">   46</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -265,7 +278,14 @@ Static Public Attributes</h2></td></tr>
 <p>It creates a new thread and starts it. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00133">133</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  134</span>            {</div>
+<div class="line"><span class="lineno">  135</span>                <span class="keywordflow">if</span> (!Scripts.ContainsKey(name))</div>
+<div class="line"><span class="lineno">  136</span>                    Scripts.Add(name, <span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  137</span>                scriptName = this.name;</div>
+<div class="line"><span class="lineno">  138</span>                thread = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadStart(RunScript));</div>
+<div class="line"><span class="lineno">  139</span>                thread.Start();</div>
+<div class="line"><span class="lineno">  140</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aaef0cfb462ea92e6eb6425e59f1fd8b2" name="aaef0cfb462ea92e6eb6425e59f1fd8b2"></a>
@@ -296,6 +316,13 @@ Static Public Attributes</h2></td></tr>
  </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00051">51</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   52</span>            {</div>
+<div class="line"><span class="lineno">   53</span>                scriptName = rn.name;</div>
+<div class="line"><span class="lineno">   54</span>                Thread t = <span class="keyword">new</span> Thread(<span class="keyword">new</span> ThreadStart(RunScript));</div>
+<div class="line"><span class="lineno">   55</span>                t.Start();</div>
+<div class="line"><span class="lineno">   56</span>            }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_scripting_8cs_source.html#l00403">BioImager.Scripting.Run()</a>.</p>
 
 </div>
 </div>
@@ -332,6 +359,40 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value of the last statement in the script. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00099">99</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  100</span>            {</div>
+<div class="line"><span class="lineno">  101</span>                <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  102</span>                {</div>
+<div class="line"><span class="lineno">  103</span>                    <span class="keywordtype">string</span> loader =</div>
+<div class="line"><span class="lineno">  104</span>                  <span class="stringliteral">@&quot;//css_reference &quot;</span> + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + <span class="stringliteral">@&quot;.dll</span></div>
+<div class="line"><span class="lineno">  105</span><span class="stringliteral">                    using System;</span></div>
+<div class="line"><span class="lineno">  106</span><span class="stringliteral">                    using System.Windows.Forms;</span></div>
+<div class="line"><span class="lineno">  107</span><span class="stringliteral">                    using System.Drawing;</span></div>
+<div class="line"><span class="lineno">  108</span><span class="stringliteral">                    using System.Threading;</span></div>
+<div class="line"><span class="lineno">  109</span><span class="stringliteral">                    using Bio;&quot;</span>;</div>
+<div class="line"><span class="lineno">  110</span>                    <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> usings)</div>
+<div class="line"><span class="lineno">  111</span>                    {</div>
+<div class="line"><span class="lineno">  112</span>                        loader += usings + Environment.NewLine;</div>
+<div class="line"><span class="lineno">  113</span>                    }</div>
+<div class="line"><span class="lineno">  114</span>                    loader += <span class="stringliteral">@&quot;</span></div>
+<div class="line"><span class="lineno">  115</span><span class="stringliteral">                    public class Loader</span></div>
+<div class="line"><span class="lineno">  116</span><span class="stringliteral">                    {</span></div>
+<div class="line"><span class="lineno">  117</span><span class="stringliteral">                        public object Load()</span></div>
+<div class="line"><span class="lineno">  118</span><span class="stringliteral">                        {&quot;</span> +</div>
+<div class="line"><span class="lineno">  119</span>                            st + <span class="stringliteral">@&quot;;</span></div>
+<div class="line"><span class="lineno">  120</span><span class="stringliteral">                            return true;</span></div>
+<div class="line"><span class="lineno">  121</span><span class="stringliteral">                        }</span></div>
+<div class="line"><span class="lineno">  122</span><span class="stringliteral">                    }&quot;</span>;</div>
+<div class="line"><span class="lineno">  123</span>                    dynamic script = CSScript.Evaluator.LoadCode(loader);</div>
+<div class="line"><span class="lineno">  124</span>                    <span class="keywordflow">return</span> script.Load();</div>
+<div class="line"><span class="lineno">  125</span>                }</div>
+<div class="line"><span class="lineno">  126</span>                <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><span class="lineno">  127</span>                {</div>
+<div class="line"><span class="lineno">  128</span>                    MessageBox.Show(e.Message, e.Source);</div>
+<div class="line"><span class="lineno">  129</span>                    <span class="keywordflow">return</span> e;</div>
+<div class="line"><span class="lineno">  130</span>                }</div>
+<div class="line"><span class="lineno">  131</span>            }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_scripting_8cs_source.html#l00396">BioImager.Scripting.RunString()</a>.</p>
 
 </div>
 </div>
@@ -353,6 +414,12 @@ Static Public Attributes</h2></td></tr>
 <p>The function stops the thread. </p>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00142">142</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  143</span>            {</div>
+<div class="line"><span class="lineno">  144</span>                <span class="keywordflow">if</span> (thread != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  145</span>                    thread.Abort();</div>
+<div class="line"><span class="lineno">  146</span>            }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_scripting_8cs_source.html#l00424">BioImager.Scripting.Stop()</a>.</p>
 
 </div>
 </div>
@@ -374,6 +441,16 @@ Static Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The name of the thread and the state of the thread. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00151">151</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  152</span>            {</div>
+<div class="line"><span class="lineno">  153</span>                <span class="keywordflow">if</span> (thread != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  154</span>                {</div>
+<div class="line"><span class="lineno">  155</span>                    <span class="keywordflow">return</span> name.ToString() + <span class="stringliteral">&quot;, &quot;</span> + thread.ThreadState.ToString();</div>
+<div class="line"><span class="lineno">  156</span>                }</div>
+<div class="line"><span class="lineno">  157</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  158</span>                    <span class="keywordflow">return</span> name.ToString();</div>
+<div class="line"><span class="lineno">  159</span>            }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_scripting_8cs_source.html#l00275">BioImager.Scripting.RefreshItems()</a>, and <a class="el" href="_scripting_8cs_source.html#l00311">BioImager.Scripting.RefreshStatus()</a>.</p>
 
 </div>
 </div>
@@ -439,6 +516,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00018">18</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>
@@ -535,6 +614,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_scripting_8cs_source.html#l00028">28</a> of file <a class="el" href="_scripting_8cs_source.html">Scripting.cs</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l00075">microscope.stages.linkam._CommsInfo.view_of_info()</a>.</p>
 
 </div>
 </div>

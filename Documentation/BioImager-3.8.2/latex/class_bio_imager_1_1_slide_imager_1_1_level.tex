@@ -79,6 +79,19 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00048}{48}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00085}{85}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086             \{}
+\DoxyCodeLine{00087                 PhysicalX = physX; PhysicalY = physY;}
+\DoxyCodeLine{00088                 Compression = comp;}
+\DoxyCodeLine{00089                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < levels; i++)}
+\DoxyCodeLine{00090                 \{}
+\DoxyCodeLine{00091                     Levels.Add(\textcolor{keyword}{new} Level(w, h, pf));}
+\DoxyCodeLine{00092                     Levels[i].Parent = \textcolor{keyword}{this};}
+\DoxyCodeLine{00093                 \}}
+\DoxyCodeLine{00094             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a25dbac23fd7b1f5c5cd75cb4f1d3e56e}\label{class_bio_imager_1_1_slide_imager_1_1_level_a25dbac23fd7b1f5c5cd75cb4f1d3e56e}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Level@{Level}}
 \index{Level@{Level}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -89,6 +102,13 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00085}{85}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00095}{95}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096             \{}
+\DoxyCodeLine{00097                 Width = w; Height = h; PixelFormat = pf;}
+\DoxyCodeLine{00098             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -102,6 +122,39 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00095}{95}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00200}{200}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201             \{}
+\DoxyCodeLine{00202                 Level l = Levels[level];}
+\DoxyCodeLine{00203                 \textcolor{keywordflow}{if} (l.Image == \textcolor{keyword}{null})}
+\DoxyCodeLine{00204                     Init(l.Width, l.Height, l.PixelFormat, l.Index);}
+\DoxyCodeLine{00205                 Microscope.SetPosition(\textcolor{keyword}{new} Point3D(l.Location.X, l.Location.Y, l.Focus));}
+\DoxyCodeLine{00206                 Microscope.Objectives.SetPosition(l.Objective);}
+\DoxyCodeLine{00207                 RectangleD r = Microscope.GetObjectiveViewRectangle();}
+\DoxyCodeLine{00208                 \textcolor{keywordtype}{int} w = (int)Math.Ceiling(l.Width / r.W);}
+\DoxyCodeLine{00209                 \textcolor{keywordtype}{int} h = (int)Math.Ceiling(l.Height / r.H);}
+\DoxyCodeLine{00210                 count = w * h;}
+\DoxyCodeLine{00211                 \textcolor{keywordtype}{bool} leftright = \textcolor{keyword}{false};}
+\DoxyCodeLine{00212                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < h; y++)}
+\DoxyCodeLine{00213                 \{}
+\DoxyCodeLine{00214                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < w; x++)}
+\DoxyCodeLine{00215                     \{}
+\DoxyCodeLine{00216                         Point3D pd = Microscope.GetPosition();}
+\DoxyCodeLine{00217                         l.ImageTile(\textcolor{keyword}{new} PointD(pd.X, pd.Y),(w * h) -\/ ((y * w) + x));}
+\DoxyCodeLine{00218                         SlideImager.progress = (int)((\textcolor{keywordtype}{double})((y * w) + x) / (double)(w * h));}
+\DoxyCodeLine{00219                         \textcolor{keywordflow}{if} (leftright)}
+\DoxyCodeLine{00220                             Microscope.MoveFieldLeft();}
+\DoxyCodeLine{00221                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00222                             Microscope.MoveFieldRight();}
+\DoxyCodeLine{00223                     \}}
+\DoxyCodeLine{00224                     Point3D p = Microscope.GetPosition();}
+\DoxyCodeLine{00225                     l.ImageTile(\textcolor{keyword}{new} PointD(p.X, p.Y), (w * h) -\/ ((y * w) + w));}
+\DoxyCodeLine{00226                     leftright = !leftright;}
+\DoxyCodeLine{00227                     Microscope.MoveFieldDown();}
+\DoxyCodeLine{00228                 \}}
+\DoxyCodeLine{00229             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a9e1a98ea2e19e69a3f65e95a3822a6be}\label{class_bio_imager_1_1_slide_imager_1_1_level_a9e1a98ea2e19e69a3f65e95a3822a6be}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Init@{Init}}
 \index{Init@{Init}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -112,6 +165,25 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00200}{200}} of fi
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00069}{69}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070             \{}
+\DoxyCodeLine{00071                 RectangleD r = Microscope.GetObjectiveViewRectangle();}
+\DoxyCodeLine{00072                 \textcolor{keywordtype}{int} wi = (int)(w / r.W);}
+\DoxyCodeLine{00073                 \textcolor{keywordtype}{int} hi = (int)(h / r.H);}
+\DoxyCodeLine{00074                 \textcolor{keywordtype}{double} xx = 2 * index;}
+\DoxyCodeLine{00075                 \textcolor{keywordflow}{if}(index==0)}
+\DoxyCodeLine{00076                     Image = \textcolor{keyword}{new} AForge.Bitmap((\textcolor{keywordtype}{int})(w / PhysicalX), (\textcolor{keywordtype}{int})(h / PhysicalY), pf);}
+\DoxyCodeLine{00077                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00078                     Image = \textcolor{keyword}{new} AForge.Bitmap((\textcolor{keywordtype}{int})(w / PhysicalX / xx), (\textcolor{keywordtype}{int})(h / PhysicalY / xx), pf);}
+\DoxyCodeLine{00079                 \textcolor{keywordtype}{int} bands = BioImage.GetBands(pf);}
+\DoxyCodeLine{00080                 \textcolor{keywordflow}{if} (Image.BitsPerPixel > 8)}
+\DoxyCodeLine{00081                     VipsImage = NetVips.Image.NewFromMemory(Image.Data, (ulong)Image.Length, Image.Width, Image.Height, bands, Enums.BandFormat.Ushort);}
+\DoxyCodeLine{00082                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00083                     VipsImage = NetVips.Image.NewFromMemory(Image.Data, (ulong)Image.Length, Image.Width, Image.Height, bands, Enums.BandFormat.Uchar);}
+\DoxyCodeLine{00084             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_ad19d7d3853262d258f7a03fe3ca4001b}\label{class_bio_imager_1_1_slide_imager_1_1_level_ad19d7d3853262d258f7a03fe3ca4001b}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!SaveLevel@{SaveLevel}}
 \index{SaveLevel@{SaveLevel}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -122,6 +194,59 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00069}{69}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00099}{99}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100             \{}
+\DoxyCodeLine{00101                 \textcolor{keywordtype}{string} met = \textcolor{stringliteral}{"{}<?xml version=\(\backslash\)"{}1.0\(\backslash\)"{} encoding=\(\backslash\)"{}UTF-\/8\(\backslash\)"{} standalone=\(\backslash\)"{}no\(\backslash\)"{}?>"{}} +}
+\DoxyCodeLine{00102                 \textcolor{stringliteral}{"{}<OME xmlns=\(\backslash\)"{}http://www.openmicroscopy.org/Schemas/OME/2016-\/06\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00103                 \textcolor{stringliteral}{"{}xmlns:xsi=\(\backslash\)"{}http://www.w3.org/2001/XMLSchema-\/instance\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00104                 \textcolor{stringliteral}{"{}xsi:schemaLocation=\(\backslash\)"{}http://www.openmicroscopy.org/Schemas/OME/2016-\/06 http://www.openmicroscopy.org/Schemas/OME/2016-\/06/ome.xsd\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00105                 \textcolor{keywordtype}{int} c = Parent.Image.RGBChannelsCount;}
+\DoxyCodeLine{00106                 \textcolor{keywordtype}{string} endian = Parent.Image.LittleEndian.ToString().ToLower();}
+\DoxyCodeLine{00107                 \textcolor{keywordtype}{int} ib = 0;}
+\DoxyCodeLine{00108                 met +=}
+\DoxyCodeLine{00109                 \textcolor{stringliteral}{"{}<Image ID=\(\backslash\)"{}Image:"{}} + ib + \textcolor{stringliteral}{"{}\(\backslash\)"{}>"{}} +}
+\DoxyCodeLine{00110                 \textcolor{stringliteral}{"{}<Pixels BigEndian=\(\backslash\)"{}"{}} + endian + \textcolor{stringliteral}{"{}\(\backslash\)"{} DimensionOrder= \(\backslash\)"{}XYCZT\(\backslash\)"{} ID= \(\backslash\)"{}Pixels:0\(\backslash\)"{} Interleaved=\(\backslash\)"{}true\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00111                 \textcolor{stringliteral}{"{}PhysicalSizeX=\(\backslash\)"{}"{}} + PhysicalX + \textcolor{stringliteral}{"{}\(\backslash\)"{} PhysicalSizeXUnit=\(\backslash\)"{}µm\(\backslash\)"{} PhysicalSizeY=\(\backslash\)"{}"{}} + PhysicalY + \textcolor{stringliteral}{"{}\(\backslash\)"{} PhysicalSizeYUnit=\(\backslash\)"{}µm\(\backslash\)"{} SignificantBits=\(\backslash\)"{}"{}} + Parent.Image.BitsPerPixel + \textcolor{stringliteral}{"{}\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00112                 \textcolor{stringliteral}{"{}SizeC = \(\backslash\)"{}"{}} + c + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeT = \(\backslash\)"{}"{}} + 1 + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeX =\(\backslash\)"{}"{}} + Parent.Image.Width +}
+\DoxyCodeLine{00113                 \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeY= \(\backslash\)"{}"{}} + Parent.Image.Height + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeZ=\(\backslash\)"{}"{}} + 1;}
+\DoxyCodeLine{00114                 \textcolor{keywordflow}{if} (Parent.Image.BitsPerPixel > 8) met += \textcolor{stringliteral}{"{}\(\backslash\)"{} Type= \(\backslash\)"{}uint16\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00115                 \textcolor{keywordflow}{else} met += \textcolor{stringliteral}{"{}\(\backslash\)"{} Type= \(\backslash\)"{}uint8\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00116                 \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00117                 \textcolor{keywordflow}{foreach} (Channel ch \textcolor{keywordflow}{in} Channels)}
+\DoxyCodeLine{00118                 \{}
+\DoxyCodeLine{00119                     met += \textcolor{stringliteral}{"{}<Channel ID=\(\backslash\)"{}Channel:"{}} + ib + \textcolor{stringliteral}{"{}:"{}} + i + \textcolor{stringliteral}{"{}\(\backslash\)"{} SamplesPerPixel=\(\backslash\)"{}1\(\backslash\)"{}></Channel>"{}};}
+\DoxyCodeLine{00120                     i++;}
+\DoxyCodeLine{00121                 \}}
+\DoxyCodeLine{00122                 met += \textcolor{stringliteral}{"{}</Pixels></Image></OME>"{}};}
+\DoxyCodeLine{00123                 A:}
+\DoxyCodeLine{00124                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00125                 \{}
+\DoxyCodeLine{00126                     \textcolor{keyword}{using }var mutated = Parent.VipsImage.Mutate(\textcolor{keyword}{mutable} =>}
+\DoxyCodeLine{00127                     \{}
+\DoxyCodeLine{00128                         \textcolor{comment}{// Set the ImageDescription tag}}
+\DoxyCodeLine{00129                         \textcolor{keyword}{mutable}.Set(GValue.GStrType, \textcolor{stringliteral}{"{}image-\/description"{}}, met);}
+\DoxyCodeLine{00130                         \textcolor{keyword}{mutable}.Set(GValue.GIntType, \textcolor{stringliteral}{"{}page-\/height"{}}, Parent.Image.Height);}
+\DoxyCodeLine{00131                     \});}
+\DoxyCodeLine{00132                     \textcolor{keywordflow}{if} (Parent.Image.BitsPerPixel > 8)}
+\DoxyCodeLine{00133                         mutated.Tiffsave(file, Compression, 1, Enums.ForeignTiffPredictor.None, \textcolor{keyword}{true}, (\textcolor{keywordtype}{int})512, (\textcolor{keywordtype}{int})512, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 16,}
+\DoxyCodeLine{00134                         Enums.ForeignTiffResunit.Cm, 1000 * PhysicalX, 1000 * PhysicalY, \textcolor{keyword}{true}, \textcolor{keyword}{null}, Enums.RegionShrink.Nearest,}
+\DoxyCodeLine{00135                         CompressionLevel, \textcolor{keyword}{true}, Enums.ForeignDzDepth.Onetile, \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{keyword}{null}, \textcolor{keyword}{null}, (\textcolor{keywordtype}{int})Parent.Image.Height);}
+\DoxyCodeLine{00136                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00137                         mutated.Tiffsave(file, Compression, 1, Enums.ForeignTiffPredictor.None, \textcolor{keyword}{true}, (\textcolor{keywordtype}{int})512, (\textcolor{keywordtype}{int})512, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 8,}
+\DoxyCodeLine{00138                         Enums.ForeignTiffResunit.Cm, 1000 * PhysicalX, 1000 * PhysicalY, \textcolor{keyword}{true}, \textcolor{keyword}{null}, Enums.RegionShrink.Nearest,}
+\DoxyCodeLine{00139                         CompressionLevel, \textcolor{keyword}{true}, Enums.ForeignDzDepth.Onetile, \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{keyword}{null}, \textcolor{keyword}{null}, (\textcolor{keywordtype}{int})Parent.Image.Height);}
+\DoxyCodeLine{00140                 \}}
+\DoxyCodeLine{00141                 \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{00142                 \{}
+\DoxyCodeLine{00143                     Console.WriteLine(e.ToString());}
+\DoxyCodeLine{00144                     \textcolor{keywordflow}{goto} A;}
+\DoxyCodeLine{00145                 \}}
+\DoxyCodeLine{00146                 }
+\DoxyCodeLine{00147 }
+\DoxyCodeLine{00148             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_ab586555a8ed9f180c30e93a8fe9ecb16}\label{class_bio_imager_1_1_slide_imager_1_1_level_ab586555a8ed9f180c30e93a8fe9ecb16}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!SaveLevels@{SaveLevels}}
 \index{SaveLevels@{SaveLevels}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -132,6 +257,60 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00099}{99}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00149}{149}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150             \{}
+\DoxyCodeLine{00151                 \textcolor{keywordtype}{string} met = \textcolor{stringliteral}{"{}<?xml version=\(\backslash\)"{}1.0\(\backslash\)"{} encoding=\(\backslash\)"{}UTF-\/8\(\backslash\)"{} standalone=\(\backslash\)"{}no\(\backslash\)"{}?>"{}} +}
+\DoxyCodeLine{00152                 \textcolor{stringliteral}{"{}<OME xmlns=\(\backslash\)"{}http://www.openmicroscopy.org/Schemas/OME/2016-\/06\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00153                 \textcolor{stringliteral}{"{}xmlns:xsi=\(\backslash\)"{}http://www.w3.org/2001/XMLSchema-\/instance\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00154                 \textcolor{stringliteral}{"{}xsi:schemaLocation=\(\backslash\)"{}http://www.openmicroscopy.org/Schemas/OME/2016-\/06 http://www.openmicroscopy.org/Schemas/OME/2016-\/06/ome.xsd\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00155                 \textcolor{keywordtype}{int} c = Image.RGBChannelsCount;}
+\DoxyCodeLine{00156                 \textcolor{keywordtype}{string} endian = Image.LittleEndian.ToString().ToLower();}
+\DoxyCodeLine{00157                 \textcolor{keywordtype}{int} ib = 0;}
+\DoxyCodeLine{00158                 \textcolor{keywordflow}{foreach} (Level l \textcolor{keywordflow}{in} Levels)}
+\DoxyCodeLine{00159                 \{}
+\DoxyCodeLine{00160                     met +=}
+\DoxyCodeLine{00161                     \textcolor{stringliteral}{"{}<Image ID=\(\backslash\)"{}Image:"{}} + ib + \textcolor{stringliteral}{"{}\(\backslash\)"{}>"{}} +}
+\DoxyCodeLine{00162                     \textcolor{stringliteral}{"{}<Pixels BigEndian=\(\backslash\)"{}"{}} + endian + \textcolor{stringliteral}{"{}\(\backslash\)"{} DimensionOrder= \(\backslash\)"{}XYCZT\(\backslash\)"{} ID= \(\backslash\)"{}Pixels:0\(\backslash\)"{} Interleaved=\(\backslash\)"{}true\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00163                     \textcolor{stringliteral}{"{}PhysicalSizeX=\(\backslash\)"{}"{}} + PhysicalX + \textcolor{stringliteral}{"{}\(\backslash\)"{} PhysicalSizeXUnit=\(\backslash\)"{}µm\(\backslash\)"{} PhysicalSizeY=\(\backslash\)"{}"{}} + PhysicalY + \textcolor{stringliteral}{"{}\(\backslash\)"{} PhysicalSizeYUnit=\(\backslash\)"{}µm\(\backslash\)"{} SignificantBits=\(\backslash\)"{}"{}} + Image.BitsPerPixel + \textcolor{stringliteral}{"{}\(\backslash\)"{} "{}} +}
+\DoxyCodeLine{00164                     \textcolor{stringliteral}{"{}SizeC = \(\backslash\)"{}"{}} + c + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeT = \(\backslash\)"{}"{}} + 1 + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeX =\(\backslash\)"{}"{}} + Image.Width +}
+\DoxyCodeLine{00165                     \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeY= \(\backslash\)"{}"{}} + Image.Height + \textcolor{stringliteral}{"{}\(\backslash\)"{} SizeZ=\(\backslash\)"{}"{}} + 1;}
+\DoxyCodeLine{00166                     \textcolor{keywordflow}{if} (Image.BitsPerPixel > 8) met += \textcolor{stringliteral}{"{}\(\backslash\)"{} Type= \(\backslash\)"{}uint16\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00167                     \textcolor{keywordflow}{else} met += \textcolor{stringliteral}{"{}\(\backslash\)"{} Type= \(\backslash\)"{}uint8\(\backslash\)"{}>"{}};}
+\DoxyCodeLine{00168                     \textcolor{keywordtype}{int} i = 0;}
+\DoxyCodeLine{00169                     \textcolor{keywordflow}{foreach} (Channel ch \textcolor{keywordflow}{in} l.Channels)}
+\DoxyCodeLine{00170                     \{}
+\DoxyCodeLine{00171                         met += \textcolor{stringliteral}{"{}<Channel ID=\(\backslash\)"{}Channel:"{}} + ib + \textcolor{stringliteral}{"{}:"{}} + i + \textcolor{stringliteral}{"{}\(\backslash\)"{} SamplesPerPixel=\(\backslash\)"{}1\(\backslash\)"{}></Channel>"{}};}
+\DoxyCodeLine{00172                         i++;}
+\DoxyCodeLine{00173                     \}}
+\DoxyCodeLine{00174                     met += \textcolor{stringliteral}{"{}</Pixels></Image>"{}};}
+\DoxyCodeLine{00175                     ib++;}
+\DoxyCodeLine{00176                 \}}
+\DoxyCodeLine{00177                 met += \textcolor{stringliteral}{"{}</OME>"{}};}
+\DoxyCodeLine{00178                 \textcolor{keywordtype}{int} li = 0;}
+\DoxyCodeLine{00179                 \textcolor{keywordflow}{foreach} (Level l \textcolor{keywordflow}{in} Levels)}
+\DoxyCodeLine{00180                 \{}
+\DoxyCodeLine{00181                     \textcolor{keywordtype}{string} fs = file.Replace(\textcolor{stringliteral}{"{}.ome.tif"{}}, \textcolor{stringliteral}{"{}"{}});}
+\DoxyCodeLine{00182                     NetVips.Image im = NetVips.Image.NewFromFile(fs + \textcolor{stringliteral}{"{}-\/"{}} + li + \textcolor{stringliteral}{"{}ome.tif"{}});}
+\DoxyCodeLine{00183                     \textcolor{keyword}{using }var mutated = im.Mutate(\textcolor{keyword}{mutable} =>}
+\DoxyCodeLine{00184                     \{}
+\DoxyCodeLine{00185                         \textcolor{comment}{// Set the ImageDescription tag}}
+\DoxyCodeLine{00186                         \textcolor{keyword}{mutable}.Set(GValue.GStrType, \textcolor{stringliteral}{"{}image-\/description"{}}, met);}
+\DoxyCodeLine{00187                         \textcolor{keyword}{mutable}.Set(GValue.GIntType, \textcolor{stringliteral}{"{}page-\/height"{}}, l.Height * l.PhysicalY);}
+\DoxyCodeLine{00188                     \});}
+\DoxyCodeLine{00189                     \textcolor{keywordflow}{if} (l.Image.BitsPerPixel > 8)}
+\DoxyCodeLine{00190                         mutated.Tiffsave(file, Compression, 1, Enums.ForeignTiffPredictor.None, \textcolor{keyword}{true}, (\textcolor{keywordtype}{int})l.WidthPx, (\textcolor{keywordtype}{int})l.HeightPx, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 16,}
+\DoxyCodeLine{00191                         Enums.ForeignTiffResunit.Cm, 1000 * l.PhysicalX, 1000 * l.PhysicalY, \textcolor{keyword}{true}, \textcolor{keyword}{null}, Enums.RegionShrink.Nearest,}
+\DoxyCodeLine{00192                         CompressionLevel, \textcolor{keyword}{true}, Enums.ForeignDzDepth.One, \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{keyword}{null}, \textcolor{keyword}{null}, (\textcolor{keywordtype}{int})l.HeightPx);}
+\DoxyCodeLine{00193                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00194                         mutated.Tiffsave(file, Compression, 1, Enums.ForeignTiffPredictor.None, \textcolor{keyword}{true}, (\textcolor{keywordtype}{int})l.WidthPx, (\textcolor{keywordtype}{int})l.HeightPx, \textcolor{keyword}{true}, \textcolor{keyword}{false}, 8,}
+\DoxyCodeLine{00195                         Enums.ForeignTiffResunit.Cm, 1000 * l.PhysicalX, 1000 * l.PhysicalY, \textcolor{keyword}{true}, \textcolor{keyword}{null}, Enums.RegionShrink.Nearest,}
+\DoxyCodeLine{00196                         CompressionLevel, \textcolor{keyword}{true}, Enums.ForeignDzDepth.One, \textcolor{keyword}{true}, \textcolor{keyword}{false}, \textcolor{keyword}{null}, \textcolor{keyword}{null}, (\textcolor{keywordtype}{int})l.HeightPx);}
+\DoxyCodeLine{00197                     li++;}
+\DoxyCodeLine{00198                 \}}
+\DoxyCodeLine{00199             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -168,6 +347,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00050}{50}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00053}{53}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00053 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{new} List<BioImage>();}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a842d361925a98e3faefb4a43c93ea18a}\label{class_bio_imager_1_1_slide_imager_1_1_level_a842d361925a98e3faefb4a43c93ea18a}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Compression@{Compression}}
 \index{Compression@{Compression}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -178,6 +362,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00053}{53}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00067}{67}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_abcb9822ecfac389653ac0fe90fb5f6e5}\label{class_bio_imager_1_1_slide_imager_1_1_level_abcb9822ecfac389653ac0fe90fb5f6e5}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!CompressionLevel@{CompressionLevel}}
 \index{CompressionLevel@{CompressionLevel}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -188,6 +377,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00067}{67}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00068}{68}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00068 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a6050f7b82d31012626e5f34c5bdc4eb5}\label{class_bio_imager_1_1_slide_imager_1_1_level_a6050f7b82d31012626e5f34c5bdc4eb5}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Focus@{Focus}}
 \index{Focus@{Focus}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -198,6 +392,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00068}{68}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00055}{55}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a7d5d235d6d288ad51538fb33047c2575}\label{class_bio_imager_1_1_slide_imager_1_1_level_a7d5d235d6d288ad51538fb33047c2575}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Height@{Height}}
 \index{Height@{Height}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -208,6 +407,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00055}{55}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00062}{62}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a05a9ec423bc3022186ba0dea02077a60}\label{class_bio_imager_1_1_slide_imager_1_1_level_a05a9ec423bc3022186ba0dea02077a60}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!HeightPx@{HeightPx}}
 \index{HeightPx@{HeightPx}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -218,6 +422,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00062}{62}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00065}{65}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065 \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} Height / PhysicalY; \} \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a676b97b378da6aa0e2feaa65dbb091c5}\label{class_bio_imager_1_1_slide_imager_1_1_level_a676b97b378da6aa0e2feaa65dbb091c5}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Image@{Image}}
 \index{Image@{Image}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -228,6 +437,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00065}{65}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00060}{60}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00060 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{null};}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_aadcdb2db645e8e50d8473bb559d978d8}\label{class_bio_imager_1_1_slide_imager_1_1_level_aadcdb2db645e8e50d8473bb559d978d8}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Index@{Index}}
 \index{Index@{Index}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -238,6 +452,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00060}{60}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00063}{63}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00063 \{  \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a46dd448117ebc8b3feb4bd2d6eb0820c}\label{class_bio_imager_1_1_slide_imager_1_1_level_a46dd448117ebc8b3feb4bd2d6eb0820c}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Location@{Location}}
 \index{Location@{Location}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -248,6 +467,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00063}{63}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00052}{52}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a3a13e410f29a73248ff631419d8eb362}\label{class_bio_imager_1_1_slide_imager_1_1_level_a3a13e410f29a73248ff631419d8eb362}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Objective@{Objective}}
 \index{Objective@{Objective}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -258,6 +482,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00052}{52}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00054}{54}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00054 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a397e48a82d66bf4fcca695dbdaf28d74}\label{class_bio_imager_1_1_slide_imager_1_1_level_a397e48a82d66bf4fcca695dbdaf28d74}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Parent@{Parent}}
 \index{Parent@{Parent}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -268,6 +497,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00054}{54}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00051}{51}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00051 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{null};}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a1bc8afda11dfd0dee2b4f95a7bd331a5}\label{class_bio_imager_1_1_slide_imager_1_1_level_a1bc8afda11dfd0dee2b4f95a7bd331a5}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!PhysicalX@{PhysicalX}}
 \index{PhysicalX@{PhysicalX}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -278,6 +512,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00051}{51}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00058}{58}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00058 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a3f1ea8a36973fb5fdc2e44d7f2fa3547}\label{class_bio_imager_1_1_slide_imager_1_1_level_a3f1ea8a36973fb5fdc2e44d7f2fa3547}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!PhysicalY@{PhysicalY}}
 \index{PhysicalY@{PhysicalY}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -288,6 +527,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00058}{58}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00059}{59}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00059 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a8cdbcdb491177c0ba5953ae661b4ba71}\label{class_bio_imager_1_1_slide_imager_1_1_level_a8cdbcdb491177c0ba5953ae661b4ba71}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!PixelFormat@{PixelFormat}}
 \index{PixelFormat@{PixelFormat}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -298,6 +542,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00059}{59}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00057}{57}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00057 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_ace3c5087dfe0834ed772f552e331d690}\label{class_bio_imager_1_1_slide_imager_1_1_level_ace3c5087dfe0834ed772f552e331d690}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!VipsImage@{VipsImage}}
 \index{VipsImage@{VipsImage}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -308,6 +557,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00057}{57}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00056}{56}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00056 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a6d7dedf65ba50743a2b1fe5e3cb9adb2}\label{class_bio_imager_1_1_slide_imager_1_1_level_a6d7dedf65ba50743a2b1fe5e3cb9adb2}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!Width@{Width}}
 \index{Width@{Width}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -318,6 +572,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00056}{56}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00061}{61}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00061 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_imager_1_1_level_a793d05389e0c63a4f7455e59fe3fda47}\label{class_bio_imager_1_1_slide_imager_1_1_level_a793d05389e0c63a4f7455e59fe3fda47}} 
 \index{BioImager.SlideImager.Level@{BioImager.SlideImager.Level}!WidthPx@{WidthPx}}
 \index{WidthPx@{WidthPx}!BioImager.SlideImager.Level@{BioImager.SlideImager.Level}}
@@ -328,6 +587,11 @@ Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00061}{61}} of fil
 
 Definition at line \mbox{\hyperlink{_slide_imager_8cs_source_l00064}{64}} of file \mbox{\hyperlink{_slide_imager_8cs_source}{Slide\+Imager.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064 \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} Width / PhysicalX; \} \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

@@ -53,6 +53,18 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00048}{48}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00062}{62}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00062     \textcolor{keyword}{def }setUp(self):}
+\DoxyCodeLine{00063         self.serial = TestSerialMock.Serial()}
+\DoxyCodeLine{00064         patcher = unittest.mock.patch.object(}
+\DoxyCodeLine{00065             TestSerialMock.Serial, \textcolor{stringliteral}{"{}handle"{}}, wraps=self.serial.handle}
+\DoxyCodeLine{00066         )}
+\DoxyCodeLine{00067         self.addCleanup(patcher.stop)}
+\DoxyCodeLine{00068         self.mock = patcher.start()}
+\DoxyCodeLine{00069 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a38662fecd9967893c91dfe745d2ecbd4}\label{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a38662fecd9967893c91dfe745d2ecbd4}} 
 \index{microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}!test\_multiple\_commands@{test\_multiple\_commands}}
 \index{test\_multiple\_commands@{test\_multiple\_commands}!microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}}
@@ -63,6 +75,15 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00062}{62}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00080}{80}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080     \textcolor{keyword}{def }test\_multiple\_commands(self):}
+\DoxyCodeLine{00081         self.serial.write(b\textcolor{stringliteral}{"{}foo\(\backslash\)r\(\backslash\)nbar\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00082         calls = [unittest.mock.call(x) \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} [b\textcolor{stringliteral}{"{}foo"{}}, b\textcolor{stringliteral}{"{}bar"{}}]]}
+\DoxyCodeLine{00083         self.assertEqual(self.serial.handle.mock\_calls, calls)}
+\DoxyCodeLine{00084 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a2e8db0cddbb71d703e90cd7901953536}\label{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a2e8db0cddbb71d703e90cd7901953536}} 
 \index{microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}!test\_partial\_commands@{test\_partial\_commands}}
 \index{test\_partial\_commands@{test\_partial\_commands}!microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}}
@@ -73,6 +94,16 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00080}{80}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00074}{74}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074     \textcolor{keyword}{def }test\_partial\_commands(self):}
+\DoxyCodeLine{00075         self.serial.write(b\textcolor{stringliteral}{"{}fo"{}})}
+\DoxyCodeLine{00076         self.serial.write(b\textcolor{stringliteral}{"{}o"{}})}
+\DoxyCodeLine{00077         self.serial.write(b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00078         self.serial.handle.assert\_called\_once\_with(b\textcolor{stringliteral}{"{}foo"{}})}
+\DoxyCodeLine{00079 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a3df65cb4bad9fc2d242f8a24ec82296a}\label{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a3df65cb4bad9fc2d242f8a24ec82296a}} 
 \index{microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}!test\_simple\_commands@{test\_simple\_commands}}
 \index{test\_simple\_commands@{test\_simple\_commands}!microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}}
@@ -83,6 +114,14 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00074}{74}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00070}{70}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00070     \textcolor{keyword}{def }test\_simple\_commands(self):}
+\DoxyCodeLine{00071         self.serial.write(b\textcolor{stringliteral}{"{}foo\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00072         self.mock.assert\_called\_once\_with(b\textcolor{stringliteral}{"{}foo"{}})}
+\DoxyCodeLine{00073 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a241c7d2ae18df532a7b8c4a851955c10}\label{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a241c7d2ae18df532a7b8c4a851955c10}} 
 \index{microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}!test\_unix\_eol@{test\_unix\_eol}}
 \index{test\_unix\_eol@{test\_unix\_eol}!microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}}
@@ -93,6 +132,16 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00070}{70}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00085}{85}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085     \textcolor{keyword}{def }test\_unix\_eol(self):}
+\DoxyCodeLine{00086         self.serial.eol = b\textcolor{stringliteral}{"{}\(\backslash\)n"{}}}
+\DoxyCodeLine{00087         self.serial.write(b\textcolor{stringliteral}{"{}foo\(\backslash\)nbar\(\backslash\)n"{}})}
+\DoxyCodeLine{00088         calls = [unittest.mock.call(x) \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} [b\textcolor{stringliteral}{"{}foo"{}}, b\textcolor{stringliteral}{"{}bar"{}}]]}
+\DoxyCodeLine{00089         self.assertEqual(self.serial.handle.mock\_calls, calls)}
+\DoxyCodeLine{00090 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a54b671d815e94d51e86fe4a14431c290}\label{classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_a54b671d815e94d51e86fe4a14431c290}} 
 \index{microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}!test\_write@{test\_write}}
 \index{test\_write@{test\_write}!microscope.testsuite.test\_devices.TestSerialMock@{microscope.testsuite.test\_devices.TestSerialMock}}
@@ -103,6 +152,15 @@ Definition at line \mbox{\hyperlink{test__devices_8py_source_l00085}{85}} of fil
 
 Definition at line \mbox{\hyperlink{test__devices_8py_source_l00091}{91}} of file \mbox{\hyperlink{test__devices_8py_source}{test\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00091     \textcolor{keyword}{def }test\_write(self):}
+\DoxyCodeLine{00092         self.serial.write(b\textcolor{stringliteral}{"{}echo qux\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00093         self.assertEqual(self.serial.readline(), b\textcolor{stringliteral}{"{}qux\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

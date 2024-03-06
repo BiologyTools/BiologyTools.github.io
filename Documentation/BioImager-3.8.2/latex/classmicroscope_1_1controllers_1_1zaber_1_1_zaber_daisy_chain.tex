@@ -92,6 +92,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00588}{588}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00593     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00594         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00595         self.\_conn = \_ZaberConnection(port, baudrate=115200, timeout=0.5)}
+\DoxyCodeLine{00596         self.\_devices: typing.Dict[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}] = \{\}}
+\DoxyCodeLine{00597 }
+\DoxyCodeLine{00598         \textcolor{keywordflow}{for} address, device\_type \textcolor{keywordflow}{in} address2type.items():}
+\DoxyCodeLine{00599             \textcolor{keywordflow}{if} address < 1 \textcolor{keywordflow}{or} address > 99:}
+\DoxyCodeLine{00600                 \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}address must be an integer between 1-\/99"{}})}
+\DoxyCodeLine{00601             dev\_cls = device\_type.value}
+\DoxyCodeLine{00602             self.\_devices[str(address)] = dev\_cls(self.\_conn, address)}
+\DoxyCodeLine{00603 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_ad3cebca4d1567eebcac75337113cdf90}\label{classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain_ad3cebca4d1567eebcac75337113cdf90}} 
@@ -108,6 +123,20 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a51485
 
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00605}{605}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00605     \textcolor{keyword}{def }devices(self) -\/> typing.Dict[str, microscope.abc.Device]:}
+\DoxyCodeLine{00606         \textcolor{keywordflow}{return} self.\_devices}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{device__server_8py_source_l00323}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+devices}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00316}{microscope.\+simulators.\+Simulated\+Controller.\+\_\+devices}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01342}{microscope.\+abc.\+Controller.\+devices()}}.
 
 
 

@@ -42,6 +42,32 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00137}{137}} of file \mbox{\
 Definition at line \mbox{\hyperlink{gui_8py_source_l00142}{142}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142     \textcolor{keyword}{def }\_\_init\_\_(self, camera: microscope.abc.Camera) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00143         super().\_\_init\_\_()}
+\DoxyCodeLine{00144         self.\_camera = camera}
+\DoxyCodeLine{00145         self.\_data\_queue = \_DataQueue()}
+\DoxyCodeLine{00146         \textcolor{keywordflow}{if} isinstance(self.\_camera, Pyro4.Proxy):}
+\DoxyCodeLine{00147             pyro\_daemon = Pyro4.Daemon()}
+\DoxyCodeLine{00148             queue\_uri = pyro\_daemon.register(self.\_data\_queue)}
+\DoxyCodeLine{00149             self.\_camera.set\_client(queue\_uri)}
+\DoxyCodeLine{00150             data\_thread = threading.Thread(}
+\DoxyCodeLine{00151                 target=pyro\_daemon.requestLoop, daemon=\textcolor{keyword}{True}}
+\DoxyCodeLine{00152             )}
+\DoxyCodeLine{00153             data\_thread.start()}
+\DoxyCodeLine{00154         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00155             self.\_device.set\_client(self.\_data\_queue)}
+\DoxyCodeLine{00156         fetch\_thread = threading.Thread(target=self.fetchLoop, daemon=\textcolor{keyword}{True})}
+\DoxyCodeLine{00157         fetch\_thread.start()}
+\DoxyCodeLine{00158 }
+\DoxyCodeLine{00159         \textcolor{comment}{\# Depending on the Qt backend this might not get called (seems}}
+\DoxyCodeLine{00160         \textcolor{comment}{\# to work on PySide2 but not with PyQt5).  The device itself}}
+\DoxyCodeLine{00161         \textcolor{comment}{\# should be removing clients that no longer work anyway.}}
+\DoxyCodeLine{00162         self.destroyed.connect(\textcolor{keyword}{lambda}: self.\_camera.set\_client(\textcolor{keywordtype}{None}))}
+\DoxyCodeLine{00163 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1___imager_a076673b9c57fbf23fdf6bc94dd8d5f19}\label{classmicroscope_1_1gui_1_1___imager_a076673b9c57fbf23fdf6bc94dd8d5f19}} 
@@ -54,6 +80,23 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00142}{142}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00167}{167}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00167     \textcolor{keyword}{def }fetchLoop(self) -\/> None:}
+\DoxyCodeLine{00168         \textcolor{keywordflow}{while} \textcolor{keyword}{True}:}
+\DoxyCodeLine{00169             \textcolor{comment}{\# We may be getting images faster than we can display so}}
+\DoxyCodeLine{00170             \textcolor{comment}{\# only get the last image in the queue and discard the}}
+\DoxyCodeLine{00171             \textcolor{comment}{\# rest (we could do with a class that only has one item}}
+\DoxyCodeLine{00172             \textcolor{comment}{\# and putting a new item will discard the previous instead}}
+\DoxyCodeLine{00173             \textcolor{comment}{\# of blocking/queue).}}
+\DoxyCodeLine{00174             data = self.\_data\_queue.get()}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} self.\_data\_queue.empty():}
+\DoxyCodeLine{00176                 data = self.\_data\_queue.get()}
+\DoxyCodeLine{00177             self.imageAcquired.emit(data)}
+\DoxyCodeLine{00178 }
+\DoxyCodeLine{00179 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1___imager_a50aa41da864a5a43c784a00df5392c55}\label{classmicroscope_1_1gui_1_1___imager_a50aa41da864a5a43c784a00df5392c55}} 
 \index{microscope.gui.\_Imager@{microscope.gui.\_Imager}!snap@{snap}}
 \index{snap@{snap}!microscope.gui.\_Imager@{microscope.gui.\_Imager}}
@@ -64,6 +107,13 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00167}{167}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00164}{164}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164     \textcolor{keyword}{def }snap(self) -\/> None:}
+\DoxyCodeLine{00165         self.\_camera.trigger()}
+\DoxyCodeLine{00166 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

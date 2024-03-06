@@ -47,6 +47,37 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00168}{168}} of file \
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00169}{169}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00169     \textcolor{keyword}{def }\_\_init\_\_(self, name, args=[], argnames=[], lib="{}ATCORE"{}):}
+\DoxyCodeLine{00170         self.f = getattr(\_stdcall\_libraries[lib], name)}
+\DoxyCodeLine{00171         self.f.restype = c\_int}
+\DoxyCodeLine{00172         self.f.argtypes = [stripMeta(a) \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args]}
+\DoxyCodeLine{00173 }
+\DoxyCodeLine{00174         self.fargs = args}
+\DoxyCodeLine{00175         self.fargnames = argnames}
+\DoxyCodeLine{00176         self.name = name}
+\DoxyCodeLine{00177 }
+\DoxyCodeLine{00178         self.inp = [\textcolor{keywordflow}{not} isinstance(a, OUTPUT) \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args]}
+\DoxyCodeLine{00179         self.in\_args = [a \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} isinstance(a, OUTPUT)]}
+\DoxyCodeLine{00180         self.out\_args = [a \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args \textcolor{keywordflow}{if} isinstance(a, OUTPUT)]}
+\DoxyCodeLine{00181 }
+\DoxyCodeLine{00182         self.buf\_size\_arg\_pos = -\/1}
+\DoxyCodeLine{00183         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(self.in\_args)):}
+\DoxyCodeLine{00184             \textcolor{keywordflow}{if} isinstance(self.in\_args[i], \_OUTSTRLEN):}
+\DoxyCodeLine{00185                 self.buf\_size\_arg\_pos = i}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187         ds = name + \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nArguments:\(\backslash\)n===========\(\backslash\)n"{}}}
+\DoxyCodeLine{00188         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(args)):}
+\DoxyCodeLine{00189             an = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00190             \textcolor{keywordflow}{if} i < len(argnames):}
+\DoxyCodeLine{00191                 an = argnames[i]}
+\DoxyCodeLine{00192             ds += \textcolor{stringliteral}{"{}\(\backslash\)t\%s\(\backslash\)t\%s\(\backslash\)n"{}} \% (args[i], an)}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194         self.f.\_\_doc\_\_ = ds}
+\DoxyCodeLine{00195 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a5dcd8efd617bd728699c26e91b42957a}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a5dcd8efd617bd728699c26e91b42957a}} 
@@ -60,6 +91,52 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00169}{169}} of file \
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00196}{196}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00196     \textcolor{keyword}{def }\_\_call\_\_(self, *args):}
+\DoxyCodeLine{00197         ars = []}
+\DoxyCodeLine{00198         i = 0}
+\DoxyCodeLine{00199         ret = []}
+\DoxyCodeLine{00200 }
+\DoxyCodeLine{00201         \textcolor{keywordflow}{if} len(args) < len(self.in\_args):}
+\DoxyCodeLine{00202             \textcolor{keywordflow}{raise} TypeError(\textcolor{stringliteral}{"{}Not enough arguments passed to \%s"{}} \% self.name)}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204         \textcolor{keywordflow}{if} self.buf\_size\_arg\_pos >= 0:}
+\DoxyCodeLine{00205             bs = args[self.buf\_size\_arg\_pos]}
+\DoxyCodeLine{00206         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00207             bs = 255}
+\DoxyCodeLine{00208 }
+\DoxyCodeLine{00209         \textcolor{keywordflow}{for} j \textcolor{keywordflow}{in} range(len(self.inp)):}
+\DoxyCodeLine{00210             \textcolor{keywordflow}{if} self.inp[j]:  \textcolor{comment}{\# an input}}
+\DoxyCodeLine{00211                 ars.append(args[i])}
+\DoxyCodeLine{00212                 i += 1}
+\DoxyCodeLine{00213             \textcolor{keywordflow}{else}:  \textcolor{comment}{\# an output}}
+\DoxyCodeLine{00214                 r, ar = self.fargs[j].getVar(bs)}
+\DoxyCodeLine{00215                 ars.append(ar)}
+\DoxyCodeLine{00216                 ret.append(r)}
+\DoxyCodeLine{00217                 \textcolor{comment}{\# print r, r.\_type\_}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219         \textcolor{comment}{\# print ars}}
+\DoxyCodeLine{00220         res = self.f(*ars)}
+\DoxyCodeLine{00221         \textcolor{comment}{\# print res}}
+\DoxyCodeLine{00222 }
+\DoxyCodeLine{00223         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} res == AT\_SUCCESS:}
+\DoxyCodeLine{00224             \textcolor{keywordflow}{if} res == AT\_ERR\_TIMEDOUT \textcolor{keywordflow}{or} res == AT\_ERR\_NODATA:}
+\DoxyCodeLine{00225                 \textcolor{comment}{\# handle timeouts as a special case, as we expect to get them}}
+\DoxyCodeLine{00226                 \textcolor{keywordflow}{raise} TimeoutError(self.name, res)}
+\DoxyCodeLine{00227             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00228                 \textcolor{keywordflow}{raise} CameraError(self.name, res)}
+\DoxyCodeLine{00229 }
+\DoxyCodeLine{00230         \textcolor{keywordflow}{if} len(ret) == 0:}
+\DoxyCodeLine{00231             \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00232         \textcolor{keywordflow}{if} len(ret) == 1:}
+\DoxyCodeLine{00233             \textcolor{keywordflow}{return} ret[0]}
+\DoxyCodeLine{00234         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00235             \textcolor{keywordflow}{return} ret}
+\DoxyCodeLine{00236 }
+\DoxyCodeLine{00237 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_ac084873bb8dd846495e76bd2b780a2af}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_ac084873bb8dd846495e76bd2b780a2af}} 
@@ -72,6 +149,10 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00196}{196}} of file \
 
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00182}{182}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l00663}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+\_\+\+\_\+call\+\_\+\+\_\+()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a9e1d78a55c9b5954bb4c6edc0e61d439}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a9e1d78a55c9b5954bb4c6edc0e61d439}} 
 \index{microscope.cameras.\_SDK3.dllFunction@{microscope.cameras.\_SDK3.dllFunction}!f@{f}}
 \index{f@{f}!microscope.cameras.\_SDK3.dllFunction@{microscope.cameras.\_SDK3.dllFunction}}
@@ -81,6 +162,10 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00182}{182}} of file \
 
 
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00170}{170}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l00663}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+\_\+\+\_\+call\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a61400d84908c113d00cb475390324c27}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a61400d84908c113d00cb475390324c27}} 
 \index{microscope.cameras.\_SDK3.dllFunction@{microscope.cameras.\_SDK3.dllFunction}!fargnames@{fargnames}}
@@ -101,6 +186,10 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00175}{175}} of file \
 
 
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00174}{174}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l00663}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+\_\+\+\_\+call\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a795525f0a21bf3447ca62687edafea59}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a795525f0a21bf3447ca62687edafea59}} 
 \index{microscope.cameras.\_SDK3.dllFunction@{microscope.cameras.\_SDK3.dllFunction}!in\_args@{in\_args}}
@@ -131,6 +220,10 @@ Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00178}{178}} of file \
 
 
 Definition at line \mbox{\hyperlink{___s_d_k3_8py_source_l00176}{176}} of file \mbox{\hyperlink{___s_d_k3_8py_source}{\+\_\+\+SDK3.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a647bcc99005f66bcebecb4db37dd9558}\label{classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function_a647bcc99005f66bcebecb4db37dd9558}} 
 \index{microscope.cameras.\_SDK3.dllFunction@{microscope.cameras.\_SDK3.dllFunction}!out\_args@{out\_args}}

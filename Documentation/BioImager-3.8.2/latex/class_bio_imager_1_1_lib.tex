@@ -54,6 +54,40 @@ Definition at line \mbox{\hyperlink{_library_8cs_source_l00061}{61}} of file \mb
 Definition at line \mbox{\hyperlink{_library_8cs_source_l00151}{151}} of file \mbox{\hyperlink{_library_8cs_source}{Library.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152         \{}
+\DoxyCodeLine{00153             dll = Assembly.LoadFile(file);}
+\DoxyCodeLine{00154             \textcolor{comment}{//Assembly.ReflectionOnlyLoad}}
+\DoxyCodeLine{00155             Type[] tps = dll.GetExportedTypes();}
+\DoxyCodeLine{00156             \textcolor{keywordflow}{foreach} (Type type \textcolor{keywordflow}{in} tps)}
+\DoxyCodeLine{00157             \{}
+\DoxyCodeLine{00158                 TypeInfo t = \textcolor{keyword}{new} TypeInfo();}
+\DoxyCodeLine{00159                 t.type = type;}
+\DoxyCodeLine{00160                 \textcolor{keywordtype}{string} s = type.ToString();}
+\DoxyCodeLine{00161                 s = s.Remove(0, s.LastIndexOf(\textcolor{charliteral}{'.'}) + 1);}
+\DoxyCodeLine{00162                 \textcolor{keywordflow}{if} (type.IsEnum)}
+\DoxyCodeLine{00163                 \{}
+\DoxyCodeLine{00164                     GetEnums(t);}
+\DoxyCodeLine{00165                 \}}
+\DoxyCodeLine{00166                 GetInterfaces(t);}
+\DoxyCodeLine{00167                 GetConstructors(t);}
+\DoxyCodeLine{00168                 GetProperties(t);}
+\DoxyCodeLine{00169                 GetFields(t);}
+\DoxyCodeLine{00170                 GetMethods(t);}
+\DoxyCodeLine{00171                 GetMembers(t);}
+\DoxyCodeLine{00172                 Types.Add(s,t);}
+\DoxyCodeLine{00173             \}}
+\DoxyCodeLine{00174             Module[] mds = dll.GetModules();}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{foreach} (Module m \textcolor{keywordflow}{in} mds)}
+\DoxyCodeLine{00176             \{}
+\DoxyCodeLine{00177                 \textcolor{keywordtype}{string} s = m.ToString();}
+\DoxyCodeLine{00178                 s = s.Remove(0, s.LastIndexOf(\textcolor{charliteral}{'.'}) + 1);}
+\DoxyCodeLine{00179                 Modules.Add(s, m);}
+\DoxyCodeLine{00180             \}}
+\DoxyCodeLine{00181         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_lib_acc0dd2ecd2f289b24cee0b9cfd5fffb4}\label{class_bio_imager_1_1_lib_acc0dd2ecd2f289b24cee0b9cfd5fffb4}} 
@@ -80,6 +114,15 @@ The value of the property.
 
 Definition at line \mbox{\hyperlink{_library_8cs_source_l00218}{218}} of file \mbox{\hyperlink{_library_8cs_source}{Library.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00219         \{}
+\DoxyCodeLine{00220             Type myType = Types[type].type;}
+\DoxyCodeLine{00221             PropertyInfo p = myType.GetProperty(name);}
+\DoxyCodeLine{00222             \textcolor{keywordflow}{return} p.GetValue(obj);}
+\DoxyCodeLine{00223         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_lib_aede4def54dac19a6a0e3e26be2b8d3f5}\label{class_bio_imager_1_1_lib_aede4def54dac19a6a0e3e26be2b8d3f5}} 
 \index{BioImager.Lib@{BioImager.Lib}!Invoke@{Invoke}}
 \index{Invoke@{Invoke}!BioImager.Lib@{BioImager.Lib}}
@@ -106,6 +149,14 @@ The return value of the method.
 
 Definition at line \mbox{\hyperlink{_library_8cs_source_l00206}{206}} of file \mbox{\hyperlink{_library_8cs_source}{Library.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00207         \{}
+\DoxyCodeLine{00208             Type t = Types[st].type;}
+\DoxyCodeLine{00209             \textcolor{keywordflow}{return} t.InvokeMember(name, BindingFlags.InvokeMethod, \textcolor{keyword}{null}, o, args);}
+\DoxyCodeLine{00210         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_lib_acb41b9bf4a0170036af735ebbb9d142c}\label{class_bio_imager_1_1_lib_acb41b9bf4a0170036af735ebbb9d142c}} 
 \index{BioImager.Lib@{BioImager.Lib}!Invoke@{Invoke}}
 \index{Invoke@{Invoke}!BioImager.Lib@{BioImager.Lib}}
@@ -132,6 +183,13 @@ The return value of the method.
 
 Definition at line \mbox{\hyperlink{_library_8cs_source_l00192}{192}} of file \mbox{\hyperlink{_library_8cs_source}{Library.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00193         \{}
+\DoxyCodeLine{00194             \textcolor{keywordflow}{return} type.InvokeMember(name, BindingFlags.InvokeMethod, \textcolor{keyword}{null}, o, args);}
+\DoxyCodeLine{00195         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

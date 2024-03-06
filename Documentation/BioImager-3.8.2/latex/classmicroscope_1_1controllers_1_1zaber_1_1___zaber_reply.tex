@@ -37,6 +37,19 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00061}{61}} of file \mbox{
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00064}{64}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00064     \textcolor{keyword}{def }\_\_init\_\_(self, data: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00065         self.\_data = data}
+\DoxyCodeLine{00066         \textcolor{keywordflow}{if} (}
+\DoxyCodeLine{00067             data[0] != \_AT\_CODE}
+\DoxyCodeLine{00068             \textcolor{keywordflow}{or} data[-\/2:] != b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}}
+\DoxyCodeLine{00069             \textcolor{keywordflow}{or} any([data[i] != \_SPACE\_CODE \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} (3, 5, 8, 13, 16)])}
+\DoxyCodeLine{00070         ):}
+\DoxyCodeLine{00071             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}Not a valid reply from a Zaber device"{}})}
+\DoxyCodeLine{00072 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_ae7f3c620452df2bf72d80a29cf28e783}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_ae7f3c620452df2bf72d80a29cf28e783}} 
@@ -49,6 +62,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00064}{64}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00074}{74}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00074     \textcolor{keyword}{def }address(self) -\/> bytes:}
+\DoxyCodeLine{00075         \textcolor{stringliteral}{"{}"{}"{}The start of reply with device address and space."{}"{}"{}}}
+\DoxyCodeLine{00076         \textcolor{keywordflow}{return} self.\_data[1:3]}
+\DoxyCodeLine{00077 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00065}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Reply.\+\_\+data}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a7329ddb3d69b48a3fcae56ac73998320}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a7329ddb3d69b48a3fcae56ac73998320}} 
 \index{microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}!flag@{flag}}
@@ -65,6 +90,22 @@ the response property will be one word with the reason why.
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00079}{79}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079     \textcolor{keyword}{def }flag(self) -\/> bytes:}
+\DoxyCodeLine{00080         \textcolor{stringliteral}{"{}"{}"{}The reply flag indicates if the message was accepted or rejected.}}
+\DoxyCodeLine{00081 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00082 \textcolor{stringliteral}{        Can be `b"{}OK"{}}` (accepted) \textcolor{keywordflow}{or} `b\textcolor{stringliteral}{"{}RJ"{}}` (rejected).  If rejected,}
+\DoxyCodeLine{00083         the response property will be one word \textcolor{keyword}{with} the reason why.}
+\DoxyCodeLine{00084         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00085 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\_data[6:8]}
+\DoxyCodeLine{00086 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00065}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Reply.\+\_\+data}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a09a239794fb288620cccf03e4ae2ef9a}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a09a239794fb288620cccf03e4ae2ef9a}} 
 \index{microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}!response@{response}}
 \index{response@{response}!microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}}
@@ -75,6 +116,15 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00079}{79}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00107}{107}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107     \textcolor{keyword}{def }response(self) -\/> bytes:}
+\DoxyCodeLine{00108         \textcolor{comment}{\# Assumes no checksum}}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{return} self.\_data[17:-\/2]}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a81992e5250ab015586a7b4ba35afd80e}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_a81992e5250ab015586a7b4ba35afd80e}} 
 \index{microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}!status@{status}}
 \index{status@{status}!microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}}
@@ -91,6 +141,23 @@ idle.
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00088}{88}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088     \textcolor{keyword}{def }status(self) -\/> bytes:}
+\DoxyCodeLine{00089         \textcolor{stringliteral}{"{}"{}"{}``b"{}BUSY"{}`` when the axis is moving and ``b"{}IDLE"{}`` otherwise.}}
+\DoxyCodeLine{00090 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00091 \textcolor{stringliteral}{        If the reply message applies to the whole device, the status}}
+\DoxyCodeLine{00092 \textcolor{stringliteral}{        }\textcolor{keywordflow}{is} `b\textcolor{stringliteral}{"{}BUSY"{}}` \textcolor{keywordflow}{if} any axis \textcolor{keywordflow}{is} busy \textcolor{keywordflow}{and} `b\textcolor{stringliteral}{"{}IDLE"{}}` \textcolor{keywordflow}{if} all axes are}
+\DoxyCodeLine{00093         idle.}
+\DoxyCodeLine{00094         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00095 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\_data[9:13]}
+\DoxyCodeLine{00096 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00065}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Reply.\+\_\+data}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_af935342a2de9a5827e4da856c7bb6e7c}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply_af935342a2de9a5827e4da856c7bb6e7c}} 
 \index{microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}!warning@{warning}}
 \index{warning@{warning}!microscope.controllers.zaber.\_ZaberReply@{microscope.controllers.zaber.\_ZaberReply}}
@@ -105,6 +172,22 @@ is a warning.
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00098}{98}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098     \textcolor{keyword}{def }warning(self) -\/> bytes:}
+\DoxyCodeLine{00099         \textcolor{stringliteral}{"{}"{}"{}The highest priority warning currently active.}}
+\DoxyCodeLine{00100 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00101 \textcolor{stringliteral}{        This will be `b'-\/-\/'}` under normal conditions.  Anything \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00102         \textcolor{keywordflow}{is} a warning.}
+\DoxyCodeLine{00103         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00104 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} self.\_data[14:16]}
+\DoxyCodeLine{00105 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00065}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Reply.\+\_\+data}}.
 
 
 

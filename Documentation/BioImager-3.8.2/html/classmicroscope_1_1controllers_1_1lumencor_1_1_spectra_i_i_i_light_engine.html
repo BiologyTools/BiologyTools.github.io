@@ -249,7 +249,34 @@ sources that are on or turn off additional sources.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lumencor_8py_source.html#l00172">172</a> of file <a class="el" href="lumencor_8py_source.html">lumencor.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  172</span>    <span class="keyword">def </span>__init__(self, port: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  173</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  174</span>        self._lights: typing.Mapping[str, <a class="code hl_class" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>] = {}</div>
+<div class="line"><span class="lineno">  175</span> </div>
+<div class="line"><span class="lineno">  176</span>        <span class="comment"># We use standard (not legacy) mode communication so 115200,8,N,1</span></div>
+<div class="line"><span class="lineno">  177</span>        serial_conn = serial.Serial(</div>
+<div class="line"><span class="lineno">  178</span>            port=port,</div>
+<div class="line"><span class="lineno">  179</span>            baudrate=115200,</div>
+<div class="line"><span class="lineno">  180</span>            timeout=1,</div>
+<div class="line"><span class="lineno">  181</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">  182</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><span class="lineno">  183</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">  184</span>            xonxoff=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  185</span>            rtscts=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  186</span>            dsrdtr=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  187</span>        )</div>
+<div class="line"><span class="lineno">  188</span>        shared_serial = <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a>(serial_conn)</div>
+<div class="line"><span class="lineno">  189</span>        connection = _SpectraIIIConnection(shared_serial)</div>
+<div class="line"><span class="lineno">  190</span> </div>
+<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">for</span> index, name <span class="keywordflow">in</span> connection.get_channel_map():</div>
+<div class="line"><span class="lineno">  192</span>            <span class="keyword">assert</span> (</div>
+<div class="line"><span class="lineno">  193</span>                name <span class="keywordflow">not</span> <span class="keywordflow">in</span> self._lights</div>
+<div class="line"><span class="lineno">  194</span>            ), <span class="stringliteral">&quot;light with name &#39;%s&#39; already mapped&quot;</span></div>
+<div class="line"><span class="lineno">  195</span>            self._lights[name] = _SpectraIIILightChannel(connection, index)</div>
+<div class="line"><span class="lineno">  196</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1__utils_1_1_shared_serial_html"><div class="ttname"><a href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a></div><div class="ttdef"><b>Definition:</b> <a href="__utils_8py_source.html#l00111">_utils.py:111</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1abc_1_1_device_html"><div class="ttname"><a href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a></div><div class="ttdef"><b>Definition:</b> <a href="abc_8py_source.html#l00285">abc.py:285</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -272,6 +299,12 @@ sources that are on or turn off additional sources.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_controller.html#a514852dc8a72c9cf2f0277660a32c555">microscope.abc.Controller</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lumencor_8py_source.html#l00198">198</a> of file <a class="el" href="lumencor_8py_source.html">lumencor.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  198</span>    <span class="keyword">def </span>devices(self) -&gt; typing.Mapping[str, microscope.abc.Device]:</div>
+<div class="line"><span class="lineno">  199</span>        <span class="keywordflow">return</span> self._lights</div>
+<div class="line"><span class="lineno">  200</span> </div>
+<div class="line"><span class="lineno">  201</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01342">microscope.abc.Controller.devices()</a>.</p>
 
 </div>
 </div>

@@ -165,6 +165,13 @@ Constructs an \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder}{Roi
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00369}{369}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00370             \{}
+\DoxyCodeLine{00371                 this.path = path;}
+\DoxyCodeLine{00372             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_aa2d3a6cbf326900d4bbf6d05d5d6b1f7}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_aa2d3a6cbf326900d4bbf6d05d5d6b1f7}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!RoiDecoder@{RoiDecoder}}
 \index{RoiDecoder@{RoiDecoder}!BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}}
@@ -175,6 +182,15 @@ Constructs an \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder}{Roi
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00375}{375}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00376             \{}
+\DoxyCodeLine{00377                 ins = \textcolor{keyword}{new} MemoryStream(bytes);}
+\DoxyCodeLine{00378                 this.name = name;}
+\DoxyCodeLine{00379                 this.size = bytes.Length;}
+\DoxyCodeLine{00380             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -188,6 +204,312 @@ Returns the \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}}.
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00392}{392}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00393             \{}
+\DoxyCodeLine{00394                 ROI roi = \textcolor{keyword}{new} ROI();}
+\DoxyCodeLine{00395                 data = File.ReadAllBytes(path);}
+\DoxyCodeLine{00396                 size = data.Length;}
+\DoxyCodeLine{00397                 \textcolor{keywordflow}{if} (getByte(0) != 73 || getByte(1) != 111)  \textcolor{comment}{//"{}Iout"{}}}
+\DoxyCodeLine{00398                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}This is not an ImageJ ROI"{}});}
+\DoxyCodeLine{00399                 \textcolor{keywordtype}{int} version = getShort(VERSION\_OFFSET);}
+\DoxyCodeLine{00400                 \textcolor{keywordtype}{int} type = getByte(TYPE);}
+\DoxyCodeLine{00401                 \textcolor{keywordtype}{int} subtype = getShort(SUBTYPE);}
+\DoxyCodeLine{00402                 \textcolor{keywordtype}{int} top = getShort(TOP);}
+\DoxyCodeLine{00403                 \textcolor{keywordtype}{int} left = getShort(LEFT);}
+\DoxyCodeLine{00404                 \textcolor{keywordtype}{int} bottom = getShort(BOTTOM);}
+\DoxyCodeLine{00405                 \textcolor{keywordtype}{int} right = getShort(RIGHT);}
+\DoxyCodeLine{00406                 \textcolor{keywordtype}{int} width = right -\/ left;}
+\DoxyCodeLine{00407                 \textcolor{keywordtype}{int} height = bottom -\/ top;}
+\DoxyCodeLine{00408                 \textcolor{keywordtype}{int} n = getUnsignedShort(N\_COORDINATES);}
+\DoxyCodeLine{00409                 \textcolor{keywordflow}{if} (n == 0)}
+\DoxyCodeLine{00410                     n = getInt(SIZE);}
+\DoxyCodeLine{00411                 \textcolor{keywordtype}{int} options = getShort(OPTIONS);}
+\DoxyCodeLine{00412                 \textcolor{keywordtype}{int} position = getInt(POSITION);}
+\DoxyCodeLine{00413                 \textcolor{keywordtype}{int} hdr2Offset = getInt(HEADER2\_OFFSET);}
+\DoxyCodeLine{00414                 \textcolor{keywordtype}{int} channel = 0, slice = 0, frame = 0;}
+\DoxyCodeLine{00415                 \textcolor{keywordtype}{int} overlayLabelColor = 0;}
+\DoxyCodeLine{00416                 \textcolor{keywordtype}{int} overlayFontSize = 0;}
+\DoxyCodeLine{00417                 \textcolor{keywordtype}{int} group = 0;}
+\DoxyCodeLine{00418                 \textcolor{keywordtype}{int} imageOpacity = 0;}
+\DoxyCodeLine{00419                 \textcolor{keywordtype}{int} imageSize = 0;}
+\DoxyCodeLine{00420                 \textcolor{keywordtype}{bool} subPixelResolution = (options \& SUB\_PIXEL\_RESOLUTION) != 0 \&\& version >= 222;}
+\DoxyCodeLine{00421                 \textcolor{keywordtype}{bool} drawOffset = subPixelResolution \&\& (options \& DRAW\_OFFSET) != 0;}
+\DoxyCodeLine{00422                 \textcolor{keywordtype}{bool} scaleStrokeWidth = \textcolor{keyword}{true};}
+\DoxyCodeLine{00423                 \textcolor{keywordflow}{if} (version >= 228)}
+\DoxyCodeLine{00424                     scaleStrokeWidth = (options \& SCALE\_STROKE\_WIDTH) != 0;}
+\DoxyCodeLine{00425 }
+\DoxyCodeLine{00426                 \textcolor{keywordtype}{bool} subPixelRect = version >= 223 \&\& subPixelResolution \&\& (type == rect || type == oval);}
+\DoxyCodeLine{00427                 \textcolor{keywordtype}{double} xd = 0.0, yd = 0.0, widthd = 0.0, heightd = 0.0;}
+\DoxyCodeLine{00428                 \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00429                 \{}
+\DoxyCodeLine{00430                     xd = getFloat(XD);}
+\DoxyCodeLine{00431                     yd = getFloat(YD);}
+\DoxyCodeLine{00432                     widthd = getFloat(WIDTHD);}
+\DoxyCodeLine{00433                     heightd = getFloat(HEIGHTD);}
+\DoxyCodeLine{00434                 \}}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436                 \textcolor{keywordflow}{if} (hdr2Offset > 0 \&\& hdr2Offset + IMAGE\_SIZE + 4 <= size)}
+\DoxyCodeLine{00437                 \{}
+\DoxyCodeLine{00438                     channel = getInt(hdr2Offset + C\_POSITION);}
+\DoxyCodeLine{00439                     slice = getInt(hdr2Offset + Z\_POSITION);}
+\DoxyCodeLine{00440                     frame = getInt(hdr2Offset + T\_POSITION);}
+\DoxyCodeLine{00441                     overlayLabelColor = getInt(hdr2Offset + OVERLAY\_LABEL\_COLOR);}
+\DoxyCodeLine{00442                     overlayFontSize = getShort(hdr2Offset + OVERLAY\_FONT\_SIZE);}
+\DoxyCodeLine{00443                     imageOpacity = getByte(hdr2Offset + IMAGE\_OPACITY);}
+\DoxyCodeLine{00444                     imageSize = getInt(hdr2Offset + IMAGE\_SIZE);}
+\DoxyCodeLine{00445                     group = getByte(hdr2Offset + GROUP);}
+\DoxyCodeLine{00446                 \}}
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00448                 \textcolor{keywordflow}{if} (name != \textcolor{keyword}{null} \&\& name.EndsWith(\textcolor{stringliteral}{"{}.roi"{}}))}
+\DoxyCodeLine{00449                     name = name.Substring(0, name.Length -\/ 4);}
+\DoxyCodeLine{00450                 \textcolor{keywordtype}{bool} isComposite = getInt(SHAPE\_ROI\_SIZE) > 0;}
+\DoxyCodeLine{00451 }
+\DoxyCodeLine{00452 }
+\DoxyCodeLine{00453                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00454 \textcolor{comment}{                if (isComposite)}}
+\DoxyCodeLine{00455 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00456 \textcolor{comment}{                    roi = getShapeRoi();}}
+\DoxyCodeLine{00457 \textcolor{comment}{                    if (version >= 218)}}
+\DoxyCodeLine{00458 \textcolor{comment}{                        getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}}
+\DoxyCodeLine{00459 \textcolor{comment}{                    roi.coord.Z = position;}}
+\DoxyCodeLine{00460 \textcolor{comment}{                    if (channel > 0 || slice > 0 || frame > 0)}}
+\DoxyCodeLine{00461 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{00462 \textcolor{comment}{                        roi.coord.C = channel; roi.coord.Z = slice; roi.coord.T = frame;}}
+\DoxyCodeLine{00463 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{00464 \textcolor{comment}{                    decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{00465 \textcolor{comment}{                    if (version >= 224)}}
+\DoxyCodeLine{00466 \textcolor{comment}{                    \{}}
+\DoxyCodeLine{00467 \textcolor{comment}{                        string props = getRoiProps();}}
+\DoxyCodeLine{00468 \textcolor{comment}{                        if (props != null)}}
+\DoxyCodeLine{00469 \textcolor{comment}{                            roi.properties = props;}}
+\DoxyCodeLine{00470 \textcolor{comment}{                    \}}}
+\DoxyCodeLine{00471 \textcolor{comment}{                    if (version >= 228 \&\& group > 0)}}
+\DoxyCodeLine{00472 \textcolor{comment}{                        roi.serie = group;}}
+\DoxyCodeLine{00473 \textcolor{comment}{                    return roi;}}
+\DoxyCodeLine{00474 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00475 \textcolor{comment}{                */}}
+\DoxyCodeLine{00476                 \textcolor{keywordflow}{switch} (type)}
+\DoxyCodeLine{00477                 \{}
+\DoxyCodeLine{00478                     \textcolor{keywordflow}{case} 1: \textcolor{comment}{//Rect}}
+\DoxyCodeLine{00479                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00480                             roi = ROI.CreateRectangle(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{00481                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00482                             roi = ROI.CreateRectangle(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{00483                         \textcolor{keywordtype}{int} arcSize = getShort(ROUNDED\_RECT\_ARC\_SIZE);}
+\DoxyCodeLine{00484                         \textcolor{keywordflow}{if} (arcSize > 0)}
+\DoxyCodeLine{00485                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type rounded rectangle not supported."{}});}
+\DoxyCodeLine{00486                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00487                     \textcolor{keywordflow}{case} 2: \textcolor{comment}{//Ellipse}}
+\DoxyCodeLine{00488                         \textcolor{keywordflow}{if} (subPixelRect)}
+\DoxyCodeLine{00489                             roi = ROI.CreateEllipse(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), xd, yd, widthd, heightd);}
+\DoxyCodeLine{00490                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00491                             roi = ROI.CreateEllipse(\textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1), left, top, width, height);}
+\DoxyCodeLine{00492                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00493                     \textcolor{keywordflow}{case} 3: \textcolor{comment}{//Line}}
+\DoxyCodeLine{00494                         \textcolor{keywordtype}{float} x1 = getFloat(X1);}
+\DoxyCodeLine{00495                         \textcolor{keywordtype}{float} y1 = getFloat(Y1);}
+\DoxyCodeLine{00496                         \textcolor{keywordtype}{float} x2 = getFloat(X2);}
+\DoxyCodeLine{00497                         \textcolor{keywordtype}{float} y2 = getFloat(Y2);}
+\DoxyCodeLine{00498 }
+\DoxyCodeLine{00499                         \textcolor{keywordflow}{if} (subtype == ARROW)}
+\DoxyCodeLine{00500                         \{}
+\DoxyCodeLine{00501                             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}Type arrow not supported."{}});}
+\DoxyCodeLine{00502                             \textcolor{comment}{/*}}
+\DoxyCodeLine{00503 \textcolor{comment}{                            roi = new Arrow(x1, y1, x2, y2);}}
+\DoxyCodeLine{00504 \textcolor{comment}{                            ((Arrow)roi).setDoubleHeaded((options \& DOUBLE\_HEADED) != 0);}}
+\DoxyCodeLine{00505 \textcolor{comment}{                            ((Arrow)roi).setOutline((options \& OUTLINE) != 0);}}
+\DoxyCodeLine{00506 \textcolor{comment}{                            int style = getByte(ARROW\_STYLE);}}
+\DoxyCodeLine{00507 \textcolor{comment}{                            if (style >= Arrow.FILLED \&\& style <= Arrow.BAR)}}
+\DoxyCodeLine{00508 \textcolor{comment}{                                ((Arrow)roi).setStyle(style);}}
+\DoxyCodeLine{00509 \textcolor{comment}{                            int headSize = getByte(ARROW\_HEAD\_SIZE);}}
+\DoxyCodeLine{00510 \textcolor{comment}{                            if (headSize >= 0 \&\& style <= 30)}}
+\DoxyCodeLine{00511 \textcolor{comment}{                                ((Arrow)roi).setHeadSize(headSize);}}
+\DoxyCodeLine{00512 \textcolor{comment}{                            */}}
+\DoxyCodeLine{00513                         \}}
+\DoxyCodeLine{00514                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00515                         \{}
+\DoxyCodeLine{00516                             roi = ROI.CreateLine(\textcolor{keyword}{new} ZCT(slice, channel, frame), \textcolor{keyword}{new} PointD(x1, y1), \textcolor{keyword}{new} PointD(x2, y2));}
+\DoxyCodeLine{00517                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{00518                         \}}
+\DoxyCodeLine{00519 }
+\DoxyCodeLine{00520                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00521                     \textcolor{keywordflow}{case} 0:}
+\DoxyCodeLine{00522                     \textcolor{keywordflow}{case} 5:}
+\DoxyCodeLine{00523                     \textcolor{keywordflow}{case} 6:}
+\DoxyCodeLine{00524                     \textcolor{keywordflow}{case} 7:}
+\DoxyCodeLine{00525                     \textcolor{keywordflow}{case} 8:}
+\DoxyCodeLine{00526                     \textcolor{keywordflow}{case} 9:}
+\DoxyCodeLine{00527                     \textcolor{keywordflow}{case} 10:}
+\DoxyCodeLine{00528                         \textcolor{comment}{//IJ.log("{}type: "{}+type);}}
+\DoxyCodeLine{00529                         \textcolor{comment}{//IJ.log("{}n: "{}+n);}}
+\DoxyCodeLine{00530                         \textcolor{comment}{//ij.IJ.log("{}rect: "{}+left+"{},"{}+top+"{} "{}+width+"{} "{}+height);}}
+\DoxyCodeLine{00531                         \textcolor{keywordflow}{if} (n == 0 || n < 0) \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00532                         \textcolor{keywordtype}{int}[] x = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{00533                         \textcolor{keywordtype}{int}[] y = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[n];}
+\DoxyCodeLine{00534                         \textcolor{keywordtype}{float}[] xf = \textcolor{keyword}{null};}
+\DoxyCodeLine{00535                         \textcolor{keywordtype}{float}[] yf = \textcolor{keyword}{null};}
+\DoxyCodeLine{00536                         \textcolor{keywordtype}{int} base1 = COORDINATES;}
+\DoxyCodeLine{00537                         \textcolor{keywordtype}{int} base2 = base1 + 2 * n;}
+\DoxyCodeLine{00538                         \textcolor{keywordtype}{int} xtmp, ytmp;}
+\DoxyCodeLine{00539                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{00540                         \{}
+\DoxyCodeLine{00541                             xtmp = getShort(base1 + i * 2);}
+\DoxyCodeLine{00542                             \textcolor{keywordflow}{if} (xtmp < 0) xtmp = 0;}
+\DoxyCodeLine{00543                             ytmp = getShort(base2 + i * 2);}
+\DoxyCodeLine{00544                             \textcolor{keywordflow}{if} (ytmp < 0) ytmp = 0;}
+\DoxyCodeLine{00545                             x[i] = left + xtmp;}
+\DoxyCodeLine{00546                             y[i] = top + ytmp;}
+\DoxyCodeLine{00547                         \}}
+\DoxyCodeLine{00548                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00549                         \{}
+\DoxyCodeLine{00550                             xf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{00551                             yf = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[n];}
+\DoxyCodeLine{00552                             base1 = COORDINATES + 4 * n;}
+\DoxyCodeLine{00553                             base2 = base1 + 4 * n;}
+\DoxyCodeLine{00554                             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < n; i++)}
+\DoxyCodeLine{00555                             \{}
+\DoxyCodeLine{00556                                 xf[i] = getFloat(base1 + i * 4);}
+\DoxyCodeLine{00557                                 yf[i] = getFloat(base2 + i * 4);}
+\DoxyCodeLine{00558                             \}}
+\DoxyCodeLine{00559                         \}}
+\DoxyCodeLine{00560                         \textcolor{keywordflow}{if} (type == point)}
+\DoxyCodeLine{00561                         \{}
+\DoxyCodeLine{00562                             \textcolor{comment}{//TODO implement non subpizel ROI}}
+\DoxyCodeLine{00563                             \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00564                             \{}
+\DoxyCodeLine{00565                                 roi.AddPoints(xf, yf);}
+\DoxyCodeLine{00566                             \}}
+\DoxyCodeLine{00567                             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00568                                 roi.AddPoints(x, y);}
+\DoxyCodeLine{00569                             \textcolor{keywordflow}{if} (version >= 226)}
+\DoxyCodeLine{00570                             \{}
+\DoxyCodeLine{00571                                 \textcolor{comment}{//((PointRoi)roi).setPointType(getByte(POINT\_TYPE));}}
+\DoxyCodeLine{00572                                 roi.strokeWidth = getShort(STROKE\_WIDTH);}
+\DoxyCodeLine{00573                             \}}
+\DoxyCodeLine{00574                             \textcolor{comment}{//if ((options \& SHOW\_LABELS) != 0 \&\& !ij.Prefs.noPointLabels)}}
+\DoxyCodeLine{00575                             \textcolor{comment}{//    ((PointRoi)roi).setShowLabels(true);}}
+\DoxyCodeLine{00576                             \textcolor{comment}{//if ((options \& PROMPT\_BEFORE\_DELETING) != 0)}}
+\DoxyCodeLine{00577                             \textcolor{comment}{//    ((PointRoi)roi).promptBeforeDeleting(true);}}
+\DoxyCodeLine{00578                             roi.type = ROI.Type.Point;}
+\DoxyCodeLine{00579                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00580                         \}}
+\DoxyCodeLine{00581                         \textcolor{keywordflow}{if} (type == polygon)}
+\DoxyCodeLine{00582                             roi.type = ROI.Type.Polygon;}
+\DoxyCodeLine{00583                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freehand)}
+\DoxyCodeLine{00584                         \{}
+\DoxyCodeLine{00585                             roi.type = ROI.Type.Freeform;}
+\DoxyCodeLine{00586                             \textcolor{keywordflow}{if} (subtype == ELLIPSE || subtype == ROTATED\_RECT)}
+\DoxyCodeLine{00587                             \{}
+\DoxyCodeLine{00588                                 \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotSupportedException(\textcolor{stringliteral}{"{}ROI type not supported."{}});}
+\DoxyCodeLine{00589                                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00590 \textcolor{comment}{                                double ex1 = getFloat(X1);}}
+\DoxyCodeLine{00591 \textcolor{comment}{                                double ey1 = getFloat(Y1);}}
+\DoxyCodeLine{00592 \textcolor{comment}{                                double ex2 = getFloat(X2);}}
+\DoxyCodeLine{00593 \textcolor{comment}{                                double ey2 = getFloat(Y2);}}
+\DoxyCodeLine{00594 \textcolor{comment}{                                double param = getFloat(FLOAT\_PARAM);}}
+\DoxyCodeLine{00595 \textcolor{comment}{                                if (subtype == ROTATED\_RECT)}}
+\DoxyCodeLine{00596 \textcolor{comment}{                                    roi = new RotatedRectRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{00597 \textcolor{comment}{                                else}}
+\DoxyCodeLine{00598 \textcolor{comment}{                                    roi = new EllipseRoi(ex1, ey1, ex2, ey2, param);}}
+\DoxyCodeLine{00599 \textcolor{comment}{                                break;}}
+\DoxyCodeLine{00600 \textcolor{comment}{                                */}}
+\DoxyCodeLine{00601                             \}}
+\DoxyCodeLine{00602                         \}}
+\DoxyCodeLine{00603                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == traced)}
+\DoxyCodeLine{00604                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00605                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == polyline)}
+\DoxyCodeLine{00606                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00607                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == freeline)}
+\DoxyCodeLine{00608                             roi.type = ROI.Type.Polyline;}
+\DoxyCodeLine{00609                         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (type == angle)}
+\DoxyCodeLine{00610                             roi.type = ROI.Type.Point;}
+\DoxyCodeLine{00611                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00612                             roi.type = ROI.Type.Freeform;}
+\DoxyCodeLine{00613                         \textcolor{keywordflow}{if} (subPixelResolution)}
+\DoxyCodeLine{00614                         \{}
+\DoxyCodeLine{00615                             roi.AddPoints(xf, yf);}
+\DoxyCodeLine{00616                             \textcolor{comment}{//roi = new PolygonRoi(xf, yf, n, roiType);}}
+\DoxyCodeLine{00617                             \textcolor{comment}{//roi.setDrawOffset(drawOffset);}}
+\DoxyCodeLine{00618                         \}}
+\DoxyCodeLine{00619                         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00620                             roi.AddPoints(x, y);}
+\DoxyCodeLine{00621                         \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00622                     \textcolor{keywordflow}{default}:}
+\DoxyCodeLine{00623                         \textcolor{keywordflow}{throw} \textcolor{keyword}{new} IOException(\textcolor{stringliteral}{"{}Unrecognized ROI type: "{}} + type);}
+\DoxyCodeLine{00624                 \}}
+\DoxyCodeLine{00625                 \textcolor{keywordflow}{if} (roi == \textcolor{keyword}{null})}
+\DoxyCodeLine{00626                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00627                 roi.roiName = getRoiName();}
+\DoxyCodeLine{00628 }
+\DoxyCodeLine{00629                 \textcolor{comment}{// read stroke width, stroke color and fill color (1.43i or later)}}
+\DoxyCodeLine{00630                 \textcolor{keywordflow}{if} (version >= 218)}
+\DoxyCodeLine{00631                 \{}
+\DoxyCodeLine{00632                     getStrokeWidthAndColor(roi, hdr2Offset, scaleStrokeWidth);}
+\DoxyCodeLine{00633                     \textcolor{comment}{/*}}
+\DoxyCodeLine{00634 \textcolor{comment}{                    if (type == point)}}
+\DoxyCodeLine{00635 \textcolor{comment}{                        roi.setStrokeWidth(0);}}
+\DoxyCodeLine{00636 \textcolor{comment}{                    bool splineFit = (options \& SPLINE\_FIT) != 0;}}
+\DoxyCodeLine{00637 \textcolor{comment}{                    if (splineFit \&\& roi instanceof PolygonRoi)}}
+\DoxyCodeLine{00638 \textcolor{comment}{                            ((PolygonRoi)roi).fitSpline();}}
+\DoxyCodeLine{00639 \textcolor{comment}{                    */}}
+\DoxyCodeLine{00640                 \}}
+\DoxyCodeLine{00641 }
+\DoxyCodeLine{00642                 \textcolor{keywordflow}{if} (version >= 218 \&\& subtype == TEXT)}
+\DoxyCodeLine{00643                 \{}
+\DoxyCodeLine{00644                     getTextRoi(roi, version);}
+\DoxyCodeLine{00645                     roi.type = ROI.Type.Label;}
+\DoxyCodeLine{00646                 \}}
+\DoxyCodeLine{00647                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00648 \textcolor{comment}{                if (version >= 221 \&\& subtype == IMAGE)}}
+\DoxyCodeLine{00649 \textcolor{comment}{                    roi = getImageRoi(roi, imageOpacity, imageSize, options);}}
+\DoxyCodeLine{00650 \textcolor{comment}{                }}
+\DoxyCodeLine{00651 \textcolor{comment}{                if (version >= 224)}}
+\DoxyCodeLine{00652 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00653 \textcolor{comment}{                    string props = getRoiProps();}}
+\DoxyCodeLine{00654 \textcolor{comment}{                    if (props != null)}}
+\DoxyCodeLine{00655 \textcolor{comment}{                        roi.setProperties(props);}}
+\DoxyCodeLine{00656 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00657 \textcolor{comment}{}}
+\DoxyCodeLine{00658 \textcolor{comment}{                if (version >= 227)}}
+\DoxyCodeLine{00659 \textcolor{comment}{                \{}}
+\DoxyCodeLine{00660 \textcolor{comment}{                    int[] counters = getPointCounters(n);}}
+\DoxyCodeLine{00661 \textcolor{comment}{                    if (counters != null \&\& (roi instanceof PointRoi))}}
+\DoxyCodeLine{00662 \textcolor{comment}{                            ((PointRoi)roi).setCounters(counters);}}
+\DoxyCodeLine{00663 \textcolor{comment}{                \}}}
+\DoxyCodeLine{00664 \textcolor{comment}{                */}}
+\DoxyCodeLine{00665                 \textcolor{comment}{// set group (1.52t or later)}}
+\DoxyCodeLine{00666                 \textcolor{keywordflow}{if} (version >= 228 \&\& group > 0)}
+\DoxyCodeLine{00667                     roi.serie = group;}
+\DoxyCodeLine{00668 }
+\DoxyCodeLine{00669                 roi.coord.Z = position;}
+\DoxyCodeLine{00670                 \textcolor{keywordflow}{if} (channel > 0 || slice > 0 || frame > 0)}
+\DoxyCodeLine{00671                     roi.coord = \textcolor{keyword}{new} ZCT(slice -\/ 1, channel -\/ 1, frame -\/ 1); \textcolor{comment}{//-\/1 because our ROI coordinates are 0 based}}
+\DoxyCodeLine{00672                 \textcolor{comment}{//decodeOverlayOptions(roi, version, options, overlayLabelColor, overlayFontSize);}}
+\DoxyCodeLine{00673 }
+\DoxyCodeLine{00674                 \textcolor{comment}{//We convert pixel to subpixel}}
+\DoxyCodeLine{00675 }
+\DoxyCodeLine{00676                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < roi.PointsD.Count; i++)}
+\DoxyCodeLine{00677                 \{}
+\DoxyCodeLine{00678                     PointD pd = ImageView.SelectedImage.ToStageSpace(roi.PointsD[i]);}
+\DoxyCodeLine{00679                     roi.PointsD[i] = pd;}
+\DoxyCodeLine{00680                     roi.UpdateBoundingBox();}
+\DoxyCodeLine{00681                 \}}
+\DoxyCodeLine{00682 }
+\DoxyCodeLine{00683                 \textcolor{keywordflow}{if} (roi.type == ROI.Type.Polygon || roi.type == ROI.Type.Freeform)}
+\DoxyCodeLine{00684                     roi.closed = \textcolor{keyword}{true};}
+\DoxyCodeLine{00685                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{00686             \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_bio_8cs_source_l00833}{Bio\+Imager.\+ROI.\+Create\+Ellipse()}}, \mbox{\hyperlink{_bio_8cs_source_l00796}{Bio\+Imager.\+ROI.\+Create\+Line()}}, \mbox{\hyperlink{_bio_8cs_source_l00815}{Bio\+Imager.\+ROI.\+Create\+Rectangle()}}, and \mbox{\hyperlink{_bio_8cs_source_l03382}{Bio\+Imager.\+Bio\+Image.\+To\+Stage\+Space()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_image_j_8cs_source_l00383}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+open()}}, and \mbox{\hyperlink{_image_j_8cs_source_l00947}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+open\+From\+Byte\+Array()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad4b360e58c7918aae85e2f368e48a04d}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_ad4b360e58c7918aae85e2f368e48a04d}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!open@{open}}
 \index{open@{open}!BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}}
@@ -197,6 +519,20 @@ Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00392}{392}} of file \m
 Opens the \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}} at the specified path. Returns null if there is an error. 
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00383}{383}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00384             \{}
+\DoxyCodeLine{00385                 ROI roi = \textcolor{keyword}{null};}
+\DoxyCodeLine{00386                 \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}} rd = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}}(path);}
+\DoxyCodeLine{00387                 roi = rd.getRoi();}
+\DoxyCodeLine{00388                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{00389             \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00392}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+get\+Roi()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_1_1_roi_decoder_a668e4b1fd00368fdedc54c61c2b15971}\label{class_bio_imager_1_1_image_j_1_1_roi_decoder_a668e4b1fd00368fdedc54c61c2b15971}} 
 \index{BioImager.ImageJ.RoiDecoder@{BioImager.ImageJ.RoiDecoder}!openFromByteArray@{openFromByteArray}}
@@ -217,6 +553,29 @@ A \mbox{\hyperlink{class_bio_imager_1_1_r_o_i}{ROI}} object.
 
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00947}{947}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00948             \{}
+\DoxyCodeLine{00949                 ROI roi = \textcolor{keyword}{null};}
+\DoxyCodeLine{00950                 \textcolor{keywordflow}{if} (bytes == \textcolor{keyword}{null} || bytes.Length == 0)}
+\DoxyCodeLine{00951                     \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{00952                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00953                 \{}
+\DoxyCodeLine{00954                     \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}} decoder = \textcolor{keyword}{new} \mbox{\hyperlink{class_bio_imager_1_1_image_j_1_1_roi_decoder_a31ca49ea30d96c369b6beead2c7ea660}{RoiDecoder}}(bytes, \textcolor{keyword}{null});}
+\DoxyCodeLine{00955                     roi = decoder.getRoi();}
+\DoxyCodeLine{00956                 \}}
+\DoxyCodeLine{00957                 \textcolor{keywordflow}{catch} (IOException e)}
+\DoxyCodeLine{00958                 \{}
+\DoxyCodeLine{00959                     \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00960                 \}}
+\DoxyCodeLine{00961                 \textcolor{keywordflow}{return} roi;}
+\DoxyCodeLine{00962             \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00392}{Bio\+Imager.\+Image\+J.\+Roi\+Decoder.\+get\+Roi()}}.
 
 
 

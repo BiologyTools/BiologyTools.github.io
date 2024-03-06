@@ -188,7 +188,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00026">26</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   26</span>{ }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -231,7 +232,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00263">263</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  264</span>        {</div>
+<div class="line"><span class="lineno">  265</span>            BeginScene(<span class="keyword">new</span> Color4(red, green, blue, alpha));</div>
+<div class="line"><span class="lineno">  266</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad8e764f5f2408d7df8da8d11eaa47479" name="ad8e764f5f2408d7df8da8d11eaa47479"></a>
@@ -250,7 +254,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00275">275</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  276</span>        {</div>
+<div class="line"><span class="lineno">  277</span>            <span class="comment">// Present the back buffer to the screen since rendering is complete.</span></div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">if</span> (VerticalSyncEnabled)</div>
+<div class="line"><span class="lineno">  279</span>                SwapChain.Present(1, PresentFlags.None); <span class="comment">// Lock to screen refresh rate.</span></div>
+<div class="line"><span class="lineno">  280</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  281</span>                SwapChain.Present(0, PresentFlags.None); <span class="comment">// Present as fast as possible.</span></div>
+<div class="line"><span class="lineno">  282</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac44a80c22bd66870f1ba3b8fa1ac4cd4" name="ac44a80c22bd66870f1ba3b8fa1ac4cd4"></a>
@@ -280,7 +291,217 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00029">29</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   30</span>        {</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">   32</span>            {</div>
+<div class="line"><span class="lineno">   33</span>                <span class="comment">// Store the vsync setting.</span></div>
+<div class="line"><span class="lineno">   34</span>                VerticalSyncEnabled = DSystemConfiguration.VerticalSyncEnabled;</div>
+<div class="line"><span class="lineno">   35</span> </div>
+<div class="line"><span class="lineno">   36</span>                <span class="comment">// Create a DirectX graphics interface factory.</span></div>
+<div class="line"><span class="lineno">   37</span>                var factory = <span class="keyword">new</span> Factory1();</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span>                <span class="comment">// Use the factory to create an adapter for the primary graphics interface (video card).</span></div>
+<div class="line"><span class="lineno">   40</span>                var adapter = factory.GetAdapter1(0);</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>                <span class="comment">// Get the primary adapter output (monitor).</span></div>
+<div class="line"><span class="lineno">   43</span>                var monitor = adapter.GetOutput(0);</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>                <span class="comment">// Get modes that fit the DXGI_FORMAT_R8G8B8A8_UNORM display format for the adapter output (monitor).</span></div>
+<div class="line"><span class="lineno">   46</span>                var modes = monitor.GetDisplayModeList(Format.R8G8B8A8_UNorm, DisplayModeEnumerationFlags.Interlaced);</div>
+<div class="line"><span class="lineno">   47</span> </div>
+<div class="line"><span class="lineno">   48</span>                <span class="comment">// Now go through all the display modes and find the one that matches the screen width and height.</span></div>
+<div class="line"><span class="lineno">   49</span>                <span class="comment">// When a match is found store the the refresh rate for that monitor, if vertical sync is enabled. </span></div>
+<div class="line"><span class="lineno">   50</span>                <span class="comment">// Otherwise we use maximum refresh rate.</span></div>
+<div class="line"><span class="lineno">   51</span>                var rational = <span class="keyword">new</span> Rational(0, 1);</div>
+<div class="line"><span class="lineno">   52</span>                <span class="keywordflow">if</span> (VerticalSyncEnabled)</div>
+<div class="line"><span class="lineno">   53</span>                {</div>
+<div class="line"><span class="lineno">   54</span>                    <span class="keywordflow">foreach</span> (var mode <span class="keywordflow">in</span> modes)</div>
+<div class="line"><span class="lineno">   55</span>                    {</div>
+<div class="line"><span class="lineno">   56</span>                        <span class="keywordflow">if</span> (mode.Width == configuration.Width &amp;&amp; mode.Height == configuration.Height)</div>
+<div class="line"><span class="lineno">   57</span>                        {</div>
+<div class="line"><span class="lineno">   58</span>                            rational = <span class="keyword">new</span> Rational(mode.RefreshRate.Numerator, mode.RefreshRate.Denominator);</div>
+<div class="line"><span class="lineno">   59</span>                            <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">   60</span>                        }</div>
+<div class="line"><span class="lineno">   61</span>                    }</div>
+<div class="line"><span class="lineno">   62</span>                }</div>
+<div class="line"><span class="lineno">   63</span> </div>
+<div class="line"><span class="lineno">   64</span>                <span class="comment">// Get the adapter (video card) description.</span></div>
+<div class="line"><span class="lineno">   65</span>                var adapterDescription = adapter.Description;</div>
+<div class="line"><span class="lineno">   66</span> </div>
+<div class="line"><span class="lineno">   67</span>                <span class="comment">// Store the dedicated video card memory in megabytes.</span></div>
+<div class="line"><span class="lineno">   68</span>                <span class="comment">//VideoCardMemory = adapterDescription.DedicatedVideoMemory &gt;&gt; 10 &gt;&gt; 10;</span></div>
+<div class="line"><span class="lineno">   69</span> </div>
+<div class="line"><span class="lineno">   70</span>                <span class="comment">// Convert the name of the video card to a character array and store it.</span></div>
+<div class="line"><span class="lineno">   71</span>                VideoCardDescription = adapterDescription.Description.Trim(<span class="charliteral">&#39;\0&#39;</span>);</div>
+<div class="line"><span class="lineno">   72</span> </div>
+<div class="line"><span class="lineno">   73</span>                <span class="comment">// Release the adapter output.</span></div>
+<div class="line"><span class="lineno">   74</span>                monitor.Dispose();</div>
+<div class="line"><span class="lineno">   75</span>                <span class="comment">// Release the adapter.</span></div>
+<div class="line"><span class="lineno">   76</span>                adapter.Dispose();</div>
+<div class="line"><span class="lineno">   77</span>                <span class="comment">// Release the factory.</span></div>
+<div class="line"><span class="lineno">   78</span>                factory.Dispose();</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>                <span class="comment">// Initialize the swap chain description.</span></div>
+<div class="line"><span class="lineno">   81</span>                var swapChainDesc = <span class="keyword">new</span> SwapChainDescription()</div>
+<div class="line"><span class="lineno">   82</span>                {</div>
+<div class="line"><span class="lineno">   83</span>                    <span class="comment">// Set to a single back buffer.</span></div>
+<div class="line"><span class="lineno">   84</span>                    BufferCount = 1,</div>
+<div class="line"><span class="lineno">   85</span>                    <span class="comment">// Set the width and height of the back buffer.</span></div>
+<div class="line"><span class="lineno">   86</span>                    ModeDescription = <span class="keyword">new</span> ModeDescription(configuration.Width, configuration.Height, rational, Format.R8G8B8A8_UNorm),</div>
+<div class="line"><span class="lineno">   87</span>                    <span class="comment">// Set the usage of the back buffer.</span></div>
+<div class="line"><span class="lineno">   88</span>                    Usage = Usage.RenderTargetOutput,</div>
+<div class="line"><span class="lineno">   89</span>                    <span class="comment">// Set the handle for the window to render to.</span></div>
+<div class="line"><span class="lineno">   90</span>                    OutputHandle = windowHandle,</div>
+<div class="line"><span class="lineno">   91</span>                    <span class="comment">// Turn multisampling off.</span></div>
+<div class="line"><span class="lineno">   92</span>                    SampleDescription = <span class="keyword">new</span> SampleDescription(1, 0),</div>
+<div class="line"><span class="lineno">   93</span>                    <span class="comment">// Set to full screen or windowed mode.</span></div>
+<div class="line"><span class="lineno">   94</span>                    IsWindowed = !DSystemConfiguration.FullScreen,</div>
+<div class="line"><span class="lineno">   95</span>                    <span class="comment">// Don&#39;t set the advanced flags.</span></div>
+<div class="line"><span class="lineno">   96</span>                    Flags = SwapChainFlags.None,</div>
+<div class="line"><span class="lineno">   97</span>                    <span class="comment">// Discard the back buffer content after presenting.</span></div>
+<div class="line"><span class="lineno">   98</span>                    SwapEffect = SwapEffect.Discard</div>
+<div class="line"><span class="lineno">   99</span>                };</div>
+<div class="line"><span class="lineno">  100</span> </div>
+<div class="line"><span class="lineno">  101</span>                <span class="comment">// Create the swap chain, Direct3D device, and Direct3D device context.</span></div>
+<div class="line"><span class="lineno">  102</span>                SharpDX.Direct3D11.Device device;</div>
+<div class="line"><span class="lineno">  103</span>                SwapChain swapChain;</div>
+<div class="line"><span class="lineno">  104</span>                SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, swapChainDesc, out device, out swapChain);</div>
+<div class="line"><span class="lineno">  105</span> </div>
+<div class="line"><span class="lineno">  106</span>                Device = device;</div>
+<div class="line"><span class="lineno">  107</span>                SwapChain = swapChain;</div>
+<div class="line"><span class="lineno">  108</span>                DeviceContext = device.ImmediateContext;</div>
+<div class="line"><span class="lineno">  109</span> </div>
+<div class="line"><span class="lineno">  110</span>                <span class="comment">// Get the pointer to the back buffer.</span></div>
+<div class="line"><span class="lineno">  111</span>                var backBuffer = Texture2D.FromSwapChain&lt;Texture2D&gt;(SwapChain, 0);</div>
+<div class="line"><span class="lineno">  112</span> </div>
+<div class="line"><span class="lineno">  113</span>                <span class="comment">// Create the render target view with the back buffer pointer.</span></div>
+<div class="line"><span class="lineno">  114</span>                RenderTargetView = <span class="keyword">new</span> RenderTargetView(device, backBuffer);</div>
+<div class="line"><span class="lineno">  115</span> </div>
+<div class="line"><span class="lineno">  116</span>                <span class="comment">// Release pointer to the back buffer as we no longer need it.</span></div>
+<div class="line"><span class="lineno">  117</span>                backBuffer.Dispose();</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span>                <span class="comment">// Initialize and set up the description of the depth buffer.</span></div>
+<div class="line"><span class="lineno">  120</span>                Texture2DDescription depthBufferDesc = <span class="keyword">new</span> Texture2DDescription()</div>
+<div class="line"><span class="lineno">  121</span>                {</div>
+<div class="line"><span class="lineno">  122</span>                    Width = configuration.Width,</div>
+<div class="line"><span class="lineno">  123</span>                    Height = configuration.Height,</div>
+<div class="line"><span class="lineno">  124</span>                    MipLevels = 1,</div>
+<div class="line"><span class="lineno">  125</span>                    ArraySize = 1,</div>
+<div class="line"><span class="lineno">  126</span>                    Format = Format.D24_UNorm_S8_UInt,</div>
+<div class="line"><span class="lineno">  127</span>                    SampleDescription = <span class="keyword">new</span> SampleDescription(1, 0),</div>
+<div class="line"><span class="lineno">  128</span>                    Usage = ResourceUsage.Default,</div>
+<div class="line"><span class="lineno">  129</span>                    BindFlags = BindFlags.DepthStencil,</div>
+<div class="line"><span class="lineno">  130</span>                    CpuAccessFlags = CpuAccessFlags.None,</div>
+<div class="line"><span class="lineno">  131</span>                    OptionFlags = ResourceOptionFlags.None</div>
+<div class="line"><span class="lineno">  132</span>                };</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>                <span class="comment">// Create the texture for the depth buffer using the filled out description.</span></div>
+<div class="line"><span class="lineno">  135</span>                DepthStencilBuffer = <span class="keyword">new</span> Texture2D(device, depthBufferDesc);</div>
+<div class="line"><span class="lineno">  136</span> </div>
+<div class="line"><span class="lineno">  137</span>                <span class="comment">// Initialize and set up the description of the stencil state.</span></div>
+<div class="line"><span class="lineno">  138</span>                DepthStencilStateDescription depthStencilDesc = <span class="keyword">new</span> DepthStencilStateDescription()</div>
+<div class="line"><span class="lineno">  139</span>                {</div>
+<div class="line"><span class="lineno">  140</span>                    IsDepthEnabled = <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  141</span>                    DepthWriteMask = DepthWriteMask.All,</div>
+<div class="line"><span class="lineno">  142</span>                    DepthComparison = Comparison.Less,</div>
+<div class="line"><span class="lineno">  143</span>                    IsStencilEnabled = <span class="keyword">true</span>,</div>
+<div class="line"><span class="lineno">  144</span>                    StencilReadMask = 0xFF,</div>
+<div class="line"><span class="lineno">  145</span>                    StencilWriteMask = 0xFF,</div>
+<div class="line"><span class="lineno">  146</span>                    <span class="comment">// Stencil operation if pixel front-facing.</span></div>
+<div class="line"><span class="lineno">  147</span>                    FrontFace = <span class="keyword">new</span> DepthStencilOperationDescription()</div>
+<div class="line"><span class="lineno">  148</span>                    {</div>
+<div class="line"><span class="lineno">  149</span>                        FailOperation = StencilOperation.Keep,</div>
+<div class="line"><span class="lineno">  150</span>                        DepthFailOperation = StencilOperation.Increment,</div>
+<div class="line"><span class="lineno">  151</span>                        PassOperation = StencilOperation.Keep,</div>
+<div class="line"><span class="lineno">  152</span>                        Comparison = Comparison.Always</div>
+<div class="line"><span class="lineno">  153</span>                    },</div>
+<div class="line"><span class="lineno">  154</span>                    <span class="comment">// Stencil operation if pixel is back-facing.</span></div>
+<div class="line"><span class="lineno">  155</span>                    BackFace = <span class="keyword">new</span> DepthStencilOperationDescription()</div>
+<div class="line"><span class="lineno">  156</span>                    {</div>
+<div class="line"><span class="lineno">  157</span>                        FailOperation = StencilOperation.Keep,</div>
+<div class="line"><span class="lineno">  158</span>                        DepthFailOperation = StencilOperation.Decrement,</div>
+<div class="line"><span class="lineno">  159</span>                        PassOperation = StencilOperation.Keep,</div>
+<div class="line"><span class="lineno">  160</span>                        Comparison = Comparison.Always</div>
+<div class="line"><span class="lineno">  161</span>                    }</div>
+<div class="line"><span class="lineno">  162</span>                };</div>
+<div class="line"><span class="lineno">  163</span> </div>
+<div class="line"><span class="lineno">  164</span>                <span class="comment">// Create the depth stencil state.</span></div>
+<div class="line"><span class="lineno">  165</span>                DepthStencilState = <span class="keyword">new</span> DepthStencilState(Device, depthStencilDesc);</div>
+<div class="line"><span class="lineno">  166</span> </div>
+<div class="line"><span class="lineno">  167</span>                <span class="comment">// Set the depth stencil state.</span></div>
+<div class="line"><span class="lineno">  168</span>                DeviceContext.OutputMerger.SetDepthStencilState(DepthStencilState, 1);</div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>                <span class="comment">// Initialize and set up the depth stencil view.</span></div>
+<div class="line"><span class="lineno">  171</span>                DepthStencilViewDescription depthStencilViewDesc = <span class="keyword">new</span> DepthStencilViewDescription()</div>
+<div class="line"><span class="lineno">  172</span>                {</div>
+<div class="line"><span class="lineno">  173</span>                    Format = Format.D24_UNorm_S8_UInt,</div>
+<div class="line"><span class="lineno">  174</span>                    Dimension = DepthStencilViewDimension.Texture2D,</div>
+<div class="line"><span class="lineno">  175</span>                    Texture2D = <span class="keyword">new</span> DepthStencilViewDescription.Texture2DResource()</div>
+<div class="line"><span class="lineno">  176</span>                    {</div>
+<div class="line"><span class="lineno">  177</span>                        MipSlice = 0</div>
+<div class="line"><span class="lineno">  178</span>                    }</div>
+<div class="line"><span class="lineno">  179</span>                };</div>
+<div class="line"><span class="lineno">  180</span> </div>
+<div class="line"><span class="lineno">  181</span>                <span class="comment">// Create the depth stencil view.</span></div>
+<div class="line"><span class="lineno">  182</span>                DepthStencilView = <span class="keyword">new</span> DepthStencilView(Device, DepthStencilBuffer, depthStencilViewDesc);</div>
+<div class="line"><span class="lineno">  183</span> </div>
+<div class="line"><span class="lineno">  184</span>                <span class="comment">// Bind the render target view and depth stencil buffer to the output render pipeline.</span></div>
+<div class="line"><span class="lineno">  185</span>                DeviceContext.OutputMerger.SetTargets(DepthStencilView, RenderTargetView);</div>
+<div class="line"><span class="lineno">  186</span> </div>
+<div class="line"><span class="lineno">  187</span>                <span class="comment">// Setup the raster description which will determine how and what polygon will be drawn.</span></div>
+<div class="line"><span class="lineno">  188</span>                RasterizerStateDescription rasterDesc = <span class="keyword">new</span> RasterizerStateDescription()</div>
+<div class="line"><span class="lineno">  189</span>                {</div>
+<div class="line"><span class="lineno">  190</span>                    IsAntialiasedLineEnabled = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  191</span>                    CullMode = CullMode.Back,</div>
+<div class="line"><span class="lineno">  192</span>                    DepthBias = 0,</div>
+<div class="line"><span class="lineno">  193</span>                    DepthBiasClamp = .0f,</div>
+<div class="line"><span class="lineno">  194</span>                    IsDepthClipEnabled = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  195</span>                    FillMode = FillMode.Solid,</div>
+<div class="line"><span class="lineno">  196</span>                    IsFrontCounterClockwise = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  197</span>                    IsMultisampleEnabled = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  198</span>                    IsScissorEnabled = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  199</span>                    SlopeScaledDepthBias = .0f</div>
+<div class="line"><span class="lineno">  200</span>                };</div>
+<div class="line"><span class="lineno">  201</span> </div>
+<div class="line"><span class="lineno">  202</span>                <span class="comment">// Create the rasterizer state from the description we just filled out.</span></div>
+<div class="line"><span class="lineno">  203</span>                RasterState = <span class="keyword">new</span> RasterizerState(Device, rasterDesc);</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>                <span class="comment">// Now set the rasterizer state.</span></div>
+<div class="line"><span class="lineno">  206</span>                DeviceContext.Rasterizer.State = RasterState;</div>
+<div class="line"><span class="lineno">  207</span> </div>
+<div class="line"><span class="lineno">  208</span>                <span class="comment">// Setup and create the viewport for rendering.</span></div>
+<div class="line"><span class="lineno">  209</span>                DeviceContext.Rasterizer.SetViewport(0, 0, configuration.Width, configuration.Height, 0, 1);</div>
+<div class="line"><span class="lineno">  210</span> </div>
+<div class="line"><span class="lineno">  211</span>                <span class="comment">// Setup and create the projection matrix.</span></div>
+<div class="line"><span class="lineno">  212</span>                ProjectionMatrix = Matrix.PerspectiveFovLH((<span class="keywordtype">float</span>)(Math.PI / 4), ((<span class="keywordtype">float</span>)configuration.Width / (<span class="keywordtype">float</span>)configuration.Height), DSystemConfiguration.ScreenNear, DSystemConfiguration.ScreenDepth);</div>
+<div class="line"><span class="lineno">  213</span> </div>
+<div class="line"><span class="lineno">  214</span>                <span class="comment">// Initialize the world matrix to the identity matrix.</span></div>
+<div class="line"><span class="lineno">  215</span>                WorldMatrix = Matrix.Identity;</div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>                BlendStateDescription blendStateDescription = <span class="keyword">new</span> BlendStateDescription</div>
+<div class="line"><span class="lineno">  218</span>                {</div>
+<div class="line"><span class="lineno">  219</span>                    AlphaToCoverageEnable = <span class="keyword">false</span>,</div>
+<div class="line"><span class="lineno">  220</span>                };</div>
+<div class="line"><span class="lineno">  221</span> </div>
+<div class="line"><span class="lineno">  222</span>                blendStateDescription.RenderTarget[0].IsBlendEnabled = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  223</span>                blendStateDescription.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;</div>
+<div class="line"><span class="lineno">  224</span>                blendStateDescription.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;</div>
+<div class="line"><span class="lineno">  225</span>                blendStateDescription.RenderTarget[0].BlendOperation = BlendOperation.Add;</div>
+<div class="line"><span class="lineno">  226</span>                blendStateDescription.RenderTarget[0].SourceAlphaBlend = BlendOption.Zero;</div>
+<div class="line"><span class="lineno">  227</span>                blendStateDescription.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;</div>
+<div class="line"><span class="lineno">  228</span>                blendStateDescription.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;</div>
+<div class="line"><span class="lineno">  229</span>                blendStateDescription.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span>                DeviceContext.OutputMerger.BlendState = <span class="keyword">new</span> BlendState(device, blendStateDescription);</div>
+<div class="line"><span class="lineno">  232</span> </div>
+<div class="line"><span class="lineno">  233</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  234</span>            }</div>
+<div class="line"><span class="lineno">  235</span>            <span class="keywordflow">catch</span></div>
+<div class="line"><span class="lineno">  236</span>            {</div>
+<div class="line"><span class="lineno">  237</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  238</span>            }</div>
+<div class="line"><span class="lineno">  239</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a0266f404d171453d83bd17cdf3f8839e" name="a0266f404d171453d83bd17cdf3f8839e"></a>
@@ -299,7 +520,29 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00240">240</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  241</span>        {</div>
+<div class="line"><span class="lineno">  242</span>            <span class="comment">// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.</span></div>
+<div class="line"><span class="lineno">  243</span>            SwapChain?.SetFullscreenState(<span class="keyword">false</span>, <span class="keyword">null</span>);</div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span>            <span class="comment">// Dispose of all objects.</span></div>
+<div class="line"><span class="lineno">  246</span>            RasterState?.Dispose();</div>
+<div class="line"><span class="lineno">  247</span>            RasterState = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  248</span>            DepthStencilView?.Dispose();</div>
+<div class="line"><span class="lineno">  249</span>            DepthStencilView = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  250</span>            DepthStencilState?.Dispose();</div>
+<div class="line"><span class="lineno">  251</span>            DepthStencilState = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  252</span>            DepthStencilBuffer?.Dispose();</div>
+<div class="line"><span class="lineno">  253</span>            DepthStencilBuffer = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  254</span>            RenderTargetView?.Dispose();</div>
+<div class="line"><span class="lineno">  255</span>            RenderTargetView = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  256</span>            DeviceContext?.Dispose();</div>
+<div class="line"><span class="lineno">  257</span>            DeviceContext = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  258</span>            Device?.Dispose();</div>
+<div class="line"><span class="lineno">  259</span>            Device = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  260</span>            SwapChain?.Dispose();</div>
+<div class="line"><span class="lineno">  261</span>            SwapChain = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  262</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -324,7 +567,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00019">19</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   19</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a92cbe58b5b099098210ace88576470e6" name="a92cbe58b5b099098210ace88576470e6"></a>
@@ -348,7 +592,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00015">15</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   15</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1a5b4d37bf5f2c8bdabcfc1a102a31c2" name="a1a5b4d37bf5f2c8bdabcfc1a102a31c2"></a>
@@ -372,7 +617,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00016">16</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   16</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9b3aea7ea5c1ef2105127fc9891be895" name="a9b3aea7ea5c1ef2105127fc9891be895"></a>
@@ -396,7 +642,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00022">22</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   22</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad94bd93458ea57725014b72698cb21b7" name="ad94bd93458ea57725014b72698cb21b7"></a>
@@ -420,7 +667,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00013">13</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   13</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad4c957b876357a9a43e526757e7824d8" name="ad4c957b876357a9a43e526757e7824d8"></a>
@@ -444,7 +692,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00012">12</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   12</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a63fa75a7994e37e60a1f7f14c14864f3" name="a63fa75a7994e37e60a1f7f14c14864f3"></a>
@@ -468,7 +717,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_d_x11_8cs_source.html#l00023">23</a> of file <a class="el" href="_d_d_x11_8cs_source.html">DDX11.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   23</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

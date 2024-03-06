@@ -52,6 +52,19 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00993}{993}} of file \mbox{\
 Definition at line \mbox{\hyperlink{abc_8py_source_l01007}{1007}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01007     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs):}
+\DoxyCodeLine{01008         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{01009         \textcolor{comment}{\# TODO: We should probably construct the connection here but}}
+\DoxyCodeLine{01010         \textcolor{comment}{\#       the Serial constructor takes a lot of arguments, and}}
+\DoxyCodeLine{01011         \textcolor{comment}{\#       it becomes tricky to separate those from arguments to}}
+\DoxyCodeLine{01012         \textcolor{comment}{\#       the constructor of other parent classes.}}
+\DoxyCodeLine{01013         self.connection = \textcolor{keywordtype}{None}  \textcolor{comment}{\# serial.Serial (to be constructed by child)}}
+\DoxyCodeLine{01014         self.\_comms\_lock = threading.RLock()}
+\DoxyCodeLine{01015 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_serial_device_mixin_a43a79573d3996cb9cf15dadeae83fa69}\label{classmicroscope_1_1abc_1_1_serial_device_mixin_a43a79573d3996cb9cf15dadeae83fa69}} 
@@ -73,6 +86,35 @@ another can run.\end{DoxyVerb}
 Definition at line \mbox{\hyperlink{abc_8py_source_l01030}{1030}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01030     \textcolor{keyword}{def }lock\_comms(func):}
+\DoxyCodeLine{01031         \textcolor{stringliteral}{"{}"{}"{}Decorator to flush input buffer and lock communications.}}
+\DoxyCodeLine{01032 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01033 \textcolor{stringliteral}{        There have been problems }\textcolor{keyword}{with} the DeepStar lasers returning}
+\DoxyCodeLine{01034         junk characters after the expected response, so it \textcolor{keywordflow}{is}}
+\DoxyCodeLine{01035         advisable to flush the input buffer prior to running a command}
+\DoxyCodeLine{01036         \textcolor{keywordflow}{and} subsequent readline.  It also locks the comms channel so}
+\DoxyCodeLine{01037         that a function must finish all its communications before}
+\DoxyCodeLine{01038         another can run.}
+\DoxyCodeLine{01039 }
+\DoxyCodeLine{01040         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01041 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01042 \textcolor{stringliteral}{        }\textcolor{preprocessor}{@functools.wraps(func)}}
+\DoxyCodeLine{01043         \textcolor{keyword}{def }wrapper(self, *args, **kwargs):}
+\DoxyCodeLine{01044             \textcolor{keyword}{with} self.\_comms\_lock:}
+\DoxyCodeLine{01045                 self.connection.flushInput()}
+\DoxyCodeLine{01046                 \textcolor{keywordflow}{return} func(self, *args, **kwargs)}
+\DoxyCodeLine{01047 }
+\DoxyCodeLine{01048         \textcolor{keywordflow}{return} wrapper}
+\DoxyCodeLine{01049 }
+\DoxyCodeLine{01050 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01014}{microscope.\+abc.\+Serial\+Device\+Mixin.\+\_\+comms\+\_\+lock}}, \mbox{\hyperlink{abc_8py_source_l01013}{microscope.\+abc.\+Serial\+Device\+Mixin.\+connection}}, \mbox{\hyperlink{thorlabs_8py_source_l00062}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+connection}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00049}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+connection}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00046}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+connection}}, \mbox{\hyperlink{lights_2obis_8py_source_l00036}{microscope.\+lights.\+obis.\+Obis\+Laser.\+connection}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00060}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+connection}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}\label{classmicroscope_1_1abc_1_1_serial_device_mixin_a9e3ba09d83f3a9e56cae14813c6423ea}} 
@@ -84,6 +126,10 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l01030}{1030}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01013}{1013}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, and \mbox{\hyperlink{abc_8py_source_l01030}{microscope.\+abc.\+Serial\+Device\+Mixin.\+lock\+\_\+comms()}}.
 
 
 

@@ -33,6 +33,26 @@ Definition at line \mbox{\hyperlink{coolled_8py_source_l00036}{36}} of file \mbo
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00039}{39}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00039     \textcolor{keyword}{def }\_\_init\_\_(self, serial: microscope.\_utils.SharedSerial) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00040         self.\_serial = serial}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042         \textcolor{comment}{\# When we connect for the first time, we will get back a}}
+\DoxyCodeLine{00043         \textcolor{comment}{\# greeting message like 'CoolLED precisExcite, Hello, pleased}}
+\DoxyCodeLine{00044         \textcolor{comment}{\# to meet you'.  Discard it by reading until timeout.}}
+\DoxyCodeLine{00045         self.\_serial.readlines()}
+\DoxyCodeLine{00046 }
+\DoxyCodeLine{00047         \textcolor{comment}{\# Check that this behaves like a CoolLED device.}}
+\DoxyCodeLine{00048         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00049             self.get\_css()}
+\DoxyCodeLine{00050         \textcolor{keywordflow}{except} Exception:}
+\DoxyCodeLine{00051             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00052                 \textcolor{stringliteral}{"{}Not a CoolLED device, unable to get CSS"{}}}
+\DoxyCodeLine{00053             )}
+\DoxyCodeLine{00054 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_af275ed1e320e099da07b0904994f4459}\label{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_af275ed1e320e099da07b0904994f4459}} 
@@ -46,6 +66,23 @@ Definition at line \mbox{\hyperlink{coolled_8py_source_l00039}{39}} of file \mbo
 
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00079}{79}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00079     \textcolor{keyword}{def }get\_channels(self) -\/> typing.List[str]:}
+\DoxyCodeLine{00080         \textcolor{stringliteral}{"{}"{}"{}Return list of channel names (names are one character string)."{}"{}"{}}}
+\DoxyCodeLine{00081         \textcolor{comment}{\# answer has the form: [xsnNNN] per channel.  The letter 'x'}}
+\DoxyCodeLine{00082         \textcolor{comment}{\# defines the channel (A to H), 's' refers to S (Selected) or}}
+\DoxyCodeLine{00083         \textcolor{comment}{\# X (Not selected), 'n' refers to N (On) or F (Off) and 'NNN'}}
+\DoxyCodeLine{00084         \textcolor{comment}{\# is the intensity in integer percent.}}
+\DoxyCodeLine{00085         \textcolor{keywordflow}{return} list(self.get\_css()[::6].decode())}
+\DoxyCodeLine{00086 }
+\DoxyCodeLine{00087 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00055}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+get\+\_\+css()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_affaf93559285e4049740f22e88852f97}\label{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_affaf93559285e4049740f22e88852f97}} 
 \index{microscope.controllers.coolled.\_CoolLEDConnection@{microscope.controllers.coolled.\_CoolLEDConnection}!get\_css@{get\_css}}
 \index{get\_css@{get\_css}!microscope.controllers.coolled.\_CoolLEDConnection@{microscope.controllers.coolled.\_CoolLEDConnection}}
@@ -57,6 +94,30 @@ Definition at line \mbox{\hyperlink{coolled_8py_source_l00079}{79}} of file \mbo
 
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00055}{55}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00055     \textcolor{keyword}{def }get\_css(self) -\/> bytes:}
+\DoxyCodeLine{00056         \textcolor{stringliteral}{"{}"{}"{}Get the global channel status map."{}"{}"{}}}
+\DoxyCodeLine{00057         \textcolor{keyword}{with} self.\_serial.lock:}
+\DoxyCodeLine{00058             self.\_serial.write(b\textcolor{stringliteral}{"{}CSS?\(\backslash\)n"{}})}
+\DoxyCodeLine{00059             answer = self.\_serial.readline()}
+\DoxyCodeLine{00060         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}CSS"{}}):}
+\DoxyCodeLine{00061             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00062                 \textcolor{stringliteral}{"{}answer to 'CSS?' should start with 'CSS'"{}}}
+\DoxyCodeLine{00063                 \textcolor{stringliteral}{"{} but got '\%s' instead"{}} \% answer.decode}
+\DoxyCodeLine{00064             )}
+\DoxyCodeLine{00065         \textcolor{keywordflow}{return} answer[3:-\/2]  \textcolor{comment}{\# remove initial b'CSS' and final b'\(\backslash\)r\(\backslash\)n'}}
+\DoxyCodeLine{00066 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
+
+
+
+Referenced by \mbox{\hyperlink{coolled_8py_source_l00079}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+get\+\_\+channels()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_a51fd1d8ffd3c6efe136a2665966ec3b4}\label{classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection_a51fd1d8ffd3c6efe136a2665966ec3b4}} 
 \index{microscope.controllers.coolled.\_CoolLEDConnection@{microscope.controllers.coolled.\_CoolLEDConnection}!set\_css@{set\_css}}
 \index{set\_css@{set\_css}!microscope.controllers.coolled.\_CoolLEDConnection@{microscope.controllers.coolled.\_CoolLEDConnection}}
@@ -67,6 +128,26 @@ Definition at line \mbox{\hyperlink{coolled_8py_source_l00055}{55}} of file \mbo
  
 
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00067}{67}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067     \textcolor{keyword}{def }set\_css(self, css: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00068         \textcolor{stringliteral}{"{}"{}"{}Set status for any number of channels."{}"{}"{}}}
+\DoxyCodeLine{00069         \textcolor{keyword}{assert} len(css) \% 6 == 0, \textcolor{stringliteral}{"{}css must be multiple of 6 (6 per channel)"{}}}
+\DoxyCodeLine{00070         \textcolor{keyword}{with} self.\_serial.lock:}
+\DoxyCodeLine{00071             self.\_serial.write(b\textcolor{stringliteral}{"{}CSS"{}} + css + b\textcolor{stringliteral}{"{}\(\backslash\)n"{}})}
+\DoxyCodeLine{00072             answer = self.\_serial.readline()}
+\DoxyCodeLine{00073         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}CSS"{}}):}
+\DoxyCodeLine{00074             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00075                 \textcolor{stringliteral}{"{}answer to 'CSS?' should start with 'CSS'"{}}}
+\DoxyCodeLine{00076                 \textcolor{stringliteral}{"{} but got '\%s' instead"{}} \% answer.decode}
+\DoxyCodeLine{00077             )}
+\DoxyCodeLine{00078 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
 
 
 

@@ -236,7 +236,49 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00094">94</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   94</span>    <span class="keyword">def </span>__init__(self, port: str, baudrate: int, timeout: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   95</span>        <span class="comment"># From the technical datasheet: 8 bit word 1 stop bit, no</span></div>
+<div class="line"><span class="lineno">   96</span>        <span class="comment"># parity no handshake, baudrate options of 9600, 19200, 38400,</span></div>
+<div class="line"><span class="lineno">   97</span>        <span class="comment"># 57600 and 115200.</span></div>
+<div class="line"><span class="lineno">   98</span>        self._serial = serial.Serial(</div>
+<div class="line"><span class="lineno">   99</span>            port=port,</div>
+<div class="line"><span class="lineno">  100</span>            baudrate=baudrate,</div>
+<div class="line"><span class="lineno">  101</span>            timeout=timeout,</div>
+<div class="line"><span class="lineno">  102</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">  103</span>            stopbits=serial.STOPBITS_TWO,</div>
+<div class="line"><span class="lineno">  104</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">  105</span>            xonxoff=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  106</span>            rtscts=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  107</span>            dsrdtr=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">  108</span>        )</div>
+<div class="line"><span class="lineno">  109</span>        self._lock = threading.RLock()</div>
+<div class="line"><span class="lineno">  110</span> </div>
+<div class="line"><span class="lineno">  111</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  112</span>            <span class="comment"># We do not use the general get_description() here because</span></div>
+<div class="line"><span class="lineno">  113</span>            <span class="comment"># if this is not a ProScan device it would never reach the</span></div>
+<div class="line"><span class="lineno">  114</span>            <span class="comment"># &#39;\rEND\r&#39; that signals the end of the description.</span></div>
+<div class="line"><span class="lineno">  115</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  116</span>                self.command(b<span class="stringliteral">&#39;RCONFIG&#39;</span>)</div>
+<div class="line"><span class="lineno">  117</span>                answer = self.read_multiline()</div>
+<div class="line"><span class="lineno">  118</span>            <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno">  119</span>                print(<span class="stringliteral">&quot;Unable to read configuration. Is Ludl connected?&quot;</span>)</div>
+<div class="line"><span class="lineno">  120</span>                <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  121</span>            <span class="comment"># parse config responce which tells us what devices are present</span></div>
+<div class="line"><span class="lineno">  122</span>            <span class="comment"># on this controller.</span></div>
+<div class="line"><span class="lineno">  123</span> </div>
+<div class="line"><span class="lineno">  124</span>            self._devlist={}</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>            <span class="keywordflow">for</span> line <span class="keywordflow">in</span> answer[4:-1]:</div>
+<div class="line"><span class="lineno">  127</span>                <span class="comment">#loop through lines 4 to second last one which are devices</span></div>
+<div class="line"><span class="lineno">  128</span>                <span class="comment">#present on this controller</span></div>
+<div class="line"><span class="lineno">  129</span>                devinfo=re.split(<span class="stringliteral">r&quot;\s{2,}&quot;</span>,line.decode(<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  130</span>                <span class="comment"># dev address,label,id,description, type</span></div>
+<div class="line"><span class="lineno">  131</span>                self._devlist[devinfo[0]]=devinfo[1:]</div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span><span class="comment">#            print(answer)</span></div>
+<div class="line"><span class="lineno">  134</span> </div>
+<div class="line"><span class="lineno">  135</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -267,6 +309,17 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00264">264</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  264</span>    <span class="keyword">def </span>changed_timeout(self, new_timeout: float):</div>
+<div class="line"><span class="lineno">  265</span>        previous = self._serial.timeout</div>
+<div class="line"><span class="lineno">  266</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  267</span>            self._serial.timeout = new_timeout</div>
+<div class="line"><span class="lineno">  268</span>            <span class="keywordflow">yield</span></div>
+<div class="line"><span class="lineno">  269</span>        <span class="keywordflow">finally</span>:</div>
+<div class="line"><span class="lineno">  270</span>            self._serial.timeout = previous</div>
+<div class="line"><span class="lineno">  271</span> </div>
+<div class="line"><span class="lineno">  272</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00114">microscope.controllers.prior._ProScanIIIConnection.move_command()</a>.</p>
 
 </div>
 </div>
@@ -297,6 +350,15 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send command to device.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00142">142</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  142</span>    <span class="keyword">def </span>command(self, command: bytes) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  143</span>        <span class="stringliteral">&quot;&quot;&quot;Send command to device.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  144</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  145</span>            self._serial.write(command + b<span class="stringliteral">&quot;\r&quot;</span>)</div>
+<div class="line"><span class="lineno">  146</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, and <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="zaber_8py_source.html#l00231">microscope.controllers.zaber._ZaberDeviceConnection.been_homed()</a>, <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>, <a class="el" href="zaber_8py_source.html#l00265">microscope.controllers.zaber._ZaberDeviceConnection.get_absolute_position()</a>, <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, <a class="el" href="zaber_8py_source.html#l00252">microscope.controllers.zaber._ZaberDeviceConnection.get_current_index()</a>, <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, <a class="el" href="ludl_8py_source.html#l00257">microscope.stages.ludl._LudlController.get_description()</a>, <a class="el" href="zaber_8py_source.html#l00248">microscope.controllers.zaber._ZaberDeviceConnection.get_index_distance()</a>, <a class="el" href="zaber_8py_source.html#l00269">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_max()</a>, <a class="el" href="zaber_8py_source.html#l00273">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_min()</a>, <a class="el" href="zaber_8py_source.html#l00227">microscope.controllers.zaber._ZaberDeviceConnection.get_number_axes()</a>, <a class="el" href="zaber_8py_source.html#l00240">microscope.controllers.zaber._ZaberDeviceConnection.get_rotation_length()</a>, <a class="el" href="zaber_8py_source.html#l00236">microscope.controllers.zaber._ZaberDeviceConnection.home()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00166">microscope.lights.toptica._iBeamConnection.laser_off()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00162">microscope.lights.toptica._iBeamConnection.laser_on()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00170">microscope.lights.toptica._iBeamConnection.set_normal_channel_power()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00179">microscope.lights.toptica._iBeamConnection.show_power_uW()</a>, and <a class="el" href="lights_2toptica_8py_source.html#l00188">microscope.lights.toptica._iBeamConnection.status_laser()</a>.</p>
 
 </div>
 </div>
@@ -327,7 +389,16 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00241">241</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  241</span>    <span class="keyword">def </span>get_absolute_position(self, axis: bytes) -&gt; float:</div>
+<div class="line"><span class="lineno">  242</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  243</span>        position=self.get_command(bytes(<span class="stringliteral">&#39;WHERE {0}&#39;</span>.format(axisname),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  244</span>        <span class="keywordflow">if</span> position[3:4]==b<span class="stringliteral">&#39;N&#39;</span>:</div>
+<div class="line"><span class="lineno">  245</span>            print(<span class="stringliteral">&quot;Error: {0} : {1}&quot;</span>.format(position,</div>
+<div class="line"><span class="lineno">  246</span>                                         LUDL_ERRORS[int(position[4:6])]))</div>
+<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  248</span>            <span class="keywordflow">return</span> float(position.strip()[2:])</div>
+<div class="line"><span class="lineno">  249</span>                                </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa538b7e1ccab1e5b2980f6487179811a" name="aa538b7e1ccab1e5b2980f6487179811a"></a>
@@ -357,6 +428,16 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send get command and return the answer.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00189">189</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>    <span class="keyword">def </span>get_command(self, command: bytes) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  190</span>        <span class="stringliteral">&quot;&quot;&quot;Send get command and return the answer.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  191</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  192</span>            self.command(command)</div>
+<div class="line"><span class="lineno">  193</span>            <span class="keywordflow">return</span> self.readline()</div>
+<div class="line"><span class="lineno">  194</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>, <a class="el" href="__utils_8py_source.html#l00122">microscope._utils.SharedSerial.readline()</a>, <a class="el" href="prior_8py_source.html#l00085">microscope.controllers.prior._ProScanIIIConnection.readline()</a>, <a class="el" href="ludl_8py_source.html#l00147">microscope.stages.ludl._LudlController.readline()</a>, <a class="el" href="zaber_8py_source.html#l00154">microscope.controllers.zaber._ZaberConnection.readline()</a>, and <a class="el" href="mock__devices_8py_source.html#l00096">microscope.testsuite.mock_devices.SerialMock.readline()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, <a class="el" href="ludl_8py_source.html#l00195">microscope.stages.ludl._LudlController.move_command()</a>, <a class="el" href="ludl_8py_source.html#l00212">microscope.stages.ludl._LudlController.move_to_absolute_position()</a>, <a class="el" href="prior_8py_source.html#l00090">microscope.controllers.prior._ProScanIIIConnection.read_until_timeout()</a>, and <a class="el" href="ludl_8py_source.html#l00175">microscope.stages.ludl._LudlController.wait_until_idle()</a>.</p>
 
 </div>
 </div>
@@ -387,6 +468,16 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send a get description command and return it.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00257">257</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  257</span>    <span class="keyword">def </span>get_description(self, command: bytes) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  258</span>        <span class="stringliteral">&quot;&quot;&quot;Send a get description command and return it.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  259</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  260</span>            self.command(command)</div>
+<div class="line"><span class="lineno">  261</span>            <span class="keywordflow">return</span> self._serial.read_until(b<span class="stringliteral">&quot;\rEND\r&quot;</span>)</div>
+<div class="line"><span class="lineno">  262</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>, <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>.</p>
 
 </div>
 </div>
@@ -407,7 +498,10 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00139">139</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  139</span>    <span class="keyword">def </span>get_number_axes(self):</div>
+<div class="line"><span class="lineno">  140</span>        <span class="keywordflow">return</span> 2</div>
+<div class="line"><span class="lineno">  141</span>    </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2b845f352d6a5920386aeeac1a6f3ccb" name="a2b845f352d6a5920386aeeac1a6f3ccb"></a>
@@ -427,6 +521,11 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00136">136</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  136</span>    <span class="keyword">def </span>is_busy(self):</div>
+<div class="line"><span class="lineno">  137</span>        <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  138</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="zaber_8py_source.html#l00212">microscope.controllers.zaber._ZaberDeviceConnection.wait_until_idle()</a>.</p>
 
 </div>
 </div>
@@ -457,6 +556,14 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00221">221</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  221</span>    <span class="keyword">def </span>motor_moving(self,axis: bytes) -&gt; int:</div>
+<div class="line"><span class="lineno">  222</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  223</span>        reply=self.get_command(bytes(<span class="stringliteral">&#39;RDSTAT {0}&#39;</span>.format(axisname),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  224</span>        flags=int(reply.strip()[3:])</div>
+<div class="line"><span class="lineno">  225</span>        <span class="keywordflow">return</span> (flags&amp;1)</div>
+<div class="line"><span class="lineno">  226</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00212">microscope.stages.ludl._LudlController.move_to_absolute_position()</a>.</p>
 
 </div>
 </div>
@@ -493,6 +600,14 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send a realtive movement command to stated axis</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00206">206</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  206</span>    <span class="keyword">def </span>move_by_relative_position(self, axis: bytes, delta: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  207</span>        <span class="stringliteral">&quot;&quot;&quot;Send a realtive movement command to stated axis&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  208</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  209</span>        self.move_command(bytes(<span class="stringliteral">&#39;MOVREL {0}={1}&#39;</span>.format(axisname,</div>
+<div class="line"><span class="lineno">  210</span>                                                        str(delta)),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  211</span>        </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00114">microscope.controllers.prior._ProScanIIIConnection.move_command()</a>, and <a class="el" href="ludl_8py_source.html#l00195">microscope.stages.ludl._LudlController.move_command()</a>.</p>
 
 </div>
 </div>
@@ -523,6 +638,21 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send a move command and check return value.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00195">195</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  195</span>    <span class="keyword">def </span>move_command(self, command: bytes) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  196</span>        <span class="stringliteral">&quot;&quot;&quot;Send a move command and check return value.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  197</span>        <span class="comment"># Movement commands respond with &quot;:A \n&quot; but the move is then</span></div>
+<div class="line"><span class="lineno">  198</span>        <span class="comment"># being performed.  The move is only finihsed once the</span></div>
+<div class="line"><span class="lineno">  199</span>        <span class="comment"># &quot;STATUS&quot; command returns &quot;N&quot; rather than &quot;B&quot;</span></div>
+<div class="line"><span class="lineno">  200</span>        <span class="comment">#self._command_and_validate(command, b&quot;N&quot;)</span></div>
+<div class="line"><span class="lineno">  201</span>        <span class="comment">#</span></div>
+<div class="line"><span class="lineno">  202</span>        <span class="comment">#actully beter to just issue the move command and rely on</span></div>
+<div class="line"><span class="lineno">  203</span>        <span class="comment">#other process to check position</span></div>
+<div class="line"><span class="lineno">  204</span>        self.get_command(command)</div>
+<div class="line"><span class="lineno">  205</span>        </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, and <a class="el" href="lumencor_8py_source.html#l00097">microscope.controllers.lumencor._SpectraIIIConnection.get_command()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, <a class="el" href="ludl_8py_source.html#l00206">microscope.stages.ludl._LudlController.move_by_relative_position()</a>, and <a class="el" href="ludl_8py_source.html#l00212">microscope.stages.ludl._LudlController.move_to_absolute_position()</a>.</p>
 
 </div>
 </div>
@@ -559,6 +689,13 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send a realtive movement command to stated axis</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00212">212</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  212</span>    <span class="keyword">def </span>move_to_absolute_position(self, axis: bytes, pos: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  213</span>        <span class="stringliteral">&quot;&quot;&quot;Send a realtive movement command to stated axis&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  214</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  215</span>        self.move_command(bytes(<span class="stringliteral">&#39;MOVE {0}={1}&#39;</span>.format(axisname,</div>
+<div class="line"><span class="lineno">  216</span>                                                      str(pos)),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, <a class="el" href="lumencor_8py_source.html#l00097">microscope.controllers.lumencor._SpectraIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00221">microscope.stages.ludl._LudlController.motor_moving()</a>, <a class="el" href="prior_8py_source.html#l00114">microscope.controllers.prior._ProScanIIIConnection.move_command()</a>, and <a class="el" href="ludl_8py_source.html#l00195">microscope.stages.ludl._LudlController.move_command()</a>.</p>
 
 </div>
 </div>
@@ -595,7 +732,11 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00217">217</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  217</span>    <span class="keyword">def </span>move_to_limit(self,axis: bytes,speed: int):</div>
+<div class="line"><span class="lineno">  218</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  219</span>        self.get_command(bytes(<span class="stringliteral">&#39;SPIN {0}={1}&#39;</span>.format(axisname,speed),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  220</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a346c58743e240e6b9f6a738d3341147d" name="a346c58743e240e6b9f6a738d3341147d"></a>
@@ -615,7 +756,23 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00152">152</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  152</span>    <span class="keyword">def </span>read_multiline(self):</div>
+<div class="line"><span class="lineno">  153</span>        output=[]</div>
+<div class="line"><span class="lineno">  154</span>        line=<span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  155</span>        <span class="keywordflow">while</span> (line):</div>
+<div class="line"><span class="lineno">  156</span>            line=self.readline()</div>
+<div class="line"><span class="lineno">  157</span>            output.append(line.strip())</div>
+<div class="line"><span class="lineno">  158</span>            <span class="keywordflow">if</span> line==b<span class="stringliteral">&#39;N&#39;</span> <span class="keywordflow">or</span> line[0:2] == b<span class="stringliteral">&#39;:A&#39;</span> :</div>
+<div class="line"><span class="lineno">  159</span>                <span class="comment">#thins means an end of command strings doesn require an</span></div>
+<div class="line"><span class="lineno">  160</span>                <span class="comment">#additional timeout before it returns </span></div>
+<div class="line"><span class="lineno">  161</span>                <span class="keywordflow">return</span> (output)</div>
+<div class="line"><span class="lineno">  162</span>            <span class="keywordflow">elif</span> line[0] == b<span class="stringliteral">&#39;N&#39;</span>:</div>
+<div class="line"><span class="lineno">  163</span>                <span class="comment">#this is an error string</span></div>
+<div class="line"><span class="lineno">  164</span>                error=line[2:].strip()</div>
+<div class="line"><span class="lineno">  165</span>                raise(<span class="stringliteral">&#39;Ludl controller error: %s,%s&#39;</span> % (error,LUDL_ERRORS[error]))</div>
+<div class="line"><span class="lineno">  166</span>        return(output)</div>
+<div class="line"><span class="lineno">  167</span>            </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a23900f80d4e878fcaaf9442c3cc00554" name="a23900f80d4e878fcaaf9442c3cc00554"></a>
@@ -635,6 +792,17 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Read until timeout; used to clean buffer if in an unknown state.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00168">168</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  168</span>    <span class="keyword">def </span>read_until_timeout(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  169</span>        <span class="stringliteral">&quot;&quot;&quot;Read until timeout; used to clean buffer if in an unknown state.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  170</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  171</span>            self._serial.flushInput()</div>
+<div class="line"><span class="lineno">  172</span>            <span class="keywordflow">while</span> self._serial.readline():</div>
+<div class="line"><span class="lineno">  173</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  174</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>, and <a class="el" href="ludl_8py_source.html#l00147">microscope.stages.ludl._LudlController.readline()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, and <a class="el" href="prior_8py_source.html#l00090">microscope.controllers.prior._ProScanIIIConnection.read_until_timeout()</a>.</p>
 
 </div>
 </div>
@@ -655,6 +823,15 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Read a line from the device connection until '\n'.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00147">147</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  147</span>    <span class="keyword">def </span>readline(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  148</span>        <span class="stringliteral">&quot;&quot;&quot;Read a line from the device connection until &#39;\n&#39;.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="keyword">with</span> self._lock:</div>
+<div class="line"><span class="lineno">  150</span>            <span class="keywordflow">return</span> self._serial.read_until(b<span class="stringliteral">&quot;\n&quot;</span>)</div>
+<div class="line"><span class="lineno">  151</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>, <a class="el" href="__utils_8py_source.html#l00122">microscope._utils.SharedSerial.readline()</a>, <a class="el" href="prior_8py_source.html#l00085">microscope.controllers.prior._ProScanIIIConnection.readline()</a>, <a class="el" href="ludl_8py_source.html#l00147">microscope.stages.ludl._LudlController.readline()</a>, <a class="el" href="zaber_8py_source.html#l00154">microscope.controllers.zaber._ZaberConnection.readline()</a>, and <a class="el" href="mock__devices_8py_source.html#l00096">microscope.testsuite.mock_devices.SerialMock.readline()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00168">microscope.stages.ludl._LudlController.read_until_timeout()</a>, and <a class="el" href="ludl_8py_source.html#l00147">microscope.stages.ludl._LudlController.readline()</a>.</p>
 
 </div>
 </div>
@@ -685,7 +862,11 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00237">237</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  237</span>    <span class="keyword">def </span>reset_position(self, axis: bytes):</div>
+<div class="line"><span class="lineno">  238</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  239</span>        self.get_command(bytes(<span class="stringliteral">&#39;HERE {0}=0&#39;</span>.format(axisname),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  240</span>        </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa5a22278bb4966a9855b709b50b8731c" name="aa5a22278bb4966a9855b709b50b8731c"></a>
@@ -715,6 +896,15 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 <pre class="fragment">Send a set command and check return value.</pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00250">250</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  250</span>    <span class="keyword">def </span>set_command(self, command: bytes) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  251</span>        <span class="stringliteral">&quot;&quot;&quot;Send a set command and check return value.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  252</span>        <span class="comment"># Property type commands that set certain status respond with</span></div>
+<div class="line"><span class="lineno">  253</span>        <span class="comment"># zero.  They respond with a zero even if there are invalid</span></div>
+<div class="line"><span class="lineno">  254</span>        <span class="comment"># arguments in the command.</span></div>
+<div class="line"><span class="lineno">  255</span>        self._command_and_validate(command, b<span class="stringliteral">&quot;0\r&quot;</span>)</div>
+<div class="line"><span class="lineno">  256</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00097">microscope.controllers.prior._ProScanIIIConnection._command_and_validate()</a>, and <a class="el" href="ludl_8py_source.html#l00180">microscope.stages.ludl._LudlController._command_and_validate()</a>.</p>
 
 </div>
 </div>
@@ -751,7 +941,12 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00227">227</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>set_speed(self, axis: bytes, speed: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  228</span>        axisname=AXIS_MAPPER[axis]</div>
+<div class="line"><span class="lineno">  229</span>        self.get_command(bytes(<span class="stringliteral">&#39;SPEED {0}={1}&#39;</span>.format(axisname,speed),<span class="stringliteral">&#39;ascii&#39;</span>))</div>
+<div class="line"><span class="lineno">  230</span> </div>
+<div class="line"><span class="lineno">  231</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6bf9c0436e3cca82392eaccfd5ddce75" name="a6bf9c0436e3cca82392eaccfd5ddce75"></a>
@@ -781,7 +976,12 @@ This class has only been tested on a MAC2000 controller from the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00232">232</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  232</span>    <span class="keyword">def </span>wait_for_motor_stop(self,axis: bytes):</div>
+<div class="line"><span class="lineno">  233</span>        while(self.motor_moving(axis)):</div>
+<div class="line"><span class="lineno">  234</span>            time.sleep(0.1)</div>
+<div class="line"><span class="lineno">  235</span>            </div>
+<div class="line"><span class="lineno">  236</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4975a305c046500ab17cbf0e3a58c92c" name="a4975a305c046500ab17cbf0e3a58c92c"></a>
@@ -802,6 +1002,13 @@ This class has only been tested on a MAC2000 controller from the
 <pre class="fragment">Keep sending the 'STATUS' comand until the respnce
 returns b'0\r' </pre> 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00175">175</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>    <span class="keyword">def </span>wait_until_idle(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  176</span>        <span class="stringliteral">&quot;&quot;&quot;Keep sending the &#39;STATUS&#39; comand until the respnce</span></div>
+<div class="line"><span class="lineno">  177</span><span class="stringliteral">        returns b&#39;0\r&#39;</span> <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  178</span><span class="stringliteral">        self._command_and_validate(b&#39;STATUS&#39;</span>, b<span class="stringliteral">&quot;N&quot;</span>)</div>
+<div class="line"><span class="lineno">  179</span>        </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00097">microscope.controllers.prior._ProScanIIIConnection._command_and_validate()</a>, <a class="el" href="ludl_8py_source.html#l00180">microscope.stages.ludl._LudlController._command_and_validate()</a>, <a class="el" href="__utils_8py_source.html#l00116">microscope._utils.SharedSerial._lock</a>, <a class="el" href="prior_8py_source.html#l00061">microscope.controllers.prior._ProScanIIIConnection._lock</a>, <a class="el" href="zaber_8py_source.html#l00134">microscope.controllers.zaber._ZaberConnection._lock</a>, <a class="el" href="aurox_8py_source.html#l00103">microscope.filterwheels.aurox.Clarity._lock</a>, <a class="el" href="thorlabs_8py_source.html#l00071">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._lock</a>, <a class="el" href="ludl_8py_source.html#l00109">microscope.stages.ludl._LudlController._lock</a>, <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, and <a class="el" href="lumencor_8py_source.html#l00097">microscope.controllers.lumencor._SpectraIIIConnection.get_command()</a>.</p>
 
 </div>
 </div>

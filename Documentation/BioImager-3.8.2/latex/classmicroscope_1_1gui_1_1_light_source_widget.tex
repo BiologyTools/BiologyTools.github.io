@@ -36,6 +36,47 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00345}{345}} of file \mbox{\
 Definition at line \mbox{\hyperlink{gui_8py_source_l00346}{346}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00348     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00349         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00350         self.\_device = device}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352         self.\_enable\_check = QtWidgets.QCheckBox(\textcolor{stringliteral}{"{}Enabled"{}}, parent=self)}
+\DoxyCodeLine{00353         self.\_enable\_check.stateChanged.connect(self.updateEnableState)}
+\DoxyCodeLine{00354 }
+\DoxyCodeLine{00355         self.\_set\_power\_box = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{00356         self.\_set\_power\_box.setMinimum(0.0)}
+\DoxyCodeLine{00357         self.\_set\_power\_box.setMaximum(1.0)}
+\DoxyCodeLine{00358         self.\_set\_power\_box.setValue(self.\_device.power)}
+\DoxyCodeLine{00359         self.\_set\_power\_box.setSingleStep(0.01)}
+\DoxyCodeLine{00360         self.\_set\_power\_box.setAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{00361         self.\_set\_power\_box.valueChanged.connect(}
+\DoxyCodeLine{00362             \textcolor{keyword}{lambda} x: setattr(self.\_device, \textcolor{stringliteral}{"{}power"{}}, x)}
+\DoxyCodeLine{00363         )}
+\DoxyCodeLine{00364 }
+\DoxyCodeLine{00365         self.\_current\_power = QtWidgets.QLineEdit(}
+\DoxyCodeLine{00366             str(self.\_device.power), parent=self}
+\DoxyCodeLine{00367         )}
+\DoxyCodeLine{00368         self.\_current\_power.setReadOnly(\textcolor{keyword}{True})}
+\DoxyCodeLine{00369         self.\_current\_power.setAlignment(QtCore.Qt.AlignRight)}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371         self.\_get\_power\_timer = QtCore.QTimer(self)}
+\DoxyCodeLine{00372         self.\_get\_power\_timer.timeout.connect(self.updateCurrentPower)}
+\DoxyCodeLine{00373         self.\_get\_power\_timer.setInterval(500)  \textcolor{comment}{\# msec}}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375         self.updateEnableState()}
+\DoxyCodeLine{00376 }
+\DoxyCodeLine{00377         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{00378         layout.addWidget(self.\_enable\_check)}
+\DoxyCodeLine{00379         power\_layout = QtWidgets.QFormLayout()}
+\DoxyCodeLine{00380         power\_layout.addRow(\textcolor{stringliteral}{"{}Set power"{}}, self.\_set\_power\_box)}
+\DoxyCodeLine{00381         power\_layout.addRow(\textcolor{stringliteral}{"{}Current power"{}}, self.\_current\_power)}
+\DoxyCodeLine{00382         layout.addLayout(power\_layout)}
+\DoxyCodeLine{00383         self.setLayout(layout)}
+\DoxyCodeLine{00384 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1_light_source_widget_aae580fbda9ae9b82f89e556d6f93914f}\label{classmicroscope_1_1gui_1_1_light_source_widget_aae580fbda9ae9b82f89e556d6f93914f}} 
@@ -48,6 +89,14 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00346}{346}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00408}{408}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00408     \textcolor{keyword}{def }updateCurrentPower(self) -\/> None:}
+\DoxyCodeLine{00409         self.\_current\_power.setText(str(self.\_device.power))}
+\DoxyCodeLine{00410 }
+\DoxyCodeLine{00411 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}\label{classmicroscope_1_1gui_1_1_light_source_widget_a59f279bc62db9299289b210437013987}} 
 \index{microscope.gui.LightSourceWidget@{microscope.gui.LightSourceWidget}!updateEnableState@{updateEnableState}}
 \index{updateEnableState@{updateEnableState}!microscope.gui.LightSourceWidget@{microscope.gui.LightSourceWidget}}
@@ -58,6 +107,37 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00408}{408}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00385}{385}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00385     \textcolor{keyword}{def }updateEnableState(self) -\/> None:}
+\DoxyCodeLine{00386         \textcolor{stringliteral}{"{}"{}"{}Update UI and light source state after enable check box"{}"{}"{}}}
+\DoxyCodeLine{00387         \textcolor{keywordflow}{if} self.\_enable\_check.isChecked():}
+\DoxyCodeLine{00388             self.\_device.enable()}
+\DoxyCodeLine{00389         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00390             self.\_device.disable()}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392         device\_is\_enabled = self.\_device.get\_is\_enabled()}
+\DoxyCodeLine{00393 }
+\DoxyCodeLine{00394         \textcolor{keywordflow}{if} self.\_enable\_check.isChecked() != device\_is\_enabled:}
+\DoxyCodeLine{00395             self.\_enable\_check.setChecked(device\_is\_enabled)}
+\DoxyCodeLine{00396             \_logger.error(}
+\DoxyCodeLine{00397                 \textcolor{stringliteral}{"{}failed to \%s light"{}},}
+\DoxyCodeLine{00398                 \textcolor{stringliteral}{"{}enable"{}} \textcolor{keywordflow}{if} self.\_enable\_check.isChecked() \textcolor{keywordflow}{else} \textcolor{stringliteral}{"{}disable"{}},}
+\DoxyCodeLine{00399             )}
+\DoxyCodeLine{00400 }
+\DoxyCodeLine{00401         self.\_current\_power.setEnabled(device\_is\_enabled)}
+\DoxyCodeLine{00402         \textcolor{keywordflow}{if} device\_is\_enabled:}
+\DoxyCodeLine{00403             self.\_get\_power\_timer.start()}
+\DoxyCodeLine{00404         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00405             self.\_get\_power\_timer.stop()}
+\DoxyCodeLine{00406             self.\_current\_power.setText(\textcolor{stringliteral}{"{}0.0"{}})}
+\DoxyCodeLine{00407 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{gui_8py_source_l00365}{microscope.\+gui.\+Light\+Source\+Widget.\+\_\+current\+\_\+power}}, \mbox{\hyperlink{gui_8py_source_l00067}{microscope.\+gui.\+Device\+Settings\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00088}{microscope.\+gui.\+Controller\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00185}{microscope.\+gui.\+Camera\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00259}{microscope.\+gui.\+Deformable\+Mirror\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00321}{microscope.\+gui.\+Filter\+Wheel\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00350}{microscope.\+gui.\+Light\+Source\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00423}{microscope.\+gui.\+Stage\+Widget.\+\_\+device}}, \mbox{\hyperlink{gui_8py_source_l00194}{microscope.\+gui.\+Camera\+Widget.\+\_\+enable\+\_\+check}}, \mbox{\hyperlink{gui_8py_source_l00352}{microscope.\+gui.\+Light\+Source\+Widget.\+\_\+enable\+\_\+check}}, and \mbox{\hyperlink{gui_8py_source_l00371}{microscope.\+gui.\+Light\+Source\+Widget.\+\_\+get\+\_\+power\+\_\+timer}}.
 
 
 

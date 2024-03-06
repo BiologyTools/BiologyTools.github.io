@@ -311,6 +311,71 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html#a2affa7aa4fc988edbd7337e4a305b8f6">microscope.testsuite.devices.TestCamera</a>, and <a class="el" href="classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html#a5fa190172f9a8c7a93053942d69aa117">microscope.simulators.stage_aware_camera.StageAwareCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00157">157</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  157</span>    <span class="keyword">def </span>__init__(self, **kwargs):</div>
+<div class="line"><span class="lineno">  158</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment"># Binning and ROI</span></div>
+<div class="line"><span class="lineno">  160</span>        self._roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(0, 0, 512, 512)</div>
+<div class="line"><span class="lineno">  161</span>        self._binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(1, 1)</div>
+<div class="line"><span class="lineno">  162</span>        <span class="comment"># Function used to generate test image</span></div>
+<div class="line"><span class="lineno">  163</span>        self._image_generator = _ImageGenerator()</div>
+<div class="line"><span class="lineno">  164</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  165</span>            <span class="stringliteral">&quot;image pattern&quot;</span>,</div>
+<div class="line"><span class="lineno">  166</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno">  167</span>            self._image_generator.method,</div>
+<div class="line"><span class="lineno">  168</span>            self._image_generator.set_method,</div>
+<div class="line"><span class="lineno">  169</span>            self._image_generator.get_methods,</div>
+<div class="line"><span class="lineno">  170</span>        )</div>
+<div class="line"><span class="lineno">  171</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  172</span>            <span class="stringliteral">&quot;image data type&quot;</span>,</div>
+<div class="line"><span class="lineno">  173</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno">  174</span>            self._image_generator.data_type,</div>
+<div class="line"><span class="lineno">  175</span>            self._image_generator.set_data_type,</div>
+<div class="line"><span class="lineno">  176</span>            self._image_generator.get_data_types,</div>
+<div class="line"><span class="lineno">  177</span>        )</div>
+<div class="line"><span class="lineno">  178</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  179</span>            <span class="stringliteral">&quot;display image number&quot;</span>,</div>
+<div class="line"><span class="lineno">  180</span>            <span class="stringliteral">&quot;bool&quot;</span>,</div>
+<div class="line"><span class="lineno">  181</span>            <span class="keyword">lambda</span>: self._image_generator.numbering,</div>
+<div class="line"><span class="lineno">  182</span>            self._image_generator.enable_numbering,</div>
+<div class="line"><span class="lineno">  183</span>            <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  184</span>        )</div>
+<div class="line"><span class="lineno">  185</span>        <span class="comment"># Software buffers and parameters for data conversion.</span></div>
+<div class="line"><span class="lineno">  186</span>        self._a_setting = 0</div>
+<div class="line"><span class="lineno">  187</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  188</span>            <span class="stringliteral">&quot;a_setting&quot;</span>,</div>
+<div class="line"><span class="lineno">  189</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno">  190</span>            <span class="keyword">lambda</span>: self._a_setting,</div>
+<div class="line"><span class="lineno">  191</span>            <span class="keyword">lambda</span> val: setattr(self, <span class="stringliteral">&quot;_a_setting&quot;</span>, val),</div>
+<div class="line"><span class="lineno">  192</span>            <span class="keyword">lambda</span>: (1, 100),</div>
+<div class="line"><span class="lineno">  193</span>        )</div>
+<div class="line"><span class="lineno">  194</span>        self._error_percent = 0</div>
+<div class="line"><span class="lineno">  195</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  196</span>            <span class="stringliteral">&quot;_error_percent&quot;</span>,</div>
+<div class="line"><span class="lineno">  197</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keyword">lambda</span>: self._error_percent,</div>
+<div class="line"><span class="lineno">  199</span>            self._set_error_percent,</div>
+<div class="line"><span class="lineno">  200</span>            <span class="keyword">lambda</span>: (0, 100),</div>
+<div class="line"><span class="lineno">  201</span>        )</div>
+<div class="line"><span class="lineno">  202</span>        self._gain = 0</div>
+<div class="line"><span class="lineno">  203</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  204</span>            <span class="stringliteral">&quot;gain&quot;</span>,</div>
+<div class="line"><span class="lineno">  205</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno">  206</span>            <span class="keyword">lambda</span>: self._gain,</div>
+<div class="line"><span class="lineno">  207</span>            self._set_gain,</div>
+<div class="line"><span class="lineno">  208</span>            <span class="keyword">lambda</span>: (0, 8192),</div>
+<div class="line"><span class="lineno">  209</span>        )</div>
+<div class="line"><span class="lineno">  210</span>        self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  211</span>        self._exposure_time = 0.1</div>
+<div class="line"><span class="lineno">  212</span>        self._triggered = 0</div>
+<div class="line"><span class="lineno">  213</span>        <span class="comment"># Count number of images sent since last enable.</span></div>
+<div class="line"><span class="lineno">  214</span>        self._sent = 0</div>
+<div class="line"><span class="lineno">  215</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_binning_html"><div class="ttname"><a href="classmicroscope_1_1_binning.html">microscope.Binning</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00137">__init__.py:137</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_r_o_i_html"><div class="ttname"><a href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00144">__init__.py:144</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="simulators_2____init_____8py_source.html#l00157">microscope.simulators.SimulatedCamera.__init__()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00186">microscope.simulators.SimulatedCamera._a_setting</a>, <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00194">microscope.simulators.SimulatedCamera._error_percent</a>, <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00202">microscope.simulators.SimulatedCamera._gain</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00163">microscope.simulators.SimulatedCamera._image_generator</a>, <a class="el" href="andorsdk3_8py_source.html#l00363">microscope.cameras.andorsdk3.AndorSDK3._purge_buffers()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00223">microscope.simulators.SimulatedCamera._purge_buffers()</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00214">microscope.simulators.SimulatedCamera._sent</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00216">microscope.simulators.SimulatedCamera._set_error_percent()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00220">microscope.simulators.SimulatedCamera._set_gain()</a>, <a class="el" href="picam_8py_source.html#l00060">microscope.cameras.picam.PiCamera._triggered</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00212">microscope.simulators.SimulatedCamera._triggered</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00099">microscope.simulators.stage_aware_camera.StageAwareCamera._triggered</a>, and <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00157">microscope.simulators.SimulatedCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -334,6 +399,15 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a36952a38857bc6c8eb627b2d8b6b867b">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00253">253</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  253</span>    <span class="keyword">def </span>abort(self):</div>
+<div class="line"><span class="lineno">  254</span>        _logger.info(<span class="stringliteral">&quot;Disabling acquisition; %d images sent.&quot;</span>, self._sent)</div>
+<div class="line"><span class="lineno">  255</span>        <span class="keywordflow">if</span> self._acquiring:</div>
+<div class="line"><span class="lineno">  256</span>            self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  257</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00227">microscope.simulators.SimulatedCamera._create_buffers()</a>, <a class="el" href="andorsdk3_8py_source.html#l00378">microscope.cameras.andorsdk3.AndorSDK3._create_buffers()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00214">microscope.simulators.SimulatedCamera._sent</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -356,6 +430,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a2048ad36a754b19e2488b77161a08e63">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00277">277</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>    <span class="keyword">def </span>get_cycle_time(self):</div>
+<div class="line"><span class="lineno">  278</span>        <span class="keywordflow">return</span> self._exposure_time</div>
+<div class="line"><span class="lineno">  279</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="picam_8py_source.html#l00060">microscope.cameras.picam.PiCamera._triggered</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00212">microscope.simulators.SimulatedCamera._triggered</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00099">microscope.simulators.stage_aware_camera.StageAwareCamera._triggered</a>, <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>, and <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
 
 </div>
 </div>
@@ -378,6 +457,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a16e161a6bd61f3968a072971285eb017">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00274">274</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  274</span>    <span class="keyword">def </span>get_exposure_time(self):</div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> self._exposure_time</div>
+<div class="line"><span class="lineno">  276</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>.</p>
 
 </div>
 </div>
@@ -410,6 +494,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00271">271</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  271</span>    <span class="keyword">def </span>set_exposure_time(self, value):</div>
+<div class="line"><span class="lineno">  272</span>        self._exposure_time = value</div>
+<div class="line"><span class="lineno">  273</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>.</p>
 
 </div>
 </div>
@@ -430,6 +519,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="simulators_2____init_____8py_source.html#l00283">283</a> of file <a class="el" href="simulators_2____init_____8py_source.html">__init__.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  283</span>    <span class="keyword">def </span>soft_trigger(self):</div>
+<div class="line"><span class="lineno">  284</span>        <span class="comment"># deprecated, use self.trigger()</span></div>
+<div class="line"><span class="lineno">  285</span>        self.trigger()</div>
+<div class="line"><span class="lineno">  286</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00247">microscope.cameras.picam.PiCamera.get_cycle_time()</a>.</p>
 
 </div>
 </div>

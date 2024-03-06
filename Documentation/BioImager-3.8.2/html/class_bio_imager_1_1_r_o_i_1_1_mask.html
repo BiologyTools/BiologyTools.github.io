@@ -237,7 +237,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00595">595</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  596</span>            {</div>
+<div class="line"><span class="lineno">  597</span>                this.width = width;</div>
+<div class="line"><span class="lineno">  598</span>                this.height = height;</div>
+<div class="line"><span class="lineno">  599</span>                PhysicalSizeX = physX;</div>
+<div class="line"><span class="lineno">  600</span>                PhysicalSizeY = physY;</div>
+<div class="line"><span class="lineno">  601</span>                mask = fts;</div>
+<div class="line"><span class="lineno">  602</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ada6c1656a7fdd1ef1d9da30345d92eab" name="ada6c1656a7fdd1ef1d9da30345d92eab"></a>
@@ -285,7 +292,22 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00603">603</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  604</span>            {</div>
+<div class="line"><span class="lineno">  605</span>                this.width = width;</div>
+<div class="line"><span class="lineno">  606</span>                this.height = height;</div>
+<div class="line"><span class="lineno">  607</span>                PhysicalSizeX = physX;</div>
+<div class="line"><span class="lineno">  608</span>                PhysicalSizeY = physY;</div>
+<div class="line"><span class="lineno">  609</span>                mask = <span class="keyword">new</span> <span class="keywordtype">float</span>[bts.Length];</div>
+<div class="line"><span class="lineno">  610</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; height; y++)</div>
+<div class="line"><span class="lineno">  611</span>                {</div>
+<div class="line"><span class="lineno">  612</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; width; x++)</div>
+<div class="line"><span class="lineno">  613</span>                    {</div>
+<div class="line"><span class="lineno">  614</span>                        <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  615</span>                        mask[ind] = (float)BitConverter.ToSingle(bts, ind * 4);</div>
+<div class="line"><span class="lineno">  616</span>                    }</div>
+<div class="line"><span class="lineno">  617</span>                }</div>
+<div class="line"><span class="lineno">  618</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -305,7 +327,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00701">701</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  702</span>            {</div>
+<div class="line"><span class="lineno">  703</span>                <span class="keywordflow">if</span> (pixbuf != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  704</span>                    pixbuf.Dispose();</div>
+<div class="line"><span class="lineno">  705</span>                <span class="keywordflow">if</span> (colored != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  706</span>                    colored.Dispose();</div>
+<div class="line"><span class="lineno">  707</span>                mask = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  708</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9ec574dbaa03df5c6236628a6bd8a058" name="a9ec574dbaa03df5c6236628a6bd8a058"></a>
@@ -324,7 +353,23 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00684">684</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  685</span>            {</div>
+<div class="line"><span class="lineno">  686</span>                <span class="keywordtype">byte</span>[] pixelData = <span class="keyword">new</span> <span class="keywordtype">byte</span>[width * height * 4];</div>
+<div class="line"><span class="lineno">  687</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; height; y++)</div>
+<div class="line"><span class="lineno">  688</span>                {</div>
+<div class="line"><span class="lineno">  689</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; width; x++)</div>
+<div class="line"><span class="lineno">  690</span>                    {</div>
+<div class="line"><span class="lineno">  691</span>                        <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  692</span>                        <span class="keywordtype">byte</span>[] bt = BitConverter.GetBytes(mask[ind]);</div>
+<div class="line"><span class="lineno">  693</span>                        pixelData[4 * ind] = bt[0];</div>
+<div class="line"><span class="lineno">  694</span>                        pixelData[4 * ind + 1] = bt[1];</div>
+<div class="line"><span class="lineno">  695</span>                        pixelData[4 * ind + 2] = bt[2];</div>
+<div class="line"><span class="lineno">  696</span>                        pixelData[4 * ind + 3] = bt[3];</div>
+<div class="line"><span class="lineno">  697</span>                    }</div>
+<div class="line"><span class="lineno">  698</span>                }</div>
+<div class="line"><span class="lineno">  699</span>                <span class="keywordflow">return</span> pixelData;</div>
+<div class="line"><span class="lineno">  700</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5fc9cbf3817df602829e69a57fa3037f" name="a5fc9cbf3817df602829e69a57fa3037f"></a>
@@ -354,7 +399,16 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00674">674</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  675</span>            {</div>
+<div class="line"><span class="lineno">  676</span>                <span class="keywordflow">if</span> (updateColored || forceUpdate)</div>
+<div class="line"><span class="lineno">  677</span>                {</div>
+<div class="line"><span class="lineno">  678</span>                    UpdateColored(col);</div>
+<div class="line"><span class="lineno">  679</span>                    <span class="keywordflow">return</span> colored;</div>
+<div class="line"><span class="lineno">  680</span>                }</div>
+<div class="line"><span class="lineno">  681</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  682</span>                    <span class="keywordflow">return</span> colored;</div>
+<div class="line"><span class="lineno">  683</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abe2dd90d797985cafa9c882e973615e4" name="abe2dd90d797985cafa9c882e973615e4"></a>
@@ -384,7 +438,13 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00579">579</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  580</span>            {</div>
+<div class="line"><span class="lineno">  581</span>                <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  582</span>                <span class="keywordflow">if</span> (ind &gt; mask.Length)</div>
+<div class="line"><span class="lineno">  583</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentException(<span class="stringliteral">&quot;Point &quot;</span> + x + <span class="stringliteral">&quot;,&quot;</span> + y + <span class="stringliteral">&quot; is outside the mask.&quot;</span>);</div>
+<div class="line"><span class="lineno">  584</span>                <span class="keywordflow">return</span> mask[ind];</div>
+<div class="line"><span class="lineno">  585</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae5c0b3b1151bf5036c4708bb374741e4" name="ae5c0b3b1151bf5036c4708bb374741e4"></a>
@@ -414,7 +474,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00568">568</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  569</span>            {</div>
+<div class="line"><span class="lineno">  570</span>                <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  571</span>                <span class="keywordflow">if</span> (ind &gt; mask.Length)</div>
+<div class="line"><span class="lineno">  572</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  573</span>                <span class="keywordflow">if</span> (mask[ind] &gt; min)</div>
+<div class="line"><span class="lineno">  574</span>                {</div>
+<div class="line"><span class="lineno">  575</span>                    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  576</span>                }</div>
+<div class="line"><span class="lineno">  577</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  578</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a3c950cb59674f5d04bd5504813c900f2" name="a3c950cb59674f5d04bd5504813c900f2"></a>
@@ -450,7 +520,15 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00586">586</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  587</span>            {</div>
+<div class="line"><span class="lineno">  588</span>                <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  589</span>                <span class="keywordflow">if</span> (ind &gt; mask.Length)</div>
+<div class="line"><span class="lineno">  590</span>                    <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentException(<span class="stringliteral">&quot;Point &quot;</span> + x + <span class="stringliteral">&quot;,&quot;</span> + y + <span class="stringliteral">&quot; is outside the mask.&quot;</span>);</div>
+<div class="line"><span class="lineno">  591</span>                mask[ind] = val;</div>
+<div class="line"><span class="lineno">  592</span>                updatePixbuf = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  593</span>                updateColored = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  594</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -492,7 +570,39 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00619">619</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  620</span>            {</div>
+<div class="line"><span class="lineno">  621</span>                <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  622</span>                {</div>
+<div class="line"><span class="lineno">  623</span>                    <span class="keywordflow">if</span> (updatePixbuf)</div>
+<div class="line"><span class="lineno">  624</span>                    {</div>
+<div class="line"><span class="lineno">  625</span>                        <span class="keywordflow">if</span> (pixbuf != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  626</span>                            pixbuf.Dispose();</div>
+<div class="line"><span class="lineno">  627</span>                        <span class="keywordtype">byte</span>[] pixelData = <span class="keyword">new</span> <span class="keywordtype">byte</span>[width * height * 4];</div>
+<div class="line"><span class="lineno">  628</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; height; y++)</div>
+<div class="line"><span class="lineno">  629</span>                        {</div>
+<div class="line"><span class="lineno">  630</span>                            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; width; x++)</div>
+<div class="line"><span class="lineno">  631</span>                            {</div>
+<div class="line"><span class="lineno">  632</span>                                <span class="keywordtype">int</span> ind = y * width + x;</div>
+<div class="line"><span class="lineno">  633</span>                                <span class="keywordflow">if</span> (mask[ind] &gt; 0)</div>
+<div class="line"><span class="lineno">  634</span>                                {</div>
+<div class="line"><span class="lineno">  635</span>                                    pixelData[4 * ind] = (byte)(mask[ind] / 255);<span class="comment">// Blue</span></div>
+<div class="line"><span class="lineno">  636</span>                                    pixelData[4 * ind + 1] = (byte)(mask[ind] / 255);<span class="comment">// Green</span></div>
+<div class="line"><span class="lineno">  637</span>                                    pixelData[4 * ind + 2] = (byte)(mask[ind] / 255);<span class="comment">// Red</span></div>
+<div class="line"><span class="lineno">  638</span>                                    pixelData[4 * ind + 3] = 125;<span class="comment">// Alpha</span></div>
+<div class="line"><span class="lineno">  639</span>                                }</div>
+<div class="line"><span class="lineno">  640</span>                                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  641</span>                                    pixelData[4 * ind + 3] = 0;</div>
+<div class="line"><span class="lineno">  642</span>                            }</div>
+<div class="line"><span class="lineno">  643</span>                        }</div>
+<div class="line"><span class="lineno">  644</span>                        pixbuf = <span class="keyword">new</span> Bitmap(<span class="stringliteral">&quot;&quot;</span>, width, height, PixelFormat.Format32bppArgb, pixelData, <span class="keyword">new</span> ZCT(), 0);</div>
+<div class="line"><span class="lineno">  645</span>                        updatePixbuf = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  646</span>                        <span class="keywordflow">return</span> pixbuf;</div>
+<div class="line"><span class="lineno">  647</span>                    }</div>
+<div class="line"><span class="lineno">  648</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  649</span>                        <span class="keywordflow">return</span> pixbuf;</div>
+<div class="line"><span class="lineno">  650</span>                }</div>
+<div class="line"><span class="lineno">  651</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a51902c051db2a5679fd4211f5c591361" name="a51902c051db2a5679fd4211f5c591361"></a>
@@ -516,7 +626,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00548">548</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  548</span>{ <span class="keyword">get</span> { <span class="keywordflow">return</span> height; } <span class="keyword">set</span> { height = value; } }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a96bd1f56a176d3e9a6cf3d5c0b003915" name="a96bd1f56a176d3e9a6cf3d5c0b003915"></a>
@@ -540,7 +651,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00549">549</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  549</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a081dedbe13d304271aabc131b9aafa2a" name="a081dedbe13d304271aabc131b9aafa2a"></a>
@@ -564,7 +676,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00550">550</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  550</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a8d84869ddb207e4b06af577359e160a7" name="a8d84869ddb207e4b06af577359e160a7"></a>
@@ -588,7 +701,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_bio_8cs_source.html#l00547">547</a> of file <a class="el" href="_bio_8cs_source.html">Bio.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  547</span>{ <span class="keyword">get</span> { <span class="keywordflow">return</span> width; } <span class="keyword">set</span> { width = value; } }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

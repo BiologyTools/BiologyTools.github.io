@@ -185,7 +185,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__client_8py_source.html#l00066">66</a> of file <a class="el" href="test__client_8py_source.html">test_client.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   66</span>    <span class="keyword">def </span>setUp(self):</div>
+<div class="line"><span class="lineno">   67</span>        self.daemon = Pyro4.Daemon()</div>
+<div class="line"><span class="lineno">   68</span>        self.thread = threading.Thread(target=self.daemon.requestLoop)</div>
+<div class="line"><span class="lineno">   69</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acce7531bad4e4c728191cffd2975b7a4" name="acce7531bad4e4c728191cffd2975b7a4"></a>
@@ -205,7 +209,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__client_8py_source.html#l00070">70</a> of file <a class="el" href="test__client_8py_source.html">test_client.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   70</span>    <span class="keyword">def </span>tearDown(self):</div>
+<div class="line"><span class="lineno">   71</span>        self.daemon.shutdown()</div>
+<div class="line"><span class="lineno">   72</span>        self.thread.join()</div>
+<div class="line"><span class="lineno">   73</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afad2c9c1db6e72458f9766cfa9df3114" name="afad2c9c1db6e72458f9766cfa9df3114"></a>
@@ -225,6 +233,21 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Test we can read properties via the Client</pre> 
 <p class="definition">Definition at line <a class="el" href="test__client_8py_source.html#l00080">80</a> of file <a class="el" href="test__client_8py_source.html">test_client.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   80</span>    <span class="keyword">def </span>test_property_access(self):</div>
+<div class="line"><span class="lineno">   81</span>        <span class="stringliteral">&quot;&quot;&quot;Test we can read properties via the Client&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   82</span>        <span class="comment"># list of (object-to-serve, property-name-to-test)</span></div>
+<div class="line"><span class="lineno">   83</span>        objs2prop = [</div>
+<div class="line"><span class="lineno">   84</span>            (PyroService(), <span class="stringliteral">&quot;attr&quot;</span>),</div>
+<div class="line"><span class="lineno">   85</span>            (ExposedDeformableMirror(10), <span class="stringliteral">&quot;n_actuators&quot;</span>),</div>
+<div class="line"><span class="lineno">   86</span>        ]</div>
+<div class="line"><span class="lineno">   87</span>        clients = self._serve_objs([x[0] <span class="keywordflow">for</span> x <span class="keywordflow">in</span> objs2prop])</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">for</span> client, obj_prop <span class="keywordflow">in</span> zip(clients, objs2prop):</div>
+<div class="line"><span class="lineno">   89</span>            obj = obj_prop[0]</div>
+<div class="line"><span class="lineno">   90</span>            name = obj_prop[1]</div>
+<div class="line"><span class="lineno">   91</span>            self.assertTrue(getattr(client, name), getattr(obj, name))</div>
+<div class="line"><span class="lineno">   92</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="test__client_8py_source.html#l00074">microscope.testsuite.test_client.TestClient._serve_objs()</a>.</p>
 
 </div>
 </div>
@@ -245,6 +268,18 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Test we can write properties via the Client</pre> 
 <p class="definition">Definition at line <a class="el" href="test__client_8py_source.html#l00093">93</a> of file <a class="el" href="test__client_8py_source.html">test_client.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>test_property_writing(self):</div>
+<div class="line"><span class="lineno">   94</span>        <span class="stringliteral">&quot;&quot;&quot;Test we can write properties via the Client&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   95</span>        obj = PyroService()</div>
+<div class="line"><span class="lineno">   96</span>        client = (self._serve_objs([obj]))[0]</div>
+<div class="line"><span class="lineno">   97</span>        self.assertTrue(client.attr, 42)</div>
+<div class="line"><span class="lineno">   98</span>        client.attr = 10</div>
+<div class="line"><span class="lineno">   99</span>        self.assertTrue(client.attr, 10)</div>
+<div class="line"><span class="lineno">  100</span>        self.assertTrue(obj.attr, 10)</div>
+<div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="test__client_8py_source.html#l00074">microscope.testsuite.test_client.TestClient._serve_objs()</a>.</p>
 
 </div>
 </div>

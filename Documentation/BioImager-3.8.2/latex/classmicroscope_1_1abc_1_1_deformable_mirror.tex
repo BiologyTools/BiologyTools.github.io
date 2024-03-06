@@ -67,6 +67,15 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{abc_8py_source_l01076}{1076}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01076     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs) -\/> None:}
+\DoxyCodeLine{01077         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{01078         self.\_patterns: typing.Optional[numpy.ndarray] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{01079         self.\_pattern\_idx: int = -\/1}
+\DoxyCodeLine{01080 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_deformable_mirror_aacb167c682dc78cef01fa9bd8119280b}\label{classmicroscope_1_1abc_1_1_deformable_mirror_aacb167c682dc78cef01fa9bd8119280b}} 
@@ -84,6 +93,37 @@ Raises:
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01113}{1113}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01113     \textcolor{keyword}{def }apply\_pattern(self, pattern: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{01114         \textcolor{stringliteral}{"{}"{}"{}Apply this pattern.}}
+\DoxyCodeLine{01115 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01116 \textcolor{stringliteral}{        Raises:}}
+\DoxyCodeLine{01117 \textcolor{stringliteral}{            \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}: }\textcolor{keywordflow}{if} device trigger type \textcolor{keywordflow}{is}}
+\DoxyCodeLine{01118                 \textcolor{keywordflow}{not} set to software.}
+\DoxyCodeLine{01119 }
+\DoxyCodeLine{01120         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01121 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} self.trigger\_type \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{01122             \textcolor{comment}{\# An alternative to error is to change the trigger type,}}
+\DoxyCodeLine{01123             \textcolor{comment}{\# apply the pattern, then restore the trigger type, but}}
+\DoxyCodeLine{01124             \textcolor{comment}{\# that would clear the queue on the device.  It's better}}
+\DoxyCodeLine{01125             \textcolor{comment}{\# to have the user specifically do it.  See issue \#61.}}
+\DoxyCodeLine{01126             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_incompatible_state_error}{microscope.IncompatibleStateError}}(}
+\DoxyCodeLine{01127                 \textcolor{stringliteral}{"{}apply\_pattern requires software trigger type"{}}}
+\DoxyCodeLine{01128             )}
+\DoxyCodeLine{01129         self.\_validate\_patterns(pattern)}
+\DoxyCodeLine{01130         self.\_do\_apply\_pattern(pattern)}
+\DoxyCodeLine{01131 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01110}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+do\+\_\+apply\+\_\+pattern()}}, \mbox{\hyperlink{alpao_8py_source_l00128}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+do\+\_\+apply\+\_\+pattern()}}, \mbox{\hyperlink{mirror_2bmc_8py_source_l00066}{microscope.\+mirror.\+bmc.\+BMCDeformable\+Mirror.\+\_\+do\+\_\+apply\+\_\+pattern()}}, \mbox{\hyperlink{mirror_2mirao52e_8py_source_l00094}{microscope.\+mirror.\+mirao52e.\+Mirao52e.\+\_\+do\+\_\+apply\+\_\+pattern()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00391}{microscope.\+simulators.\+Simulated\+Deformable\+Mirror.\+\_\+do\+\_\+apply\+\_\+pattern()}}, \mbox{\hyperlink{abc_8py_source_l01086}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+validate\+\_\+patterns()}}, \mbox{\hyperlink{__utils_8py_source_l00056}{microscope.\+\_\+utils.\+Only\+Triggers\+Once\+On\+Software\+Mixin.\+trigger\+\_\+type()}}, \mbox{\hyperlink{__utils_8py_source_l00086}{microscope.\+\_\+utils.\+Only\+Triggers\+Bulb\+On\+Software\+Mixin.\+trigger\+\_\+type()}}, \mbox{\hyperlink{abc_8py_source_l00243}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger\+\_\+type()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00582}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+trigger\+\_\+type()}}, \mbox{\hyperlink{atmcd_8py_source_l01765}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+trigger\+\_\+type()}}, \mbox{\hyperlink{picam_8py_source_l00217}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+trigger\+\_\+type()}}, \mbox{\hyperlink{pvcam_8py_source_l01880}{microscope.\+cameras.\+pvcam.\+PVCamera.\+trigger\+\_\+type()}}, \mbox{\hyperlink{ximea_8py_source_l00445}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+trigger\+\_\+type()}}, \mbox{\hyperlink{coolled_8py_source_l00190}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+trigger\+\_\+type()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00220}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+trigger\+\_\+type()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00174}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+trigger\+\_\+type()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00195}{microscope.\+lights.\+obis.\+Obis\+Laser.\+trigger\+\_\+type()}}, and \mbox{\hyperlink{alpao_8py_source_l00125}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+trigger\+\_\+type()}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01148}{microscope.\+abc.\+Deformable\+Mirror.\+next\+\_\+pattern()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_deformable_mirror_ab0d31d4c7f3b4eb3c5f44990e59c49ea}\label{classmicroscope_1_1abc_1_1_deformable_mirror_ab0d31d4c7f3b4eb3c5f44990e59c49ea}} 
 \index{microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}!n\_actuators@{n\_actuators}}
 \index{n\_actuators@{n\_actuators}!microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}}
@@ -94,6 +134,13 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l01113}{1113}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01083}{1083}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01083     \textcolor{keyword}{def }n\_actuators(self) -\/> int:}
+\DoxyCodeLine{01084         \textcolor{keywordflow}{raise} NotImplementedError()}
+\DoxyCodeLine{01085 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_deformable_mirror_a00ad32bca0d8dade56582b3e0b57f2b3}\label{classmicroscope_1_1abc_1_1_deformable_mirror_a00ad32bca0d8dade56582b3e0b57f2b3}} 
 \index{microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}!next\_pattern@{next\_pattern}}
 \index{next\_pattern@{next\_pattern}!microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}}
@@ -106,6 +153,22 @@ DEPRECATED: this is the same as calling :meth:`trigger`.\end{DoxyVerb}
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01148}{1148}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01148     \textcolor{keyword}{def }next\_pattern(self) -\/> None:}
+\DoxyCodeLine{01149         \textcolor{stringliteral}{"{}"{}"{}Apply the next pattern in the queue.}}
+\DoxyCodeLine{01150 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01151 \textcolor{stringliteral}{        DEPRECATED: this }\textcolor{keywordflow}{is} the same \textcolor{keyword}{as} calling :meth:`trigger`.}
+\DoxyCodeLine{01152 }
+\DoxyCodeLine{01153         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01154 \textcolor{stringliteral}{        self.trigger()}}
+\DoxyCodeLine{01155 \textcolor{stringliteral}{}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01146}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+pattern\+\_\+idx}}, \mbox{\hyperlink{abc_8py_source_l01145}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+patterns}}, \mbox{\hyperlink{abc_8py_source_l01113}{microscope.\+abc.\+Deformable\+Mirror.\+apply\+\_\+pattern()}}, \mbox{\hyperlink{abc_8py_source_l00263}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger()}}, and \mbox{\hyperlink{abc_8py_source_l01178}{microscope.\+abc.\+Deformable\+Mirror.\+trigger()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_deformable_mirror_aabc55f14c48d6e983aa07f6de760c0da}\label{classmicroscope_1_1abc_1_1_deformable_mirror_aabc55f14c48d6e983aa07f6de760c0da}} 
 \index{microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}!queue\_patterns@{queue\_patterns}}
@@ -130,6 +193,30 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_d
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01132}{1132}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01132     \textcolor{keyword}{def }queue\_patterns(self, patterns: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{01133         \textcolor{stringliteral}{"{}"{}"{}Send values to the mirror.}}
+\DoxyCodeLine{01134 \textcolor{stringliteral}{}}
+\DoxyCodeLine{01135 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{01136 \textcolor{stringliteral}{            patterns: An `KxN` elements array of values }\textcolor{keywordflow}{in} the range}
+\DoxyCodeLine{01137                 `[0 1]`, where `N` equals the number of actuators, \textcolor{keywordflow}{and}}
+\DoxyCodeLine{01138                 `K` \textcolor{keywordflow}{is} the number of patterns.}
+\DoxyCodeLine{01139 }
+\DoxyCodeLine{01140         A convenience fallback \textcolor{keywordflow}{is} provided \textcolor{keywordflow}{for} software triggering \textcolor{keywordflow}{is}}
+\DoxyCodeLine{01141         provided.}
+\DoxyCodeLine{01142 }
+\DoxyCodeLine{01143         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{01144 \textcolor{stringliteral}{        self.\_validate\_patterns(patterns)}}
+\DoxyCodeLine{01145 \textcolor{stringliteral}{        self.\_patterns = patterns}}
+\DoxyCodeLine{01146 \textcolor{stringliteral}{        self.\_pattern\_idx = -\/1  }\textcolor{comment}{\# none is applied yet}}
+\DoxyCodeLine{01147 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01146}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+pattern\+\_\+idx}}, \mbox{\hyperlink{abc_8py_source_l01145}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+patterns}}, and \mbox{\hyperlink{abc_8py_source_l01086}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+validate\+\_\+patterns()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_deformable_mirror_a68184efcbdfff846a949420e88fa5294}\label{classmicroscope_1_1abc_1_1_deformable_mirror_a68184efcbdfff846a949420e88fa5294}} 
 \index{microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}!trigger@{trigger}}
 \index{trigger@{trigger}!microscope.abc.DeformableMirror@{microscope.abc.DeformableMirror}}
@@ -144,6 +231,25 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l01178}{1178}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01178     \textcolor{keyword}{def }trigger(self) -\/> None:}
+\DoxyCodeLine{01179         \textcolor{stringliteral}{"{}"{}"{}Apply the next pattern in the queue."{}"{}"{}}}
+\DoxyCodeLine{01180         \textcolor{comment}{\# This is just a passthrough to the TriggerTargetMixin class}}
+\DoxyCodeLine{01181         \textcolor{comment}{\# and only exists for the docstring.}}
+\DoxyCodeLine{01182         \textcolor{keywordflow}{return} super().trigger()}
+\DoxyCodeLine{01183 }
+\DoxyCodeLine{01184 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01178}{microscope.\+abc.\+Deformable\+Mirror.\+trigger()}}.
+
+
+
+Referenced by \mbox{\hyperlink{clients_8py_source_l00090}{microscope.\+clients.\+Data\+Client.\+enable()}}, \mbox{\hyperlink{ximea_8py_source_l00359}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+get\+\_\+cycle\+\_\+time()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00277}{microscope.\+simulators.\+Simulated\+Camera.\+get\+\_\+cycle\+\_\+time()}}, \mbox{\hyperlink{abc_8py_source_l00789}{microscope.\+abc.\+Data\+Device.\+grab\+\_\+next\+\_\+data()}}, \mbox{\hyperlink{abc_8py_source_l01148}{microscope.\+abc.\+Deformable\+Mirror.\+next\+\_\+pattern()}}, and \mbox{\hyperlink{abc_8py_source_l01178}{microscope.\+abc.\+Deformable\+Mirror.\+trigger()}}.
 
 
 

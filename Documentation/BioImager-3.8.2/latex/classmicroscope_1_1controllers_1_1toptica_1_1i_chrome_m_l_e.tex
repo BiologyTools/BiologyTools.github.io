@@ -43,6 +43,46 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00261}{261}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00261     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00262         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00263         self.\_lasers: typing.Dict[str, \_iChromeLaser] = \{\}}
+\DoxyCodeLine{00264 }
+\DoxyCodeLine{00265         \textcolor{comment}{\# Setting specified on the manual (M-\/051 version 03)}}
+\DoxyCodeLine{00266         serial\_conn = serial.Serial(}
+\DoxyCodeLine{00267             port=port,}
+\DoxyCodeLine{00268             baudrate=115200,}
+\DoxyCodeLine{00269             timeout=1,}
+\DoxyCodeLine{00270             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00271             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00272             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00273             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00274             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00275             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00276         )}
+\DoxyCodeLine{00277         shared\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{00278         ichrome\_connection = \_iChromeConnection(shared\_serial)}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280         \_LOGGER.info(\textcolor{stringliteral}{"{}Connected to \%s"{}}, ichrome\_connection.get\_serial\_number())}
+\DoxyCodeLine{00281 }
+\DoxyCodeLine{00282         \textcolor{comment}{\# According to the manual the iChrome can have between 3 and 5}}
+\DoxyCodeLine{00283         \textcolor{comment}{\# lasers.  There doesn't seem to be a simple command to check}}
+\DoxyCodeLine{00284         \textcolor{comment}{\# what's installed, we'd have to parse the whole summary}}
+\DoxyCodeLine{00285         \textcolor{comment}{\# table.  So we try/except to each laser line.}}
+\DoxyCodeLine{00286         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(1, 6):}
+\DoxyCodeLine{00287             name = \textcolor{stringliteral}{"{}laser\%d"{}} \% i}
+\DoxyCodeLine{00288             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00289                 laser = \_iChromeLaser(ichrome\_connection, i)}
+\DoxyCodeLine{00290             \textcolor{keywordflow}{except} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}:}
+\DoxyCodeLine{00291                 \_LOGGER.info(\textcolor{stringliteral}{"{}no \%s available"{}}, name)}
+\DoxyCodeLine{00292                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00293             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00294                 \_LOGGER.info(\textcolor{stringliteral}{"{}found \%s on iChrome MLE"{}}, name)}
+\DoxyCodeLine{00295                 self.\_lasers[name] = laser}
+\DoxyCodeLine{00296 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a270a351ac7b888f49836a8580a757492}\label{classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e_a270a351ac7b888f49836a8580a757492}} 
@@ -59,6 +99,16 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a51485
 
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00298}{298}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00298     \textcolor{keyword}{def }devices(self) -\/> typing.Dict[str, \_iChromeLaser]:}
+\DoxyCodeLine{00299         \textcolor{keywordflow}{return} self.\_lasers}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01342}{microscope.\+abc.\+Controller.\+devices()}}.
 
 
 

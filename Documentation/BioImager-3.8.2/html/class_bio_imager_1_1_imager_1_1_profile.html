@@ -181,7 +181,15 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00103">103</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  104</span>            {</div>
+<div class="line"><span class="lineno">  105</span>                FilePath = path;</div>
+<div class="line"><span class="lineno">  106</span>                <span class="keywordflow">if</span> (path != <span class="stringliteral">&quot;Default&quot;</span>)</div>
+<div class="line"><span class="lineno">  107</span>                {</div>
+<div class="line"><span class="lineno">  108</span>                    Name = Path.GetFileNameWithoutExtension(FilePath);</div>
+<div class="line"><span class="lineno">  109</span>                    DirName = Path.GetDirectoryName(FilePath);</div>
+<div class="line"><span class="lineno">  110</span>                }</div>
+<div class="line"><span class="lineno">  111</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -201,7 +209,23 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00113">113</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  114</span>            {</div>
+<div class="line"><span class="lineno">  115</span>                <span class="keywordtype">string</span>[] sts = File.ReadAllLines(FilePath);</div>
+<div class="line"><span class="lineno">  116</span>                <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> sts)</div>
+<div class="line"><span class="lineno">  117</span>                {</div>
+<div class="line"><span class="lineno">  118</span>                    <span class="keywordtype">string</span>[] ss = s.Split(<span class="charliteral">&#39;=&#39;</span>);</div>
+<div class="line"><span class="lineno">  119</span>                    <span class="keywordflow">if</span> (Settings.Default[ss[0]].GetType() == typeof(<span class="keywordtype">double</span>))</div>
+<div class="line"><span class="lineno">  120</span>                    {</div>
+<div class="line"><span class="lineno">  121</span>                        Settings.Default[ss[0]] = <span class="keywordtype">double</span>.Parse(ss[1]);</div>
+<div class="line"><span class="lineno">  122</span>                    }</div>
+<div class="line"><span class="lineno">  123</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  124</span>                        <span class="keywordflow">if</span> (Settings.Default[ss[0]].GetType() == typeof(<span class="keywordtype">string</span>))</div>
+<div class="line"><span class="lineno">  125</span>                    {</div>
+<div class="line"><span class="lineno">  126</span>                        Settings.Default[ss[0]] = ss[1];</div>
+<div class="line"><span class="lineno">  127</span>                    }</div>
+<div class="line"><span class="lineno">  128</span>                }</div>
+<div class="line"><span class="lineno">  129</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a18a88b62caa7bdf09977dfa9ac9e5f65" name="a18a88b62caa7bdf09977dfa9ac9e5f65"></a>
@@ -221,7 +245,16 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00092">92</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   93</span>            {</div>
+<div class="line"><span class="lineno">   94</span>                List&lt;string&gt; sts = <span class="keyword">new</span> List&lt;string&gt;();</div>
+<div class="line"><span class="lineno">   95</span>                <span class="keywordflow">foreach</span> (SettingsProperty currentProperty <span class="keywordflow">in</span> Settings.Default.Properties)</div>
+<div class="line"><span class="lineno">   96</span>                {</div>
+<div class="line"><span class="lineno">   97</span>                    <span class="keywordtype">string</span> s = currentProperty.Name + <span class="stringliteral">&quot;=&quot;</span> + Settings.Default[currentProperty.Name].ToString();</div>
+<div class="line"><span class="lineno">   98</span>                    sts.Add(s);</div>
+<div class="line"><span class="lineno">   99</span>                }</div>
+<div class="line"><span class="lineno">  100</span>                File.WriteAllLines(path, sts.ToArray());</div>
+<div class="line"><span class="lineno">  101</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a527e60186c05733debb9aa3c177afdaa" name="a527e60186c05733debb9aa3c177afdaa"></a>
@@ -240,7 +273,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_imager_8cs_source.html#l00131">131</a> of file <a class="el" href="_imager_8cs_source.html">Imager.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  132</span>            {</div>
+<div class="line"><span class="lineno">  133</span>                <span class="keywordflow">return</span> Name + <span class="stringliteral">&quot; &quot;</span> + DirName;</div>
+<div class="line"><span class="lineno">  134</span>            }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

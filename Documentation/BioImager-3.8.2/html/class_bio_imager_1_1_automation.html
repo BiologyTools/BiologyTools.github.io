@@ -219,7 +219,18 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00387">387</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  388</span>        {</div>
+<div class="line"><span class="lineno">  389</span>            m_GlobalHook = Hook.GlobalEvents();</div>
+<div class="line"><span class="lineno">  390</span>            m_GlobalHook.MouseDownExt += GlobalHookMouseDownExt;</div>
+<div class="line"><span class="lineno">  391</span>            m_GlobalHook.MouseUpExt += GlobalHookMouseUpExt;</div>
+<div class="line"><span class="lineno">  392</span>            m_GlobalHook.MouseMoveExt += GlobalHookMouseMoveExt;</div>
+<div class="line"><span class="lineno">  393</span>            m_GlobalHook.KeyPress += GlobalHookKeyPress;</div>
+<div class="line"><span class="lineno">  394</span>            m_GlobalHook.KeyUp += GlobalHookKeyUp;</div>
+<div class="line"><span class="lineno">  395</span>            m_GlobalHook.KeyDown += GlobalHookKeyDown;</div>
+<div class="line"><span class="lineno">  396</span>            m_GlobalHook.MouseWheel += GlobalHookMouseWheel; </div>
+<div class="line"><span class="lineno">  397</span>            input = <span class="keyword">new</span> InputSimulator();</div>
+<div class="line"><span class="lineno">  398</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -256,7 +267,13 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00469">469</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  470</span>        {</div>
+<div class="line"><span class="lineno">  471</span>            <span class="keywordflow">if</span> (Properties.ContainsKey(rec.Name))</div>
+<div class="line"><span class="lineno">  472</span>                Properties[rec.Name] = rec;</div>
+<div class="line"><span class="lineno">  473</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  474</span>                Properties.Add(rec.Name, rec);</div>
+<div class="line"><span class="lineno">  475</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abf0aacc1f9ca0ad260a6c2710f9813b1" name="abf0aacc1f9ca0ad260a6c2710f9813b1"></a>
@@ -292,6 +309,12 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The value of the property. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00450">450</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  451</span>        {</div>
+<div class="line"><span class="lineno">  452</span>            Recorder.AddLine(<span class="stringliteral">&quot;Automation.GetProperty(&quot;</span> + <span class="charliteral">&#39;&quot;&#39;</span> + prop + <span class="charliteral">&#39;&quot;&#39;</span> + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  453</span>            <span class="keywordflow">return</span> Properties[prop].Get();</div>
+<div class="line"><span class="lineno">  454</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_microscope_8cs_source.html#l00303">BioImager.Focus.GetFocus()</a>.</p>
 
 </div>
 </div>
@@ -327,7 +350,12 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00479">479</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  480</span>        {</div>
+<div class="line"><span class="lineno">  481</span>            Recording rec = (Recording)Properties[prop];</div>
+<div class="line"><span class="lineno">  482</span>            rec.Run();</div>
+<div class="line"><span class="lineno">  483</span>            Recorder.AddLine(<span class="stringliteral">&quot;Automation.RunRecording(&quot;</span> + <span class="charliteral">&#39;&quot;&#39;</span> + prop + <span class="charliteral">&#39;&quot;&#39;</span> + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  484</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4191d900725c4a9b9cd404592509ab99" name="a4191d900725c4a9b9cd404592509ab99"></a>
@@ -373,6 +401,13 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00459">459</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  460</span>        {</div>
+<div class="line"><span class="lineno">  461</span>            Recording rec = (Recording)Properties[prop];</div>
+<div class="line"><span class="lineno">  462</span>            rec.Set(val);</div>
+<div class="line"><span class="lineno">  463</span>            Recorder.AddLine(<span class="stringliteral">&quot;Automation.SetProperty(&quot;</span> + <span class="charliteral">&#39;&quot;&#39;</span> + prop + <span class="charliteral">&#39;&quot;&#39;</span> + <span class="stringliteral">&quot;,&quot;</span> + <span class="charliteral">&#39;&quot;&#39;</span> + val + <span class="charliteral">&#39;&quot;&#39;</span> + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  464</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_microscope_8cs_source.html#l00256">BioImager.Focus.SetFocus()</a>.</p>
 
 </div>
 </div>
@@ -406,7 +441,13 @@ Properties</h2></td></tr>
 </p>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00432">432</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  433</span>        {</div>
+<div class="line"><span class="lineno">  434</span>            recording = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  435</span>            recname = name;</div>
+<div class="line"><span class="lineno">  436</span>            rec = <span class="keyword">new</span> Recording();</div>
+<div class="line"><span class="lineno">  437</span>            rec.Name = recname;</div>
+<div class="line"><span class="lineno">  438</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6d48724f0c1e3a268d476c2df9d801eb" name="a6d48724f0c1e3a268d476c2df9d801eb"></a>
@@ -435,7 +476,11 @@ Properties</h2></td></tr>
 <p>It starts recording. </p>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00418">418</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  419</span>        {</div>
+<div class="line"><span class="lineno">  420</span>            recording = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  421</span>            rec = <span class="keyword">new</span> Recording();</div>
+<div class="line"><span class="lineno">  422</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af1482e180e7609969598366c59f41fbc" name="af1482e180e7609969598366c59f41fbc"></a>
@@ -464,7 +509,11 @@ Properties</h2></td></tr>
 <p>Stop recording the property and add it to the list of properties. </p>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00440">440</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  441</span>        {</div>
+<div class="line"><span class="lineno">  442</span>            recording = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  443</span>            Properties.Add(rec.Name,rec);</div>
+<div class="line"><span class="lineno">  444</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abab9f8563a9339c8ab9a01b12c45c830" name="abab9f8563a9339c8ab9a01b12c45c830"></a>
@@ -493,7 +542,12 @@ Properties</h2></td></tr>
 <p>It stops the recording and adds it to the list of recordings. </p>
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00424">424</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  425</span>        {</div>
+<div class="line"><span class="lineno">  426</span>            recording=<span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  427</span>            rec.Name = recname;</div>
+<div class="line"><span class="lineno">  428</span>            Recordings.Add(rec.Name,rec);</div>
+<div class="line"><span class="lineno">  429</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -663,7 +717,21 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00402">402</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  403</span>        {</div>
+<div class="line"><span class="lineno">  404</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  405</span>            {</div>
+<div class="line"><span class="lineno">  406</span>                <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  407</span>                {</div>
+<div class="line"><span class="lineno">  408</span>                    <span class="keywordflow">return</span> automation.FromPoint(<span class="keyword">new</span> Point(Cursor.Position.X, Cursor.Position.Y));</div>
+<div class="line"><span class="lineno">  409</span>                }</div>
+<div class="line"><span class="lineno">  410</span>                <span class="keywordflow">catch</span> (Exception)</div>
+<div class="line"><span class="lineno">  411</span>                {</div>
+<div class="line"><span class="lineno">  412</span> </div>
+<div class="line"><span class="lineno">  413</span>                }</div>
+<div class="line"><span class="lineno">  414</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  415</span>            }</div>
+<div class="line"><span class="lineno">  416</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae7c283c44fe5cface604b95d65020936" name="ae7c283c44fe5cface604b95d65020936"></a>
@@ -687,7 +755,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_automation_8cs_source.html#l00377">377</a> of file <a class="el" href="_automation_8cs_source.html">Automation.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  378</span>        {</div>
+<div class="line"><span class="lineno">  379</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> recording; }</div>
+<div class="line"><span class="lineno">  380</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

@@ -242,7 +242,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00016">16</a> of file <a class="el" href="_queue_linear_flood_filler_8cs_source.html">QueueLinearFloodFiller.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   16</span>: base(configSource) { }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -273,6 +274,8 @@ Additional Inherited Members</h2></td></tr>
 <p >param name="y"&gt;The y coordinate of the pixel whose byte index should be returned.</p>
 
 <p class="definition">Definition at line <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00207">207</a> of file <a class="el" href="_queue_linear_flood_filler_8cs_source.html">QueueLinearFloodFiller.cs</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00022">BioImager.QueueLinearFloodFiller.FloodFill()</a>.</p>
 
 </div>
 </div>
@@ -311,7 +314,10 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00257">257</a> of file <a class="el" href="_queue_linear_flood_filler_8cs_source.html">QueueLinearFloodFiller.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  258</span>        {</div>
+<div class="line"><span class="lineno">  259</span>            <span class="keywordflow">return</span> (bitmapStride * y) + (x * bitmapPixelFormatSize);</div>
+<div class="line"><span class="lineno">  260</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae413f3ddb1217fdc884773515321a4a7" name="ae413f3ddb1217fdc884773515321a4a7"></a>
@@ -359,7 +365,10 @@ Additional Inherited Members</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00268">268</a> of file <a class="el" href="_queue_linear_flood_filler_8cs_source.html">QueueLinearFloodFiller.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  269</span>        {</div>
+<div class="line"><span class="lineno">  270</span>            <span class="keywordflow">return</span> (bitmapWidth * y) + x;</div>
+<div class="line"><span class="lineno">  271</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac8d0e7790f8df341f8d4debcbc16728f" name="ac8d0e7790f8df341f8d4debcbc16728f"></a>
@@ -387,6 +396,63 @@ Additional Inherited Members</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00022">22</a> of file <a class="el" href="_queue_linear_flood_filler_8cs_source.html">QueueLinearFloodFiller.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>        {</div>
+<div class="line"><span class="lineno">   24</span>            watch.Reset();</div>
+<div class="line"><span class="lineno">   25</span>            watch.Start();</div>
+<div class="line"><span class="lineno">   26</span> </div>
+<div class="line"><span class="lineno">   27</span>            <span class="comment">//***Prepare for fill.</span></div>
+<div class="line"><span class="lineno">   28</span>            PrepareForFloodFill(pt);</div>
+<div class="line"><span class="lineno">   29</span> </div>
+<div class="line"><span class="lineno">   30</span>            ranges = <span class="keyword">new</span> FloodFillRangeQueue(((bitmapWidth + bitmapHeight) / 2) * 5);<span class="comment">//new Queue&lt;FloodFillRange&gt;();</span></div>
+<div class="line"><span class="lineno">   31</span> </div>
+<div class="line"><span class="lineno">   32</span>            <span class="comment">//***Get starting color.</span></div>
+<div class="line"><span class="lineno">   33</span>            <span class="keywordtype">int</span> x = (int)pt.X; <span class="keywordtype">int</span> y = (<span class="keywordtype">int</span>)pt.Y;</div>
+<div class="line"><span class="lineno">   34</span>            <span class="keywordtype">int</span> idx = CoordsToByteIndex(ref x, ref y);</div>
+<div class="line"><span class="lineno">   35</span>            startColor = bitmap.GetPixel((<span class="keywordtype">int</span>)pt.X,(<span class="keywordtype">int</span>)pt.Y);</div>
+<div class="line"><span class="lineno">   36</span> </div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordtype">bool</span>[] pixelsChecked = this.pixelsChecked;</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span>            <span class="comment">//***Do first call to floodfill.</span></div>
+<div class="line"><span class="lineno">   40</span>            LinearFill(ref x, ref y);</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>            <span class="comment">//***Call floodfill routine while floodfill ranges still exist on the queue</span></div>
+<div class="line"><span class="lineno">   43</span>            <span class="keywordflow">while</span> (ranges.<a class="code hl_property" href="class_bio_imager_1_1_flood_fill_range_queue.html#afa471285501923cc0cdf103fd910df5a">Count</a> &gt; 0)</div>
+<div class="line"><span class="lineno">   44</span>            {</div>
+<div class="line"><span class="lineno">   45</span>                <span class="comment">//**Get Next Range Off the Queue</span></div>
+<div class="line"><span class="lineno">   46</span>                FloodFillRange range = ranges.<a class="code hl_function" href="class_bio_imager_1_1_flood_fill_range_queue.html#a39c67294e355577a7249084949b69dce">Dequeue</a>();</div>
+<div class="line"><span class="lineno">   47</span> </div>
+<div class="line"><span class="lineno">   48</span>                <span class="comment">//**Check Above and Below Each Pixel in the Floodfill Range</span></div>
+<div class="line"><span class="lineno">   49</span>                <span class="keywordtype">int</span> downPxIdx = (bitmapWidth * (range.Y + 1)) + range.StartX;<span class="comment">//CoordsToPixelIndex(lFillLoc,y+1);</span></div>
+<div class="line"><span class="lineno">   50</span>                <span class="keywordtype">int</span> upPxIdx = (bitmapWidth * (range.Y - 1)) + range.StartX;<span class="comment">//CoordsToPixelIndex(lFillLoc, y - 1);</span></div>
+<div class="line"><span class="lineno">   51</span>                <span class="keywordtype">int</span> upY = range.Y - 1;<span class="comment">//so we can pass the y coord by ref</span></div>
+<div class="line"><span class="lineno">   52</span>                <span class="keywordtype">int</span> downY = range.Y + 1;</div>
+<div class="line"><span class="lineno">   53</span>                <span class="keywordtype">int</span> tempIdx;</div>
+<div class="line"><span class="lineno">   54</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = range.StartX; i &lt;= range.EndX; i++)</div>
+<div class="line"><span class="lineno">   55</span>                {</div>
+<div class="line"><span class="lineno">   56</span>                    <span class="comment">//*Start Fill Upwards</span></div>
+<div class="line"><span class="lineno">   57</span>                    <span class="comment">//if we&#39;re not above the top of the bitmap and the pixel above this one is within the color tolerance</span></div>
+<div class="line"><span class="lineno">   58</span>                    tempIdx = CoordsToByteIndex(ref i, ref upY);</div>
+<div class="line"><span class="lineno">   59</span>                    <span class="keywordflow">if</span> (range.Y &gt; 0 &amp;&amp; (!pixelsChecked[upPxIdx]) &amp;&amp; <a class="code hl_function" href="class_bio_imager_1_1_queue_linear_flood_filler.html#a94f6be5b7151c860d00106174c8abe89">CheckPixel</a>(ref tempIdx))</div>
+<div class="line"><span class="lineno">   60</span>                        LinearFill(ref i, ref upY);</div>
+<div class="line"><span class="lineno">   61</span> </div>
+<div class="line"><span class="lineno">   62</span>                    <span class="comment">//*Start Fill Downwards</span></div>
+<div class="line"><span class="lineno">   63</span>                    <span class="comment">//if we&#39;re not below the bottom of the bitmap and the pixel below this one is within the color tolerance</span></div>
+<div class="line"><span class="lineno">   64</span>                    tempIdx = CoordsToByteIndex(ref i, ref downY);</div>
+<div class="line"><span class="lineno">   65</span>                    <span class="keywordflow">if</span> (range.Y &lt; (bitmapHeight - 1) &amp;&amp; (!pixelsChecked[downPxIdx]) &amp;&amp; <a class="code hl_function" href="class_bio_imager_1_1_queue_linear_flood_filler.html#a94f6be5b7151c860d00106174c8abe89">CheckPixel</a>(ref tempIdx))</div>
+<div class="line"><span class="lineno">   66</span>                        LinearFill(ref i, ref downY);</div>
+<div class="line"><span class="lineno">   67</span>                    downPxIdx++;</div>
+<div class="line"><span class="lineno">   68</span>                    upPxIdx++;</div>
+<div class="line"><span class="lineno">   69</span>                }</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>            }</div>
+<div class="line"><span class="lineno">   72</span> </div>
+<div class="line"><span class="lineno">   73</span>            watch.Stop();</div>
+<div class="line"><span class="lineno">   74</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_flood_fill_range_queue_html_a39c67294e355577a7249084949b69dce"><div class="ttname"><a href="class_bio_imager_1_1_flood_fill_range_queue.html#a39c67294e355577a7249084949b69dce">BioImager.FloodFillRangeQueue.Dequeue</a></div><div class="ttdeci">FloodFillRange Dequeue()</div><div class="ttdoc">Removes and returns the FloodFillRange at the beginning of the queue.</div><div class="ttdef"><b>Definition:</b> <a href="_flood_fill_range_queue_8cs_source.html#l00050">FloodFillRangeQueue.cs:50</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_flood_fill_range_queue_html_afa471285501923cc0cdf103fd910df5a"><div class="ttname"><a href="class_bio_imager_1_1_flood_fill_range_queue.html#afa471285501923cc0cdf103fd910df5a">BioImager.FloodFillRangeQueue.Count</a></div><div class="ttdeci">int Count</div><div class="ttdoc">Returns the number of items currently in the queue.</div><div class="ttdef"><b>Definition:</b> <a href="_flood_fill_range_queue_8cs_source.html#l00013">FloodFillRangeQueue.cs:14</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_queue_linear_flood_filler_html_a94f6be5b7151c860d00106174c8abe89"><div class="ttname"><a href="class_bio_imager_1_1_queue_linear_flood_filler.html#a94f6be5b7151c860d00106174c8abe89">BioImager.QueueLinearFloodFiller.CheckPixel</a></div><div class="ttdeci">bool CheckPixel(ref int px)</div><div class="ttdef"><b>Definition:</b> <a href="_queue_linear_flood_filler_8cs_source.html#l00207">QueueLinearFloodFiller.cs:207</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_queue_linear_flood_filler_8cs_source.html#l00207">BioImager.QueueLinearFloodFiller.CheckPixel()</a>, <a class="el" href="_flood_fill_range_queue_8cs_source.html#l00014">BioImager.FloodFillRangeQueue.Count</a>, and <a class="el" href="_flood_fill_range_queue_8cs_source.html#l00050">BioImager.FloodFillRangeQueue.Dequeue()</a>.</p>
 
 </div>
 </div>

@@ -317,6 +317,43 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#aa83a5fbd2c9d16bd7af0ad180702b365">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00186">186</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  189</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  190</span>        self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  191</span>        self._handle = xiapi.Camera()</div>
+<div class="line"><span class="lineno">  192</span>        self._img = xiapi.Image()</div>
+<div class="line"><span class="lineno">  193</span>        self._serial_number = serial_number</div>
+<div class="line"><span class="lineno">  194</span>        self._sensor_shape = (0, 0)</div>
+<div class="line"><span class="lineno">  195</span>        self._roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(<span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  196</span>        self._binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(1, 1)</div>
+<div class="line"><span class="lineno">  197</span> </div>
+<div class="line"><span class="lineno">  198</span>        <span class="comment"># When using the Settings system, enums are not really enums</span></div>
+<div class="line"><span class="lineno">  199</span>        <span class="comment"># and even when using lists we get indices sent back and forth</span></div>
+<div class="line"><span class="lineno">  200</span>        <span class="comment"># (works fine only when using EnumInt.  The gymnastic here</span></div>
+<div class="line"><span class="lineno">  201</span>        <span class="comment"># makes it work with the rest of enums which are there to make</span></div>
+<div class="line"><span class="lineno">  202</span>        <span class="comment"># it work with TriggerTargetMixin.</span></div>
+<div class="line"><span class="lineno">  203</span>        trg_source_names = [x.name <span class="keywordflow">for</span> x <span class="keywordflow">in</span> TrgSourceMap]</div>
+<div class="line"><span class="lineno">  204</span> </div>
+<div class="line"><span class="lineno">  205</span>        <span class="keyword">def </span>_trigger_source_setter(index: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  206</span>            trigger_mode = TrgSourceMap[trg_source_names[index]].value</div>
+<div class="line"><span class="lineno">  207</span>            self.set_trigger(trigger_mode, self.trigger_mode)</div>
+<div class="line"><span class="lineno">  208</span> </div>
+<div class="line"><span class="lineno">  209</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  210</span>            <span class="stringliteral">&quot;trigger source&quot;</span>,</div>
+<div class="line"><span class="lineno">  211</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keyword">lambda</span>: TrgSourceMap(self.trigger_type).name,</div>
+<div class="line"><span class="lineno">  213</span>            _trigger_source_setter,</div>
+<div class="line"><span class="lineno">  214</span>            trg_source_names,</div>
+<div class="line"><span class="lineno">  215</span>        )</div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>        self.initialize()</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_binning_html"><div class="ttname"><a href="classmicroscope_1_1_binning.html">microscope.Binning</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00137">__init__.py:137</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_r_o_i_html"><div class="ttname"><a href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00144">__init__.py:144</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>, <a class="el" href="ximea_8py_source.html#l00192">microscope.cameras.ximea.XimeaCamera._img</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="ximea_8py_source.html#l00194">microscope.cameras.ximea.XimeaCamera._sensor_shape</a>, <a class="el" href="andorsdk3_8py_source.html#l00296">microscope.cameras.andorsdk3.AndorSDK3._serial_number</a>, <a class="el" href="ximea_8py_source.html#l00193">microscope.cameras.ximea.XimeaCamera._serial_number</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="abc_8py_source.html#l00339">microscope.abc.Device.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00230">microscope.testsuite.devices.TestFloatingDevice.initialize()</a>, <a class="el" href="__utils_8py_source.html#l00065">microscope._utils.OnlyTriggersOnceOnSoftwareMixin.set_trigger()</a>, <a class="el" href="__utils_8py_source.html#l00095">microscope._utils.OnlyTriggersBulbOnSoftwareMixin.set_trigger()</a>, <a class="el" href="abc_8py_source.html#l00249">microscope.abc.TriggerTargetMixin.set_trigger()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, <a class="el" href="atmcd_8py_source.html#l01770">microscope.cameras.atmcd.AndorAtmcd.set_trigger()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, <a class="el" href="ximea_8py_source.html#l00457">microscope.cameras.ximea.XimeaCamera.set_trigger()</a>, <a class="el" href="coolled_8py_source.html#l00212">microscope.controllers.coolled._CoolLEDChannel.set_trigger()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00228">microscope.controllers.toptica._iChromeLaser.set_trigger()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00183">microscope.lights.deepstar.DeepstarLaser.set_trigger()</a>, <a class="el" href="lights_2obis_8py_source.html#l00204">microscope.lights.obis.ObisLaser.set_trigger()</a>, <a class="el" href="picam_8py_source.html#l00193">microscope.cameras.picam.PiCamera.set_trigger()</a>, <a class="el" href="alpao_8py_source.html#l00134">microscope.mirror.alpao.AlpaoDeformableMirror.set_trigger()</a>, <a class="el" href="__utils_8py_source.html#l00060">microscope._utils.OnlyTriggersOnceOnSoftwareMixin.trigger_mode()</a>, <a class="el" href="__utils_8py_source.html#l00090">microscope._utils.OnlyTriggersBulbOnSoftwareMixin.trigger_mode()</a>, <a class="el" href="abc_8py_source.html#l00238">microscope.abc.TriggerTargetMixin.trigger_mode()</a>, <a class="el" href="andorsdk3_8py_source.html#l00577">microscope.cameras.andorsdk3.AndorSDK3.trigger_mode()</a>, <a class="el" href="atmcd_8py_source.html#l01761">microscope.cameras.atmcd.AndorAtmcd.trigger_mode()</a>, <a class="el" href="picam_8py_source.html#l00209">microscope.cameras.picam.PiCamera.trigger_mode()</a>, <a class="el" href="pvcam_8py_source.html#l01876">microscope.cameras.pvcam.PVCamera.trigger_mode()</a>, <a class="el" href="ximea_8py_source.html#l00434">microscope.cameras.ximea.XimeaCamera.trigger_mode()</a>, <a class="el" href="coolled_8py_source.html#l00207">microscope.controllers.coolled._CoolLEDChannel.trigger_mode()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00216">microscope.controllers.toptica._iChromeLaser.trigger_mode()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00178">microscope.lights.deepstar.DeepstarLaser.trigger_mode()</a>, <a class="el" href="lights_2obis_8py_source.html#l00199">microscope.lights.obis.ObisLaser.trigger_mode()</a>, <a class="el" href="alpao_8py_source.html#l00121">microscope.mirror.alpao.AlpaoDeformableMirror.trigger_mode()</a>, <a class="el" href="__utils_8py_source.html#l00056">microscope._utils.OnlyTriggersOnceOnSoftwareMixin.trigger_type()</a>, <a class="el" href="__utils_8py_source.html#l00086">microscope._utils.OnlyTriggersBulbOnSoftwareMixin.trigger_type()</a>, <a class="el" href="abc_8py_source.html#l00243">microscope.abc.TriggerTargetMixin.trigger_type()</a>, <a class="el" href="andorsdk3_8py_source.html#l00582">microscope.cameras.andorsdk3.AndorSDK3.trigger_type()</a>, <a class="el" href="atmcd_8py_source.html#l01765">microscope.cameras.atmcd.AndorAtmcd.trigger_type()</a>, <a class="el" href="picam_8py_source.html#l00217">microscope.cameras.picam.PiCamera.trigger_type()</a>, <a class="el" href="pvcam_8py_source.html#l01880">microscope.cameras.pvcam.PVCamera.trigger_type()</a>, <a class="el" href="ximea_8py_source.html#l00445">microscope.cameras.ximea.XimeaCamera.trigger_type()</a>, <a class="el" href="coolled_8py_source.html#l00190">microscope.controllers.coolled._CoolLEDChannel.trigger_type()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00220">microscope.controllers.toptica._iChromeLaser.trigger_type()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00174">microscope.lights.deepstar.DeepstarLaser.trigger_type()</a>, <a class="el" href="lights_2obis_8py_source.html#l00195">microscope.lights.obis.ObisLaser.trigger_type()</a>, and <a class="el" href="alpao_8py_source.html#l00125">microscope.mirror.alpao.AlpaoDeformableMirror.trigger_type()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -340,6 +377,23 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a36952a38857bc6c8eb627b2d8b6b867b">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00246">246</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  246</span>    <span class="keyword">def </span>abort(self):</div>
+<div class="line"><span class="lineno">  247</span>        _logger.info(<span class="stringliteral">&quot;Disabling acquisition.&quot;</span>)</div>
+<div class="line"><span class="lineno">  248</span>        <span class="keywordflow">if</span> self._acquiring:</div>
+<div class="line"><span class="lineno">  249</span>            <span class="comment"># We set acquiring before calling stop_acquisition because</span></div>
+<div class="line"><span class="lineno">  250</span>            <span class="comment"># the fetch loop is still running and will raise errors 45</span></div>
+<div class="line"><span class="lineno">  251</span>            <span class="comment"># otherwise.</span></div>
+<div class="line"><span class="lineno">  252</span>            self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  253</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  254</span>                self._handle.stop_acquisition()</div>
+<div class="line"><span class="lineno">  255</span>            <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">  256</span>                self._acquiring = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  257</span>                <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">  258</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, and <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -362,6 +416,11 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a2048ad36a754b19e2488b77161a08e63">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00359">359</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  359</span>    <span class="keyword">def </span>get_cycle_time(self):</div>
+<div class="line"><span class="lineno">  360</span>        <span class="keywordflow">return</span> 1.0 / self._handle.get_framerate()</div>
+<div class="line"><span class="lineno">  361</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="ximea_8py_source.html#l00194">microscope.cameras.ximea.XimeaCamera._sensor_shape</a>, <a class="el" href="picam_8py_source.html#l00231">microscope.cameras.picam.PiCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00970">microscope.abc.Camera._set_roi()</a>, <a class="el" href="ximea_8py_source.html#l00394">microscope.cameras.ximea.XimeaCamera._set_roi()</a>, <a class="el" href="andorsdk3_8py_source.html#l00626">microscope.cameras.andorsdk3.AndorSDK3._set_roi()</a>, <a class="el" href="atmcd_8py_source.html#l01798">microscope.cameras.atmcd.AndorAtmcd._set_roi()</a>, <a class="el" href="pvcam_8py_source.html#l01650">microscope.cameras.pvcam.PVCamera._set_roi()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00305">microscope.simulators.SimulatedCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>, and <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
 
 </div>
 </div>
@@ -384,6 +443,12 @@ Args:
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a16e161a6bd61f3968a072971285eb017">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00355">355</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  355</span>    <span class="keyword">def </span>get_exposure_time(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  356</span>        <span class="comment"># exposure times are in us, so multiple by 1E-6 to get seconds.</span></div>
+<div class="line"><span class="lineno">  357</span>        <span class="keywordflow">return</span> self._handle.get_exposure() * 1.0e-6</div>
+<div class="line"><span class="lineno">  358</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, and <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>.</p>
 
 </div>
 </div>
@@ -409,6 +474,86 @@ Open the connection, connect properties and populate settings dict.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00259">259</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  259</span>    <span class="keyword">def </span>initialize(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  260</span>        <span class="stringliteral">&quot;&quot;&quot;Initialise the camera.</span></div>
+<div class="line"><span class="lineno">  261</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  262</span><span class="stringliteral">        Open the connection, connect properties </span><span class="keywordflow">and</span> populate settings dict.</div>
+<div class="line"><span class="lineno">  263</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  264</span><span class="stringliteral">        n_cameras = self._handle.get_number_devices()</span></div>
+<div class="line"><span class="lineno">  265</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  266</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self._serial_number <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  267</span>            <span class="keywordflow">if</span> n_cameras &gt; 1:</div>
+<div class="line"><span class="lineno">  268</span>                <span class="keywordflow">raise</span> TypeError(</div>
+<div class="line"><span class="lineno">  269</span>                    <span class="stringliteral">&quot;more than one Ximea camera found but the&quot;</span></div>
+<div class="line"><span class="lineno">  270</span>                    <span class="stringliteral">&quot; serial_number argument was not specified&quot;</span></div>
+<div class="line"><span class="lineno">  271</span>                )</div>
+<div class="line"><span class="lineno">  272</span>            _logger.info(</div>
+<div class="line"><span class="lineno">  273</span>                <span class="stringliteral">&quot;serial_number is not specified but there is only one&quot;</span></div>
+<div class="line"><span class="lineno">  274</span>                <span class="stringliteral">&quot; camera on the system&quot;</span></div>
+<div class="line"><span class="lineno">  275</span>            )</div>
+<div class="line"><span class="lineno">  276</span>            self._handle.open_device()</div>
+<div class="line"><span class="lineno">  277</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  278</span>            _logger.info(</div>
+<div class="line"><span class="lineno">  279</span>                <span class="stringliteral">&quot;opening camera with serial number &#39;%s&#39;&quot;</span>, self._serial_number</div>
+<div class="line"><span class="lineno">  280</span>            )</div>
+<div class="line"><span class="lineno">  281</span>            self._handle.open_device_by_SN(self._serial_number)</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>        self._sensor_shape = (</div>
+<div class="line"><span class="lineno">  284</span>            self._handle.get_width_maximum()</div>
+<div class="line"><span class="lineno">  285</span>            + self._handle.get_offsetX_maximum(),</div>
+<div class="line"><span class="lineno">  286</span>            self._handle.get_height_maximum()</div>
+<div class="line"><span class="lineno">  287</span>            + self._handle.get_offsetY_maximum(),</div>
+<div class="line"><span class="lineno">  288</span>        )</div>
+<div class="line"><span class="lineno">  289</span>        self._roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(</div>
+<div class="line"><span class="lineno">  290</span>            left=0,</div>
+<div class="line"><span class="lineno">  291</span>            top=0,</div>
+<div class="line"><span class="lineno">  292</span>            width=self._sensor_shape[0],</div>
+<div class="line"><span class="lineno">  293</span>            height=self._sensor_shape[1],</div>
+<div class="line"><span class="lineno">  294</span>        )</div>
+<div class="line"><span class="lineno">  295</span>        self.set_roi(self._roi)</div>
+<div class="line"><span class="lineno">  296</span> </div>
+<div class="line"><span class="lineno">  297</span>        self.set_trigger(</div>
+<div class="line"><span class="lineno">  298</span>            microscope.TriggerType.SOFTWARE, microscope.TriggerMode.ONCE</div>
+<div class="line"><span class="lineno">  299</span>        )</div>
+<div class="line"><span class="lineno">  300</span> </div>
+<div class="line"><span class="lineno">  301</span>        <span class="comment"># Add settings for the different temperature sensors.</span></div>
+<div class="line"><span class="lineno">  302</span>        <span class="keywordflow">for</span> temp_param_name <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">  303</span>            <span class="stringliteral">&quot;chip_temp&quot;</span>,</div>
+<div class="line"><span class="lineno">  304</span>            <span class="stringliteral">&quot;hous_temp&quot;</span>,</div>
+<div class="line"><span class="lineno">  305</span>            <span class="stringliteral">&quot;hous_back_side_temp&quot;</span>,</div>
+<div class="line"><span class="lineno">  306</span>            <span class="stringliteral">&quot;sensor_board_temp&quot;</span>,</div>
+<div class="line"><span class="lineno">  307</span>        ]:</div>
+<div class="line"><span class="lineno">  308</span>            get_temp_method = getattr(self._handle, <span class="stringliteral">&quot;get_&quot;</span> + temp_param_name)</div>
+<div class="line"><span class="lineno">  309</span>            <span class="comment"># Not all cameras have temperature sensors in all</span></div>
+<div class="line"><span class="lineno">  310</span>            <span class="comment"># locations.  We can&#39;t query if the sensor is there, we</span></div>
+<div class="line"><span class="lineno">  311</span>            <span class="comment"># can only try to read the temperature and skip that</span></div>
+<div class="line"><span class="lineno">  312</span>            <span class="comment"># temperature sensor if we get an exception.</span></div>
+<div class="line"><span class="lineno">  313</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  314</span>                get_temp_method()</div>
+<div class="line"><span class="lineno">  315</span>            <span class="keywordflow">except</span> xiapi.Xi_error <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  316</span>                <span class="comment"># Depending on XiAPI version, camera model, and</span></div>
+<div class="line"><span class="lineno">  317</span>                <span class="comment"># selected sensor, we might get any of these errors as</span></div>
+<div class="line"><span class="lineno">  318</span>                <span class="comment"># meaning that it&#39;s not available.  See</span></div>
+<div class="line"><span class="lineno">  319</span>                <span class="comment"># https://github.com/python-microscope/vendor-issues/issues/6</span></div>
+<div class="line"><span class="lineno">  320</span>                <span class="keywordflow">if</span> err.status <span class="keywordflow">not</span> <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">  321</span>                    _XI_NOT_SUPPORTED,</div>
+<div class="line"><span class="lineno">  322</span>                    _XI_NOT_IMPLEMENTED,</div>
+<div class="line"><span class="lineno">  323</span>                    _XI_UNKNOWN_PARAM,</div>
+<div class="line"><span class="lineno">  324</span>                ]:</div>
+<div class="line"><span class="lineno">  325</span>                    <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">  326</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  327</span>                self.add_setting(</div>
+<div class="line"><span class="lineno">  328</span>                    temp_param_name,</div>
+<div class="line"><span class="lineno">  329</span>                    <span class="stringliteral">&quot;float&quot;</span>,</div>
+<div class="line"><span class="lineno">  330</span>                    get_temp_method,</div>
+<div class="line"><span class="lineno">  331</span>                    <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  332</span>                    values=tuple(),</div>
+<div class="line"><span class="lineno">  333</span>                )</div>
+<div class="line"><span class="lineno">  334</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="ximea_8py_source.html#l00194">microscope.cameras.ximea.XimeaCamera._sensor_shape</a>, <a class="el" href="andorsdk3_8py_source.html#l00296">microscope.cameras.andorsdk3.AndorSDK3._serial_number</a>, <a class="el" href="ximea_8py_source.html#l00193">microscope.cameras.ximea.XimeaCamera._serial_number</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="abc_8py_source.html#l00974">microscope.abc.Camera.set_roi()</a>, <a class="el" href="__utils_8py_source.html#l00065">microscope._utils.OnlyTriggersOnceOnSoftwareMixin.set_trigger()</a>, <a class="el" href="__utils_8py_source.html#l00095">microscope._utils.OnlyTriggersBulbOnSoftwareMixin.set_trigger()</a>, <a class="el" href="abc_8py_source.html#l00249">microscope.abc.TriggerTargetMixin.set_trigger()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, <a class="el" href="atmcd_8py_source.html#l01770">microscope.cameras.atmcd.AndorAtmcd.set_trigger()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, <a class="el" href="ximea_8py_source.html#l00457">microscope.cameras.ximea.XimeaCamera.set_trigger()</a>, <a class="el" href="coolled_8py_source.html#l00212">microscope.controllers.coolled._CoolLEDChannel.set_trigger()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00228">microscope.controllers.toptica._iChromeLaser.set_trigger()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00183">microscope.lights.deepstar.DeepstarLaser.set_trigger()</a>, <a class="el" href="lights_2obis_8py_source.html#l00204">microscope.lights.obis.ObisLaser.set_trigger()</a>, <a class="el" href="picam_8py_source.html#l00193">microscope.cameras.picam.PiCamera.set_trigger()</a>, and <a class="el" href="alpao_8py_source.html#l00134">microscope.mirror.alpao.AlpaoDeformableMirror.set_trigger()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -441,6 +586,15 @@ Open the connection, connect properties and populate settings dict.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00348">348</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  348</span>    <span class="keyword">def </span>set_exposure_time(self, value: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  349</span>        <span class="comment"># exposure times are set in us.</span></div>
+<div class="line"><span class="lineno">  350</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  351</span>            self._handle.set_exposure_direct(int(value * 1000000))</div>
+<div class="line"><span class="lineno">  352</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  353</span>            _logger.debug(<span class="stringliteral">&quot;set_exposure_time exception: %s&quot;</span>, err)</div>
+<div class="line"><span class="lineno">  354</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, and <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>.</p>
 
 </div>
 </div>
@@ -480,6 +634,28 @@ Open the connection, connect properties and populate settings dict.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00455">455</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  457</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  458</span>        <span class="keywordflow">if</span> tmode <span class="keywordflow">is</span> <span class="keywordflow">not</span> microscope.TriggerMode.ONCE:</div>
+<div class="line"><span class="lineno">  459</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  460</span>                <span class="stringliteral">&quot;%s not supported (only TriggerMode.ONCE)&quot;</span> % tmode</div>
+<div class="line"><span class="lineno">  461</span>            )</div>
+<div class="line"><span class="lineno">  462</span> </div>
+<div class="line"><span class="lineno">  463</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  464</span>            trg_source = TrgSourceMap(ttype)</div>
+<div class="line"><span class="lineno">  465</span>        <span class="keywordflow">except</span> ValueError:</div>
+<div class="line"><span class="lineno">  466</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  467</span>                <span class="stringliteral">&quot;no support for trigger type %s&quot;</span> % ttype</div>
+<div class="line"><span class="lineno">  468</span>            )</div>
+<div class="line"><span class="lineno">  469</span> </div>
+<div class="line"><span class="lineno">  470</span>        <span class="keywordflow">if</span> trg_source.name != self._handle.get_trigger_source():</div>
+<div class="line"><span class="lineno">  471</span>            <span class="comment"># Changing trigger source requires stopping acquisition.</span></div>
+<div class="line"><span class="lineno">  472</span>            <span class="keyword">with</span> _disabled_camera(self):</div>
+<div class="line"><span class="lineno">  473</span>                self._handle.set_trigger_source(trg_source.name)</div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, and <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -500,6 +676,11 @@ Open the connection, connect properties and populate settings dict.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00365">365</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  365</span>    <span class="keyword">def </span>soft_trigger(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  366</span>        self.trigger()</div>
+<div class="line"><span class="lineno">  367</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00247">microscope.cameras.picam.PiCamera.get_cycle_time()</a>.</p>
 
 </div>
 </div>
@@ -522,6 +703,18 @@ Open the connection, connect properties and populate settings dict.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00434">434</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  434</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno">  435</span>        trg_selector = self._handle.get_trigger_selector()</div>
+<div class="line"><span class="lineno">  436</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  437</span>            tmode = TrgSelectorMap[trg_selector]</div>
+<div class="line"><span class="lineno">  438</span>        <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno">  439</span>            <span class="keywordflow">raise</span> Exception(</div>
+<div class="line"><span class="lineno">  440</span>                <span class="stringliteral">&quot;somehow set to unsupported trigger mode %s&quot;</span> % trg_selector</div>
+<div class="line"><span class="lineno">  441</span>            )</div>
+<div class="line"><span class="lineno">  442</span>        <span class="keywordflow">return</span> tmode.value</div>
+<div class="line"><span class="lineno">  443</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -544,6 +737,18 @@ Open the connection, connect properties and populate settings dict.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ximea_8py_source.html#l00445">445</a> of file <a class="el" href="ximea_8py_source.html">ximea.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  445</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno">  446</span>        trg_source = self._handle.get_trigger_source()</div>
+<div class="line"><span class="lineno">  447</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  448</span>            ttype = TrgSourceMap[trg_source]</div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno">  450</span>            <span class="keywordflow">raise</span> Exception(</div>
+<div class="line"><span class="lineno">  451</span>                <span class="stringliteral">&quot;somehow set to unsupported trigger type %s&quot;</span> % trg_source</div>
+<div class="line"><span class="lineno">  452</span>            )</div>
+<div class="line"><span class="lineno">  453</span>        <span class="keywordflow">return</span> ttype.value</div>
+<div class="line"><span class="lineno">  454</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>

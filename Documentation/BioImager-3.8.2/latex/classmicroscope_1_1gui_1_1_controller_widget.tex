@@ -39,6 +39,34 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00075}{75}} of file \mbox{\h
 Definition at line \mbox{\hyperlink{gui_8py_source_l00084}{84}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00086     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00087         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00088         self.\_device = device}
+\DoxyCodeLine{00089 }
+\DoxyCodeLine{00090         self.\_button2window: typing.Dict[}
+\DoxyCodeLine{00091             QtWidgets.QPushButton, typing.Optional[QtWidgets.QMainWindow]}
+\DoxyCodeLine{00092         ] = \{\}}
+\DoxyCodeLine{00093         self.\_button2name: typing.Dict[QtWidgets.QPushButton, str] = \{\}}
+\DoxyCodeLine{00094 }
+\DoxyCodeLine{00095         self.\_button\_grp = QtWidgets.QButtonGroup(self)}
+\DoxyCodeLine{00096         self.\_button\_grp.setExclusive(\textcolor{keyword}{False})}
+\DoxyCodeLine{00097         \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} self.\_device.devices.keys():}
+\DoxyCodeLine{00098             button = QtWidgets.QPushButton(name, parent=self)}
+\DoxyCodeLine{00099             button.setCheckable(\textcolor{keyword}{True})}
+\DoxyCodeLine{00100             self.\_button\_grp.addButton(button)}
+\DoxyCodeLine{00101             self.\_button2name[button] = name}
+\DoxyCodeLine{00102             self.\_button2window[button] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00103         self.\_button\_grp.buttonToggled.connect(self.toggleDeviceWidget)}
+\DoxyCodeLine{00104 }
+\DoxyCodeLine{00105         layout = QtWidgets.QVBoxLayout()}
+\DoxyCodeLine{00106         \textcolor{keywordflow}{for} button \textcolor{keywordflow}{in} self.\_button\_grp.buttons():}
+\DoxyCodeLine{00107             layout.addWidget(button)}
+\DoxyCodeLine{00108         self.setLayout(layout)}
+\DoxyCodeLine{00109 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1_controller_widget_a522ca0ee8a7632b93012497804502b2d}\label{classmicroscope_1_1gui_1_1_controller_widget_a522ca0ee8a7632b93012497804502b2d}} 
@@ -51,6 +79,29 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00084}{84}} of file \mbox{\h
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00110}{110}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00112     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00113         \textcolor{keywordflow}{if} checked:}
+\DoxyCodeLine{00114             device = self.\_device.devices[self.\_button2name[button]]}
+\DoxyCodeLine{00115             widget\_cls = \_guess\_device\_widget(device)}
+\DoxyCodeLine{00116             widget = widget\_cls(device)}
+\DoxyCodeLine{00117             window = MainWindow(widget, parent=self)}
+\DoxyCodeLine{00118             self.\_button2window[button] = window}
+\DoxyCodeLine{00119             window.show()}
+\DoxyCodeLine{00120         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00121             window = self.\_button2window[button]}
+\DoxyCodeLine{00122             \textcolor{keywordflow}{if} window \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00123                 \_logger.error(}
+\DoxyCodeLine{00124                     \textcolor{stringliteral}{"{}unchecking subdevice button but there's no window"{}}}
+\DoxyCodeLine{00125                 )}
+\DoxyCodeLine{00126             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00127                 window.close()}
+\DoxyCodeLine{00128                 self.\_button2window[button] = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130 }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

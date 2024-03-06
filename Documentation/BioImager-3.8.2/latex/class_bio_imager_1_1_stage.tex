@@ -72,6 +72,19 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00020}{20}} of file 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00027}{27}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00028         \{}
+\DoxyCodeLine{00029             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00030             \{}
+\DoxyCodeLine{00031                 PointD d = \mbox{\hyperlink{class_bio_imager_1_1_stage_a20fce9f3b88830c36ce0cd47df783da8}{GetPosition}}(\textcolor{keyword}{true});}
+\DoxyCodeLine{00032                 x = d.X;}
+\DoxyCodeLine{00033                 y = d.Y;}
+\DoxyCodeLine{00034                 \mbox{\hyperlink{class_bio_imager_1_1_stage_a5744af87c4ecf45b1ecfc3dc16397be2}{UpdateSWLimit}}();}
+\DoxyCodeLine{00035             \}}
+\DoxyCodeLine{00036         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_ab13529b062fa5dbbc6836f7dfb25b078}\label{class_bio_imager_1_1_stage_ab13529b062fa5dbbc6836f7dfb25b078}} 
 \index{BioImager.Stage@{BioImager.Stage}!Stage@{Stage}}
 \index{Stage@{Stage}!BioImager.Stage@{BioImager.Stage}}
@@ -82,6 +95,13 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00027}{27}} of file 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00037}{37}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00038         \{}
+\DoxyCodeLine{00039 }
+\DoxyCodeLine{00040         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -105,6 +125,41 @@ A PointD object.
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00144}{144}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145         \{}
+\DoxyCodeLine{00146             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{00147             \{}
+\DoxyCodeLine{00148                 PointD pd;}
+\DoxyCodeLine{00149                 Microscope.pMicroscope.GetPosition(out pd,\textcolor{keyword}{false});}
+\DoxyCodeLine{00150                 \textcolor{keywordflow}{return} pd;}
+\DoxyCodeLine{00151             \}}
+\DoxyCodeLine{00152             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00153             \textcolor{keywordflow}{if} (Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00154             \{}
+\DoxyCodeLine{00155                 PointD pd;}
+\DoxyCodeLine{00156                 PycroManager.GetPosition(out pd, \textcolor{keyword}{false});}
+\DoxyCodeLine{00157                 \textcolor{keywordflow}{return} pd;}
+\DoxyCodeLine{00158             \}}
+\DoxyCodeLine{00159             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00160             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00161             \{}
+\DoxyCodeLine{00162                 \mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{BioImager.MicroscopeConsole.Command}} com = BioImager.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{00163                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.GetStage,\textcolor{keyword}{null}));}
+\DoxyCodeLine{00164                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(com.doubles[0], com.doubles[1]);}
+\DoxyCodeLine{00165             \}}
+\DoxyCodeLine{00166             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{00167             \{}
+\DoxyCodeLine{00168                 \textcolor{keywordflow}{return} Microscope.sdk.GetPosition();}
+\DoxyCodeLine{00169             \}}
+\DoxyCodeLine{00170             \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(x, y);}
+\DoxyCodeLine{00171         \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00119}{Bio\+Imager.\+Stage.\+Get\+Position\+X()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00130}{Bio\+Imager.\+Stage.\+Get\+Position\+Y()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a7c8c161744a78b30af76204464c487ad}\label{class_bio_imager_1_1_stage_a7c8c161744a78b30af76204464c487ad}} 
 \index{BioImager.Stage@{BioImager.Stage}!GetPositionX@{GetPositionX}}
 \index{GetPositionX@{GetPositionX}!BioImager.Stage@{BioImager.Stage}}
@@ -124,6 +179,22 @@ The position of the object in the X axis.
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00119}{119}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00120         \{}
+\DoxyCodeLine{00121             x = \mbox{\hyperlink{class_bio_imager_1_1_stage_a20fce9f3b88830c36ce0cd47df783da8}{GetPosition}}(update).X;}
+\DoxyCodeLine{00122             \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{00123         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00144}{Bio\+Imager.\+Stage.\+Get\+Position()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00203}{Bio\+Imager.\+Stage.\+Move\+Left()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00194}{Bio\+Imager.\+Stage.\+Move\+Right()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a20587aade4ebdfc011cf1fa5443646ca}\label{class_bio_imager_1_1_stage_a20587aade4ebdfc011cf1fa5443646ca}} 
 \index{BioImager.Stage@{BioImager.Stage}!GetPositionY@{GetPositionY}}
@@ -145,6 +216,22 @@ The position of the object in the Y axis.
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00130}{130}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131         \{}
+\DoxyCodeLine{00132             y = \mbox{\hyperlink{class_bio_imager_1_1_stage_a20fce9f3b88830c36ce0cd47df783da8}{GetPosition}}(update).Y;}
+\DoxyCodeLine{00133             \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{00134         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00144}{Bio\+Imager.\+Stage.\+Get\+Position()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00185}{Bio\+Imager.\+Stage.\+Move\+Down()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00176}{Bio\+Imager.\+Stage.\+Move\+Up()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a8b84ed0aefe1d36e92f8d1b949599480}\label{class_bio_imager_1_1_stage_a8b84ed0aefe1d36e92f8d1b949599480}} 
 \index{BioImager.Stage@{BioImager.Stage}!MoveDown@{MoveDown}}
 \index{MoveDown@{MoveDown}!BioImager.Stage@{BioImager.Stage}}
@@ -161,6 +248,18 @@ Move the stage down by the specified amount of microns
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00185}{185}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00186         \{}
+\DoxyCodeLine{00187             \textcolor{keywordtype}{double} y = \mbox{\hyperlink{class_bio_imager_1_1_stage_a20587aade4ebdfc011cf1fa5443646ca}{GetPositionY}}(\textcolor{keyword}{true}) + m;}
+\DoxyCodeLine{00188             \mbox{\hyperlink{class_bio_imager_1_1_stage_ab83a0de9ebef1a1b5cac36e6cb7d6093}{SetPositionY}}(y);}
+\DoxyCodeLine{00189         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00130}{Bio\+Imager.\+Stage.\+Get\+Position\+Y()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00108}{Bio\+Imager.\+Stage.\+Set\+Position\+Y()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_ac1936e79912e77b8dcd73689a20ed841}\label{class_bio_imager_1_1_stage_ac1936e79912e77b8dcd73689a20ed841}} 
 \index{BioImager.Stage@{BioImager.Stage}!MoveLeft@{MoveLeft}}
@@ -179,6 +278,18 @@ Move the stage left by the specified amount of microns
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00203}{203}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00204         \{}
+\DoxyCodeLine{00205             \textcolor{keywordtype}{double} x = \mbox{\hyperlink{class_bio_imager_1_1_stage_a7c8c161744a78b30af76204464c487ad}{GetPositionX}}(\textcolor{keyword}{true}) -\/ m;}
+\DoxyCodeLine{00206             \mbox{\hyperlink{class_bio_imager_1_1_stage_ae97677b0a7582eccfefad42d8ed42d68}{SetPositionX}}(x);}
+\DoxyCodeLine{00207         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00119}{Bio\+Imager.\+Stage.\+Get\+Position\+X()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00099}{Bio\+Imager.\+Stage.\+Set\+Position\+X()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a55d5b544e29bbb50b8b7e83675df1a9d}\label{class_bio_imager_1_1_stage_a55d5b544e29bbb50b8b7e83675df1a9d}} 
 \index{BioImager.Stage@{BioImager.Stage}!MoveRight@{MoveRight}}
 \index{MoveRight@{MoveRight}!BioImager.Stage@{BioImager.Stage}}
@@ -196,6 +307,18 @@ Move the stage right by the specified amount of microns
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00194}{194}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195         \{}
+\DoxyCodeLine{00196             \textcolor{keywordtype}{double} x = \mbox{\hyperlink{class_bio_imager_1_1_stage_a7c8c161744a78b30af76204464c487ad}{GetPositionX}}(\textcolor{keyword}{true}) + m;}
+\DoxyCodeLine{00197             \mbox{\hyperlink{class_bio_imager_1_1_stage_ae97677b0a7582eccfefad42d8ed42d68}{SetPositionX}}(x);}
+\DoxyCodeLine{00198         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00119}{Bio\+Imager.\+Stage.\+Get\+Position\+X()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00099}{Bio\+Imager.\+Stage.\+Set\+Position\+X()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a873ab0191d190c370c3cf81ed440ef15}\label{class_bio_imager_1_1_stage_a873ab0191d190c370c3cf81ed440ef15}} 
 \index{BioImager.Stage@{BioImager.Stage}!MoveUp@{MoveUp}}
 \index{MoveUp@{MoveUp}!BioImager.Stage@{BioImager.Stage}}
@@ -212,6 +335,18 @@ Move the stage up by the specified amount of microns
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00176}{176}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00177         \{}
+\DoxyCodeLine{00178             \textcolor{keywordtype}{double} y = \mbox{\hyperlink{class_bio_imager_1_1_stage_a20587aade4ebdfc011cf1fa5443646ca}{GetPositionY}}(\textcolor{keyword}{true}) -\/ m;}
+\DoxyCodeLine{00179             \mbox{\hyperlink{class_bio_imager_1_1_stage_ab83a0de9ebef1a1b5cac36e6cb7d6093}{SetPositionY}}(y);}
+\DoxyCodeLine{00180         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00130}{Bio\+Imager.\+Stage.\+Get\+Position\+Y()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00108}{Bio\+Imager.\+Stage.\+Set\+Position\+Y()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a6be17e961ed1c407cbc79b1d79f3fbe3}\label{class_bio_imager_1_1_stage_a6be17e961ed1c407cbc79b1d79f3fbe3}} 
 \index{BioImager.Stage@{BioImager.Stage}!SetPosition@{SetPosition}}
@@ -232,6 +367,44 @@ The function sets the position of the stage to the given coordinates
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00068}{68}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069         \{}
+\DoxyCodeLine{00070             \textcolor{keywordflow}{if} (Recorder.recordMicroscope)}
+\DoxyCodeLine{00071                 Recorder.AddLine(\textcolor{stringliteral}{"{}Microscope.Stage.SetPosition("{}} + px + \textcolor{stringliteral}{"{},"{}} + py + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00072             x = px;}
+\DoxyCodeLine{00073             y = py;}
+\DoxyCodeLine{00074             \textcolor{keywordflow}{if}(Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{00075             \{}
+\DoxyCodeLine{00076                 Microscope.pMicroscope.SetPosition(\textcolor{keyword}{new} PointD(px, py));}
+\DoxyCodeLine{00077             \}}
+\DoxyCodeLine{00078             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00079             \textcolor{keywordflow}{if} (Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00080             \{}
+\DoxyCodeLine{00081                 PycroManager.SetPosition(\textcolor{keyword}{new} PointD(px, py));}
+\DoxyCodeLine{00082             \}}
+\DoxyCodeLine{00083             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00084             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00085             \{}
+\DoxyCodeLine{00086                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.SetStage, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[]\{px,py \}));}
+\DoxyCodeLine{00087             \}}
+\DoxyCodeLine{00088             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{00089             \{}
+\DoxyCodeLine{00090                 Microscope.sdk.SetPosition(\textcolor{keyword}{new} PointD(px, py));}
+\DoxyCodeLine{00091             \}}
+\DoxyCodeLine{00092             \textcolor{keywordflow}{if} (App.viewer != \textcolor{keyword}{null})}
+\DoxyCodeLine{00093                 App.viewer.UpdateView(\textcolor{keyword}{true});}
+\DoxyCodeLine{00094         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_view_8cs_source_l01023}{Bio\+Imager.\+Image\+View.\+Update\+View()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00099}{Bio\+Imager.\+Stage.\+Set\+Position\+X()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00108}{Bio\+Imager.\+Stage.\+Set\+Position\+Y()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_ae97677b0a7582eccfefad42d8ed42d68}\label{class_bio_imager_1_1_stage_ae97677b0a7582eccfefad42d8ed42d68}} 
 \index{BioImager.Stage@{BioImager.Stage}!SetPositionX@{SetPositionX}}
 \index{SetPositionX@{SetPositionX}!BioImager.Stage@{BioImager.Stage}}
@@ -249,6 +422,22 @@ This function sets the position of the object to the given x and y coordinates
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00099}{99}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100         \{}
+\DoxyCodeLine{00101             x = px;}
+\DoxyCodeLine{00102             \mbox{\hyperlink{class_bio_imager_1_1_stage_a6be17e961ed1c407cbc79b1d79f3fbe3}{SetPosition}}(px, y);}
+\DoxyCodeLine{00103         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00068}{Bio\+Imager.\+Stage.\+Set\+Position()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00203}{Bio\+Imager.\+Stage.\+Move\+Left()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00194}{Bio\+Imager.\+Stage.\+Move\+Right()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_ab83a0de9ebef1a1b5cac36e6cb7d6093}\label{class_bio_imager_1_1_stage_ab83a0de9ebef1a1b5cac36e6cb7d6093}} 
 \index{BioImager.Stage@{BioImager.Stage}!SetPositionY@{SetPositionY}}
 \index{SetPositionY@{SetPositionY}!BioImager.Stage@{BioImager.Stage}}
@@ -265,6 +454,22 @@ This function sets the position of the object to the given x and y coordinates
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00108}{108}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00109         \{}
+\DoxyCodeLine{00110             y = py;}
+\DoxyCodeLine{00111             \mbox{\hyperlink{class_bio_imager_1_1_stage_a6be17e961ed1c407cbc79b1d79f3fbe3}{SetPosition}}(x, py);}
+\DoxyCodeLine{00112         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00068}{Bio\+Imager.\+Stage.\+Set\+Position()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00185}{Bio\+Imager.\+Stage.\+Move\+Down()}}, and \mbox{\hyperlink{_microscope_8cs_source_l00176}{Bio\+Imager.\+Stage.\+Move\+Up()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a93eae2a85e5fb45ed4a3b6280134aa3e}\label{class_bio_imager_1_1_stage_a93eae2a85e5fb45ed4a3b6280134aa3e}} 
 \index{BioImager.Stage@{BioImager.Stage}!SetSWLimit@{SetSWLimit}}
@@ -289,6 +494,20 @@ It sets the limits of the stage movement
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00229}{229}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230         \{}
+\DoxyCodeLine{00231             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00232             \{}
+\DoxyCodeLine{00233                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00234                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.SetStageSWLimit, }
+\DoxyCodeLine{00235                     \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{xmin,xmax,ymin,ymax\}));}
+\DoxyCodeLine{00236             \}}
+\DoxyCodeLine{00237             \textcolor{keywordflow}{if} (Recorder.recordMicroscope)}
+\DoxyCodeLine{00238                 Recorder.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetSWLimit("{}} + xmin + \textcolor{stringliteral}{"{},"{}} + xmax + \textcolor{stringliteral}{"{},"{}} + ymin + \textcolor{stringliteral}{"{},"{}} + ymax + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00239         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_a5744af87c4ecf45b1ecfc3dc16397be2}\label{class_bio_imager_1_1_stage_a5744af87c4ecf45b1ecfc3dc16397be2}} 
 \index{BioImager.Stage@{BioImager.Stage}!UpdateSWLimit@{UpdateSWLimit}}
 \index{UpdateSWLimit@{UpdateSWLimit}!BioImager.Stage@{BioImager.Stage}}
@@ -303,6 +522,21 @@ It gets the software limits of the microscope stage.
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00210}{210}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00211         \{}
+\DoxyCodeLine{00212             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00213             \{}
+\DoxyCodeLine{00214                 \mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{BioImager.MicroscopeConsole.Command}} com = \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00215                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.GetStageSWLimit, \textcolor{keyword}{null}));}
+\DoxyCodeLine{00216                 minX = com.doubles[0];}
+\DoxyCodeLine{00217                 minY = com.doubles[1];}
+\DoxyCodeLine{00218                 maxX = com.doubles[2];}
+\DoxyCodeLine{00219                 maxY = com.doubles[3];}
+\DoxyCodeLine{00220             \}}
+\DoxyCodeLine{00221         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -369,6 +603,16 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00058}{58}} of file 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00044}{44}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00045         \{}
+\DoxyCodeLine{00046             \textcolor{keyword}{get}}
+\DoxyCodeLine{00047             \{}
+\DoxyCodeLine{00048                 \textcolor{keywordflow}{return} x;}
+\DoxyCodeLine{00049             \}}
+\DoxyCodeLine{00050         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_stage_ad5843d4e529e4d7e43e24904173d5f13}\label{class_bio_imager_1_1_stage_ad5843d4e529e4d7e43e24904173d5f13}} 
 \index{BioImager.Stage@{BioImager.Stage}!Y@{Y}}
 \index{Y@{Y}!BioImager.Stage@{BioImager.Stage}}
@@ -379,6 +623,16 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00044}{44}} of file 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00051}{51}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052         \{}
+\DoxyCodeLine{00053             \textcolor{keyword}{get}}
+\DoxyCodeLine{00054             \{}
+\DoxyCodeLine{00055                 \textcolor{keywordflow}{return} y;}
+\DoxyCodeLine{00056             \}}
+\DoxyCodeLine{00057         \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

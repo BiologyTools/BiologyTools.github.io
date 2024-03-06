@@ -199,7 +199,29 @@ position numbers.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00317">317</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  319</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  320</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  321</span>        self._device = device</div>
+<div class="line"><span class="lineno">  322</span> </div>
+<div class="line"><span class="lineno">  323</span>        self._button_grp = QtWidgets.QButtonGroup(self)</div>
+<div class="line"><span class="lineno">  324</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(self._device.n_positions):</div>
+<div class="line"><span class="lineno">  325</span>            button = QtWidgets.QPushButton(str(i + 1), parent=self)</div>
+<div class="line"><span class="lineno">  326</span>            button.setCheckable(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  327</span>            self._button_grp.addButton(button, i)</div>
+<div class="line"><span class="lineno">  328</span>        self._button_grp.button(self._device.position).setChecked(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span>        <span class="comment"># We use buttonClicked instead of idClicked because that</span></div>
+<div class="line"><span class="lineno">  331</span>        <span class="comment"># requires Qt 5.15 which is too recent.  Once we can use</span></div>
+<div class="line"><span class="lineno">  332</span>        <span class="comment"># idClicked, then the slot will automatically get the wanted</span></div>
+<div class="line"><span class="lineno">  333</span>        <span class="comment"># position.</span></div>
+<div class="line"><span class="lineno">  334</span>        self._button_grp.buttonClicked.connect(self.setFilterWheelPosition)</div>
+<div class="line"><span class="lineno">  335</span> </div>
+<div class="line"><span class="lineno">  336</span>        layout = QtWidgets.QVBoxLayout()</div>
+<div class="line"><span class="lineno">  337</span>        <span class="keywordflow">for</span> button <span class="keywordflow">in</span> self._button_grp.buttons():</div>
+<div class="line"><span class="lineno">  338</span>            layout.addWidget(button)</div>
+<div class="line"><span class="lineno">  339</span>        self.setLayout(layout)</div>
+<div class="line"><span class="lineno">  340</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -220,7 +242,11 @@ position numbers.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00341">341</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  341</span>    <span class="keyword">def </span>setFilterWheelPosition(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  342</span>        self._device.position = self._button_grp.checkedId()</div>
+<div class="line"><span class="lineno">  343</span> </div>
+<div class="line"><span class="lineno">  344</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

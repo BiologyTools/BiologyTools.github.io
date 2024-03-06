@@ -52,6 +52,22 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00083}{83}} of file \mbox{
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00101}{101}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00101     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs):}
+\DoxyCodeLine{00102         super().\_\_init\_\_(positions=Clarity.\_positions, **kwargs)}
+\DoxyCodeLine{00103         self.\_lock = Lock()}
+\DoxyCodeLine{00104         self.\_hid = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00105         self.add\_setting(}
+\DoxyCodeLine{00106             \textcolor{stringliteral}{"{}sectioning"{}},}
+\DoxyCodeLine{00107             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00108             self.get\_slide\_position,}
+\DoxyCodeLine{00109             \textcolor{keyword}{lambda} val: self.set\_slide\_position(val),}
+\DoxyCodeLine{00110             self.\_slide\_to\_sectioning,}
+\DoxyCodeLine{00111         )}
+\DoxyCodeLine{00112 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_aab8eab3434771417c60f402bd8245cf2}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_aab8eab3434771417c60f402bd8245cf2}} 
@@ -64,6 +80,15 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00101}{101}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00158}{158}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158     \textcolor{keyword}{def }close(self):}
+\DoxyCodeLine{00159         \textcolor{keywordflow}{if} self.is\_connected:}
+\DoxyCodeLine{00160             self.\_hid.close()}
+\DoxyCodeLine{00161             self.\_hid = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00162 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a06a5675ef75be50f7a32a33539c848cc}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a06a5675ef75be50f7a32a33539c848cc}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!get\_id@{get\_id}}
 \index{get\_id@{get\_id}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -73,6 +98,17 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00158}{158}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00163}{163}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00163     \textcolor{keyword}{def }get\_id(self):}
+\DoxyCodeLine{00164         \textcolor{keywordflow}{return} self.\_send\_command(\_\_GETSERIAL)}
+\DoxyCodeLine{00165 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a2b0829aec91ce2f5fe2a3e20b54d8c4c}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a2b0829aec91ce2f5fe2a3e20b54d8c4c}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!get\_slide\_position@{get\_slide\_position}}
@@ -85,6 +121,25 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00163}{163}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00182}{182}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00182     \textcolor{keyword}{def }get\_slide\_position(self):}
+\DoxyCodeLine{00183         \textcolor{stringliteral}{"{}"{}"{}Get the current slide position"{}"{}"{}}}
+\DoxyCodeLine{00184         result = self.\_send\_command(\_\_GETSLIDE)}
+\DoxyCodeLine{00185         \textcolor{keywordflow}{if} result \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00186             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}Slide position error."{}})}
+\DoxyCodeLine{00187         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{00188 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{thorlabs_8py_source_l00102}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+send\+\_\+command()}}, and \mbox{\hyperlink{aurox_8py_source_l00113}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+send\+\_\+command()}}.
+
+
+
+Referenced by \mbox{\hyperlink{aurox_8py_source_l00249}{microscope.\+filterwheels.\+aurox.\+Clarity.\+moving()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_ab2edb7d855b980a8b72d3402de5d9325}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_ab2edb7d855b980a8b72d3402de5d9325}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!get\_slides@{get\_slides}}
 \index{get\_slides@{get\_slides}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -95,6 +150,13 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00182}{182}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00198}{198}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00198     \textcolor{keyword}{def }get\_slides(self):}
+\DoxyCodeLine{00199         \textcolor{keywordflow}{return} self.\_slide\_to\_sectioning}
+\DoxyCodeLine{00200 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a6cd1a52e4f4822a04ff00911e4a4ad01}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a6cd1a52e4f4822a04ff00911e4a4ad01}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!get\_status@{get\_status}}
 \index{get\_status@{get\_status}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -104,6 +166,58 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00198}{198}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00201}{201}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00201     \textcolor{keyword}{def }get\_status(self):}
+\DoxyCodeLine{00202         \textcolor{comment}{\# Fetch 10 bytes VERSION[3],ONOFF,SHUTTER,SLIDE,FILT,CAL,??,??}}
+\DoxyCodeLine{00203         result = self.\_send\_command(\_\_FULLSTAT)}
+\DoxyCodeLine{00204         \textcolor{keywordflow}{if} result \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00205             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00206         \textcolor{comment}{\# A status dict to populate and return}}
+\DoxyCodeLine{00207         status = \{\}}
+\DoxyCodeLine{00208         \textcolor{comment}{\# A list to track states, any one of which mean the device is busy.}}
+\DoxyCodeLine{00209         busy = []}
+\DoxyCodeLine{00210         \textcolor{comment}{\# Disk running}}
+\DoxyCodeLine{00211         status[\textcolor{stringliteral}{"{}on"{}}] = result[3] == \_\_RUN}
+\DoxyCodeLine{00212         \textcolor{comment}{\# Door open}}
+\DoxyCodeLine{00213         \textcolor{comment}{\# Note -\/ it appears that the \_\_DOOROPEN and \_\_DOORCLOSED status states}}
+\DoxyCodeLine{00214         \textcolor{comment}{\# are switched, or that the DOOR is in fact an internal shutter. I'll}}
+\DoxyCodeLine{00215         \textcolor{comment}{\# interpret 'door' as the external door here, as that is what the user}}
+\DoxyCodeLine{00216         \textcolor{comment}{\# can see. When the external door is open, result[4] == \_\_DOORCLOSED}}
+\DoxyCodeLine{00217         door = result[4] == \_\_DOORCLOSED}
+\DoxyCodeLine{00218         status[\textcolor{stringliteral}{"{}door open"{}}] = door}
+\DoxyCodeLine{00219         busy.append(door)}
+\DoxyCodeLine{00220         \textcolor{comment}{\# Slide position}}
+\DoxyCodeLine{00221         slide = result[5]}
+\DoxyCodeLine{00222         \textcolor{keywordflow}{if} slide == \_\_SLDMID:}
+\DoxyCodeLine{00223             \textcolor{comment}{\# Slide is moving}}
+\DoxyCodeLine{00224             status[\textcolor{stringliteral}{"{}slide"{}}] = (\textcolor{keywordtype}{None}, \textcolor{stringliteral}{"{}moving"{}})}
+\DoxyCodeLine{00225             busy.append(\textcolor{keyword}{True})}
+\DoxyCodeLine{00226         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00227             status[\textcolor{stringliteral}{"{}slide"{}}] = (}
+\DoxyCodeLine{00228                 slide,}
+\DoxyCodeLine{00229                 self.\_slide\_to\_sectioning.get(slide, \textcolor{keywordtype}{None}),}
+\DoxyCodeLine{00230             )}
+\DoxyCodeLine{00231         \textcolor{comment}{\# Filter position}}
+\DoxyCodeLine{00232         filter = result[6]}
+\DoxyCodeLine{00233         \textcolor{keywordflow}{if} filter == \_\_FLTMID:}
+\DoxyCodeLine{00234             \textcolor{comment}{\# Filter is moving}}
+\DoxyCodeLine{00235             status[\textcolor{stringliteral}{"{}filter"{}}] = (\textcolor{keywordtype}{None}, \textcolor{stringliteral}{"{}moving"{}})}
+\DoxyCodeLine{00236             busy.append(\textcolor{keyword}{True})}
+\DoxyCodeLine{00237         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00238             status[\textcolor{stringliteral}{"{}filter"{}}] = result[6]}
+\DoxyCodeLine{00239         \textcolor{comment}{\# Calibration LED on}}
+\DoxyCodeLine{00240         status[\textcolor{stringliteral}{"{}calibration"{}}] = result[7] == \_\_CALON}
+\DoxyCodeLine{00241         \textcolor{comment}{\# Slide or filter moving}}
+\DoxyCodeLine{00242         status[\textcolor{stringliteral}{"{}busy"{}}] = any(busy)}
+\DoxyCodeLine{00243         \textcolor{keywordflow}{return} status}
+\DoxyCodeLine{00244 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a96c4d1d84370df027ad175c83eb7ea71}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a96c4d1d84370df027ad175c83eb7ea71}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!is\_connected@{is\_connected}}
@@ -115,6 +229,13 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00201}{201}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00149}{149}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00149     \textcolor{keyword}{def }is\_connected(self):}
+\DoxyCodeLine{00150         \textcolor{keywordflow}{return} self.\_hid \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00151 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a0a14531f6459c85af23220ea06223ff6}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a0a14531f6459c85af23220ea06223ff6}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!moving@{moving}}
 \index{moving@{moving}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -126,6 +247,36 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00149}{149}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00249}{249}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00249     \textcolor{keyword}{def }moving(self):}
+\DoxyCodeLine{00250         \textcolor{stringliteral}{"{}"{}"{}Report whether or not the device is between positions."{}"{}"{}}}
+\DoxyCodeLine{00251         \textcolor{comment}{\# Wait a short time to avoid false negatives when called}}
+\DoxyCodeLine{00252         \textcolor{comment}{\# immediately after initiating a move. Trial and error}}
+\DoxyCodeLine{00253         \textcolor{comment}{\# indicates a delay of 50ms is required.}}
+\DoxyCodeLine{00254         time.sleep(0.05)}
+\DoxyCodeLine{00255         \textcolor{comment}{\# Can return false negatives on long moves, so OR 5 readings.}}
+\DoxyCodeLine{00256         moving = \textcolor{keyword}{False}}
+\DoxyCodeLine{00257         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(5):}
+\DoxyCodeLine{00258             moving = moving \textcolor{keywordflow}{or} any(}
+\DoxyCodeLine{00259                 (}
+\DoxyCodeLine{00260                     self.get\_slide\_position() == \_\_SLDMID,}
+\DoxyCodeLine{00261                     self.get\_position() == \_\_FLTMID,}
+\DoxyCodeLine{00262                 )}
+\DoxyCodeLine{00263             )}
+\DoxyCodeLine{00264             time.sleep(0.01)}
+\DoxyCodeLine{00265         \textcolor{keywordflow}{return} moving}
+\DoxyCodeLine{00266 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{thorlabs_8py_source_l00102}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{aurox_8py_source_l00113}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{abc_8py_source_l01315}{microscope.\+abc.\+Filter\+Wheel.\+get\+\_\+position()}}, \mbox{\hyperlink{linkam_8py_source_l01359}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+MDSMixin.\+get\+\_\+position()}}, \mbox{\hyperlink{aurox_8py_source_l00182}{microscope.\+filterwheels.\+aurox.\+Clarity.\+get\+\_\+slide\+\_\+position()}}, and \mbox{\hyperlink{aurox_8py_source_l00249}{microscope.\+filterwheels.\+aurox.\+Clarity.\+moving()}}.
+
+
+
+Referenced by \mbox{\hyperlink{aurox_8py_source_l00249}{microscope.\+filterwheels.\+aurox.\+Clarity.\+moving()}}, and \mbox{\hyperlink{aurox_8py_source_l00189}{microscope.\+filterwheels.\+aurox.\+Clarity.\+set\+\_\+slide\+\_\+position()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a7f24361bf9c5d7cbb5465b9cfa120202}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a7f24361bf9c5d7cbb5465b9cfa120202}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!open@{open}}
 \index{open@{open}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -136,6 +287,16 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00249}{249}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00152}{152}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152     \textcolor{keyword}{def }open(self):}
+\DoxyCodeLine{00153         h = hid.device()}
+\DoxyCodeLine{00154         h.open(vendor\_id=\_\_VENDORID, product\_id=\_\_PRODUCTID)}
+\DoxyCodeLine{00155         h.set\_nonblocking(\textcolor{keyword}{False})}
+\DoxyCodeLine{00156         self.\_hid = h}
+\DoxyCodeLine{00157 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_aff0698ccf638d5bfc2cf61537c96169e}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_aff0698ccf638d5bfc2cf61537c96169e}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!set\_calibration@{set\_calibration}}
 \index{set\_calibration@{set\_calibration}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -146,6 +307,17 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00152}{152}} of file \mbox
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00175}{175}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175     \textcolor{keyword}{def }set\_calibration(self, state):}
+\DoxyCodeLine{00176         \textcolor{keywordflow}{if} state:}
+\DoxyCodeLine{00177             result = self.\_send\_command(\_\_SETCAL, \_\_CALON)}
+\DoxyCodeLine{00178         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00179             result = self.\_send\_command(\_\_SETCAL, \_\_CALOFF)}
+\DoxyCodeLine{00180         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{00181 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a0b7acee6056ccc8b0a8b2cebd59423fe}\label{classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity_a0b7acee6056ccc8b0a8b2cebd59423fe}} 
 \index{microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}!set\_slide\_position@{set\_slide\_position}}
 \index{set\_slide\_position@{set\_slide\_position}!microscope.filterwheels.aurox.Clarity@{microscope.filterwheels.aurox.Clarity}}
@@ -156,6 +328,23 @@ Definition at line \mbox{\hyperlink{aurox_8py_source_l00175}{175}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{aurox_8py_source_l00189}{189}} of file \mbox{\hyperlink{aurox_8py_source}{aurox.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189     \textcolor{keyword}{def }set\_slide\_position(self, position, blocking=True):}
+\DoxyCodeLine{00190         \textcolor{stringliteral}{"{}"{}"{}Set the slide position"{}"{}"{}}}
+\DoxyCodeLine{00191         result = self.\_send\_command(\_\_SETSLIDE, position)}
+\DoxyCodeLine{00192         \textcolor{keywordflow}{if} result \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00193             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}Slide position error."{}})}
+\DoxyCodeLine{00194         \textcolor{keywordflow}{while} blocking \textcolor{keywordflow}{and} self.moving():}
+\DoxyCodeLine{00195             \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00196         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{00197 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{thorlabs_8py_source_l00102}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{aurox_8py_source_l00113}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{aurox_8py_source_l00084}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+slide\+\_\+to\+\_\+sectioning}}, and \mbox{\hyperlink{aurox_8py_source_l00249}{microscope.\+filterwheels.\+aurox.\+Clarity.\+moving()}}.
 
 
 

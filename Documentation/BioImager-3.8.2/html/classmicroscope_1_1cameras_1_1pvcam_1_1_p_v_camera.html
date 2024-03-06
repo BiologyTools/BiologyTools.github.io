@@ -340,7 +340,56 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01413">1413</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1413</span>    <span class="keyword">def </span>__init__(self, index=0, **kwargs):</div>
+<div class="line"><span class="lineno"> 1414</span>        super().__init__(index=index, **kwargs)</div>
+<div class="line"><span class="lineno"> 1415</span>        <span class="comment"># Camera name in DLL.</span></div>
+<div class="line"><span class="lineno"> 1416</span>        self._pv_name = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1417</span>        <span class="comment"># Camera handle.</span></div>
+<div class="line"><span class="lineno"> 1418</span>        self.handle = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1419</span>        <span class="comment"># Sensor shape.</span></div>
+<div class="line"><span class="lineno"> 1420</span>        self.shape = (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1421</span>        <span class="comment"># Region of interest.</span></div>
+<div class="line"><span class="lineno"> 1422</span>        self.roi = (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1423</span>        <span class="comment"># Binning setting.</span></div>
+<div class="line"><span class="lineno"> 1424</span>        self.binning = <a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(1, 1)</div>
+<div class="line"><span class="lineno"> 1425</span>        self._trigger = TRIG_STROBED</div>
+<div class="line"><span class="lineno"> 1426</span>        self.exposure_time = 0.001  <span class="comment"># in seconds</span></div>
+<div class="line"><span class="lineno"> 1427</span>        <span class="comment"># Cycle time</span></div>
+<div class="line"><span class="lineno"> 1428</span>        self.cycle_time = self.exposure_time</div>
+<div class="line"><span class="lineno"> 1429</span>        <span class="comment"># Data buffer.</span></div>
+<div class="line"><span class="lineno"> 1430</span>        self._buffer = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1431</span>        <span class="comment"># This devices PVCAM parameters.</span></div>
+<div class="line"><span class="lineno"> 1432</span>        self._params = {}</div>
+<div class="line"><span class="lineno"> 1433</span>        <span class="comment"># Circular buffer length.</span></div>
+<div class="line"><span class="lineno"> 1434</span>        self._circ_buffer_length = 10</div>
+<div class="line"><span class="lineno"> 1435</span> </div>
+<div class="line"><span class="lineno"> 1436</span>        <span class="comment"># Add common settings.</span></div>
+<div class="line"><span class="lineno"> 1437</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1438</span>            <span class="stringliteral">&quot;exposure time&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1439</span>            <span class="stringliteral">&quot;float&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1440</span>            <span class="keyword">lambda</span>: self.exposure_time,</div>
+<div class="line"><span class="lineno"> 1441</span>            self.set_exposure_time,</div>
+<div class="line"><span class="lineno"> 1442</span>            <span class="keyword">lambda</span>: (1e-6, 1),</div>
+<div class="line"><span class="lineno"> 1443</span>        )</div>
+<div class="line"><span class="lineno"> 1444</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1445</span>            <span class="stringliteral">&quot;trigger mode&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1446</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1447</span>            <span class="keyword">lambda</span>: self._trigger,</div>
+<div class="line"><span class="lineno"> 1448</span>            <span class="keyword">lambda</span> value: setattr(self, <span class="stringliteral">&quot;_trigger&quot;</span>, value),</div>
+<div class="line"><span class="lineno"> 1449</span>            {k: v.label <span class="keywordflow">for</span> k, v <span class="keywordflow">in</span> TRIGGER_MODES.items()},</div>
+<div class="line"><span class="lineno"> 1450</span>        )</div>
+<div class="line"><span class="lineno"> 1451</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1452</span>            <span class="stringliteral">&quot;circular buffer length&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1453</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1454</span>            <span class="keyword">lambda</span>: self._circ_buffer_length,</div>
+<div class="line"><span class="lineno"> 1455</span>            <span class="keyword">lambda</span> value: setattr(self, <span class="stringliteral">&quot;_circ_buffer_length&quot;</span>, value),</div>
+<div class="line"><span class="lineno"> 1456</span>            (2, 100),</div>
+<div class="line"><span class="lineno"> 1457</span>        )</div>
+<div class="line"><span class="lineno"> 1458</span> </div>
+<div class="line"><span class="lineno"> 1459</span>        self.initialize()</div>
+<div class="line"><span class="lineno"> 1460</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_binning_html"><div class="ttname"><a href="classmicroscope_1_1_binning.html">microscope.Binning</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00137">__init__.py:137</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -366,6 +415,22 @@ be modified.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a36952a38857bc6c8eb627b2d8b6b867b">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01664">1664</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1664</span>    <span class="keyword">def </span>abort(self):</div>
+<div class="line"><span class="lineno"> 1665</span>        <span class="stringliteral">&quot;&quot;&quot;Abort acquisition.</span></div>
+<div class="line"><span class="lineno"> 1666</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1667</span><span class="stringliteral">        This should put the camera into a state </span><span class="keywordflow">in</span> which settings can</div>
+<div class="line"><span class="lineno"> 1668</span>        be modified.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1669</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self._trigger == TRIG_SOFT:</div>
+<div class="line"><span class="lineno"> 1670</span>            _exp_finish_seq(self.handle, CCS_CLEAR)</div>
+<div class="line"><span class="lineno"> 1671</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1672</span>            _exp_stop_cont(self.handle, CCS_CLEAR)</div>
+<div class="line"><span class="lineno"> 1673</span>        _exp_abort(self.handle, CCS_HALT)</div>
+<div class="line"><span class="lineno"> 1674</span>        self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno"> 1675</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01425">microscope.cameras.pvcam.PVCamera._trigger</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, and <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -391,6 +456,15 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a2048ad36a754b19e2488b77161a08e63">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01839">1839</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1839</span>    <span class="keyword">def </span>get_cycle_time(self):</div>
+<div class="line"><span class="lineno"> 1840</span>        <span class="stringliteral">&quot;&quot;&quot;Return the cycle time.</span></div>
+<div class="line"><span class="lineno"> 1841</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1842</span><span class="stringliteral">        Just </span><span class="keywordflow">return</span> self.cycle_time, which <span class="keywordflow">is</span> updated <span class="keyword">with</span> the real</div>
+<div class="line"><span class="lineno"> 1843</span>        value during _do_enable.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1844</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self.cycle_time</div>
+<div class="line"><span class="lineno"> 1845</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="picam_8py_source.html#l00066">microscope.cameras.picam.PiCamera.cycle_time</a>, and <a class="el" href="pvcam_8py_source.html#l01428">microscope.cameras.pvcam.PVCamera.cycle_time</a>.</p>
 
 </div>
 </div>
@@ -416,6 +490,15 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a16e161a6bd61f3968a072971285eb017">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01832">1832</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1832</span>    <span class="keyword">def </span>get_exposure_time(self):</div>
+<div class="line"><span class="lineno"> 1833</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current exposure time.</span></div>
+<div class="line"><span class="lineno"> 1834</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1835</span><span class="stringliteral">        Just </span><span class="keywordflow">return</span> self.exposure_time, which <span class="keywordflow">is</span> updated <span class="keyword">with</span> the real</div>
+<div class="line"><span class="lineno"> 1836</span>        value during _do_enable.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1837</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self.exposure_time</div>
+<div class="line"><span class="lineno"> 1838</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="picam_8py_source.html#l00065">microscope.cameras.picam.PiCamera.exposure_time</a>, and <a class="el" href="pvcam_8py_source.html#l01426">microscope.cameras.pvcam.PVCamera.exposure_time</a>.</p>
 
 </div>
 </div>
@@ -438,6 +521,14 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html#a03520e043c352c83536d735f641d285e">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01660">1660</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1660</span>    <span class="keyword">def </span>get_id(self):</div>
+<div class="line"><span class="lineno"> 1661</span>        <span class="stringliteral">&quot;&quot;&quot;Get hardware&#39;s unique identifier.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1662</span>        <span class="keywordflow">return</span> self._params[PARAM_HEAD_SER_NUM_ALPHA].current</div>
+<div class="line"><span class="lineno"> 1663</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01432">microscope.cameras.pvcam.PVCamera._params</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>
@@ -460,6 +551,147 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01676">1676</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1676</span>    <span class="keyword">def </span>initialize(self):</div>
+<div class="line"><span class="lineno"> 1677</span>        <span class="stringliteral">&quot;&quot;&quot;Initialise the camera.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1678</span>        <span class="comment"># Init the DLL if necessary.</span></div>
+<div class="line"><span class="lineno"> 1679</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> PVCamera.open_cameras:</div>
+<div class="line"><span class="lineno"> 1680</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1681</span>                _pvcam_init()</div>
+<div class="line"><span class="lineno"> 1682</span>            <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno"> 1683</span>                <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno"> 1684</span>        <span class="comment"># If no cameras detected, need to deinit DLL so it can be reinited to update count.</span></div>
+<div class="line"><span class="lineno"> 1685</span>        <span class="keywordflow">if</span> _cam_get_total().value == 0:</div>
+<div class="line"><span class="lineno"> 1686</span>            _pvcam_uninit()</div>
+<div class="line"><span class="lineno"> 1687</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(<span class="stringliteral">&quot;No cameras detected.&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1688</span>        <span class="comment"># Connect to the camera.</span></div>
+<div class="line"><span class="lineno"> 1689</span>        _logger.info(<span class="stringliteral">&quot;DLL version: %s&quot;</span>, _pvcam_get_ver().value)</div>
+<div class="line"><span class="lineno"> 1690</span>        self._pv_name = _cam_get_name(self._index).value</div>
+<div class="line"><span class="lineno"> 1691</span>        _logger.info(<span class="stringliteral">&quot;Initializing %s&quot;</span>, self._pv_name)</div>
+<div class="line"><span class="lineno"> 1692</span>        self.handle = _cam_open(self._pv_name, OPEN_EXCLUSIVE)</div>
+<div class="line"><span class="lineno"> 1693</span>        PVCamera.open_cameras.append(self.handle)</div>
+<div class="line"><span class="lineno"> 1694</span>        <span class="comment"># Set up event callbacks. Tried to use the resume callback to reinit camera</span></div>
+<div class="line"><span class="lineno"> 1695</span>        <span class="comment"># after power loss, but any attempt to close/reopen the camera or deinit the</span></div>
+<div class="line"><span class="lineno"> 1696</span>        <span class="comment"># DLL throws a Windows Error 0xE06D7363.</span></div>
+<div class="line"><span class="lineno"> 1697</span>        <span class="keyword">def </span>_cb(event):</div>
+<div class="line"><span class="lineno"> 1698</span>            _logger.info(<span class="stringliteral">&quot;Received %s event.&quot;</span>, event)</div>
+<div class="line"><span class="lineno"> 1699</span>            <span class="keywordflow">if</span> event == <span class="stringliteral">&quot;removed&quot;</span>:</div>
+<div class="line"><span class="lineno"> 1700</span>                _logger.critical(<span class="stringliteral">&quot;Can not re-init hardware. Exiting.&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1701</span>                exit(-1)</div>
+<div class="line"><span class="lineno"> 1702</span>            <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno"> 1703</span> </div>
+<div class="line"><span class="lineno"> 1704</span>        self._cbs = {</div>
+<div class="line"><span class="lineno"> 1705</span>            <span class="stringliteral">&quot;check&quot;</span>: CALLBACK(<span class="keyword">lambda</span>: _cb(<span class="stringliteral">&quot;check&quot;</span>)),</div>
+<div class="line"><span class="lineno"> 1706</span>            <span class="stringliteral">&quot;resumed&quot;</span>: CALLBACK(<span class="keyword">lambda</span>: _cb(<span class="stringliteral">&quot;resumed&quot;</span>)),</div>
+<div class="line"><span class="lineno"> 1707</span>            <span class="stringliteral">&quot;removed&quot;</span>: CALLBACK(<span class="keyword">lambda</span>: _cb(<span class="stringliteral">&quot;removed&quot;</span>)),</div>
+<div class="line"><span class="lineno"> 1708</span>        }</div>
+<div class="line"><span class="lineno"> 1709</span>        _cam_register_callback(</div>
+<div class="line"><span class="lineno"> 1710</span>            self.handle, PL_CALLBACK_CHECK_CAMS, self._cbs[<span class="stringliteral">&quot;check&quot;</span>]</div>
+<div class="line"><span class="lineno"> 1711</span>        )</div>
+<div class="line"><span class="lineno"> 1712</span>        _cam_register_callback(</div>
+<div class="line"><span class="lineno"> 1713</span>            self.handle, PL_CALLBACK_CAM_REMOVED, self._cbs[<span class="stringliteral">&quot;removed&quot;</span>]</div>
+<div class="line"><span class="lineno"> 1714</span>        )</div>
+<div class="line"><span class="lineno"> 1715</span>        _cam_register_callback(</div>
+<div class="line"><span class="lineno"> 1716</span>            self.handle, PL_CALLBACK_CAM_RESUMED, self._cbs[<span class="stringliteral">&quot;resumed&quot;</span>]</div>
+<div class="line"><span class="lineno"> 1717</span>        )</div>
+<div class="line"><span class="lineno"> 1718</span>        <span class="comment"># Repopulate _params.</span></div>
+<div class="line"><span class="lineno"> 1719</span>        self._params = {}</div>
+<div class="line"><span class="lineno"> 1720</span>        <span class="keywordflow">for</span> (param_id, name) <span class="keywordflow">in</span> _param_to_name.items():</div>
+<div class="line"><span class="lineno"> 1721</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1722</span>                p = PVParam.factory(self, param_id)</div>
+<div class="line"><span class="lineno"> 1723</span>            <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno"> 1724</span>                _logger.warn(<span class="stringliteral">&quot;Skipping unsupported parameter %s.&quot;</span>, name)</div>
+<div class="line"><span class="lineno"> 1725</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno"> 1726</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> p.dtype <span class="keywordflow">or</span> <span class="keywordflow">not</span> p.available:</div>
+<div class="line"><span class="lineno"> 1727</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno"> 1728</span>            self._params[param_id] = p</div>
+<div class="line"><span class="lineno"> 1729</span>            name = name[6:]</div>
+<div class="line"><span class="lineno"> 1730</span> </div>
+<div class="line"><span class="lineno"> 1731</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1732</span>                p.current</div>
+<div class="line"><span class="lineno"> 1733</span>            <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno"> 1734</span>                <span class="comment"># Raise these here, as the message is a tuple, not a str.</span></div>
+<div class="line"><span class="lineno"> 1735</span>                <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno"> 1736</span>            <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno"> 1737</span>                <span class="comment"># Test on err.args prevents indexing into empty tuple.</span></div>
+<div class="line"><span class="lineno"> 1738</span>                <span class="keywordflow">if</span> err.args <span class="keywordflow">and</span> <span class="keywordflow">not</span> err.args[0].startswith(<span class="stringliteral">&quot;pvcam error 49&quot;</span>):</div>
+<div class="line"><span class="lineno"> 1739</span>                    _logger.warn(</div>
+<div class="line"><span class="lineno"> 1740</span>                        <span class="stringliteral">&quot;Skipping parameter %s: not supported&quot;</span> <span class="stringliteral">&quot; in python.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1741</span>                        p.name,</div>
+<div class="line"><span class="lineno"> 1742</span>                    )</div>
+<div class="line"><span class="lineno"> 1743</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno"> 1744</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1745</span>                p.name,</div>
+<div class="line"><span class="lineno"> 1746</span>                p.dtype,</div>
+<div class="line"><span class="lineno"> 1747</span>                <span class="keyword">lambda</span> p=p: p.current,</div>
+<div class="line"><span class="lineno"> 1748</span>                p.set_value</div>
+<div class="line"><span class="lineno"> 1749</span>                <span class="keywordflow">if</span> p.access <span class="keywordflow">in</span> [ACC_READ_WRITE, ACC_WRITE_ONLY]</div>
+<div class="line"><span class="lineno"> 1750</span>                <span class="keywordflow">else</span> <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1751</span>                <span class="keyword">lambda</span> p=p: p.values,</div>
+<div class="line"><span class="lineno"> 1752</span>            )</div>
+<div class="line"><span class="lineno"> 1753</span>        <span class="keywordflow">if</span> PARAM_GAIN_MULT_FACTOR <span class="keywordflow">in</span> self._params:</div>
+<div class="line"><span class="lineno"> 1754</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1755</span>                <span class="stringliteral">&quot;gain&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1756</span>                self._params[PARAM_GAIN_MULT_FACTOR].dtype,</div>
+<div class="line"><span class="lineno"> 1757</span>                <span class="keyword">lambda</span>: self._params[PARAM_GAIN_MULT_FACTOR].current,</div>
+<div class="line"><span class="lineno"> 1758</span>                self._params[PARAM_GAIN_MULT_FACTOR].set_value,</div>
+<div class="line"><span class="lineno"> 1759</span>                self._params[PARAM_GAIN_MULT_FACTOR].values,</div>
+<div class="line"><span class="lineno"> 1760</span>            )</div>
+<div class="line"><span class="lineno"> 1761</span> </div>
+<div class="line"><span class="lineno"> 1762</span>        <span class="keywordflow">if</span> PARAM_PMODE <span class="keywordflow">in</span> self._params:</div>
+<div class="line"><span class="lineno"> 1763</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1764</span>                <span class="stringliteral">&quot;frame transfer mode&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1765</span>                self._params[PARAM_PMODE].dtype,</div>
+<div class="line"><span class="lineno"> 1766</span>                <span class="keyword">lambda</span>: self._params[PARAM_PMODE].current,</div>
+<div class="line"><span class="lineno"> 1767</span>                self._params[PARAM_PMODE].set_value,</div>
+<div class="line"><span class="lineno"> 1768</span>                self._params[PARAM_PMODE].values,</div>
+<div class="line"><span class="lineno"> 1769</span>            )</div>
+<div class="line"><span class="lineno"> 1770</span> </div>
+<div class="line"><span class="lineno"> 1771</span>        self.shape = (</div>
+<div class="line"><span class="lineno"> 1772</span>            self._params[PARAM_PAR_SIZE].current,</div>
+<div class="line"><span class="lineno"> 1773</span>            self._params[PARAM_SER_SIZE].current,</div>
+<div class="line"><span class="lineno"> 1774</span>        )</div>
+<div class="line"><span class="lineno"> 1775</span>        self.roi = <a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(0, 0, self.shape[0], self.shape[1])</div>
+<div class="line"><span class="lineno"> 1776</span> </div>
+<div class="line"><span class="lineno"> 1777</span>        <span class="comment"># Populate readout modes by iterating over readout ports and speed</span></div>
+<div class="line"><span class="lineno"> 1778</span>        <span class="comment"># table entries.</span></div>
+<div class="line"><span class="lineno"> 1779</span>        ro_ports = self._params[PARAM_READOUT_PORT].values</div>
+<div class="line"><span class="lineno"> 1780</span>        self._readout_modes = []</div>
+<div class="line"><span class="lineno"> 1781</span>        self._readout_mode_parameters = []</div>
+<div class="line"><span class="lineno"> 1782</span>        <span class="keywordflow">for</span> i, port <span class="keywordflow">in</span> ro_ports.items():</div>
+<div class="line"><span class="lineno"> 1783</span>            self._params[PARAM_READOUT_PORT].set_value(i)</div>
+<div class="line"><span class="lineno"> 1784</span>            ro_speeds = self._params[PARAM_SPDTAB_INDEX].values</div>
+<div class="line"><span class="lineno"> 1785</span>            <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(ro_speeds[0], ro_speeds[1] + 1):</div>
+<div class="line"><span class="lineno"> 1786</span>                self._params[PARAM_SPDTAB_INDEX].set_value(j)</div>
+<div class="line"><span class="lineno"> 1787</span>                bit_depth = self._params[PARAM_BIT_DEPTH].current</div>
+<div class="line"><span class="lineno"> 1788</span>                freq = 1e9 / self._params[PARAM_PIX_TIME].current</div>
+<div class="line"><span class="lineno"> 1789</span>                <span class="keywordflow">if</span> freq &gt; 1e6:</div>
+<div class="line"><span class="lineno"> 1790</span>                    freq *= 1e-6</div>
+<div class="line"><span class="lineno"> 1791</span>                    prefix = <span class="stringliteral">&quot;M&quot;</span></div>
+<div class="line"><span class="lineno"> 1792</span>                <span class="keywordflow">elif</span> freq &gt; 1e3:</div>
+<div class="line"><span class="lineno"> 1793</span>                    freq *= 1e-3</div>
+<div class="line"><span class="lineno"> 1794</span>                    prefix = <span class="stringliteral">&quot;k&quot;</span></div>
+<div class="line"><span class="lineno"> 1795</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1796</span>                    prefix = <span class="stringliteral">&quot;Hz&quot;</span></div>
+<div class="line"><span class="lineno"> 1797</span>                mode_str = <span class="stringliteral">&quot;%s, %s-bit, %s %sHz&quot;</span> % (</div>
+<div class="line"><span class="lineno"> 1798</span>                    port,</div>
+<div class="line"><span class="lineno"> 1799</span>                    bit_depth,</div>
+<div class="line"><span class="lineno"> 1800</span>                    freq,</div>
+<div class="line"><span class="lineno"> 1801</span>                    prefix,</div>
+<div class="line"><span class="lineno"> 1802</span>                )</div>
+<div class="line"><span class="lineno"> 1803</span>                self._readout_modes.append(mode_str)</div>
+<div class="line"><span class="lineno"> 1804</span>                self._readout_mode_parameters.append(</div>
+<div class="line"><span class="lineno"> 1805</span>                    {<span class="stringliteral">&quot;port&quot;</span>: i, <span class="stringliteral">&quot;spdtab_index&quot;</span>: j}</div>
+<div class="line"><span class="lineno"> 1806</span>                )</div>
+<div class="line"><span class="lineno"> 1807</span>        <span class="comment"># Set to default mode.</span></div>
+<div class="line"><span class="lineno"> 1808</span>        self.set_readout_mode(0)</div>
+<div class="line"><span class="lineno"> 1809</span>        self._params[PARAM_CLEAR_MODE].set_value(CLEAR_PRE_EXPOSURE_POST_SEQ)</div>
+<div class="line"><span class="lineno"> 1810</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_r_o_i_html"><div class="ttname"><a href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00144">__init__.py:144</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01704">microscope.cameras.pvcam.PVCamera._cbs</a>, <a class="el" href="abc_8py_source.html#l00216">microscope.abc.FloatingDeviceMixin._index</a>, <a class="el" href="pvcam_8py_source.html#l01432">microscope.cameras.pvcam.PVCamera._params</a>, <a class="el" href="pvcam_8py_source.html#l01416">microscope.cameras.pvcam.PVCamera._pv_name</a>, <a class="el" href="pvcam_8py_source.html#l01781">microscope.cameras.pvcam.PVCamera._readout_mode_parameters</a>, <a class="el" href="abc_8py_source.html#l00832">microscope.abc.Camera._readout_modes</a>, <a class="el" href="atmcd_8py_source.html#l01479">microscope.cameras.atmcd.AndorAtmcd._readout_modes</a>, <a class="el" href="pvcam_8py_source.html#l01780">microscope.cameras.pvcam.PVCamera._readout_modes</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>, <a class="el" href="picam_8py_source.html#l00063">microscope.cameras.picam.PiCamera.roi</a>, <a class="el" href="pvcam_8py_source.html#l01422">microscope.cameras.pvcam.PVCamera.roi</a>, <a class="el" href="abc_8py_source.html#l00876">microscope.abc.Camera.set_readout_mode()</a>, <a class="el" href="pvcam_8py_source.html#l01812">microscope.cameras.pvcam.PVCamera.set_readout_mode()</a>, and <a class="el" href="pvcam_8py_source.html#l01420">microscope.cameras.pvcam.PVCamera.shape</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -492,6 +724,12 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01828">1828</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1828</span>    <span class="keyword">def </span>set_exposure_time(self, value):</div>
+<div class="line"><span class="lineno"> 1829</span>        <span class="stringliteral">&quot;&quot;&quot;Set the exposure time to value.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1830</span>        self.exposure_time = value</div>
+<div class="line"><span class="lineno"> 1831</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="picam_8py_source.html#l00065">microscope.cameras.picam.PiCamera.exposure_time</a>, and <a class="el" href="pvcam_8py_source.html#l01426">microscope.cameras.pvcam.PVCamera.exposure_time</a>.</p>
 
 </div>
 </div>
@@ -524,6 +762,25 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#ace2ff70daf5a7c4a8ec53b375e5da73f">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01812">1812</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1812</span>    <span class="keyword">def </span>set_readout_mode(self, index):</div>
+<div class="line"><span class="lineno"> 1813</span>        <span class="stringliteral">&quot;&quot;&quot;Set the readout mode and transform.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1814</span>        params = self._readout_mode_parameters[index]</div>
+<div class="line"><span class="lineno"> 1815</span>        self._params[PARAM_READOUT_PORT].set_value(params[<span class="stringliteral">&quot;port&quot;</span>])</div>
+<div class="line"><span class="lineno"> 1816</span>        self._params[PARAM_SPDTAB_INDEX].set_value(params[<span class="stringliteral">&quot;spdtab_index&quot;</span>])</div>
+<div class="line"><span class="lineno"> 1817</span>        self._readout_mode = index</div>
+<div class="line"><span class="lineno"> 1818</span>        <span class="comment"># Update transforms, if available.</span></div>
+<div class="line"><span class="lineno"> 1819</span>        chip = self._params[PARAM_CHIP_NAME].current</div>
+<div class="line"><span class="lineno"> 1820</span>        new_readout_transform = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1821</span>        readout_map = READOUT_TRANSFORMS.get(chip, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1822</span>        <span class="keywordflow">if</span> readout_map:</div>
+<div class="line"><span class="lineno"> 1823</span>            new_readout_transform = readout_map.get(params[<span class="stringliteral">&quot;port&quot;</span>], <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1824</span>        <span class="keywordflow">if</span> new_readout_transform:</div>
+<div class="line"><span class="lineno"> 1825</span>            self._set_readout_transform(new_readout_transform)</div>
+<div class="line"><span class="lineno"> 1826</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01432">microscope.cameras.pvcam.PVCamera._params</a>, <a class="el" href="abc_8py_source.html#l00834">microscope.abc.Camera._readout_mode</a>, <a class="el" href="pvcam_8py_source.html#l01817">microscope.cameras.pvcam.PVCamera._readout_mode</a>, <a class="el" href="pvcam_8py_source.html#l01781">microscope.cameras.pvcam.PVCamera._readout_mode_parameters</a>, and <a class="el" href="abc_8py_source.html#l00897">microscope.abc.Camera._set_readout_transform()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, and <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -563,6 +820,19 @@ value during _do_enable.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01883">1883</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1885</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1886</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1887</span>            self._trigger = TRIGGER_TO_PV_MODE[(ttype, tmode)]</div>
+<div class="line"><span class="lineno"> 1888</span>        <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno"> 1889</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno"> 1890</span>                <span class="stringliteral">&quot;no PVCam mode for %s and %s&quot;</span> % (ttype, tmode)</div>
+<div class="line"><span class="lineno"> 1891</span>            )</div>
+<div class="line"><span class="lineno"> 1892</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01430">microscope.cameras.pvcam.PVCamera._buffer</a>, <a class="el" href="clients_8py_source.html#l00075">microscope.clients.DataClient._buffer</a>, <a class="el" href="pvcam_8py_source.html#l01425">microscope.cameras.pvcam.PVCamera._trigger</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, and <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -588,6 +858,38 @@ Deprecated, use trigger().
 Trigger an exposure in TRIG_SOFT mode.
 Log some debugging stats in other trigger modes.</pre> 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01847">1847</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1847</span>    <span class="keyword">def </span>soft_trigger(self):</div>
+<div class="line"><span class="lineno"> 1848</span>        <span class="stringliteral">&quot;&quot;&quot;Expose software triggering to a client.</span></div>
+<div class="line"><span class="lineno"> 1849</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1850</span><span class="stringliteral">        Deprecated, use trigger().</span></div>
+<div class="line"><span class="lineno"> 1851</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1852</span><span class="stringliteral">        Trigger an exposure </span><span class="keywordflow">in</span> TRIG_SOFT mode.</div>
+<div class="line"><span class="lineno"> 1853</span>        Log some debugging stats <span class="keywordflow">in</span> other trigger modes.<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1854</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self._trigger == TRIG_SOFT:</div>
+<div class="line"><span class="lineno"> 1855</span>            _logger.debug(<span class="stringliteral">&quot;Received soft trigger ...&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1856</span>            _exp_start_seq(</div>
+<div class="line"><span class="lineno"> 1857</span>                self.handle, self._buffer.ctypes.data_as(ctypes.c_void_p)</div>
+<div class="line"><span class="lineno"> 1858</span>            )</div>
+<div class="line"><span class="lineno"> 1859</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1860</span>            cstatus, cbytes, cframes = _exp_check_cont_status(self.handle)</div>
+<div class="line"><span class="lineno"> 1861</span>            status, bytes = _exp_check_status(self.handle)</div>
+<div class="line"><span class="lineno"> 1862</span> </div>
+<div class="line"><span class="lineno"> 1863</span>            _logger.debug(</div>
+<div class="line"><span class="lineno"> 1864</span>                <span class="stringliteral">&quot;Status checks\n&quot;</span></div>
+<div class="line"><span class="lineno"> 1865</span>                <span class="stringliteral">&quot;check_cont:   %s \t bytes: %d\tframes: %d\n&quot;</span></div>
+<div class="line"><span class="lineno"> 1866</span>                <span class="stringliteral">&quot;check_status: %s \t bytes: %d\t&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1867</span>                STATUS_STRINGS[cstatus.value],</div>
+<div class="line"><span class="lineno"> 1868</span>                cbytes.value,</div>
+<div class="line"><span class="lineno"> 1869</span>                cframes.value,</div>
+<div class="line"><span class="lineno"> 1870</span>                STATUS_STRINGS[status.value],</div>
+<div class="line"><span class="lineno"> 1871</span>                bytes.value,</div>
+<div class="line"><span class="lineno"> 1872</span>            )</div>
+<div class="line"><span class="lineno"> 1873</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno"> 1874</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01430">microscope.cameras.pvcam.PVCamera._buffer</a>, <a class="el" href="clients_8py_source.html#l00075">microscope.clients.DataClient._buffer</a>, <a class="el" href="pvcam_8py_source.html#l01425">microscope.cameras.pvcam.PVCamera._trigger</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00247">microscope.cameras.picam.PiCamera.get_cycle_time()</a>.</p>
 
 </div>
 </div>
@@ -610,6 +912,11 @@ Log some debugging stats in other trigger modes.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01876">1876</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1876</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno"> 1877</span>        <span class="keywordflow">return</span> PV_MODE_TO_TRIGGER[self._trigger][1]</div>
+<div class="line"><span class="lineno"> 1878</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -632,6 +939,11 @@ Log some debugging stats in other trigger modes.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01880">1880</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1880</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno"> 1881</span>        <span class="keywordflow">return</span> PV_MODE_TO_TRIGGER[self._trigger][0]</div>
+<div class="line"><span class="lineno"> 1882</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>
@@ -666,6 +978,8 @@ Log some debugging stats in other trigger modes.</pre>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01428">1428</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="pvcam_8py_source.html#l01839">microscope.cameras.pvcam.PVCamera.get_cycle_time()</a>.</p>
+
 </div>
 </div>
 <a id="ae6c18373d0a5618f6fdb9b65c56baf30" name="ae6c18373d0a5618f6fdb9b65c56baf30"></a>
@@ -682,6 +996,8 @@ Log some debugging stats in other trigger modes.</pre>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01426">1426</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01832">microscope.cameras.pvcam.PVCamera.get_exposure_time()</a>, and <a class="el" href="pvcam_8py_source.html#l01828">microscope.cameras.pvcam.PVCamera.set_exposure_time()</a>.</p>
+
 </div>
 </div>
 <a id="a3ac4e6327a2d2b810f4d9e9ed960392d" name="a3ac4e6327a2d2b810f4d9e9ed960392d"></a>
@@ -697,6 +1013,8 @@ Log some debugging stats in other trigger modes.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01418">1418</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>
@@ -738,6 +1056,8 @@ Log some debugging stats in other trigger modes.</pre>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01422">1422</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, and <a class="el" href="picam_8py_source.html#l00193">microscope.cameras.picam.PiCamera.set_trigger()</a>.</p>
+
 </div>
 </div>
 <a id="acfbeb6d7f67dd886b52c28e366cd51cc" name="acfbeb6d7f67dd886b52c28e366cd51cc"></a>
@@ -753,6 +1073,8 @@ Log some debugging stats in other trigger modes.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l01420">1420</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>.</p>
 
 </div>
 </div>

@@ -187,6 +187,17 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Display tracker properties in representation.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01411">1411</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1411</span>        <span class="keyword">def </span>__repr__(self):</div>
+<div class="line"><span class="lineno"> 1412</span>            <span class="stringliteral">&quot;&quot;&quot;Display tracker properties in representation.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1413</span>            <span class="keywordflow">return</span> <span class="stringliteral">&quot;refilling: %s, t: %s, dt: %s&quot;</span> % (</div>
+<div class="line"><span class="lineno"> 1414</span>                self.refilling,</div>
+<div class="line"><span class="lineno"> 1415</span>                self.t,</div>
+<div class="line"><span class="lineno"> 1416</span>                self.dt,</div>
+<div class="line"><span class="lineno"> 1417</span>            )</div>
+<div class="line"><span class="lineno"> 1418</span> </div>
+<div class="line"><span class="lineno"> 1419</span>    <span class="keyword">def </span>__init__(self, uid=&quot;&quot;, **kwargs):</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01390">microscope.stages.linkam.LinkamCMS.RefillTracker.dt</a>, <a class="el" href="linkam_8py_source.html#l01388">microscope.stages.linkam.LinkamCMS.RefillTracker.refilling</a>, and <a class="el" href="linkam_8py_source.html#l01392">microscope.stages.linkam.LinkamCMS.RefillTracker.t</a>.</p>
 
 </div>
 </div>
@@ -207,6 +218,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Represent this object as a dict for status queries.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01405">1405</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1405</span>        <span class="keyword">def </span>as_dict(self):</div>
+<div class="line"><span class="lineno"> 1406</span>            <span class="stringliteral">&quot;&quot;&quot;Represent this object as a dict for status queries.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1407</span>            <span class="keywordflow">return</span> dict(</div>
+<div class="line"><span class="lineno"> 1408</span>                refilling=self.refilling, last=self.t, between_last=self.dt</div>
+<div class="line"><span class="lineno"> 1409</span>            )</div>
+<div class="line"><span class="lineno"> 1410</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01390">microscope.stages.linkam.LinkamCMS.RefillTracker.dt</a>, <a class="el" href="linkam_8py_source.html#l01388">microscope.stages.linkam.LinkamCMS.RefillTracker.refilling</a>, and <a class="el" href="linkam_8py_source.html#l01392">microscope.stages.linkam.LinkamCMS.RefillTracker.t</a>.</p>
 
 </div>
 </div>
@@ -227,6 +246,13 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">End a refill: update status flag and last refill time.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01400">1400</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1400</span>        <span class="keyword">def </span>end_refill(self):</div>
+<div class="line"><span class="lineno"> 1401</span>            <span class="stringliteral">&quot;&quot;&quot;End a refill: update status flag and last refill time.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1402</span>            self.refilling = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno"> 1403</span>            self.t = datetime.datetime.now()</div>
+<div class="line"><span class="lineno"> 1404</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01388">microscope.stages.linkam.LinkamCMS.RefillTracker.refilling</a>, and <a class="el" href="linkam_8py_source.html#l01392">microscope.stages.linkam.LinkamCMS.RefillTracker.t</a>.</p>
 
 </div>
 </div>
@@ -247,6 +273,14 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Start a refill: update status flag and last cycle time.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01394">1394</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1394</span>        <span class="keyword">def </span>start_refill(self):</div>
+<div class="line"><span class="lineno"> 1395</span>            <span class="stringliteral">&quot;&quot;&quot;Start a refill: update status flag and last cycle time.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1396</span>            self.refilling = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno"> 1397</span>            <span class="keywordflow">if</span> self.t <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1398</span>                self.dt = datetime.datetime.now() - self.t</div>
+<div class="line"><span class="lineno"> 1399</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01390">microscope.stages.linkam.LinkamCMS.RefillTracker.dt</a>, <a class="el" href="linkam_8py_source.html#l01388">microscope.stages.linkam.LinkamCMS.RefillTracker.refilling</a>, and <a class="el" href="linkam_8py_source.html#l01392">microscope.stages.linkam.LinkamCMS.RefillTracker.t</a>.</p>
 
 </div>
 </div>
@@ -273,6 +307,8 @@ Static Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01390">1390</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01411">microscope.stages.linkam.LinkamCMS.RefillTracker.__repr__()</a>, <a class="el" href="linkam_8py_source.html#l01405">microscope.stages.linkam.LinkamCMS.RefillTracker.as_dict()</a>, and <a class="el" href="linkam_8py_source.html#l01394">microscope.stages.linkam.LinkamCMS.RefillTracker.start_refill()</a>.</p>
+
 </div>
 </div>
 <a id="ac15823893391979d1153f711ac034217" name="ac15823893391979d1153f711ac034217"></a>
@@ -297,6 +333,8 @@ Static Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01388">1388</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01411">microscope.stages.linkam.LinkamCMS.RefillTracker.__repr__()</a>, <a class="el" href="linkam_8py_source.html#l01405">microscope.stages.linkam.LinkamCMS.RefillTracker.as_dict()</a>, <a class="el" href="linkam_8py_source.html#l01400">microscope.stages.linkam.LinkamCMS.RefillTracker.end_refill()</a>, and <a class="el" href="linkam_8py_source.html#l01394">microscope.stages.linkam.LinkamCMS.RefillTracker.start_refill()</a>.</p>
+
 </div>
 </div>
 <a id="a610ac6c8dd858bea6061ba602f59caae" name="a610ac6c8dd858bea6061ba602f59caae"></a>
@@ -312,6 +350,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01396">1396</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01411">microscope.stages.linkam.LinkamCMS.RefillTracker.__repr__()</a>, <a class="el" href="linkam_8py_source.html#l01405">microscope.stages.linkam.LinkamCMS.RefillTracker.as_dict()</a>, <a class="el" href="linkam_8py_source.html#l01400">microscope.stages.linkam.LinkamCMS.RefillTracker.end_refill()</a>, and <a class="el" href="linkam_8py_source.html#l01394">microscope.stages.linkam.LinkamCMS.RefillTracker.start_refill()</a>.</p>
 
 </div>
 </div>
@@ -336,6 +376,8 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01392">1392</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01411">microscope.stages.linkam.LinkamCMS.RefillTracker.__repr__()</a>, <a class="el" href="linkam_8py_source.html#l01405">microscope.stages.linkam.LinkamCMS.RefillTracker.as_dict()</a>, <a class="el" href="linkam_8py_source.html#l01400">microscope.stages.linkam.LinkamCMS.RefillTracker.end_refill()</a>, and <a class="el" href="linkam_8py_source.html#l01394">microscope.stages.linkam.LinkamCMS.RefillTracker.start_refill()</a>.</p>
 
 </div>
 </div>

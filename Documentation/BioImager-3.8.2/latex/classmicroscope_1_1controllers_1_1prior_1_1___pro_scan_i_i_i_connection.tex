@@ -62,6 +62,44 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00032}{32}} of file \mbox{
 Definition at line \mbox{\hyperlink{prior_8py_source_l00046}{46}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00046     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, baudrate: int, timeout: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00047         \textcolor{comment}{\# From the technical datasheet: 8 bit word 1 stop bit, no}}
+\DoxyCodeLine{00048         \textcolor{comment}{\# parity no handshake, baudrate options of 9600, 19200, 38400,}}
+\DoxyCodeLine{00049         \textcolor{comment}{\# 57600 and 115200.}}
+\DoxyCodeLine{00050         self.\_serial = serial.Serial(}
+\DoxyCodeLine{00051             port=port,}
+\DoxyCodeLine{00052             baudrate=baudrate,}
+\DoxyCodeLine{00053             timeout=timeout,}
+\DoxyCodeLine{00054             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00055             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00056             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00057             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00058             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00059             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00060         )}
+\DoxyCodeLine{00061         self.\_lock = threading.RLock()}
+\DoxyCodeLine{00062 }
+\DoxyCodeLine{00063         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00064             \textcolor{comment}{\# We do not use the general get\_description() here because}}
+\DoxyCodeLine{00065             \textcolor{comment}{\# if this is not a ProScan device it would never reach the}}
+\DoxyCodeLine{00066             \textcolor{comment}{\# '\(\backslash\)rEND\(\backslash\)r' that signals the end of the description.}}
+\DoxyCodeLine{00067             self.command(b\textcolor{stringliteral}{"{}?"{}})}
+\DoxyCodeLine{00068             answer = self.readline()}
+\DoxyCodeLine{00069             \textcolor{keywordflow}{if} answer != b\textcolor{stringliteral}{"{}PROSCAN INFORMATION\(\backslash\)r"{}}:}
+\DoxyCodeLine{00070                 self.read\_until\_timeout()}
+\DoxyCodeLine{00071                 \textcolor{keywordflow}{raise} RuntimeError(}
+\DoxyCodeLine{00072                     \textcolor{stringliteral}{"{}Not a ProScanIII device: '?' returned '\%s'"{}}}
+\DoxyCodeLine{00073                     \% answer.decode()}
+\DoxyCodeLine{00074                 )}
+\DoxyCodeLine{00075             \textcolor{comment}{\# A description ends with END on its own line.}}
+\DoxyCodeLine{00076             line = self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)rEND\(\backslash\)r"{}})}
+\DoxyCodeLine{00077             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} line.endswith(b\textcolor{stringliteral}{"{}\(\backslash\)rEND\(\backslash\)r"{}}):}
+\DoxyCodeLine{00078                 \textcolor{keywordflow}{raise} RuntimeError(\textcolor{stringliteral}{"{}Failed to clear description"{}})}
+\DoxyCodeLine{00079 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a7000c9299f538593466ae3ed641a3f62}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a7000c9299f538593466ae3ed641a3f62}} 
@@ -74,6 +112,17 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00046}{46}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00146}{146}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00146     \textcolor{keyword}{def }assert\_filterwheel\_number(self, number: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00147         \textcolor{keyword}{assert} number > 0 \textcolor{keywordflow}{and} number < 4}
+\DoxyCodeLine{00148 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_aa3246929da24ef0f121bcf1c9fcbf94c}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_aa3246929da24ef0f121bcf1c9fcbf94c}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!changed\_timeout@{changed\_timeout}}
 \index{changed\_timeout@{changed\_timeout}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -83,6 +132,22 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00146}{146}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00138}{138}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138     \textcolor{keyword}{def }changed\_timeout(self, new\_timeout: float):}
+\DoxyCodeLine{00139         previous = self.\_serial.timeout}
+\DoxyCodeLine{00140         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00141             self.\_serial.timeout = new\_timeout}
+\DoxyCodeLine{00142             \textcolor{keywordflow}{yield}}
+\DoxyCodeLine{00143         \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{00144             self.\_serial.timeout = previous}
+\DoxyCodeLine{00145 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00114}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+move\+\_\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a3517e8ba90492c3474bc76a11ff7edd7}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a3517e8ba90492c3474bc76a11ff7edd7}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!command@{command}}
@@ -95,6 +160,23 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00138}{138}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00080}{80}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00080     \textcolor{keyword}{def }command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00081         \textcolor{stringliteral}{"{}"{}"{}Send command to device."{}"{}"{}}}
+\DoxyCodeLine{00082         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00083             self.\_serial.write(command + b\textcolor{stringliteral}{"{}\(\backslash\)r"{}})}
+\DoxyCodeLine{00084 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
+
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00231}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+been\+\_\+homed()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00265}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00252}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+current\+\_\+index()}}, \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00257}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+description()}}, \mbox{\hyperlink{zaber_8py_source_l00248}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+index\+\_\+distance()}}, \mbox{\hyperlink{zaber_8py_source_l00269}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+max()}}, \mbox{\hyperlink{zaber_8py_source_l00273}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+min()}}, \mbox{\hyperlink{zaber_8py_source_l00227}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+number\+\_\+axes()}}, \mbox{\hyperlink{zaber_8py_source_l00240}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+rotation\+\_\+length()}}, \mbox{\hyperlink{zaber_8py_source_l00236}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+home()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+off()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00162}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+set\+\_\+normal\+\_\+channel\+\_\+power()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+show\+\_\+power\+\_\+u\+W()}}, and \mbox{\hyperlink{lights_2toptica_8py_source_l00188}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+status\+\_\+laser()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a167fdc88c080eed2ec3404ef030ae659}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a167fdc88c080eed2ec3404ef030ae659}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!get\_command@{get\_command}}
 \index{get\_command@{get\_command}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -105,6 +187,24 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00080}{80}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00108}{108}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108     \textcolor{keyword}{def }get\_command(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{00109         \textcolor{stringliteral}{"{}"{}"{}Send get command and return the answer."{}"{}"{}}}
+\DoxyCodeLine{00110         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00111             self.command(command)}
+\DoxyCodeLine{00112             \textcolor{keywordflow}{return} self.readline()}
+\DoxyCodeLine{00113 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{__utils_8py_source_l00122}{microscope.\+\_\+utils.\+Shared\+Serial.\+readline()}}, \mbox{\hyperlink{prior_8py_source_l00085}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+readline()}}, \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}, \mbox{\hyperlink{zaber_8py_source_l00154}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+readline()}}, and \mbox{\hyperlink{mock__devices_8py_source_l00096}{microscope.\+testsuite.\+mock\+\_\+devices.\+Serial\+Mock.\+readline()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00175}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+wait\+\_\+until\+\_\+idle()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a26501c5e53335aba39feeabd749cd063}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a26501c5e53335aba39feeabd749cd063}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!get\_description@{get\_description}}
@@ -117,6 +217,24 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00108}{108}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00131}{131}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00131     \textcolor{keyword}{def }get\_description(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{00132         \textcolor{stringliteral}{"{}"{}"{}Send a get description command and return it."{}"{}"{}}}
+\DoxyCodeLine{00133         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00134             self.command(command)}
+\DoxyCodeLine{00135             \textcolor{keywordflow}{return} self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)rEND\(\backslash\)r"{}})}
+\DoxyCodeLine{00136 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00149}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+has\+\_\+thing()}}, \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00146}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+assert\+\_\+filterwheel\+\_\+number()}}, \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{lumencor_8py_source_l00097}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00257}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+description()}}, \mbox{\hyperlink{prior_8py_source_l00114}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+move\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00168}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+read\+\_\+until\+\_\+timeout()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a9071d7728e867cb88ffc5bcdc46dd822}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a9071d7728e867cb88ffc5bcdc46dd822}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!get\_filter\_position@{get\_filter\_position}}
 \index{get\_filter\_position@{get\_filter\_position}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -127,6 +245,15 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00131}{131}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00178}{178}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00178     \textcolor{keyword}{def }get\_filter\_position(self, number: int) -\/> int:}
+\DoxyCodeLine{00179         self.assert\_filterwheel\_number(number)}
+\DoxyCodeLine{00180         answer = self.get\_command(b\textcolor{stringliteral}{"{}7 \%d F"{}} \% number)}
+\DoxyCodeLine{00181         \textcolor{keywordflow}{return} int(answer)}
+\DoxyCodeLine{00182 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_adb0c921e77c1f44f0ce00b9932ad0fef}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_adb0c921e77c1f44f0ce00b9932ad0fef}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!get\_n\_filter\_positions@{get\_n\_filter\_positions}}
 \index{get\_n\_filter\_positions@{get\_n\_filter\_positions}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -137,6 +264,15 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00178}{178}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00173}{173}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173     \textcolor{keyword}{def }get\_n\_filter\_positions(self, number: int) -\/> int:}
+\DoxyCodeLine{00174         self.assert\_filterwheel\_number(number)}
+\DoxyCodeLine{00175         answer = self.get\_command(b\textcolor{stringliteral}{"{}FPW \%d"{}} \% number)}
+\DoxyCodeLine{00176         \textcolor{keywordflow}{return} int(answer)}
+\DoxyCodeLine{00177 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a913f53b7a04fd04b30b9aec497554b30}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a913f53b7a04fd04b30b9aec497554b30}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!has\_filterwheel@{has\_filterwheel}}
 \index{has\_filterwheel@{has\_filterwheel}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -147,6 +283,21 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00173}{173}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00162}{162}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162     \textcolor{keyword}{def }has\_filterwheel(self, number: int) -\/> bool:}
+\DoxyCodeLine{00163         self.assert\_filterwheel\_number(number)}
+\DoxyCodeLine{00164         \textcolor{comment}{\# We use the 'FILTER w' command to check if there's a filter}}
+\DoxyCodeLine{00165         \textcolor{comment}{\# wheel instead of the '?' command.  The reason is that the}}
+\DoxyCodeLine{00166         \textcolor{comment}{\# third filter wheel, named "{}A AXIS"{} on the controller box and}}
+\DoxyCodeLine{00167         \textcolor{comment}{\# "{}FOURTH"{} on the output of the '?' command, can be used for}}
+\DoxyCodeLine{00168         \textcolor{comment}{\# non filter wheels.  We hope that 'FILTER 3' will fail}}
+\DoxyCodeLine{00169         \textcolor{comment}{\# properly if what is connected to "{}A AXIS"{} is not a filter}}
+\DoxyCodeLine{00170         \textcolor{comment}{\# wheel.}}
+\DoxyCodeLine{00171         \textcolor{keywordflow}{return} self.\_has\_thing(b\textcolor{stringliteral}{"{}FILTER \%d"{}} \% number, b\textcolor{stringliteral}{"{}FILTER\_\%d = "{}} \% number)}
+\DoxyCodeLine{00172 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a913c9bef47cb03b9c68fc495ec583635}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a913c9bef47cb03b9c68fc495ec583635}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!move\_command@{move\_command}}
 \index{move\_command@{move\_command}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -157,6 +308,28 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00162}{162}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00114}{114}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114     \textcolor{keyword}{def }move\_command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00115         \textcolor{stringliteral}{"{}"{}"{}Send a move command and check return value."{}"{}"{}}}
+\DoxyCodeLine{00116         \textcolor{comment}{\# Movement commands respond with an R at the end of move.}}
+\DoxyCodeLine{00117         \textcolor{comment}{\# Once a movement command is issued the application should}}
+\DoxyCodeLine{00118         \textcolor{comment}{\# wait until the end of move R response is received before}}
+\DoxyCodeLine{00119         \textcolor{comment}{\# sending any further commands.}}
+\DoxyCodeLine{00120         \textcolor{comment}{\# TODO: this times 10 for timeout is a bit arbitrary.}}
+\DoxyCodeLine{00121         \textcolor{keyword}{with} self.changed\_timeout(10 * self.\_serial.timeout):}
+\DoxyCodeLine{00122             self.\_command\_and\_validate(command, b\textcolor{stringliteral}{"{}R\(\backslash\)r"{}})}
+\DoxyCodeLine{00123 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00097}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+command\+\_\+and\+\_\+validate()}}, \mbox{\hyperlink{ludl_8py_source_l00180}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+command\+\_\+and\+\_\+validate()}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00138}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+changed\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00264}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+changed\+\_\+timeout()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00206}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+by\+\_\+relative\+\_\+position()}}, and \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a58a6e01138b504719d73bc34c230927a}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a58a6e01138b504719d73bc34c230927a}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!read\_until\_timeout@{read\_until\_timeout}}
@@ -169,6 +342,25 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00114}{114}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00090}{90}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00090     \textcolor{keyword}{def }read\_until\_timeout(self) -\/> None:}
+\DoxyCodeLine{00091         \textcolor{stringliteral}{"{}"{}"{}Read until timeout; used to clean buffer if in an unknown state."{}"{}"{}}}
+\DoxyCodeLine{00092         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00093             self.\_serial.flushInput()}
+\DoxyCodeLine{00094             \textcolor{keywordflow}{while} self.\_serial.readline():}
+\DoxyCodeLine{00095                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00096 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{lumencor_8py_source_l00097}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, \mbox{\hyperlink{ludl_8py_source_l00168}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{prior_8py_source_l00085}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+readline()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, and \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a10a28fd291b6d3f2318f86e4d3138fca}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a10a28fd291b6d3f2318f86e4d3138fca}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!readline@{readline}}
 \index{readline@{readline}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -179,6 +371,23 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00090}{90}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00085}{85}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00085     \textcolor{keyword}{def }readline(self) -\/> bytes:}
+\DoxyCodeLine{00086         \textcolor{stringliteral}{"{}"{}"{}Read a line from the device connection."{}"{}"{}}}
+\DoxyCodeLine{00087         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00088             \textcolor{keywordflow}{return} self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)r"{}})}
+\DoxyCodeLine{00089 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_aa058fa9e777e9382cc3b5df4a74bf12f}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_aa058fa9e777e9382cc3b5df4a74bf12f}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!set\_command@{set\_command}}
@@ -191,6 +400,21 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00085}{85}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00124}{124}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00124     \textcolor{keyword}{def }set\_command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00125         \textcolor{stringliteral}{"{}"{}"{}Send a set command and check return value."{}"{}"{}}}
+\DoxyCodeLine{00126         \textcolor{comment}{\# Property type commands that set certain status respond with}}
+\DoxyCodeLine{00127         \textcolor{comment}{\# zero.  They respond with a zero even if there are invalid}}
+\DoxyCodeLine{00128         \textcolor{comment}{\# arguments in the command.}}
+\DoxyCodeLine{00129         self.\_command\_and\_validate(command, b\textcolor{stringliteral}{"{}0\(\backslash\)r"{}})}
+\DoxyCodeLine{00130 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00097}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+command\+\_\+and\+\_\+validate()}}, and \mbox{\hyperlink{ludl_8py_source_l00180}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+command\+\_\+and\+\_\+validate()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a647a4394274bc545c183fc25eea4ec80}\label{classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection_a647a4394274bc545c183fc25eea4ec80}} 
 \index{microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}!set\_filter\_position@{set\_filter\_position}}
 \index{set\_filter\_position@{set\_filter\_position}!microscope.controllers.prior.\_ProScanIIIConnection@{microscope.controllers.prior.\_ProScanIIIConnection}}
@@ -201,6 +425,15 @@ Definition at line \mbox{\hyperlink{prior_8py_source_l00124}{124}} of file \mbox
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00183}{183}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00183     \textcolor{keyword}{def }set\_filter\_position(self, number: int, pos: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00184         self.assert\_filterwheel\_number(number)}
+\DoxyCodeLine{00185         self.move\_command(b\textcolor{stringliteral}{"{}7 \%d \%d"{}} \% (number, pos))}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187 }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

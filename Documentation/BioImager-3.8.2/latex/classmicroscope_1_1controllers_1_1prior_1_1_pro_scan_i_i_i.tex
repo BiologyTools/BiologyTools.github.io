@@ -58,6 +58,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{prior_8py_source_l00211}{211}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00213     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00214         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00215         self.\_conn = \_ProScanIIIConnection(port, baudrate, timeout)}
+\DoxyCodeLine{00216         self.\_devices: typing.Mapping[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}] = \{\}}
+\DoxyCodeLine{00217 }
+\DoxyCodeLine{00218         \textcolor{comment}{\# Can have up to three filter wheels, numbered 1 to 3.}}
+\DoxyCodeLine{00219         \textcolor{keywordflow}{for} number \textcolor{keywordflow}{in} range(1, 4):}
+\DoxyCodeLine{00220             \textcolor{keywordflow}{if} self.\_conn.has\_filterwheel(number):}
+\DoxyCodeLine{00221                 key = \textcolor{stringliteral}{"{}filter \%d"{}} \% number}
+\DoxyCodeLine{00222                 self.\_devices[key] = \_ProScanIIIFilterWheel(self.\_conn, number)}
+\DoxyCodeLine{00223 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i_ae9d982d5e19a4dfb2c08bccdb6b046b5}\label{classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i_ae9d982d5e19a4dfb2c08bccdb6b046b5}} 
@@ -74,6 +89,22 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a51485
 
 
 Definition at line \mbox{\hyperlink{prior_8py_source_l00225}{225}} of file \mbox{\hyperlink{prior_8py_source}{prior.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00225     \textcolor{keyword}{def }devices(self) -\/> typing.Mapping[str, microscope.abc.Device]:}
+\DoxyCodeLine{00226         \textcolor{keywordflow}{return} self.\_devices}
+\DoxyCodeLine{00227 }
+\DoxyCodeLine{00228 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{device__server_8py_source_l00323}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+devices}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00316}{microscope.\+simulators.\+Simulated\+Controller.\+\_\+devices}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01342}{microscope.\+abc.\+Controller.\+devices()}}.
 
 
 

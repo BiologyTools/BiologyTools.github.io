@@ -271,7 +271,29 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00136">136</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  138</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  139</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  140</span>        self._conn = _CoolLEDChannelConnection(connection, name)</div>
+<div class="line"><span class="lineno">  141</span>        <span class="comment"># If a channel is disabled (&quot;unselected&quot;), setting the trigger</span></div>
+<div class="line"><span class="lineno">  142</span>        <span class="comment"># type to software (&quot;on&quot;) is not recorded and reverts back to</span></div>
+<div class="line"><span class="lineno">  143</span>        <span class="comment"># high (&quot;off&quot;).  Because of this, we keep track of what</span></div>
+<div class="line"><span class="lineno">  144</span>        <span class="comment"># trigger type we want, i.e., should be &quot;on&quot; or &quot;off&quot;, and</span></div>
+<div class="line"><span class="lineno">  145</span>        <span class="comment"># apply it when the channel is enabled.</span></div>
+<div class="line"><span class="lineno">  146</span>        self._should_be_on = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  147</span> </div>
+<div class="line"><span class="lineno">  148</span>        <span class="comment"># The channel may be &quot;selected&quot; (enabled) and &quot;off&quot; (trigger</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment"># type HIGH).  When we set the trigger type to software,</span></div>
+<div class="line"><span class="lineno">  150</span>        <span class="comment"># that&#39;s the same as setting it &quot;on&quot; which will make the</span></div>
+<div class="line"><span class="lineno">  151</span>        <span class="comment"># channel emit light.  Constructing this channel should not</span></div>
+<div class="line"><span class="lineno">  152</span>        <span class="comment"># accidentally mae it emit light so disable it firt.</span></div>
+<div class="line"><span class="lineno">  153</span>        self.disable()</div>
+<div class="line"><span class="lineno">  154</span> </div>
+<div class="line"><span class="lineno">  155</span>        <span class="comment"># Default to software trigger type.</span></div>
+<div class="line"><span class="lineno">  156</span>        self.set_trigger(</div>
+<div class="line"><span class="lineno">  157</span>            microscope.TriggerType.SOFTWARE, microscope.TriggerMode.BULB</div>
+<div class="line"><span class="lineno">  158</span>        )</div>
+<div class="line"><span class="lineno">  159</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -294,6 +316,13 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#add8e7f466e7a28137d6e0ceede74e15e">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00175">175</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  175</span>    <span class="keyword">def </span>disable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  176</span>        self._conn.set_selected_state(<span class="stringliteral">&quot;X&quot;</span>)</div>
+<div class="line"><span class="lineno">  177</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, and <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, and <a class="el" href="abc_8py_source.html#l00349">microscope.abc.Device.shutdown()</a>.</p>
 
 </div>
 </div>
@@ -316,6 +345,17 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#ac7759ad4eb304422f07cfee215a73961">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00166">166</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  166</span>    <span class="keyword">def </span>enable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  167</span>        self._conn.set_selected_state(<span class="stringliteral">&quot;S&quot;</span>)</div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">if</span> self._should_be_on:</div>
+<div class="line"><span class="lineno">  169</span>            <span class="comment"># TriggerType.SOFTWARE</span></div>
+<div class="line"><span class="lineno">  170</span>            self._conn.set_switch_state(<span class="stringliteral">&quot;N&quot;</span>)</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  172</span>            <span class="comment"># TriggerType.HIGH</span></div>
+<div class="line"><span class="lineno">  173</span>            self._conn.set_switch_state(<span class="stringliteral">&quot;F&quot;</span>)</div>
+<div class="line"><span class="lineno">  174</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00146">microscope.controllers.coolled._CoolLEDChannel._should_be_on</a>.</p>
 
 </div>
 </div>
@@ -338,6 +378,15 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#a368b7bf7f4d13f9176d467fcb0dbf6f3">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00178">178</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  178</span>    <span class="keyword">def </span>get_is_on(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  179</span>        selected = self._conn.get_selected_state()</div>
+<div class="line"><span class="lineno">  180</span>        <span class="keyword">assert</span> selected <span class="keywordflow">in</span> [<span class="stringliteral">&quot;S&quot;</span>, <span class="stringliteral">&quot;X&quot;</span>]</div>
+<div class="line"><span class="lineno">  181</span>        <span class="keywordflow">return</span> selected == <span class="stringliteral">&quot;S&quot;</span></div>
+<div class="line"><span class="lineno">  182</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00146">microscope.controllers.coolled._CoolLEDChannel._should_be_on</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00136">microscope.lights.deepstar.DeepstarLaser.get_is_on()</a>, <a class="el" href="lights_2obis_8py_source.html#l00166">microscope.lights.obis.ObisLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>.</p>
 
 </div>
 </div>
@@ -360,6 +409,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#ad89d3b36b76fa78d2617794df95502b2">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00163">163</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  163</span>    <span class="keyword">def </span>get_status(self) -&gt; typing.List[str]:</div>
+<div class="line"><span class="lineno">  164</span>        <span class="keywordflow">return</span> []</div>
+<div class="line"><span class="lineno">  165</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -399,6 +453,27 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00210">210</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  212</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  213</span>        <span class="keywordflow">if</span> tmode <span class="keywordflow">is</span> <span class="keywordflow">not</span> microscope.TriggerMode.BULB:</div>
+<div class="line"><span class="lineno">  214</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  215</span>                <span class="stringliteral">&quot;the only trigger mode supported is &#39;bulb&#39;&quot;</span></div>
+<div class="line"><span class="lineno">  216</span>            )</div>
+<div class="line"><span class="lineno">  217</span>        <span class="keywordflow">if</span> ttype <span class="keywordflow">is</span> microscope.TriggerType.SOFTWARE:</div>
+<div class="line"><span class="lineno">  218</span>            self._conn.set_switch_state(<span class="stringliteral">&quot;N&quot;</span>)</div>
+<div class="line"><span class="lineno">  219</span>            self._should_be_on = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  220</span>        <span class="keywordflow">elif</span> ttype <span class="keywordflow">is</span> microscope.TriggerType.HIGH:</div>
+<div class="line"><span class="lineno">  221</span>            self._conn.set_switch_state(<span class="stringliteral">&quot;F&quot;</span>)</div>
+<div class="line"><span class="lineno">  222</span>            self._should_be_on = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  223</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  224</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  225</span>                <span class="stringliteral">&quot;trigger type supported must be &#39;SOFTWARE&#39; or &#39;HIGH&#39;&quot;</span></div>
+<div class="line"><span class="lineno">  226</span>            )</div>
+<div class="line"><span class="lineno">  227</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00146">microscope.controllers.coolled._CoolLEDChannel._should_be_on</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -421,6 +496,11 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00207">207</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  207</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">return</span> microscope.TriggerMode.BULB</div>
+<div class="line"><span class="lineno">  209</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -443,6 +523,24 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00190">190</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno">  191</span>        <span class="keywordflow">if</span> self._conn.get_selected_state() == <span class="stringliteral">&quot;S&quot;</span>:</div>
+<div class="line"><span class="lineno">  192</span>            <span class="comment"># Channel is &quot;selected&quot; (enabled): get the answer from</span></div>
+<div class="line"><span class="lineno">  193</span>            <span class="comment"># switch state (&quot;on&quot; or &quot;off&quot;).</span></div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">if</span> self._conn.get_switch_state() == <span class="stringliteral">&quot;N&quot;</span>:</div>
+<div class="line"><span class="lineno">  195</span>                <span class="keywordflow">return</span> microscope.TriggerType.SOFTWARE</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  197</span>                <span class="keywordflow">return</span> microscope.TriggerType.HIGH</div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  199</span>            <span class="comment"># Channel is &quot;unselected&quot; (disabled): trigger type will be</span></div>
+<div class="line"><span class="lineno">  200</span>            <span class="comment"># whatever we set it to when we enable it.</span></div>
+<div class="line"><span class="lineno">  201</span>            <span class="keywordflow">if</span> self._should_be_on:</div>
+<div class="line"><span class="lineno">  202</span>                <span class="keywordflow">return</span> microscope.TriggerType.SOFTWARE</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  204</span>                <span class="keywordflow">return</span> microscope.TriggerType.HIGH</div>
+<div class="line"><span class="lineno">  205</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>

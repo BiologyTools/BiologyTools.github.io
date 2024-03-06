@@ -90,6 +90,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1mock__device
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00136}{136}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00136     \textcolor{keyword}{def }\_\_init\_\_(self, *args, **kwargs):}
+\DoxyCodeLine{00137         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00138 }
+\DoxyCodeLine{00139         self.key = \textcolor{stringliteral}{"{}on"{}}}
+\DoxyCodeLine{00140         self.status = \textcolor{stringliteral}{"{}laser ready"{}}  \textcolor{comment}{\# Laser ready, status code 5}}
+\DoxyCodeLine{00141         self.light = \textcolor{keyword}{True}  \textcolor{comment}{\# Light Servo}}
+\DoxyCodeLine{00142         self.tec = \textcolor{keyword}{True}  \textcolor{comment}{\# TEC (Thermo-\/Electric Cooler) Servo}}
+\DoxyCodeLine{00143         self.echo = \textcolor{keyword}{True}}
+\DoxyCodeLine{00144         self.prompt = \textcolor{keyword}{True}}
+\DoxyCodeLine{00145         self.power = CoherentSapphireLaserMock.default\_power}
+\DoxyCodeLine{00146 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a0a764e569a376e7bdafa08ce945515a5}\label{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a0a764e569a376e7bdafa08ce945515a5}} 
@@ -106,6 +121,172 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1mock__device
 
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00158}{158}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00158     \textcolor{keyword}{def }handle(self, command):}
+\DoxyCodeLine{00159         \textcolor{comment}{\# Operator's manual mentions all commands in uppercase.}}
+\DoxyCodeLine{00160         \textcolor{comment}{\# Experimentation shows that they are case insensitive.}}
+\DoxyCodeLine{00161         command = command.upper()}
+\DoxyCodeLine{00162 }
+\DoxyCodeLine{00163         answer = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00164 }
+\DoxyCodeLine{00165         \textcolor{comment}{\# Prompt}}
+\DoxyCodeLine{00166         \textcolor{keywordflow}{if} command == b\textcolor{stringliteral}{"{}>=0"{}}:}
+\DoxyCodeLine{00167             self.prompt = \textcolor{keyword}{False}}
+\DoxyCodeLine{00168         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}>=1"{}}:}
+\DoxyCodeLine{00169             self.prompt = \textcolor{keyword}{True}}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171         \textcolor{comment}{\# Echo}}
+\DoxyCodeLine{00172         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}E=0"{}}:}
+\DoxyCodeLine{00173             self.echo = \textcolor{keyword}{False}}
+\DoxyCodeLine{00174         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}E=1"{}}:}
+\DoxyCodeLine{00175             self.echo = \textcolor{keyword}{True}}
+\DoxyCodeLine{00176 }
+\DoxyCodeLine{00177         \textcolor{comment}{\# Head ID}}
+\DoxyCodeLine{00178         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?HID"{}}:}
+\DoxyCodeLine{00179             answer = b\textcolor{stringliteral}{"{}505925.000"{}}}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181         \textcolor{comment}{\# Head hours}}
+\DoxyCodeLine{00182         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?HH"{}}:}
+\DoxyCodeLine{00183             answer = b\textcolor{stringliteral}{"{}   257:34"{}}}
+\DoxyCodeLine{00184 }
+\DoxyCodeLine{00185         \textcolor{comment}{\# Key switch}}
+\DoxyCodeLine{00186         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?K"{}}:}
+\DoxyCodeLine{00187             \textcolor{keywordflow}{if} self.key == \textcolor{stringliteral}{"{}standby"{}}:}
+\DoxyCodeLine{00188                 answer = b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00189             \textcolor{keywordflow}{elif} self.key == \textcolor{stringliteral}{"{}on"{}}:}
+\DoxyCodeLine{00190                 answer = b\textcolor{stringliteral}{"{}1"{}}}
+\DoxyCodeLine{00191             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00192                 \textcolor{keywordflow}{raise} RuntimeError(\textcolor{stringliteral}{"{}unknown key state '\%s'"{}} \% self.key)}
+\DoxyCodeLine{00193 }
+\DoxyCodeLine{00194         \textcolor{comment}{\# Light servo}}
+\DoxyCodeLine{00195         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}L=0"{}}:}
+\DoxyCodeLine{00196             self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00197         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}L=1"{}}:}
+\DoxyCodeLine{00198             \textcolor{keywordflow}{if} self.tec:}
+\DoxyCodeLine{00199                 \textcolor{keywordflow}{if} self.key == \textcolor{stringliteral}{"{}on"{}}:}
+\DoxyCodeLine{00200                     self.light = \textcolor{keyword}{True}}
+\DoxyCodeLine{00201                 \textcolor{comment}{\# if key switch is not on, keep light off}}
+\DoxyCodeLine{00202             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00203                 answer = b\textcolor{stringliteral}{"{}TEC must be ON (T=1) to enable Light Output!"{}}}
+\DoxyCodeLine{00204         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?L"{}}:}
+\DoxyCodeLine{00205             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.light \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207         \textcolor{comment}{\# TEC servo}}
+\DoxyCodeLine{00208         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}T=0"{}}:}
+\DoxyCodeLine{00209             \textcolor{comment}{\# turning this off, also turns light servo off}}
+\DoxyCodeLine{00210             self.tec = \textcolor{keyword}{False}}
+\DoxyCodeLine{00211             self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00212         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}T=1"{}}:}
+\DoxyCodeLine{00213             self.tec = \textcolor{keyword}{True}}
+\DoxyCodeLine{00214         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?T"{}}:}
+\DoxyCodeLine{00215             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.tec \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217         \textcolor{comment}{\# Laser power}}
+\DoxyCodeLine{00218         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?MINLP"{}}:}
+\DoxyCodeLine{00219             answer = b\textcolor{stringliteral}{"{}20.000"{}}}
+\DoxyCodeLine{00220         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?MAXLP"{}}:}
+\DoxyCodeLine{00221             answer = b\textcolor{stringliteral}{"{}220.000"{}}}
+\DoxyCodeLine{00222         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?P"{}}:}
+\DoxyCodeLine{00223             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.light:}
+\DoxyCodeLine{00224                 answer = b\textcolor{stringliteral}{"{}0.000"{}}}
+\DoxyCodeLine{00225             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00226                 answer = b\textcolor{stringliteral}{"{}\%.3f"{}} \% (self.power)}
+\DoxyCodeLine{00227         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?SP"{}}:}
+\DoxyCodeLine{00228             answer = b\textcolor{stringliteral}{"{}\%.3f"{}} \% (self.power)}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{elif} command.startswith(b\textcolor{stringliteral}{"{}P="{}}):}
+\DoxyCodeLine{00230             new\_power = float(command[2:])}
+\DoxyCodeLine{00231             \textcolor{keywordflow}{if} new\_power < 19.999999 \textcolor{keywordflow}{or} new\_power > 220.00001:}
+\DoxyCodeLine{00232                 answer = b\textcolor{stringliteral}{"{}value must be between 20.000 and 220.000"{}}}
+\DoxyCodeLine{00233             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00234                 \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.light:}
+\DoxyCodeLine{00235                     answer = b\textcolor{stringliteral}{"{}Note: Laser\_Output is OFF (L=0)"{}}}
+\DoxyCodeLine{00236                 self.power = new\_power}
+\DoxyCodeLine{00237 }
+\DoxyCodeLine{00238         \textcolor{comment}{\# Nominal output power}}
+\DoxyCodeLine{00239         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}NOMP"{}}:}
+\DoxyCodeLine{00240             answer = b\textcolor{stringliteral}{"{}200"{}}}
+\DoxyCodeLine{00241 }
+\DoxyCodeLine{00242         \textcolor{comment}{\# Laser type and nominal power}}
+\DoxyCodeLine{00243         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}LT"{}}:}
+\DoxyCodeLine{00244             answer = b\textcolor{stringliteral}{"{}Sapphire 200mW"{}}}
+\DoxyCodeLine{00245 }
+\DoxyCodeLine{00246         \textcolor{comment}{\# Laser head status}}
+\DoxyCodeLine{00247         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?STA"{}}:}
+\DoxyCodeLine{00248             status\_codes = \{}
+\DoxyCodeLine{00249                 \textcolor{stringliteral}{"{}start up"{}}: b\textcolor{stringliteral}{"{}1"{}},}
+\DoxyCodeLine{00250                 \textcolor{stringliteral}{"{}warmup"{}}: b\textcolor{stringliteral}{"{}2"{}},}
+\DoxyCodeLine{00251                 \textcolor{stringliteral}{"{}standby"{}}: b\textcolor{stringliteral}{"{}3"{}},}
+\DoxyCodeLine{00252                 \textcolor{stringliteral}{"{}laser on"{}}: b\textcolor{stringliteral}{"{}4"{}},}
+\DoxyCodeLine{00253                 \textcolor{stringliteral}{"{}laser ready"{}}: b\textcolor{stringliteral}{"{}5"{}},}
+\DoxyCodeLine{00254                 \textcolor{stringliteral}{"{}error"{}}: b\textcolor{stringliteral}{"{}6"{}},}
+\DoxyCodeLine{00255             \}}
+\DoxyCodeLine{00256             answer = status\_codes[self.status]}
+\DoxyCodeLine{00257 }
+\DoxyCodeLine{00258         \textcolor{comment}{\# Fault related commands.  We don't model any faults yet.}}
+\DoxyCodeLine{00259         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?F"{}}:}
+\DoxyCodeLine{00260             answer = b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00261         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?FF"{}}:}
+\DoxyCodeLine{00262             \textcolor{comment}{\# Two bytes with possible faults:}}
+\DoxyCodeLine{00263             \textcolor{comment}{\#    0 -\/ external interlock fault}}
+\DoxyCodeLine{00264             \textcolor{comment}{\#    1 -\/ diode temperature fault (both TEC and light}}
+\DoxyCodeLine{00265             \textcolor{comment}{\#        servo off)}}
+\DoxyCodeLine{00266             \textcolor{comment}{\#    2 -\/ base plate temperature fault (both TEC and light}}
+\DoxyCodeLine{00267             \textcolor{comment}{\#        servo off)}}
+\DoxyCodeLine{00268             \textcolor{comment}{\#    3 -\/ OEM controller LP temperature (both TEC and}}
+\DoxyCodeLine{00269             \textcolor{comment}{\#        light servo off)}}
+\DoxyCodeLine{00270             \textcolor{comment}{\#    4 -\/ diode current fault}}
+\DoxyCodeLine{00271             \textcolor{comment}{\#    5 -\/ analog interface fault}}
+\DoxyCodeLine{00272             \textcolor{comment}{\#    6 -\/ base plate temperature fault (only light servo}}
+\DoxyCodeLine{00273             \textcolor{comment}{\#        turned off)}}
+\DoxyCodeLine{00274             \textcolor{comment}{\#    7 -\/ diode temperature fault (only light servo turned}}
+\DoxyCodeLine{00275             \textcolor{comment}{\#        off)}}
+\DoxyCodeLine{00276             \textcolor{comment}{\#    8 -\/ system warning/waiting for TEC servo to reach}}
+\DoxyCodeLine{00277             \textcolor{comment}{\#        target temperature}}
+\DoxyCodeLine{00278             \textcolor{comment}{\#    9 -\/ head EEPROM fault}}
+\DoxyCodeLine{00279             \textcolor{comment}{\#   10 -\/ OEM controller LP EEPROM fault}}
+\DoxyCodeLine{00280             \textcolor{comment}{\#   11 -\/ EEPOT1 fault}}
+\DoxyCodeLine{00281             \textcolor{comment}{\#   12 -\/ EEPOT2 fault}}
+\DoxyCodeLine{00282             \textcolor{comment}{\#   13 -\/ laser ready}}
+\DoxyCodeLine{00283             \textcolor{comment}{\#   14 -\/ not implemented}}
+\DoxyCodeLine{00284             \textcolor{comment}{\#   15 -\/ not implemented}}
+\DoxyCodeLine{00285             \textcolor{keywordflow}{if} self.light:}
+\DoxyCodeLine{00286                 \textcolor{comment}{\# Has a bit of its own, but it's not really a fault.}}
+\DoxyCodeLine{00287                 answer = b\textcolor{stringliteral}{"{}8192"{}}  \textcolor{comment}{\# 00100000 00000000}}
+\DoxyCodeLine{00288             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00289                 answer = b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00290         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?FL"{}}:}
+\DoxyCodeLine{00291             \textcolor{comment}{\# Show faults in text.  This is a multiline reply, one}}
+\DoxyCodeLine{00292             \textcolor{comment}{\# per fault, plus the header line.}}
+\DoxyCodeLine{00293             answer = b\textcolor{stringliteral}{"{}Fault(s):\(\backslash\)r\(\backslash\)n\(\backslash\)tNone"{}}}
+\DoxyCodeLine{00294 }
+\DoxyCodeLine{00295         \textcolor{comment}{\# Software version}}
+\DoxyCodeLine{00296         \textcolor{keywordflow}{elif} command \textcolor{keywordflow}{in} [b\textcolor{stringliteral}{"{}sv"{}}, b\textcolor{stringliteral}{"{}svps"{}}]:}
+\DoxyCodeLine{00297             answer = b\textcolor{stringliteral}{"{}8.005"{}}}
+\DoxyCodeLine{00298 }
+\DoxyCodeLine{00299         \textcolor{comment}{\# Nominal laser wavelength}}
+\DoxyCodeLine{00300         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?WAVE"{}}:}
+\DoxyCodeLine{00301             answer = b\textcolor{stringliteral}{"{}561"{}}}
+\DoxyCodeLine{00302 }
+\DoxyCodeLine{00303         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00304             \textcolor{keywordflow}{raise} NotImplementedError(}
+\DoxyCodeLine{00305                 \textcolor{stringliteral}{"{}no handling for command '\%s'"{}} \% command.decode(\textcolor{stringliteral}{"{}utf-\/8"{}})}
+\DoxyCodeLine{00306             )}
+\DoxyCodeLine{00307 }
+\DoxyCodeLine{00308         \textcolor{keywordflow}{if} answer \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00309             self.in\_buffer.write(answer + self.eol)}
+\DoxyCodeLine{00310 }
+\DoxyCodeLine{00311         \textcolor{keywordflow}{if} self.prompt:}
+\DoxyCodeLine{00312             self.in\_buffer.write(b\textcolor{stringliteral}{"{}Sapphire:0-\/> "{}})}
+\DoxyCodeLine{00313         \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00314 }
+\DoxyCodeLine{00315 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{___s_d_k3_cam_8py_source_l00172}{microscope.\+cameras.\+\_\+\+SDK3\+Cam.\+SDK3\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{pvcam_8py_source_l01664}{microscope.\+cameras.\+pvcam.\+PVCamera.\+abort()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00527}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+get\+\_\+id()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00452}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+initialize()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00404}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+invalidate\+\_\+buffers()}}, \mbox{\hyperlink{pvcam_8py_source_l01885}{microscope.\+cameras.\+pvcam.\+PVCamera.\+set\+\_\+trigger()}}, and \mbox{\hyperlink{pvcam_8py_source_l01847}{microscope.\+cameras.\+pvcam.\+PVCamera.\+soft\+\_\+trigger()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a27e288b76da0e0cf2b8436e4345b6ac8}\label{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a27e288b76da0e0cf2b8436e4345b6ac8}} 
 \index{microscope.testsuite.mock\_devices.CoherentSapphireLaserMock@{microscope.testsuite.mock\_devices.CoherentSapphireLaserMock}!write@{write}}
 \index{write@{write}!microscope.testsuite.mock\_devices.CoherentSapphireLaserMock@{microscope.testsuite.mock\_devices.CoherentSapphireLaserMock}}
@@ -120,6 +301,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1mock__device
 
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00147}{147}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00147     \textcolor{keyword}{def }write(self, data):}
+\DoxyCodeLine{00148         \textcolor{comment}{\# Echo as soon as we get data, do not wait for an EOL.  Also,}}
+\DoxyCodeLine{00149         \textcolor{comment}{\# echo before handling the command because if will echo even}}
+\DoxyCodeLine{00150         \textcolor{comment}{\# if the command is to turn the echo off.}}
+\DoxyCodeLine{00151         \textcolor{keywordflow}{if} self.echo:}
+\DoxyCodeLine{00152             self.in\_buffer.write(data)}
+\DoxyCodeLine{00153         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00154             \textcolor{comment}{\# If echo is off, we still echo EOLs}}
+\DoxyCodeLine{00155             self.in\_buffer.write(self.eol * data.count(self.eol))}
+\DoxyCodeLine{00156         \textcolor{keywordflow}{return} super().write(data)}
+\DoxyCodeLine{00157 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -182,6 +378,10 @@ Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00143}{143}} of fi
 
 
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00121}{121}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a322a6d1cd6c4046824bbb8c192f1fb25}\label{classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock_a322a6d1cd6c4046824bbb8c192f1fb25}} 
 \index{microscope.testsuite.mock\_devices.CoherentSapphireLaserMock@{microscope.testsuite.mock\_devices.CoherentSapphireLaserMock}!key@{key}}

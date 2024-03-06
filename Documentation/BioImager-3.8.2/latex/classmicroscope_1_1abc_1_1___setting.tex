@@ -74,6 +74,46 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00064}{64}} of file \mbox{\h
 Definition at line \mbox{\hyperlink{abc_8py_source_l00099}{99}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00107     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00108         self.name = name}
+\DoxyCodeLine{00109         \textcolor{keywordflow}{if} dtype \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} DTYPES:}
+\DoxyCodeLine{00110             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}Unsupported dtype."{}})}
+\DoxyCodeLine{00111         \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} (isinstance(values, DTYPES[dtype]) \textcolor{keywordflow}{or} callable(values)):}
+\DoxyCodeLine{00112             \textcolor{keywordflow}{raise} TypeError(}
+\DoxyCodeLine{00113                 \textcolor{stringliteral}{"{}Invalid values type for \%s '\%s': expected function or \%s"{}}}
+\DoxyCodeLine{00114                 \% (dtype, name, DTYPES[dtype])}
+\DoxyCodeLine{00115             )}
+\DoxyCodeLine{00116         self.dtype = dtype}
+\DoxyCodeLine{00117         self.\_get = get\_func}
+\DoxyCodeLine{00118         self.\_values = values}
+\DoxyCodeLine{00119         self.\_last\_written = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00120         \textcolor{keywordflow}{if} self.\_get \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00121             self.\_set = set\_func}
+\DoxyCodeLine{00122         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00123             \textcolor{comment}{\# Cache last written value for write-\/only settings.}}
+\DoxyCodeLine{00124             \textcolor{keyword}{def }w(value):}
+\DoxyCodeLine{00125                 self.\_last\_written = value}
+\DoxyCodeLine{00126                 set\_func(value)}
+\DoxyCodeLine{00127 }
+\DoxyCodeLine{00128             self.\_set = w}
+\DoxyCodeLine{00129 }
+\DoxyCodeLine{00130         \textcolor{keywordflow}{if} readonly \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00131             \textcolor{keywordflow}{if} self.\_set \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00132                 self.\_readonly = \textcolor{keyword}{lambda}: \textcolor{keyword}{True}}
+\DoxyCodeLine{00133             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00134                 self.\_readonly = \textcolor{keyword}{lambda}: \textcolor{keyword}{False}}
+\DoxyCodeLine{00135         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00136             \textcolor{keywordflow}{if} self.\_set \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00137                 \textcolor{keywordflow}{raise} ValueError(}
+\DoxyCodeLine{00138                     \textcolor{stringliteral}{"{}`readonly` is not `None` but `set\_func` is `None`"{}}}
+\DoxyCodeLine{00139                 )}
+\DoxyCodeLine{00140             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00141                 self.\_readonly = readonly}
+\DoxyCodeLine{00142 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_a269150bb26f1e65b544ef99caacd9fef}\label{classmicroscope_1_1abc_1_1___setting_a269150bb26f1e65b544ef99caacd9fef}} 
@@ -86,6 +126,18 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00099}{99}} of file \mbox{\h
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00143}{143}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143     \textcolor{keyword}{def }describe(self):}
+\DoxyCodeLine{00144         \textcolor{keywordflow}{return} \{}
+\DoxyCodeLine{00145             \textcolor{stringliteral}{"{}type"{}}: self.dtype,}
+\DoxyCodeLine{00146             \textcolor{stringliteral}{"{}values"{}}: self.values(),}
+\DoxyCodeLine{00147             \textcolor{stringliteral}{"{}readonly"{}}: self.readonly(),}
+\DoxyCodeLine{00148             \textcolor{stringliteral}{"{}cached"{}}: self.\_last\_written \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None},}
+\DoxyCodeLine{00149         \}}
+\DoxyCodeLine{00150 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_a5b85b40907ba9571570d1c9c3f675cba}\label{classmicroscope_1_1abc_1_1___setting_a5b85b40907ba9571570d1c9c3f675cba}} 
 \index{microscope.abc.\_Setting@{microscope.abc.\_Setting}!get@{get}}
 \index{get@{get}!microscope.abc.\_Setting@{microscope.abc.\_Setting}}
@@ -96,6 +148,20 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00143}{143}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00151}{151}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00151     \textcolor{keyword}{def }get(self):}
+\DoxyCodeLine{00152         \textcolor{keywordflow}{if} self.\_get \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00153             value = self.\_get()}
+\DoxyCodeLine{00154         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00155             value = self.\_last\_written}
+\DoxyCodeLine{00156         \textcolor{keywordflow}{if} isinstance(self.\_values, EnumMeta):}
+\DoxyCodeLine{00157             \textcolor{keywordflow}{return} self.\_values(value).value}
+\DoxyCodeLine{00158         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00159             \textcolor{keywordflow}{return} value}
+\DoxyCodeLine{00160 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_a8c39fd9909af771934d316dcfb01c801}\label{classmicroscope_1_1abc_1_1___setting_a8c39fd9909af771934d316dcfb01c801}} 
 \index{microscope.abc.\_Setting@{microscope.abc.\_Setting}!readonly@{readonly}}
 \index{readonly@{readonly}!microscope.abc.\_Setting@{microscope.abc.\_Setting}}
@@ -106,6 +172,13 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00151}{151}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00161}{161}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161     \textcolor{keyword}{def }readonly(self) -\/> bool:}
+\DoxyCodeLine{00162         \textcolor{keywordflow}{return} self.\_readonly()}
+\DoxyCodeLine{00163 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_abc38af17db5f27b4448cbb305f02c6ed}\label{classmicroscope_1_1abc_1_1___setting_abc38af17db5f27b4448cbb305f02c6ed}} 
 \index{microscope.abc.\_Setting@{microscope.abc.\_Setting}!set@{set}}
 \index{set@{set}!microscope.abc.\_Setting@{microscope.abc.\_Setting}}
@@ -117,6 +190,23 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00161}{161}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00164}{164}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00164     \textcolor{keyword}{def }set(self, value) -\/> None:}
+\DoxyCodeLine{00165         \textcolor{stringliteral}{"{}"{}"{}Set a setting."{}"{}"{}}}
+\DoxyCodeLine{00166         \textcolor{keywordflow}{if} self.\_set \textcolor{keywordflow}{is} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00167             \textcolor{keywordflow}{raise} NotImplementedError()}
+\DoxyCodeLine{00168         \textcolor{comment}{\# TODO further validation.}}
+\DoxyCodeLine{00169         \textcolor{keywordflow}{if} isinstance(self.\_values, EnumMeta):}
+\DoxyCodeLine{00170             value = self.\_values(value)}
+\DoxyCodeLine{00171         self.\_set(value)}
+\DoxyCodeLine{00172 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00121}{microscope.\+abc.\+\_\+\+Setting.\+\_\+set}}, \mbox{\hyperlink{abc_8py_source_l00118}{microscope.\+abc.\+\_\+\+Setting.\+\_\+values}}, \mbox{\hyperlink{abc_8py_source_l00116}{microscope.\+abc.\+\_\+\+Setting.\+dtype}}, and \mbox{\hyperlink{pvcam_8py_source_l01234}{microscope.\+cameras.\+pvcam.\+PVParam.\+dtype}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_aa2cf466fab14b718a1ae470fca1fc6af}\label{classmicroscope_1_1abc_1_1___setting_aa2cf466fab14b718a1ae470fca1fc6af}} 
 \index{microscope.abc.\_Setting@{microscope.abc.\_Setting}!values@{values}}
 \index{values@{values}!microscope.abc.\_Setting@{microscope.abc.\_Setting}}
@@ -126,6 +216,29 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00164}{164}} of file \mbox{\
 
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00173}{173}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173     \textcolor{keyword}{def }values(self):}
+\DoxyCodeLine{00174         \textcolor{keywordflow}{if} isinstance(self.\_values, EnumMeta):}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{return} [(v.value, v.name) \textcolor{keywordflow}{for} v \textcolor{keywordflow}{in} self.\_values]}
+\DoxyCodeLine{00176         values = \_call\_if\_callable(self.\_values)}
+\DoxyCodeLine{00177         \textcolor{keywordflow}{if} values \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00178             \textcolor{keywordflow}{if} self.dtype == \textcolor{stringliteral}{"{}enum"{}}:}
+\DoxyCodeLine{00179                 \textcolor{keywordflow}{if} isinstance(values, dict):}
+\DoxyCodeLine{00180                     \textcolor{keywordflow}{return} list(values.items())}
+\DoxyCodeLine{00181                 \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00182                     \textcolor{comment}{\# self.\_values is a list or tuple}}
+\DoxyCodeLine{00183                     \textcolor{keywordflow}{return} list(enumerate(values))}
+\DoxyCodeLine{00184             \textcolor{keywordflow}{elif} self.\_values \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00185                 \textcolor{keywordflow}{return} values}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
 
 
 
@@ -140,6 +253,10 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00173}{173}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00116}{116}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, and \mbox{\hyperlink{abc_8py_source_l00164}{microscope.\+abc.\+\_\+\+Setting.\+set()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1___setting_a354652a39947995ab02aeaf646820e45}\label{classmicroscope_1_1abc_1_1___setting_a354652a39947995ab02aeaf646820e45}} 
 \index{microscope.abc.\_Setting@{microscope.abc.\_Setting}!name@{name}}
 \index{name@{name}!microscope.abc.\_Setting@{microscope.abc.\_Setting}}
@@ -149,6 +266,10 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00116}{116}} of file \mbox{\
 
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00108}{108}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
 
 
 

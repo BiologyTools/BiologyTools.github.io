@@ -193,7 +193,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00091">91</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   91</span>    <span class="keyword">def </span>__init__(self, connection: _CoolLEDConnection, name: str) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   92</span>        <span class="keywordflow">if</span> len(name) != 1:</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;name should be a one character string&quot;</span>)</div>
+<div class="line"><span class="lineno">   94</span>        self._conn = connection</div>
+<div class="line"><span class="lineno">   95</span>        self._css_offset = self._conn.get_css()[::6].index(name.encode()) * 6</div>
+<div class="line"><span class="lineno">   96</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -214,6 +220,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Intensity in integer percent [0 100]</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00101">101</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  101</span>    <span class="keyword">def </span>get_intensity(self) -&gt; int:</div>
+<div class="line"><span class="lineno">  102</span>        <span class="stringliteral">&quot;&quot;&quot;Intensity in integer percent [0 100]&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  103</span>        <span class="keywordflow">return</span> int(self._get_css()[3:])</div>
+<div class="line"><span class="lineno">  104</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00097">microscope.controllers.coolled._CoolLEDChannelConnection._get_css()</a>.</p>
 
 </div>
 </div>
@@ -234,7 +246,11 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00121">121</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  121</span>    <span class="keyword">def </span>get_selected_state(self) -&gt; str:</div>
+<div class="line"><span class="lineno">  122</span>        <span class="stringliteral">&quot;S (Selected) or X (Unselected)&quot;</span> <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> self._get_css()[1:2].decode()</div>
+<div class="line"><span class="lineno">  124</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab9633e41cfe62a0b7a66e54dd1d0071d" name="ab9633e41cfe62a0b7a66e54dd1d0071d"></a>
@@ -254,6 +270,12 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">N (On) or F (Off)</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00110">110</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>    <span class="keyword">def </span>get_switch_state(self) -&gt; str:</div>
+<div class="line"><span class="lineno">  111</span>        <span class="stringliteral">&quot;&quot;&quot;N (On) or F (Off)&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  112</span>        <span class="keywordflow">return</span> self._get_css()[2:3].decode()</div>
+<div class="line"><span class="lineno">  113</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00097">microscope.controllers.coolled._CoolLEDChannelConnection._get_css()</a>.</p>
 
 </div>
 </div>
@@ -284,6 +306,13 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Intensity in integer percent [0 100]</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00105">105</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  105</span>    <span class="keyword">def </span>set_intensity(self, intensity: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  106</span>        <span class="stringliteral">&quot;&quot;&quot;Intensity in integer percent [0 100]&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  107</span>        percent = str(intensity).zfill(3)</div>
+<div class="line"><span class="lineno">  108</span>        self._conn.set_css(self._get_css()[0:3] + percent.encode())</div>
+<div class="line"><span class="lineno">  109</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00097">microscope.controllers.coolled._CoolLEDChannelConnection._get_css()</a>.</p>
 
 </div>
 </div>
@@ -314,6 +343,16 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">X (Unselected) or S (Selected)</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00125">125</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  125</span>    <span class="keyword">def </span>set_selected_state(self, state: str) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  126</span>        <span class="stringliteral">&quot;&quot;&quot;X (Unselected) or S (Selected)&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  127</span>        <span class="keywordflow">if</span> state <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;X&quot;</span>, <span class="stringliteral">&quot;S&quot;</span>]:</div>
+<div class="line"><span class="lineno">  128</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;state must be X (Unselected) or S (Selected)&quot;</span>)</div>
+<div class="line"><span class="lineno">  129</span>        css = self._get_css()</div>
+<div class="line"><span class="lineno">  130</span>        self._conn.set_css(css[0:1] + state.encode() + css[2:])</div>
+<div class="line"><span class="lineno">  131</span> </div>
+<div class="line"><span class="lineno">  132</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00097">microscope.controllers.coolled._CoolLEDChannelConnection._get_css()</a>.</p>
 
 </div>
 </div>
@@ -344,6 +383,15 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">N (On) or F (Off)</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00114">114</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>set_switch_state(self, state: str) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  115</span>        <span class="stringliteral">&quot;&quot;&quot;N (On) or F (Off)&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">if</span> state <span class="keywordflow">not</span> <span class="keywordflow">in</span> [<span class="stringliteral">&quot;N&quot;</span>, <span class="stringliteral">&quot;F&quot;</span>]:</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;state needs to be N (on) or F (off)&quot;</span>)</div>
+<div class="line"><span class="lineno">  118</span>        css = self._get_css()</div>
+<div class="line"><span class="lineno">  119</span>        self._conn.set_css(css[0:2] + state.encode() + css[3:])</div>
+<div class="line"><span class="lineno">  120</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, and <a class="el" href="coolled_8py_source.html#l00097">microscope.controllers.coolled._CoolLEDChannelConnection._get_css()</a>.</p>
 
 </div>
 </div>

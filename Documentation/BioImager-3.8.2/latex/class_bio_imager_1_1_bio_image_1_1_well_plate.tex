@@ -42,6 +42,54 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l01900}{1900}} of file \mbox
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l01923}{1923}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{01924             \{}
+\DoxyCodeLine{01925                 ID = b.meta.getPlateID(b.series);}
+\DoxyCodeLine{01926                 Name = b.meta.getPlateName(b.series);}
+\DoxyCodeLine{01927                 \textcolor{keywordtype}{double} x, y;}
+\DoxyCodeLine{01928                 \textcolor{keywordflow}{if} (b.meta.getPlateWellOriginX(b.series) != \textcolor{keyword}{null})}
+\DoxyCodeLine{01929                     x = b.meta.getPlateWellOriginX(b.series).value().doubleValue();}
+\DoxyCodeLine{01930                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01931                     x = 0;}
+\DoxyCodeLine{01932                 \textcolor{keywordflow}{if} (b.meta.getPlateWellOriginY(b.series) != \textcolor{keyword}{null})}
+\DoxyCodeLine{01933                     y = b.meta.getPlateWellOriginY(b.series).value().doubleValue();}
+\DoxyCodeLine{01934                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{01935                     y = 0;}
+\DoxyCodeLine{01936                 Origin = \textcolor{keyword}{new} PointD(x, y);}
+\DoxyCodeLine{01937                 \textcolor{keywordtype}{int} ws = b.meta.getWellCount(b.series);}
+\DoxyCodeLine{01938                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < ws; i++)}
+\DoxyCodeLine{01939                 \{}
+\DoxyCodeLine{01940                     Well w = \textcolor{keyword}{new} Well();}
+\DoxyCodeLine{01941                     w.ID = b.meta.getWellID(b.series, i);}
+\DoxyCodeLine{01942                     w.Column = b.meta.getWellColumn(b.series, i).getNumberValue().intValue();}
+\DoxyCodeLine{01943                     w.Row = b.meta.getWellRow(b.series, i).getNumberValue().intValue();}
+\DoxyCodeLine{01944                     \textcolor{keywordtype}{int} wsc = b.meta.getWellSampleCount(b.series, i);}
+\DoxyCodeLine{01945                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} s = 0; s < wsc; s++)}
+\DoxyCodeLine{01946                     \{}
+\DoxyCodeLine{01947                         Well.Sample sa = \textcolor{keyword}{new} Well.Sample();}
+\DoxyCodeLine{01948                         sa.Time = b.meta.getWellSampleTimepoint(b.series, i, s);}
+\DoxyCodeLine{01949                         sa.Index = b.meta.getWellSampleIndex(b.series, i, s).getNumberValue().intValue();}
+\DoxyCodeLine{01950                         \textcolor{keywordtype}{double} sx, sy;}
+\DoxyCodeLine{01951                         \textcolor{keywordflow}{if} (b.meta.getWellSamplePositionX(b.series, i, s) != \textcolor{keyword}{null})}
+\DoxyCodeLine{01952                             sx = b.meta.getWellSamplePositionX(b.series, i, s).value().doubleValue();}
+\DoxyCodeLine{01953                         \textcolor{keywordflow}{else} sx = 0;}
+\DoxyCodeLine{01954                         \textcolor{keywordflow}{if} (b.meta.getWellSamplePositionY(b.series, i, s) != \textcolor{keyword}{null})}
+\DoxyCodeLine{01955                             sy = b.meta.getWellSamplePositionY(b.series, i, s).value().doubleValue();}
+\DoxyCodeLine{01956                         \textcolor{keywordflow}{else} sy = 0;}
+\DoxyCodeLine{01957                         sa.Position = \textcolor{keyword}{new} PointD(sx, sy);}
+\DoxyCodeLine{01958                         sa.ID = b.meta.getWellSampleID(b.series, i, s);}
+\DoxyCodeLine{01959                         w.Samples.Add(sa);}
+\DoxyCodeLine{01960                     \}}
+\DoxyCodeLine{01961                     ome.xml.model.primitives.Color c = b.meta.getWellColor(b.series, i);}
+\DoxyCodeLine{01962                     \textcolor{keywordflow}{if} (c != \textcolor{keyword}{null})}
+\DoxyCodeLine{01963                         w.Color = System.Drawing.Color.FromArgb(c.getAlpha(), c.getRed(), c.getGreen(), c.getBlue());}
+\DoxyCodeLine{01964                     Wells.Add(w);}
+\DoxyCodeLine{01965                 \}}
+\DoxyCodeLine{01966 }
+\DoxyCodeLine{01967             \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_bio_image_1_1_well_plate_ac9bf549537a2e2ff23b96663c7dc8d9a}\label{class_bio_imager_1_1_bio_image_1_1_well_plate_ac9bf549537a2e2ff23b96663c7dc8d9a}} 

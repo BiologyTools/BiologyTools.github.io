@@ -257,7 +257,21 @@ The Mirao 52e deformable mirrors only support software trigger.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_deformable_mirror.html">microscope.abc.DeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mirror_2mirao52e_8py_source.html#l00068">68</a> of file <a class="el" href="mirror_2mirao52e_8py_source.html">mirao52e.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   68</span>    <span class="keyword">def </span>__init__(self, **kwargs) -&gt; None:</div>
+<div class="line"><span class="lineno">   69</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">   70</span>        <span class="comment"># Status is not the return code of the function calls.</span></div>
+<div class="line"><span class="lineno">   71</span>        <span class="comment"># Status is where we can find the error code in case a</span></div>
+<div class="line"><span class="lineno">   72</span>        <span class="comment"># function call returns false.  This _status variable will be</span></div>
+<div class="line"><span class="lineno">   73</span>        <span class="comment"># an argument in all function calls.</span></div>
+<div class="line"><span class="lineno">   74</span>        self._status = ctypes.pointer(ctypes.c_int(mro.OK))</div>
+<div class="line"><span class="lineno">   75</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> mro.open(self._status):</div>
+<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">   77</span>                <span class="stringliteral">&quot;failed to open mirao mirror (error code %d)&quot;</span></div>
+<div class="line"><span class="lineno">   78</span>                % self._status.contents.value</div>
+<div class="line"><span class="lineno">   79</span>            )</div>
+<div class="line"><span class="lineno">   80</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -280,7 +294,10 @@ The Mirao 52e deformable mirrors only support software trigger.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_deformable_mirror.html">microscope.abc.DeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mirror_2mirao52e_8py_source.html#l00082">82</a> of file <a class="el" href="mirror_2mirao52e_8py_source.html">mirao52e.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   82</span>    <span class="keyword">def </span>n_actuators(self) -&gt; int:</div>
+<div class="line"><span class="lineno">   83</span>        <span class="keywordflow">return</span> mro.NB_COMMAND_VALUES</div>
+<div class="line"><span class="lineno">   84</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

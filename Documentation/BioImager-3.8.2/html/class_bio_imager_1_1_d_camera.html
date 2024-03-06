@@ -172,7 +172,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_camera_8cs_source.html#l00017">17</a> of file <a class="el" href="_d_camera_8cs_source.html">DCamera.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   17</span>{ }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -192,7 +193,32 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_camera_8cs_source.html#l00026">26</a> of file <a class="el" href="_d_camera_8cs_source.html">DCamera.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   27</span>        {</div>
+<div class="line"><span class="lineno">   28</span>            <span class="comment">// Setup the position of the camera in the world.</span></div>
+<div class="line"><span class="lineno">   29</span>            Vector3 position = <span class="keyword">new</span> Vector3(PositionX, PositionY, PositionZ);</div>
+<div class="line"><span class="lineno">   30</span> </div>
+<div class="line"><span class="lineno">   31</span>            <span class="comment">// Setup where the camera is looking by default.</span></div>
+<div class="line"><span class="lineno">   32</span>            Vector3 lookAt = <span class="keyword">new</span> Vector3(0, 0, 1);</div>
+<div class="line"><span class="lineno">   33</span> </div>
+<div class="line"><span class="lineno">   34</span>            <span class="comment">// Set the yaw (Y axis), pitch (X axis), and roll (Z axis) rotations in radians.</span></div>
+<div class="line"><span class="lineno">   35</span>            <span class="keywordtype">float</span> pitch = RotationX * 0.0174532925f;</div>
+<div class="line"><span class="lineno">   36</span>            <span class="keywordtype">float</span> yaw = RotationY * 0.0174532925f; ;</div>
+<div class="line"><span class="lineno">   37</span>            <span class="keywordtype">float</span> roll = RotationZ * 0.0174532925f; ;</div>
+<div class="line"><span class="lineno">   38</span> </div>
+<div class="line"><span class="lineno">   39</span>            <span class="comment">// Create the rotation matrix from the yaw, pitch, and roll values.</span></div>
+<div class="line"><span class="lineno">   40</span>            Matrix rotationMatrix = Matrix.RotationYawPitchRoll(yaw, pitch, roll);</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>            <span class="comment">// Transform the lookAt and up vector by the rotation matrix so the view is correctly rotated at the origin.</span></div>
+<div class="line"><span class="lineno">   43</span>            lookAt = Vector3.TransformCoordinate(lookAt, rotationMatrix);</div>
+<div class="line"><span class="lineno">   44</span>            Vector3 up = Vector3.TransformCoordinate(Vector3.UnitY, rotationMatrix);</div>
+<div class="line"><span class="lineno">   45</span> </div>
+<div class="line"><span class="lineno">   46</span>            <span class="comment">// Translate the rotated camera position to the location of the viewer.</span></div>
+<div class="line"><span class="lineno">   47</span>            lookAt = position + lookAt;</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>            <span class="comment">// Finally create the view matrix from the three updated vectors.</span></div>
+<div class="line"><span class="lineno">   50</span>            ViewMatrix = Matrix.LookAtLH(position, lookAt, up);</div>
+<div class="line"><span class="lineno">   51</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afdd57938b819ff3c9bcdc05d03c07d33" name="afdd57938b819ff3c9bcdc05d03c07d33"></a>
@@ -228,7 +254,12 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_camera_8cs_source.html#l00020">20</a> of file <a class="el" href="_d_camera_8cs_source.html">DCamera.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   21</span>        {</div>
+<div class="line"><span class="lineno">   22</span>            PositionX = x;</div>
+<div class="line"><span class="lineno">   23</span>            PositionY = y;</div>
+<div class="line"><span class="lineno">   24</span>            PositionZ = z;</div>
+<div class="line"><span class="lineno">   25</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -253,7 +284,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_camera_8cs_source.html#l00014">14</a> of file <a class="el" href="_d_camera_8cs_source.html">DCamera.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   14</span>{ <span class="keyword">get</span>; <span class="keyword">private</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

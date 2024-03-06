@@ -76,6 +76,52 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00080}{80}} of file \mbox{\
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00094}{94}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00094     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, baudrate: int, timeout: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00095         \textcolor{comment}{\# From the technical datasheet: 8 bit word 1 stop bit, no}}
+\DoxyCodeLine{00096         \textcolor{comment}{\# parity no handshake, baudrate options of 9600, 19200, 38400,}}
+\DoxyCodeLine{00097         \textcolor{comment}{\# 57600 and 115200.}}
+\DoxyCodeLine{00098         self.\_serial = serial.Serial(}
+\DoxyCodeLine{00099             port=port,}
+\DoxyCodeLine{00100             baudrate=baudrate,}
+\DoxyCodeLine{00101             timeout=timeout,}
+\DoxyCodeLine{00102             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00103             stopbits=serial.STOPBITS\_TWO,}
+\DoxyCodeLine{00104             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00105             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00106             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00107             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00108         )}
+\DoxyCodeLine{00109         self.\_lock = threading.RLock()}
+\DoxyCodeLine{00110 }
+\DoxyCodeLine{00111         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00112             \textcolor{comment}{\# We do not use the general get\_description() here because}}
+\DoxyCodeLine{00113             \textcolor{comment}{\# if this is not a ProScan device it would never reach the}}
+\DoxyCodeLine{00114             \textcolor{comment}{\# '\(\backslash\)rEND\(\backslash\)r' that signals the end of the description.}}
+\DoxyCodeLine{00115             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00116                 self.command(b\textcolor{stringliteral}{'RCONFIG'})}
+\DoxyCodeLine{00117                 answer = self.read\_multiline()}
+\DoxyCodeLine{00118             \textcolor{keywordflow}{except}:}
+\DoxyCodeLine{00119                 print(\textcolor{stringliteral}{"{}Unable to read configuration. Is Ludl connected?"{}})}
+\DoxyCodeLine{00120                 \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00121             \textcolor{comment}{\# parse config responce which tells us what devices are present}}
+\DoxyCodeLine{00122             \textcolor{comment}{\# on this controller.}}
+\DoxyCodeLine{00123 }
+\DoxyCodeLine{00124             self.\_devlist=\{\}}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126             \textcolor{keywordflow}{for} line \textcolor{keywordflow}{in} answer[4:-\/1]:}
+\DoxyCodeLine{00127                 \textcolor{comment}{\#loop through lines 4 to second last one which are devices}}
+\DoxyCodeLine{00128                 \textcolor{comment}{\#present on this controller}}
+\DoxyCodeLine{00129                 devinfo=re.split(\textcolor{stringliteral}{r"{}\(\backslash\)s\{2,\}"{}},line.decode(\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00130                 \textcolor{comment}{\# dev address,label,id,description, type}}
+\DoxyCodeLine{00131                 self.\_devlist[devinfo[0]]=devinfo[1:]}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133 \textcolor{comment}{\#            print(answer)}}
+\DoxyCodeLine{00134 }
+\DoxyCodeLine{00135 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_adb348ea11b7a58f450abe17132b9a8b0}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_adb348ea11b7a58f450abe17132b9a8b0}} 
@@ -88,6 +134,23 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00094}{94}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00264}{264}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264     \textcolor{keyword}{def }changed\_timeout(self, new\_timeout: float):}
+\DoxyCodeLine{00265         previous = self.\_serial.timeout}
+\DoxyCodeLine{00266         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00267             self.\_serial.timeout = new\_timeout}
+\DoxyCodeLine{00268             \textcolor{keywordflow}{yield}}
+\DoxyCodeLine{00269         \textcolor{keywordflow}{finally}:}
+\DoxyCodeLine{00270             self.\_serial.timeout = previous}
+\DoxyCodeLine{00271 }
+\DoxyCodeLine{00272 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00114}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+move\+\_\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_add4a03d1c3ce094776f51d029f3cfed6}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_add4a03d1c3ce094776f51d029f3cfed6}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!command@{command}}
 \index{command@{command}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -99,6 +162,23 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00264}{264}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00142}{142}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00142     \textcolor{keyword}{def }command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00143         \textcolor{stringliteral}{"{}"{}"{}Send command to device."{}"{}"{}}}
+\DoxyCodeLine{00144         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00145             self.\_serial.write(command + b\textcolor{stringliteral}{"{}\(\backslash\)r"{}})}
+\DoxyCodeLine{00146 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
+
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00231}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+been\+\_\+homed()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00265}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00252}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+current\+\_\+index()}}, \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00257}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+description()}}, \mbox{\hyperlink{zaber_8py_source_l00248}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+index\+\_\+distance()}}, \mbox{\hyperlink{zaber_8py_source_l00269}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+max()}}, \mbox{\hyperlink{zaber_8py_source_l00273}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+min()}}, \mbox{\hyperlink{zaber_8py_source_l00227}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+number\+\_\+axes()}}, \mbox{\hyperlink{zaber_8py_source_l00240}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+rotation\+\_\+length()}}, \mbox{\hyperlink{zaber_8py_source_l00236}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+home()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+off()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00162}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+set\+\_\+normal\+\_\+channel\+\_\+power()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+show\+\_\+power\+\_\+u\+W()}}, and \mbox{\hyperlink{lights_2toptica_8py_source_l00188}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+status\+\_\+laser()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ad40130624c8e05564a2cb6ca03e55827}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ad40130624c8e05564a2cb6ca03e55827}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!get\_absolute\_position@{get\_absolute\_position}}
 \index{get\_absolute\_position@{get\_absolute\_position}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -109,6 +189,19 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00142}{142}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00241}{241}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00241     \textcolor{keyword}{def }get\_absolute\_position(self, axis: bytes) -\/> float:}
+\DoxyCodeLine{00242         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00243         position=self.get\_command(bytes(\textcolor{stringliteral}{'WHERE \{0\}'}.format(axisname),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00244         \textcolor{keywordflow}{if} position[3:4]==b\textcolor{stringliteral}{'N'}:}
+\DoxyCodeLine{00245             print(\textcolor{stringliteral}{"{}Error: \{0\} : \{1\}"{}}.format(position,}
+\DoxyCodeLine{00246                                          LUDL\_ERRORS[int(position[4:6])]))}
+\DoxyCodeLine{00247         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00248             \textcolor{keywordflow}{return} float(position.strip()[2:])}
+\DoxyCodeLine{00249                                 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_aa538b7e1ccab1e5b2980f6487179811a}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_aa538b7e1ccab1e5b2980f6487179811a}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!get\_command@{get\_command}}
 \index{get\_command@{get\_command}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -119,6 +212,24 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00241}{241}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00189}{189}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189     \textcolor{keyword}{def }get\_command(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{00190         \textcolor{stringliteral}{"{}"{}"{}Send get command and return the answer."{}"{}"{}}}
+\DoxyCodeLine{00191         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00192             self.command(command)}
+\DoxyCodeLine{00193             \textcolor{keywordflow}{return} self.readline()}
+\DoxyCodeLine{00194 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{__utils_8py_source_l00122}{microscope.\+\_\+utils.\+Shared\+Serial.\+readline()}}, \mbox{\hyperlink{prior_8py_source_l00085}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+readline()}}, \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}, \mbox{\hyperlink{zaber_8py_source_l00154}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+readline()}}, and \mbox{\hyperlink{mock__devices_8py_source_l00096}{microscope.\+testsuite.\+mock\+\_\+devices.\+Serial\+Mock.\+readline()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00175}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+wait\+\_\+until\+\_\+idle()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a34ac31f67b585435ffb69696e5dbeee6}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a34ac31f67b585435ffb69696e5dbeee6}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!get\_description@{get\_description}}
@@ -131,6 +242,24 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00189}{189}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00257}{257}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257     \textcolor{keyword}{def }get\_description(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{00258         \textcolor{stringliteral}{"{}"{}"{}Send a get description command and return it."{}"{}"{}}}
+\DoxyCodeLine{00259         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00260             self.command(command)}
+\DoxyCodeLine{00261             \textcolor{keywordflow}{return} self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)rEND\(\backslash\)r"{}})}
+\DoxyCodeLine{00262 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ab64797f5dbbbae931ff14d1906b24ca8}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ab64797f5dbbbae931ff14d1906b24ca8}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!get\_number\_axes@{get\_number\_axes}}
 \index{get\_number\_axes@{get\_number\_axes}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -141,6 +270,13 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00257}{257}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00139}{139}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00139     \textcolor{keyword}{def }get\_number\_axes(self):}
+\DoxyCodeLine{00140         \textcolor{keywordflow}{return} 2}
+\DoxyCodeLine{00141     }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a2b845f352d6a5920386aeeac1a6f3ccb}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a2b845f352d6a5920386aeeac1a6f3ccb}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!is\_busy@{is\_busy}}
 \index{is\_busy@{is\_busy}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -151,6 +287,17 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00139}{139}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00136}{136}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00136     \textcolor{keyword}{def }is\_busy(self):}
+\DoxyCodeLine{00137         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00138 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00212}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+wait\+\_\+until\+\_\+idle()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a57f567ba8dbb26f07e8584dfb9f09e2c}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a57f567ba8dbb26f07e8584dfb9f09e2c}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!motor\_moving@{motor\_moving}}
 \index{motor\_moving@{motor\_moving}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -160,6 +307,20 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00136}{136}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00221}{221}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00221     \textcolor{keyword}{def }motor\_moving(self,axis: bytes) -\/> int:}
+\DoxyCodeLine{00222         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00223         reply=self.get\_command(bytes(\textcolor{stringliteral}{'RDSTAT \{0\}'}.format(axisname),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00224         flags=int(reply.strip()[3:])}
+\DoxyCodeLine{00225         \textcolor{keywordflow}{return} (flags\&1)}
+\DoxyCodeLine{00226 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a72a9f751ad9cc80c5b9d0513707376b4}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a72a9f751ad9cc80c5b9d0513707376b4}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!move\_by\_relative\_position@{move\_by\_relative\_position}}
@@ -172,6 +333,20 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00221}{221}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00206}{206}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00206     \textcolor{keyword}{def }move\_by\_relative\_position(self, axis: bytes, delta: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00207         \textcolor{stringliteral}{"{}"{}"{}Send a realtive movement command to stated axis"{}"{}"{}}}
+\DoxyCodeLine{00208         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00209         self.move\_command(bytes(\textcolor{stringliteral}{'MOVREL \{0\}=\{1\}'}.format(axisname,}
+\DoxyCodeLine{00210                                                         str(delta)),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00211         }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00114}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+move\+\_\+command()}}, and \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ab1e24e50e7aa74429aee6d9d1f11fc30}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_ab1e24e50e7aa74429aee6d9d1f11fc30}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!move\_command@{move\_command}}
 \index{move\_command@{move\_command}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -182,6 +357,29 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00206}{206}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00195}{195}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00195     \textcolor{keyword}{def }move\_command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00196         \textcolor{stringliteral}{"{}"{}"{}Send a move command and check return value."{}"{}"{}}}
+\DoxyCodeLine{00197         \textcolor{comment}{\# Movement commands respond with "{}:A \(\backslash\)n"{} but the move is then}}
+\DoxyCodeLine{00198         \textcolor{comment}{\# being performed.  The move is only finihsed once the}}
+\DoxyCodeLine{00199         \textcolor{comment}{\# "{}STATUS"{} command returns "{}N"{} rather than "{}B"{}}}
+\DoxyCodeLine{00200         \textcolor{comment}{\#self.\_command\_and\_validate(command, b"{}N"{})}}
+\DoxyCodeLine{00201         \textcolor{comment}{\#}}
+\DoxyCodeLine{00202         \textcolor{comment}{\#actully beter to just issue the move command and rely on}}
+\DoxyCodeLine{00203         \textcolor{comment}{\#other process to check position}}
+\DoxyCodeLine{00204         self.get\_command(command)}
+\DoxyCodeLine{00205         }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, and \mbox{\hyperlink{lumencor_8py_source_l00097}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+get\+\_\+command()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00206}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+by\+\_\+relative\+\_\+position()}}, and \mbox{\hyperlink{ludl_8py_source_l00212}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+to\+\_\+absolute\+\_\+position()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_abb81fc4a3d934780a0e1f16f2c1b4a57}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_abb81fc4a3d934780a0e1f16f2c1b4a57}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!move\_to\_absolute\_position@{move\_to\_absolute\_position}}
@@ -194,6 +392,19 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00195}{195}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00212}{212}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212     \textcolor{keyword}{def }move\_to\_absolute\_position(self, axis: bytes, pos: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00213         \textcolor{stringliteral}{"{}"{}"{}Send a realtive movement command to stated axis"{}"{}"{}}}
+\DoxyCodeLine{00214         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00215         self.move\_command(bytes(\textcolor{stringliteral}{'MOVE \{0\}=\{1\}'}.format(axisname,}
+\DoxyCodeLine{00216                                                       str(pos)),\textcolor{stringliteral}{'ascii'}))}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{lumencor_8py_source_l00097}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00221}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+motor\+\_\+moving()}}, \mbox{\hyperlink{prior_8py_source_l00114}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+move\+\_\+command()}}, and \mbox{\hyperlink{ludl_8py_source_l00195}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+move\+\_\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a3c0ed839d3ad298bbbf95dd79b967243}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a3c0ed839d3ad298bbbf95dd79b967243}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!move\_to\_limit@{move\_to\_limit}}
 \index{move\_to\_limit@{move\_to\_limit}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -204,6 +415,14 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00212}{212}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00217}{217}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00217     \textcolor{keyword}{def }move\_to\_limit(self,axis: bytes,speed: int):}
+\DoxyCodeLine{00218         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00219         self.get\_command(bytes(\textcolor{stringliteral}{'SPIN \{0\}=\{1\}'}.format(axisname,speed),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00220 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a346c58743e240e6b9f6a738d3341147d}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a346c58743e240e6b9f6a738d3341147d}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!read\_multiline@{read\_multiline}}
 \index{read\_multiline@{read\_multiline}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -214,6 +433,26 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00217}{217}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00152}{152}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152     \textcolor{keyword}{def }read\_multiline(self):}
+\DoxyCodeLine{00153         output=[]}
+\DoxyCodeLine{00154         line=\textcolor{keyword}{True}}
+\DoxyCodeLine{00155         \textcolor{keywordflow}{while} (line):}
+\DoxyCodeLine{00156             line=self.readline()}
+\DoxyCodeLine{00157             output.append(line.strip())}
+\DoxyCodeLine{00158             \textcolor{keywordflow}{if} line==b\textcolor{stringliteral}{'N'} \textcolor{keywordflow}{or} line[0:2] == b\textcolor{stringliteral}{':A'} :}
+\DoxyCodeLine{00159                 \textcolor{comment}{\#thins means an end of command strings doesn require an}}
+\DoxyCodeLine{00160                 \textcolor{comment}{\#additional timeout before it returns }}
+\DoxyCodeLine{00161                 \textcolor{keywordflow}{return} (output)}
+\DoxyCodeLine{00162             \textcolor{keywordflow}{elif} line[0] == b\textcolor{stringliteral}{'N'}:}
+\DoxyCodeLine{00163                 \textcolor{comment}{\#this is an error string}}
+\DoxyCodeLine{00164                 error=line[2:].strip()}
+\DoxyCodeLine{00165                 raise(\textcolor{stringliteral}{'Ludl controller error: \%s,\%s'} \% (error,LUDL\_ERRORS[error]))}
+\DoxyCodeLine{00166         return(output)}
+\DoxyCodeLine{00167             }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a23900f80d4e878fcaaf9442c3cc00554}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a23900f80d4e878fcaaf9442c3cc00554}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!read\_until\_timeout@{read\_until\_timeout}}
 \index{read\_until\_timeout@{read\_until\_timeout}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -224,6 +463,25 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00152}{152}} of file \mbox{
  
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00168}{168}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00168     \textcolor{keyword}{def }read\_until\_timeout(self) -\/> None:}
+\DoxyCodeLine{00169         \textcolor{stringliteral}{"{}"{}"{}Read until timeout; used to clean buffer if in an unknown state."{}"{}"{}}}
+\DoxyCodeLine{00170         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00171             self.\_serial.flushInput()}
+\DoxyCodeLine{00172             \textcolor{keywordflow}{while} self.\_serial.readline():}
+\DoxyCodeLine{00173                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00174 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, and \mbox{\hyperlink{prior_8py_source_l00090}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+read\+\_\+until\+\_\+timeout()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a8af5295bc32b54e0752b2ef132078ce9}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a8af5295bc32b54e0752b2ef132078ce9}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!readline@{readline}}
@@ -236,6 +494,23 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00168}{168}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00147}{147}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00147     \textcolor{keyword}{def }readline(self) -\/> bytes:}
+\DoxyCodeLine{00148         \textcolor{stringliteral}{"{}"{}"{}Read a line from the device connection until '\(\backslash\)n'."{}"{}"{}}}
+\DoxyCodeLine{00149         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00150             \textcolor{keywordflow}{return} self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)n"{}})}
+\DoxyCodeLine{00151 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}, \mbox{\hyperlink{__utils_8py_source_l00122}{microscope.\+\_\+utils.\+Shared\+Serial.\+readline()}}, \mbox{\hyperlink{prior_8py_source_l00085}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+readline()}}, \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}, \mbox{\hyperlink{zaber_8py_source_l00154}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+readline()}}, and \mbox{\hyperlink{mock__devices_8py_source_l00096}{microscope.\+testsuite.\+mock\+\_\+devices.\+Serial\+Mock.\+readline()}}.
+
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00168}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+read\+\_\+until\+\_\+timeout()}}, and \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a797bda5e6cbc64b417f648e3e190f6b7}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a797bda5e6cbc64b417f648e3e190f6b7}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!reset\_position@{reset\_position}}
 \index{reset\_position@{reset\_position}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -246,6 +521,14 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00147}{147}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00237}{237}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00237     \textcolor{keyword}{def }reset\_position(self, axis: bytes):}
+\DoxyCodeLine{00238         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00239         self.get\_command(bytes(\textcolor{stringliteral}{'HERE \{0\}=0'}.format(axisname),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00240         }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_aa5a22278bb4966a9855b709b50b8731c}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_aa5a22278bb4966a9855b709b50b8731c}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!set\_command@{set\_command}}
 \index{set\_command@{set\_command}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -257,6 +540,21 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00237}{237}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00250}{250}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00250     \textcolor{keyword}{def }set\_command(self, command: bytes) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00251         \textcolor{stringliteral}{"{}"{}"{}Send a set command and check return value."{}"{}"{}}}
+\DoxyCodeLine{00252         \textcolor{comment}{\# Property type commands that set certain status respond with}}
+\DoxyCodeLine{00253         \textcolor{comment}{\# zero.  They respond with a zero even if there are invalid}}
+\DoxyCodeLine{00254         \textcolor{comment}{\# arguments in the command.}}
+\DoxyCodeLine{00255         self.\_command\_and\_validate(command, b\textcolor{stringliteral}{"{}0\(\backslash\)r"{}})}
+\DoxyCodeLine{00256 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00097}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+command\+\_\+and\+\_\+validate()}}, and \mbox{\hyperlink{ludl_8py_source_l00180}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+command\+\_\+and\+\_\+validate()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a586420bde444b84ceb9c3bcceb027ec2}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a586420bde444b84ceb9c3bcceb027ec2}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!set\_speed@{set\_speed}}
 \index{set\_speed@{set\_speed}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -267,6 +565,15 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00250}{250}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00227}{227}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00227     \textcolor{keyword}{def }set\_speed(self, axis: bytes, speed: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00228         axisname=AXIS\_MAPPER[axis]}
+\DoxyCodeLine{00229         self.get\_command(bytes(\textcolor{stringliteral}{'SPEED \{0\}=\{1\}'}.format(axisname,speed),\textcolor{stringliteral}{'ascii'}))}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a6bf9c0436e3cca82392eaccfd5ddce75}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a6bf9c0436e3cca82392eaccfd5ddce75}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!wait\_for\_motor\_stop@{wait\_for\_motor\_stop}}
 \index{wait\_for\_motor\_stop@{wait\_for\_motor\_stop}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -277,6 +584,15 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00227}{227}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00232}{232}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232     \textcolor{keyword}{def }wait\_for\_motor\_stop(self,axis: bytes):}
+\DoxyCodeLine{00233         while(self.motor\_moving(axis)):}
+\DoxyCodeLine{00234             time.sleep(0.1)}
+\DoxyCodeLine{00235             }
+\DoxyCodeLine{00236 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a4975a305c046500ab17cbf0e3a58c92c}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller_a4975a305c046500ab17cbf0e3a58c92c}} 
 \index{microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}!wait\_until\_idle@{wait\_until\_idle}}
 \index{wait\_until\_idle@{wait\_until\_idle}!microscope.stages.ludl.\_LudlController@{microscope.stages.ludl.\_LudlController}}
@@ -288,6 +604,19 @@ returns b'0\r' \end{DoxyVerb}
  
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00175}{175}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00175     \textcolor{keyword}{def }wait\_until\_idle(self) -\/> None:}
+\DoxyCodeLine{00176         \textcolor{stringliteral}{"{}"{}"{}Keep sending the 'STATUS' comand until the respnce}}
+\DoxyCodeLine{00177 \textcolor{stringliteral}{        returns b'0\(\backslash\)r'} \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00178 \textcolor{stringliteral}{        self.\_command\_and\_validate(b'STATUS'}, b\textcolor{stringliteral}{"{}N"{}})}
+\DoxyCodeLine{00179         }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00097}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+command\+\_\+and\+\_\+validate()}}, \mbox{\hyperlink{ludl_8py_source_l00180}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+command\+\_\+and\+\_\+validate()}}, \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, and \mbox{\hyperlink{lumencor_8py_source_l00097}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+get\+\_\+command()}}.
 
 
 

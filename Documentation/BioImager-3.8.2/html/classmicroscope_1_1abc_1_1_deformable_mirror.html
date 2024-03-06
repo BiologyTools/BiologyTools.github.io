@@ -264,7 +264,12 @@ software triggering.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01076">1076</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1076</span>    <span class="keyword">def </span>__init__(self, **kwargs) -&gt; None:</div>
+<div class="line"><span class="lineno"> 1077</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno"> 1078</span>        self._patterns: typing.Optional[numpy.ndarray] = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1079</span>        self._pattern_idx: int = -1</div>
+<div class="line"><span class="lineno"> 1080</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -299,6 +304,30 @@ Raises:
     microscope.IncompatibleStateError: if device trigger type is
         not set to software.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01113">1113</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1113</span>    <span class="keyword">def </span>apply_pattern(self, pattern: numpy.ndarray) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1114</span>        <span class="stringliteral">&quot;&quot;&quot;Apply this pattern.</span></div>
+<div class="line"><span class="lineno"> 1115</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1116</span><span class="stringliteral">        Raises:</span></div>
+<div class="line"><span class="lineno"> 1117</span><span class="stringliteral">            <a class="code hl_class" href="classmicroscope_1_1_incompatible_state_error.html">microscope.IncompatibleStateError</a>: </span><span class="keywordflow">if</span> device trigger type <span class="keywordflow">is</span></div>
+<div class="line"><span class="lineno"> 1118</span>                <span class="keywordflow">not</span> set to software.</div>
+<div class="line"><span class="lineno"> 1119</span> </div>
+<div class="line"><span class="lineno"> 1120</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1121</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self.trigger_type <span class="keywordflow">is</span> <span class="keywordflow">not</span> microscope.TriggerType.SOFTWARE:</div>
+<div class="line"><span class="lineno"> 1122</span>            <span class="comment"># An alternative to error is to change the trigger type,</span></div>
+<div class="line"><span class="lineno"> 1123</span>            <span class="comment"># apply the pattern, then restore the trigger type, but</span></div>
+<div class="line"><span class="lineno"> 1124</span>            <span class="comment"># that would clear the queue on the device.  It&#39;s better</span></div>
+<div class="line"><span class="lineno"> 1125</span>            <span class="comment"># to have the user specifically do it.  See issue #61.</span></div>
+<div class="line"><span class="lineno"> 1126</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_incompatible_state_error.html">microscope.IncompatibleStateError</a>(</div>
+<div class="line"><span class="lineno"> 1127</span>                <span class="stringliteral">&quot;apply_pattern requires software trigger type&quot;</span></div>
+<div class="line"><span class="lineno"> 1128</span>            )</div>
+<div class="line"><span class="lineno"> 1129</span>        self._validate_patterns(pattern)</div>
+<div class="line"><span class="lineno"> 1130</span>        self._do_apply_pattern(pattern)</div>
+<div class="line"><span class="lineno"> 1131</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_incompatible_state_error_html"><div class="ttname"><a href="classmicroscope_1_1_incompatible_state_error.html">microscope.IncompatibleStateError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00049">__init__.py:49</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01110">microscope.abc.DeformableMirror._do_apply_pattern()</a>, <a class="el" href="alpao_8py_source.html#l00128">microscope.mirror.alpao.AlpaoDeformableMirror._do_apply_pattern()</a>, <a class="el" href="mirror_2bmc_8py_source.html#l00066">microscope.mirror.bmc.BMCDeformableMirror._do_apply_pattern()</a>, <a class="el" href="mirror_2mirao52e_8py_source.html#l00094">microscope.mirror.mirao52e.Mirao52e._do_apply_pattern()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00391">microscope.simulators.SimulatedDeformableMirror._do_apply_pattern()</a>, <a class="el" href="abc_8py_source.html#l01086">microscope.abc.DeformableMirror._validate_patterns()</a>, <a class="el" href="__utils_8py_source.html#l00056">microscope._utils.OnlyTriggersOnceOnSoftwareMixin.trigger_type()</a>, <a class="el" href="__utils_8py_source.html#l00086">microscope._utils.OnlyTriggersBulbOnSoftwareMixin.trigger_type()</a>, <a class="el" href="abc_8py_source.html#l00243">microscope.abc.TriggerTargetMixin.trigger_type()</a>, <a class="el" href="andorsdk3_8py_source.html#l00582">microscope.cameras.andorsdk3.AndorSDK3.trigger_type()</a>, <a class="el" href="atmcd_8py_source.html#l01765">microscope.cameras.atmcd.AndorAtmcd.trigger_type()</a>, <a class="el" href="picam_8py_source.html#l00217">microscope.cameras.picam.PiCamera.trigger_type()</a>, <a class="el" href="pvcam_8py_source.html#l01880">microscope.cameras.pvcam.PVCamera.trigger_type()</a>, <a class="el" href="ximea_8py_source.html#l00445">microscope.cameras.ximea.XimeaCamera.trigger_type()</a>, <a class="el" href="coolled_8py_source.html#l00190">microscope.controllers.coolled._CoolLEDChannel.trigger_type()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00220">microscope.controllers.toptica._iChromeLaser.trigger_type()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00174">microscope.lights.deepstar.DeepstarLaser.trigger_type()</a>, <a class="el" href="lights_2obis_8py_source.html#l00195">microscope.lights.obis.ObisLaser.trigger_type()</a>, and <a class="el" href="alpao_8py_source.html#l00125">microscope.mirror.alpao.AlpaoDeformableMirror.trigger_type()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01148">microscope.abc.DeformableMirror.next_pattern()</a>.</p>
 
 </div>
 </div>
@@ -319,7 +348,10 @@ Raises:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01083">1083</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1083</span>    <span class="keyword">def </span>n_actuators(self) -&gt; int:</div>
+<div class="line"><span class="lineno"> 1084</span>        <span class="keywordflow">raise</span> NotImplementedError()</div>
+<div class="line"><span class="lineno"> 1085</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a00ad32bca0d8dade56582b3e0b57f2b3" name="a00ad32bca0d8dade56582b3e0b57f2b3"></a>
@@ -341,6 +373,16 @@ Raises:
 
 DEPRECATED: this is the same as calling :meth:`trigger`.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01148">1148</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1148</span>    <span class="keyword">def </span>next_pattern(self) -&gt; None:</div>
+<div class="line"><span class="lineno"> 1149</span>        <span class="stringliteral">&quot;&quot;&quot;Apply the next pattern in the queue.</span></div>
+<div class="line"><span class="lineno"> 1150</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1151</span><span class="stringliteral">        DEPRECATED: this </span><span class="keywordflow">is</span> the same <span class="keyword">as</span> calling :meth:`trigger`.</div>
+<div class="line"><span class="lineno"> 1152</span> </div>
+<div class="line"><span class="lineno"> 1153</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1154</span><span class="stringliteral">        self.trigger()</span></div>
+<div class="line"><span class="lineno"> 1155</span><span class="stringliteral"></span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01146">microscope.abc.DeformableMirror._pattern_idx</a>, <a class="el" href="abc_8py_source.html#l01145">microscope.abc.DeformableMirror._patterns</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>, and <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
 
 </div>
 </div>
@@ -381,6 +423,24 @@ provided.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror.html#ae6def33ab71adefe58aa7aec41a97829">microscope.mirror.alpao.AlpaoDeformableMirror</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01132">1132</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1132</span>    <span class="keyword">def </span>queue_patterns(self, patterns: numpy.ndarray) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1133</span>        <span class="stringliteral">&quot;&quot;&quot;Send values to the mirror.</span></div>
+<div class="line"><span class="lineno"> 1134</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1135</span><span class="stringliteral">        Args:</span></div>
+<div class="line"><span class="lineno"> 1136</span><span class="stringliteral">            patterns: An `KxN` elements array of values </span><span class="keywordflow">in</span> the range</div>
+<div class="line"><span class="lineno"> 1137</span>                `[0 1]`, where `N` equals the number of actuators, <span class="keywordflow">and</span></div>
+<div class="line"><span class="lineno"> 1138</span>                `K` <span class="keywordflow">is</span> the number of patterns.</div>
+<div class="line"><span class="lineno"> 1139</span> </div>
+<div class="line"><span class="lineno"> 1140</span>        A convenience fallback <span class="keywordflow">is</span> provided <span class="keywordflow">for</span> software triggering <span class="keywordflow">is</span></div>
+<div class="line"><span class="lineno"> 1141</span>        provided.</div>
+<div class="line"><span class="lineno"> 1142</span> </div>
+<div class="line"><span class="lineno"> 1143</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1144</span><span class="stringliteral">        self._validate_patterns(patterns)</span></div>
+<div class="line"><span class="lineno"> 1145</span><span class="stringliteral">        self._patterns = patterns</span></div>
+<div class="line"><span class="lineno"> 1146</span><span class="stringliteral">        self._pattern_idx = -1  </span><span class="comment"># none is applied yet</span></div>
+<div class="line"><span class="lineno"> 1147</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01146">microscope.abc.DeformableMirror._pattern_idx</a>, <a class="el" href="abc_8py_source.html#l01145">microscope.abc.DeformableMirror._patterns</a>, and <a class="el" href="abc_8py_source.html#l01086">microscope.abc.DeformableMirror._validate_patterns()</a>.</p>
 
 </div>
 </div>
@@ -403,6 +463,17 @@ provided.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a13348ed06ccceb5184881f9fc5330bbb">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01178">1178</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1178</span>    <span class="keyword">def </span>trigger(self) -&gt; None:</div>
+<div class="line"><span class="lineno"> 1179</span>        <span class="stringliteral">&quot;&quot;&quot;Apply the next pattern in the queue.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1180</span>        <span class="comment"># This is just a passthrough to the TriggerTargetMixin class</span></div>
+<div class="line"><span class="lineno"> 1181</span>        <span class="comment"># and only exists for the docstring.</span></div>
+<div class="line"><span class="lineno"> 1182</span>        <span class="keywordflow">return</span> super().trigger()</div>
+<div class="line"><span class="lineno"> 1183</span> </div>
+<div class="line"><span class="lineno"> 1184</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="clients_8py_source.html#l00090">microscope.clients.DataClient.enable()</a>, <a class="el" href="ximea_8py_source.html#l00359">microscope.cameras.ximea.XimeaCamera.get_cycle_time()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00277">microscope.simulators.SimulatedCamera.get_cycle_time()</a>, <a class="el" href="abc_8py_source.html#l00789">microscope.abc.DataDevice.grab_next_data()</a>, <a class="el" href="abc_8py_source.html#l01148">microscope.abc.DeformableMirror.next_pattern()</a>, and <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
 
 </div>
 </div>

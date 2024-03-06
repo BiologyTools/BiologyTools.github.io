@@ -242,7 +242,13 @@ UID.  In this class for test units we can check which UID to get.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="testsuite_2devices_8py_source.html#l00224">224</a> of file <a class="el" href="testsuite_2devices_8py_source.html">devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  224</span>    <span class="keyword">def </span>__init__(self, uid: str, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  225</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  226</span>        self._initialized = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  227</span>        self._uid = uid</div>
+<div class="line"><span class="lineno">  228</span>        self.initialize()</div>
+<div class="line"><span class="lineno">  229</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -265,6 +271,19 @@ UID.  In this class for test units we can check which UID to get.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html#a03520e043c352c83536d735f641d285e">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="testsuite_2devices_8py_source.html#l00238">238</a> of file <a class="el" href="testsuite_2devices_8py_source.html">devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  238</span>    <span class="keyword">def </span>get_id(self) -&gt; str:</div>
+<div class="line"><span class="lineno">  239</span>        <span class="keywordflow">if</span> self._initialized:</div>
+<div class="line"><span class="lineno">  240</span>            <span class="keywordflow">return</span> self._uid</div>
+<div class="line"><span class="lineno">  241</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  242</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_incompatible_state_error.html">microscope.IncompatibleStateError</a>(</div>
+<div class="line"><span class="lineno">  243</span>                <span class="stringliteral">&quot;uid is not available until after initialisation&quot;</span></div>
+<div class="line"><span class="lineno">  244</span>            )</div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_incompatible_state_error_html"><div class="ttname"><a href="classmicroscope_1_1_incompatible_state_error.html">microscope.IncompatibleStateError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00049">__init__.py:49</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="testsuite_2devices_8py_source.html#l00226">microscope.testsuite.devices.TestFloatingDevice._initialized</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00227">microscope.testsuite.devices.TestFloatingDevice._uid</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>
@@ -285,6 +304,12 @@ UID.  In this class for test units we can check which UID to get.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Expose private _index for testing purposes.</pre> 
 <p class="definition">Definition at line <a class="el" href="testsuite_2devices_8py_source.html#l00234">234</a> of file <a class="el" href="testsuite_2devices_8py_source.html">devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  234</span>    <span class="keyword">def </span>get_index(self) -&gt; int:</div>
+<div class="line"><span class="lineno">  235</span>        <span class="stringliteral">&quot;&quot;&quot;Expose private _index for testing purposes.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  236</span>        <span class="keywordflow">return</span> self._index</div>
+<div class="line"><span class="lineno">  237</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00216">microscope.abc.FloatingDeviceMixin._index</a>.</p>
 
 </div>
 </div>
@@ -311,6 +336,14 @@ they should call it on their `__init__` method.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="testsuite_2devices_8py_source.html#l00230">230</a> of file <a class="el" href="testsuite_2devices_8py_source.html">devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  230</span>    <span class="keyword">def </span>initialize(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  231</span>        super().initialize()</div>
+<div class="line"><span class="lineno">  232</span>        self._initialized = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  233</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="testsuite_2devices_8py_source.html#l00226">microscope.testsuite.devices.TestFloatingDevice._initialized</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>

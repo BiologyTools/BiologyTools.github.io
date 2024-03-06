@@ -73,6 +73,48 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_ca
 Definition at line \mbox{\hyperlink{abc_8py_source_l00829}{829}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00829     \textcolor{keyword}{def }\_\_init\_\_(self, **kwargs) -\/> None:}
+\DoxyCodeLine{00830         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00831         \textcolor{comment}{\# A list of readout mode descriptions.}}
+\DoxyCodeLine{00832         self.\_readout\_modes = [\textcolor{stringliteral}{"{}default"{}}]}
+\DoxyCodeLine{00833         \textcolor{comment}{\# The index of the current readout mode.}}
+\DoxyCodeLine{00834         self.\_readout\_mode = 0}
+\DoxyCodeLine{00835         \textcolor{comment}{\# Transforms to apply to data (fliplr, flipud, rot90)}}
+\DoxyCodeLine{00836         \textcolor{comment}{\# Transform to correct for readout order.}}
+\DoxyCodeLine{00837         self.\_readout\_transform = (\textcolor{keyword}{False}, \textcolor{keyword}{False}, \textcolor{keyword}{False})}
+\DoxyCodeLine{00838         \textcolor{comment}{\# Transform supplied by client to correct for system geometry.}}
+\DoxyCodeLine{00839         self.\_client\_transform = (\textcolor{keyword}{False}, \textcolor{keyword}{False}, \textcolor{keyword}{False})}
+\DoxyCodeLine{00840         \textcolor{comment}{\# Result of combining client and readout transforms}}
+\DoxyCodeLine{00841         self.\_transform = (\textcolor{keyword}{False}, \textcolor{keyword}{False}, \textcolor{keyword}{False})}
+\DoxyCodeLine{00842         \textcolor{comment}{\# A transform provided by the client.}}
+\DoxyCodeLine{00843         self.add\_setting(}
+\DoxyCodeLine{00844             \textcolor{stringliteral}{"{}transform"{}},}
+\DoxyCodeLine{00845             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00846             \textcolor{keyword}{lambda}: Camera.ALLOWED\_TRANSFORMS.index(self.\_transform),}
+\DoxyCodeLine{00847             \textcolor{keyword}{lambda} index: self.set\_transform(Camera.ALLOWED\_TRANSFORMS[index]),}
+\DoxyCodeLine{00848             Camera.ALLOWED\_TRANSFORMS,}
+\DoxyCodeLine{00849         )}
+\DoxyCodeLine{00850         self.add\_setting(}
+\DoxyCodeLine{00851             \textcolor{stringliteral}{"{}readout mode"{}},}
+\DoxyCodeLine{00852             \textcolor{stringliteral}{"{}enum"{}},}
+\DoxyCodeLine{00853             \textcolor{keyword}{lambda}: self.\_readout\_mode,}
+\DoxyCodeLine{00854             self.set\_readout\_mode,}
+\DoxyCodeLine{00855             \textcolor{keyword}{lambda}: self.\_readout\_modes,}
+\DoxyCodeLine{00856         )}
+\DoxyCodeLine{00857         self.add\_setting(\textcolor{stringliteral}{"{}roi"{}}, \textcolor{stringliteral}{"{}tuple"{}}, self.get\_roi, self.set\_roi, \textcolor{keywordtype}{None})}
+\DoxyCodeLine{00858 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l00839}{microscope.\+abc.\+Camera.\+\_\+client\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00834}{microscope.\+abc.\+Camera.\+\_\+readout\+\_\+mode}}, \mbox{\hyperlink{pvcam_8py_source_l01817}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+readout\+\_\+mode}}, \mbox{\hyperlink{abc_8py_source_l00832}{microscope.\+abc.\+Camera.\+\_\+readout\+\_\+modes}}, \mbox{\hyperlink{atmcd_8py_source_l01479}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+readout\+\_\+modes}}, \mbox{\hyperlink{pvcam_8py_source_l01780}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+readout\+\_\+modes}}, \mbox{\hyperlink{abc_8py_source_l00837}{microscope.\+abc.\+Camera.\+\_\+readout\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00841}{microscope.\+abc.\+Camera.\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00407}{microscope.\+abc.\+Device.\+add\+\_\+setting()}}, \mbox{\hyperlink{abc_8py_source_l00961}{microscope.\+abc.\+Camera.\+get\+\_\+roi()}}, \mbox{\hyperlink{abc_8py_source_l00876}{microscope.\+abc.\+Camera.\+set\+\_\+readout\+\_\+mode()}}, \mbox{\hyperlink{pvcam_8py_source_l01812}{microscope.\+cameras.\+pvcam.\+PVCamera.\+set\+\_\+readout\+\_\+mode()}}, \mbox{\hyperlink{abc_8py_source_l00974}{microscope.\+abc.\+Camera.\+set\+\_\+roi()}}, and \mbox{\hyperlink{abc_8py_source_l00884}{microscope.\+abc.\+Camera.\+set\+\_\+transform()}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_ad28cdab8354d25aa19b81353b6f7a480}\label{classmicroscope_1_1abc_1_1_camera_ad28cdab8354d25aa19b81353b6f7a480}} 
@@ -85,6 +127,22 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00829}{829}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00933}{933}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00933     \textcolor{keyword}{def }get\_binning(self) -\/> microscope.Binning:}
+\DoxyCodeLine{00934         \textcolor{stringliteral}{"{}"{}"{}Return the current binning corrected for transform."{}"{}"{}}}
+\DoxyCodeLine{00935         binning = self.\_get\_binning()}
+\DoxyCodeLine{00936         \textcolor{keywordflow}{if} self.\_transform[2]:}
+\DoxyCodeLine{00937             \textcolor{comment}{\# 90 degree rotation}}
+\DoxyCodeLine{00938             binning = \mbox{\hyperlink{classmicroscope_1_1_binning}{microscope.Binning}}(binning[1], binning[0])}
+\DoxyCodeLine{00939         \textcolor{keywordflow}{return} binning}
+\DoxyCodeLine{00940 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, and \mbox{\hyperlink{abc_8py_source_l00974}{microscope.\+abc.\+Camera.\+set\+\_\+roi()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a2048ad36a754b19e2488b77161a08e63}\label{classmicroscope_1_1abc_1_1_camera_a2048ad36a754b19e2488b77161a08e63}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!get\_cycle\_time@{get\_cycle\_time}}
@@ -101,6 +159,14 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1andorsdk3_1_1_an
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00911}{911}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00911     \textcolor{keyword}{def }get\_cycle\_time(self) -\/> float:}
+\DoxyCodeLine{00912         \textcolor{stringliteral}{"{}"{}"{}Return the cycle time in seconds."{}"{}"{}}}
+\DoxyCodeLine{00913         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00914 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a16e161a6bd61f3968a072971285eb017}\label{classmicroscope_1_1abc_1_1_camera_a16e161a6bd61f3968a072971285eb017}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!get\_exposure\_time@{get\_exposure\_time}}
 \index{get\_exposure\_time@{get\_exposure\_time}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -116,6 +182,14 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1andorsdk3_1_1_an
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00907}{907}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00907     \textcolor{keyword}{def }get\_exposure\_time(self) -\/> float:}
+\DoxyCodeLine{00908         \textcolor{stringliteral}{"{}"{}"{}Return the current exposure time in seconds."{}"{}"{}}}
+\DoxyCodeLine{00909         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00910 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a23985107b0809645061cc5b6570e924b}\label{classmicroscope_1_1abc_1_1_camera_a23985107b0809645061cc5b6570e924b}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!get\_roi@{get\_roi}}
 \index{get\_roi@{get\_roi}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -126,6 +200,26 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00907}{907}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00961}{961}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00961     \textcolor{keyword}{def }get\_roi(self) -\/> microscope.ROI:}
+\DoxyCodeLine{00962         \textcolor{stringliteral}{"{}"{}"{}Return current ROI."{}"{}"{}}}
+\DoxyCodeLine{00963         roi = self.\_get\_roi()}
+\DoxyCodeLine{00964         \textcolor{keywordflow}{if} self.\_transform[2]:}
+\DoxyCodeLine{00965             \textcolor{comment}{\# 90 degree rotation}}
+\DoxyCodeLine{00966             roi = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{microscope.ROI}}(roi[1], roi[0], roi[3], roi[2])}
+\DoxyCodeLine{00967         \textcolor{keywordflow}{return} roi}
+\DoxyCodeLine{00968 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00957}{microscope.\+abc.\+Camera.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00617}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{atmcd_8py_source_l01793}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{picam_8py_source_l00220}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{pvcam_8py_source_l01645}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{ximea_8py_source_l00385}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+get\+\_\+roi()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00301}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+get\+\_\+roi()}}, and \mbox{\hyperlink{abc_8py_source_l00841}{microscope.\+abc.\+Camera.\+\_\+transform}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, and \mbox{\hyperlink{andorsdk3_8py_source_l00588}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+set\+\_\+trigger()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a60bd2f8bd76859fd35d3ed0c135bf391}\label{classmicroscope_1_1abc_1_1_camera_a60bd2f8bd76859fd35d3ed0c135bf391}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!get\_sensor\_shape@{get\_sensor\_shape}}
@@ -138,6 +232,22 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00961}{961}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00920}{920}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00920     \textcolor{keyword}{def }get\_sensor\_shape(self) -\/> typing.Tuple[int, int]:}
+\DoxyCodeLine{00921         \textcolor{stringliteral}{"{}"{}"{}Return a tuple of `(width, height)` corrected for transform."{}"{}"{}}}
+\DoxyCodeLine{00922         shape = self.\_get\_sensor\_shape()}
+\DoxyCodeLine{00923         \textcolor{keywordflow}{if} self.\_transform[2]:}
+\DoxyCodeLine{00924             \textcolor{comment}{\# 90 degree rotation}}
+\DoxyCodeLine{00925             shape = (shape[1], shape[0])}
+\DoxyCodeLine{00926         \textcolor{keywordflow}{return} shape}
+\DoxyCodeLine{00927 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00974}{microscope.\+abc.\+Camera.\+set\+\_\+roi()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_ac427cb07b847ac1ddd32d0964cba9fa2}\label{classmicroscope_1_1abc_1_1_camera_ac427cb07b847ac1ddd32d0964cba9fa2}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!get\_transform@{get\_transform}}
 \index{get\_transform@{get\_transform}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -149,6 +259,14 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00920}{920}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00880}{880}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00880     \textcolor{keyword}{def }get\_transform(self):}
+\DoxyCodeLine{00881         \textcolor{stringliteral}{"{}"{}"{}Return the current transform without readout transform."{}"{}"{}}}
+\DoxyCodeLine{00882         \textcolor{keywordflow}{return} self.\_client\_transform}
+\DoxyCodeLine{00883 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a01c44d08b0f7dcb152a211c98858f6d3}\label{classmicroscope_1_1abc_1_1_camera_a01c44d08b0f7dcb152a211c98858f6d3}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!set\_binning@{set\_binning}}
 \index{set\_binning@{set\_binning}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -159,6 +277,28 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00880}{880}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00946}{946}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00946     \textcolor{keyword}{def }set\_binning(self, binning: microscope.Binning) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00947         \textcolor{stringliteral}{"{}"{}"{}Set binning along both axes.  Return `}\textcolor{keyword}{True}` \textcolor{keywordflow}{if} successful.\textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00948 \textcolor{stringliteral}{        h\_bin, v\_bin = binning}}
+\DoxyCodeLine{00949 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} self.\_transform[2]:}
+\DoxyCodeLine{00950             \textcolor{comment}{\# 90 degree rotation}}
+\DoxyCodeLine{00951             binning = \mbox{\hyperlink{classmicroscope_1_1_binning}{microscope.Binning}}(v\_bin, h\_bin)}
+\DoxyCodeLine{00952         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00953             binning = \mbox{\hyperlink{classmicroscope_1_1_binning}{microscope.Binning}}(h\_bin, v\_bin)}
+\DoxyCodeLine{00954         \textcolor{keywordflow}{return} self.\_set\_binning(binning)}
+\DoxyCodeLine{00955 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{andorsdk3_8py_source_l00607}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{atmcd_8py_source_l01788}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{pvcam_8py_source_l01640}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00298}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{picam_8py_source_l00224}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{abc_8py_source_l00942}{microscope.\+abc.\+Camera.\+\_\+set\+\_\+binning()}}, \mbox{\hyperlink{ximea_8py_source_l00376}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+set\+\_\+binning()}}, and \mbox{\hyperlink{abc_8py_source_l00841}{microscope.\+abc.\+Camera.\+\_\+transform}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a925b8831a01c673565ecb97b4f781800}\label{classmicroscope_1_1abc_1_1_camera_a925b8831a01c673565ecb97b4f781800}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!set\_exposure\_time@{set\_exposure\_time}}
@@ -175,6 +315,14 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1ximea_1_1_ximea_
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00903}{903}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00903     \textcolor{keyword}{def }set\_exposure\_time(self, value: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00904         \textcolor{stringliteral}{"{}"{}"{}Set the exposure time on the device in seconds."{}"{}"{}}}
+\DoxyCodeLine{00905         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00906 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_ace2ff70daf5a7c4a8ec53b375e5da73f}\label{classmicroscope_1_1abc_1_1_camera_ace2ff70daf5a7c4a8ec53b375e5da73f}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!set\_readout\_mode@{set\_readout\_mode}}
 \index{set\_readout\_mode@{set\_readout\_mode}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -190,6 +338,18 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_ca
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00876}{876}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00876     \textcolor{keyword}{def }set\_readout\_mode(self, description):}
+\DoxyCodeLine{00877         \textcolor{stringliteral}{"{}"{}"{}Set the readout mode and \_readout\_transform."{}"{}"{}}}
+\DoxyCodeLine{00878         \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00879 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a611b492b2e6de513b0f490ce8467d939}\label{classmicroscope_1_1abc_1_1_camera_a611b492b2e6de513b0f490ce8467d939}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!set\_roi@{set\_roi}}
 \index{set\_roi@{set\_roi}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -204,6 +364,37 @@ Return True if ROI set correctly, False otherwise.
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00974}{974}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00974     \textcolor{keyword}{def }set\_roi(self, roi: microscope.ROI) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00975         \textcolor{stringliteral}{"{}"{}"{}Set the ROI according to the provided rectangle.}}
+\DoxyCodeLine{00976 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00977 \textcolor{stringliteral}{        Return }\textcolor{keyword}{True} \textcolor{keywordflow}{if} ROI set correctly, \textcolor{keyword}{False} otherwise.}
+\DoxyCodeLine{00978         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00979 \textcolor{stringliteral}{        maxw, maxh = self.get\_sensor\_shape()}}
+\DoxyCodeLine{00980 \textcolor{stringliteral}{        binning = self.get\_binning()}}
+\DoxyCodeLine{00981 \textcolor{stringliteral}{        left, top, width, height = roi}}
+\DoxyCodeLine{00982 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} \textcolor{keywordflow}{not} width:  \textcolor{comment}{\# 0 or None}}
+\DoxyCodeLine{00983             width = maxw // binning.h}
+\DoxyCodeLine{00984         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} height:  \textcolor{comment}{\# 0 or None}}
+\DoxyCodeLine{00985             height = maxh // binning.v}
+\DoxyCodeLine{00986         \textcolor{keywordflow}{if} self.\_transform[2]:}
+\DoxyCodeLine{00987             roi = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{microscope.ROI}}(left, top, height, width)}
+\DoxyCodeLine{00988         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00989             roi = \mbox{\hyperlink{classmicroscope_1_1_r_o_i}{microscope.ROI}}(left, top, width, height)}
+\DoxyCodeLine{00990         \textcolor{keywordflow}{return} self.\_set\_roi(roi)}
+\DoxyCodeLine{00991 }
+\DoxyCodeLine{00992 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{picam_8py_source_l00231}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{abc_8py_source_l00970}{microscope.\+abc.\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{ximea_8py_source_l00394}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00626}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{atmcd_8py_source_l01798}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{pvcam_8py_source_l01650}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00305}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+set\+\_\+roi()}}, \mbox{\hyperlink{abc_8py_source_l00841}{microscope.\+abc.\+Camera.\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00933}{microscope.\+abc.\+Camera.\+get\+\_\+binning()}}, and \mbox{\hyperlink{abc_8py_source_l00920}{microscope.\+abc.\+Camera.\+get\+\_\+sensor\+\_\+shape()}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, and \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_camera_a9661c8304efb2af634ea469aaac9c80f}\label{classmicroscope_1_1abc_1_1_camera_a9661c8304efb2af634ea469aaac9c80f}} 
 \index{microscope.abc.Camera@{microscope.abc.Camera}!set\_transform@{set\_transform}}
 \index{set\_transform@{set\_transform}!microscope.abc.Camera@{microscope.abc.Camera}}
@@ -214,6 +405,31 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00974}{974}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00884}{884}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00884     \textcolor{keyword}{def }set\_transform(self, transform):}
+\DoxyCodeLine{00885         \textcolor{stringliteral}{"{}"{}"{}Combine provided transform with readout transform."{}"{}"{}}}
+\DoxyCodeLine{00886         \textcolor{keywordflow}{if} isinstance(transform, str):}
+\DoxyCodeLine{00887             transform = literal\_eval(transform)}
+\DoxyCodeLine{00888         self.\_client\_transform = transform}
+\DoxyCodeLine{00889         lr, ud, rot = (}
+\DoxyCodeLine{00890             self.\_readout\_transform[i] \string^ transform[i] \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(3)}
+\DoxyCodeLine{00891         )}
+\DoxyCodeLine{00892         \textcolor{keywordflow}{if} self.\_readout\_transform[2] \textcolor{keywordflow}{and} self.\_client\_transform[2]:}
+\DoxyCodeLine{00893             lr = \textcolor{keywordflow}{not} lr}
+\DoxyCodeLine{00894             ud = \textcolor{keywordflow}{not} ud}
+\DoxyCodeLine{00895         self.\_transform = (lr, ud, rot)}
+\DoxyCodeLine{00896 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00839}{microscope.\+abc.\+Camera.\+\_\+client\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00837}{microscope.\+abc.\+Camera.\+\_\+readout\+\_\+transform}}, \mbox{\hyperlink{abc_8py_source_l00841}{microscope.\+abc.\+Camera.\+\_\+transform}}, and \mbox{\hyperlink{abc_8py_source_l00884}{microscope.\+abc.\+Camera.\+set\+\_\+transform()}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{abc_8py_source_l00884}{microscope.\+abc.\+Camera.\+set\+\_\+transform()}}.
 
 
 

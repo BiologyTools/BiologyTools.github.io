@@ -53,6 +53,23 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00241}{241}} of f
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00255}{255}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00262     ):}
+\DoxyCodeLine{00263         \textcolor{comment}{\# The device to serve.}}
+\DoxyCodeLine{00264         self.\_device\_def = device\_def}
+\DoxyCodeLine{00265         self.\_options = options}
+\DoxyCodeLine{00266         self.\_devices: typing.Dict[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscope.abc.Device}}] = \{\}}
+\DoxyCodeLine{00267         \textcolor{comment}{\# Where to serve it.}}
+\DoxyCodeLine{00268         self.\_id\_to\_host = id\_to\_host}
+\DoxyCodeLine{00269         self.\_id\_to\_port = id\_to\_port}
+\DoxyCodeLine{00270         \textcolor{comment}{\# A shared event to allow clean shutdown.}}
+\DoxyCodeLine{00271         self.exit\_event = exit\_event}
+\DoxyCodeLine{00272         super().\_\_init\_\_()}
+\DoxyCodeLine{00273         self.daemon = \textcolor{keyword}{True}}
+\DoxyCodeLine{00274 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_device_server_aded495e13b5ceba10399930174024dc3}\label{classmicroscope_1_1device__server_1_1_device_server_aded495e13b5ceba10399930174024dc3}} 
@@ -68,6 +85,28 @@ This is useful to restart a device server.\end{DoxyVerb}
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00275}{275}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00275     \textcolor{keyword}{def }clone(self):}
+\DoxyCodeLine{00276         \textcolor{stringliteral}{"{}"{}"{}Create new instance with same settings.}}
+\DoxyCodeLine{00277 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00278 \textcolor{stringliteral}{        This }\textcolor{keywordflow}{is} useful to restart a device server.}
+\DoxyCodeLine{00279 }
+\DoxyCodeLine{00280         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00281 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} DeviceServer(}
+\DoxyCodeLine{00282             self.\_device\_def,}
+\DoxyCodeLine{00283             self.\_options,}
+\DoxyCodeLine{00284             self.\_id\_to\_host,}
+\DoxyCodeLine{00285             self.\_id\_to\_port,}
+\DoxyCodeLine{00286             exit\_event=self.exit\_event,}
+\DoxyCodeLine{00287         )}
+\DoxyCodeLine{00288 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{device__server_8py_source_l00264}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+device\+\_\+def}}, \mbox{\hyperlink{device__server_8py_source_l00323}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+devices}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00316}{microscope.\+simulators.\+Simulated\+Controller.\+\_\+devices}}, \mbox{\hyperlink{device__server_8py_source_l00268}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+id\+\_\+to\+\_\+host}}, \mbox{\hyperlink{device__server_8py_source_l00269}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+id\+\_\+to\+\_\+port}}, \mbox{\hyperlink{device__server_8py_source_l00265}{microscope.\+device\+\_\+server.\+Device\+Server.\+\_\+options}}, and \mbox{\hyperlink{device__server_8py_source_l00271}{microscope.\+device\+\_\+server.\+Device\+Server.\+exit\+\_\+event}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_device_server_acf4199baa6ede34e1dba12aaa3d980bf}\label{classmicroscope_1_1device__server_1_1_device_server_acf4199baa6ede34e1dba12aaa3d980bf}} 
 \index{microscope.device\_server.DeviceServer@{microscope.device\_server.DeviceServer}!run@{run}}
 \index{run@{run}!microscope.device\_server.DeviceServer@{microscope.device\_server.DeviceServer}}
@@ -78,6 +117,114 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00275}{275}} of f
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00289}{289}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00289     \textcolor{keyword}{def }run(self):}
+\DoxyCodeLine{00290         cls = self.\_device\_def[\textcolor{stringliteral}{"{}cls"{}}]}
+\DoxyCodeLine{00291         cls\_name = cls.\_\_name\_\_}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293         \textcolor{comment}{\# If the multiprocessing start method is fork, the child}}
+\DoxyCodeLine{00294         \textcolor{comment}{\# process gets a copy of the root logger.  The copy is}}
+\DoxyCodeLine{00295         \textcolor{comment}{\# configured to sign the messages as "{}device-\/server"{}, and}}
+\DoxyCodeLine{00296         \textcolor{comment}{\# write to the main log file and stderr.  We remove those}}
+\DoxyCodeLine{00297         \textcolor{comment}{\# handlers so that this DeviceServer is logged to a separate}}
+\DoxyCodeLine{00298         \textcolor{comment}{\# file and the messages are signed with the device name.}}
+\DoxyCodeLine{00299         root\_logger = logging.getLogger()}
+\DoxyCodeLine{00300         \textcolor{comment}{\# Get a new list of handlers because otherwise we are}}
+\DoxyCodeLine{00301         \textcolor{comment}{\# iterating over the same list as removeHandler().}}
+\DoxyCodeLine{00302         \textcolor{keywordflow}{for} handler \textcolor{keywordflow}{in} list(root\_logger.handlers):}
+\DoxyCodeLine{00303             root\_logger.removeHandler(handler)}
+\DoxyCodeLine{00304 }
+\DoxyCodeLine{00305         root\_logger.setLevel(self.\_options.logging\_level)}
+\DoxyCodeLine{00306 }
+\DoxyCodeLine{00307         \textcolor{comment}{\# Later, we'll log to one file per server, with a filename}}
+\DoxyCodeLine{00308         \textcolor{comment}{\# based on a unique identifier for the device. Some devices}}
+\DoxyCodeLine{00309         \textcolor{comment}{\# don't have UIDs available until after initialization, so}}
+\DoxyCodeLine{00310         \textcolor{comment}{\# log to stderr until then.}}
+\DoxyCodeLine{00311         stderr\_handler = StreamHandler(sys.stderr)}
+\DoxyCodeLine{00312         stderr\_handler.setFormatter(\_create\_log\_formatter(cls\_name))}
+\DoxyCodeLine{00313         root\_logger.addHandler(stderr\_handler)}
+\DoxyCodeLine{00314         root\_logger.debug(\textcolor{stringliteral}{"{}Debugging messages on."{}})}
+\DoxyCodeLine{00315 }
+\DoxyCodeLine{00316         root\_logger.addFilter(Filter())}
+\DoxyCodeLine{00317 }
+\DoxyCodeLine{00318         \textcolor{comment}{\# The cls argument can either be a Device subclass, or it can}}
+\DoxyCodeLine{00319         \textcolor{comment}{\# be a function that returns a map of names to devices.}}
+\DoxyCodeLine{00320         cls\_is\_type = isinstance(cls, type)}
+\DoxyCodeLine{00321 }
+\DoxyCodeLine{00322         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} cls\_is\_type:}
+\DoxyCodeLine{00323             self.\_devices = cls(**self.\_device\_def[\textcolor{stringliteral}{"{}conf"{}}])}
+\DoxyCodeLine{00324         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00325             \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} self.exit\_event.is\_set():}
+\DoxyCodeLine{00326                 \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00327                     device = cls(**self.\_device\_def[\textcolor{stringliteral}{"{}conf"{}}])}
+\DoxyCodeLine{00328                 \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{00329                     \_logger.info(}
+\DoxyCodeLine{00330                         \textcolor{stringliteral}{"{}Failed to start device. Retrying in 5s."{}}, exc\_info=e}
+\DoxyCodeLine{00331                     )}
+\DoxyCodeLine{00332                     time.sleep(5)}
+\DoxyCodeLine{00333                 \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00334                     \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00335             self.\_devices = \{cls\_name: device\}}
+\DoxyCodeLine{00336 }
+\DoxyCodeLine{00337         \textcolor{keywordflow}{if} cls\_is\_type \textcolor{keywordflow}{and} issubclass(cls, FloatingDeviceMixin):}
+\DoxyCodeLine{00338             uid = str(list(self.\_devices.values())[0].get\_id())}
+\DoxyCodeLine{00339             \textcolor{keywordflow}{if} uid \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_id\_to\_host \textcolor{keywordflow}{or} uid \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_id\_to\_port:}
+\DoxyCodeLine{00340                 \textcolor{keywordflow}{raise} Exception(}
+\DoxyCodeLine{00341                     \textcolor{stringliteral}{"{}Host or port not found for device \%s"{}} \% (uid,)}
+\DoxyCodeLine{00342                 )}
+\DoxyCodeLine{00343             host = self.\_id\_to\_host[uid]}
+\DoxyCodeLine{00344             port = self.\_id\_to\_port[uid]}
+\DoxyCodeLine{00345         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00346             host = self.\_device\_def[\textcolor{stringliteral}{"{}host"{}}]}
+\DoxyCodeLine{00347             port = self.\_device\_def[\textcolor{stringliteral}{"{}port"{}}]}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349         pyro\_daemon = Pyro4.Daemon(port=port, host=host)}
+\DoxyCodeLine{00350 }
+\DoxyCodeLine{00351         log\_handler = RotatingFileHandler(}
+\DoxyCodeLine{00352             \textcolor{stringliteral}{"{}\%s\_\%s\_\%s.log"{}} \% (cls\_name, host, port)}
+\DoxyCodeLine{00353         )}
+\DoxyCodeLine{00354         log\_handler.setFormatter(\_create\_log\_formatter(cls\_name))}
+\DoxyCodeLine{00355         root\_logger.addHandler(log\_handler)}
+\DoxyCodeLine{00356 }
+\DoxyCodeLine{00357         \_logger.info(\textcolor{stringliteral}{"{}Device initialized; starting daemon."{}})}
+\DoxyCodeLine{00358         \textcolor{keywordflow}{for} obj\_id, device \textcolor{keywordflow}{in} self.\_devices.items():}
+\DoxyCodeLine{00359             \_register\_device(pyro\_daemon, device, obj\_id=obj\_id)}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361         \textcolor{comment}{\# Run the Pyro daemon in a separate thread so that we can do}}
+\DoxyCodeLine{00362         \textcolor{comment}{\# clean shutdown under Windows.}}
+\DoxyCodeLine{00363         pyro\_thread = Thread(target=pyro\_daemon.requestLoop)}
+\DoxyCodeLine{00364         pyro\_thread.daemon = \textcolor{keyword}{True}}
+\DoxyCodeLine{00365         pyro\_thread.start()}
+\DoxyCodeLine{00366         \textcolor{keywordflow}{for} device \textcolor{keywordflow}{in} self.\_devices.values():}
+\DoxyCodeLine{00367             \_logger.info(\textcolor{stringliteral}{"{}Serving \%s"{}}, pyro\_daemon.uriFor(device))}
+\DoxyCodeLine{00368             \textcolor{keywordflow}{if} isinstance(device, FloatingDeviceMixin):}
+\DoxyCodeLine{00369                 \_logger.info(}
+\DoxyCodeLine{00370                     \textcolor{stringliteral}{"{}Device UID on port \%s is \%s"{}}, port, device.get\_id()}
+\DoxyCodeLine{00371                 )}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373         \textcolor{comment}{\# Wait for termination event. We should just be able to call}}
+\DoxyCodeLine{00374         \textcolor{comment}{\# wait() on the exit\_event, but this causes issues with locks}}
+\DoxyCodeLine{00375         \textcolor{comment}{\# in multiprocessing -\/ see http://bugs.python.org/issue30975 .}}
+\DoxyCodeLine{00376         \textcolor{keywordflow}{while} self.exit\_event \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} self.exit\_event.is\_set():}
+\DoxyCodeLine{00377             \textcolor{comment}{\# This tread waits for the termination event.}}
+\DoxyCodeLine{00378             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00379                 time.sleep(5)}
+\DoxyCodeLine{00380             \textcolor{keywordflow}{except} (KeyboardInterrupt, IOError):}
+\DoxyCodeLine{00381                 \textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00382         pyro\_daemon.shutdown()}
+\DoxyCodeLine{00383         pyro\_thread.join()}
+\DoxyCodeLine{00384         \textcolor{keywordflow}{for} device \textcolor{keywordflow}{in} self.\_devices.values():}
+\DoxyCodeLine{00385             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00386                 device.shutdown()}
+\DoxyCodeLine{00387             \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} ex:}
+\DoxyCodeLine{00388                 \textcolor{comment}{\# Catch errors so we get a chance of shutting down the}}
+\DoxyCodeLine{00389                 \textcolor{comment}{\# other devices.}}
+\DoxyCodeLine{00390                 \_logger.error(\textcolor{stringliteral}{"{}Failure to shutdown device \%s"{}}, device, ex)}
+\DoxyCodeLine{00391 }
+\DoxyCodeLine{00392 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -100,6 +247,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00273}{273}} of f
 
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00271}{271}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00275}{microscope.\+device\+\_\+server.\+Device\+Server.\+clone()}}.
 
 
 

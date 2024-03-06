@@ -82,6 +82,14 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00159}{159}} of file \mbox
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00173}{173}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00173     \textcolor{keyword}{def }\_\_init\_\_(self, conn: \_ZaberConnection, device\_address: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00174         self.\_conn = conn}
+\DoxyCodeLine{00175         self.\_address\_bytes = b\textcolor{stringliteral}{"{}\%02d"{}} \% device\_address}
+\DoxyCodeLine{00176 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a6ee20c260fc363950c197713820a09f1}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a6ee20c260fc363950c197713820a09f1}} 
@@ -94,6 +102,19 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00173}{173}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00231}{231}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00231     \textcolor{keyword}{def }been\_homed(self, axis: int = 0) -\/> bool:}
+\DoxyCodeLine{00232         \textcolor{stringliteral}{"{}"{}"{}True if all axes, or selected axis, has been homed."{}"{}"{}}}
+\DoxyCodeLine{00233         reply = self.command(b\textcolor{stringliteral}{"{}get limit.home.triggered"{}}, axis)}
+\DoxyCodeLine{00234         \textcolor{keywordflow}{return} all([int(x) \textcolor{keywordflow}{for} x \textcolor{keywordflow}{in} reply.response.split()])}
+\DoxyCodeLine{00235 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_aa40a6c3164797e66a1c6245be2e81ef8}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_aa40a6c3164797e66a1c6245be2e81ef8}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!command@{command}}
@@ -113,6 +134,38 @@ Args:
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00189}{189}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00189     \textcolor{keyword}{def }command(self, command: bytes, axis: int = 0) -\/> \_ZaberReply:}
+\DoxyCodeLine{00190         \textcolor{stringliteral}{"{}"{}"{}Send command and return reply.}}
+\DoxyCodeLine{00191 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00192 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{00193 \textcolor{stringliteral}{            command: a bytes array }\textcolor{keyword}{with} the command \textcolor{keywordflow}{and} its}
+\DoxyCodeLine{00194                 parameters.}
+\DoxyCodeLine{00195             axis: the axis number to send the command.  If zero, the}
+\DoxyCodeLine{00196                 command \textcolor{keywordflow}{is} executed by all axis \textcolor{keywordflow}{in} the device.}
+\DoxyCodeLine{00197         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00198 \textcolor{stringliteral}{        }\textcolor{comment}{\# We do not need to check whether axis number is valid because}}
+\DoxyCodeLine{00199         \textcolor{comment}{\# the device will reject the command with BADAXIS if so.}}
+\DoxyCodeLine{00200         \textcolor{keyword}{with} self.\_conn.lock:}
+\DoxyCodeLine{00201             self.\_conn.write(}
+\DoxyCodeLine{00202                 b\textcolor{stringliteral}{"{}/\%s \%1d \%s\(\backslash\)n"{}} \% (self.\_address\_bytes, axis, command)}
+\DoxyCodeLine{00203             )}
+\DoxyCodeLine{00204             data = self.\_conn.readline()}
+\DoxyCodeLine{00205         reply = \_ZaberReply(data)}
+\DoxyCodeLine{00206         self.\_validate\_reply(reply)}
+\DoxyCodeLine{00207         \textcolor{keywordflow}{return} reply}
+\DoxyCodeLine{00208 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00175}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+address\+\_\+bytes}}, \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00177}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+validate\+\_\+reply()}}, \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00231}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+been\+\_\+homed()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00265}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00252}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+current\+\_\+index()}}, \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00257}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+description()}}, \mbox{\hyperlink{zaber_8py_source_l00248}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+index\+\_\+distance()}}, \mbox{\hyperlink{zaber_8py_source_l00269}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+max()}}, \mbox{\hyperlink{zaber_8py_source_l00273}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+min()}}, \mbox{\hyperlink{zaber_8py_source_l00227}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+number\+\_\+axes()}}, \mbox{\hyperlink{zaber_8py_source_l00240}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+rotation\+\_\+length()}}, \mbox{\hyperlink{zaber_8py_source_l00236}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+home()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+off()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00162}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+set\+\_\+normal\+\_\+channel\+\_\+power()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+show\+\_\+power\+\_\+u\+W()}}, and \mbox{\hyperlink{lights_2toptica_8py_source_l00188}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+status\+\_\+laser()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_adedadda94d6686430f0b6898256d2dca}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_adedadda94d6686430f0b6898256d2dca}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_absolute\_position@{get\_absolute\_position}}
 \index{get\_absolute\_position@{get\_absolute\_position}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -123,6 +176,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00189}{189}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00265}{265}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00265     \textcolor{keyword}{def }get\_absolute\_position(self, axis: int) -\/> int:}
+\DoxyCodeLine{00266         \textcolor{stringliteral}{"{}"{}"{}Current absolute position of an axis, in microsteps."{}"{}"{}}}
+\DoxyCodeLine{00267         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get pos"{}}, axis).response)}
+\DoxyCodeLine{00268 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a85c26828d611801f94e4daecc551a7d3}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a85c26828d611801f94e4daecc551a7d3}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_current\_index@{get\_current\_index}}
@@ -135,6 +200,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00265}{265}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00252}{252}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00252     \textcolor{keyword}{def }get\_current\_index(self, axis: int) -\/> int:}
+\DoxyCodeLine{00253         \textcolor{stringliteral}{"{}"{}"{}The current index number or zero if between index positions."{}"{}"{}}}
+\DoxyCodeLine{00254         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get motion.index.num"{}}, axis).response)}
+\DoxyCodeLine{00255 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_ad98ae324d2b24195a1a9ddfed6085c40}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_ad98ae324d2b24195a1a9ddfed6085c40}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_index\_distance@{get\_index\_distance}}
 \index{get\_index\_distance@{get\_index\_distance}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -146,6 +223,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00252}{252}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00248}{248}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248     \textcolor{keyword}{def }get\_index\_distance(self, axis: int) -\/> int:}
+\DoxyCodeLine{00249         \textcolor{stringliteral}{"{}"{}"{}The distance between consecutive index positions."{}"{}"{}}}
+\DoxyCodeLine{00250         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get motion.index.dist"{}}, axis).response)}
+\DoxyCodeLine{00251 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a9678efaf9cc6d0cdeae7e67fb3dabac2}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a9678efaf9cc6d0cdeae7e67fb3dabac2}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_lamp\_flux@{get\_lamp\_flux}}
 \index{get\_lamp\_flux@{get\_lamp\_flux}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -156,6 +245,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00248}{248}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00286}{286}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00286     \textcolor{keyword}{def }get\_lamp\_flux(self, channel: int) -\/> float:}
+\DoxyCodeLine{00287         \textcolor{keywordflow}{return} float(self.command(b\textcolor{stringliteral}{"{}get lamp.flux"{}}, channel).response)}
+\DoxyCodeLine{00288 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a9655500bb795a22e27fff7950743bc19}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a9655500bb795a22e27fff7950743bc19}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_lamp\_is\_on@{get\_lamp\_is\_on}}
 \index{get\_lamp\_is\_on@{get\_lamp\_is\_on}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -166,6 +262,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00286}{286}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00292}{292}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00292     \textcolor{keyword}{def }get\_lamp\_is\_on(self, channel: int) -\/> bool:}
+\DoxyCodeLine{00293         \textcolor{keywordflow}{return} self.command(b\textcolor{stringliteral}{"{}get lamp.status"{}}, channel).response == b\textcolor{stringliteral}{"{}2"{}}}
+\DoxyCodeLine{00294 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a6b224c17e9d3af2f2ae283cd0bfb5570}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a6b224c17e9d3af2f2ae283cd0bfb5570}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_lamp\_max\_flux@{get\_lamp\_max\_flux}}
 \index{get\_lamp\_max\_flux@{get\_lamp\_max\_flux}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -176,6 +279,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00292}{292}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00283}{283}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00283     \textcolor{keyword}{def }get\_lamp\_max\_flux(self, channel: int) -\/> float:}
+\DoxyCodeLine{00284         \textcolor{keywordflow}{return} float(self.command(b\textcolor{stringliteral}{"{}get lamp.flux.max"{}}, channel).response)}
+\DoxyCodeLine{00285 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a4d6506e6750415e86239fa2e534b1aa4}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a4d6506e6750415e86239fa2e534b1aa4}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_lamp\_temperature@{get\_lamp\_temperature}}
 \index{get\_lamp\_temperature@{get\_lamp\_temperature}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -186,6 +296,14 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00283}{283}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00295}{295}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00295     \textcolor{keyword}{def }get\_lamp\_temperature(self, channel: int) -\/> float:}
+\DoxyCodeLine{00296         \textcolor{keywordflow}{return} float(self.command(b\textcolor{stringliteral}{"{}get lamp.temperature"{}}, channel).response)}
+\DoxyCodeLine{00297 }
+\DoxyCodeLine{00298 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a168ac18dc9b8e4f24ac31164d37498d1}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a168ac18dc9b8e4f24ac31164d37498d1}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_limit\_max@{get\_limit\_max}}
 \index{get\_limit\_max@{get\_limit\_max}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -196,6 +314,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00295}{295}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00269}{269}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00269     \textcolor{keyword}{def }get\_limit\_max(self, axis: int) -\/> int:}
+\DoxyCodeLine{00270         \textcolor{stringliteral}{"{}"{}"{}The maximum position the device can move to, in microsteps."{}"{}"{}}}
+\DoxyCodeLine{00271         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get limit.max"{}}, axis).response)}
+\DoxyCodeLine{00272 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a2a088bc1c3315db9d5e22bf29c617bb0}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a2a088bc1c3315db9d5e22bf29c617bb0}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_limit\_min@{get\_limit\_min}}
@@ -208,6 +338,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00269}{269}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00273}{273}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00273     \textcolor{keyword}{def }get\_limit\_min(self, axis: int) -\/> int:}
+\DoxyCodeLine{00274         \textcolor{stringliteral}{"{}"{}"{}The minimum position the device can move to, in microsteps."{}"{}"{}}}
+\DoxyCodeLine{00275         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get limit.min"{}}, axis).response)}
+\DoxyCodeLine{00276 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a0b69aaa21f4c66565d5512166c47613b}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a0b69aaa21f4c66565d5512166c47613b}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_number\_axes@{get\_number\_axes}}
 \index{get\_number\_axes@{get\_number\_axes}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -218,6 +360,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00273}{273}} of file \mbox
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00227}{227}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00227     \textcolor{keyword}{def }get\_number\_axes(self) -\/> int:}
+\DoxyCodeLine{00228         \textcolor{stringliteral}{"{}"{}"{}Reports the number of axes in the device."{}"{}"{}}}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get system.axiscount"{}}).response)}
+\DoxyCodeLine{00230 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1678d4d9de888176c82ee300b0ee0b1a}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1678d4d9de888176c82ee300b0ee0b1a}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!get\_rotation\_length@{get\_rotation\_length}}
@@ -234,6 +388,22 @@ filter wheels and filter cube turrets.
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00240}{240}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00240     \textcolor{keyword}{def }get\_rotation\_length(self, axis: int) -\/> int:}
+\DoxyCodeLine{00241         \textcolor{stringliteral}{"{}"{}"{}Number of microsteps needed to complete one full rotation.}}
+\DoxyCodeLine{00242 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00243 \textcolor{stringliteral}{        This }\textcolor{keywordflow}{is} only valid on controllers \textcolor{keywordflow}{and} rotary devices including}
+\DoxyCodeLine{00244         filter wheels \textcolor{keywordflow}{and} filter cube turrets.}
+\DoxyCodeLine{00245         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00246 \textcolor{stringliteral}{        }\textcolor{keywordflow}{return} int(self.command(b\textcolor{stringliteral}{"{}get limit.cycle.dist"{}}, axis).response)}
+\DoxyCodeLine{00247 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1a71a97faa12b185ecb36cc096929514}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1a71a97faa12b185ecb36cc096929514}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!home@{home}}
 \index{home@{home}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -245,6 +415,18 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00240}{240}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00236}{236}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00236     \textcolor{keyword}{def }home(self, axis: int = 0) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00237         \textcolor{stringliteral}{"{}"{}"{}Move the axis to the home position."{}"{}"{}}}
+\DoxyCodeLine{00238         self.command(b\textcolor{stringliteral}{"{}home"{}}, axis)}
+\DoxyCodeLine{00239 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1bf2b1dc675ff0bddf8692124a82c54b}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a1bf2b1dc675ff0bddf8692124a82c54b}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!is\_busy@{is\_busy}}
 \index{is\_busy@{is\_busy}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -254,6 +436,17 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00236}{236}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00209}{209}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00209     \textcolor{keyword}{def }is\_busy(self) -\/> bool:}
+\DoxyCodeLine{00210         \textcolor{keywordflow}{return} self.command(b\textcolor{stringliteral}{"{}"{}}).status == b\textcolor{stringliteral}{"{}BUSY"{}}}
+\DoxyCodeLine{00211 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00212}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+wait\+\_\+until\+\_\+idle()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a3cccc8e2914f0dd4652a41be8481a8be}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a3cccc8e2914f0dd4652a41be8481a8be}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!lamp\_off@{lamp\_off}}
@@ -265,6 +458,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00209}{209}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00277}{277}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00277     \textcolor{keyword}{def }lamp\_off(self, channel: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00278         self.command(b\textcolor{stringliteral}{"{}lamp off"{}}, channel)}
+\DoxyCodeLine{00279 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a53fc2505b2b2cb7106b457a8ffc92889}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a53fc2505b2b2cb7106b457a8ffc92889}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!lamp\_on@{lamp\_on}}
 \index{lamp\_on@{lamp\_on}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -275,6 +475,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00277}{277}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00280}{280}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00280     \textcolor{keyword}{def }lamp\_on(self, channel: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00281         self.command(b\textcolor{stringliteral}{"{}lamp on"{}}, channel)}
+\DoxyCodeLine{00282 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a3ec2d23b3255304104b26fecaab18673}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a3ec2d23b3255304104b26fecaab18673}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!move\_by\_relative\_position@{move\_by\_relative\_position}}
 \index{move\_by\_relative\_position@{move\_by\_relative\_position}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -285,6 +492,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00280}{280}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00262}{262}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00262     \textcolor{keyword}{def }move\_by\_relative\_position(self, axis: int, position: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00263         self.command(b\textcolor{stringliteral}{"{}move rel \%d"{}} \% position, axis)}
+\DoxyCodeLine{00264 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_abbb9e328970817f87b7eb470bb7c8842}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_abbb9e328970817f87b7eb470bb7c8842}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!move\_to\_absolute\_position@{move\_to\_absolute\_position}}
 \index{move\_to\_absolute\_position@{move\_to\_absolute\_position}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -295,6 +509,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00262}{262}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00259}{259}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00259     \textcolor{keyword}{def }move\_to\_absolute\_position(self, axis: int, position: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00260         self.command(b\textcolor{stringliteral}{"{}move abs \%d"{}} \% position, axis)}
+\DoxyCodeLine{00261 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_afd22b21895687c5c4e69152ff5788b23}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_afd22b21895687c5c4e69152ff5788b23}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!move\_to\_index@{move\_to\_index}}
 \index{move\_to\_index@{move\_to\_index}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -305,6 +526,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00259}{259}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00256}{256}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00256     \textcolor{keyword}{def }move\_to\_index(self, axis: int, index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00257         self.command(b\textcolor{stringliteral}{"{}move index \%d"{}} \% index, axis)}
+\DoxyCodeLine{00258 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a4cce3c89fd8e96e60e5bba83fb9e90f7}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_a4cce3c89fd8e96e60e5bba83fb9e90f7}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!set\_lamp\_flux@{set\_lamp\_flux}}
 \index{set\_lamp\_flux@{set\_lamp\_flux}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -315,6 +543,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00256}{256}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00289}{289}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00289     \textcolor{keyword}{def }set\_lamp\_flux(self, channel: int, flux: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00290         self.command(b\textcolor{stringliteral}{"{}set lamp.flux \%.3f"{}} \% flux, channel)}
+\DoxyCodeLine{00291 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_acd09b936986659491d648b16c687a170}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection_acd09b936986659491d648b16c687a170}} 
 \index{microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}!wait\_until\_idle@{wait\_until\_idle}}
 \index{wait\_until\_idle@{wait\_until\_idle}!microscope.controllers.zaber.\_ZaberDeviceConnection@{microscope.controllers.zaber.\_ZaberDeviceConnection}}
@@ -328,6 +563,29 @@ A device is busy if *any* of its axis is busy.
  
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00212}{212}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00212     \textcolor{keyword}{def }wait\_until\_idle(self, timeout: float = 10.0) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00213         \textcolor{stringliteral}{"{}"{}"{}Wait, or error, until device is idle.}}
+\DoxyCodeLine{00214 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00215 \textcolor{stringliteral}{        A device }\textcolor{keywordflow}{is} busy \textcolor{keywordflow}{if} *any* of its axis \textcolor{keywordflow}{is} busy.}
+\DoxyCodeLine{00216         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00217 \textcolor{stringliteral}{        sleep\_interval = 0.1}}
+\DoxyCodeLine{00218 \textcolor{stringliteral}{        }\textcolor{keywordflow}{for} \_ \textcolor{keywordflow}{in} range(int(timeout / sleep\_interval)):}
+\DoxyCodeLine{00219             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.is\_busy():}
+\DoxyCodeLine{00220                 \textcolor{keywordflow}{break}}
+\DoxyCodeLine{00221             time.sleep(sleep\_interval)}
+\DoxyCodeLine{00222         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00223             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00224                 \textcolor{stringliteral}{"{}device still busy after \%f seconds"{}} \% timeout}
+\DoxyCodeLine{00225             )}
+\DoxyCodeLine{00226 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00209}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+is\+\_\+busy()}}, and \mbox{\hyperlink{ludl_8py_source_l00136}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+is\+\_\+busy()}}.
 
 
 

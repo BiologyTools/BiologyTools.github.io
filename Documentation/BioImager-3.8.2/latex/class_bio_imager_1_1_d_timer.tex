@@ -34,6 +34,24 @@ Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00005}{5}} of file \mbo
 
 Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00031}{31}} of file \mbox{\hyperlink{_d_timer_8cs_source}{DTimer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00032         \{}
+\DoxyCodeLine{00033             \textcolor{comment}{// Query the current time.}}
+\DoxyCodeLine{00034             \textcolor{keywordtype}{long} currentTime = \_StopWatch.ElapsedTicks;}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036             \textcolor{comment}{// Calculate the difference in time since the last time we queried for the current time.}}
+\DoxyCodeLine{00037             \textcolor{keywordtype}{float} timeDifference = currentTime -\/ m\_LastFrameTime;}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039             \textcolor{comment}{// Calculate the frame time by the time difference over the timer speed resolution.}}
+\DoxyCodeLine{00040             FrameTime = timeDifference / m\_ticksPerMs;}
+\DoxyCodeLine{00041             CumulativeFrameTime += FrameTime;}
+\DoxyCodeLine{00042 }
+\DoxyCodeLine{00043             \textcolor{comment}{// record this Frames durations to the LastFrame for next frame processing.}}
+\DoxyCodeLine{00044             m\_LastFrameTime = currentTime;}
+\DoxyCodeLine{00045         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_timer_a36370e18cade3986383dc3e359eda3fe}\label{class_bio_imager_1_1_d_timer_a36370e18cade3986383dc3e359eda3fe}} 
 \index{BioImager.DTimer@{BioImager.DTimer}!Initialize@{Initialize}}
 \index{Initialize@{Initialize}!BioImager.DTimer@{BioImager.DTimer}}
@@ -44,6 +62,23 @@ Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00031}{31}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_d_timer_8cs_source}{DTimer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018         \{}
+\DoxyCodeLine{00019             \textcolor{comment}{// Check to see if this system supports high performance timers.}}
+\DoxyCodeLine{00020             \textcolor{keywordflow}{if} (!Stopwatch.IsHighResolution)}
+\DoxyCodeLine{00021                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00022             \textcolor{keywordflow}{if} (Stopwatch.Frequency == 0)}
+\DoxyCodeLine{00023                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00024 }
+\DoxyCodeLine{00025             \textcolor{comment}{// Find out how many times the frequency counter ticks every millisecond.}}
+\DoxyCodeLine{00026             m\_ticksPerMs = (float)(Stopwatch.Frequency / 1000.0f);}
+\DoxyCodeLine{00027 }
+\DoxyCodeLine{00028             \_StopWatch = Stopwatch.StartNew();}
+\DoxyCodeLine{00029             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00030         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Property Documentation}
@@ -57,6 +92,11 @@ Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00017}{17}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00014}{14}} of file \mbox{\hyperlink{_d_timer_8cs_source}{DTimer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00014 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_timer_a061a04a7d06693c1a01187898fbdabe4}\label{class_bio_imager_1_1_d_timer_a061a04a7d06693c1a01187898fbdabe4}} 
 \index{BioImager.DTimer@{BioImager.DTimer}!FrameTime@{FrameTime}}
 \index{FrameTime@{FrameTime}!BioImager.DTimer@{BioImager.DTimer}}
@@ -67,6 +107,11 @@ Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00014}{14}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_timer_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_d_timer_8cs_source}{DTimer.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

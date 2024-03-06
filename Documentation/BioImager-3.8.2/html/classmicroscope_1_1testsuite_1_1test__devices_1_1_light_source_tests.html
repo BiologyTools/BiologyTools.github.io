@@ -239,7 +239,12 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00178">178</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  178</span>    <span class="keyword">def </span>assertEqualMW(self, first, second, msg=None):</div>
+<div class="line"><span class="lineno">  179</span>        <span class="comment"># We could be smarter, but rounding the values should be</span></div>
+<div class="line"><span class="lineno">  180</span>        <span class="comment"># enough to check the values when comparing power levels.</span></div>
+<div class="line"><span class="lineno">  181</span>        self.assertEqual(round(first), round(second), msg)</div>
+<div class="line"><span class="lineno">  182</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5b7ba877c45b835585f2747b0648fce2" name="a5b7ba877c45b835585f2747b0648fce2"></a>
@@ -259,7 +264,14 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00183">183</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  183</span>    <span class="keyword">def </span>test_get_is_on(self):</div>
+<div class="line"><span class="lineno">  184</span>        self.assertEqual(self.device.connection.light, self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  185</span>        self.device.enable()</div>
+<div class="line"><span class="lineno">  186</span>        self.assertEqual(self.device.connection.light, self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  187</span>        self.device.disable()</div>
+<div class="line"><span class="lineno">  188</span>        self.assertEqual(self.device.connection.light, self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  189</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad3c283ed001da0e8132d02c9896cc228" name="ad3c283ed001da0e8132d02c9896cc228"></a>
@@ -279,7 +291,14 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00190">190</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  190</span>    <span class="keyword">def </span>test_off_after_constructor(self):</div>
+<div class="line"><span class="lineno">  191</span>        <span class="comment"># Some lasers, such as our Coherent Sapphire emit laser</span></div>
+<div class="line"><span class="lineno">  192</span>        <span class="comment"># radiation as soon as the key is switched on.  We should</span></div>
+<div class="line"><span class="lineno">  193</span>        <span class="comment"># ensure that the laser is turned off during the</span></div>
+<div class="line"><span class="lineno">  194</span>        <span class="comment"># construction.</span></div>
+<div class="line"><span class="lineno">  195</span>        self.assertFalse(self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  196</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a59f5f61adbfa7889840d546d13f7169a" name="a59f5f61adbfa7889840d546d13f7169a"></a>
@@ -299,7 +318,12 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00208">208</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  208</span>    <span class="keyword">def </span>test_power_when_off(self):</div>
+<div class="line"><span class="lineno">  209</span>        self.device.disable()</div>
+<div class="line"><span class="lineno">  210</span>        self.assertIsInstance(self.device.power, float)</div>
+<div class="line"><span class="lineno">  211</span>        self.assertEqual(self.device.power, 0.0)</div>
+<div class="line"><span class="lineno">  212</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1f0177433605e7ba0182a672c844ad64" name="a1f0177433605e7ba0182a672c844ad64"></a>
@@ -319,7 +343,22 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00213">213</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  213</span>    <span class="keyword">def </span>test_setting_power(self):</div>
+<div class="line"><span class="lineno">  214</span>        self.device.enable()</div>
+<div class="line"><span class="lineno">  215</span>        self.assertIsInstance(self.device.power, float)</div>
+<div class="line"><span class="lineno">  216</span>        power_mw = self.device.power * self.fake.max_power</div>
+<div class="line"><span class="lineno">  217</span>        self.assertEqualMW(power_mw, self.fake.default_power)</div>
+<div class="line"><span class="lineno">  218</span>        self.assertEqualMW(self.device.power, self.device.get_set_power())</div>
+<div class="line"><span class="lineno">  219</span> </div>
+<div class="line"><span class="lineno">  220</span>        new_power = 0.5</div>
+<div class="line"><span class="lineno">  221</span>        new_power_mw = new_power * self.fake.max_power</div>
+<div class="line"><span class="lineno">  222</span>        self.device.power = new_power</div>
+<div class="line"><span class="lineno">  223</span>        self.assertEqualMW(</div>
+<div class="line"><span class="lineno">  224</span>            self.device.power * self.fake.max_power, new_power_mw</div>
+<div class="line"><span class="lineno">  225</span>        )</div>
+<div class="line"><span class="lineno">  226</span>        self.assertEqualMW(new_power, self.device.get_set_power())</div>
+<div class="line"><span class="lineno">  227</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad40184f0d5e6af3336ebe5240933ed15" name="ad40184f0d5e6af3336ebe5240933ed15"></a>
@@ -339,7 +378,18 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00228">228</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  228</span>    <span class="keyword">def </span>test_setting_power_outside_limit(self):</div>
+<div class="line"><span class="lineno">  229</span>        self.device.enable()</div>
+<div class="line"><span class="lineno">  230</span>        self.device.power = -0.1</div>
+<div class="line"><span class="lineno">  231</span>        self.assertEqual(</div>
+<div class="line"><span class="lineno">  232</span>            self.device.power,</div>
+<div class="line"><span class="lineno">  233</span>            self.fake.min_power / self.fake.max_power,</div>
+<div class="line"><span class="lineno">  234</span>            <span class="stringliteral">&quot;clip setting power below 0&quot;</span>,</div>
+<div class="line"><span class="lineno">  235</span>        )</div>
+<div class="line"><span class="lineno">  236</span>        self.device.power = 1.1</div>
+<div class="line"><span class="lineno">  237</span>        self.assertEqual(self.device.power, 1.0, <span class="stringliteral">&quot;clip setting power above 1&quot;</span>)</div>
+<div class="line"><span class="lineno">  238</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac4ef42fb1e3a29e65cb767cc1965cc4b" name="ac4ef42fb1e3a29e65cb767cc1965cc4b"></a>
@@ -359,7 +409,12 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00203">203</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  203</span>    <span class="keyword">def </span>test_shutdown(self):</div>
+<div class="line"><span class="lineno">  204</span>        self.device.enable()</div>
+<div class="line"><span class="lineno">  205</span>        self.device.disable()</div>
+<div class="line"><span class="lineno">  206</span>        self.device.shutdown()</div>
+<div class="line"><span class="lineno">  207</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4d1714a90c503b2fa3052d9ed524002d" name="a4d1714a90c503b2fa3052d9ed524002d"></a>
@@ -379,7 +434,14 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00239">239</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  239</span>    <span class="keyword">def </span>test_status(self):</div>
+<div class="line"><span class="lineno">  240</span>        status = self.device.get_status()</div>
+<div class="line"><span class="lineno">  241</span>        self.assertIsInstance(status, list)</div>
+<div class="line"><span class="lineno">  242</span>        <span class="keywordflow">for</span> msg <span class="keywordflow">in</span> status:</div>
+<div class="line"><span class="lineno">  243</span>            self.assertIsInstance(msg, str)</div>
+<div class="line"><span class="lineno">  244</span> </div>
+<div class="line"><span class="lineno">  245</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ad4d7091ff8eba38300a7348938e4aab7" name="ad4d7091ff8eba38300a7348938e4aab7"></a>
@@ -399,7 +461,13 @@ implement the `setUp` method which must add two properties:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00197">197</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  197</span>    <span class="keyword">def </span>test_turning_on_and_off(self):</div>
+<div class="line"><span class="lineno">  198</span>        self.device.enable()</div>
+<div class="line"><span class="lineno">  199</span>        self.assertTrue(self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  200</span>        self.device.disable()</div>
+<div class="line"><span class="lineno">  201</span>        self.assertFalse(self.device.get_is_on())</div>
+<div class="line"><span class="lineno">  202</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

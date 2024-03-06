@@ -49,6 +49,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00008}{8}} of file \mbo
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00026}{26}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00026 \{ \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a04a8b84a0565418df95e6c586f1bd0a1}\label{class_bio_imager_1_1_d_d_x11_a04a8b84a0565418df95e6c586f1bd0a1}} 
@@ -61,6 +66,13 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00026}{26}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00263}{263}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264         \{}
+\DoxyCodeLine{00265             BeginScene(\textcolor{keyword}{new} Color4(red, green, blue, alpha));}
+\DoxyCodeLine{00266         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_ad8e764f5f2408d7df8da8d11eaa47479}\label{class_bio_imager_1_1_d_d_x11_ad8e764f5f2408d7df8da8d11eaa47479}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!EndScene@{EndScene}}
 \index{EndScene@{EndScene}!BioImager.DDX11@{BioImager.DDX11}}
@@ -71,6 +83,17 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00263}{263}} of file \m
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00275}{275}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00276         \{}
+\DoxyCodeLine{00277             \textcolor{comment}{// Present the back buffer to the screen since rendering is complete.}}
+\DoxyCodeLine{00278             \textcolor{keywordflow}{if} (VerticalSyncEnabled)}
+\DoxyCodeLine{00279                 SwapChain.Present(1, PresentFlags.None); \textcolor{comment}{// Lock to screen refresh rate.}}
+\DoxyCodeLine{00280             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00281                 SwapChain.Present(0, PresentFlags.None); \textcolor{comment}{// Present as fast as possible.}}
+\DoxyCodeLine{00282         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_ac44a80c22bd66870f1ba3b8fa1ac4cd4}\label{class_bio_imager_1_1_d_d_x11_ac44a80c22bd66870f1ba3b8fa1ac4cd4}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!Initialize@{Initialize}}
 \index{Initialize@{Initialize}!BioImager.DDX11@{BioImager.DDX11}}
@@ -81,6 +104,220 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00275}{275}} of file \m
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00029}{29}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00030         \{}
+\DoxyCodeLine{00031             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00032             \{}
+\DoxyCodeLine{00033                 \textcolor{comment}{// Store the vsync setting.}}
+\DoxyCodeLine{00034                 VerticalSyncEnabled = DSystemConfiguration.VerticalSyncEnabled;}
+\DoxyCodeLine{00035 }
+\DoxyCodeLine{00036                 \textcolor{comment}{// Create a DirectX graphics interface factory.}}
+\DoxyCodeLine{00037                 var factory = \textcolor{keyword}{new} Factory1();}
+\DoxyCodeLine{00038 }
+\DoxyCodeLine{00039                 \textcolor{comment}{// Use the factory to create an adapter for the primary graphics interface (video card).}}
+\DoxyCodeLine{00040                 var adapter = factory.GetAdapter1(0);}
+\DoxyCodeLine{00041 }
+\DoxyCodeLine{00042                 \textcolor{comment}{// Get the primary adapter output (monitor).}}
+\DoxyCodeLine{00043                 var monitor = adapter.GetOutput(0);}
+\DoxyCodeLine{00044 }
+\DoxyCodeLine{00045                 \textcolor{comment}{// Get modes that fit the DXGI\_FORMAT\_R8G8B8A8\_UNORM display format for the adapter output (monitor).}}
+\DoxyCodeLine{00046                 var modes = monitor.GetDisplayModeList(Format.R8G8B8A8\_UNorm, DisplayModeEnumerationFlags.Interlaced);}
+\DoxyCodeLine{00047 }
+\DoxyCodeLine{00048                 \textcolor{comment}{// Now go through all the display modes and find the one that matches the screen width and height.}}
+\DoxyCodeLine{00049                 \textcolor{comment}{// When a match is found store the the refresh rate for that monitor, if vertical sync is enabled. }}
+\DoxyCodeLine{00050                 \textcolor{comment}{// Otherwise we use maximum refresh rate.}}
+\DoxyCodeLine{00051                 var rational = \textcolor{keyword}{new} Rational(0, 1);}
+\DoxyCodeLine{00052                 \textcolor{keywordflow}{if} (VerticalSyncEnabled)}
+\DoxyCodeLine{00053                 \{}
+\DoxyCodeLine{00054                     \textcolor{keywordflow}{foreach} (var mode \textcolor{keywordflow}{in} modes)}
+\DoxyCodeLine{00055                     \{}
+\DoxyCodeLine{00056                         \textcolor{keywordflow}{if} (mode.Width == configuration.Width \&\& mode.Height == configuration.Height)}
+\DoxyCodeLine{00057                         \{}
+\DoxyCodeLine{00058                             rational = \textcolor{keyword}{new} Rational(mode.RefreshRate.Numerator, mode.RefreshRate.Denominator);}
+\DoxyCodeLine{00059                             \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00060                         \}}
+\DoxyCodeLine{00061                     \}}
+\DoxyCodeLine{00062                 \}}
+\DoxyCodeLine{00063 }
+\DoxyCodeLine{00064                 \textcolor{comment}{// Get the adapter (video card) description.}}
+\DoxyCodeLine{00065                 var adapterDescription = adapter.Description;}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067                 \textcolor{comment}{// Store the dedicated video card memory in megabytes.}}
+\DoxyCodeLine{00068                 \textcolor{comment}{//VideoCardMemory = adapterDescription.DedicatedVideoMemory >> 10 >> 10;}}
+\DoxyCodeLine{00069 }
+\DoxyCodeLine{00070                 \textcolor{comment}{// Convert the name of the video card to a character array and store it.}}
+\DoxyCodeLine{00071                 VideoCardDescription = adapterDescription.Description.Trim(\textcolor{charliteral}{'\(\backslash\)0'});}
+\DoxyCodeLine{00072 }
+\DoxyCodeLine{00073                 \textcolor{comment}{// Release the adapter output.}}
+\DoxyCodeLine{00074                 monitor.Dispose();}
+\DoxyCodeLine{00075                 \textcolor{comment}{// Release the adapter.}}
+\DoxyCodeLine{00076                 adapter.Dispose();}
+\DoxyCodeLine{00077                 \textcolor{comment}{// Release the factory.}}
+\DoxyCodeLine{00078                 factory.Dispose();}
+\DoxyCodeLine{00079 }
+\DoxyCodeLine{00080                 \textcolor{comment}{// Initialize the swap chain description.}}
+\DoxyCodeLine{00081                 var swapChainDesc = \textcolor{keyword}{new} SwapChainDescription()}
+\DoxyCodeLine{00082                 \{}
+\DoxyCodeLine{00083                     \textcolor{comment}{// Set to a single back buffer.}}
+\DoxyCodeLine{00084                     BufferCount = 1,}
+\DoxyCodeLine{00085                     \textcolor{comment}{// Set the width and height of the back buffer.}}
+\DoxyCodeLine{00086                     ModeDescription = \textcolor{keyword}{new} ModeDescription(configuration.Width, configuration.Height, rational, Format.R8G8B8A8\_UNorm),}
+\DoxyCodeLine{00087                     \textcolor{comment}{// Set the usage of the back buffer.}}
+\DoxyCodeLine{00088                     Usage = Usage.RenderTargetOutput,}
+\DoxyCodeLine{00089                     \textcolor{comment}{// Set the handle for the window to render to.}}
+\DoxyCodeLine{00090                     OutputHandle = windowHandle,}
+\DoxyCodeLine{00091                     \textcolor{comment}{// Turn multisampling off.}}
+\DoxyCodeLine{00092                     SampleDescription = \textcolor{keyword}{new} SampleDescription(1, 0),}
+\DoxyCodeLine{00093                     \textcolor{comment}{// Set to full screen or windowed mode.}}
+\DoxyCodeLine{00094                     IsWindowed = !DSystemConfiguration.FullScreen,}
+\DoxyCodeLine{00095                     \textcolor{comment}{// Don't set the advanced flags.}}
+\DoxyCodeLine{00096                     Flags = SwapChainFlags.None,}
+\DoxyCodeLine{00097                     \textcolor{comment}{// Discard the back buffer content after presenting.}}
+\DoxyCodeLine{00098                     SwapEffect = SwapEffect.Discard}
+\DoxyCodeLine{00099                 \};}
+\DoxyCodeLine{00100 }
+\DoxyCodeLine{00101                 \textcolor{comment}{// Create the swap chain, Direct3D device, and Direct3D device context.}}
+\DoxyCodeLine{00102                 SharpDX.Direct3D11.Device device;}
+\DoxyCodeLine{00103                 SwapChain swapChain;}
+\DoxyCodeLine{00104                 SharpDX.Direct3D11.Device.CreateWithSwapChain(DriverType.Hardware, DeviceCreationFlags.None, swapChainDesc, out device, out swapChain);}
+\DoxyCodeLine{00105 }
+\DoxyCodeLine{00106                 Device = device;}
+\DoxyCodeLine{00107                 SwapChain = swapChain;}
+\DoxyCodeLine{00108                 DeviceContext = device.ImmediateContext;}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110                 \textcolor{comment}{// Get the pointer to the back buffer.}}
+\DoxyCodeLine{00111                 var backBuffer = Texture2D.FromSwapChain<Texture2D>(SwapChain, 0);}
+\DoxyCodeLine{00112 }
+\DoxyCodeLine{00113                 \textcolor{comment}{// Create the render target view with the back buffer pointer.}}
+\DoxyCodeLine{00114                 RenderTargetView = \textcolor{keyword}{new} RenderTargetView(device, backBuffer);}
+\DoxyCodeLine{00115 }
+\DoxyCodeLine{00116                 \textcolor{comment}{// Release pointer to the back buffer as we no longer need it.}}
+\DoxyCodeLine{00117                 backBuffer.Dispose();}
+\DoxyCodeLine{00118 }
+\DoxyCodeLine{00119                 \textcolor{comment}{// Initialize and set up the description of the depth buffer.}}
+\DoxyCodeLine{00120                 Texture2DDescription depthBufferDesc = \textcolor{keyword}{new} Texture2DDescription()}
+\DoxyCodeLine{00121                 \{}
+\DoxyCodeLine{00122                     Width = configuration.Width,}
+\DoxyCodeLine{00123                     Height = configuration.Height,}
+\DoxyCodeLine{00124                     MipLevels = 1,}
+\DoxyCodeLine{00125                     ArraySize = 1,}
+\DoxyCodeLine{00126                     Format = Format.D24\_UNorm\_S8\_UInt,}
+\DoxyCodeLine{00127                     SampleDescription = \textcolor{keyword}{new} SampleDescription(1, 0),}
+\DoxyCodeLine{00128                     Usage = ResourceUsage.Default,}
+\DoxyCodeLine{00129                     BindFlags = BindFlags.DepthStencil,}
+\DoxyCodeLine{00130                     CpuAccessFlags = CpuAccessFlags.None,}
+\DoxyCodeLine{00131                     OptionFlags = ResourceOptionFlags.None}
+\DoxyCodeLine{00132                 \};}
+\DoxyCodeLine{00133 }
+\DoxyCodeLine{00134                 \textcolor{comment}{// Create the texture for the depth buffer using the filled out description.}}
+\DoxyCodeLine{00135                 DepthStencilBuffer = \textcolor{keyword}{new} Texture2D(device, depthBufferDesc);}
+\DoxyCodeLine{00136 }
+\DoxyCodeLine{00137                 \textcolor{comment}{// Initialize and set up the description of the stencil state.}}
+\DoxyCodeLine{00138                 DepthStencilStateDescription depthStencilDesc = \textcolor{keyword}{new} DepthStencilStateDescription()}
+\DoxyCodeLine{00139                 \{}
+\DoxyCodeLine{00140                     IsDepthEnabled = \textcolor{keyword}{true},}
+\DoxyCodeLine{00141                     DepthWriteMask = DepthWriteMask.All,}
+\DoxyCodeLine{00142                     DepthComparison = Comparison.Less,}
+\DoxyCodeLine{00143                     IsStencilEnabled = \textcolor{keyword}{true},}
+\DoxyCodeLine{00144                     StencilReadMask = 0xFF,}
+\DoxyCodeLine{00145                     StencilWriteMask = 0xFF,}
+\DoxyCodeLine{00146                     \textcolor{comment}{// Stencil operation if pixel front-\/facing.}}
+\DoxyCodeLine{00147                     FrontFace = \textcolor{keyword}{new} DepthStencilOperationDescription()}
+\DoxyCodeLine{00148                     \{}
+\DoxyCodeLine{00149                         FailOperation = StencilOperation.Keep,}
+\DoxyCodeLine{00150                         DepthFailOperation = StencilOperation.Increment,}
+\DoxyCodeLine{00151                         PassOperation = StencilOperation.Keep,}
+\DoxyCodeLine{00152                         Comparison = Comparison.Always}
+\DoxyCodeLine{00153                     \},}
+\DoxyCodeLine{00154                     \textcolor{comment}{// Stencil operation if pixel is back-\/facing.}}
+\DoxyCodeLine{00155                     BackFace = \textcolor{keyword}{new} DepthStencilOperationDescription()}
+\DoxyCodeLine{00156                     \{}
+\DoxyCodeLine{00157                         FailOperation = StencilOperation.Keep,}
+\DoxyCodeLine{00158                         DepthFailOperation = StencilOperation.Decrement,}
+\DoxyCodeLine{00159                         PassOperation = StencilOperation.Keep,}
+\DoxyCodeLine{00160                         Comparison = Comparison.Always}
+\DoxyCodeLine{00161                     \}}
+\DoxyCodeLine{00162                 \};}
+\DoxyCodeLine{00163 }
+\DoxyCodeLine{00164                 \textcolor{comment}{// Create the depth stencil state.}}
+\DoxyCodeLine{00165                 DepthStencilState = \textcolor{keyword}{new} DepthStencilState(Device, depthStencilDesc);}
+\DoxyCodeLine{00166 }
+\DoxyCodeLine{00167                 \textcolor{comment}{// Set the depth stencil state.}}
+\DoxyCodeLine{00168                 DeviceContext.OutputMerger.SetDepthStencilState(DepthStencilState, 1);}
+\DoxyCodeLine{00169 }
+\DoxyCodeLine{00170                 \textcolor{comment}{// Initialize and set up the depth stencil view.}}
+\DoxyCodeLine{00171                 DepthStencilViewDescription depthStencilViewDesc = \textcolor{keyword}{new} DepthStencilViewDescription()}
+\DoxyCodeLine{00172                 \{}
+\DoxyCodeLine{00173                     Format = Format.D24\_UNorm\_S8\_UInt,}
+\DoxyCodeLine{00174                     Dimension = DepthStencilViewDimension.Texture2D,}
+\DoxyCodeLine{00175                     Texture2D = \textcolor{keyword}{new} DepthStencilViewDescription.Texture2DResource()}
+\DoxyCodeLine{00176                     \{}
+\DoxyCodeLine{00177                         MipSlice = 0}
+\DoxyCodeLine{00178                     \}}
+\DoxyCodeLine{00179                 \};}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181                 \textcolor{comment}{// Create the depth stencil view.}}
+\DoxyCodeLine{00182                 DepthStencilView = \textcolor{keyword}{new} DepthStencilView(Device, DepthStencilBuffer, depthStencilViewDesc);}
+\DoxyCodeLine{00183 }
+\DoxyCodeLine{00184                 \textcolor{comment}{// Bind the render target view and depth stencil buffer to the output render pipeline.}}
+\DoxyCodeLine{00185                 DeviceContext.OutputMerger.SetTargets(DepthStencilView, RenderTargetView);}
+\DoxyCodeLine{00186 }
+\DoxyCodeLine{00187                 \textcolor{comment}{// Setup the raster description which will determine how and what polygon will be drawn.}}
+\DoxyCodeLine{00188                 RasterizerStateDescription rasterDesc = \textcolor{keyword}{new} RasterizerStateDescription()}
+\DoxyCodeLine{00189                 \{}
+\DoxyCodeLine{00190                     IsAntialiasedLineEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{00191                     CullMode = CullMode.Back,}
+\DoxyCodeLine{00192                     DepthBias = 0,}
+\DoxyCodeLine{00193                     DepthBiasClamp = .0f,}
+\DoxyCodeLine{00194                     IsDepthClipEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{00195                     FillMode = FillMode.Solid,}
+\DoxyCodeLine{00196                     IsFrontCounterClockwise = \textcolor{keyword}{false},}
+\DoxyCodeLine{00197                     IsMultisampleEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{00198                     IsScissorEnabled = \textcolor{keyword}{false},}
+\DoxyCodeLine{00199                     SlopeScaledDepthBias = .0f}
+\DoxyCodeLine{00200                 \};}
+\DoxyCodeLine{00201 }
+\DoxyCodeLine{00202                 \textcolor{comment}{// Create the rasterizer state from the description we just filled out.}}
+\DoxyCodeLine{00203                 RasterState = \textcolor{keyword}{new} RasterizerState(Device, rasterDesc);}
+\DoxyCodeLine{00204 }
+\DoxyCodeLine{00205                 \textcolor{comment}{// Now set the rasterizer state.}}
+\DoxyCodeLine{00206                 DeviceContext.Rasterizer.State = RasterState;}
+\DoxyCodeLine{00207 }
+\DoxyCodeLine{00208                 \textcolor{comment}{// Setup and create the viewport for rendering.}}
+\DoxyCodeLine{00209                 DeviceContext.Rasterizer.SetViewport(0, 0, configuration.Width, configuration.Height, 0, 1);}
+\DoxyCodeLine{00210 }
+\DoxyCodeLine{00211                 \textcolor{comment}{// Setup and create the projection matrix.}}
+\DoxyCodeLine{00212                 ProjectionMatrix = Matrix.PerspectiveFovLH((\textcolor{keywordtype}{float})(Math.PI / 4), ((\textcolor{keywordtype}{float})configuration.Width / (\textcolor{keywordtype}{float})configuration.Height), DSystemConfiguration.ScreenNear, DSystemConfiguration.ScreenDepth);}
+\DoxyCodeLine{00213 }
+\DoxyCodeLine{00214                 \textcolor{comment}{// Initialize the world matrix to the identity matrix.}}
+\DoxyCodeLine{00215                 WorldMatrix = Matrix.Identity;}
+\DoxyCodeLine{00216 }
+\DoxyCodeLine{00217                 BlendStateDescription blendStateDescription = \textcolor{keyword}{new} BlendStateDescription}
+\DoxyCodeLine{00218                 \{}
+\DoxyCodeLine{00219                     AlphaToCoverageEnable = \textcolor{keyword}{false},}
+\DoxyCodeLine{00220                 \};}
+\DoxyCodeLine{00221 }
+\DoxyCodeLine{00222                 blendStateDescription.RenderTarget[0].IsBlendEnabled = \textcolor{keyword}{true};}
+\DoxyCodeLine{00223                 blendStateDescription.RenderTarget[0].SourceBlend = BlendOption.SourceAlpha;}
+\DoxyCodeLine{00224                 blendStateDescription.RenderTarget[0].DestinationBlend = BlendOption.InverseSourceAlpha;}
+\DoxyCodeLine{00225                 blendStateDescription.RenderTarget[0].BlendOperation = BlendOperation.Add;}
+\DoxyCodeLine{00226                 blendStateDescription.RenderTarget[0].SourceAlphaBlend = BlendOption.Zero;}
+\DoxyCodeLine{00227                 blendStateDescription.RenderTarget[0].DestinationAlphaBlend = BlendOption.Zero;}
+\DoxyCodeLine{00228                 blendStateDescription.RenderTarget[0].AlphaBlendOperation = BlendOperation.Add;}
+\DoxyCodeLine{00229                 blendStateDescription.RenderTarget[0].RenderTargetWriteMask = ColorWriteMaskFlags.All;}
+\DoxyCodeLine{00230 }
+\DoxyCodeLine{00231                 DeviceContext.OutputMerger.BlendState = \textcolor{keyword}{new} BlendState(device, blendStateDescription);}
+\DoxyCodeLine{00232 }
+\DoxyCodeLine{00233                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00234             \}}
+\DoxyCodeLine{00235             \textcolor{keywordflow}{catch}}
+\DoxyCodeLine{00236             \{}
+\DoxyCodeLine{00237                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00238             \}}
+\DoxyCodeLine{00239         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a0266f404d171453d83bd17cdf3f8839e}\label{class_bio_imager_1_1_d_d_x11_a0266f404d171453d83bd17cdf3f8839e}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!ShutDown@{ShutDown}}
 \index{ShutDown@{ShutDown}!BioImager.DDX11@{BioImager.DDX11}}
@@ -91,6 +328,32 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00029}{29}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00240}{240}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00241         \{}
+\DoxyCodeLine{00242             \textcolor{comment}{// Before shutting down set to windowed mode or when you release the swap chain it will throw an exception.}}
+\DoxyCodeLine{00243             SwapChain?.SetFullscreenState(\textcolor{keyword}{false}, \textcolor{keyword}{null});}
+\DoxyCodeLine{00244 }
+\DoxyCodeLine{00245             \textcolor{comment}{// Dispose of all objects.}}
+\DoxyCodeLine{00246             RasterState?.Dispose();}
+\DoxyCodeLine{00247             RasterState = \textcolor{keyword}{null};}
+\DoxyCodeLine{00248             DepthStencilView?.Dispose();}
+\DoxyCodeLine{00249             DepthStencilView = \textcolor{keyword}{null};}
+\DoxyCodeLine{00250             DepthStencilState?.Dispose();}
+\DoxyCodeLine{00251             DepthStencilState = \textcolor{keyword}{null};}
+\DoxyCodeLine{00252             DepthStencilBuffer?.Dispose();}
+\DoxyCodeLine{00253             DepthStencilBuffer = \textcolor{keyword}{null};}
+\DoxyCodeLine{00254             RenderTargetView?.Dispose();}
+\DoxyCodeLine{00255             RenderTargetView = \textcolor{keyword}{null};}
+\DoxyCodeLine{00256             DeviceContext?.Dispose();}
+\DoxyCodeLine{00257             DeviceContext = \textcolor{keyword}{null};}
+\DoxyCodeLine{00258             Device?.Dispose();}
+\DoxyCodeLine{00259             Device = \textcolor{keyword}{null};}
+\DoxyCodeLine{00260             SwapChain?.Dispose();}
+\DoxyCodeLine{00261             SwapChain = \textcolor{keyword}{null};}
+\DoxyCodeLine{00262         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Property Documentation}
@@ -104,6 +367,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00240}{240}} of file \m
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00019}{19}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00019 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a92cbe58b5b099098210ace88576470e6}\label{class_bio_imager_1_1_d_d_x11_a92cbe58b5b099098210ace88576470e6}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!Device@{Device}}
 \index{Device@{Device}!BioImager.DDX11@{BioImager.DDX11}}
@@ -114,6 +382,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00019}{19}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00015}{15}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00015 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a1a5b4d37bf5f2c8bdabcfc1a102a31c2}\label{class_bio_imager_1_1_d_d_x11_a1a5b4d37bf5f2c8bdabcfc1a102a31c2}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!DeviceContext@{DeviceContext}}
 \index{DeviceContext@{DeviceContext}!BioImager.DDX11@{BioImager.DDX11}}
@@ -124,6 +397,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00015}{15}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00016}{16}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00016 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a9b3aea7ea5c1ef2105127fc9891be895}\label{class_bio_imager_1_1_d_d_x11_a9b3aea7ea5c1ef2105127fc9891be895}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!ProjectionMatrix@{ProjectionMatrix}}
 \index{ProjectionMatrix@{ProjectionMatrix}!BioImager.DDX11@{BioImager.DDX11}}
@@ -134,6 +412,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00016}{16}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00022}{22}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00022 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_ad94bd93458ea57725014b72698cb21b7}\label{class_bio_imager_1_1_d_d_x11_ad94bd93458ea57725014b72698cb21b7}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!VideoCardDescription@{VideoCardDescription}}
 \index{VideoCardDescription@{VideoCardDescription}!BioImager.DDX11@{BioImager.DDX11}}
@@ -144,6 +427,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00022}{22}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00013}{13}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00013 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_ad4c957b876357a9a43e526757e7824d8}\label{class_bio_imager_1_1_d_d_x11_ad4c957b876357a9a43e526757e7824d8}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!VideoCardMemory@{VideoCardMemory}}
 \index{VideoCardMemory@{VideoCardMemory}!BioImager.DDX11@{BioImager.DDX11}}
@@ -154,6 +442,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00013}{13}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00012}{12}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00012 \{ \textcolor{keyword}{get}; \textcolor{keyword}{private} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_d_d_x11_a63fa75a7994e37e60a1f7f14c14864f3}\label{class_bio_imager_1_1_d_d_x11_a63fa75a7994e37e60a1f7f14c14864f3}} 
 \index{BioImager.DDX11@{BioImager.DDX11}!WorldMatrix@{WorldMatrix}}
 \index{WorldMatrix@{WorldMatrix}!BioImager.DDX11@{BioImager.DDX11}}
@@ -164,6 +457,11 @@ Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00012}{12}} of file \mb
 
 Definition at line \mbox{\hyperlink{_d_d_x11_8cs_source_l00023}{23}} of file \mbox{\hyperlink{_d_d_x11_8cs_source}{DDX11.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00023 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

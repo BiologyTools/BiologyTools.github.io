@@ -57,6 +57,30 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00096}{96}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00096     \textcolor{keyword}{def }\_\_init\_\_(self, serial\_number: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00097         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00098         self.\_dm = asdk.Init(serial\_number.encode())}
+\DoxyCodeLine{00099         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\_dm:}
+\DoxyCodeLine{00100             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00101                 \textcolor{stringliteral}{"{}Failed to initialise connection: don't know why"{}}}
+\DoxyCodeLine{00102             )}
+\DoxyCodeLine{00103         \textcolor{comment}{\# In theory, asdkInit should return a NULL pointer in case of}}
+\DoxyCodeLine{00104         \textcolor{comment}{\# failure and that should be enough to check.  However, at least}}
+\DoxyCodeLine{00105         \textcolor{comment}{\# in the case of a missing configuration file it still returns a}}
+\DoxyCodeLine{00106         \textcolor{comment}{\# DM pointer so we still need to check for errors on the stack.}}
+\DoxyCodeLine{00107         self.\_raise\_if\_error(asdk.FAILURE)}
+\DoxyCodeLine{00108 }
+\DoxyCodeLine{00109         value = asdk.Scalar\_p(asdk.Scalar())}
+\DoxyCodeLine{00110         status = asdk.Get(self.\_dm, b\textcolor{stringliteral}{"{}NbOfActuator"{}}, value)}
+\DoxyCodeLine{00111         self.\_raise\_if\_error(status)}
+\DoxyCodeLine{00112         self.\_n\_actuators = int(value.contents.value)}
+\DoxyCodeLine{00113         self.\_trigger\_type = microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{00114         self.\_trigger\_mode = microscope.TriggerMode.ONCE}
+\DoxyCodeLine{00115 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a2d58e03ce00f95642120bbdd9d3e2521}\label{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a2d58e03ce00f95642120bbdd9d3e2521}} 
@@ -73,6 +97,13 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror
 
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00117}{117}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00117     \textcolor{keyword}{def }n\_actuators(self) -\/> int:}
+\DoxyCodeLine{00118         \textcolor{keywordflow}{return} self.\_n\_actuators}
+\DoxyCodeLine{00119 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae6def33ab71adefe58aa7aec41a97829}\label{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_ae6def33ab71adefe58aa7aec41a97829}} 
 \index{microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}!queue\_patterns@{queue\_patterns}}
 \index{queue\_patterns@{queue\_patterns}!microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}}
@@ -96,6 +127,59 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_deformable_mirror
 
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00161}{161}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00161     \textcolor{keyword}{def }queue\_patterns(self, patterns: numpy.ndarray) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00162         \textcolor{keywordflow}{if} self.\_trigger\_type == microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{00163             super().queue\_patterns(patterns)}
+\DoxyCodeLine{00164             \textcolor{keywordflow}{return}}
+\DoxyCodeLine{00165 }
+\DoxyCodeLine{00166         self.\_validate\_patterns(patterns)}
+\DoxyCodeLine{00167         patterns = self.\_normalize\_patterns(patterns)}
+\DoxyCodeLine{00168         patterns = numpy.atleast\_2d(patterns)}
+\DoxyCodeLine{00169         n\_patterns: int = patterns.shape[0]}
+\DoxyCodeLine{00170 }
+\DoxyCodeLine{00171         \textcolor{comment}{\# The Alpao SDK seems to only support the trigger mode start.  It}}
+\DoxyCodeLine{00172         \textcolor{comment}{\# still has option called nRepeats that we can't really figure}}
+\DoxyCodeLine{00173         \textcolor{comment}{\# what is meant to do.  When set to 1, the mode is start.  What}}
+\DoxyCodeLine{00174         \textcolor{comment}{\# we want it is to have trigger mode once which was not}}
+\DoxyCodeLine{00175         \textcolor{comment}{\# supported.  We have received a modified version where if}}
+\DoxyCodeLine{00176         \textcolor{comment}{\# nRepeats is set to same number of patterns, does trigger mode}}
+\DoxyCodeLine{00177         \textcolor{comment}{\# once (not documented on Alpao SDK).}}
+\DoxyCodeLine{00178         \textcolor{keywordflow}{if} self.\_trigger\_mode == microscope.TriggerMode.ONCE:}
+\DoxyCodeLine{00179             n\_repeats = n\_patterns}
+\DoxyCodeLine{00180         \textcolor{keywordflow}{elif} self.\_trigger\_mode == microscope.TriggerMode.START:}
+\DoxyCodeLine{00181             n\_repeats = 1}
+\DoxyCodeLine{00182         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00183             \textcolor{comment}{\# We should not get here in the first place since}}
+\DoxyCodeLine{00184             \textcolor{comment}{\# set\_trigger filters unsupported modes.}}
+\DoxyCodeLine{00185             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00186                 \textcolor{stringliteral}{"{}trigger type '\%s' and trigger mode '\%s' is not supported"{}}}
+\DoxyCodeLine{00187                 \% (self.\_trigger\_type.name, self.\_trigger\_mode.name)}
+\DoxyCodeLine{00188             )}
+\DoxyCodeLine{00189 }
+\DoxyCodeLine{00190         data\_pointer = patterns.ctypes.data\_as(asdk.Scalar\_p)}
+\DoxyCodeLine{00191 }
+\DoxyCodeLine{00192         \textcolor{comment}{\# We don't know if the previous queue of pattern ran until the}}
+\DoxyCodeLine{00193         \textcolor{comment}{\# end, so we need to clear it before sending (see issue \#50)}}
+\DoxyCodeLine{00194         status = asdk.Stop(self.\_dm)}
+\DoxyCodeLine{00195         self.\_raise\_if\_error(status)}
+\DoxyCodeLine{00196 }
+\DoxyCodeLine{00197         status = asdk.SendPattern(}
+\DoxyCodeLine{00198             self.\_dm, data\_pointer, n\_patterns, n\_repeats}
+\DoxyCodeLine{00199         )}
+\DoxyCodeLine{00200         self.\_raise\_if\_error(status)}
+\DoxyCodeLine{00201 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{alpao_8py_source_l00098}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+dm}}, \mbox{\hyperlink{mirror_2bmc_8py_source_l00051}{microscope.\+mirror.\+bmc.\+BMCDeformable\+Mirror.\+\_\+dm}}, \mbox{\hyperlink{alpao_8py_source_l00067}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+find\+\_\+error\+\_\+str()}}, \mbox{\hyperlink{alpao_8py_source_l00059}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+normalize\+\_\+patterns()}}, \mbox{\hyperlink{mirror_2mirao52e_8py_source_l00086}{microscope.\+mirror.\+mirao52e.\+Mirao52e.\+\_\+normalize\+\_\+patterns()}}, \mbox{\hyperlink{alpao_8py_source_l00090}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+raise\+\_\+if\+\_\+error()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00307}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+trigger\+\_\+mode}}, \mbox{\hyperlink{alpao_8py_source_l00114}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+mode}}, \mbox{\hyperlink{picam_8py_source_l00068}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{alpao_8py_source_l00113}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{abc_8py_source_l01086}{microscope.\+abc.\+Deformable\+Mirror.\+\_\+validate\+\_\+patterns()}}, and \mbox{\hyperlink{alpao_8py_source_l00161}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+queue\+\_\+patterns()}}.
+
+
+
+Referenced by \mbox{\hyperlink{alpao_8py_source_l00161}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+queue\+\_\+patterns()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aa40af0631d16ee4c1fc8b86f6c3e708b}\label{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_aa40af0631d16ee4c1fc8b86f6c3e708b}} 
 \index{microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}!set\_trigger@{set\_trigger}}
 \index{set\_trigger@{set\_trigger}!microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}}
@@ -111,6 +195,45 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00134}{134}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134     \textcolor{keyword}{def }set\_trigger(self, ttype, tmode):}
+\DoxyCodeLine{00135         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.\_supported\_TriggerModes:}
+\DoxyCodeLine{00136             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00137                 \textcolor{stringliteral}{"{}unsupported trigger of mode '\%s' for Alpao Mirrors"{}}}
+\DoxyCodeLine{00138                 \% tmode.name}
+\DoxyCodeLine{00139             )}
+\DoxyCodeLine{00140         \textcolor{keywordflow}{elif} (}
+\DoxyCodeLine{00141             ttype == microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{00142             \textcolor{keywordflow}{and} tmode != microscope.TriggerMode.ONCE}
+\DoxyCodeLine{00143         ):}
+\DoxyCodeLine{00144             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00145                 \textcolor{stringliteral}{"{}trigger mode '\%s' only supports trigger type ONCE"{}}}
+\DoxyCodeLine{00146                 \% tmode.name}
+\DoxyCodeLine{00147             )}
+\DoxyCodeLine{00148         self.\_trigger\_mode = tmode}
+\DoxyCodeLine{00149 }
+\DoxyCodeLine{00150         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00151             value = self.\_TriggerType\_to\_asdkTriggerIn[ttype]}
+\DoxyCodeLine{00152         \textcolor{keywordflow}{except} KeyError:}
+\DoxyCodeLine{00153             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00154                 \textcolor{stringliteral}{"{}unsupported trigger of type '\%s' for Alpao Mirrors"{}}}
+\DoxyCodeLine{00155                 \% ttype.name}
+\DoxyCodeLine{00156             )}
+\DoxyCodeLine{00157         status = asdk.Set(self.\_dm, b\textcolor{stringliteral}{"{}TriggerIn"{}}, value)}
+\DoxyCodeLine{00158         self.\_raise\_if\_error(status)}
+\DoxyCodeLine{00159         self.\_trigger\_type = ttype}
+\DoxyCodeLine{00160 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{alpao_8py_source_l00098}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+dm}}, \mbox{\hyperlink{mirror_2bmc_8py_source_l00051}{microscope.\+mirror.\+bmc.\+BMCDeformable\+Mirror.\+\_\+dm}}, \mbox{\hyperlink{alpao_8py_source_l00090}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+raise\+\_\+if\+\_\+error()}}, \mbox{\hyperlink{alpao_8py_source_l00053}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+supported\+\_\+\+Trigger\+Modes}}, \mbox{\hyperlink{andorsdk3_8py_source_l00307}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+trigger\+\_\+mode}}, \mbox{\hyperlink{alpao_8py_source_l00114}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+mode}}, \mbox{\hyperlink{picam_8py_source_l00068}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+trigger\+\_\+type}}, \mbox{\hyperlink{alpao_8py_source_l00113}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+trigger\+\_\+type}}, and \mbox{\hyperlink{alpao_8py_source_l00047}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+\+Trigger\+Type\+\_\+to\+\_\+asdk\+Trigger\+In}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a0da4d48042f67dcac6064fbbb12d6b4f}\label{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a0da4d48042f67dcac6064fbbb12d6b4f}} 
 \index{microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}!trigger\_mode@{trigger\_mode}}
 \index{trigger\_mode@{trigger\_mode}!microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}}
@@ -125,6 +248,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00121}{121}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00121     \textcolor{keyword}{def }trigger\_mode(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{00122         \textcolor{keywordflow}{return} self.\_trigger\_mode}
+\DoxyCodeLine{00123 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a4f60fb094d2707f87c3b0c81ecec1d4b}\label{classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror_a4f60fb094d2707f87c3b0c81ecec1d4b}} 
 \index{microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}!trigger\_type@{trigger\_type}}
 \index{trigger\_type@{trigger\_type}!microscope.mirror.alpao.AlpaoDeformableMirror@{microscope.mirror.alpao.AlpaoDeformableMirror}}
@@ -138,6 +272,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 
 Definition at line \mbox{\hyperlink{alpao_8py_source_l00125}{125}} of file \mbox{\hyperlink{alpao_8py_source}{alpao.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00125     \textcolor{keyword}{def }trigger\_type(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{00126         \textcolor{keywordflow}{return} self.\_trigger\_type}
+\DoxyCodeLine{00127 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l01113}{microscope.\+abc.\+Deformable\+Mirror.\+apply\+\_\+pattern()}}, and \mbox{\hyperlink{abc_8py_source_l00263}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger()}}.
 
 
 

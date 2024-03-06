@@ -41,6 +41,13 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00243}{243}} of file
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00248}{248}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00249         \{}
+\DoxyCodeLine{00250 }
+\DoxyCodeLine{00251         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_focus_a3cca66b920dadb0649c9bffeb87a0ac0}\label{class_bio_imager_1_1_focus_a3cca66b920dadb0649c9bffeb87a0ac0}} 
@@ -57,6 +64,21 @@ The z-\/axis position of the microscope.
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00291}{291}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00292         \{}
+\DoxyCodeLine{00293             \textcolor{keywordflow}{return} \mbox{\hyperlink{class_bio_imager_1_1_focus_a3cca66b920dadb0649c9bffeb87a0ac0}{GetFocus}}(\textcolor{keyword}{false});}
+\DoxyCodeLine{00294         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_microscope_8cs_source_l00291}{Bio\+Imager.\+Focus.\+Get\+Focus()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_microscope_8cs_source_l00291}{Bio\+Imager.\+Focus.\+Get\+Focus()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_focus_a490d467a04084f8ed73be0157f794156}\label{class_bio_imager_1_1_focus_a490d467a04084f8ed73be0157f794156}} 
 \index{BioImager.Focus@{BioImager.Focus}!GetFocus@{GetFocus}}
@@ -78,6 +100,43 @@ The z position of the microscope.
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00303}{303}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00304         \{}
+\DoxyCodeLine{00305             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{00306             \{}
+\DoxyCodeLine{00307                 Point3D p;}
+\DoxyCodeLine{00308                 Microscope.pMicroscope.GetPosition3D(out p, update);}
+\DoxyCodeLine{00309                 \textcolor{keywordflow}{return} p.Z;}
+\DoxyCodeLine{00310             \}}
+\DoxyCodeLine{00311             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00312             \{}
+\DoxyCodeLine{00313                 Point3D p;}
+\DoxyCodeLine{00314                 PycroManager.GetPosition3D(out p, update);}
+\DoxyCodeLine{00315                 \textcolor{keywordflow}{return} p.Z;}
+\DoxyCodeLine{00316             \}}
+\DoxyCodeLine{00317             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00318             \{}
+\DoxyCodeLine{00319                 \mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{BioImager.MicroscopeConsole.Command}} com = BioImager.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{00320                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.GetFocus, \textcolor{keyword}{null}));}
+\DoxyCodeLine{00321                 \textcolor{keywordflow}{return} com.doubles[0];}
+\DoxyCodeLine{00322             \}}
+\DoxyCodeLine{00323             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{00324             \{}
+\DoxyCodeLine{00325                 \textcolor{keywordflow}{return} Microscope.sdk.GetZ();}
+\DoxyCodeLine{00326             \}}
+\DoxyCodeLine{00327             \textcolor{keywordflow}{if}(Automation.Properties.ContainsKey(\textcolor{stringliteral}{"{}GetFocus"{}}))}
+\DoxyCodeLine{00328             \{}
+\DoxyCodeLine{00329                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{double})Automation.GetProperty(\textcolor{stringliteral}{"{}GetFocus"{}});}
+\DoxyCodeLine{00330             \}}
+\DoxyCodeLine{00331             \textcolor{keywordflow}{return} z;}
+\DoxyCodeLine{00332         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_automation_8cs_source_l00450}{Bio\+Imager.\+Automation.\+Get\+Property()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_focus_a4066fa2ce5019736fac41f717966b9cc}\label{class_bio_imager_1_1_focus_a4066fa2ce5019736fac41f717966b9cc}} 
 \index{BioImager.Focus@{BioImager.Focus}!GetSWLimit@{GetSWLimit}}
 \index{GetSWLimit@{GetSWLimit}!BioImager.Focus@{BioImager.Focus}}
@@ -93,6 +152,21 @@ The return value is a PointD object.
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00337}{337}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00338         \{}
+\DoxyCodeLine{00339             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00340             \{}
+\DoxyCodeLine{00341                 \mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{BioImager.MicroscopeConsole.Command}} com = \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00342                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.GetStageSWLimit, \textcolor{keyword}{null}));}
+\DoxyCodeLine{00343                 upperLimit = com.doubles[0];}
+\DoxyCodeLine{00344                 lowerLimit = com.doubles[1];}
+\DoxyCodeLine{00345                 \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(upperLimit,lowerLimit);}
+\DoxyCodeLine{00346             \}}
+\DoxyCodeLine{00347             \textcolor{keywordflow}{return} \textcolor{keyword}{new} PointD(lowerLimit, upperLimit);}
+\DoxyCodeLine{00348         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_focus_a987ece342f70bcd2ae93b36d0b727e68}\label{class_bio_imager_1_1_focus_a987ece342f70bcd2ae93b36d0b727e68}} 
 \index{BioImager.Focus@{BioImager.Focus}!SetFocus@{SetFocus}}
 \index{SetFocus@{SetFocus}!BioImager.Focus@{BioImager.Focus}}
@@ -109,6 +183,44 @@ Sets the z-\/axis based on microscope configuration.
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00256}{256}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257         \{}
+\DoxyCodeLine{00258             \textcolor{keywordflow}{if} (Recorder.recordMicroscope)}
+\DoxyCodeLine{00259                 Recorder.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetFocus("{}} + f + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00260             \textcolor{keywordflow}{if} (Properties.Settings.Default.PMicroscope)}
+\DoxyCodeLine{00261             \{}
+\DoxyCodeLine{00262                 PointD p = Microscope.Stage.GetPosition(\textcolor{keyword}{true});}
+\DoxyCodeLine{00263                 Microscope.pMicroscope.SetPosition(\textcolor{keyword}{new} Point3D(p.X,p.Y,f));}
+\DoxyCodeLine{00264             \}}
+\DoxyCodeLine{00265             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00266             \textcolor{keywordflow}{if} (Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00267             \{}
+\DoxyCodeLine{00268                 PointD p = Microscope.Stage.GetPosition(\textcolor{keyword}{true});}
+\DoxyCodeLine{00269                 PycroManager.SetPosition(\textcolor{keyword}{new} Point3D(p.X, p.Y, f));}
+\DoxyCodeLine{00270             \}}
+\DoxyCodeLine{00271             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00272             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00273             \{}
+\DoxyCodeLine{00274                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00275                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.SetFocus,\textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ f\}));}
+\DoxyCodeLine{00276                 z = f;}
+\DoxyCodeLine{00277             \}}
+\DoxyCodeLine{00278             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{00279             \{}
+\DoxyCodeLine{00280                 Microscope.sdk.SetZ(f);}
+\DoxyCodeLine{00281             \}}
+\DoxyCodeLine{00282             \textcolor{keywordflow}{if} (Automation.Properties.ContainsKey(\textcolor{stringliteral}{"{}SetFocus"{}}))}
+\DoxyCodeLine{00283             \{}
+\DoxyCodeLine{00284                 Automation.SetProperty(\textcolor{stringliteral}{"{}SetFocus"{}}, f.ToString());}
+\DoxyCodeLine{00285             \}}
+\DoxyCodeLine{00286         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_automation_8cs_source_l00459}{Bio\+Imager.\+Automation.\+Set\+Property()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_focus_a199cda7cb657515b7f88a9994efb0854}\label{class_bio_imager_1_1_focus_a199cda7cb657515b7f88a9994efb0854}} 
 \index{BioImager.Focus@{BioImager.Focus}!SetSWLimit@{SetSWLimit}}
@@ -129,6 +241,22 @@ The function takes two double values, xd and yd, and sets the upper and lower li
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00355}{355}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00356         \{}
+\DoxyCodeLine{00357             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00358             \{}
+\DoxyCodeLine{00359                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00360                    \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.SetFocusSWLimit,}
+\DoxyCodeLine{00361                    \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ xd, yd \}));}
+\DoxyCodeLine{00362             \}}
+\DoxyCodeLine{00363             upperLimit = xd;}
+\DoxyCodeLine{00364             lowerLimit = yd;}
+\DoxyCodeLine{00365             \textcolor{keywordflow}{if} (Recorder.recordMicroscope)}
+\DoxyCodeLine{00366                 Recorder.AddLine(\textcolor{stringliteral}{"{}Microscope.Focus.SetSWLimit("{}} + xd + \textcolor{stringliteral}{"{},"{}} + yd + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00367         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

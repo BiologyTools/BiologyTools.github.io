@@ -40,6 +40,34 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00112}{112}} of file \mbox
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00122}{122}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00122     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, baudrate: int, timeout: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00123         self.\_serial = serial.Serial(}
+\DoxyCodeLine{00124             port=port,}
+\DoxyCodeLine{00125             baudrate=baudrate,}
+\DoxyCodeLine{00126             timeout=timeout,}
+\DoxyCodeLine{00127             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00128             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00129             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00130             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00131             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00132             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00133         )}
+\DoxyCodeLine{00134         self.\_lock = threading.RLock()}
+\DoxyCodeLine{00135         \textcolor{keyword}{with} self.\_lock:}
+\DoxyCodeLine{00136             \textcolor{comment}{\# The command / does nothing other than getting a response}}
+\DoxyCodeLine{00137             \textcolor{comment}{\# from all devices in the chain.  This seems to be the}}
+\DoxyCodeLine{00138             \textcolor{comment}{\# most innocent command we can use.}}
+\DoxyCodeLine{00139             self.\_serial.write(b\textcolor{stringliteral}{"{}/\(\backslash\)n"{}})}
+\DoxyCodeLine{00140             lines = self.\_serial.readlines()}
+\DoxyCodeLine{00141         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} all([l.startswith(b\textcolor{stringliteral}{"{}@"{}}) \textcolor{keywordflow}{for} l \textcolor{keywordflow}{in} lines]):}
+\DoxyCodeLine{00142             \textcolor{keywordflow}{raise} RuntimeError(}
+\DoxyCodeLine{00143                 \textcolor{stringliteral}{"{}'\%s' does not respond like a Zaber device"{}} \% port}
+\DoxyCodeLine{00144             )}
+\DoxyCodeLine{00145 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_a2c6623d242320a81758527612c8cd610}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_a2c6623d242320a81758527612c8cd610}} 
@@ -52,6 +80,13 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00122}{122}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00147}{147}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00147     \textcolor{keyword}{def }lock(self) -\/> threading.RLock:}
+\DoxyCodeLine{00148         \textcolor{keywordflow}{return} self.\_lock}
+\DoxyCodeLine{00149 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_a56f7e390fa0899acf3382f47713ee6d5}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_a56f7e390fa0899acf3382f47713ee6d5}} 
 \index{microscope.controllers.zaber.\_ZaberConnection@{microscope.controllers.zaber.\_ZaberConnection}!readline@{readline}}
 \index{readline@{readline}!microscope.controllers.zaber.\_ZaberConnection@{microscope.controllers.zaber.\_ZaberConnection}}
@@ -61,6 +96,19 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00147}{147}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00154}{154}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00154     \textcolor{keyword}{def }readline(self, size: int = -\/1) -\/> bytes:}
+\DoxyCodeLine{00155         \textcolor{keyword}{with} self.lock:}
+\DoxyCodeLine{00156             \textcolor{keywordflow}{return} self.\_serial.readline(size)}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, and \mbox{\hyperlink{ludl_8py_source_l00147}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+readline()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_aa07a0a66e79a66dd6e60ab5ad6ef98ba}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection_aa07a0a66e79a66dd6e60ab5ad6ef98ba}} 
 \index{microscope.controllers.zaber.\_ZaberConnection@{microscope.controllers.zaber.\_ZaberConnection}!write@{write}}
@@ -72,6 +120,14 @@ Definition at line \mbox{\hyperlink{zaber_8py_source_l00154}{154}} of file \mbox
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00150}{150}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00150     \textcolor{keyword}{def }write(self, data: bytes) -\/> int:}
+\DoxyCodeLine{00151         \textcolor{keyword}{with} self.lock:}
+\DoxyCodeLine{00152             \textcolor{keywordflow}{return} self.\_serial.write(data)}
+\DoxyCodeLine{00153 }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

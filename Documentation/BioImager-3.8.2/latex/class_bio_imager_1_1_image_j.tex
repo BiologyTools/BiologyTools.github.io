@@ -63,6 +63,30 @@ This function is used to initialize the path of the Image\+J.\+exe file
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00247}{247}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00248         \{}
+\DoxyCodeLine{00249             \textcolor{keywordflow}{if} (!\mbox{\hyperlink{class_bio_imager_1_1_image_j_a20d4c8959894e4fec84959d16bcfe411}{SetImageJPath}}())}
+\DoxyCodeLine{00250                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00251             Macro.Initialize();}
+\DoxyCodeLine{00252             \textcolor{keywordtype}{string}[] ds = Directory.GetFiles(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/macros"{}});}
+\DoxyCodeLine{00253             \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} ds)}
+\DoxyCodeLine{00254             \{}
+\DoxyCodeLine{00255                 \textcolor{keywordflow}{if} (s.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}) || s.EndsWith(\textcolor{stringliteral}{"{}.txt"{}}))}
+\DoxyCodeLine{00256                     Macros.Add(\textcolor{keyword}{new} Macro.Command(Path.GetFileName(s), \textcolor{stringliteral}{"{}"{}}, \textcolor{stringliteral}{"{}"{}}));}
+\DoxyCodeLine{00257             \}}
+\DoxyCodeLine{00258             \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00259         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00263}{Bio\+Imager.\+Image\+J.\+Set\+Image\+JPath()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_app_8cs_source_l00056}{Bio\+Imager.\+App.\+Initialize()}}, \mbox{\hyperlink{_image_j_8cs_source_l00115}{Bio\+Imager.\+Image\+J.\+Run\+Macro()}}, \mbox{\hyperlink{_image_j_8cs_source_l00189}{Bio\+Imager.\+Image\+J.\+Run\+On\+Image()}}, and \mbox{\hyperlink{_image_j_8cs_source_l00137}{Bio\+Imager.\+Image\+J.\+Run\+String()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_a40611c73686613a5cb602fd270280632}\label{class_bio_imager_1_1_image_j_a40611c73686613a5cb602fd270280632}} 
 \index{BioImager.ImageJ@{BioImager.ImageJ}!RunMacro@{RunMacro}}
 \index{RunMacro@{RunMacro}!BioImager.ImageJ@{BioImager.ImageJ}}
@@ -84,6 +108,32 @@ The macro is being returned.
 
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00115}{115}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00116         \{}
+\DoxyCodeLine{00117             \textcolor{keywordflow}{if}(!Initialized)}
+\DoxyCodeLine{00118             \{}
+\DoxyCodeLine{00119                 \mbox{\hyperlink{class_bio_imager_1_1_image_j_ae17c52ed404d512bba4aaf2b0957cbe5}{Initialize}}();}
+\DoxyCodeLine{00120             \}}
+\DoxyCodeLine{00121             file.Replace(\textcolor{stringliteral}{"{}/"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{00122             Process pr = \textcolor{keyword}{new} Process();}
+\DoxyCodeLine{00123             pr.StartInfo.FileName = ImageJPath;}
+\DoxyCodeLine{00124             pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/macro "{}} + file + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{00125 }
+\DoxyCodeLine{00126             pr.Start();}
+\DoxyCodeLine{00127             processes.Add(pr);}
+\DoxyCodeLine{00128             Recorder.AddLine(\textcolor{stringliteral}{"{}ImageJ.RunMacro("{}} + file + \textcolor{stringliteral}{"{},"{}} + \textcolor{charliteral}{'"{}'} + param + \textcolor{charliteral}{'"{}'} + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00129         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00247}{Bio\+Imager.\+Image\+J.\+Initialize()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_imager_8cs_source_l01338}{Bio\+Imager.\+Imager.\+Perform\+Function()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_a2397fe8c288350578c6bf8bfddd3dd8f}\label{class_bio_imager_1_1_image_j_a2397fe8c288350578c6bf8bfddd3dd8f}} 
 \index{BioImager.ImageJ@{BioImager.ImageJ}!RunOnImage@{RunOnImage}}
@@ -113,6 +163,71 @@ The return value is the result of the last statement in the script.
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00189}{189}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00190         \{}
+\DoxyCodeLine{00191             \textcolor{keywordflow}{if} (!Initialized)}
+\DoxyCodeLine{00192             \{}
+\DoxyCodeLine{00193                 \mbox{\hyperlink{class_bio_imager_1_1_image_j_ae17c52ed404d512bba4aaf2b0957cbe5}{Initialize}}();}
+\DoxyCodeLine{00194             \}}
+\DoxyCodeLine{00195             \textcolor{keywordtype}{string} filename = \textcolor{stringliteral}{"{}"{}};}
+\DoxyCodeLine{00196             \textcolor{keywordtype}{string} dir = Path.GetDirectoryName(ImageView.SelectedImage.file);}
+\DoxyCodeLine{00197 }
+\DoxyCodeLine{00198             \textcolor{keywordflow}{if} (ImageView.SelectedImage.ID.EndsWith(\textcolor{stringliteral}{"{}.ome.tif"{}}))}
+\DoxyCodeLine{00199             \{}
+\DoxyCodeLine{00200                 filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);}
+\DoxyCodeLine{00201                 filename = filename.Remove(filename.Length -\/ 4, 4);}
+\DoxyCodeLine{00202             \}}
+\DoxyCodeLine{00203             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00204                 filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);}
+\DoxyCodeLine{00205             \textcolor{keywordtype}{string} file = dir + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}} + filename + \textcolor{stringliteral}{"{}-\/temp"{}} + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{00206             file = file.Replace(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}}, \textcolor{stringliteral}{"{}/"{}});}
+\DoxyCodeLine{00207             \textcolor{keywordtype}{string} st =}
+\DoxyCodeLine{00208             \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Importer\(\backslash\)"{}, \(\backslash\)"{}open=\(\backslash\)"{} + getArgument + \(\backslash\)"{} autoscale color\_mode=Default open\_all\_series display\_rois rois\_import=[ROI manager] view=Hyperstack stack\_order=XYCZT\(\backslash\)"{}); "{}} + con +}
+\DoxyCodeLine{00209             \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{}} + file + \textcolor{stringliteral}{"{} export compression=Uncompressed\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{00210             \textcolor{stringliteral}{"{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{00211             \textcolor{stringliteral}{"{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{}};}
+\DoxyCodeLine{00212             \textcolor{keywordflow}{if}(bioformats)}
+\DoxyCodeLine{00213                 st =}
+\DoxyCodeLine{00214                 \textcolor{stringliteral}{"{}open(getArgument); "{}} + con +}
+\DoxyCodeLine{00215                 \textcolor{stringliteral}{"{}run(\(\backslash\)"{}Bio-\/Formats Exporter\(\backslash\)"{}, \(\backslash\)"{}save="{}} + file + \textcolor{stringliteral}{"{} export compression=Uncompressed\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{00216                 \textcolor{stringliteral}{"{}dir = getDir(\(\backslash\)"{}startup\(\backslash\)"{}); "{}} +}
+\DoxyCodeLine{00217                 \textcolor{stringliteral}{"{}File.saveString(\(\backslash\)"{}done\(\backslash\)"{}, dir + \(\backslash\)"{}/done.txt\(\backslash\)"{});"{}};}
+\DoxyCodeLine{00218             \textcolor{comment}{//We save the image as a temp image as otherwise imagej won't export due to file access error.}}
+\DoxyCodeLine{00219             \mbox{\hyperlink{class_bio_imager_1_1_image_j_a88988cb11e1887bc2f071917b24749f9}{RunString}}(st, ImageView.SelectedImage.file, headless);}
+\DoxyCodeLine{00220 }
+\DoxyCodeLine{00221             \textcolor{keywordflow}{if} (!File.Exists(file))}
+\DoxyCodeLine{00222                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00223 }
+\DoxyCodeLine{00224             \textcolor{keywordtype}{string} ffile = dir + \textcolor{stringliteral}{"{}/"{}} + filename + \textcolor{stringliteral}{"{}.ome.tif"{}};}
+\DoxyCodeLine{00225             File.Delete(ffile);}
+\DoxyCodeLine{00226             File.Copy(file, ffile);}
+\DoxyCodeLine{00227             File.Delete(file);}
+\DoxyCodeLine{00228             \textcolor{keywordflow}{if} (ImageView.SelectedImage.Filename != filename + \textcolor{stringliteral}{"{}.ome.tif"{}} || ImageView.SelectedImage.Filename != filename + \textcolor{stringliteral}{"{}.tif"{}})}
+\DoxyCodeLine{00229             \{}
+\DoxyCodeLine{00230                 \textcolor{keywordflow}{if} (ImageView.SelectedImage.filename.EndsWith(\textcolor{stringliteral}{"{}.tif"{}}))}
+\DoxyCodeLine{00231                     BioImage.OpenFile(ffile, newTab);}
+\DoxyCodeLine{00232                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00233                     BioImage.OpenFile(ffile, \textcolor{keyword}{true});}
+\DoxyCodeLine{00234             \}}
+\DoxyCodeLine{00235             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00236             \{}
+\DoxyCodeLine{00237                 App.viewer.Images[App.viewer.SelectedIndex] = BioImage.OpenFile(ffile, 0, \textcolor{keyword}{false}, \textcolor{keyword}{false});}
+\DoxyCodeLine{00238             \}}
+\DoxyCodeLine{00239             App.viewer.UpdateImage();}
+\DoxyCodeLine{00240             App.viewer.UpdateView();}
+\DoxyCodeLine{00241             Recorder.AddLine(\textcolor{stringliteral}{"{}RunOnImage(\(\backslash\)"{}"{}} + con + \textcolor{stringliteral}{"{}\(\backslash\)"{},"{}} + headless + \textcolor{stringliteral}{"{},"{}} + onTab + \textcolor{stringliteral}{"{},"{}} + newTab + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00242         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00247}{Bio\+Imager.\+Image\+J.\+Initialize()}}, \mbox{\hyperlink{_bio_8cs_source_l04642}{Bio\+Imager.\+Bio\+Image.\+Open\+File()}}, \mbox{\hyperlink{_image_j_8cs_source_l00137}{Bio\+Imager.\+Image\+J.\+Run\+String()}}, \mbox{\hyperlink{_image_view_8cs_source_l00216}{Bio\+Imager.\+Image\+View.\+Selected\+Index}}, \mbox{\hyperlink{_image_view_8cs_source_l01405}{Bio\+Imager.\+Image\+View.\+Update\+Image()}}, and \mbox{\hyperlink{_image_view_8cs_source_l01023}{Bio\+Imager.\+Image\+View.\+Update\+View()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_function_form_8cs_source_l00586}{Bio\+Imager.\+Function.\+Perform\+Function()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_a88988cb11e1887bc2f071917b24749f9}\label{class_bio_imager_1_1_image_j_a88988cb11e1887bc2f071917b24749f9}} 
 \index{BioImager.ImageJ@{BioImager.ImageJ}!RunString@{RunString}}
 \index{RunString@{RunString}!BioImager.ImageJ@{BioImager.ImageJ}}
@@ -137,6 +252,58 @@ The macro is returning a string.
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00137}{137}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00138         \{}
+\DoxyCodeLine{00139             \textcolor{keywordflow}{if} (!Initialized)}
+\DoxyCodeLine{00140             \{}
+\DoxyCodeLine{00141                 \mbox{\hyperlink{class_bio_imager_1_1_image_j_ae17c52ed404d512bba4aaf2b0957cbe5}{Initialize}}();}
+\DoxyCodeLine{00142             \}}
+\DoxyCodeLine{00143             Process pr = \textcolor{keyword}{new} Process();}
+\DoxyCodeLine{00144             pr.StartInfo.FileName = ImageJPath;}
+\DoxyCodeLine{00145             pr.StartInfo.CreateNoWindow = \textcolor{keyword}{true};}
+\DoxyCodeLine{00146             \textcolor{keywordtype}{string} te = rng.Next(0, 9999999).ToString();}
+\DoxyCodeLine{00147             \textcolor{keywordtype}{string} p = Environment.CurrentDirectory + \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}} + te + \textcolor{stringliteral}{"{}.txt"{}};}
+\DoxyCodeLine{00148             p.Replace(\textcolor{stringliteral}{"{}/"{}}, \textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)"{}});}
+\DoxyCodeLine{00149             File.WriteAllText(p,con);}
+\DoxyCodeLine{00150             \textcolor{keywordflow}{if}(headless)}
+\DoxyCodeLine{00151                 pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/-\/headless -\/macro "{}} + p + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{00152             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00153                 pr.StartInfo.Arguments = \textcolor{stringliteral}{"{}-\/macro "{}} + p + \textcolor{stringliteral}{"{} "{}} + param;}
+\DoxyCodeLine{00154             pr.Start();}
+\DoxyCodeLine{00155             File.Delete(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}});}
+\DoxyCodeLine{00156             processes.Add(pr);}
+\DoxyCodeLine{00157             \textcolor{keywordflow}{do}}
+\DoxyCodeLine{00158             \{}
+\DoxyCodeLine{00159                 \textcolor{keywordflow}{if} (File.Exists(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}}))}
+\DoxyCodeLine{00160                 \{}
+\DoxyCodeLine{00161                     \textcolor{keywordflow}{do}}
+\DoxyCodeLine{00162                     \{}
+\DoxyCodeLine{00163                         \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00164                         \{}
+\DoxyCodeLine{00165                             File.Delete(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}});}
+\DoxyCodeLine{00166                         \}}
+\DoxyCodeLine{00167                         \textcolor{keywordflow}{catch} (Exception)}
+\DoxyCodeLine{00168                         \{}
+\DoxyCodeLine{00169                         }
+\DoxyCodeLine{00170                         \}}
+\DoxyCodeLine{00171                     \} \textcolor{keywordflow}{while} (File.Exists(Path.GetDirectoryName(ImageJPath) + \textcolor{stringliteral}{"{}/done.txt"{}}));}
+\DoxyCodeLine{00172                     pr.Kill();}
+\DoxyCodeLine{00173                     \textcolor{keywordflow}{break};}
+\DoxyCodeLine{00174                 \}}
+\DoxyCodeLine{00175             \} \textcolor{keywordflow}{while} (!pr.HasExited);}
+\DoxyCodeLine{00176             File.Delete(p);}
+\DoxyCodeLine{00177         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_image_j_8cs_source_l00247}{Bio\+Imager.\+Image\+J.\+Initialize()}}.
+
+
+
+Referenced by \mbox{\hyperlink{_image_j_8cs_source_l00189}{Bio\+Imager.\+Image\+J.\+Run\+On\+Image()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_image_j_a20d4c8959894e4fec84959d16bcfe411}\label{class_bio_imager_1_1_image_j_a20d4c8959894e4fec84959d16bcfe411}} 
 \index{BioImager.ImageJ@{BioImager.ImageJ}!SetImageJPath@{SetImageJPath}}
 \index{SetImageJPath@{SetImageJPath}!BioImager.ImageJ@{BioImager.ImageJ}}
@@ -151,6 +318,32 @@ The return value is a boolean.
 
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00263}{263}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00264         \{}
+\DoxyCodeLine{00265             \textcolor{keywordflow}{if} (Properties.Settings.Default.ImageJPath == \textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00266             \{}
+\DoxyCodeLine{00267                 MessageBox.Show(\textcolor{stringliteral}{"{}ImageJ path not set. Set the ImageJ executable location."{}});}
+\DoxyCodeLine{00268                 OpenFileDialog file = \textcolor{keyword}{new} OpenFileDialog();}
+\DoxyCodeLine{00269                 file.Title = \textcolor{stringliteral}{"{}Set the ImageJ executable location."{}};}
+\DoxyCodeLine{00270                 \textcolor{keywordflow}{if} (file.ShowDialog() != DialogResult.OK)}
+\DoxyCodeLine{00271                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00272                 Properties.Settings.Default.ImageJPath = file.FileName;}
+\DoxyCodeLine{00273                 Properties.Settings.Default.Save();}
+\DoxyCodeLine{00274                 ImageJPath = file.FileName;}
+\DoxyCodeLine{00275                 init = \textcolor{keyword}{true};}
+\DoxyCodeLine{00276                 file.Dispose();}
+\DoxyCodeLine{00277                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00278             \}}
+\DoxyCodeLine{00279             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00280                 \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00281         \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_image_j_8cs_source_l00247}{Bio\+Imager.\+Image\+J.\+Initialize()}}.
 
 
 
@@ -198,6 +391,11 @@ Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00104}{104}} of file \m
 
 Definition at line \mbox{\hyperlink{_image_j_8cs_source_l00108}{108}} of file \mbox{\hyperlink{_image_j_8cs_source}{Image\+J.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00108 \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} init; \} \textcolor{keyword}{private} \textcolor{keyword}{set} \{ \} \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

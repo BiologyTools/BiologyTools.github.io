@@ -50,6 +50,34 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l00733}{733}} of file \mbox
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l00738}{738}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00738     \textcolor{keyword}{def }\_\_init\_\_(self, name, args=[], argnames=[], buf\_len=-\/1, lib=\_lib):}
+\DoxyCodeLine{00739         self.f = getattr(lib, name)}
+\DoxyCodeLine{00740         self.f.restype = rs\_bool}
+\DoxyCodeLine{00741         self.f.argtypes = [stripMeta(a) \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args]}
+\DoxyCodeLine{00742 }
+\DoxyCodeLine{00743         self.fargs = args}
+\DoxyCodeLine{00744         self.fargnames = argnames}
+\DoxyCodeLine{00745         self.name = name}
+\DoxyCodeLine{00746 }
+\DoxyCodeLine{00747         self.inp = [\textcolor{keywordflow}{not} isinstance(a, OUTPUT) \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args]}
+\DoxyCodeLine{00748         self.in\_args = [a \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} isinstance(a, OUTPUT)]}
+\DoxyCodeLine{00749         self.out\_args = [a \textcolor{keywordflow}{for} a \textcolor{keywordflow}{in} args \textcolor{keywordflow}{if} isinstance(a, OUTPUT)]}
+\DoxyCodeLine{00750 }
+\DoxyCodeLine{00751         self.buf\_len = buf\_len}
+\DoxyCodeLine{00752 }
+\DoxyCodeLine{00753         docstring = name + \textcolor{stringliteral}{"{}\(\backslash\)n\(\backslash\)nArguments:\(\backslash\)n===========\(\backslash\)n"{}}}
+\DoxyCodeLine{00754         \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(len(args)):}
+\DoxyCodeLine{00755             an = \textcolor{stringliteral}{"{}"{}}}
+\DoxyCodeLine{00756             \textcolor{keywordflow}{if} i < len(argnames):}
+\DoxyCodeLine{00757                 an = argnames[i]}
+\DoxyCodeLine{00758             docstring += \textcolor{stringliteral}{"{}\(\backslash\)t\%s\(\backslash\)t\%s\(\backslash\)n"{}} \% (args[i], an)}
+\DoxyCodeLine{00759 }
+\DoxyCodeLine{00760         self.f.\_\_doc\_\_ = docstring}
+\DoxyCodeLine{00761 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ad8b8aafd4dac848fdff1450864cc18bf}\label{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ad8b8aafd4dac848fdff1450864cc18bf}} 
@@ -62,6 +90,64 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l00738}{738}} of file \mbox
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l00762}{762}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00762     \textcolor{keyword}{def }\_\_call\_\_(self, *args, **kwargs):}
+\DoxyCodeLine{00763         ars = []}
+\DoxyCodeLine{00764         i = 0}
+\DoxyCodeLine{00765         ret = []}
+\DoxyCodeLine{00766         \textcolor{comment}{\# pl\_get\_param buffer length depends on the parameter being fetched, so}}
+\DoxyCodeLine{00767         \textcolor{comment}{\# use kwargs to pass buffer length.}}
+\DoxyCodeLine{00768         \textcolor{keywordflow}{if} \textcolor{stringliteral}{"{}buf\_len"{}} \textcolor{keywordflow}{in} kwargs:}
+\DoxyCodeLine{00769             bs = kwargs[\textcolor{stringliteral}{"{}buf\_len"{}}]}
+\DoxyCodeLine{00770         \textcolor{keywordflow}{elif} self.name == \textcolor{stringliteral}{"{}pl\_get\_enum\_param"{}}:}
+\DoxyCodeLine{00771             \textcolor{comment}{\# last argument is buffer length}}
+\DoxyCodeLine{00772             bs = args[-\/1]}
+\DoxyCodeLine{00773         \textcolor{keywordflow}{elif} self.buf\_len >= 0:}
+\DoxyCodeLine{00774             bs = self.buf\_len}
+\DoxyCodeLine{00775         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00776             bs = 256}
+\DoxyCodeLine{00777         \textcolor{comment}{\# May have been passed a ctype; if so, fetch its value.}}
+\DoxyCodeLine{00778         \textcolor{keywordflow}{if} isinstance(bs, ctypes.\_SimpleCData):}
+\DoxyCodeLine{00779             bs = bs.value}
+\DoxyCodeLine{00780 }
+\DoxyCodeLine{00781         \textcolor{keywordflow}{for} j \textcolor{keywordflow}{in} range(len(self.inp)):}
+\DoxyCodeLine{00782             \textcolor{keywordflow}{if} self.inp[j]:  \textcolor{comment}{\# an input}}
+\DoxyCodeLine{00783                 \textcolor{keywordflow}{if} self.f.argtypes[j] \textcolor{keywordflow}{is} CALLBACK \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} isinstance(}
+\DoxyCodeLine{00784                     args[i], CALLBACK}
+\DoxyCodeLine{00785                 ):}
+\DoxyCodeLine{00786                     ars.append(CALLBACK(args[i]))}
+\DoxyCodeLine{00787                 \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00788                     ars.append(args[i])}
+\DoxyCodeLine{00789                 i += 1}
+\DoxyCodeLine{00790             \textcolor{keywordflow}{else}:  \textcolor{comment}{\# an output}}
+\DoxyCodeLine{00791                 r, ar = self.fargs[j].get\_var(bs)}
+\DoxyCodeLine{00792                 ars.append(ar)}
+\DoxyCodeLine{00793                 ret.append(r)}
+\DoxyCodeLine{00794                 \textcolor{comment}{\# print r, r.\_type\_}}
+\DoxyCodeLine{00795 }
+\DoxyCodeLine{00796         \textcolor{comment}{\# print (self.name, ars)}}
+\DoxyCodeLine{00797         res = self.f(*ars)}
+\DoxyCodeLine{00798         \textcolor{comment}{\# print res}}
+\DoxyCodeLine{00799 }
+\DoxyCodeLine{00800         \textcolor{keywordflow}{if} res == \textcolor{keyword}{False}:}
+\DoxyCodeLine{00801             err\_code = \_lib.pl\_error\_code()}
+\DoxyCodeLine{00802             err\_msg = ctypes.create\_string\_buffer(ERROR\_MSG\_LEN)}
+\DoxyCodeLine{00803             \_lib.pl\_error\_message(err\_code, err\_msg)}
+\DoxyCodeLine{00804             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00805                 \textcolor{stringliteral}{"{}pvcam error \%d: \%s"{}} \% (err\_code, err\_msg.value)}
+\DoxyCodeLine{00806             )}
+\DoxyCodeLine{00807 }
+\DoxyCodeLine{00808         \textcolor{keywordflow}{if} len(ret) == 0:}
+\DoxyCodeLine{00809             \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00810         \textcolor{keywordflow}{if} len(ret) == 1:}
+\DoxyCodeLine{00811             \textcolor{keywordflow}{return} ret[0]}
+\DoxyCodeLine{00812         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00813             \textcolor{keywordflow}{return} ret}
+\DoxyCodeLine{00814 }
+\DoxyCodeLine{00815 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -85,6 +171,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l00751}{751}} of file \mbox
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l00739}{739}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l00663}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+\_\+\+\_\+call\+\_\+\+\_\+()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_a60c69a1615d1ee3d78b9b133023cddde}\label{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_a60c69a1615d1ee3d78b9b133023cddde}} 
 \index{microscope.cameras.pvcam.dllFunction@{microscope.cameras.pvcam.dllFunction}!fargnames@{fargnames}}
 \index{fargnames@{fargnames}!microscope.cameras.pvcam.dllFunction@{microscope.cameras.pvcam.dllFunction}}
@@ -104,6 +194,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l00744}{744}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l00743}{743}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l00663}{microscope.\+cameras.\+atmcd.\+dll\+Function.\+\_\+\+\_\+call\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ad6584d0dc2c8f2e61ebdf73f97b3ce94}\label{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ad6584d0dc2c8f2e61ebdf73f97b3ce94}} 
 \index{microscope.cameras.pvcam.dllFunction@{microscope.cameras.pvcam.dllFunction}!in\_args@{in\_args}}
@@ -134,6 +228,10 @@ Definition at line \mbox{\hyperlink{pvcam_8py_source_l00747}{747}} of file \mbox
 
 
 Definition at line \mbox{\hyperlink{pvcam_8py_source_l00745}{745}} of file \mbox{\hyperlink{pvcam_8py_source}{pvcam.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ab8358305ce89432ea4a7deab3386536f}\label{classmicroscope_1_1cameras_1_1pvcam_1_1dll_function_ab8358305ce89432ea4a7deab3386536f}} 
 \index{microscope.cameras.pvcam.dllFunction@{microscope.cameras.pvcam.dllFunction}!out\_args@{out\_args}}

@@ -236,7 +236,11 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00173">173</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  173</span>    <span class="keyword">def </span>__init__(self, conn: _ZaberConnection, device_address: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  174</span>        self._conn = conn</div>
+<div class="line"><span class="lineno">  175</span>        self._address_bytes = b<span class="stringliteral">&quot;%02d&quot;</span> % device_address</div>
+<div class="line"><span class="lineno">  176</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -267,6 +271,13 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">True if all axes, or selected axis, has been homed.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00231">231</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  231</span>    <span class="keyword">def </span>been_homed(self, axis: int = 0) -&gt; bool:</div>
+<div class="line"><span class="lineno">  232</span>        <span class="stringliteral">&quot;&quot;&quot;True if all axes, or selected axis, has been homed.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  233</span>        reply = self.command(b<span class="stringliteral">&quot;get limit.home.triggered&quot;</span>, axis)</div>
+<div class="line"><span class="lineno">  234</span>        <span class="keywordflow">return</span> all([int(x) <span class="keywordflow">for</span> x <span class="keywordflow">in</span> reply.response.split()])</div>
+<div class="line"><span class="lineno">  235</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -310,6 +321,30 @@ Args:
         command is executed by all axis in the device.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00189">189</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  189</span>    <span class="keyword">def </span>command(self, command: bytes, axis: int = 0) -&gt; _ZaberReply:</div>
+<div class="line"><span class="lineno">  190</span>        <span class="stringliteral">&quot;&quot;&quot;Send command and return reply.</span></div>
+<div class="line"><span class="lineno">  191</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  192</span><span class="stringliteral">        Args:</span></div>
+<div class="line"><span class="lineno">  193</span><span class="stringliteral">            command: a bytes array </span><span class="keyword">with</span> the command <span class="keywordflow">and</span> its</div>
+<div class="line"><span class="lineno">  194</span>                parameters.</div>
+<div class="line"><span class="lineno">  195</span>            axis: the axis number to send the command.  If zero, the</div>
+<div class="line"><span class="lineno">  196</span>                command <span class="keywordflow">is</span> executed by all axis <span class="keywordflow">in</span> the device.</div>
+<div class="line"><span class="lineno">  197</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  198</span><span class="stringliteral">        </span><span class="comment"># We do not need to check whether axis number is valid because</span></div>
+<div class="line"><span class="lineno">  199</span>        <span class="comment"># the device will reject the command with BADAXIS if so.</span></div>
+<div class="line"><span class="lineno">  200</span>        <span class="keyword">with</span> self._conn.lock:</div>
+<div class="line"><span class="lineno">  201</span>            self._conn.write(</div>
+<div class="line"><span class="lineno">  202</span>                b<span class="stringliteral">&quot;/%s %1d %s\n&quot;</span> % (self._address_bytes, axis, command)</div>
+<div class="line"><span class="lineno">  203</span>            )</div>
+<div class="line"><span class="lineno">  204</span>            data = self._conn.readline()</div>
+<div class="line"><span class="lineno">  205</span>        reply = _ZaberReply(data)</div>
+<div class="line"><span class="lineno">  206</span>        self._validate_reply(reply)</div>
+<div class="line"><span class="lineno">  207</span>        <span class="keywordflow">return</span> reply</div>
+<div class="line"><span class="lineno">  208</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00175">microscope.controllers.zaber._ZaberDeviceConnection._address_bytes</a>, <a class="el" href="coolled_8py_source.html#l00094">microscope.controllers.coolled._CoolLEDChannelConnection._conn</a>, <a class="el" href="coolled_8py_source.html#l00140">microscope.controllers.coolled._CoolLEDChannel._conn</a>, <a class="el" href="lumencor_8py_source.html#l00116">microscope.controllers.lumencor._LightChannelConnection._conn</a>, <a class="el" href="lumencor_8py_source.html#l00213">microscope.controllers.lumencor._SpectraIIILightChannel._conn</a>, <a class="el" href="prior_8py_source.html#l00215">microscope.controllers.prior.ProScanIII._conn</a>, <a class="el" href="prior_8py_source.html#l00232">microscope.controllers.prior._ProScanIIIFilterWheel._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00110">microscope.controllers.toptica._iChromeLaserConnection._conn</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00173">microscope.controllers.toptica._iChromeLaser._conn</a>, <a class="el" href="zaber_8py_source.html#l00174">microscope.controllers.zaber._ZaberDeviceConnection._conn</a>, <a class="el" href="zaber_8py_source.html#l00595">microscope.controllers.zaber.ZaberDaisyChain._conn</a>, <a class="el" href="lights_2toptica_8py_source.html#l00218">microscope.lights.toptica.TopticaiBeam._conn</a>, <a class="el" href="ludl_8py_source.html#l00444">microscope.stages.ludl.ludlMC2000._conn</a>, <a class="el" href="zaber_8py_source.html#l00177">microscope.controllers.zaber._ZaberDeviceConnection._validate_reply()</a>, <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="zaber_8py_source.html#l00231">microscope.controllers.zaber._ZaberDeviceConnection.been_homed()</a>, <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>, <a class="el" href="zaber_8py_source.html#l00265">microscope.controllers.zaber._ZaberDeviceConnection.get_absolute_position()</a>, <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, <a class="el" href="zaber_8py_source.html#l00252">microscope.controllers.zaber._ZaberDeviceConnection.get_current_index()</a>, <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, <a class="el" href="ludl_8py_source.html#l00257">microscope.stages.ludl._LudlController.get_description()</a>, <a class="el" href="zaber_8py_source.html#l00248">microscope.controllers.zaber._ZaberDeviceConnection.get_index_distance()</a>, <a class="el" href="zaber_8py_source.html#l00269">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_max()</a>, <a class="el" href="zaber_8py_source.html#l00273">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_min()</a>, <a class="el" href="zaber_8py_source.html#l00227">microscope.controllers.zaber._ZaberDeviceConnection.get_number_axes()</a>, <a class="el" href="zaber_8py_source.html#l00240">microscope.controllers.zaber._ZaberDeviceConnection.get_rotation_length()</a>, <a class="el" href="zaber_8py_source.html#l00236">microscope.controllers.zaber._ZaberDeviceConnection.home()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00166">microscope.lights.toptica._iBeamConnection.laser_off()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00162">microscope.lights.toptica._iBeamConnection.laser_on()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00170">microscope.lights.toptica._iBeamConnection.set_normal_channel_power()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00179">microscope.lights.toptica._iBeamConnection.show_power_uW()</a>, and <a class="el" href="lights_2toptica_8py_source.html#l00188">microscope.lights.toptica._iBeamConnection.status_laser()</a>.</p>
 
 </div>
 </div>
@@ -340,6 +375,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Current absolute position of an axis, in microsteps.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00265">265</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  265</span>    <span class="keyword">def </span>get_absolute_position(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  266</span>        <span class="stringliteral">&quot;&quot;&quot;Current absolute position of an axis, in microsteps.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  267</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get pos&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  268</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -370,6 +411,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">The current index number or zero if between index positions.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00252">252</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  252</span>    <span class="keyword">def </span>get_current_index(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  253</span>        <span class="stringliteral">&quot;&quot;&quot;The current index number or zero if between index positions.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  254</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get motion.index.num&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  255</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -400,6 +447,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">The distance between consecutive index positions.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00248">248</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  248</span>    <span class="keyword">def </span>get_index_distance(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  249</span>        <span class="stringliteral">&quot;&quot;&quot;The distance between consecutive index positions.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  250</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get motion.index.dist&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  251</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -430,7 +483,10 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00286">286</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  286</span>    <span class="keyword">def </span>get_lamp_flux(self, channel: int) -&gt; float:</div>
+<div class="line"><span class="lineno">  287</span>        <span class="keywordflow">return</span> float(self.command(b<span class="stringliteral">&quot;get lamp.flux&quot;</span>, channel).response)</div>
+<div class="line"><span class="lineno">  288</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9655500bb795a22e27fff7950743bc19" name="a9655500bb795a22e27fff7950743bc19"></a>
@@ -460,7 +516,10 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00292">292</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  292</span>    <span class="keyword">def </span>get_lamp_is_on(self, channel: int) -&gt; bool:</div>
+<div class="line"><span class="lineno">  293</span>        <span class="keywordflow">return</span> self.command(b<span class="stringliteral">&quot;get lamp.status&quot;</span>, channel).response == b<span class="stringliteral">&quot;2&quot;</span></div>
+<div class="line"><span class="lineno">  294</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6b224c17e9d3af2f2ae283cd0bfb5570" name="a6b224c17e9d3af2f2ae283cd0bfb5570"></a>
@@ -490,7 +549,10 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00283">283</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  283</span>    <span class="keyword">def </span>get_lamp_max_flux(self, channel: int) -&gt; float:</div>
+<div class="line"><span class="lineno">  284</span>        <span class="keywordflow">return</span> float(self.command(b<span class="stringliteral">&quot;get lamp.flux.max&quot;</span>, channel).response)</div>
+<div class="line"><span class="lineno">  285</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4d6506e6750415e86239fa2e534b1aa4" name="a4d6506e6750415e86239fa2e534b1aa4"></a>
@@ -520,7 +582,11 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00295">295</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  295</span>    <span class="keyword">def </span>get_lamp_temperature(self, channel: int) -&gt; float:</div>
+<div class="line"><span class="lineno">  296</span>        <span class="keywordflow">return</span> float(self.command(b<span class="stringliteral">&quot;get lamp.temperature&quot;</span>, channel).response)</div>
+<div class="line"><span class="lineno">  297</span> </div>
+<div class="line"><span class="lineno">  298</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a168ac18dc9b8e4f24ac31164d37498d1" name="a168ac18dc9b8e4f24ac31164d37498d1"></a>
@@ -550,6 +616,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">The maximum position the device can move to, in microsteps.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00269">269</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  269</span>    <span class="keyword">def </span>get_limit_max(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  270</span>        <span class="stringliteral">&quot;&quot;&quot;The maximum position the device can move to, in microsteps.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  271</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get limit.max&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  272</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -580,6 +652,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">The minimum position the device can move to, in microsteps.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00273">273</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  273</span>    <span class="keyword">def </span>get_limit_min(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  274</span>        <span class="stringliteral">&quot;&quot;&quot;The minimum position the device can move to, in microsteps.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  275</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get limit.min&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  276</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -600,6 +678,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Reports the number of axes in the device.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00227">227</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  227</span>    <span class="keyword">def </span>get_number_axes(self) -&gt; int:</div>
+<div class="line"><span class="lineno">  228</span>        <span class="stringliteral">&quot;&quot;&quot;Reports the number of axes in the device.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get system.axiscount&quot;</span>).response)</div>
+<div class="line"><span class="lineno">  230</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -634,6 +718,16 @@ This is only valid on controllers and rotary devices including
 filter wheels and filter cube turrets.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00240">240</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  240</span>    <span class="keyword">def </span>get_rotation_length(self, axis: int) -&gt; int:</div>
+<div class="line"><span class="lineno">  241</span>        <span class="stringliteral">&quot;&quot;&quot;Number of microsteps needed to complete one full rotation.</span></div>
+<div class="line"><span class="lineno">  242</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  243</span><span class="stringliteral">        This </span><span class="keywordflow">is</span> only valid on controllers <span class="keywordflow">and</span> rotary devices including</div>
+<div class="line"><span class="lineno">  244</span>        filter wheels <span class="keywordflow">and</span> filter cube turrets.</div>
+<div class="line"><span class="lineno">  245</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  246</span><span class="stringliteral">        </span><span class="keywordflow">return</span> int(self.command(b<span class="stringliteral">&quot;get limit.cycle.dist&quot;</span>, axis).response)</div>
+<div class="line"><span class="lineno">  247</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -664,6 +758,12 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 <pre class="fragment">Move the axis to the home position.</pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00236">236</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  236</span>    <span class="keyword">def </span>home(self, axis: int = 0) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  237</span>        <span class="stringliteral">&quot;&quot;&quot;Move the axis to the home position.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  238</span>        self.command(b<span class="stringliteral">&quot;home&quot;</span>, axis)</div>
+<div class="line"><span class="lineno">  239</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -684,6 +784,11 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00209">209</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  209</span>    <span class="keyword">def </span>is_busy(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  210</span>        <span class="keywordflow">return</span> self.command(b<span class="stringliteral">&quot;&quot;</span>).status == b<span class="stringliteral">&quot;BUSY&quot;</span></div>
+<div class="line"><span class="lineno">  211</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="zaber_8py_source.html#l00212">microscope.controllers.zaber._ZaberDeviceConnection.wait_until_idle()</a>.</p>
 
 </div>
 </div>
@@ -714,7 +819,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00277">277</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  277</span>    <span class="keyword">def </span>lamp_off(self, channel: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  278</span>        self.command(b<span class="stringliteral">&quot;lamp off&quot;</span>, channel)</div>
+<div class="line"><span class="lineno">  279</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a53fc2505b2b2cb7106b457a8ffc92889" name="a53fc2505b2b2cb7106b457a8ffc92889"></a>
@@ -744,7 +852,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00280">280</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  280</span>    <span class="keyword">def </span>lamp_on(self, channel: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  281</span>        self.command(b<span class="stringliteral">&quot;lamp on&quot;</span>, channel)</div>
+<div class="line"><span class="lineno">  282</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a3ec2d23b3255304104b26fecaab18673" name="a3ec2d23b3255304104b26fecaab18673"></a>
@@ -780,7 +891,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00262">262</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  262</span>    <span class="keyword">def </span>move_by_relative_position(self, axis: int, position: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  263</span>        self.command(b<span class="stringliteral">&quot;move rel %d&quot;</span> % position, axis)</div>
+<div class="line"><span class="lineno">  264</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="abbb9e328970817f87b7eb470bb7c8842" name="abbb9e328970817f87b7eb470bb7c8842"></a>
@@ -816,7 +930,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00259">259</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  259</span>    <span class="keyword">def </span>move_to_absolute_position(self, axis: int, position: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  260</span>        self.command(b<span class="stringliteral">&quot;move abs %d&quot;</span> % position, axis)</div>
+<div class="line"><span class="lineno">  261</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afd22b21895687c5c4e69152ff5788b23" name="afd22b21895687c5c4e69152ff5788b23"></a>
@@ -852,7 +969,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00256">256</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  256</span>    <span class="keyword">def </span>move_to_index(self, axis: int, index: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  257</span>        self.command(b<span class="stringliteral">&quot;move index %d&quot;</span> % index, axis)</div>
+<div class="line"><span class="lineno">  258</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a4cce3c89fd8e96e60e5bba83fb9e90f7" name="a4cce3c89fd8e96e60e5bba83fb9e90f7"></a>
@@ -888,7 +1008,10 @@ filter wheels and filter cube turrets.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00289">289</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  289</span>    <span class="keyword">def </span>set_lamp_flux(self, channel: int, flux: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  290</span>        self.command(b<span class="stringliteral">&quot;set lamp.flux %.3f&quot;</span> % flux, channel)</div>
+<div class="line"><span class="lineno">  291</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acd09b936986659491d648b16c687a170" name="acd09b936986659491d648b16c687a170"></a>
@@ -921,6 +1044,24 @@ filter wheels and filter cube turrets.
 A device is busy if *any* of its axis is busy.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00212">212</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  212</span>    <span class="keyword">def </span>wait_until_idle(self, timeout: float = 10.0) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  213</span>        <span class="stringliteral">&quot;&quot;&quot;Wait, or error, until device is idle.</span></div>
+<div class="line"><span class="lineno">  214</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  215</span><span class="stringliteral">        A device </span><span class="keywordflow">is</span> busy <span class="keywordflow">if</span> *any* of its axis <span class="keywordflow">is</span> busy.</div>
+<div class="line"><span class="lineno">  216</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  217</span><span class="stringliteral">        sleep_interval = 0.1</span></div>
+<div class="line"><span class="lineno">  218</span><span class="stringliteral">        </span><span class="keywordflow">for</span> _ <span class="keywordflow">in</span> range(int(timeout / sleep_interval)):</div>
+<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.is_busy():</div>
+<div class="line"><span class="lineno">  220</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  221</span>            time.sleep(sleep_interval)</div>
+<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  224</span>                <span class="stringliteral">&quot;device still busy after %f seconds&quot;</span> % timeout</div>
+<div class="line"><span class="lineno">  225</span>            )</div>
+<div class="line"><span class="lineno">  226</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00209">microscope.controllers.zaber._ZaberDeviceConnection.is_busy()</a>, and <a class="el" href="ludl_8py_source.html#l00136">microscope.stages.ludl._LudlController.is_busy()</a>.</p>
 
 </div>
 </div>

@@ -181,7 +181,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00039">39</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   39</span>    <span class="keyword">def </span>__init__(self, serial: microscope._utils.SharedSerial) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   40</span>        self._serial = serial</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>        <span class="comment"># When we connect for the first time, we will get back a</span></div>
+<div class="line"><span class="lineno">   43</span>        <span class="comment"># greeting message like &#39;CoolLED precisExcite, Hello, pleased</span></div>
+<div class="line"><span class="lineno">   44</span>        <span class="comment"># to meet you&#39;.  Discard it by reading until timeout.</span></div>
+<div class="line"><span class="lineno">   45</span>        self._serial.readlines()</div>
+<div class="line"><span class="lineno">   46</span> </div>
+<div class="line"><span class="lineno">   47</span>        <span class="comment"># Check that this behaves like a CoolLED device.</span></div>
+<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">   49</span>            self.get_css()</div>
+<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">except</span> Exception:</div>
+<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">   52</span>                <span class="stringliteral">&quot;Not a CoolLED device, unable to get CSS&quot;</span></div>
+<div class="line"><span class="lineno">   53</span>            )</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -202,6 +219,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return list of channel names (names are one character string).</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00079">79</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   79</span>    <span class="keyword">def </span>get_channels(self) -&gt; typing.List[str]:</div>
+<div class="line"><span class="lineno">   80</span>        <span class="stringliteral">&quot;&quot;&quot;Return list of channel names (names are one character string).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   81</span>        <span class="comment"># answer has the form: [xsnNNN] per channel.  The letter &#39;x&#39;</span></div>
+<div class="line"><span class="lineno">   82</span>        <span class="comment"># defines the channel (A to H), &#39;s&#39; refers to S (Selected) or</span></div>
+<div class="line"><span class="lineno">   83</span>        <span class="comment"># X (Not selected), &#39;n&#39; refers to N (On) or F (Off) and &#39;NNN&#39;</span></div>
+<div class="line"><span class="lineno">   84</span>        <span class="comment"># is the intensity in integer percent.</span></div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> list(self.get_css()[::6].decode())</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="coolled_8py_source.html#l00055">microscope.controllers.coolled._CoolLEDConnection.get_css()</a>.</p>
 
 </div>
 </div>
@@ -222,6 +250,23 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Get the global channel status map.</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00055">55</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   55</span>    <span class="keyword">def </span>get_css(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">   56</span>        <span class="stringliteral">&quot;&quot;&quot;Get the global channel status map.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   57</span>        <span class="keyword">with</span> self._serial.lock:</div>
+<div class="line"><span class="lineno">   58</span>            self._serial.write(b<span class="stringliteral">&quot;CSS?\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   59</span>            answer = self._serial.readline()</div>
+<div class="line"><span class="lineno">   60</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;CSS&quot;</span>):</div>
+<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">   62</span>                <span class="stringliteral">&quot;answer to &#39;CSS?&#39; should start with &#39;CSS&#39;&quot;</span></div>
+<div class="line"><span class="lineno">   63</span>                <span class="stringliteral">&quot; but got &#39;%s&#39; instead&quot;</span> % answer.decode</div>
+<div class="line"><span class="lineno">   64</span>            )</div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> answer[3:-2]  <span class="comment"># remove initial b&#39;CSS&#39; and final b&#39;\r\n&#39;</span></div>
+<div class="line"><span class="lineno">   66</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, and <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="coolled_8py_source.html#l00079">microscope.controllers.coolled._CoolLEDConnection.get_channels()</a>.</p>
 
 </div>
 </div>
@@ -252,6 +297,20 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Set status for any number of channels.</pre> 
 <p class="definition">Definition at line <a class="el" href="coolled_8py_source.html#l00067">67</a> of file <a class="el" href="coolled_8py_source.html">coolled.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>    <span class="keyword">def </span>set_css(self, css: bytes) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   68</span>        <span class="stringliteral">&quot;&quot;&quot;Set status for any number of channels.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   69</span>        <span class="keyword">assert</span> len(css) % 6 == 0, <span class="stringliteral">&quot;css must be multiple of 6 (6 per channel)&quot;</span></div>
+<div class="line"><span class="lineno">   70</span>        <span class="keyword">with</span> self._serial.lock:</div>
+<div class="line"><span class="lineno">   71</span>            self._serial.write(b<span class="stringliteral">&quot;CSS&quot;</span> + css + b<span class="stringliteral">&quot;\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   72</span>            answer = self._serial.readline()</div>
+<div class="line"><span class="lineno">   73</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;CSS&quot;</span>):</div>
+<div class="line"><span class="lineno">   74</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">   75</span>                <span class="stringliteral">&quot;answer to &#39;CSS?&#39; should start with &#39;CSS&#39;&quot;</span></div>
+<div class="line"><span class="lineno">   76</span>                <span class="stringliteral">&quot; but got &#39;%s&#39; instead&quot;</span> % answer.decode</div>
+<div class="line"><span class="lineno">   77</span>            )</div>
+<div class="line"><span class="lineno">   78</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, and <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>.</p>
 
 </div>
 </div>

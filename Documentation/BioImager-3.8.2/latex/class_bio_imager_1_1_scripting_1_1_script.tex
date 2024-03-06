@@ -68,6 +68,16 @@ Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00016}{16}} of file \
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00030}{30}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00031             \{}
+\DoxyCodeLine{00032                 name = Path.GetFileName(file);}
+\DoxyCodeLine{00033                 scriptString = scriptStr;}
+\DoxyCodeLine{00034                 \textcolor{keywordflow}{if} (file.EndsWith(\textcolor{stringliteral}{"{}.txt"{}}) || file.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{00035                     type = ScriptType.imagej;}
+\DoxyCodeLine{00036             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_a0e05636c723f0887dade9df2446f3adf}\label{class_bio_imager_1_1_scripting_1_1_script_a0e05636c723f0887dade9df2446f3adf}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!Script@{Script}}
 \index{Script@{Script}!BioImager.Scripting.Script@{BioImager.Scripting.Script}}
@@ -78,6 +88,17 @@ Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00030}{30}} of file \
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00039}{39}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00040             \{}
+\DoxyCodeLine{00041                 name = Path.GetFileName(file);}
+\DoxyCodeLine{00042                 scriptString = File.ReadAllText(file);}
+\DoxyCodeLine{00043                 this.file = file;}
+\DoxyCodeLine{00044                 \textcolor{keywordflow}{if} (file.EndsWith(\textcolor{stringliteral}{"{}.txt"{}}) || file.EndsWith(\textcolor{stringliteral}{"{}.ijm"{}}))}
+\DoxyCodeLine{00045                     type = ScriptType.imagej;}
+\DoxyCodeLine{00046             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -95,6 +116,17 @@ It creates a new thread and starts it.
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00133}{133}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134             \{}
+\DoxyCodeLine{00135                 \textcolor{keywordflow}{if} (!Scripts.ContainsKey(name))}
+\DoxyCodeLine{00136                     Scripts.Add(name, \textcolor{keyword}{this});}
+\DoxyCodeLine{00137                 scriptName = this.name;}
+\DoxyCodeLine{00138                 thread = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} ThreadStart(RunScript));}
+\DoxyCodeLine{00139                 thread.Start();}
+\DoxyCodeLine{00140             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_aaef0cfb462ea92e6eb6425e59f1fd8b2}\label{class_bio_imager_1_1_scripting_1_1_script_aaef0cfb462ea92e6eb6425e59f1fd8b2}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!Run@{Run}}
 \index{Run@{Run}!BioImager.Scripting.Script@{BioImager.Scripting.Script}}
@@ -107,6 +139,19 @@ The thread is started by calling the Run\+Script function. ~\newline
  
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00051}{51}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00052             \{}
+\DoxyCodeLine{00053                 scriptName = rn.name;}
+\DoxyCodeLine{00054                 Thread t = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} ThreadStart(RunScript));}
+\DoxyCodeLine{00055                 t.Start();}
+\DoxyCodeLine{00056             \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_scripting_8cs_source_l00403}{Bio\+Imager.\+Scripting.\+Run()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_a629e166dcb7a5471e3315fdac436403a}\label{class_bio_imager_1_1_scripting_1_1_script_a629e166dcb7a5471e3315fdac436403a}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!RunString@{RunString}}
@@ -128,6 +173,46 @@ The return value of the last statement in the script.
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00099}{99}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00100             \{}
+\DoxyCodeLine{00101                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00102                 \{}
+\DoxyCodeLine{00103                     \textcolor{keywordtype}{string} loader =}
+\DoxyCodeLine{00104                   \textcolor{stringliteral}{@"{}//css\_reference "{}} + System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + \textcolor{stringliteral}{@"{}.dll}}
+\DoxyCodeLine{00105 \textcolor{stringliteral}{                    using System;}}
+\DoxyCodeLine{00106 \textcolor{stringliteral}{                    using System.Windows.Forms;}}
+\DoxyCodeLine{00107 \textcolor{stringliteral}{                    using System.Drawing;}}
+\DoxyCodeLine{00108 \textcolor{stringliteral}{                    using System.Threading;}}
+\DoxyCodeLine{00109 \textcolor{stringliteral}{                    using Bio;"{}};}
+\DoxyCodeLine{00110                     \textcolor{keywordflow}{foreach} (\textcolor{keywordtype}{string} s \textcolor{keywordflow}{in} usings)}
+\DoxyCodeLine{00111                     \{}
+\DoxyCodeLine{00112                         loader += usings + Environment.NewLine;}
+\DoxyCodeLine{00113                     \}}
+\DoxyCodeLine{00114                     loader += \textcolor{stringliteral}{@"{}}}
+\DoxyCodeLine{00115 \textcolor{stringliteral}{                    public class Loader}}
+\DoxyCodeLine{00116 \textcolor{stringliteral}{                    \{}}
+\DoxyCodeLine{00117 \textcolor{stringliteral}{                        public object Load()}}
+\DoxyCodeLine{00118 \textcolor{stringliteral}{                        \{"{}} +}
+\DoxyCodeLine{00119                             st + \textcolor{stringliteral}{@"{};}}
+\DoxyCodeLine{00120 \textcolor{stringliteral}{                            return true;}}
+\DoxyCodeLine{00121 \textcolor{stringliteral}{                        \}}}
+\DoxyCodeLine{00122 \textcolor{stringliteral}{                    \}"{}};}
+\DoxyCodeLine{00123                     dynamic script = CSScript.Evaluator.LoadCode(loader);}
+\DoxyCodeLine{00124                     \textcolor{keywordflow}{return} script.Load();}
+\DoxyCodeLine{00125                 \}}
+\DoxyCodeLine{00126                 \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{00127                 \{}
+\DoxyCodeLine{00128                     MessageBox.Show(e.Message, e.Source);}
+\DoxyCodeLine{00129                     \textcolor{keywordflow}{return} e;}
+\DoxyCodeLine{00130                 \}}
+\DoxyCodeLine{00131             \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_scripting_8cs_source_l00396}{Bio\+Imager.\+Scripting.\+Run\+String()}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_a7c1e7807db2b1b7d769f9340d8c4b801}\label{class_bio_imager_1_1_scripting_1_1_script_a7c1e7807db2b1b7d769f9340d8c4b801}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!Stop@{Stop}}
 \index{Stop@{Stop}!BioImager.Scripting.Script@{BioImager.Scripting.Script}}
@@ -141,6 +226,18 @@ The function stops the thread.
 
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00142}{142}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00143             \{}
+\DoxyCodeLine{00144                 \textcolor{keywordflow}{if} (thread != \textcolor{keyword}{null})}
+\DoxyCodeLine{00145                     thread.Abort();}
+\DoxyCodeLine{00146             \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_scripting_8cs_source_l00424}{Bio\+Imager.\+Scripting.\+Stop()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}\label{class_bio_imager_1_1_scripting_1_1_script_aea77276ec26da3319c7f195c56f41edd}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!ToString@{ToString}}
@@ -156,6 +253,22 @@ The name of the thread and the state of the thread.
 
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00151}{151}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00152             \{}
+\DoxyCodeLine{00153                 \textcolor{keywordflow}{if} (thread != \textcolor{keyword}{null})}
+\DoxyCodeLine{00154                 \{}
+\DoxyCodeLine{00155                     \textcolor{keywordflow}{return} name.ToString() + \textcolor{stringliteral}{"{}, "{}} + thread.ThreadState.ToString();}
+\DoxyCodeLine{00156                 \}}
+\DoxyCodeLine{00157                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00158                     \textcolor{keywordflow}{return} name.ToString();}
+\DoxyCodeLine{00159             \}}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{_scripting_8cs_source_l00275}{Bio\+Imager.\+Scripting.\+Refresh\+Items()}}, and \mbox{\hyperlink{_scripting_8cs_source_l00311}{Bio\+Imager.\+Scripting.\+Refresh\+Status()}}.
 
 
 
@@ -199,6 +312,10 @@ Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00019}{19}} of file \
 
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00018}{18}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
+
+
+
+Referenced by \mbox{\hyperlink{pvcam_8py_source_l01203}{microscope.\+cameras.\+pvcam.\+PVParam.\+factory()}}, \mbox{\hyperlink{pvcam_8py_source_l01238}{microscope.\+cameras.\+pvcam.\+PVParam.\+set\+\_\+value()}}, and \mbox{\hyperlink{pvcam_8py_source_l01341}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+set\+\_\+value()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_a6d1933e7584b8b77ee593a21425ed78d}\label{class_bio_imager_1_1_scripting_1_1_script_a6d1933e7584b8b77ee593a21425ed78d}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!obj@{obj}}
@@ -259,6 +376,10 @@ Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00027}{27}} of file \
 
 
 Definition at line \mbox{\hyperlink{_scripting_8cs_source_l00028}{28}} of file \mbox{\hyperlink{_scripting_8cs_source}{Scripting.\+cs}}.
+
+
+
+Referenced by \mbox{\hyperlink{linkam_8py_source_l00075}{microscope.\+stages.\+linkam.\+\_\+\+Comms\+Info.\+view\+\_\+of\+\_\+info()}}.
 
 \mbox{\Hypertarget{class_bio_imager_1_1_scripting_1_1_script_acaf64176d17a9b188eaf7210af421b4a}\label{class_bio_imager_1_1_scripting_1_1_script_acaf64176d17a9b188eaf7210af421b4a}} 
 \index{BioImager.Scripting.Script@{BioImager.Scripting.Script}!usings@{usings}}

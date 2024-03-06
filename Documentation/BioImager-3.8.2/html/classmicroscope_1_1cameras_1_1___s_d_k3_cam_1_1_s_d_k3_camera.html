@@ -190,6 +190,14 @@ Public Attributes</h2></td></tr>
 <pre class="fragment">camera initialisation - note that this should be called  from derived classes
 *AFTER* the properties have been defined</pre> 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">172</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  172</span>    <span class="keyword">def </span>__init__(self, camNum):</div>
+<div class="line"><span class="lineno">  173</span>        <span class="stringliteral">&quot;&quot;&quot;camera initialisation - note that this should be called  </span><span class="keyword">from</span> derived classes</div>
+<div class="line"><span class="lineno">  174</span>        *AFTER* the properties have been defined<span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  175</span><span class="stringliteral">        </span><span class="comment"># camReg.regCamera() #initialise the library if needed</span></div>
+<div class="line"><span class="lineno">  176</span>        self.camNum = camNum</div>
+<div class="line"><span class="lineno">  177</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="___s_d_k3_cam_8py_source.html#l00176">microscope.cameras._SDK3Cam.SDK3Camera.camNum</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00182">microscope.cameras._SDK3Cam.SDK3Camera.connectProperties()</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, and <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>.</p>
 
 </div>
 </div>
@@ -211,6 +219,13 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00182">182</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  182</span>    <span class="keyword">def </span>connectProperties(self):</div>
+<div class="line"><span class="lineno">  183</span>        <span class="keywordflow">for</span> name, var <span class="keywordflow">in</span> self.__dict__.items():</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">if</span> isinstance(var, ATProperty):</div>
+<div class="line"><span class="lineno">  185</span>                var.connect(self.handle, name)</div>
+<div class="line"><span class="lineno">  186</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -231,7 +246,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00178">178</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  178</span>    <span class="keyword">def </span>Init(self):</div>
+<div class="line"><span class="lineno">  179</span>        self.handle = SDK3.Open(self.camNum)</div>
+<div class="line"><span class="lineno">  180</span>        self.connectProperties()</div>
+<div class="line"><span class="lineno">  181</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a177d8b5e123df8ebbc14eb5413192d9a" name="a177d8b5e123df8ebbc14eb5413192d9a"></a>
@@ -251,7 +270,10 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00187">187</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  187</span>    <span class="keyword">def </span>shutdown(self):</div>
+<div class="line"><span class="lineno">  188</span>        SDK3.Close(self.handle)</div>
+<div class="line"><span class="lineno">  189</span>        <span class="comment"># camReg.unregCamera()</span></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -269,6 +291,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00176">176</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>.</p>
+
 </div>
 </div>
 <a id="a9b11e84de4b071dc2590d7b5e45211dd" name="a9b11e84de4b071dc2590d7b5e45211dd"></a>
@@ -284,6 +308,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">179</a> of file <a class="el" href="___s_d_k3_cam_8py_source.html">_SDK3Cam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>

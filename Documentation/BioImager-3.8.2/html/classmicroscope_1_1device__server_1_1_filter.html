@@ -187,7 +187,14 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00153">153</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  153</span>    <span class="keyword">def </span>__init__(self):</div>
+<div class="line"><span class="lineno">  154</span>        self.last = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  155</span>        self.count = 1</div>
+<div class="line"><span class="lineno">  156</span>        self.aggregate_at = 3</div>
+<div class="line"><span class="lineno">  157</span>        self.repeat_at = 5</div>
+<div class="line"><span class="lineno">  158</span>        self.stop_at = self.aggregate_at + 3 * self.repeat_at</div>
+<div class="line"><span class="lineno">  159</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -218,6 +225,38 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Pass, aggregate or suppress consecutive repetitions of a log message.</pre> 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00160">160</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  160</span>    <span class="keyword">def </span>filter(self, record):</div>
+<div class="line"><span class="lineno">  161</span>        <span class="stringliteral">&quot;&quot;&quot;Pass, aggregate or suppress consecutive repetitions of a log message.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  162</span>        <span class="keywordflow">if</span> self.last == record.msg:</div>
+<div class="line"><span class="lineno">  163</span>            <span class="comment"># Repeated message. Increment count.</span></div>
+<div class="line"><span class="lineno">  164</span>            self.count += 1</div>
+<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  166</span>            <span class="comment"># New message. We&#39;ve seen 1 instance of it.</span></div>
+<div class="line"><span class="lineno">  167</span>            self.count = 1</div>
+<div class="line"><span class="lineno">  168</span>        <span class="comment"># Update self.last - no further reference to last message</span></div>
+<div class="line"><span class="lineno">  169</span>        <span class="comment"># needed in this call.</span></div>
+<div class="line"><span class="lineno">  170</span>        self.last = record.msg</div>
+<div class="line"><span class="lineno">  171</span>        <span class="keywordflow">if</span> self.count &lt; self.aggregate_at:</div>
+<div class="line"><span class="lineno">  172</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">elif</span> self.count == self.aggregate_at:</div>
+<div class="line"><span class="lineno">  174</span>            record.msg = <span class="stringliteral">&quot;Aggregating reps. of: %s&quot;</span> % (record.msg)</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  176</span>        <span class="keywordflow">elif</span> (</div>
+<div class="line"><span class="lineno">  177</span>            self.stop_at &gt; self.count &gt; self.aggregate_at</div>
+<div class="line"><span class="lineno">  178</span>            <span class="keywordflow">and</span> ((self.count - self.aggregate_at) % self.repeat_at) == 0</div>
+<div class="line"><span class="lineno">  179</span>        ):</div>
+<div class="line"><span class="lineno">  180</span>            record.msg = <span class="stringliteral">&quot;%d times: %s&quot;</span> % (self.repeat_at, record.msg)</div>
+<div class="line"><span class="lineno">  181</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">elif</span> self.count == self.stop_at:</div>
+<div class="line"><span class="lineno">  183</span>            record.msg = <span class="stringliteral">&quot;Suppressing reps. of: %s&quot;</span> % (record.msg)</div>
+<div class="line"><span class="lineno">  184</span>            <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  185</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  186</span>            <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  187</span> </div>
+<div class="line"><span class="lineno">  188</span> </div>
+<div class="line"><span class="lineno">  189</span><span class="preprocessor">@dataclass(frozen=True)</span></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="device__server_8py_source.html#l00156">microscope.device_server.Filter.aggregate_at</a>, <a class="el" href="pvcam_8py_source.html#l01317">microscope.cameras.pvcam.PVParam.count()</a>, <a class="el" href="device__server_8py_source.html#l00155">microscope.device_server.Filter.count</a>, <a class="el" href="_bio_8cs_source.html#l02266">BioImager.BioImage.ImageJDesc.count</a>, <a class="el" href="_slide_imager_8cs_source.html#l00309">BioImager.SlideImager.count</a>, <a class="el" href="device__server_8py_source.html#l00154">microscope.device_server.Filter.last</a>, <a class="el" href="device__server_8py_source.html#l00157">microscope.device_server.Filter.repeat_at</a>, and <a class="el" href="device__server_8py_source.html#l00158">microscope.device_server.Filter.stop_at</a>.</p>
 
 </div>
 </div>
@@ -236,6 +275,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00156">156</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>.</p>
+
 </div>
 </div>
 <a id="a00ec921671500922c97a89bb92653418" name="a00ec921671500922c97a89bb92653418"></a>
@@ -251,6 +292,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00155">155</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>, and <a class="el" href="pvcam_8py_source.html#l01371">microscope.cameras.pvcam.PVEnumParam.values()</a>.</p>
 
 </div>
 </div>
@@ -268,6 +311,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00154">154</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>.</p>
+
 </div>
 </div>
 <a id="a0c96cbe6c9b28d59b5ca2c02895b449e" name="a0c96cbe6c9b28d59b5ca2c02895b449e"></a>
@@ -284,6 +329,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00157">157</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>.</p>
+
 </div>
 </div>
 <a id="ac24fa4ed543287a1bd9e084f84652e57" name="ac24fa4ed543287a1bd9e084f84652e57"></a>
@@ -299,6 +346,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="device__server_8py_source.html#l00158">158</a> of file <a class="el" href="device__server_8py_source.html">device_server.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="device__server_8py_source.html#l00160">microscope.device_server.Filter.filter()</a>.</p>
 
 </div>
 </div>

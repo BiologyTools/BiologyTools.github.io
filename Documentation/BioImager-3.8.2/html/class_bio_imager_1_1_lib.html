@@ -195,7 +195,37 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_library_8cs_source.html#l00151">151</a> of file <a class="el" href="_library_8cs_source.html">Library.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  152</span>        {</div>
+<div class="line"><span class="lineno">  153</span>            dll = Assembly.LoadFile(file);</div>
+<div class="line"><span class="lineno">  154</span>            <span class="comment">//Assembly.ReflectionOnlyLoad</span></div>
+<div class="line"><span class="lineno">  155</span>            Type[] tps = dll.GetExportedTypes();</div>
+<div class="line"><span class="lineno">  156</span>            <span class="keywordflow">foreach</span> (Type type <span class="keywordflow">in</span> tps)</div>
+<div class="line"><span class="lineno">  157</span>            {</div>
+<div class="line"><span class="lineno">  158</span>                TypeInfo t = <span class="keyword">new</span> TypeInfo();</div>
+<div class="line"><span class="lineno">  159</span>                t.type = type;</div>
+<div class="line"><span class="lineno">  160</span>                <span class="keywordtype">string</span> s = type.ToString();</div>
+<div class="line"><span class="lineno">  161</span>                s = s.Remove(0, s.LastIndexOf(<span class="charliteral">&#39;.&#39;</span>) + 1);</div>
+<div class="line"><span class="lineno">  162</span>                <span class="keywordflow">if</span> (type.IsEnum)</div>
+<div class="line"><span class="lineno">  163</span>                {</div>
+<div class="line"><span class="lineno">  164</span>                    GetEnums(t);</div>
+<div class="line"><span class="lineno">  165</span>                }</div>
+<div class="line"><span class="lineno">  166</span>                GetInterfaces(t);</div>
+<div class="line"><span class="lineno">  167</span>                GetConstructors(t);</div>
+<div class="line"><span class="lineno">  168</span>                GetProperties(t);</div>
+<div class="line"><span class="lineno">  169</span>                GetFields(t);</div>
+<div class="line"><span class="lineno">  170</span>                GetMethods(t);</div>
+<div class="line"><span class="lineno">  171</span>                GetMembers(t);</div>
+<div class="line"><span class="lineno">  172</span>                Types.Add(s,t);</div>
+<div class="line"><span class="lineno">  173</span>            }</div>
+<div class="line"><span class="lineno">  174</span>            Module[] mds = dll.GetModules();</div>
+<div class="line"><span class="lineno">  175</span>            <span class="keywordflow">foreach</span> (Module m <span class="keywordflow">in</span> mds)</div>
+<div class="line"><span class="lineno">  176</span>            {</div>
+<div class="line"><span class="lineno">  177</span>                <span class="keywordtype">string</span> s = m.ToString();</div>
+<div class="line"><span class="lineno">  178</span>                s = s.Remove(0, s.LastIndexOf(<span class="charliteral">&#39;.&#39;</span>) + 1);</div>
+<div class="line"><span class="lineno">  179</span>                Modules.Add(s, m);</div>
+<div class="line"><span class="lineno">  180</span>            }</div>
+<div class="line"><span class="lineno">  181</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -242,7 +272,12 @@ Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The value of the property. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_library_8cs_source.html#l00218">218</a> of file <a class="el" href="_library_8cs_source.html">Library.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  219</span>        {</div>
+<div class="line"><span class="lineno">  220</span>            Type myType = Types[type].type;</div>
+<div class="line"><span class="lineno">  221</span>            PropertyInfo p = myType.GetProperty(name);</div>
+<div class="line"><span class="lineno">  222</span>            <span class="keywordflow">return</span> p.GetValue(obj);</div>
+<div class="line"><span class="lineno">  223</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aede4def54dac19a6a0e3e26be2b8d3f5" name="aede4def54dac19a6a0e3e26be2b8d3f5"></a>
@@ -295,7 +330,11 @@ Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value of the method. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_library_8cs_source.html#l00206">206</a> of file <a class="el" href="_library_8cs_source.html">Library.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  207</span>        {</div>
+<div class="line"><span class="lineno">  208</span>            Type t = Types[st].type;</div>
+<div class="line"><span class="lineno">  209</span>            <span class="keywordflow">return</span> t.InvokeMember(name, BindingFlags.InvokeMethod, <span class="keyword">null</span>, o, args);</div>
+<div class="line"><span class="lineno">  210</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acb41b9bf4a0170036af735ebbb9d142c" name="acb41b9bf4a0170036af735ebbb9d142c"></a>
@@ -348,7 +387,10 @@ Public Attributes</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value of the method. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_library_8cs_source.html#l00192">192</a> of file <a class="el" href="_library_8cs_source.html">Library.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  193</span>        {</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">return</span> type.InvokeMember(name, BindingFlags.InvokeMethod, <span class="keyword">null</span>, o, args);</div>
+<div class="line"><span class="lineno">  195</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

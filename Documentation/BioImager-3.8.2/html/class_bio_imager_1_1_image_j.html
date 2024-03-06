@@ -213,6 +213,23 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00247">247</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  248</span>        {</div>
+<div class="line"><span class="lineno">  249</span>            <span class="keywordflow">if</span> (!<a class="code hl_function" href="class_bio_imager_1_1_image_j.html#a20d4c8959894e4fec84959d16bcfe411">SetImageJPath</a>())</div>
+<div class="line"><span class="lineno">  250</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  251</span>            Macro.Initialize();</div>
+<div class="line"><span class="lineno">  252</span>            <span class="keywordtype">string</span>[] ds = Directory.GetFiles(Path.GetDirectoryName(ImageJPath) + <span class="stringliteral">&quot;/macros&quot;</span>);</div>
+<div class="line"><span class="lineno">  253</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> ds)</div>
+<div class="line"><span class="lineno">  254</span>            {</div>
+<div class="line"><span class="lineno">  255</span>                <span class="keywordflow">if</span> (s.EndsWith(<span class="stringliteral">&quot;.ijm&quot;</span>) || s.EndsWith(<span class="stringliteral">&quot;.txt&quot;</span>))</div>
+<div class="line"><span class="lineno">  256</span>                    Macros.Add(<span class="keyword">new</span> Macro.Command(Path.GetFileName(s), <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;&quot;</span>));</div>
+<div class="line"><span class="lineno">  257</span>            }</div>
+<div class="line"><span class="lineno">  258</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  259</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_html_a20d4c8959894e4fec84959d16bcfe411"><div class="ttname"><a href="class_bio_imager_1_1_image_j.html#a20d4c8959894e4fec84959d16bcfe411">BioImager.ImageJ.SetImageJPath</a></div><div class="ttdeci">static bool SetImageJPath()</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00263">ImageJ.cs:263</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_image_j_8cs_source.html#l00263">BioImager.ImageJ.SetImageJPath()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_app_8cs_source.html#l00056">BioImager.App.Initialize()</a>, <a class="el" href="_image_j_8cs_source.html#l00115">BioImager.ImageJ.RunMacro()</a>, <a class="el" href="_image_j_8cs_source.html#l00189">BioImager.ImageJ.RunOnImage()</a>, and <a class="el" href="_image_j_8cs_source.html#l00137">BioImager.ImageJ.RunString()</a>.</p>
 
 </div>
 </div>
@@ -260,6 +277,25 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The macro is being returned. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00115">115</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  116</span>        {</div>
+<div class="line"><span class="lineno">  117</span>            <span class="keywordflow">if</span>(!Initialized)</div>
+<div class="line"><span class="lineno">  118</span>            {</div>
+<div class="line"><span class="lineno">  119</span>                <a class="code hl_function" href="class_bio_imager_1_1_image_j.html#ae17c52ed404d512bba4aaf2b0957cbe5">Initialize</a>();</div>
+<div class="line"><span class="lineno">  120</span>            }</div>
+<div class="line"><span class="lineno">  121</span>            file.Replace(<span class="stringliteral">&quot;/&quot;</span>, <span class="stringliteral">&quot;\\&quot;</span>);</div>
+<div class="line"><span class="lineno">  122</span>            Process pr = <span class="keyword">new</span> Process();</div>
+<div class="line"><span class="lineno">  123</span>            pr.StartInfo.FileName = ImageJPath;</div>
+<div class="line"><span class="lineno">  124</span>            pr.StartInfo.Arguments = <span class="stringliteral">&quot;-macro &quot;</span> + file + <span class="stringliteral">&quot; &quot;</span> + param;</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>            pr.Start();</div>
+<div class="line"><span class="lineno">  127</span>            processes.Add(pr);</div>
+<div class="line"><span class="lineno">  128</span>            Recorder.AddLine(<span class="stringliteral">&quot;ImageJ.RunMacro(&quot;</span> + file + <span class="stringliteral">&quot;,&quot;</span> + <span class="charliteral">&#39;&quot;&#39;</span> + param + <span class="charliteral">&#39;&quot;&#39;</span> + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  129</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_html_ae17c52ed404d512bba4aaf2b0957cbe5"><div class="ttname"><a href="class_bio_imager_1_1_image_j.html#ae17c52ed404d512bba4aaf2b0957cbe5">BioImager.ImageJ.Initialize</a></div><div class="ttdeci">static bool Initialize()</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00247">ImageJ.cs:247</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_image_j_8cs_source.html#l00247">BioImager.ImageJ.Initialize()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_imager_8cs_source.html#l01338">BioImager.Imager.PerformFunction()</a>.</p>
 
 </div>
 </div>
@@ -328,6 +364,64 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value is the result of the last statement in the script. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00189">189</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  190</span>        {</div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">if</span> (!Initialized)</div>
+<div class="line"><span class="lineno">  192</span>            {</div>
+<div class="line"><span class="lineno">  193</span>                <a class="code hl_function" href="class_bio_imager_1_1_image_j.html#ae17c52ed404d512bba4aaf2b0957cbe5">Initialize</a>();</div>
+<div class="line"><span class="lineno">  194</span>            }</div>
+<div class="line"><span class="lineno">  195</span>            <span class="keywordtype">string</span> filename = <span class="stringliteral">&quot;&quot;</span>;</div>
+<div class="line"><span class="lineno">  196</span>            <span class="keywordtype">string</span> dir = Path.GetDirectoryName(ImageView.SelectedImage.file);</div>
+<div class="line"><span class="lineno">  197</span> </div>
+<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.ID.EndsWith(<span class="stringliteral">&quot;.ome.tif&quot;</span>))</div>
+<div class="line"><span class="lineno">  199</span>            {</div>
+<div class="line"><span class="lineno">  200</span>                filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);</div>
+<div class="line"><span class="lineno">  201</span>                filename = filename.Remove(filename.Length - 4, 4);</div>
+<div class="line"><span class="lineno">  202</span>            }</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  204</span>                filename = Path.GetFileNameWithoutExtension(ImageView.SelectedImage.ID);</div>
+<div class="line"><span class="lineno">  205</span>            <span class="keywordtype">string</span> file = dir + <span class="stringliteral">&quot;\\&quot;</span> + filename + <span class="stringliteral">&quot;-temp&quot;</span> + <span class="stringliteral">&quot;.ome.tif&quot;</span>;</div>
+<div class="line"><span class="lineno">  206</span>            file = file.Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>);</div>
+<div class="line"><span class="lineno">  207</span>            <span class="keywordtype">string</span> st =</div>
+<div class="line"><span class="lineno">  208</span>            <span class="stringliteral">&quot;run(\&quot;Bio-Formats Importer\&quot;, \&quot;open=\&quot; + getArgument + \&quot; autoscale color_mode=Default open_all_series display_rois rois_import=[ROI manager] view=Hyperstack stack_order=XYCZT\&quot;); &quot;</span> + con +</div>
+<div class="line"><span class="lineno">  209</span>            <span class="stringliteral">&quot;run(\&quot;Bio-Formats Exporter\&quot;, \&quot;save=&quot;</span> + file + <span class="stringliteral">&quot; export compression=Uncompressed\&quot;); &quot;</span> +</div>
+<div class="line"><span class="lineno">  210</span>            <span class="stringliteral">&quot;dir = getDir(\&quot;startup\&quot;); &quot;</span> +</div>
+<div class="line"><span class="lineno">  211</span>            <span class="stringliteral">&quot;File.saveString(\&quot;done\&quot;, dir + \&quot;/done.txt\&quot;);&quot;</span>;</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keywordflow">if</span>(bioformats)</div>
+<div class="line"><span class="lineno">  213</span>                st =</div>
+<div class="line"><span class="lineno">  214</span>                <span class="stringliteral">&quot;open(getArgument); &quot;</span> + con +</div>
+<div class="line"><span class="lineno">  215</span>                <span class="stringliteral">&quot;run(\&quot;Bio-Formats Exporter\&quot;, \&quot;save=&quot;</span> + file + <span class="stringliteral">&quot; export compression=Uncompressed\&quot;); &quot;</span> +</div>
+<div class="line"><span class="lineno">  216</span>                <span class="stringliteral">&quot;dir = getDir(\&quot;startup\&quot;); &quot;</span> +</div>
+<div class="line"><span class="lineno">  217</span>                <span class="stringliteral">&quot;File.saveString(\&quot;done\&quot;, dir + \&quot;/done.txt\&quot;);&quot;</span>;</div>
+<div class="line"><span class="lineno">  218</span>            <span class="comment">//We save the image as a temp image as otherwise imagej won&#39;t export due to file access error.</span></div>
+<div class="line"><span class="lineno">  219</span>            <a class="code hl_function" href="class_bio_imager_1_1_image_j.html#a88988cb11e1887bc2f071917b24749f9">RunString</a>(st, ImageView.SelectedImage.file, headless);</div>
+<div class="line"><span class="lineno">  220</span> </div>
+<div class="line"><span class="lineno">  221</span>            <span class="keywordflow">if</span> (!File.Exists(file))</div>
+<div class="line"><span class="lineno">  222</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  223</span> </div>
+<div class="line"><span class="lineno">  224</span>            <span class="keywordtype">string</span> ffile = dir + <span class="stringliteral">&quot;/&quot;</span> + filename + <span class="stringliteral">&quot;.ome.tif&quot;</span>;</div>
+<div class="line"><span class="lineno">  225</span>            File.Delete(ffile);</div>
+<div class="line"><span class="lineno">  226</span>            File.Copy(file, ffile);</div>
+<div class="line"><span class="lineno">  227</span>            File.Delete(file);</div>
+<div class="line"><span class="lineno">  228</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.Filename != filename + <span class="stringliteral">&quot;.ome.tif&quot;</span> || ImageView.SelectedImage.Filename != filename + <span class="stringliteral">&quot;.tif&quot;</span>)</div>
+<div class="line"><span class="lineno">  229</span>            {</div>
+<div class="line"><span class="lineno">  230</span>                <span class="keywordflow">if</span> (ImageView.SelectedImage.filename.EndsWith(<span class="stringliteral">&quot;.tif&quot;</span>))</div>
+<div class="line"><span class="lineno">  231</span>                    BioImage.OpenFile(ffile, newTab);</div>
+<div class="line"><span class="lineno">  232</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  233</span>                    BioImage.OpenFile(ffile, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  234</span>            }</div>
+<div class="line"><span class="lineno">  235</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  236</span>            {</div>
+<div class="line"><span class="lineno">  237</span>                App.viewer.Images[App.viewer.SelectedIndex] = BioImage.OpenFile(ffile, 0, <span class="keyword">false</span>, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  238</span>            }</div>
+<div class="line"><span class="lineno">  239</span>            App.viewer.UpdateImage();</div>
+<div class="line"><span class="lineno">  240</span>            App.viewer.UpdateView();</div>
+<div class="line"><span class="lineno">  241</span>            Recorder.AddLine(<span class="stringliteral">&quot;RunOnImage(\&quot;&quot;</span> + con + <span class="stringliteral">&quot;\&quot;,&quot;</span> + headless + <span class="stringliteral">&quot;,&quot;</span> + onTab + <span class="stringliteral">&quot;,&quot;</span> + newTab + <span class="stringliteral">&quot;);&quot;</span>);</div>
+<div class="line"><span class="lineno">  242</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_image_j_html_a88988cb11e1887bc2f071917b24749f9"><div class="ttname"><a href="class_bio_imager_1_1_image_j.html#a88988cb11e1887bc2f071917b24749f9">BioImager.ImageJ.RunString</a></div><div class="ttdeci">static void RunString(string con, string param, bool headless)</div><div class="ttdef"><b>Definition:</b> <a href="_image_j_8cs_source.html#l00137">ImageJ.cs:137</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_image_j_8cs_source.html#l00247">BioImager.ImageJ.Initialize()</a>, <a class="el" href="_bio_8cs_source.html#l04642">BioImager.BioImage.OpenFile()</a>, <a class="el" href="_image_j_8cs_source.html#l00137">BioImager.ImageJ.RunString()</a>, <a class="el" href="_image_view_8cs_source.html#l00216">BioImager.ImageView.SelectedIndex</a>, <a class="el" href="_image_view_8cs_source.html#l01405">BioImager.ImageView.UpdateImage()</a>, and <a class="el" href="_image_view_8cs_source.html#l01023">BioImager.ImageView.UpdateView()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_function_form_8cs_source.html#l00586">BioImager.Function.PerformFunction()</a>.</p>
 
 </div>
 </div>
@@ -382,6 +476,50 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The macro is returning a string. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00137">137</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  138</span>        {</div>
+<div class="line"><span class="lineno">  139</span>            <span class="keywordflow">if</span> (!Initialized)</div>
+<div class="line"><span class="lineno">  140</span>            {</div>
+<div class="line"><span class="lineno">  141</span>                <a class="code hl_function" href="class_bio_imager_1_1_image_j.html#ae17c52ed404d512bba4aaf2b0957cbe5">Initialize</a>();</div>
+<div class="line"><span class="lineno">  142</span>            }</div>
+<div class="line"><span class="lineno">  143</span>            Process pr = <span class="keyword">new</span> Process();</div>
+<div class="line"><span class="lineno">  144</span>            pr.StartInfo.FileName = ImageJPath;</div>
+<div class="line"><span class="lineno">  145</span>            pr.StartInfo.CreateNoWindow = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  146</span>            <span class="keywordtype">string</span> te = rng.Next(0, 9999999).ToString();</div>
+<div class="line"><span class="lineno">  147</span>            <span class="keywordtype">string</span> p = Environment.CurrentDirectory + <span class="stringliteral">&quot;\\&quot;</span> + te + <span class="stringliteral">&quot;.txt&quot;</span>;</div>
+<div class="line"><span class="lineno">  148</span>            p.Replace(<span class="stringliteral">&quot;/&quot;</span>, <span class="stringliteral">&quot;\\&quot;</span>);</div>
+<div class="line"><span class="lineno">  149</span>            File.WriteAllText(p,con);</div>
+<div class="line"><span class="lineno">  150</span>            <span class="keywordflow">if</span>(headless)</div>
+<div class="line"><span class="lineno">  151</span>                pr.StartInfo.Arguments = <span class="stringliteral">&quot;--headless -macro &quot;</span> + p + <span class="stringliteral">&quot; &quot;</span> + param;</div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  153</span>                pr.StartInfo.Arguments = <span class="stringliteral">&quot;-macro &quot;</span> + p + <span class="stringliteral">&quot; &quot;</span> + param;</div>
+<div class="line"><span class="lineno">  154</span>            pr.Start();</div>
+<div class="line"><span class="lineno">  155</span>            File.Delete(Path.GetDirectoryName(ImageJPath) + <span class="stringliteral">&quot;/done.txt&quot;</span>);</div>
+<div class="line"><span class="lineno">  156</span>            processes.Add(pr);</div>
+<div class="line"><span class="lineno">  157</span>            <span class="keywordflow">do</span></div>
+<div class="line"><span class="lineno">  158</span>            {</div>
+<div class="line"><span class="lineno">  159</span>                <span class="keywordflow">if</span> (File.Exists(Path.GetDirectoryName(ImageJPath) + <span class="stringliteral">&quot;/done.txt&quot;</span>))</div>
+<div class="line"><span class="lineno">  160</span>                {</div>
+<div class="line"><span class="lineno">  161</span>                    <span class="keywordflow">do</span></div>
+<div class="line"><span class="lineno">  162</span>                    {</div>
+<div class="line"><span class="lineno">  163</span>                        <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  164</span>                        {</div>
+<div class="line"><span class="lineno">  165</span>                            File.Delete(Path.GetDirectoryName(ImageJPath) + <span class="stringliteral">&quot;/done.txt&quot;</span>);</div>
+<div class="line"><span class="lineno">  166</span>                        }</div>
+<div class="line"><span class="lineno">  167</span>                        <span class="keywordflow">catch</span> (Exception)</div>
+<div class="line"><span class="lineno">  168</span>                        {</div>
+<div class="line"><span class="lineno">  169</span>                        </div>
+<div class="line"><span class="lineno">  170</span>                        }</div>
+<div class="line"><span class="lineno">  171</span>                    } <span class="keywordflow">while</span> (File.Exists(Path.GetDirectoryName(ImageJPath) + <span class="stringliteral">&quot;/done.txt&quot;</span>));</div>
+<div class="line"><span class="lineno">  172</span>                    pr.Kill();</div>
+<div class="line"><span class="lineno">  173</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  174</span>                }</div>
+<div class="line"><span class="lineno">  175</span>            } <span class="keywordflow">while</span> (!pr.HasExited);</div>
+<div class="line"><span class="lineno">  176</span>            File.Delete(p);</div>
+<div class="line"><span class="lineno">  177</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_image_j_8cs_source.html#l00247">BioImager.ImageJ.Initialize()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="_image_j_8cs_source.html#l00189">BioImager.ImageJ.RunOnImage()</a>.</p>
 
 </div>
 </div>
@@ -411,6 +549,26 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value is a boolean. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00263">263</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  264</span>        {</div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">if</span> (Properties.Settings.Default.ImageJPath == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  266</span>            {</div>
+<div class="line"><span class="lineno">  267</span>                MessageBox.Show(<span class="stringliteral">&quot;ImageJ path not set. Set the ImageJ executable location.&quot;</span>);</div>
+<div class="line"><span class="lineno">  268</span>                OpenFileDialog file = <span class="keyword">new</span> OpenFileDialog();</div>
+<div class="line"><span class="lineno">  269</span>                file.Title = <span class="stringliteral">&quot;Set the ImageJ executable location.&quot;</span>;</div>
+<div class="line"><span class="lineno">  270</span>                <span class="keywordflow">if</span> (file.ShowDialog() != DialogResult.OK)</div>
+<div class="line"><span class="lineno">  271</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  272</span>                Properties.Settings.Default.ImageJPath = file.FileName;</div>
+<div class="line"><span class="lineno">  273</span>                Properties.Settings.Default.Save();</div>
+<div class="line"><span class="lineno">  274</span>                ImageJPath = file.FileName;</div>
+<div class="line"><span class="lineno">  275</span>                init = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  276</span>                file.Dispose();</div>
+<div class="line"><span class="lineno">  277</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  278</span>            }</div>
+<div class="line"><span class="lineno">  279</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  280</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  281</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="_image_j_8cs_source.html#l00247">BioImager.ImageJ.Initialize()</a>.</p>
 
 </div>
 </div>
@@ -509,7 +667,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_image_j_8cs_source.html#l00108">108</a> of file <a class="el" href="_image_j_8cs_source.html">ImageJ.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  108</span>{ <span class="keyword">get</span> { <span class="keywordflow">return</span> init; } <span class="keyword">private</span> <span class="keyword">set</span> { } }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

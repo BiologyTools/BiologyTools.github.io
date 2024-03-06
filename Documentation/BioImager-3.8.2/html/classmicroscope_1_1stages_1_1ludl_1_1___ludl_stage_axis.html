@@ -222,7 +222,17 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00274">274</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  274</span>    <span class="keyword">def </span>__init__(self, dev_conn: _LudlController, axis: str) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  275</span>        super().__init__()</div>
+<div class="line"><span class="lineno">  276</span>        self._dev_conn = dev_conn</div>
+<div class="line"><span class="lineno">  277</span>        self._axis = axis</div>
+<div class="line"><span class="lineno">  278</span>        <span class="comment"># not a good solution as min/max are used to build the stage map in</span></div>
+<div class="line"><span class="lineno">  279</span>        <span class="comment"># mosaic etc... Maybe we just need to know it! </span></div>
+<div class="line"><span class="lineno">  280</span>        self.min_limit = 0.0</div>
+<div class="line"><span class="lineno">  281</span>        self.max_limit = 100000.0</div>
+<div class="line"><span class="lineno">  282</span>        self.set_speed(100000)</div>
+<div class="line"><span class="lineno">  283</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -253,6 +263,26 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00313">313</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  313</span>    <span class="keyword">def </span>find_limits(self,speed = 100000):</div>
+<div class="line"><span class="lineno">  314</span>        <span class="comment">#drive axis to minimum pos, zero and then drive to max position</span></div>
+<div class="line"><span class="lineno">  315</span>        self._dev_conn.move_to_limit(self._axis,-speed)</div>
+<div class="line"><span class="lineno">  316</span>        <span class="comment"># spin moves dont set the status info need to query the motor</span></div>
+<div class="line"><span class="lineno">  317</span>        <span class="comment"># status byte</span></div>
+<div class="line"><span class="lineno">  318</span>        self._dev_conn.wait_for_motor_stop(self._axis)</div>
+<div class="line"><span class="lineno">  319</span>        <span class="comment"># reset positon to zero.</span></div>
+<div class="line"><span class="lineno">  320</span>        print(self.position)</div>
+<div class="line"><span class="lineno">  321</span>        self._dev_conn.reset_position(self._axis)</div>
+<div class="line"><span class="lineno">  322</span>        self.min_limit=0.0</div>
+<div class="line"><span class="lineno">  323</span>        self._dev_conn.homed = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  324</span>        <span class="comment"># move to positive limit</span></div>
+<div class="line"><span class="lineno">  325</span>        self._dev_conn.move_to_limit(self._axis,speed)</div>
+<div class="line"><span class="lineno">  326</span>        self._dev_conn.wait_for_motor_stop(self._axis)</div>
+<div class="line"><span class="lineno">  327</span>        self.max_limit=self.position</div>
+<div class="line"><span class="lineno">  328</span>        <span class="keywordflow">return</span> self.limits</div>
+<div class="line"><span class="lineno">  329</span> </div>
+<div class="line"><span class="lineno">  330</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -273,7 +303,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00305">305</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  305</span>    <span class="keyword">def </span>home(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  306</span>        self.find_limits()</div>
+<div class="line"><span class="lineno">  307</span>        self.move_to(self.max_limit/2)</div>
+<div class="line"><span class="lineno">  308</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a7f17397b728c325edec168527bee8fd7" name="a7f17397b728c325edec168527bee8fd7"></a>
@@ -295,6 +329,14 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a538a855a503270a2f367d1ba6e9b0274">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00298">298</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  298</span>    <span class="keyword">def </span>limits(self) -&gt; microscope.AxisLimits:</div>
+<div class="line"><span class="lineno">  299</span>        <span class="keywordflow">return</span> <a class="code hl_class" href="classmicroscope_1_1_axis_limits.html">microscope.AxisLimits</a>(lower=self.min_limit, upper=self.max_limit)</div>
+<div class="line"><span class="lineno">  300</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_axis_limits_html"><div class="ttname"><a href="classmicroscope_1_1_axis_limits.html">microscope.AxisLimits</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00130">__init__.py:130</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00303">microscope.controllers.zaber._ZaberStageAxis._axis</a>, <a class="el" href="ludl_8py_source.html#l00277">microscope.stages.ludl._LudlStageAxis._axis</a>, <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00313">microscope.stages.ludl._LudlStageAxis.find_limits()</a>, <a class="el" href="abc_8py_source.html#l01382">microscope.abc.StageAxis.limits()</a>, <a class="el" href="abc_8py_source.html#l01515">microscope.abc.Stage.limits()</a>, <a class="el" href="zaber_8py_source.html#l00321">microscope.controllers.zaber._ZaberStageAxis.limits()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00417">microscope.simulators.SimulatedStageAxis.limits()</a>, <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>, <a class="el" href="ludl_8py_source.html#l00281">microscope.stages.ludl._LudlStageAxis.max_limit</a>, <a class="el" href="ludl_8py_source.html#l00280">microscope.stages.ludl._LudlStageAxis.min_limit</a>, <a class="el" href="abc_8py_source.html#l01370">microscope.abc.StageAxis.move_to()</a>, <a class="el" href="zaber_8py_source.html#l00309">microscope.controllers.zaber._ZaberStageAxis.move_to()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00423">microscope.simulators.SimulatedStageAxis.move_to()</a>, <a class="el" href="ludl_8py_source.html#l00287">microscope.stages.ludl._LudlStageAxis.move_to()</a>, <a class="el" href="abc_8py_source.html#l01561">microscope.abc.Stage.move_to()</a>, <a class="el" href="zaber_8py_source.html#l00365">microscope.controllers.zaber._ZaberStage.move_to()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00477">microscope.simulators.SimulatedStage.move_to()</a>, <a class="el" href="ludl_8py_source.html#l00375">microscope.stages.ludl._LudlStage.move_to()</a>, <a class="el" href="linkam_8py_source.html#l01338">microscope.stages.linkam._LinkamMDSMixin.move_to()</a>, <a class="el" href="_d_color_shader_8cs_source.html#l00016">BioImager.DColorShader.DVertex.position</a>, <a class="el" href="abc_8py_source.html#l01319">microscope.abc.FilterWheel.position</a>, <a class="el" href="abc_8py_source.html#l01376">microscope.abc.StageAxis.position()</a>, <a class="el" href="abc_8py_source.html#l01500">microscope.abc.Stage.position()</a>, <a class="el" href="zaber_8py_source.html#l00314">microscope.controllers.zaber._ZaberStageAxis.position()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00413">microscope.simulators.SimulatedStageAxis.position()</a>, <a class="el" href="ludl_8py_source.html#l00291">microscope.stages.ludl._LudlStageAxis.position()</a>, <a class="el" href="_microscope_8cs_source.html#l00541">BioImager.TLShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00583">BioImager.HXPShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00621">BioImager.RLShutter.position</a>, <a class="el" href="_microscope_8cs_source.html#l00659">BioImager.LightSource.position</a>, <a class="el" href="_microscope_8cs_source.html#l00729">BioImager.FilterWheel.position</a>, <a class="el" href="atmcd_8py_source.html#l01332">microscope.cameras.atmcd.ReadoutMode.speed</a>, and <a class="el" href="ludl_8py_source.html#l00310">microscope.stages.ludl._LudlStageAxis.speed</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -327,6 +369,11 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a4c2f896778b7c7d9717b48f22f06c95a">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00284">284</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  284</span>    <span class="keyword">def </span>move_by(self, delta: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  285</span>        self._dev_conn.move_by_relative_position(self._axis, int(delta))</div>
+<div class="line"><span class="lineno">  286</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00303">microscope.controllers.zaber._ZaberStageAxis._axis</a>, <a class="el" href="ludl_8py_source.html#l00277">microscope.stages.ludl._LudlStageAxis._axis</a>, <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
 
 </div>
 </div>
@@ -359,6 +406,13 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a14b522d41fec9cc65afb5a8297ead8c1">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00287">287</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  287</span>    <span class="keyword">def </span>move_to(self, pos: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  288</span>        self._dev_conn.move_to_absolute_position(self._axis, int(pos))</div>
+<div class="line"><span class="lineno">  289</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00303">microscope.controllers.zaber._ZaberStageAxis._axis</a>, <a class="el" href="ludl_8py_source.html#l00277">microscope.stages.ludl._LudlStageAxis._axis</a>, <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00420">microscope.simulators.SimulatedStageAxis.move_by()</a>.</p>
 
 </div>
 </div>
@@ -381,6 +435,16 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_stage_axis.html#a9bd5dbb04c2cb24282ff839d82e2acf3">microscope.abc.StageAxis</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00291">291</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  291</span>    <span class="keyword">def </span>position(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  292</span>        <span class="keywordflow">if</span> self._dev_conn.is_busy():</div>
+<div class="line"><span class="lineno">  293</span>            _logger.warning(<span class="stringliteral">&quot;querying stage axis position but device is busy&quot;</span>)</div>
+<div class="line"><span class="lineno">  294</span>            self._dev_conn.wait_until_idle()</div>
+<div class="line"><span class="lineno">  295</span>        <span class="keywordflow">return</span> float(self._dev_conn.get_absolute_position(self._axis))</div>
+<div class="line"><span class="lineno">  296</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="zaber_8py_source.html#l00303">microscope.controllers.zaber._ZaberStageAxis._axis</a>, <a class="el" href="ludl_8py_source.html#l00277">microscope.stages.ludl._LudlStageAxis._axis</a>, <a class="el" href="zaber_8py_source.html#l00302">microscope.controllers.zaber._ZaberStageAxis._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00332">microscope.controllers.zaber._ZaberStage._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00381">microscope.controllers.zaber._ZaberFilterWheel._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00429">microscope.controllers.zaber._ZaberLED._dev_conn</a>, <a class="el" href="zaber_8py_source.html#l00493">microscope.controllers.zaber._ZaberLEDController._dev_conn</a>, <a class="el" href="ludl_8py_source.html#l00276">microscope.stages.ludl._LudlStageAxis._dev_conn</a>, and <a class="el" href="ludl_8py_source.html#l00337">microscope.stages.ludl._LudlStage._dev_conn</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01311">microscope.abc.FilterWheel.get_num_positions()</a>, and <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>
@@ -411,7 +475,11 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00309">309</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  309</span>    <span class="keyword">def </span>set_speed(self, speed: int) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  310</span>        self.speed = speed</div>
+<div class="line"><span class="lineno">  311</span>        self._dev_conn.set_speed(self._axis, speed)</div>
+<div class="line"><span class="lineno">  312</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -429,6 +497,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00281">281</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
+
 </div>
 </div>
 <a id="a0273d79dff0e810305675b45a48c9299" name="a0273d79dff0e810305675b45a48c9299"></a>
@@ -445,6 +515,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00280">280</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
+
 </div>
 </div>
 <a id="a9dffc71caa3ad46e8e7b74462c43491b" name="a9dffc71caa3ad46e8e7b74462c43491b"></a>
@@ -460,6 +532,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="ludl_8py_source.html#l00310">310</a> of file <a class="el" href="ludl_8py_source.html">ludl.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="ludl_8py_source.html#l00298">microscope.stages.ludl._LudlStageAxis.limits()</a>.</p>
 
 </div>
 </div>

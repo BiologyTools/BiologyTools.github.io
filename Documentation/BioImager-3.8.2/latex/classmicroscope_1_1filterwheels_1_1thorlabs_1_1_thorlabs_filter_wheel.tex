@@ -57,6 +57,56 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1filterwheels_1_1thorlabs_1_
 Definition at line \mbox{\hyperlink{thorlabs_8py_source_l00037}{37}} of file \mbox{\hyperlink{thorlabs_8py_source}{thorlabs.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00037     \textcolor{keyword}{def }\_\_init\_\_(self, com, baud=115200, timeout=2.0, **kwargs):}
+\DoxyCodeLine{00038         \textcolor{stringliteral}{"{}"{}"{}Create ThorlabsFilterWheel}}
+\DoxyCodeLine{00039 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00040 \textcolor{stringliteral}{        :param com: COM port}}
+\DoxyCodeLine{00041 \textcolor{stringliteral}{        :param baud: baud rate}}
+\DoxyCodeLine{00042 \textcolor{stringliteral}{        :param timeout: serial timeout}}
+\DoxyCodeLine{00043 \textcolor{stringliteral}{        "{}"{}"{}}}
+\DoxyCodeLine{00044 \textcolor{stringliteral}{        self.eol = "{}\(\backslash\)r"{}}}
+\DoxyCodeLine{00045         rawSerial = serial.Serial(}
+\DoxyCodeLine{00046             port=com,}
+\DoxyCodeLine{00047             baudrate=baud,}
+\DoxyCodeLine{00048             timeout=timeout,}
+\DoxyCodeLine{00049             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00050             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00051             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00052             xonxoff=0,}
+\DoxyCodeLine{00053         )}
+\DoxyCodeLine{00054         \textcolor{comment}{\# The Thorlabs controller serial implementation is strange.}}
+\DoxyCodeLine{00055         \textcolor{comment}{\# Generally, it uses \(\backslash\)r as EOL, but error messages use \(\backslash\)n.}}
+\DoxyCodeLine{00056         \textcolor{comment}{\# A readline after sending a 'pos?\(\backslash\)r' command always times out,}}
+\DoxyCodeLine{00057         \textcolor{comment}{\# but returns a string terminated by a newline.}}
+\DoxyCodeLine{00058         \textcolor{comment}{\# We use TextIOWrapper with newline=None to perform EOL translation}}
+\DoxyCodeLine{00059         \textcolor{comment}{\# inbound, but must explicitly append \(\backslash\)r to outgoing commands.}}
+\DoxyCodeLine{00060         \textcolor{comment}{\# The TextIOWrapper also deals with conversion between unicode}}
+\DoxyCodeLine{00061         \textcolor{comment}{\# and bytes.}}
+\DoxyCodeLine{00062         self.connection = io.TextIOWrapper(}
+\DoxyCodeLine{00063             rawSerial,}
+\DoxyCodeLine{00064             newline=\textcolor{keywordtype}{None},}
+\DoxyCodeLine{00065             line\_buffering=\textcolor{keyword}{True},  \textcolor{comment}{\# flush on write}}
+\DoxyCodeLine{00066             write\_through=\textcolor{keyword}{True},  \textcolor{comment}{\# write out immediately}}
+\DoxyCodeLine{00067         )}
+\DoxyCodeLine{00068         \textcolor{comment}{\# A lock for the connection.  We should probably be using}}
+\DoxyCodeLine{00069         \textcolor{comment}{\# SharedSerial (maybe change it to SharedIO, and have it}}
+\DoxyCodeLine{00070         \textcolor{comment}{\# accept any IOBase implementation).}}
+\DoxyCodeLine{00071         self.\_lock = threading.RLock()}
+\DoxyCodeLine{00072         position\_count = int(self.\_send\_command(\textcolor{stringliteral}{"{}pcount?"{}}))}
+\DoxyCodeLine{00073         super().\_\_init\_\_(positions=position\_count, **kwargs)}
+\DoxyCodeLine{00074 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{__utils_8py_source_l00116}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+lock}}, \mbox{\hyperlink{prior_8py_source_l00061}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+lock}}, \mbox{\hyperlink{zaber_8py_source_l00134}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+lock}}, \mbox{\hyperlink{aurox_8py_source_l00103}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00071}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+lock}}, \mbox{\hyperlink{ludl_8py_source_l00109}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+lock}}, \mbox{\hyperlink{thorlabs_8py_source_l00102}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{aurox_8py_source_l00113}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+send\+\_\+command()}}, \mbox{\hyperlink{abc_8py_source_l01013}{microscope.\+abc.\+Serial\+Device\+Mixin.\+connection}}, \mbox{\hyperlink{thorlabs_8py_source_l00062}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+connection}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00049}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+connection}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00046}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+connection}}, \mbox{\hyperlink{lights_2obis_8py_source_l00036}{microscope.\+lights.\+obis.\+Obis\+Laser.\+connection}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00060}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+connection}}, \mbox{\hyperlink{thorlabs_8py_source_l00044}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+eol}}, \mbox{\hyperlink{mock__devices_8py_source_l00121}{microscope.\+testsuite.\+mock\+\_\+devices.\+Coherent\+Sapphire\+Laser\+Mock.\+eol}}, \mbox{\hyperlink{mock__devices_8py_source_l00319}{microscope.\+testsuite.\+mock\+\_\+devices.\+Cobolt\+Laser\+Mock.\+eol}}, \mbox{\hyperlink{mock__devices_8py_source_l00477}{microscope.\+testsuite.\+mock\+\_\+devices.\+Omicron\+Deepstar\+Laser\+Mock.\+eol}}, and \mbox{\hyperlink{test__devices_8py_source_l00052}{microscope.\+testsuite.\+test\+\_\+devices.\+Test\+Serial\+Mock.\+Serial.\+eol}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a30c5d26ccb38a41b10bc39bdac4c46d2}\label{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a30c5d26ccb38a41b10bc39bdac4c46d2}} 
@@ -69,6 +119,10 @@ Definition at line \mbox{\hyperlink{thorlabs_8py_source_l00037}{37}} of file \mb
 
 Definition at line \mbox{\hyperlink{thorlabs_8py_source_l00062}{62}} of file \mbox{\hyperlink{thorlabs_8py_source}{thorlabs.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, and \mbox{\hyperlink{abc_8py_source_l01030}{microscope.\+abc.\+Serial\+Device\+Mixin.\+lock\+\_\+comms()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a486b94bf9dbb6f18cc4886a4dbea86cd}\label{classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel_a486b94bf9dbb6f18cc4886a4dbea86cd}} 
 \index{microscope.filterwheels.thorlabs.ThorlabsFilterWheel@{microscope.filterwheels.thorlabs.ThorlabsFilterWheel}!eol@{eol}}
 \index{eol@{eol}!microscope.filterwheels.thorlabs.ThorlabsFilterWheel@{microscope.filterwheels.thorlabs.ThorlabsFilterWheel}}
@@ -78,6 +132,10 @@ Definition at line \mbox{\hyperlink{thorlabs_8py_source_l00062}{62}} of file \mb
 
 
 Definition at line \mbox{\hyperlink{thorlabs_8py_source_l00044}{44}} of file \mbox{\hyperlink{thorlabs_8py_source}{thorlabs.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 
 

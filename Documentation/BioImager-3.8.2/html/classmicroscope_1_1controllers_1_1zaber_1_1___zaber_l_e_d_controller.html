@@ -243,7 +243,28 @@ see the `controller specific manual online
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00489">489</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  491</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  492</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  493</span>        self._dev_conn = _ZaberDeviceConnection(conn, device_address)</div>
+<div class="line"><span class="lineno">  494</span>        self._leds: typing.Dict[str, _ZaberLED] = {}</div>
+<div class="line"><span class="lineno">  495</span> </div>
+<div class="line"><span class="lineno">  496</span>        all_lamps = self._dev_conn.command(b<span class="stringliteral">&quot;get lamp.status&quot;</span>).response.split()</div>
+<div class="line"><span class="lineno">  497</span>        <span class="comment"># We get one status per peripheral connection.  Documentation</span></div>
+<div class="line"><span class="lineno">  498</span>        <span class="comment"># states that a value of &quot;0&quot; means unplugged but with X-LCA4,</span></div>
+<div class="line"><span class="lineno">  499</span>        <span class="comment"># firmware version 7.13 and build 8074, we get NA for</span></div>
+<div class="line"><span class="lineno">  500</span>        <span class="comment"># unplugged.  Also not sure how 0 (unplugged) would differ</span></div>
+<div class="line"><span class="lineno">  501</span>        <span class="comment"># from 5 (peripheral not connected).  So we count as valid</span></div>
+<div class="line"><span class="lineno">  502</span>        <span class="comment"># those with status 1 (turned off), 2 (turned on), and 3</span></div>
+<div class="line"><span class="lineno">  503</span>        <span class="comment"># (fault).</span></div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordflow">for</span> i, lamp_state <span class="keywordflow">in</span> enumerate(all_lamps, start=1):</div>
+<div class="line"><span class="lineno">  505</span>            <span class="keywordflow">if</span> lamp_state <span class="keywordflow">in</span> [b<span class="stringliteral">&quot;1&quot;</span>, b<span class="stringliteral">&quot;2&quot;</span>, b<span class="stringliteral">&quot;3&quot;</span>]:</div>
+<div class="line"><span class="lineno">  506</span>                <span class="comment"># The labels on the controller are LED1, LED2, etc, so</span></div>
+<div class="line"><span class="lineno">  507</span>                <span class="comment"># use the same for key.</span></div>
+<div class="line"><span class="lineno">  508</span>                self._leds[<span class="stringliteral">&quot;LED%d&quot;</span> % i] = _ZaberLED(self._dev_conn, i)</div>
+<div class="line"><span class="lineno">  509</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  510</span>                _logger.info(<span class="stringliteral">&quot;no LED %d, status is %s&quot;</span>, i, lamp_state.decode())</div>
+<div class="line"><span class="lineno">  511</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -266,6 +287,12 @@ see the `controller specific manual online
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_controller.html#a514852dc8a72c9cf2f0277660a32c555">microscope.abc.Controller</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="zaber_8py_source.html#l00513">513</a> of file <a class="el" href="zaber_8py_source.html">zaber.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  513</span>    <span class="keyword">def </span>devices(self) -&gt; typing.Dict[str, _ZaberLED]:</div>
+<div class="line"><span class="lineno">  514</span>        <span class="keywordflow">return</span> self._leds</div>
+<div class="line"><span class="lineno">  515</span> </div>
+<div class="line"><span class="lineno">  516</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l01342">microscope.abc.Controller.devices()</a>.</p>
 
 </div>
 </div>

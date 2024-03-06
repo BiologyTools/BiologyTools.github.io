@@ -340,7 +340,123 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00214">214</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  214</span>    <span class="keyword">def </span>__init__(self, index=0, **kwargs):</div>
+<div class="line"><span class="lineno">  215</span>        super().__init__(index=index, **kwargs)</div>
+<div class="line"><span class="lineno">  216</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> AndorSDK3.SDK_INITIALIZED:</div>
+<div class="line"><span class="lineno">  217</span>            SDK3.InitialiseLibrary()</div>
+<div class="line"><span class="lineno">  218</span>        self.handle = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  219</span>        <span class="comment"># self._sdk3cam = SDK3Camera(self._index)</span></div>
+<div class="line"><span class="lineno">  220</span>        <span class="comment"># SDK3Camera.__init__(self, self._index)</span></div>
+<div class="line"><span class="lineno">  221</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  222</span>            <span class="stringliteral">&quot;use_callback&quot;</span>,</div>
+<div class="line"><span class="lineno">  223</span>            <span class="stringliteral">&quot;bool&quot;</span>,</div>
+<div class="line"><span class="lineno">  224</span>            <span class="keyword">lambda</span>: self._using_callback,</div>
+<div class="line"><span class="lineno">  225</span>            self._enable_callback,</div>
+<div class="line"><span class="lineno">  226</span>            <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno">  227</span>        )</div>
+<div class="line"><span class="lineno">  228</span>        <span class="comment"># Define features with local style. The SDK treats parameter names</span></div>
+<div class="line"><span class="lineno">  229</span>        <span class="comment"># without regard to case, so we just need to remove the underscores</span></div>
+<div class="line"><span class="lineno">  230</span>        <span class="comment"># when connecting properties to SDK calls. We define all possible</span></div>
+<div class="line"><span class="lineno">  231</span>        <span class="comment"># features here; they will be removed if they are not implemented</span></div>
+<div class="line"><span class="lineno">  232</span>        <span class="comment"># on the camera.</span></div>
+<div class="line"><span class="lineno">  233</span>        self._accumulate_count = ATInt()</div>
+<div class="line"><span class="lineno">  234</span>        self._acquisition_start = ATCommand()</div>
+<div class="line"><span class="lineno">  235</span>        self._acquisition_stop = ATCommand()</div>
+<div class="line"><span class="lineno">  236</span>        self._alternating_readout_direction = ATBool()</div>
+<div class="line"><span class="lineno">  237</span>        self._aoi_binning = ATEnum()</div>
+<div class="line"><span class="lineno">  238</span>        self._aoi_height = ATInt()</div>
+<div class="line"><span class="lineno">  239</span>        self._aoi_left = ATInt()</div>
+<div class="line"><span class="lineno">  240</span>        self._aoi_top = ATInt()</div>
+<div class="line"><span class="lineno">  241</span>        self._aoi_width = ATInt()</div>
+<div class="line"><span class="lineno">  242</span>        self._aoi_stride = ATInt()</div>
+<div class="line"><span class="lineno">  243</span>        self._auxiliary_out_source = ATEnum()</div>
+<div class="line"><span class="lineno">  244</span>        self._aux_out_source_two = ATEnum()</div>
+<div class="line"><span class="lineno">  245</span>        self._baseline_level = ATInt()</div>
+<div class="line"><span class="lineno">  246</span>        self._bit_depth = ATEnum()</div>
+<div class="line"><span class="lineno">  247</span>        self._buffer_overflow_event = ATInt()</div>
+<div class="line"><span class="lineno">  248</span>        self._bytes_per_pixel = ATFloat()</div>
+<div class="line"><span class="lineno">  249</span>        self._camera_acquiring = ATBool()</div>
+<div class="line"><span class="lineno">  250</span>        self._camera_dump = ATCommand()</div>
+<div class="line"><span class="lineno">  251</span>        self._camera_model = ATString()</div>
+<div class="line"><span class="lineno">  252</span>        self._camera_name = ATString()</div>
+<div class="line"><span class="lineno">  253</span>        self._camera_present = ATBool()</div>
+<div class="line"><span class="lineno">  254</span>        self._controller_id = ATString()</div>
+<div class="line"><span class="lineno">  255</span>        self._frame_count = ATInt()</div>
+<div class="line"><span class="lineno">  256</span>        self._cycle_mode = ATEnum()</div>
+<div class="line"><span class="lineno">  257</span>        self._electronic_shuttering_mode = ATEnum()</div>
+<div class="line"><span class="lineno">  258</span>        self._event_enable = ATBool()</div>
+<div class="line"><span class="lineno">  259</span>        self._events_missed_event = ATInt()</div>
+<div class="line"><span class="lineno">  260</span>        self._event_selector = ATEnum()</div>
+<div class="line"><span class="lineno">  261</span>        self._exposed_pixel_height = ATInt()</div>
+<div class="line"><span class="lineno">  262</span>        self._exposure_time = ATFloat()</div>
+<div class="line"><span class="lineno">  263</span>        self._exposure_end_event = ATInt()</div>
+<div class="line"><span class="lineno">  264</span>        self._exposure_start_event = ATInt()</div>
+<div class="line"><span class="lineno">  265</span>        self._external_trigger_delay = ATFloat()</div>
+<div class="line"><span class="lineno">  266</span>        self._fan_speed = ATEnum()</div>
+<div class="line"><span class="lineno">  267</span>        self._firmware_version = ATString()</div>
+<div class="line"><span class="lineno">  268</span>        self._frame_rate = ATFloat()</div>
+<div class="line"><span class="lineno">  269</span>        self._full_aoi_control = ATBool()</div>
+<div class="line"><span class="lineno">  270</span>        self._image_size_bytes = ATInt()</div>
+<div class="line"><span class="lineno">  271</span>        self._interface_type = ATString()</div>
+<div class="line"><span class="lineno">  272</span>        self._io_invert = ATBool()</div>
+<div class="line"><span class="lineno">  273</span>        self._io_selector = ATEnum()</div>
+<div class="line"><span class="lineno">  274</span>        self._line_scan_speed = ATFloat()</div>
+<div class="line"><span class="lineno">  275</span>        self._lut_index = ATInt()</div>
+<div class="line"><span class="lineno">  276</span>        self._lut_value = ATInt()</div>
+<div class="line"><span class="lineno">  277</span>        self._max_interface_transfer_rate = ATFloat()</div>
+<div class="line"><span class="lineno">  278</span>        self._metadata_enable = ATBool()</div>
+<div class="line"><span class="lineno">  279</span>        self._metadata_timestamp = ATBool()</div>
+<div class="line"><span class="lineno">  280</span>        self._metadata_frame = ATBool()</div>
+<div class="line"><span class="lineno">  281</span>        self._overlap = ATBool()</div>
+<div class="line"><span class="lineno">  282</span>        self._pixel_encoding = ATEnum()</div>
+<div class="line"><span class="lineno">  283</span>        self._pixel_readout_rate = ATEnum()</div>
+<div class="line"><span class="lineno">  284</span>        self._pre_amp_gain_control = ATEnum()</div>
+<div class="line"><span class="lineno">  285</span>        self._readout_time = ATFloat()</div>
+<div class="line"><span class="lineno">  286</span>        self._rolling_shutter_global_clear = ATBool()</div>
+<div class="line"><span class="lineno">  287</span>        self._row_n_exposure_end_event = ATInt()</div>
+<div class="line"><span class="lineno">  288</span>        self._row_n_exposure_start_event = ATInt()</div>
+<div class="line"><span class="lineno">  289</span>        self._row_read_time = ATFloat()</div>
+<div class="line"><span class="lineno">  290</span>        self._scan_speed_control_enable = ATBool()</div>
+<div class="line"><span class="lineno">  291</span>        self._sensor_cooling = ATBool()</div>
+<div class="line"><span class="lineno">  292</span>        self._sensor_height = ATInt()</div>
+<div class="line"><span class="lineno">  293</span>        self._sensor_readout_mode = ATEnum()</div>
+<div class="line"><span class="lineno">  294</span>        self._sensor_temperature = ATFloat()</div>
+<div class="line"><span class="lineno">  295</span>        self._sensor_width = ATInt()</div>
+<div class="line"><span class="lineno">  296</span>        self._serial_number = ATString()</div>
+<div class="line"><span class="lineno">  297</span>        self._simple_pre_amp_gain_control = ATEnum()</div>
+<div class="line"><span class="lineno">  298</span>        self._software_trigger = ATCommand()</div>
+<div class="line"><span class="lineno">  299</span>        self._static_blemish_correction = ATBool()</div>
+<div class="line"><span class="lineno">  300</span>        self._spurious_noise_filter = ATBool()</div>
+<div class="line"><span class="lineno">  301</span>        self._target_sensor_temperature = ATFloat()</div>
+<div class="line"><span class="lineno">  302</span>        self._temperature_control = ATEnum()</div>
+<div class="line"><span class="lineno">  303</span>        self._temperature_status = ATEnum()</div>
+<div class="line"><span class="lineno">  304</span>        self._timestamp_clock = ATInt()</div>
+<div class="line"><span class="lineno">  305</span>        self._timestamp_clock_frequency = ATInt()</div>
+<div class="line"><span class="lineno">  306</span>        self._timestamp_clock_reset = ATCommand()</div>
+<div class="line"><span class="lineno">  307</span>        self._trigger_mode = ATEnum()</div>
+<div class="line"><span class="lineno">  308</span>        self._vertically_centre_aoi = ATBool()</div>
+<div class="line"><span class="lineno">  309</span> </div>
+<div class="line"><span class="lineno">  310</span>        <span class="comment"># Software buffers and parameters for data conversion.</span></div>
+<div class="line"><span class="lineno">  311</span>        self.num_buffers = 32</div>
+<div class="line"><span class="lineno">  312</span>        self.add_setting(</div>
+<div class="line"><span class="lineno">  313</span>            <span class="stringliteral">&quot;num_buffers&quot;</span>,</div>
+<div class="line"><span class="lineno">  314</span>            <span class="stringliteral">&quot;int&quot;</span>,</div>
+<div class="line"><span class="lineno">  315</span>            <span class="keyword">lambda</span>: self.num_buffers,</div>
+<div class="line"><span class="lineno">  316</span>            <span class="keyword">lambda</span> val: self.set_num_buffers(val),</div>
+<div class="line"><span class="lineno">  317</span>            <span class="keyword">lambda</span>: (1, 100),</div>
+<div class="line"><span class="lineno">  318</span>        )</div>
+<div class="line"><span class="lineno">  319</span>        self.buffers = queue.Queue()</div>
+<div class="line"><span class="lineno">  320</span>        self._buffer_size = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  321</span>        self._img_stride = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  322</span>        self._img_width = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  323</span>        self._img_height = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  324</span>        self._img_encoding = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  325</span>        self._buffers_valid = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  326</span>        self._exposure_callback = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  327</span> </div>
+<div class="line"><span class="lineno">  328</span>        self.initialize()</div>
+<div class="line"><span class="lineno">  329</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -363,6 +479,16 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a36952a38857bc6c8eb627b2d8b6b867b">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00446">446</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  446</span>    <span class="keyword">def </span>abort(self):</div>
+<div class="line"><span class="lineno">  447</span>        <span class="stringliteral">&quot;&quot;&quot;Abort acquisition.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  448</span>        _logger.debug(<span class="stringliteral">&quot;Disabling acquisition.&quot;</span>)</div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordflow">if</span> self._acquiring:</div>
+<div class="line"><span class="lineno">  450</span>            self._acquisition_stop()</div>
+<div class="line"><span class="lineno">  451</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, and <a class="el" href="andorsdk3_8py_source.html#l00235">microscope.cameras.andorsdk3.AndorSDK3._acquisition_stop</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -385,6 +511,11 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a2048ad36a754b19e2488b77161a08e63">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00563">563</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  563</span>    <span class="keyword">def </span>get_cycle_time(self):</div>
+<div class="line"><span class="lineno">  564</span>        <span class="keywordflow">return</span> 1.0 / self._frame_rate.get_value()</div>
+<div class="line"><span class="lineno">  565</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00268">microscope.cameras.andorsdk3.AndorSDK3._frame_rate</a>, <a class="el" href="andorsdk3_8py_source.html#l00292">microscope.cameras.andorsdk3.AndorSDK3._sensor_height</a>, <a class="el" href="andorsdk3_8py_source.html#l00295">microscope.cameras.andorsdk3.AndorSDK3._sensor_width</a>, <a class="el" href="andorsdk3_8py_source.html#l00298">microscope.cameras.andorsdk3.AndorSDK3._software_trigger</a>, <a class="el" href="andorsdk3_8py_source.html#l00307">microscope.cameras.andorsdk3.AndorSDK3._trigger_mode</a>, and <a class="el" href="alpao_8py_source.html#l00114">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_mode</a>.</p>
 
 </div>
 </div>
@@ -407,6 +538,11 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a16e161a6bd61f3968a072971285eb017">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00560">560</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  560</span>    <span class="keyword">def </span>get_exposure_time(self):</div>
+<div class="line"><span class="lineno">  561</span>        <span class="keywordflow">return</span> self._exposure_time.get_value()</div>
+<div class="line"><span class="lineno">  562</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>.</p>
 
 </div>
 </div>
@@ -427,7 +563,12 @@ Static Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00643">643</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  643</span>    <span class="keyword">def </span>get_gain(self):</div>
+<div class="line"><span class="lineno">  644</span>        <span class="keywordflow">if</span> hasattr(self, <span class="stringliteral">&quot;_preampgain&quot;</span>):</div>
+<div class="line"><span class="lineno">  645</span>            <span class="keywordflow">return</span> self._preampgain.get_value()</div>
+<div class="line"><span class="lineno">  646</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  647</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae509c2cfba9b174e5f5055cfe12fbb2d" name="ae509c2cfba9b174e5f5055cfe12fbb2d"></a>
@@ -449,6 +590,13 @@ Static Public Attributes</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html#a03520e043c352c83536d735f641d285e">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00527">527</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  527</span>    <span class="keyword">def </span>get_id(self):</div>
+<div class="line"><span class="lineno">  528</span>        <span class="keywordflow">return</span> self._serial_number.get_value()</div>
+<div class="line"><span class="lineno">  529</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00234">microscope.cameras.andorsdk3.AndorSDK3._acquisition_start</a>, <a class="el" href="andorsdk3_8py_source.html#l00235">microscope.cameras.andorsdk3.AndorSDK3._acquisition_stop</a>, <a class="el" href="andorsdk3_8py_source.html#l00325">microscope.cameras.andorsdk3.AndorSDK3._buffers_valid</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00227">microscope.simulators.SimulatedCamera._create_buffers()</a>, <a class="el" href="andorsdk3_8py_source.html#l00378">microscope.cameras.andorsdk3.AndorSDK3._create_buffers()</a>, <a class="el" href="andorsdk3_8py_source.html#l00296">microscope.cameras.andorsdk3.AndorSDK3._serial_number</a>, <a class="el" href="ximea_8py_source.html#l00193">microscope.cameras.ximea.XimeaCamera._serial_number</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>, and <a class="el" href="andorsdk3_8py_source.html#l00521">microscope.cameras.andorsdk3.AndorSDK3.set_cooling()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>
@@ -474,6 +622,80 @@ dict.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00452">452</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  452</span>    <span class="keyword">def </span>initialize(self):</div>
+<div class="line"><span class="lineno">  453</span>        <span class="stringliteral">&quot;&quot;&quot;Initialise the camera.</span></div>
+<div class="line"><span class="lineno">  454</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  455</span><span class="stringliteral">        Open the connection, connect properties </span><span class="keywordflow">and</span> populate settings</div>
+<div class="line"><span class="lineno">  456</span>        dict.</div>
+<div class="line"><span class="lineno">  457</span> </div>
+<div class="line"><span class="lineno">  458</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  459</span><span class="stringliteral">        </span><span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  460</span>            self.handle = SDK3.Open(self._index)</div>
+<div class="line"><span class="lineno">  461</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  462</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(<span class="stringliteral">&quot;Problem opening camera.&quot;</span>) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">  463</span>        <span class="keywordflow">if</span> self.handle == <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  464</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(<span class="stringliteral">&quot;No camera opened.&quot;</span>)</div>
+<div class="line"><span class="lineno">  465</span>        <span class="keywordflow">for</span> name, var <span class="keywordflow">in</span> sorted(self.__dict__.items()):</div>
+<div class="line"><span class="lineno">  466</span>            <span class="keywordflow">if</span> isinstance(var, ATProperty):</div>
+<div class="line"><span class="lineno">  467</span>                sdk_name = SDK_NAMES[name]</div>
+<div class="line"><span class="lineno">  468</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> SDK3.IsImplemented(self.handle, sdk_name):</div>
+<div class="line"><span class="lineno">  469</span>                    delattr(self, name)</div>
+<div class="line"><span class="lineno">  470</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  471</span>                var.connect(self.handle, sdk_name)</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>                <span class="keywordflow">if</span> type(var) <span class="keywordflow">is</span> ATCommand:</div>
+<div class="line"><span class="lineno">  474</span>                    <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  475</span> </div>
+<div class="line"><span class="lineno">  476</span>                is_readonly_func = var.is_readonly</div>
+<div class="line"><span class="lineno">  477</span>                <span class="keywordflow">if</span> type(var) <span class="keywordflow">is</span> ATEnum:</div>
+<div class="line"><span class="lineno">  478</span>                    set_func = var.set_index</div>
+<div class="line"><span class="lineno">  479</span>                    get_func = var.get_index</div>
+<div class="line"><span class="lineno">  480</span>                    vals_func = var.get_available_values</div>
+<div class="line"><span class="lineno">  481</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  482</span>                    set_func = var.set_value</div>
+<div class="line"><span class="lineno">  483</span>                    get_func = var.get_value</div>
+<div class="line"><span class="lineno">  484</span>                    <span class="keywordflow">if</span> type(var) <span class="keywordflow">is</span> ATString:</div>
+<div class="line"><span class="lineno">  485</span>                        vals_func = var.max_length</div>
+<div class="line"><span class="lineno">  486</span>                    <span class="keywordflow">elif</span> type(var) <span class="keywordflow">in</span> (ATFloat, ATInt):</div>
+<div class="line"><span class="lineno">  487</span>                        vals_func = <span class="keyword">lambda</span> v=var: (v.min(), v.max())</div>
+<div class="line"><span class="lineno">  488</span>                    <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  489</span>                        vals_func = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  490</span> </div>
+<div class="line"><span class="lineno">  491</span>                <span class="keywordflow">if</span> name <span class="keywordflow">in</span> INVALIDATES_BUFFERS:</div>
+<div class="line"><span class="lineno">  492</span>                    set_func = self.invalidate_buffers(set_func)</div>
+<div class="line"><span class="lineno">  493</span> </div>
+<div class="line"><span class="lineno">  494</span>                self.add_setting(</div>
+<div class="line"><span class="lineno">  495</span>                    name.lstrip(<span class="stringliteral">&quot;_&quot;</span>),</div>
+<div class="line"><span class="lineno">  496</span>                    PROPERTY_TYPES[type(var)],</div>
+<div class="line"><span class="lineno">  497</span>                    get_func,</div>
+<div class="line"><span class="lineno">  498</span>                    set_func,</div>
+<div class="line"><span class="lineno">  499</span>                    vals_func,</div>
+<div class="line"><span class="lineno">  500</span>                    is_readonly_func,</div>
+<div class="line"><span class="lineno">  501</span>                )</div>
+<div class="line"><span class="lineno">  502</span>        <span class="comment"># Default setup.</span></div>
+<div class="line"><span class="lineno">  503</span>        self.set_cooling(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  504</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._camera_model.getValue().startswith(<span class="stringliteral">&quot;SIMCAM&quot;</span>):</div>
+<div class="line"><span class="lineno">  505</span>            self._trigger_mode.set_string(<span class="stringliteral">&quot;Software&quot;</span>)</div>
+<div class="line"><span class="lineno">  506</span>            self._cycle_mode.set_string(<span class="stringliteral">&quot;Continuous&quot;</span>)</div>
+<div class="line"><span class="lineno">  507</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  508</span>            _logger.warn(<span class="stringliteral">&quot;No hardware found - using SIMCAM&quot;</span>)</div>
+<div class="line"><span class="lineno">  509</span> </div>
+<div class="line"><span class="lineno">  510</span>        <span class="keyword">def </span>callback(*args):</div>
+<div class="line"><span class="lineno">  511</span>            data = self._fetch_data(timeout=500)</div>
+<div class="line"><span class="lineno">  512</span>            timestamp = time.time()</div>
+<div class="line"><span class="lineno">  513</span>            <span class="keywordflow">if</span> data <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  514</span>                self._put(data, timestamp)</div>
+<div class="line"><span class="lineno">  515</span>                <span class="keywordflow">return</span> 0</div>
+<div class="line"><span class="lineno">  516</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  517</span>                <span class="keywordflow">return</span> -1</div>
+<div class="line"><span class="lineno">  518</span> </div>
+<div class="line"><span class="lineno">  519</span>        self._exposure_callback = SDK3.CALLBACKTYPE(callback)</div>
+<div class="line"><span class="lineno">  520</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00251">microscope.cameras.andorsdk3.AndorSDK3._camera_model</a>, <a class="el" href="andorsdk3_8py_source.html#l00256">microscope.cameras.andorsdk3.AndorSDK3._cycle_mode</a>, <a class="el" href="andorsdk3_8py_source.html#l00326">microscope.cameras.andorsdk3.AndorSDK3._exposure_callback</a>, <a class="el" href="abc_8py_source.html#l00643">microscope.abc.DataDevice._fetch_data()</a>, <a class="el" href="atmcd_8py_source.html#l01599">microscope.cameras.atmcd.AndorAtmcd._fetch_data()</a>, <a class="el" href="picam_8py_source.html#l00136">microscope.cameras.picam.PiCamera._fetch_data()</a>, <a class="el" href="pvcam_8py_source.html#l01475">microscope.cameras.pvcam.PVCamera._fetch_data()</a>, <a class="el" href="ximea_8py_source.html#l00219">microscope.cameras.ximea.XimeaCamera._fetch_data()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00232">microscope.simulators.SimulatedCamera._fetch_data()</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00098">microscope.simulators.stage_aware_camera.StageAwareCamera._fetch_data()</a>, <a class="el" href="andorsdk3_8py_source.html#l00414">microscope.cameras.andorsdk3.AndorSDK3._fetch_data()</a>, <a class="el" href="abc_8py_source.html#l00216">microscope.abc.FloatingDeviceMixin._index</a>, <a class="el" href="abc_8py_source.html#l00745">microscope.abc.DataDevice._put()</a>, <a class="el" href="andorsdk3_8py_source.html#l00291">microscope.cameras.andorsdk3.AndorSDK3._sensor_cooling</a>, <a class="el" href="andorsdk3_8py_source.html#l00307">microscope.cameras.andorsdk3.AndorSDK3._trigger_mode</a>, <a class="el" href="alpao_8py_source.html#l00114">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_mode</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, and <a class="el" href="andorsdk3_8py_source.html#l00521">microscope.cameras.andorsdk3.AndorSDK3.set_cooling()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -504,6 +726,20 @@ dict.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Wrap functions that invalidate buffers so buffers are recreated.</pre> 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00404">404</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  404</span>    <span class="keyword">def </span>invalidate_buffers(self, func):</div>
+<div class="line"><span class="lineno">  405</span>        <span class="stringliteral">&quot;&quot;&quot;Wrap functions that invalidate buffers so buffers are recreated.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  406</span>        outerself = self</div>
+<div class="line"><span class="lineno">  407</span> </div>
+<div class="line"><span class="lineno">  408</span>        <span class="keyword">def </span>wrapper(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  409</span>            func(self, *args, **kwargs)</div>
+<div class="line"><span class="lineno">  410</span>            outerself._buffers_valid = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span>        <span class="keywordflow">return</span> wrapper</div>
+<div class="line"><span class="lineno">  413</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00320">microscope.cameras.andorsdk3.AndorSDK3._buffer_size</a>, <a class="el" href="andorsdk3_8py_source.html#l00324">microscope.cameras.andorsdk3.AndorSDK3._img_encoding</a>, <a class="el" href="andorsdk3_8py_source.html#l00323">microscope.cameras.andorsdk3.AndorSDK3._img_height</a>, <a class="el" href="andorsdk3_8py_source.html#l00321">microscope.cameras.andorsdk3.AndorSDK3._img_stride</a>, <a class="el" href="andorsdk3_8py_source.html#l00322">microscope.cameras.andorsdk3.AndorSDK3._img_width</a>, <a class="el" href="andorsdk3_8py_source.html#l00319">microscope.cameras.andorsdk3.AndorSDK3.buffers</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00027">microscope.cameras._SDK3Cam.ATProperty.handle</a>, <a class="el" href="___s_d_k3_cam_8py_source.html#l00179">microscope.cameras._SDK3Cam.SDK3Camera.handle</a>, <a class="el" href="andorsdk3_8py_source.html#l00218">microscope.cameras.andorsdk3.AndorSDK3.handle</a>, <a class="el" href="pvcam_8py_source.html#l01418">microscope.cameras.pvcam.PVCamera.handle</a>, <a class="el" href="mock__devices_8py_source.html#l00069">microscope.testsuite.mock_devices.SerialMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00158">microscope.testsuite.mock_devices.CoherentSapphireLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00348">microscope.testsuite.mock_devices.CoboltLaserMock.handle()</a>, <a class="el" href="mock__devices_8py_source.html#l00548">microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.handle()</a>, and <a class="el" href="test__devices_8py_source.html#l00054">microscope.testsuite.test_devices.TestSerialMock.Serial.handle()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>.</p>
 
 </div>
 </div>
@@ -534,6 +770,14 @@ dict.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00521">521</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  521</span>    <span class="keyword">def </span>set_cooling(self, value):</div>
+<div class="line"><span class="lineno">  522</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  523</span>            self._sensor_cooling.set_value(value)</div>
+<div class="line"><span class="lineno">  524</span>        <span class="keywordflow">except</span> AttributeError:</div>
+<div class="line"><span class="lineno">  525</span>            <span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  526</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, and <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>.</p>
 
 </div>
 </div>
@@ -566,6 +810,20 @@ dict.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00548">548</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  548</span>    <span class="keyword">def </span>set_exposure_time(self, value):</div>
+<div class="line"><span class="lineno">  549</span>        bounded_value = sorted(</div>
+<div class="line"><span class="lineno">  550</span>            (self._exposure_time.min(), self._exposure_time.max(), value)</div>
+<div class="line"><span class="lineno">  551</span>        )[1]</div>
+<div class="line"><span class="lineno">  552</span>        self._exposure_time.set_value(bounded_value)</div>
+<div class="line"><span class="lineno">  553</span>        self._frame_rate.set_value(self._frame_rate.max())</div>
+<div class="line"><span class="lineno">  554</span>        _logger.debug(</div>
+<div class="line"><span class="lineno">  555</span>            <span class="stringliteral">&quot;Set exposure time to %f, resulting framerate %f.&quot;</span>,</div>
+<div class="line"><span class="lineno">  556</span>            bounded_value,</div>
+<div class="line"><span class="lineno">  557</span>            self._frame_rate.get_value(),</div>
+<div class="line"><span class="lineno">  558</span>        )</div>
+<div class="line"><span class="lineno">  559</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="andorsdk3_8py_source.html#l00262">microscope.cameras.andorsdk3.AndorSDK3._exposure_time</a>, <a class="el" href="picam_8py_source.html#l00059">microscope.cameras.picam.PiCamera._exposure_time</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00211">microscope.simulators.SimulatedCamera._exposure_time</a>, and <a class="el" href="andorsdk3_8py_source.html#l00268">microscope.cameras.andorsdk3.AndorSDK3._frame_rate</a>.</p>
 
 </div>
 </div>
@@ -596,7 +854,11 @@ dict.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00359">359</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  359</span>    <span class="keyword">def </span>set_num_buffers(self, num):</div>
+<div class="line"><span class="lineno">  360</span>        self.num_buffers = num</div>
+<div class="line"><span class="lineno">  361</span>        self._buffers_valid = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  362</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a93595cf722224e50c11692a90c522d44" name="a93595cf722224e50c11692a90c522d44"></a>
@@ -635,6 +897,22 @@ dict.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00586">586</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  588</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  589</span>        <span class="keywordflow">for</span> available_mode <span class="keywordflow">in</span> self._trigger_mode.get_available_values():</div>
+<div class="line"><span class="lineno">  590</span>            trigger = SDK3_STRING_TO_TRIGGER[available_mode.lower()]</div>
+<div class="line"><span class="lineno">  591</span>            <span class="keywordflow">if</span> trigger == (ttype, tmode):</div>
+<div class="line"><span class="lineno">  592</span>                self._trigger_mode.set_string(available_mode)</div>
+<div class="line"><span class="lineno">  593</span>                <span class="keywordflow">break</span></div>
+<div class="line"><span class="lineno">  594</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  595</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno">  596</span>                <span class="stringliteral">&quot;no SDK3 mode for %s and %s&quot;</span> % (ttype, tmode)</div>
+<div class="line"><span class="lineno">  597</span>            )</div>
+<div class="line"><span class="lineno">  598</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00237">microscope.cameras.andorsdk3.AndorSDK3._aoi_binning</a>, <a class="el" href="andorsdk3_8py_source.html#l00238">microscope.cameras.andorsdk3.AndorSDK3._aoi_height</a>, <a class="el" href="andorsdk3_8py_source.html#l00239">microscope.cameras.andorsdk3.AndorSDK3._aoi_left</a>, <a class="el" href="andorsdk3_8py_source.html#l00240">microscope.cameras.andorsdk3.AndorSDK3._aoi_top</a>, <a class="el" href="andorsdk3_8py_source.html#l00241">microscope.cameras.andorsdk3.AndorSDK3._aoi_width</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00227">microscope.simulators.SimulatedCamera._create_buffers()</a>, <a class="el" href="andorsdk3_8py_source.html#l00378">microscope.cameras.andorsdk3.AndorSDK3._create_buffers()</a>, <a class="el" href="andorsdk3_8py_source.html#l00298">microscope.cameras.andorsdk3.AndorSDK3._software_trigger</a>, <a class="el" href="andorsdk3_8py_source.html#l00307">microscope.cameras.andorsdk3.AndorSDK3._trigger_mode</a>, <a class="el" href="alpao_8py_source.html#l00114">microscope.mirror.alpao.AlpaoDeformableMirror._trigger_mode</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, and <a class="el" href="abc_8py_source.html#l00961">microscope.abc.Camera.get_roi()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -655,6 +933,12 @@ dict.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00572">572</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  572</span>    <span class="keyword">def </span>soft_trigger(self):</div>
+<div class="line"><span class="lineno">  573</span>        <span class="comment"># deprecated, use triger()</span></div>
+<div class="line"><span class="lineno">  574</span>        <span class="keywordflow">return</span> self._software_trigger()</div>
+<div class="line"><span class="lineno">  575</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00247">microscope.cameras.picam.PiCamera.get_cycle_time()</a>.</p>
 
 </div>
 </div>
@@ -677,6 +961,12 @@ dict.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00577">577</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  577</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno">  578</span>        sdk3_string = self._trigger_mode.get_string().lower()</div>
+<div class="line"><span class="lineno">  579</span>        <span class="keywordflow">return</span> SDK3_STRING_TO_TRIGGER[sdk3_string][1]</div>
+<div class="line"><span class="lineno">  580</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -699,6 +989,12 @@ dict.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00582">582</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  582</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno">  583</span>        sdk3_string = self._trigger_mode.get_string().lower()</div>
+<div class="line"><span class="lineno">  584</span>        <span class="keywordflow">return</span> SDK3_STRING_TO_TRIGGER[sdk3_string][0]</div>
+<div class="line"><span class="lineno">  585</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>
@@ -717,6 +1013,8 @@ dict.</pre>
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00319">319</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>.</p>
+
 </div>
 </div>
 <a id="a6d0357e3e93bdfd4655ae37ba60ffed3" name="a6d0357e3e93bdfd4655ae37ba60ffed3"></a>
@@ -732,6 +1030,8 @@ dict.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="andorsdk3_8py_source.html#l00218">218</a> of file <a class="el" href="andorsdk3_8py_source.html">andorsdk3.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>

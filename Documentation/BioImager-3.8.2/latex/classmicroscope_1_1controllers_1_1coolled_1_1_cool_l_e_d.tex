@@ -94,6 +94,31 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00293}{293}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00293     \textcolor{keyword}{def }\_\_init\_\_(self, port: str, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00294         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00295         self.\_channels: typing.Dict[str, \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{microscope.abc.LightSource}}] = \{\}}
+\DoxyCodeLine{00296 }
+\DoxyCodeLine{00297         \textcolor{comment}{\# CoolLED manual only has the baudrate, we guessed the rest.}}
+\DoxyCodeLine{00298         serial\_conn = serial.Serial(}
+\DoxyCodeLine{00299             port=port,}
+\DoxyCodeLine{00300             baudrate=57600,}
+\DoxyCodeLine{00301             timeout=1,}
+\DoxyCodeLine{00302             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00303             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00304             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00305             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00306             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00307             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00308         )}
+\DoxyCodeLine{00309         shared\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{00310         connection = \_CoolLEDConnection(shared\_serial)}
+\DoxyCodeLine{00311         \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} connection.get\_channels():}
+\DoxyCodeLine{00312             self.\_channels[name] = \_CoolLEDChannel(connection, name)}
+\DoxyCodeLine{00313 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d_a20c7ccd078de92c680f08d6a28329b3d}\label{classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d_a20c7ccd078de92c680f08d6a28329b3d}} 
@@ -110,6 +135,16 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_controller_a51485
 
 
 Definition at line \mbox{\hyperlink{coolled_8py_source_l00315}{315}} of file \mbox{\hyperlink{coolled_8py_source}{coolled.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00315     \textcolor{keyword}{def }devices(self) -\/> typing.Dict[str, microscope.abc.Device]:}
+\DoxyCodeLine{00316         \textcolor{keywordflow}{return} self.\_channels}
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01342}{microscope.\+abc.\+Controller.\+devices()}}.
 
 
 

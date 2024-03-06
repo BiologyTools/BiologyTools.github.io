@@ -329,7 +329,18 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01370">1370</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1370</span>    <span class="keyword">def </span>__init__(self, index=0, **kwargs):</div>
+<div class="line"><span class="lineno"> 1371</span>        super().__init__(index=index, **kwargs)</div>
+<div class="line"><span class="lineno"> 1372</span>        <span class="comment"># Recursion depth for context manager behaviour.</span></div>
+<div class="line"><span class="lineno"> 1373</span>        self._rdepth = 0</div>
+<div class="line"><span class="lineno"> 1374</span>        <span class="comment"># The handle used by the DLL to identify this camera.</span></div>
+<div class="line"><span class="lineno"> 1375</span>        self._handle = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1376</span>        <span class="comment"># The following parameters will be populated after hardware init.</span></div>
+<div class="line"><span class="lineno"> 1377</span>        self._roi = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1378</span>        self._binning = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1379</span>        self.initialize()</div>
+<div class="line"><span class="lineno"> 1380</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -357,6 +368,22 @@ We could use RLock to give re-entrant behaviour, but we track recursion
 ourselves so that we know when we must call SetCurrentCamera.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01391">1391</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1391</span>    <span class="keyword">def </span>__enter__(self):</div>
+<div class="line"><span class="lineno"> 1392</span>        <span class="stringliteral">&quot;&quot;&quot;Context manager entry code.</span></div>
+<div class="line"><span class="lineno"> 1393</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1394</span><span class="stringliteral">        The camera </span><span class="keyword">class </span>is also a context manager that ensures DLL calls act</div>
+<div class="line"><span class="lineno"> 1395</span>        on this camera by obtaining the _dll_lock.</div>
+<div class="line"><span class="lineno"> 1396</span> </div>
+<div class="line"><span class="lineno"> 1397</span>        We could use RLock to give re-entrant behaviour, but we track recursion</div>
+<div class="line"><span class="lineno"> 1398</span>        ourselves so that we know when we must call SetCurrentCamera.</div>
+<div class="line"><span class="lineno"> 1399</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1400</span><span class="stringliteral">        </span><span class="keywordflow">if</span> self._rdepth == 0:</div>
+<div class="line"><span class="lineno"> 1401</span>            _dll_lock.acquire()</div>
+<div class="line"><span class="lineno"> 1402</span>            SetCurrentCamera(self._handle)</div>
+<div class="line"><span class="lineno"> 1403</span>        self._rdepth += 1</div>
+<div class="line"><span class="lineno"> 1404</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>, and <a class="el" href="atmcd_8py_source.html#l01373">microscope.cameras.atmcd.AndorAtmcd._rdepth</a>.</p>
 
 </div>
 </div>
@@ -399,6 +426,14 @@ ourselves so that we know when we must call SetCurrentCamera.
 </div><div class="memdoc">
 <pre class="fragment">Context manager exit code.</pre> 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01405">1405</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1405</span>    <span class="keyword">def </span>__exit__(self, exc_type, exc_value, traceback):</div>
+<div class="line"><span class="lineno"> 1406</span>        <span class="stringliteral">&quot;&quot;&quot;Context manager exit code.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1407</span>        self._rdepth -= 1</div>
+<div class="line"><span class="lineno"> 1408</span>        <span class="keywordflow">if</span> self._rdepth == 0:</div>
+<div class="line"><span class="lineno"> 1409</span>            _dll_lock.release()</div>
+<div class="line"><span class="lineno"> 1410</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01373">microscope.cameras.atmcd.AndorAtmcd._rdepth</a>.</p>
 
 </div>
 </div>
@@ -421,6 +456,18 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a36952a38857bc6c8eb627b2d8b6b867b">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01424">1424</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1424</span>    <span class="keyword">def </span>abort(self):</div>
+<div class="line"><span class="lineno"> 1425</span>        <span class="stringliteral">&quot;&quot;&quot;Abort acquisition.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1426</span>        _logger.debug(<span class="stringliteral">&quot;Disabling acquisition.&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1427</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1428</span>            <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1429</span>                AbortAcquisition()</div>
+<div class="line"><span class="lineno"> 1430</span>        <span class="keywordflow">except</span> AtmcdException <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno"> 1431</span>            <span class="keywordflow">if</span> e.status != DRV_IDLE:</div>
+<div class="line"><span class="lineno"> 1432</span>                <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno"> 1433</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -443,6 +490,19 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a2048ad36a754b19e2488b77161a08e63">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01717">1717</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1717</span>    <span class="keyword">def </span>get_cycle_time(self):</div>
+<div class="line"><span class="lineno"> 1718</span>        <span class="stringliteral">&quot;&quot;&quot;Determine the minimum time between exposures.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1719</span>        <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1720</span>            exposure, accumulate, kinetic = GetAcquisitionTimings()</div>
+<div class="line"><span class="lineno"> 1721</span>            readout = GetReadOutTime()</div>
+<div class="line"><span class="lineno"> 1722</span>            <span class="comment"># IMD 20210422 DeepSIM timing is wrong as the keepclear cycles are</span></div>
+<div class="line"><span class="lineno"> 1723</span>            <span class="comment"># not accounted for.</span></div>
+<div class="line"><span class="lineno"> 1724</span>            <span class="comment"># return exposure + readout</span></div>
+<div class="line"><span class="lineno"> 1725</span>            <span class="comment"># This appears to allow the correct time between trigger pulses.</span></div>
+<div class="line"><span class="lineno"> 1726</span>            <span class="keywordflow">return</span> kinetic</div>
+<div class="line"><span class="lineno"> 1727</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00832">microscope.abc.Camera._readout_modes</a>, <a class="el" href="atmcd_8py_source.html#l01479">microscope.cameras.atmcd.AndorAtmcd._readout_modes</a>, and <a class="el" href="pvcam_8py_source.html#l01780">microscope.cameras.pvcam.PVCamera._readout_modes</a>.</p>
 
 </div>
 </div>
@@ -465,7 +525,13 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a16e161a6bd61f3968a072971285eb017">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01711">1711</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1711</span>    <span class="keyword">def </span>get_exposure_time(self):</div>
+<div class="line"><span class="lineno"> 1712</span>        <span class="stringliteral">&quot;&quot;&quot;Query the actual exposure time.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1713</span>        <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1714</span>            exposure, accumulate, kinetic = GetAcquisitionTimings()</div>
+<div class="line"><span class="lineno"> 1715</span>        <span class="keywordflow">return</span> exposure</div>
+<div class="line"><span class="lineno"> 1716</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a63f98037ae572a1f61495f2dfa829653" name="a63f98037ae572a1f61495f2dfa829653"></a>
@@ -487,6 +553,15 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_floating_device_mixin.html#a03520e043c352c83536d735f641d285e">microscope.abc.FloatingDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01618">1618</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1618</span>    <span class="keyword">def </span>get_id(self):</div>
+<div class="line"><span class="lineno"> 1619</span>        <span class="stringliteral">&quot;&quot;&quot;Return the device&#39;s unique identifier.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1620</span>        <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1621</span>            <span class="keywordflow">return</span> GetCameraSerialNumber()</div>
+<div class="line"><span class="lineno"> 1622</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="atmcd_8py_source.html#l01671">microscope.cameras.atmcd.AndorAtmcd._set_image()</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, and <a class="el" href="abc_8py_source.html#l00447">microscope.abc.Device.get_setting()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>
@@ -509,6 +584,170 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01442">1442</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1442</span>    <span class="keyword">def </span>initialize(self):</div>
+<div class="line"><span class="lineno"> 1443</span>        <span class="stringliteral">&quot;&quot;&quot;Initialize the library and hardware and create Setting objects.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1444</span>        _logger.info(<span class="stringliteral">&quot;Initializing ...&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1445</span>        num_cams = GetAvailableCameras()</div>
+<div class="line"><span class="lineno"> 1446</span>        <span class="keywordflow">if</span> self._index &gt;= num_cams:</div>
+<div class="line"><span class="lineno"> 1447</span>            msg = <span class="stringliteral">&quot;Requested camera %d, but only found %d cameras&quot;</span> % (</div>
+<div class="line"><span class="lineno"> 1448</span>                self._index,</div>
+<div class="line"><span class="lineno"> 1449</span>                num_cams,</div>
+<div class="line"><span class="lineno"> 1450</span>            )</div>
+<div class="line"><span class="lineno"> 1451</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(msg)</div>
+<div class="line"><span class="lineno"> 1452</span>        self._handle = GetCameraHandle(self._index)</div>
+<div class="line"><span class="lineno"> 1453</span> </div>
+<div class="line"><span class="lineno"> 1454</span>        <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1455</span>            <span class="comment"># Initialize the library and connect to camera.</span></div>
+<div class="line"><span class="lineno"> 1456</span>            Initialize(b<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1457</span>            <span class="comment"># Initialise ROI to full sensor area and binning to single-pixel.</span></div>
+<div class="line"><span class="lineno"> 1458</span>            self._set_roi(<a class="code hl_class" href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a>(0, 0, 0, 0))</div>
+<div class="line"><span class="lineno"> 1459</span>            self._set_binning(<a class="code hl_class" href="classmicroscope_1_1_binning.html">microscope.Binning</a>(1, 1))</div>
+<div class="line"><span class="lineno"> 1460</span>            <span class="comment"># Check info bits to see if initialization successful.</span></div>
+<div class="line"><span class="lineno"> 1461</span>            info = GetCameraInformation(self._index)</div>
+<div class="line"><span class="lineno"> 1462</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> info &amp; 1 &lt;&lt; 2:</div>
+<div class="line"><span class="lineno"> 1463</span>                <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(<span class="stringliteral">&quot;... initialization failed.&quot;</span>)</div>
+<div class="line"><span class="lineno"> 1464</span>            self._caps = GetCapabilities()</div>
+<div class="line"><span class="lineno"> 1465</span>            model = GetHeadModel()</div>
+<div class="line"><span class="lineno"> 1466</span>            serial = self.get_id()</div>
+<div class="line"><span class="lineno"> 1467</span>            <span class="comment"># Populate amplifiers</span></div>
+<div class="line"><span class="lineno"> 1468</span>            <span class="keywordflow">if</span> GetNumberAmp() &gt; 1:</div>
+<div class="line"><span class="lineno"> 1469</span>                <span class="keywordflow">if</span> self._caps.ulCameraType == AC_CAMERATYPE_CLARA:</div>
+<div class="line"><span class="lineno"> 1470</span>                    self.amplifiers = IntEnum(</div>
+<div class="line"><span class="lineno"> 1471</span>                        <span class="stringliteral">&quot;Amplifiers&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1472</span>                        ((<span class="stringliteral">&quot;CONVENTIONAL&quot;</span>, 0), (<span class="stringliteral">&quot;EXTENDED_NIR&quot;</span>, 1)),</div>
+<div class="line"><span class="lineno"> 1473</span>                    )</div>
+<div class="line"><span class="lineno"> 1474</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1475</span>                    self.amplifiers = IntEnum(</div>
+<div class="line"><span class="lineno"> 1476</span>                        <span class="stringliteral">&quot;Amplifiers&quot;</span>, ((<span class="stringliteral">&quot;EMCCD&quot;</span>, 0), (<span class="stringliteral">&quot;CONVENTIONAL&quot;</span>, 1))</div>
+<div class="line"><span class="lineno"> 1477</span>                    )</div>
+<div class="line"><span class="lineno"> 1478</span>            <span class="comment"># Populate readout modes</span></div>
+<div class="line"><span class="lineno"> 1479</span>            self._readout_modes = []</div>
+<div class="line"><span class="lineno"> 1480</span>            <span class="keywordflow">for</span> ch <span class="keywordflow">in</span> range(GetNumberADChannels()):</div>
+<div class="line"><span class="lineno"> 1481</span>                <span class="keywordflow">for</span> amp <span class="keywordflow">in</span> self.amplifiers:</div>
+<div class="line"><span class="lineno"> 1482</span>                    <span class="keywordflow">for</span> s <span class="keywordflow">in</span> range(GetNumberHSSpeeds(ch, amp.value)):</div>
+<div class="line"><span class="lineno"> 1483</span>                        speed = GetHSSpeed(ch, amp.value, s)</div>
+<div class="line"><span class="lineno"> 1484</span>                        self._readout_modes.append(</div>
+<div class="line"><span class="lineno"> 1485</span>                            ReadoutMode(ch, amp, s, speed)</div>
+<div class="line"><span class="lineno"> 1486</span>                        )</div>
+<div class="line"><span class="lineno"> 1487</span>            _logger.info(<span class="stringliteral">&quot;... initilized %s s/n %s&quot;</span>, model, serial)</div>
+<div class="line"><span class="lineno"> 1488</span>        <span class="comment"># Add settings. Some are write-only, so we set defaults here.</span></div>
+<div class="line"><span class="lineno"> 1489</span>        <span class="comment"># Mode</span></div>
+<div class="line"><span class="lineno"> 1490</span>        name = <span class="stringliteral">&quot;readout mode&quot;</span></div>
+<div class="line"><span class="lineno"> 1491</span>        <span class="keywordflow">if</span> self._readout_modes:</div>
+<div class="line"><span class="lineno"> 1492</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1493</span>                name,</div>
+<div class="line"><span class="lineno"> 1494</span>                <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1495</span>                <span class="keywordtype">None</span>,</div>
+<div class="line"><span class="lineno"> 1496</span>                self._set_readout_mode,</div>
+<div class="line"><span class="lineno"> 1497</span>                <span class="keyword">lambda</span>: [str(mode) <span class="keywordflow">for</span> mode <span class="keywordflow">in</span> self._readout_modes],</div>
+<div class="line"><span class="lineno"> 1498</span>            )</div>
+<div class="line"><span class="lineno"> 1499</span>            self.set_setting(name, 0)</div>
+<div class="line"><span class="lineno"> 1500</span>        <span class="comment"># TriggerMode</span></div>
+<div class="line"><span class="lineno"> 1501</span>        name = <span class="stringliteral">&quot;TriggerMode&quot;</span></div>
+<div class="line"><span class="lineno"> 1502</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1503</span>            name, <span class="stringliteral">&quot;enum&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetTriggerMode), TriggerMode</div>
+<div class="line"><span class="lineno"> 1504</span>        )</div>
+<div class="line"><span class="lineno"> 1505</span>        <span class="keywordflow">if</span> self._caps.ulTriggerModes &amp; AC_TRIGGERMODE_EXTERNAL:</div>
+<div class="line"><span class="lineno"> 1506</span>            self.set_setting(name, TriggerMode.EXTERNAL)</div>
+<div class="line"><span class="lineno"> 1507</span>        <span class="keywordflow">elif</span> self._caps.ulTriggerModes &amp; AC_TRIGGERMODE_CONTINUOUS:</div>
+<div class="line"><span class="lineno"> 1508</span>            self.set_setting(name, TriggerMode.SOFTWARE)</div>
+<div class="line"><span class="lineno"> 1509</span>        <span class="comment"># Gain - device will use either EMGain or MCPGain</span></div>
+<div class="line"><span class="lineno"> 1510</span>        name = <span class="stringliteral">&quot;gain&quot;</span></div>
+<div class="line"><span class="lineno"> 1511</span>        getter, setter, vrange = <span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1512</span>        <span class="keywordflow">if</span> self._caps.ulGetFunctions &amp; AC_GETFUNCTION_EMCCDGAIN:</div>
+<div class="line"><span class="lineno"> 1513</span>            getter = self._bind(GetEMCCDGain)</div>
+<div class="line"><span class="lineno"> 1514</span>        <span class="keywordflow">elif</span> self._caps.ulGetFunctions &amp; AC_GETFUNCTION_MCPGAIN:</div>
+<div class="line"><span class="lineno"> 1515</span>            getter = self._bind(GetMCPGain)</div>
+<div class="line"><span class="lineno"> 1516</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_EMCCDGAIN:</div>
+<div class="line"><span class="lineno"> 1517</span>            setter = self._bind(SetEMCCDGain)</div>
+<div class="line"><span class="lineno"> 1518</span>            vrange = self._bind(GetEMGainRange)</div>
+<div class="line"><span class="lineno"> 1519</span>        <span class="keywordflow">elif</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_MCPGAIN:</div>
+<div class="line"><span class="lineno"> 1520</span>            setter = self._bind(SetMCPGain)</div>
+<div class="line"><span class="lineno"> 1521</span>            vrange = self._bind(GetMCPGainRange)</div>
+<div class="line"><span class="lineno"> 1522</span>        <span class="keywordflow">if</span> getter <span class="keywordflow">or</span> setter:</div>
+<div class="line"><span class="lineno"> 1523</span>            self.add_setting(name, <span class="stringliteral">&quot;int&quot;</span>, getter, setter, vrange)</div>
+<div class="line"><span class="lineno"> 1524</span>        <span class="comment"># Temperature</span></div>
+<div class="line"><span class="lineno"> 1525</span>        name = <span class="stringliteral">&quot;TemperatureSetPoint&quot;</span></div>
+<div class="line"><span class="lineno"> 1526</span>        getter, setter, vrange = <span class="keywordtype">None</span>, <span class="keywordtype">None</span>, <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1527</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_TEMPERATURE:</div>
+<div class="line"><span class="lineno"> 1528</span>            setter = self._bind(SetTemperature)</div>
+<div class="line"><span class="lineno"> 1529</span>        <span class="keywordflow">if</span> self._caps.ulGetFunctions &amp; AC_GETFUNCTION_TEMPERATURERANGE:</div>
+<div class="line"><span class="lineno"> 1530</span>            vrange = self._bind(GetTemperatureRange)</div>
+<div class="line"><span class="lineno"> 1531</span>        <span class="keywordflow">if</span> setter:</div>
+<div class="line"><span class="lineno"> 1532</span>            self.add_setting(name, <span class="stringliteral">&quot;int&quot;</span>, <span class="keywordtype">None</span>, setter, vrange)</div>
+<div class="line"><span class="lineno"> 1533</span>        <span class="comment"># Set a conservative default temperature set-point.</span></div>
+<div class="line"><span class="lineno"> 1534</span>        self.set_setting(name, -20)</div>
+<div class="line"><span class="lineno"> 1535</span>        <span class="comment"># Fan control</span></div>
+<div class="line"><span class="lineno"> 1536</span>        name = <span class="stringliteral">&quot;Temperature&quot;</span></div>
+<div class="line"><span class="lineno"> 1537</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1538</span>            name, <span class="stringliteral">&quot;int&quot;</span>, self._get_sensor_temperature, <span class="keywordtype">None</span>, (<span class="keywordtype">None</span>, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1539</span>        )</div>
+<div class="line"><span class="lineno"> 1540</span>        name = <span class="stringliteral">&quot;Fan mode&quot;</span></div>
+<div class="line"><span class="lineno"> 1541</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1542</span>            name,</div>
+<div class="line"><span class="lineno"> 1543</span>            <span class="stringliteral">&quot;enum&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1544</span>            <span class="keywordtype">None</span>,  <span class="comment"># Can&#39;t query fan mode</span></div>
+<div class="line"><span class="lineno"> 1545</span>            self._bind(SetFanMode),</div>
+<div class="line"><span class="lineno"> 1546</span>            {0: <span class="stringliteral">&quot;full&quot;</span>, 1: <span class="stringliteral">&quot;low&quot;</span>, 2: <span class="stringliteral">&quot;off&quot;</span>},</div>
+<div class="line"><span class="lineno"> 1547</span>        )</div>
+<div class="line"><span class="lineno"> 1548</span>        <span class="comment"># Cooler control</span></div>
+<div class="line"><span class="lineno"> 1549</span>        name = <span class="stringliteral">&quot;Cooler Enabled&quot;</span></div>
+<div class="line"><span class="lineno"> 1550</span>        self.add_setting(name, <span class="stringliteral">&quot;bool&quot;</span>, <span class="keywordtype">None</span>, self._set_cooler_state, <span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno"> 1551</span>        self.set_setting(name, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno"> 1552</span>        <span class="comment"># Binning</span></div>
+<div class="line"><span class="lineno"> 1553</span>        name = <span class="stringliteral">&quot;Binning&quot;</span></div>
+<div class="line"><span class="lineno"> 1554</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1555</span>            name, <span class="stringliteral">&quot;tuple&quot;</span>, self.get_binning, self.set_binning, <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1556</span>        )</div>
+<div class="line"><span class="lineno"> 1557</span>        <span class="comment"># Roi</span></div>
+<div class="line"><span class="lineno"> 1558</span>        name = <span class="stringliteral">&quot;Roi&quot;</span></div>
+<div class="line"><span class="lineno"> 1559</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1560</span>            name, <span class="stringliteral">&quot;tuple&quot;</span>, self.get_roi, <span class="keyword">lambda</span> roi: self.set_roi(*roi), <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1561</span>        )</div>
+<div class="line"><span class="lineno"> 1562</span>        <span class="comment"># BaselineClamp</span></div>
+<div class="line"><span class="lineno"> 1563</span>        name = <span class="stringliteral">&quot;BaselineClamp&quot;</span></div>
+<div class="line"><span class="lineno"> 1564</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_BASELINECLAMP:</div>
+<div class="line"><span class="lineno"> 1565</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1566</span>                name, <span class="stringliteral">&quot;bool&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetBaselineClamp), <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1567</span>            )</div>
+<div class="line"><span class="lineno"> 1568</span>            self.set_setting(name, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno"> 1569</span>        <span class="comment"># BaselineOffset</span></div>
+<div class="line"><span class="lineno"> 1570</span>        name = <span class="stringliteral">&quot;BaselineOffset&quot;</span></div>
+<div class="line"><span class="lineno"> 1571</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_BASELINEOFFSET:</div>
+<div class="line"><span class="lineno"> 1572</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1573</span>                name, <span class="stringliteral">&quot;int&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetBaselineOffset), (-1000, 1000)</div>
+<div class="line"><span class="lineno"> 1574</span>            )</div>
+<div class="line"><span class="lineno"> 1575</span>            self.set_setting(name, 0)</div>
+<div class="line"><span class="lineno"> 1576</span>        <span class="comment"># EMAdvanced</span></div>
+<div class="line"><span class="lineno"> 1577</span>        name = <span class="stringliteral">&quot;EMAdvanced&quot;</span></div>
+<div class="line"><span class="lineno"> 1578</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_EMADVANCED:</div>
+<div class="line"><span class="lineno"> 1579</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1580</span>                name, <span class="stringliteral">&quot;bool&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetEMAdvanced), <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1581</span>            )</div>
+<div class="line"><span class="lineno"> 1582</span>            self.set_setting(name, <span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno"> 1583</span>        <span class="comment"># GateMode</span></div>
+<div class="line"><span class="lineno"> 1584</span>        name = <span class="stringliteral">&quot;GateMode&quot;</span></div>
+<div class="line"><span class="lineno"> 1585</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_GATEMODE:</div>
+<div class="line"><span class="lineno"> 1586</span>            vrange = range(</div>
+<div class="line"><span class="lineno"> 1587</span>                0, [5, 6][self._caps.ulCameraType &amp; AC_CAMERATYPE_ISTAR]</div>
+<div class="line"><span class="lineno"> 1588</span>            )</div>
+<div class="line"><span class="lineno"> 1589</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1590</span>                name, <span class="stringliteral">&quot;int&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetGateMode), vrange</div>
+<div class="line"><span class="lineno"> 1591</span>            )</div>
+<div class="line"><span class="lineno"> 1592</span>        <span class="comment"># HighCapacity</span></div>
+<div class="line"><span class="lineno"> 1593</span>        name = <span class="stringliteral">&quot;HighCapacity&quot;</span></div>
+<div class="line"><span class="lineno"> 1594</span>        <span class="keywordflow">if</span> self._caps.ulSetFunctions &amp; AC_SETFUNCTION_HIGHCAPACITY:</div>
+<div class="line"><span class="lineno"> 1595</span>            self.add_setting(</div>
+<div class="line"><span class="lineno"> 1596</span>                name, <span class="stringliteral">&quot;bool&quot;</span>, <span class="keywordtype">None</span>, self._bind(SetHighCapacity), <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1597</span>            )</div>
+<div class="line"><span class="lineno"> 1598</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_binning_html"><div class="ttname"><a href="classmicroscope_1_1_binning.html">microscope.Binning</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00137">__init__.py:137</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_r_o_i_html"><div class="ttname"><a href="classmicroscope_1_1_r_o_i.html">microscope.ROI</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00144">__init__.py:144</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01381">microscope.cameras.atmcd.AndorAtmcd._bind()</a>, <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="atmcd_8py_source.html#l01464">microscope.cameras.atmcd.AndorAtmcd._caps</a>, <a class="el" href="atmcd_8py_source.html#l01747">microscope.cameras.atmcd.AndorAtmcd._get_sensor_temperature()</a>, <a class="el" href="atmcd_8py_source.html#l01375">microscope.cameras.atmcd.AndorAtmcd._handle</a>, <a class="el" href="ximea_8py_source.html#l00191">microscope.cameras.ximea.XimeaCamera._handle</a>, <a class="el" href="abc_8py_source.html#l00216">microscope.abc.FloatingDeviceMixin._index</a>, <a class="el" href="abc_8py_source.html#l00832">microscope.abc.Camera._readout_modes</a>, <a class="el" href="atmcd_8py_source.html#l01479">microscope.cameras.atmcd.AndorAtmcd._readout_modes</a>, <a class="el" href="pvcam_8py_source.html#l01780">microscope.cameras.pvcam.PVCamera._readout_modes</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="andorsdk3_8py_source.html#l00607">microscope.cameras.andorsdk3.AndorSDK3._set_binning()</a>, <a class="el" href="atmcd_8py_source.html#l01788">microscope.cameras.atmcd.AndorAtmcd._set_binning()</a>, <a class="el" href="pvcam_8py_source.html#l01640">microscope.cameras.pvcam.PVCamera._set_binning()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00298">microscope.simulators.SimulatedCamera._set_binning()</a>, <a class="el" href="picam_8py_source.html#l00224">microscope.cameras.picam.PiCamera._set_binning()</a>, <a class="el" href="abc_8py_source.html#l00942">microscope.abc.Camera._set_binning()</a>, <a class="el" href="ximea_8py_source.html#l00376">microscope.cameras.ximea.XimeaCamera._set_binning()</a>, <a class="el" href="atmcd_8py_source.html#l01434">microscope.cameras.atmcd.AndorAtmcd._set_cooler_state()</a>, <a class="el" href="atmcd_8py_source.html#l01728">microscope.cameras.atmcd.AndorAtmcd._set_readout_mode()</a>, <a class="el" href="picam_8py_source.html#l00231">microscope.cameras.picam.PiCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00970">microscope.abc.Camera._set_roi()</a>, <a class="el" href="ximea_8py_source.html#l00394">microscope.cameras.ximea.XimeaCamera._set_roi()</a>, <a class="el" href="andorsdk3_8py_source.html#l00626">microscope.cameras.andorsdk3.AndorSDK3._set_roi()</a>, <a class="el" href="atmcd_8py_source.html#l01798">microscope.cameras.atmcd.AndorAtmcd._set_roi()</a>, <a class="el" href="pvcam_8py_source.html#l01650">microscope.cameras.pvcam.PVCamera._set_roi()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00305">microscope.simulators.SimulatedCamera._set_roi()</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="atmcd_8py_source.html#l01470">microscope.cameras.atmcd.AndorAtmcd.amplifiers</a>, <a class="el" href="abc_8py_source.html#l00933">microscope.abc.Camera.get_binning()</a>, <a class="el" href="abc_8py_source.html#l00219">microscope.abc.FloatingDeviceMixin.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="pvcam_8py_source.html#l01660">microscope.cameras.pvcam.PVCamera.get_id()</a>, <a class="el" href="aurox_8py_source.html#l00163">microscope.filterwheels.aurox.Clarity.get_id()</a>, <a class="el" href="linkam_8py_source.html#l01125">microscope.stages.linkam._LinkamBase.get_id()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00238">microscope.testsuite.devices.TestFloatingDevice.get_id()</a>, <a class="el" href="abc_8py_source.html#l00961">microscope.abc.Camera.get_roi()</a>, <a class="el" href="abc_8py_source.html#l00946">microscope.abc.Camera.set_binning()</a>, <a class="el" href="abc_8py_source.html#l00974">microscope.abc.Camera.set_roi()</a>, <a class="el" href="abc_8py_source.html#l00468">microscope.abc.Device.set_setting()</a>, and <a class="el" href="abc_8py_source.html#l00585">microscope.abc.DataDevice.set_setting</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -541,7 +780,12 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800">microscope.abc.Camera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01706">1706</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1706</span>    <span class="keyword">def </span>set_exposure_time(self, value):</div>
+<div class="line"><span class="lineno"> 1707</span>        <span class="stringliteral">&quot;&quot;&quot;Set exposure time.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1708</span>        <span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1709</span>            SetExposureTime(value)</div>
+<div class="line"><span class="lineno"> 1710</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="accca214264c6320ea6893ed983330081" name="accca214264c6320ea6893ed983330081"></a>
@@ -580,6 +824,20 @@ ourselves so that we know when we must call SetCurrentCamera.
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html#a3c74f4111c799b181a6168d35474def0">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01768">1768</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1770</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno"> 1771</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno"> 1772</span>            atmcd_mode = TRIGGER_TO_ATMCD_MODE[(ttype, tmode)]</div>
+<div class="line"><span class="lineno"> 1773</span>        <span class="keywordflow">except</span> KeyError:</div>
+<div class="line"><span class="lineno"> 1774</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a>(</div>
+<div class="line"><span class="lineno"> 1775</span>                <span class="stringliteral">&quot;no ATMCD mode for %s and %s&quot;</span> % (ttype, tmode)</div>
+<div class="line"><span class="lineno"> 1776</span>            )</div>
+<div class="line"><span class="lineno"> 1777</span>        self.set_setting(<span class="stringliteral">&quot;TriggerMode&quot;</span>, atmcd_mode)</div>
+<div class="line"><span class="lineno"> 1778</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_unsupported_feature_error_html"><div class="ttname"><a href="classmicroscope_1_1_unsupported_feature_error.html">microscope.UnsupportedFeatureError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00093">__init__.py:93</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l01378">microscope.cameras.atmcd.AndorAtmcd._binning</a>, <a class="el" href="ximea_8py_source.html#l00196">microscope.cameras.ximea.XimeaCamera._binning</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00161">microscope.simulators.SimulatedCamera._binning</a>, <a class="el" href="atmcd_8py_source.html#l01377">microscope.cameras.atmcd.AndorAtmcd._roi</a>, <a class="el" href="ximea_8py_source.html#l00195">microscope.cameras.ximea.XimeaCamera._roi</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00160">microscope.simulators.SimulatedCamera._roi</a>, <a class="el" href="abc_8py_source.html#l00468">microscope.abc.Device.set_setting()</a>, and <a class="el" href="abc_8py_source.html#l00585">microscope.abc.DataDevice.set_setting</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -603,6 +861,18 @@ ourselves so that we know when we must call SetCurrentCamera.
 Deprecated, use trigger().
 </pre> 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01752">1752</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1752</span>    <span class="keyword">def </span>soft_trigger(self):</div>
+<div class="line"><span class="lineno"> 1753</span>        <span class="stringliteral">&quot;&quot;&quot;Send a software trigger signal.</span></div>
+<div class="line"><span class="lineno"> 1754</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1755</span><span class="stringliteral">        Deprecated, use trigger().</span></div>
+<div class="line"><span class="lineno"> 1756</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1757</span><span class="stringliteral">        </span><span class="keyword">with</span> self:</div>
+<div class="line"><span class="lineno"> 1758</span>            SendSoftwareTrigger()</div>
+<div class="line"><span class="lineno"> 1759</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00447">microscope.abc.Device.get_setting()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00247">microscope.cameras.picam.PiCamera.get_cycle_time()</a>.</p>
 
 </div>
 </div>
@@ -625,6 +895,11 @@ Deprecated, use trigger().
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01761">1761</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1761</span>    <span class="keyword">def </span>trigger_mode(self) -&gt; microscope.TriggerMode:</div>
+<div class="line"><span class="lineno"> 1762</span>        <span class="keywordflow">return</span> ATMCD_MODE_TO_TRIGGER[self.get_setting(<span class="stringliteral">&quot;TriggerMode&quot;</span>)][1]</div>
+<div class="line"><span class="lineno"> 1763</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, and <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>.</p>
 
 </div>
 </div>
@@ -647,6 +922,11 @@ Deprecated, use trigger().
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_trigger_target_mixin.html">microscope.abc.TriggerTargetMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01765">1765</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1765</span>    <span class="keyword">def </span>trigger_type(self) -&gt; microscope.TriggerType:</div>
+<div class="line"><span class="lineno"> 1766</span>        <span class="keywordflow">return</span> ATMCD_MODE_TO_TRIGGER[self.get_setting(<span class="stringliteral">&quot;TriggerMode&quot;</span>)][0]</div>
+<div class="line"><span class="lineno"> 1767</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="abc_8py_source.html#l01113">microscope.abc.DeformableMirror.apply_pattern()</a>, and <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>.</p>
 
 </div>
 </div>
@@ -664,6 +944,8 @@ Deprecated, use trigger().
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l01470">1470</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>.</p>
 
 </div>
 </div>

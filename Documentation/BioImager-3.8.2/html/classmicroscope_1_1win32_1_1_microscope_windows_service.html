@@ -204,7 +204,12 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00088">88</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   88</span>    <span class="keyword">def </span>__init__(self, args):</div>
+<div class="line"><span class="lineno">   89</span>        <span class="comment"># Initialise service framework.</span></div>
+<div class="line"><span class="lineno">   90</span>        win32serviceutil.ServiceFramework.__init__(self, args)</div>
+<div class="line"><span class="lineno">   91</span>        self.stop_event = multiprocessing.Event()</div>
+<div class="line"><span class="lineno">   92</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -225,7 +230,12 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00076">76</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   76</span>    <span class="keyword">def </span>get_config_file(cls):</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">return</span> win32serviceutil.GetServiceCustomOption(</div>
+<div class="line"><span class="lineno">   78</span>            cls._svc_name_, <span class="stringliteral">&quot;config&quot;</span></div>
+<div class="line"><span class="lineno">   79</span>        )</div>
+<div class="line"><span class="lineno">   80</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afaa4fc8726bfafb4f68a2cdec354e6df" name="afaa4fc8726bfafb4f68a2cdec354e6df"></a>
@@ -261,7 +271,14 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00081">81</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   81</span>    <span class="keyword">def </span>log(self, message, error=False):</div>
+<div class="line"><span class="lineno">   82</span>        <span class="keywordflow">if</span> error:</div>
+<div class="line"><span class="lineno">   83</span>            logFunc = servicemanager.LogErrorMsg</div>
+<div class="line"><span class="lineno">   84</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">   85</span>            logFunc = servicemanager.LogInfoMsg</div>
+<div class="line"><span class="lineno">   86</span>        logFunc(<span class="stringliteral">&quot;%s: %s&quot;</span> % (self._svc_name_, message))</div>
+<div class="line"><span class="lineno">   87</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a34873268d03f92c9c91d9c68c0c68ff1" name="a34873268d03f92c9c91d9c68c0c68ff1"></a>
@@ -291,7 +308,12 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00070">70</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   70</span>    <span class="keyword">def </span>set_config_file(cls, path):</div>
+<div class="line"><span class="lineno">   71</span>        win32serviceutil.SetServiceCustomOption(</div>
+<div class="line"><span class="lineno">   72</span>            cls._svc_name_, <span class="stringliteral">&quot;config&quot;</span>, os.path.abspath(path)</div>
+<div class="line"><span class="lineno">   73</span>        )</div>
+<div class="line"><span class="lineno">   74</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a523c6c0db766fdc2af6703466913d3ec" name="a523c6c0db766fdc2af6703466913d3ec"></a>
@@ -311,7 +333,38 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00093">93</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   93</span>    <span class="keyword">def </span>SvcDoRun(self):</div>
+<div class="line"><span class="lineno">   94</span>        configfile = win32serviceutil.GetServiceCustomOption(</div>
+<div class="line"><span class="lineno">   95</span>            self._svc_name_, <span class="stringliteral">&quot;config&quot;</span></div>
+<div class="line"><span class="lineno">   96</span>        )</div>
+<div class="line"><span class="lineno">   97</span>        os.chdir(os.path.dirname(configfile))</div>
+<div class="line"><span class="lineno">   98</span>        self.log(<span class="stringliteral">&quot;Using config file %s.&quot;</span> % configfile)</div>
+<div class="line"><span class="lineno">   99</span>        self.log(<span class="stringliteral">&quot;Logging at %s.&quot;</span> % os.getcwd())</div>
+<div class="line"><span class="lineno">  100</span>        self.ReportServiceStatus(win32service.SERVICE_RUNNING)</div>
+<div class="line"><span class="lineno">  101</span> </div>
+<div class="line"><span class="lineno">  102</span>        <span class="keyword">from</span> <a class="code hl_namespace" href="namespacemicroscope_1_1device__server.html">microscope.device_server</a> <span class="keyword">import</span> (</div>
+<div class="line"><span class="lineno">  103</span>            serve_devices,</div>
+<div class="line"><span class="lineno">  104</span>            validate_devices,</div>
+<div class="line"><span class="lineno">  105</span>            DeviceServerOptions,</div>
+<div class="line"><span class="lineno">  106</span>        )</div>
+<div class="line"><span class="lineno">  107</span> </div>
+<div class="line"><span class="lineno">  108</span>        options = DeviceServerOptions(</div>
+<div class="line"><span class="lineno">  109</span>            config_fpath=configfile,</div>
+<div class="line"><span class="lineno">  110</span>            logging_level=logging.INFO,</div>
+<div class="line"><span class="lineno">  111</span>        )</div>
+<div class="line"><span class="lineno">  112</span> </div>
+<div class="line"><span class="lineno">  113</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  114</span>            devices = validate_devices(configfile)</div>
+<div class="line"><span class="lineno">  115</span>            serve_devices(devices, options, self.stop_event)</div>
+<div class="line"><span class="lineno">  116</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  117</span>            servicemanager.LogErrorMsg(str(e))</div>
+<div class="line"><span class="lineno">  118</span>            <span class="comment"># Exit with non-zero error code so Windows will attempt to restart.</span></div>
+<div class="line"><span class="lineno">  119</span>            sys.exit(-1)</div>
+<div class="line"><span class="lineno">  120</span>        self.log(<span class="stringliteral">&quot;Service shutdown complete.&quot;</span>)</div>
+<div class="line"><span class="lineno">  121</span>        self.ReportServiceStatus(win32service.SERVICE_STOPPED)</div>
+<div class="line"><span class="lineno">  122</span> </div>
+<div class="ttc" id="anamespacemicroscope_1_1device__server_html"><div class="ttname"><a href="namespacemicroscope_1_1device__server.html">microscope.device_server</a></div><div class="ttdef"><b>Definition:</b> <a href="device__server_8py_source.html#l00001">device_server.py:1</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ada1162726d6159d4bc14d76b72f2cda8" name="ada1162726d6159d4bc14d76b72f2cda8"></a>
@@ -331,7 +384,12 @@ all microscope devices on that system.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="win32_8py_source.html#l00123">123</a> of file <a class="el" href="win32_8py_source.html">win32.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  123</span>    <span class="keyword">def </span>SvcStop(self):</div>
+<div class="line"><span class="lineno">  124</span>        self.ReportServiceStatus(win32service.SERVICE_STOP_PENDING)</div>
+<div class="line"><span class="lineno">  125</span>        self.stop_event.set()</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

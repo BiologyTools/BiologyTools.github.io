@@ -219,7 +219,11 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#aa83a5fbd2c9d16bd7af0ad180702b365">microscope.abc.Camera</a>, <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a657d93b584e6915a33f4a853529330b4">microscope.simulators.SimulatedCamera</a>, <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#a5f1b35587bf81d7f0e8959297fdc2c12">microscope.stages.linkam._LinkamBase</a>, <a class="el" href="classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html#a2affa7aa4fc988edbd7337e4a305b8f6">microscope.testsuite.devices.TestCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a8958fbb797332a875b157cfc782b1012">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c.html#a3ca7bbe3f0d70b05046d98b172855df6">microscope.filterwheels.thorlabs.ThorlabsFW102C</a>, <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c.html#a7eb8e8dd8d386c50303ba75776f0d8b5">microscope.filterwheels.thorlabs.ThorlabsFW212C</a>, <a class="el" href="classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel.html#a64a509c273ee3513bfdcdf44676e0421">microscope.filterwheels.thorlabs.ThorlabsFilterWheel</a>, <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#af306e90265c27e6d643978f5911b54ca">microscope.abc.DataDevice</a>, <a class="el" href="classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html#a5fa190172f9a8c7a93053942d69aa117">microscope.simulators.stage_aware_camera.StageAwareCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a5187efcee41e91c498c4b07b9a30842c">microscope.cameras.ximea.XimeaCamera</a>, and <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#af7575373fa50d5ba2d93821b09605d92">microscope.stages.linkam.LinkamCMS</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00288">288</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  288</span>    <span class="keyword">def </span>__init__(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  289</span>        self.enabled = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  290</span>        self._settings: typing.Dict[str, _Setting] = {}</div>
+<div class="line"><span class="lineno">  291</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2ef1d1788cc5d1a708a0209f2cd5fe11" name="a2ef1d1788cc5d1a708a0209f2cd5fe11"></a>
@@ -241,7 +245,10 @@ Public Attributes</h2></td></tr>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#a55a843127d81f73f7ec7cf20289d24e2">microscope.stages.linkam._LinkamBase</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00292">292</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  292</span>    <span class="keyword">def </span>__del__(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  293</span>        self.shutdown()</div>
+<div class="line"><span class="lineno">  294</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -326,6 +333,50 @@ device attributes, but Pyro does not support dot notation to
 access the functions we need (e.g. `Device.some_setting.set`),
 so I'd have to write access functions, anyway.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00399">399</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  407</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  408</span>        <span class="stringliteral">&quot;&quot;&quot;Add a setting definition.</span></div>
+<div class="line"><span class="lineno">  409</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  410</span><span class="stringliteral">        Args:</span></div>
+<div class="line"><span class="lineno">  411</span><span class="stringliteral">            name: the setting&#39;s name.</span></div>
+<div class="line"><span class="lineno">  412</span><span class="stringliteral">            dtype: a data type </span><span class="keyword">from</span> `<span class="stringliteral">&quot;int&quot;</span>`, `<span class="stringliteral">&quot;float&quot;</span>`, `<span class="stringliteral">&quot;bool&quot;</span>`,</div>
+<div class="line"><span class="lineno">  413</span>                `<span class="stringliteral">&quot;enum&quot;</span>`, <span class="keywordflow">or</span> `<span class="stringliteral">&quot;str&quot;</span>` (see `DTYPES`).</div>
+<div class="line"><span class="lineno">  414</span>            get_func: a function to get the current value.</div>
+<div class="line"><span class="lineno">  415</span>            set_func: a function to set the value.</div>
+<div class="line"><span class="lineno">  416</span>            values: a description of allowed values dependent on</div>
+<div class="line"><span class="lineno">  417</span>                dtype, <span class="keywordflow">or</span> function that returns a description.</div>
+<div class="line"><span class="lineno">  418</span>            readonly: an optional function to indicate <span class="keywordflow">if</span> the setting</div>
+<div class="line"><span class="lineno">  419</span>                <span class="keywordflow">is</span> readonly.  A setting may be readonly temporarily,</div>
+<div class="line"><span class="lineno">  420</span>                so this function will <span class="keywordflow">return</span> `<span class="keyword">True</span>` <span class="keywordflow">or</span> `<span class="keyword">False</span>` to</div>
+<div class="line"><span class="lineno">  421</span>                indicate its current state.  If set to no `<span class="keywordtype">None</span>`</div>
+<div class="line"><span class="lineno">  422</span>                (default), then its value will be dependent on the</div>
+<div class="line"><span class="lineno">  423</span>                value of `set_func`.</div>
+<div class="line"><span class="lineno">  424</span> </div>
+<div class="line"><span class="lineno">  425</span>        A client needs some way of knowing a setting name <span class="keywordflow">and</span> data</div>
+<div class="line"><span class="lineno">  426</span>        type, retrieving the current value <span class="keywordflow">and</span>, <span class="keywordflow">if</span> settable, a way to</div>
+<div class="line"><span class="lineno">  427</span>        retrieve allowable values, <span class="keywordflow">and</span> set the value.  We store this</div>
+<div class="line"><span class="lineno">  428</span>        info <span class="keywordflow">in</span> a dictionary.  I considered having a `Setting1 <span class="keyword">class</span></div>
+<div class="line"><span class="lineno">  429</span>        <span class="keyword">with</span> getter, setter, etc., <span class="keywordflow">and</span> adding `Setting` instances <span class="keyword">as</span></div>
+<div class="line"><span class="lineno">  430</span>        device attributes, but Pyro does <span class="keywordflow">not</span> support dot notation to</div>
+<div class="line"><span class="lineno">  431</span>        access the functions we need (e.g. `Device.some_setting.set`),</div>
+<div class="line"><span class="lineno">  432</span>        so I<span class="stringliteral">&#39;d have to write access functions, anyway.</span></div>
+<div class="line"><span class="lineno">  433</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  434</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  435</span><span class="stringliteral">        </span><span class="keywordflow">if</span> dtype <span class="keywordflow">not</span> <span class="keywordflow">in</span> DTYPES:</div>
+<div class="line"><span class="lineno">  436</span>            <span class="keywordflow">raise</span> ValueError(<span class="stringliteral">&quot;Unsupported dtype.&quot;</span>)</div>
+<div class="line"><span class="lineno">  437</span>        <span class="keywordflow">elif</span> <span class="keywordflow">not</span> (isinstance(values, DTYPES[dtype]) <span class="keywordflow">or</span> callable(values)):</div>
+<div class="line"><span class="lineno">  438</span>            <span class="keywordflow">raise</span> TypeError(</div>
+<div class="line"><span class="lineno">  439</span>                <span class="stringliteral">&quot;Invalid values type for %s &#39;%s&#39;: expected function or %s&quot;</span></div>
+<div class="line"><span class="lineno">  440</span>                % (dtype, name, DTYPES[dtype])</div>
+<div class="line"><span class="lineno">  441</span>            )</div>
+<div class="line"><span class="lineno">  442</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  443</span>            self._settings[name] = _Setting(</div>
+<div class="line"><span class="lineno">  444</span>                name, dtype, get_func, set_func, values, readonly</div>
+<div class="line"><span class="lineno">  445</span>            )</div>
+<div class="line"><span class="lineno">  446</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00829">microscope.abc.Camera.__init__()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00157">microscope.simulators.SimulatedCamera.__init__()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00052">microscope.testsuite.devices.TestCamera.__init__()</a>, <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00067">microscope.simulators.stage_aware_camera.StageAwareCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, and <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -356,6 +407,12 @@ so I'd have to write access functions, anyway.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return ordered setting descriptions as a list of dicts.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00476">476</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  476</span>    <span class="keyword">def </span>describe_setting(self, name: str):</div>
+<div class="line"><span class="lineno">  477</span>        <span class="stringliteral">&quot;&quot;&quot;Return ordered setting descriptions as a list of dicts.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  478</span>        <span class="keywordflow">return</span> self._settings[name].describe()</div>
+<div class="line"><span class="lineno">  479</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
 
 </div>
 </div>
@@ -376,6 +433,12 @@ so I'd have to write access functions, anyway.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return ordered setting descriptions as a list of dicts.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00480">480</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  480</span>    <span class="keyword">def </span>describe_settings(self):</div>
+<div class="line"><span class="lineno">  481</span>        <span class="stringliteral">&quot;&quot;&quot;Return ordered setting descriptions as a list of dicts.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  482</span>        <span class="keywordflow">return</span> [(k, v.describe()) <span class="keywordflow">for</span> (k, v) <span class="keywordflow">in</span> self._settings.items()]</div>
+<div class="line"><span class="lineno">  483</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
 
 </div>
 </div>
@@ -398,6 +461,15 @@ so I'd have to write access functions, anyway.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a1ee17ca01f5f5b02d6fcbad940e4b584">microscope.abc.DataDevice</a>, <a class="el" href="classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel.html#a202659d3448bb0cd46e0204a36810570">microscope.controllers.coolled._CoolLEDChannel</a>, <a class="el" href="classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel.html#a08de704864682fc88e565c97922ee0a0">microscope.controllers.lumencor._SpectraIIILightChannel</a>, <a class="el" href="classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser.html#ab9154c84c3ebd43632c250df6b8c7f8a">microscope.lights.cobolt.CoboltLaser</a>, <a class="el" href="classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser.html#a158de6a68dcdafd38bfe325935639875">microscope.lights.sapphire.SapphireLaser</a>, and <a class="el" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#ace72a4800f613b245fa2f35c0683fd21">microscope.lights.toptica.TopticaiBeam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00307">307</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  307</span>    <span class="keyword">def </span>disable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  308</span>        <span class="stringliteral">&quot;&quot;&quot;Disable the device for a short period for inactivity.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  309</span>        self._do_disable()</div>
+<div class="line"><span class="lineno">  310</span>        self.enabled = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  311</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00298">microscope.abc.Device._do_disable()</a>, <a class="el" href="andorsdk3_8py_source.html#l00534">microscope.cameras.andorsdk3.AndorSDK3._do_disable()</a>, <a class="el" href="atmcd_8py_source.html#l01650">microscope.cameras.atmcd.AndorAtmcd._do_disable()</a>, <a class="el" href="picam_8py_source.html#l00168">microscope.cameras.picam.PiCamera._do_disable()</a>, <a class="el" href="pvcam_8py_source.html#l01613">microscope.cameras.pvcam.PVCamera._do_disable()</a>, <a class="el" href="ximea_8py_source.html#l00335">microscope.cameras.ximea.XimeaCamera._do_disable()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00209">microscope.controllers.toptica._iChromeLaser._do_disable()</a>, <a class="el" href="zaber_8py_source.html#l00466">microscope.controllers.zaber._ZaberLED._do_disable()</a>, <a class="el" href="aurox_8py_source.html#l00172">microscope.filterwheels.aurox.Clarity._do_disable()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00128">microscope.lights.deepstar.DeepstarLaser._do_disable()</a>, <a class="el" href="lights_2obis_8py_source.html#l00152">microscope.lights.obis.ObisLaser._do_disable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00258">microscope.simulators.SimulatedCamera._do_disable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00358">microscope.simulators.SimulatedLightSource._do_disable()</a>, <a class="el" href="abc_8py_source.html#l00289">microscope.abc.Device.enabled</a>, <a class="el" href="abc_8py_source.html#l00605">microscope.abc.DataDevice.enabled</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00114">microscope.testsuite.devices.DummySLM.enabled</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, and <a class="el" href="abc_8py_source.html#l00349">microscope.abc.Device.shutdown()</a>.</p>
 
 </div>
 </div>
@@ -420,6 +492,15 @@ so I'd have to write access functions, anyway.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#ad1a6e54ec4324cdc4bcfcb80a8d99ef8">microscope.abc.DataDevice</a>, <a class="el" href="classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel.html#ada812f986a1e28bab732bc76a4eff07f">microscope.controllers.coolled._CoolLEDChannel</a>, <a class="el" href="classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel.html#ad267aa79697c1f45df2f6bbe49772469">microscope.controllers.lumencor._SpectraIIILightChannel</a>, and <a class="el" href="classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94">microscope.lights.toptica.TopticaiBeam</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00321">321</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  321</span>    <span class="keyword">def </span>enable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  322</span>        <span class="stringliteral">&quot;&quot;&quot;Enable the device.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  323</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  324</span>            self.enabled = self._do_enable()</div>
+<div class="line"><span class="lineno">  325</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  326</span>            _logger.debug(<span class="stringliteral">&quot;Error in _do_enable:&quot;</span>, exc_info=err)</div>
+<div class="line"><span class="lineno">  327</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00312">microscope.abc.Device._do_enable()</a>, <a class="el" href="andorsdk3_8py_source.html#l00538">microscope.cameras.andorsdk3.AndorSDK3._do_enable()</a>, <a class="el" href="atmcd_8py_source.html#l01654">microscope.cameras.atmcd.AndorAtmcd._do_enable()</a>, <a class="el" href="picam_8py_source.html#l00175">microscope.cameras.picam.PiCamera._do_enable()</a>, <a class="el" href="pvcam_8py_source.html#l01480">microscope.cameras.pvcam.PVCamera._do_enable()</a>, <a class="el" href="ximea_8py_source.html#l00338">microscope.cameras.ximea.XimeaCamera._do_enable()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00206">microscope.controllers.toptica._iChromeLaser._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00341">microscope.controllers.zaber._ZaberStage._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00462">microscope.controllers.zaber._ZaberLED._do_enable()</a>, <a class="el" href="aurox_8py_source.html#l00166">microscope.filterwheels.aurox.Clarity._do_enable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00119">microscope.lights.cobolt.CoboltLaser._do_enable()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00096">microscope.lights.deepstar.DeepstarLaser._do_enable()</a>, <a class="el" href="lights_2obis_8py_source.html#l00109">microscope.lights.obis.ObisLaser._do_enable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00153">microscope.lights.sapphire.SapphireLaser._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00261">microscope.simulators.SimulatedCamera._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00351">microscope.simulators.SimulatedLightSource._do_enable()</a>, <a class="el" href="ludl_8py_source.html#l00347">microscope.stages.ludl._LudlStage._do_enable()</a>, <a class="el" href="abc_8py_source.html#l00289">microscope.abc.Device.enabled</a>, <a class="el" href="abc_8py_source.html#l00605">microscope.abc.DataDevice.enabled</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00114">microscope.testsuite.devices.DummySLM.enabled</a>.</p>
 
 </div>
 </div>
@@ -440,6 +521,21 @@ so I'd have to write access functions, anyway.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return ordered settings as a list of dicts.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00455">455</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  455</span>    <span class="keyword">def </span>get_all_settings(self):</div>
+<div class="line"><span class="lineno">  456</span>        <span class="stringliteral">&quot;&quot;&quot;Return ordered settings as a list of dicts.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  457</span>        <span class="comment"># Fetching some settings may fail depending on device state.</span></div>
+<div class="line"><span class="lineno">  458</span>        <span class="comment"># Report these values as &#39;None&#39; and continue fetching other settings.</span></div>
+<div class="line"><span class="lineno">  459</span>        <span class="keyword">def </span>catch(f):</div>
+<div class="line"><span class="lineno">  460</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  461</span>                <span class="keywordflow">return</span> f()</div>
+<div class="line"><span class="lineno">  462</span>            <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  463</span>                _logger.error(<span class="stringliteral">&quot;getting %s: %s&quot;</span>, f.__self__.name, err)</div>
+<div class="line"><span class="lineno">  464</span>                <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  465</span> </div>
+<div class="line"><span class="lineno">  466</span>        <span class="keywordflow">return</span> {k: catch(v.get) <span class="keywordflow">for</span> k, v <span class="keywordflow">in</span> self._settings.items()}</div>
+<div class="line"><span class="lineno">  467</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
 
 </div>
 </div>
@@ -460,7 +556,10 @@ so I'd have to write access functions, anyway.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00295">295</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  295</span>    <span class="keyword">def </span>get_is_enabled(self) -&gt; bool:</div>
+<div class="line"><span class="lineno">  296</span>        <span class="keywordflow">return</span> self.enabled</div>
+<div class="line"><span class="lineno">  297</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a440ac6b85c3111e007f95423b17c4a98" name="a440ac6b85c3111e007f95423b17c4a98"></a>
@@ -490,6 +589,18 @@ so I'd have to write access functions, anyway.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Return the current value of a setting.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00447">447</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  447</span>    <span class="keyword">def </span>get_setting(self, name: str):</div>
+<div class="line"><span class="lineno">  448</span>        <span class="stringliteral">&quot;&quot;&quot;Return the current value of a setting.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  449</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  450</span>            <span class="keywordflow">return</span> self._settings[name].get()</div>
+<div class="line"><span class="lineno">  451</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  452</span>            _logger.error(<span class="stringliteral">&quot;in get_setting(%s):&quot;</span>, name, exc_info=err)</div>
+<div class="line"><span class="lineno">  453</span>            <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">  454</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01752">microscope.cameras.atmcd.AndorAtmcd.soft_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -516,6 +627,18 @@ they should call it on their `__init__` method.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#ad9e11335bc97bebfce8007f3c0ab96d3">microscope.cameras.andorsdk3.AndorSDK3</a>, <a class="el" href="classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a12268ba33a8ae200310811c8a14a5607">microscope.cameras.atmcd.AndorAtmcd</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a3e6e25f9daf0f4fcb42f40474f2b45b8">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a93229fd39170fa2f1b994c1a438375be">microscope.cameras.pvcam.PVCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a808f82612986ac5d699f6f1cd69c2d8f">microscope.cameras.ximea.XimeaCamera</a>, <a class="el" href="classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser.html#a12000ac844b3a356ec150e76af96668f">microscope.lights.cobolt.CoboltLaser</a>, <a class="el" href="classmicroscope_1_1lights_1_1obis_1_1_obis_laser.html#a5344e5fbdb194d232cafdc4bf0540ad2">microscope.lights.obis.ObisLaser</a>, <a class="el" href="classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser.html#a2d61a8dc271e5c3d23d15a4852e0c14d">microscope.lights.sapphire.SapphireLaser</a>, and <a class="el" href="classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html#abb8d15f3acfb2ccc13ada1dd0d8381f4">microscope.testsuite.devices.TestFloatingDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00339">339</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  339</span>    <span class="keyword">def </span>initialize(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  340</span>        <span class="stringliteral">&quot;&quot;&quot;Initialize the device.</span></div>
+<div class="line"><span class="lineno">  341</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  342</span><span class="stringliteral">        If devices have this method (</span><span class="keywordflow">not</span> required, <span class="keywordflow">and</span> many don<span class="stringliteral">&#39;t),</span></div>
+<div class="line"><span class="lineno">  343</span><span class="stringliteral">        then they should call it </span><span class="keyword">as</span> part of the initialisation, i.e.,</div>
+<div class="line"><span class="lineno">  344</span>        they should call it on their `__init__` method.</div>
+<div class="line"><span class="lineno">  345</span> </div>
+<div class="line"><span class="lineno">  346</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  347</span><span class="stringliteral">        </span><span class="keywordflow">pass</span></div>
+<div class="line"><span class="lineno">  348</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -552,6 +675,18 @@ they should call it on their `__init__` method.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Set a setting.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00468">468</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  468</span>    <span class="keyword">def </span>set_setting(self, name: str, value) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  469</span>        <span class="stringliteral">&quot;&quot;&quot;Set a setting.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  470</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  471</span>            self._settings[name].set(value)</div>
+<div class="line"><span class="lineno">  472</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  473</span>            _logger.error(<span class="stringliteral">&quot;in set_setting(%s):&quot;</span>, name, exc_info=err)</div>
+<div class="line"><span class="lineno">  474</span>            <span class="keywordflow">raise</span></div>
+<div class="line"><span class="lineno">  475</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, and <a class="el" href="atmcd_8py_source.html#l01770">microscope.cameras.atmcd.AndorAtmcd.set_trigger()</a>.</p>
 
 </div>
 </div>
@@ -610,6 +745,58 @@ a state that it can be reconnected.
     called when the interpreter exits so if `shutdown` is not
     called explicitely, the devices might not be shutdown.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00349">349</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  349</span>    <span class="keyword">def </span>shutdown(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  350</span>        <span class="stringliteral">&quot;&quot;&quot;Shutdown the device.</span></div>
+<div class="line"><span class="lineno">  351</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  352</span><span class="stringliteral">        Disable </span><span class="keywordflow">and</span> disconnect the device.  This method should be</div>
+<div class="line"><span class="lineno">  353</span>        called before destructing the device object, to ensure that</div>
+<div class="line"><span class="lineno">  354</span>        the device <span class="keywordflow">is</span> actually shutdown.</div>
+<div class="line"><span class="lineno">  355</span> </div>
+<div class="line"><span class="lineno">  356</span>        After `shutdown`, the device object <span class="keywordflow">is</span> no longer usable <span class="keywordflow">and</span></div>
+<div class="line"><span class="lineno">  357</span>        calling any other method <span class="keywordflow">is</span> undefined behaviour.  The only</div>
+<div class="line"><span class="lineno">  358</span>        exception `shutdown` itself which can be called consecutively,</div>
+<div class="line"><span class="lineno">  359</span>        <span class="keywordflow">and</span> after the first time will have no effect.</div>
+<div class="line"><span class="lineno">  360</span> </div>
+<div class="line"><span class="lineno">  361</span>        A device object that has been shutdown can<span class="stringliteral">&#39;t be reinitialised.</span></div>
+<div class="line"><span class="lineno">  362</span><span class="stringliteral">        Instead of reusing the object, a new one should be created</span></div>
+<div class="line"><span class="lineno">  363</span><span class="stringliteral">        instead.  This means that `shutdown` will leave the device </span><span class="keywordflow">in</span></div>
+<div class="line"><span class="lineno">  364</span>        a state that it can be reconnected.</div>
+<div class="line"><span class="lineno">  365</span> </div>
+<div class="line"><span class="lineno">  366</span>        .. code-block:: python</div>
+<div class="line"><span class="lineno">  367</span> </div>
+<div class="line"><span class="lineno">  368</span>            device = SomeDevice()</div>
+<div class="line"><span class="lineno">  369</span>            device.shutdown()</div>
+<div class="line"><span class="lineno">  370</span> </div>
+<div class="line"><span class="lineno">  371</span>            <span class="comment"># Multiple calls to shutdown are OK</span></div>
+<div class="line"><span class="lineno">  372</span>            device.shutdown()</div>
+<div class="line"><span class="lineno">  373</span>            device.shutdown()</div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>            <span class="comment"># After shutdown, everything else is undefined behaviour.</span></div>
+<div class="line"><span class="lineno">  376</span>            device.enable()  <span class="comment"># undefined behaviour</span></div>
+<div class="line"><span class="lineno">  377</span>            device.get_setting(<span class="stringliteral">&quot;speed&quot;</span>)  <span class="comment"># undefined behaviour</span></div>
+<div class="line"><span class="lineno">  378</span> </div>
+<div class="line"><span class="lineno">  379</span>            <span class="comment"># To reinitialise the device, construct a new instance.</span></div>
+<div class="line"><span class="lineno">  380</span>            device = SomeDevice()</div>
+<div class="line"><span class="lineno">  381</span> </div>
+<div class="line"><span class="lineno">  382</span> </div>
+<div class="line"><span class="lineno">  383</span>        .. note::</div>
+<div class="line"><span class="lineno">  384</span> </div>
+<div class="line"><span class="lineno">  385</span>            While `__del__` calls `shutdown`, one should <span class="keywordflow">not</span> rely on</div>
+<div class="line"><span class="lineno">  386</span>            it.  Python does <span class="keywordflow">not</span> guarante that `__del__` will be</div>
+<div class="line"><span class="lineno">  387</span>            called when the interpreter exits so <span class="keywordflow">if</span> `shutdown` <span class="keywordflow">is</span> <span class="keywordflow">not</span></div>
+<div class="line"><span class="lineno">  388</span>            called explicitely, the devices might <span class="keywordflow">not</span> be shutdown.</div>
+<div class="line"><span class="lineno">  389</span> </div>
+<div class="line"><span class="lineno">  390</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  391</span><span class="stringliteral">        </span><span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  392</span>            self.disable()</div>
+<div class="line"><span class="lineno">  393</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  394</span>            _logger.warning(<span class="stringliteral">&quot;Exception in disable() during shutdown: %s&quot;</span>, e)</div>
+<div class="line"><span class="lineno">  395</span>        _logger.info(<span class="stringliteral">&quot;Shutting down ... ... ...&quot;</span>)</div>
+<div class="line"><span class="lineno">  396</span>        self._do_shutdown()</div>
+<div class="line"><span class="lineno">  397</span>        _logger.info(<span class="stringliteral">&quot;... ... ... ... shut down completed.&quot;</span>)</div>
+<div class="line"><span class="lineno">  398</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00329">microscope.abc.Device._do_shutdown()</a>, <a class="el" href="abc_8py_source.html#l01346">microscope.abc.Controller._do_shutdown()</a>, <a class="el" href="andorsdk3_8py_source.html#l00530">microscope.cameras.andorsdk3.AndorSDK3._do_shutdown()</a>, <a class="el" href="atmcd_8py_source.html#l01623">microscope.cameras.atmcd.AndorAtmcd._do_shutdown()</a>, <a class="el" href="picam_8py_source.html#l00171">microscope.cameras.picam.PiCamera._do_shutdown()</a>, <a class="el" href="pvcam_8py_source.html#l01618">microscope.cameras.pvcam.PVCamera._do_shutdown()</a>, <a class="el" href="ximea_8py_source.html#l00423">microscope.cameras.ximea.XimeaCamera._do_shutdown()</a>, <a class="el" href="coolled_8py_source.html#l00160">microscope.controllers.coolled._CoolLEDChannel._do_shutdown()</a>, <a class="el" href="lumencor_8py_source.html#l00220">microscope.controllers.lumencor._SpectraIIILightChannel._do_shutdown()</a>, <a class="el" href="prior_8py_source.html#l00241">microscope.controllers.prior._ProScanIIIFilterWheel._do_shutdown()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00212">microscope.controllers.toptica._iChromeLaser._do_shutdown()</a>, <a class="el" href="zaber_8py_source.html#l00338">microscope.controllers.zaber._ZaberStage._do_shutdown()</a>, <a class="el" href="zaber_8py_source.html#l00405">microscope.controllers.zaber._ZaberFilterWheel._do_shutdown()</a>, <a class="el" href="zaber_8py_source.html#l00456">microscope.controllers.zaber._ZaberLED._do_shutdown()</a>, <a class="el" href="aurox_8py_source.html#l00283">microscope.filterwheels.aurox.Clarity._do_shutdown()</a>, <a class="el" href="thorlabs_8py_source.html#l00075">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._do_shutdown()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00102">microscope.lights.cobolt.CoboltLaser._do_shutdown()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00123">microscope.lights.deepstar.DeepstarLaser._do_shutdown()</a>, <a class="el" href="lights_2obis_8py_source.html#l00129">microscope.lights.obis.ObisLaser._do_shutdown()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00141">microscope.lights.sapphire.SapphireLaser._do_shutdown()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00232">microscope.lights.toptica.TopticaiBeam._do_shutdown()</a>, <a class="el" href="alpao_8py_source.html#l00202">microscope.mirror.alpao.AlpaoDeformableMirror._do_shutdown()</a>, <a class="el" href="mirror_2bmc_8py_source.html#l00072">microscope.mirror.bmc.BMCDeformableMirror._do_shutdown()</a>, <a class="el" href="mirror_2mirao52e_8py_source.html#l00106">microscope.mirror.mirao52e.Mirao52e._do_shutdown()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00308">microscope.simulators.SimulatedCamera._do_shutdown()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00335">microscope.simulators.SimulatedFilterWheel._do_shutdown()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00355">microscope.simulators.SimulatedLightSource._do_shutdown()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00384">microscope.simulators.SimulatedDeformableMirror._do_shutdown()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00463">microscope.simulators.SimulatedStage._do_shutdown()</a>, <a class="el" href="linkam_8py_source.html#l01089">microscope.stages.linkam._LinkamBase._do_shutdown()</a>, <a class="el" href="ludl_8py_source.html#l00344">microscope.stages.ludl._LudlStage._do_shutdown()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00103">microscope.testsuite.devices.DummySLM._do_shutdown()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00145">microscope.testsuite.devices.DummyDSP._do_shutdown()</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00246">microscope.testsuite.devices.TestFloatingDevice._do_shutdown()</a>, <a class="el" href="test__device__server_8py_source.html#l00047">microscope.testsuite.test_device_server.ExposePIDDevice._do_shutdown()</a>, <a class="el" href="test__device__server_8py_source.html#l00193">microscope.testsuite.test_device_server.DeviceWithPort._do_shutdown()</a>, <a class="el" href="abc_8py_source.html#l00307">microscope.abc.Device.disable()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="coolled_8py_source.html#l00175">microscope.controllers.coolled._CoolLEDChannel.disable()</a>, <a class="el" href="lumencor_8py_source.html#l00233">microscope.controllers.lumencor._SpectraIIILightChannel.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00134">microscope.lights.cobolt.CoboltLaser.disable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00173">microscope.lights.sapphire.SapphireLaser.disable()</a>, and <a class="el" href="lights_2toptica_8py_source.html#l00242">microscope.lights.toptica.TopticaiBeam.disable()</a>.</p>
 
 </div>
 </div>
@@ -648,6 +835,48 @@ a state that it can be reconnected.
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1abc_1_1_data_device.html#a307a47932192c807d0501bb0a30d9a37">microscope.abc.DataDevice</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00484">484</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  484</span>    <span class="keyword">def </span>update_settings(self, incoming, init: bool = <span class="keyword">False</span>):</div>
+<div class="line"><span class="lineno">  485</span>        <span class="stringliteral">&quot;&quot;&quot;Update settings based on dict of settings and values.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  486</span>        <span class="keywordflow">if</span> init:</div>
+<div class="line"><span class="lineno">  487</span>            <span class="comment"># Assume nothing about state: set everything.</span></div>
+<div class="line"><span class="lineno">  488</span>            my_keys = set(self._settings.keys())</div>
+<div class="line"><span class="lineno">  489</span>            their_keys = set(incoming.keys())</div>
+<div class="line"><span class="lineno">  490</span>            update_keys = my_keys &amp; their_keys</div>
+<div class="line"><span class="lineno">  491</span>            <span class="keywordflow">if</span> update_keys != my_keys:</div>
+<div class="line"><span class="lineno">  492</span>                missing = <span class="stringliteral">&quot;, &quot;</span>.join([k <span class="keywordflow">for</span> k <span class="keywordflow">in</span> my_keys - their_keys])</div>
+<div class="line"><span class="lineno">  493</span>                msg = (</div>
+<div class="line"><span class="lineno">  494</span>                    <span class="stringliteral">&quot;update_settings init=True but missing keys: %s.&quot;</span> % missing</div>
+<div class="line"><span class="lineno">  495</span>                )</div>
+<div class="line"><span class="lineno">  496</span>                _logger.debug(msg)</div>
+<div class="line"><span class="lineno">  497</span>                <span class="keywordflow">raise</span> Exception(msg)</div>
+<div class="line"><span class="lineno">  498</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  499</span>            <span class="comment"># Only update changed values.</span></div>
+<div class="line"><span class="lineno">  500</span>            my_keys = set(self._settings.keys())</div>
+<div class="line"><span class="lineno">  501</span>            their_keys = set(incoming.keys())</div>
+<div class="line"><span class="lineno">  502</span>            update_keys = set(</div>
+<div class="line"><span class="lineno">  503</span>                key</div>
+<div class="line"><span class="lineno">  504</span>                <span class="keywordflow">for</span> key <span class="keywordflow">in</span> my_keys &amp; their_keys</div>
+<div class="line"><span class="lineno">  505</span>                <span class="keywordflow">if</span> self.get_setting(key) != incoming[key]</div>
+<div class="line"><span class="lineno">  506</span>            )</div>
+<div class="line"><span class="lineno">  507</span>        results = {}</div>
+<div class="line"><span class="lineno">  508</span>        <span class="comment"># Update values.</span></div>
+<div class="line"><span class="lineno">  509</span>        <span class="keywordflow">for</span> key <span class="keywordflow">in</span> update_keys:</div>
+<div class="line"><span class="lineno">  510</span>            <span class="keywordflow">if</span> key <span class="keywordflow">not</span> <span class="keywordflow">in</span> my_keys <span class="keywordflow">or</span> <span class="keywordflow">not</span> self._settings[key].set:</div>
+<div class="line"><span class="lineno">  511</span>                <span class="comment"># Setting not recognised or no set function implemented</span></div>
+<div class="line"><span class="lineno">  512</span>                results[key] = NotImplemented</div>
+<div class="line"><span class="lineno">  513</span>                update_keys.remove(key)</div>
+<div class="line"><span class="lineno">  514</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  515</span>            <span class="keywordflow">if</span> self._settings[key].readonly():</div>
+<div class="line"><span class="lineno">  516</span>                <span class="keywordflow">continue</span></div>
+<div class="line"><span class="lineno">  517</span>            self._settings[key].set(incoming[key])</div>
+<div class="line"><span class="lineno">  518</span>        <span class="comment"># Read back values in second loop.</span></div>
+<div class="line"><span class="lineno">  519</span>        <span class="keywordflow">for</span> key <span class="keywordflow">in</span> update_keys:</div>
+<div class="line"><span class="lineno">  520</span>            results[key] = self._settings[key].get()</div>
+<div class="line"><span class="lineno">  521</span>        <span class="keywordflow">return</span> results</div>
+<div class="line"><span class="lineno">  522</span> </div>
+<div class="line"><span class="lineno">  523</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="abc_8py_source.html#l00312">microscope.abc.Device._do_enable()</a>, <a class="el" href="andorsdk3_8py_source.html#l00538">microscope.cameras.andorsdk3.AndorSDK3._do_enable()</a>, <a class="el" href="atmcd_8py_source.html#l01654">microscope.cameras.atmcd.AndorAtmcd._do_enable()</a>, <a class="el" href="picam_8py_source.html#l00175">microscope.cameras.picam.PiCamera._do_enable()</a>, <a class="el" href="pvcam_8py_source.html#l01480">microscope.cameras.pvcam.PVCamera._do_enable()</a>, <a class="el" href="ximea_8py_source.html#l00338">microscope.cameras.ximea.XimeaCamera._do_enable()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00206">microscope.controllers.toptica._iChromeLaser._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00341">microscope.controllers.zaber._ZaberStage._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00462">microscope.controllers.zaber._ZaberLED._do_enable()</a>, <a class="el" href="aurox_8py_source.html#l00166">microscope.filterwheels.aurox.Clarity._do_enable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00119">microscope.lights.cobolt.CoboltLaser._do_enable()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00096">microscope.lights.deepstar.DeepstarLaser._do_enable()</a>, <a class="el" href="lights_2obis_8py_source.html#l00109">microscope.lights.obis.ObisLaser._do_enable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00153">microscope.lights.sapphire.SapphireLaser._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00261">microscope.simulators.SimulatedCamera._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00351">microscope.simulators.SimulatedLightSource._do_enable()</a>, <a class="el" href="ludl_8py_source.html#l00347">microscope.stages.ludl._LudlStage._do_enable()</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00087">microscope.simulators.stage_aware_camera.StageAwareCamera._settings</a>, <a class="el" href="abc_8py_source.html#l00588">microscope.abc.DataDevice.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00446">microscope.cameras.andorsdk3.AndorSDK3.abort()</a>, <a class="el" href="atmcd_8py_source.html#l01424">microscope.cameras.atmcd.AndorAtmcd.abort()</a>, <a class="el" href="picam_8py_source.html#l00186">microscope.cameras.picam.PiCamera.abort()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="ximea_8py_source.html#l00246">microscope.cameras.ximea.XimeaCamera.abort()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, and <a class="el" href="abc_8py_source.html#l00447">microscope.abc.Device.get_setting()</a>.</p>
 
 </div>
 </div>
@@ -665,6 +894,8 @@ a state that it can be reconnected.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00289">289</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00307">microscope.abc.Device.disable()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="abc_8py_source.html#l00321">microscope.abc.Device.enable()</a>, <a class="el" href="abc_8py_source.html#l00592">microscope.abc.DataDevice.enable()</a>, and <a class="el" href="abc_8py_source.html#l00789">microscope.abc.DataDevice.grab_next_data()</a>.</p>
 
 </div>
 </div>

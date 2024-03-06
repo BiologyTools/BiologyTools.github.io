@@ -171,7 +171,24 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__devices_8py_source.html#l00425">425</a> of file <a class="el" href="test__devices_8py_source.html">test_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  425</span>    <span class="keyword">def </span>test_non_square_patterns_shape(self):</div>
+<div class="line"><span class="lineno">  426</span>        <span class="comment"># TODO: we should also be testing this via the camera but the</span></div>
+<div class="line"><span class="lineno">  427</span>        <span class="comment"># TestCamera is only square.  In the mean time, we only test</span></div>
+<div class="line"><span class="lineno">  428</span>        <span class="comment"># directly the _ImageGenerator.</span></div>
+<div class="line"><span class="lineno">  429</span>        width = 16</div>
+<div class="line"><span class="lineno">  430</span>        height = 32</div>
+<div class="line"><span class="lineno">  431</span>        generator = simulators._ImageGenerator()</div>
+<div class="line"><span class="lineno">  432</span>        patterns = list(generator.get_methods())</div>
+<div class="line"><span class="lineno">  433</span>        <span class="keywordflow">for</span> i, pattern <span class="keywordflow">in</span> enumerate(patterns):</div>
+<div class="line"><span class="lineno">  434</span>            <span class="keyword">with</span> self.subTest(pattern):</div>
+<div class="line"><span class="lineno">  435</span>                generator.set_method(i)</div>
+<div class="line"><span class="lineno">  436</span>                array = generator.get_image(width, height, 0, 255)</div>
+<div class="line"><span class="lineno">  437</span>                <span class="comment"># In matplotlib, an M-wide by N-tall image has M columns</span></div>
+<div class="line"><span class="lineno">  438</span>                <span class="comment"># and N rows, so a shape of (N, M)</span></div>
+<div class="line"><span class="lineno">  439</span>                self.assertEqual(array.shape, (height, width))</div>
+<div class="line"><span class="lineno">  440</span> </div>
+<div class="line"><span class="lineno">  441</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

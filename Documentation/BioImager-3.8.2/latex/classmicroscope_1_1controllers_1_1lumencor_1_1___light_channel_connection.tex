@@ -37,6 +37,14 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00112}{112}} of file \m
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00115}{115}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00115     \textcolor{keyword}{def }\_\_init\_\_(self, connection: \_SpectraIIIConnection, index: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00116         self.\_conn = connection}
+\DoxyCodeLine{00117         self.\_index\_bytes = b\textcolor{stringliteral}{"{}\%d"{}} \% index}
+\DoxyCodeLine{00118 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a1723c7331b392278c979930ca0121a53}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a1723c7331b392278c979930ca0121a53}} 
@@ -50,6 +58,18 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00115}{115}} of file \m
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00141}{141}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00141     \textcolor{keyword}{def }get\_intensity(self) -\/> int:}
+\DoxyCodeLine{00142         \textcolor{stringliteral}{"{}"{}"{}Current intensity setting between 0 and maximum intensity."{}"{}"{}}}
+\DoxyCodeLine{00143         \textcolor{keywordflow}{return} int(self.\_conn.get\_command(b\textcolor{stringliteral}{"{}CHINT"{}}, self.\_index\_bytes))}
+\DoxyCodeLine{00144 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, and \mbox{\hyperlink{lumencor_8py_source_l00117}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+index\+\_\+bytes}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a83a8af29b7620eac5a4681764ee47215}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a83a8af29b7620eac5a4681764ee47215}} 
 \index{microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}!get\_light\_state@{get\_light\_state}}
 \index{get\_light\_state@{get\_light\_state}!microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}}
@@ -60,6 +80,27 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00141}{141}} of file \m
  
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00119}{119}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119     \textcolor{keyword}{def }get\_light\_state(self) -\/> bool:}
+\DoxyCodeLine{00120         \textcolor{stringliteral}{"{}"{}"{}On (True) or off (False) state"{}"{}"{}}}
+\DoxyCodeLine{00121         \textcolor{comment}{\# We use CHACT (actual light state) instead of CH (light}}
+\DoxyCodeLine{00122         \textcolor{comment}{\# state) because CH checks both the TTL inputs and channel}}
+\DoxyCodeLine{00123         \textcolor{comment}{\# state switches.}}
+\DoxyCodeLine{00124         state = self.\_conn.get\_command(b\textcolor{stringliteral}{"{}CHACT"{}}, self.\_index\_bytes)}
+\DoxyCodeLine{00125         \textcolor{keywordflow}{if} state == b\textcolor{stringliteral}{"{}1"{}}:}
+\DoxyCodeLine{00126             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00127         \textcolor{keywordflow}{elif} state == b\textcolor{stringliteral}{"{}0"{}}:}
+\DoxyCodeLine{00128             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00129         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00130             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(\textcolor{stringliteral}{"{}unexpected answer"{}})}
+\DoxyCodeLine{00131 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, and \mbox{\hyperlink{lumencor_8py_source_l00117}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+index\+\_\+bytes}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_acc4ce58dea6f67ef992a849fcae614be}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_acc4ce58dea6f67ef992a849fcae614be}} 
 \index{microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}!get\_max\_intensity@{get\_max\_intensity}}
@@ -72,6 +113,18 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00119}{119}} of file \m
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00137}{137}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00137     \textcolor{keyword}{def }get\_max\_intensity(self) -\/> int:}
+\DoxyCodeLine{00138         \textcolor{stringliteral}{"{}"{}"{}Maximum valid intensity that can be applied to a light channel."{}"{}"{}}}
+\DoxyCodeLine{00139         \textcolor{keywordflow}{return} int(self.\_conn.get\_command(b\textcolor{stringliteral}{"{}MAXINT"{}}, self.\_index\_bytes))}
+\DoxyCodeLine{00140 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, and \mbox{\hyperlink{lumencor_8py_source_l00117}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+index\+\_\+bytes}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a21aacbc50f7d43522a15283e6d380a13}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a21aacbc50f7d43522a15283e6d380a13}} 
 \index{microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}!set\_intensity@{set\_intensity}}
 \index{set\_intensity@{set\_intensity}!microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}}
@@ -83,6 +136,19 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00137}{137}} of file \m
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00145}{145}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00145     \textcolor{keyword}{def }set\_intensity(self, intensity: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00146         \textcolor{stringliteral}{"{}"{}"{}Set light intensity between 0 and maximum intensity."{}"{}"{}}}
+\DoxyCodeLine{00147         self.\_conn.set\_command(b\textcolor{stringliteral}{"{}CHINT"{}}, self.\_index\_bytes, b\textcolor{stringliteral}{"{}\%d"{}} \% intensity)}
+\DoxyCodeLine{00148 }
+\DoxyCodeLine{00149 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, and \mbox{\hyperlink{lumencor_8py_source_l00117}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+index\+\_\+bytes}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a27d9f52dd4575f070b2c76f48e7bfb85}\label{classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection_a27d9f52dd4575f070b2c76f48e7bfb85}} 
 \index{microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}!set\_light\_state@{set\_light\_state}}
 \index{set\_light\_state@{set\_light\_state}!microscope.controllers.lumencor.\_LightChannelConnection@{microscope.controllers.lumencor.\_LightChannelConnection}}
@@ -93,6 +159,19 @@ Definition at line \mbox{\hyperlink{lumencor_8py_source_l00145}{145}} of file \m
  
 
 Definition at line \mbox{\hyperlink{lumencor_8py_source_l00132}{132}} of file \mbox{\hyperlink{lumencor_8py_source}{lumencor.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00132     \textcolor{keyword}{def }set\_light\_state(self, state: bool) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00133         \textcolor{stringliteral}{"{}"{}"{}Turn light on (True) or off (False)."{}"{}"{}}}
+\DoxyCodeLine{00134         state\_arg = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} state \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00135         self.\_conn.set\_command(b\textcolor{stringliteral}{"{}CH"{}}, self.\_index\_bytes, state\_arg)}
+\DoxyCodeLine{00136 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}, and \mbox{\hyperlink{lumencor_8py_source_l00117}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+index\+\_\+bytes}}.
 
 
 

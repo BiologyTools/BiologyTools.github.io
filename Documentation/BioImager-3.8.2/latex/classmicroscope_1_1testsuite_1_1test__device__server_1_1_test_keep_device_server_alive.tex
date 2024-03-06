@@ -38,6 +38,28 @@ Definition at line \mbox{\hyperlink{test__device__server_8py_source_l00325}{325}
 Definition at line \mbox{\hyperlink{test__device__server_8py_source_l00336}{336}} of file \mbox{\hyperlink{test__device__server_8py_source}{test\+\_\+device\+\_\+server.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00336     \textcolor{keyword}{def }test\_keep\_alive(self):}
+\DoxyCodeLine{00337         device = Pyro4.Proxy(\textcolor{stringliteral}{"{}PYRO:ExposePIDDevice@127.0.0.1:8001"{}})}
+\DoxyCodeLine{00338         initial\_pid = device.get\_pid()}
+\DoxyCodeLine{00339 }
+\DoxyCodeLine{00340         os.kill(initial\_pid, signal.SIGKILL)}
+\DoxyCodeLine{00341 }
+\DoxyCodeLine{00342         \textcolor{keyword}{with} self.assertRaises(Pyro4.errors.ConnectionClosedError):}
+\DoxyCodeLine{00343             device.get\_pid()}
+\DoxyCodeLine{00344 }
+\DoxyCodeLine{00345         \textcolor{comment}{\# The device server checks every 5 seconds for a crashed}}
+\DoxyCodeLine{00346         \textcolor{comment}{\# device server so give it 6 seconds.}}
+\DoxyCodeLine{00347         time.sleep(6)}
+\DoxyCodeLine{00348 }
+\DoxyCodeLine{00349         device.\_pyroReconnect(tries=1)}
+\DoxyCodeLine{00350         new\_pid = device.get\_pid()}
+\DoxyCodeLine{00351         self.assertNotEqual(initial\_pid, new\_pid)}
+\DoxyCodeLine{00352 }
+\DoxyCodeLine{00353 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive_ae7c81354bd500c5ccbdb0a4aa0bf8fa6}\label{classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive_ae7c81354bd500c5ccbdb0a4aa0bf8fa6}} 

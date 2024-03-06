@@ -196,7 +196,25 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="test__device__server_8py_source.html#l00336">336</a> of file <a class="el" href="test__device__server_8py_source.html">test_device_server.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  336</span>    <span class="keyword">def </span>test_keep_alive(self):</div>
+<div class="line"><span class="lineno">  337</span>        device = Pyro4.Proxy(<span class="stringliteral">&quot;PYRO:ExposePIDDevice@127.0.0.1:8001&quot;</span>)</div>
+<div class="line"><span class="lineno">  338</span>        initial_pid = device.get_pid()</div>
+<div class="line"><span class="lineno">  339</span> </div>
+<div class="line"><span class="lineno">  340</span>        os.kill(initial_pid, signal.SIGKILL)</div>
+<div class="line"><span class="lineno">  341</span> </div>
+<div class="line"><span class="lineno">  342</span>        <span class="keyword">with</span> self.assertRaises(Pyro4.errors.ConnectionClosedError):</div>
+<div class="line"><span class="lineno">  343</span>            device.get_pid()</div>
+<div class="line"><span class="lineno">  344</span> </div>
+<div class="line"><span class="lineno">  345</span>        <span class="comment"># The device server checks every 5 seconds for a crashed</span></div>
+<div class="line"><span class="lineno">  346</span>        <span class="comment"># device server so give it 6 seconds.</span></div>
+<div class="line"><span class="lineno">  347</span>        time.sleep(6)</div>
+<div class="line"><span class="lineno">  348</span> </div>
+<div class="line"><span class="lineno">  349</span>        device._pyroReconnect(tries=1)</div>
+<div class="line"><span class="lineno">  350</span>        new_pid = device.get_pid()</div>
+<div class="line"><span class="lineno">  351</span>        self.assertNotEqual(initial_pid, new_pid)</div>
+<div class="line"><span class="lineno">  352</span> </div>
+<div class="line"><span class="lineno">  353</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>

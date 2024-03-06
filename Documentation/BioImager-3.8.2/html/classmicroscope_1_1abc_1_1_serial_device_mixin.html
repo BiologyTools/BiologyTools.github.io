@@ -208,7 +208,16 @@ channel.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01007">1007</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno"> 1007</span>    <span class="keyword">def </span>__init__(self, **kwargs):</div>
+<div class="line"><span class="lineno"> 1008</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno"> 1009</span>        <span class="comment"># TODO: We should probably construct the connection here but</span></div>
+<div class="line"><span class="lineno"> 1010</span>        <span class="comment">#       the Serial constructor takes a lot of arguments, and</span></div>
+<div class="line"><span class="lineno"> 1011</span>        <span class="comment">#       it becomes tricky to separate those from arguments to</span></div>
+<div class="line"><span class="lineno"> 1012</span>        <span class="comment">#       the constructor of other parent classes.</span></div>
+<div class="line"><span class="lineno"> 1013</span>        self.connection = <span class="keywordtype">None</span>  <span class="comment"># serial.Serial (to be constructed by child)</span></div>
+<div class="line"><span class="lineno"> 1014</span>        self._comms_lock = threading.RLock()</div>
+<div class="line"><span class="lineno"> 1015</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -244,6 +253,29 @@ and subsequent readline.  It also locks the comms channel so
 that a function must finish all its communications before
 another can run.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01030">1030</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1030</span>    <span class="keyword">def </span>lock_comms(func):</div>
+<div class="line"><span class="lineno"> 1031</span>        <span class="stringliteral">&quot;&quot;&quot;Decorator to flush input buffer and lock communications.</span></div>
+<div class="line"><span class="lineno"> 1032</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1033</span><span class="stringliteral">        There have been problems </span><span class="keyword">with</span> the DeepStar lasers returning</div>
+<div class="line"><span class="lineno"> 1034</span>        junk characters after the expected response, so it <span class="keywordflow">is</span></div>
+<div class="line"><span class="lineno"> 1035</span>        advisable to flush the input buffer prior to running a command</div>
+<div class="line"><span class="lineno"> 1036</span>        <span class="keywordflow">and</span> subsequent readline.  It also locks the comms channel so</div>
+<div class="line"><span class="lineno"> 1037</span>        that a function must finish all its communications before</div>
+<div class="line"><span class="lineno"> 1038</span>        another can run.</div>
+<div class="line"><span class="lineno"> 1039</span> </div>
+<div class="line"><span class="lineno"> 1040</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1041</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno"> 1042</span><span class="stringliteral">        </span><span class="preprocessor">@functools.wraps(func)</span></div>
+<div class="line"><span class="lineno"> 1043</span>        <span class="keyword">def </span>wrapper(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno"> 1044</span>            <span class="keyword">with</span> self._comms_lock:</div>
+<div class="line"><span class="lineno"> 1045</span>                self.connection.flushInput()</div>
+<div class="line"><span class="lineno"> 1046</span>                <span class="keywordflow">return</span> func(self, *args, **kwargs)</div>
+<div class="line"><span class="lineno"> 1047</span> </div>
+<div class="line"><span class="lineno"> 1048</span>        <span class="keywordflow">return</span> wrapper</div>
+<div class="line"><span class="lineno"> 1049</span> </div>
+<div class="line"><span class="lineno"> 1050</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01014">microscope.abc.SerialDeviceMixin._comms_lock</a>, <a class="el" href="abc_8py_source.html#l01013">microscope.abc.SerialDeviceMixin.connection</a>, <a class="el" href="thorlabs_8py_source.html#l00062">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.connection</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00049">microscope.lights.cobolt.CoboltLaser.connection</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00046">microscope.lights.deepstar.DeepstarLaser.connection</a>, <a class="el" href="lights_2obis_8py_source.html#l00036">microscope.lights.obis.ObisLaser.connection</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00060">microscope.lights.sapphire.SapphireLaser.connection</a>.</p>
 
 </div>
 </div>
@@ -261,6 +293,8 @@ another can run.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l01013">1013</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, and <a class="el" href="abc_8py_source.html#l01030">microscope.abc.SerialDeviceMixin.lock_comms()</a>.</p>
 
 </div>
 </div>

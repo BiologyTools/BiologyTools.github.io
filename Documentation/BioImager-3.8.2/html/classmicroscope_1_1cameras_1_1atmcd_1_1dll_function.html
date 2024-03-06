@@ -225,7 +225,43 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00627">627</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  627</span>    <span class="keyword">def </span>__init__(self, name, args=[], argnames=[], rstatus=False, lib=_dll):</div>
+<div class="line"><span class="lineno">  628</span>        <span class="comment"># the library function</span></div>
+<div class="line"><span class="lineno">  629</span>        self.f = getattr(lib, name)</div>
+<div class="line"><span class="lineno">  630</span>        <span class="comment"># dll call return type</span></div>
+<div class="line"><span class="lineno">  631</span>        self.f.restype = c_uint</div>
+<div class="line"><span class="lineno">  632</span>        <span class="comment"># dll call parameter types</span></div>
+<div class="line"><span class="lineno">  633</span>        self.f.argtypes = [stripMeta(a) <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args]</div>
+<div class="line"><span class="lineno">  634</span>        <span class="comment"># dll call parameters, with their meta wrappers</span></div>
+<div class="line"><span class="lineno">  635</span>        self.fargs = args</div>
+<div class="line"><span class="lineno">  636</span>        <span class="comment"># dll call parameter names, used to generate helpstrings</span></div>
+<div class="line"><span class="lineno">  637</span>        self.fargnames = argnames</div>
+<div class="line"><span class="lineno">  638</span>        <span class="comment"># the function name</span></div>
+<div class="line"><span class="lineno">  639</span>        self.name = name</div>
+<div class="line"><span class="lineno">  640</span>        <span class="comment"># input arguments</span></div>
+<div class="line"><span class="lineno">  641</span>        self.in_args = [a <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(a, OUTPUT)]</div>
+<div class="line"><span class="lineno">  642</span>        <span class="comment"># output arguments</span></div>
+<div class="line"><span class="lineno">  643</span>        self.out_args = [a <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args <span class="keywordflow">if</span> isinstance(a, OUTPUT)]</div>
+<div class="line"><span class="lineno">  644</span>        <span class="comment"># Indicates that this function should return the status code it generates.</span></div>
+<div class="line"><span class="lineno">  645</span>        self.rstatus = rstatus</div>
+<div class="line"><span class="lineno">  646</span>        <span class="comment"># Find any arguments that set string buffer or array sizes.</span></div>
+<div class="line"><span class="lineno">  647</span>        self.buf_size_arg_pos = -1</div>
+<div class="line"><span class="lineno">  648</span>        self.arr_size_arg_pos = -1</div>
+<div class="line"><span class="lineno">  649</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(self.in_args)):</div>
+<div class="line"><span class="lineno">  650</span>            <span class="keywordflow">if</span> isinstance(self.in_args[i], _OUTSTRLEN):</div>
+<div class="line"><span class="lineno">  651</span>                self.buf_size_arg_pos = i</div>
+<div class="line"><span class="lineno">  652</span>            <span class="keywordflow">if</span> isinstance(self.in_args[i], _OUTARRSIZE):</div>
+<div class="line"><span class="lineno">  653</span>                self.arr_size_pos = i</div>
+<div class="line"><span class="lineno">  654</span>        <span class="comment"># Generate a docstring.</span></div>
+<div class="line"><span class="lineno">  655</span>        ds = name + <span class="stringliteral">&quot;\n\nArguments:\n===========\n&quot;</span></div>
+<div class="line"><span class="lineno">  656</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(args)):</div>
+<div class="line"><span class="lineno">  657</span>            an = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  658</span>            <span class="keywordflow">if</span> i &lt; len(argnames):</div>
+<div class="line"><span class="lineno">  659</span>                an = argnames[i]</div>
+<div class="line"><span class="lineno">  660</span>            ds += <span class="stringliteral">&quot;\t%s\t%s\n&quot;</span> % (args[i], an)</div>
+<div class="line"><span class="lineno">  661</span>        self.f.__doc__ = ds</div>
+<div class="line"><span class="lineno">  662</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -256,6 +292,81 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Parse arguments, allocate any required storage, and execute the call.</pre> 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00663">663</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  663</span>    <span class="keyword">def </span>__call__(self, *args):</div>
+<div class="line"><span class="lineno">  664</span>        <span class="stringliteral">&quot;&quot;&quot;Parse arguments, allocate any required storage, and execute the call.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  665</span>        <span class="comment"># The C function arguments</span></div>
+<div class="line"><span class="lineno">  666</span>        c_args = []</div>
+<div class="line"><span class="lineno">  667</span>        i = 0</div>
+<div class="line"><span class="lineno">  668</span>        ret = []</div>
+<div class="line"><span class="lineno">  669</span> </div>
+<div class="line"><span class="lineno">  670</span>        <span class="keywordflow">if</span> self.buf_size_arg_pos &gt;= 0:</div>
+<div class="line"><span class="lineno">  671</span>            <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  672</span>                bs = args[self.buf_size_arg_pos]</div>
+<div class="line"><span class="lineno">  673</span>            <span class="keywordflow">except</span>:</div>
+<div class="line"><span class="lineno">  674</span>                bs = 255</div>
+<div class="line"><span class="lineno">  675</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  676</span>            bs = 255</div>
+<div class="line"><span class="lineno">  677</span>        <span class="comment"># Sort input and output arguments, allocating output storage as required.</span></div>
+<div class="line"><span class="lineno">  678</span>        i = 0</div>
+<div class="line"><span class="lineno">  679</span>        <span class="keywordflow">for</span> farg <span class="keywordflow">in</span> self.fargs:</div>
+<div class="line"><span class="lineno">  680</span>            <span class="keywordflow">if</span> isinstance(farg, OUTPUT):</div>
+<div class="line"><span class="lineno">  681</span>                <span class="keywordflow">if</span> isinstance(farg, OUTARR):</div>
+<div class="line"><span class="lineno">  682</span>                    size = args[self.arr_size_arg_pos]</div>
+<div class="line"><span class="lineno">  683</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  684</span>                    size = bs</div>
+<div class="line"><span class="lineno">  685</span>                r, c_arg = farg.getVar(size)</div>
+<div class="line"><span class="lineno">  686</span>                c_args.append(c_arg)</div>
+<div class="line"><span class="lineno">  687</span>                ret.append(r)</div>
+<div class="line"><span class="lineno">  688</span>            <span class="keywordflow">elif</span> isinstance(farg, _OUTSTRLEN):</div>
+<div class="line"><span class="lineno">  689</span>                c_args.append(bs)</div>
+<div class="line"><span class="lineno">  690</span>            <span class="keywordflow">elif</span> isinstance(args[i], Enum):</div>
+<div class="line"><span class="lineno">  691</span>                c_args.append(args[i].value)</div>
+<div class="line"><span class="lineno">  692</span>                i += 1</div>
+<div class="line"><span class="lineno">  693</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  694</span>                c_args.append(args[i])</div>
+<div class="line"><span class="lineno">  695</span>                i += 1</div>
+<div class="line"><span class="lineno">  696</span> </div>
+<div class="line"><span class="lineno">  697</span>        <span class="comment"># Make the library call, tolerating a few DRV_ERROR_ACKs</span></div>
+<div class="line"><span class="lineno">  698</span>        status = DRV_ERROR_ACK</div>
+<div class="line"><span class="lineno">  699</span>        ack_err_count = -1</div>
+<div class="line"><span class="lineno">  700</span>        <span class="keywordflow">while</span> status == DRV_ERROR_ACK <span class="keywordflow">and</span> ack_err_count &lt; 3:</div>
+<div class="line"><span class="lineno">  701</span>            ack_err_count += 1</div>
+<div class="line"><span class="lineno">  702</span>            status = self.f(*c_args)</div>
+<div class="line"><span class="lineno">  703</span>        ret = [extract_value(r) <span class="keywordflow">for</span> r <span class="keywordflow">in</span> ret]</div>
+<div class="line"><span class="lineno">  704</span>        <span class="keywordflow">if</span> len(ret) == 1:</div>
+<div class="line"><span class="lineno">  705</span>            ret = ret[0]</div>
+<div class="line"><span class="lineno">  706</span>        <span class="keywordflow">elif</span> len(ret) == 0:</div>
+<div class="line"><span class="lineno">  707</span>            ret = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  708</span>        <span class="comment"># A few functions indicate state using the returned status code instead</span></div>
+<div class="line"><span class="lineno">  709</span>        <span class="comment"># of filling a variable passed by reference pointer.</span></div>
+<div class="line"><span class="lineno">  710</span>        <span class="keywordflow">if</span> self.rstatus:</div>
+<div class="line"><span class="lineno">  711</span>            <span class="keywordflow">if</span> status == DRV_SUCCESS:</div>
+<div class="line"><span class="lineno">  712</span>                <span class="keywordflow">return</span> <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  713</span>            <span class="keywordflow">elif</span> status <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">  714</span>                DRV_INVALID_AMPLIFIER,</div>
+<div class="line"><span class="lineno">  715</span>                DRV_INVALID_MODE,</div>
+<div class="line"><span class="lineno">  716</span>                DRV_INVALID_COUNTCONVERT_MODE,</div>
+<div class="line"><span class="lineno">  717</span>                DRV_INVALID_FILTER,</div>
+<div class="line"><span class="lineno">  718</span>            ]:</div>
+<div class="line"><span class="lineno">  719</span>                <span class="keywordflow">return</span> <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  720</span>            <span class="keywordflow">elif</span> status <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">  721</span>                DRV_TEMP_OFF,</div>
+<div class="line"><span class="lineno">  722</span>                DRV_TEMP_STABILIZED,</div>
+<div class="line"><span class="lineno">  723</span>                DRV_TEMP_NOT_REACHED,</div>
+<div class="line"><span class="lineno">  724</span>                DRV_TEMP_DRIFT,</div>
+<div class="line"><span class="lineno">  725</span>                DRV_TEMP_NOT_STABILIZED,</div>
+<div class="line"><span class="lineno">  726</span>            ]:</div>
+<div class="line"><span class="lineno">  727</span>                <span class="keywordflow">return</span> (status, ret)</div>
+<div class="line"><span class="lineno">  728</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  729</span>                <span class="keywordflow">raise</span> AtmcdException(status)</div>
+<div class="line"><span class="lineno">  730</span>        <span class="comment"># Most functions return values via pointers, or have no return.</span></div>
+<div class="line"><span class="lineno">  731</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> status == DRV_SUCCESS:</div>
+<div class="line"><span class="lineno">  732</span>            <span class="keywordflow">raise</span> AtmcdException(status)</div>
+<div class="line"><span class="lineno">  733</span>        <span class="keywordflow">return</span> ret</div>
+<div class="line"><span class="lineno">  734</span> </div>
+<div class="line"><span class="lineno">  735</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="atmcd_8py_source.html#l00648">microscope.cameras.atmcd.dllFunction.arr_size_arg_pos</a>, <a class="el" href="___s_d_k3_8py_source.html#l00182">microscope.cameras._SDK3.dllFunction.buf_size_arg_pos</a>, <a class="el" href="atmcd_8py_source.html#l00647">microscope.cameras.atmcd.dllFunction.buf_size_arg_pos</a>, <a class="el" href="___s_d_k3_8py_source.html#l00170">microscope.cameras._SDK3.dllFunction.f</a>, <a class="el" href="atmcd_8py_source.html#l00629">microscope.cameras.atmcd.dllFunction.f</a>, <a class="el" href="pvcam_8py_source.html#l00739">microscope.cameras.pvcam.dllFunction.f</a>, <a class="el" href="_image_j_8cs_source.html#l01063">BioImager.ImageJ.RoiEncoder.f</a>, <a class="el" href="___s_d_k3_8py_source.html#l00174">microscope.cameras._SDK3.dllFunction.fargs</a>, <a class="el" href="atmcd_8py_source.html#l00635">microscope.cameras.atmcd.dllFunction.fargs</a>, <a class="el" href="pvcam_8py_source.html#l00743">microscope.cameras.pvcam.dllFunction.fargs</a>, and <a class="el" href="atmcd_8py_source.html#l00645">microscope.cameras.atmcd.dllFunction.rstatus</a>.</p>
 
 </div>
 </div>
@@ -273,6 +384,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00648">648</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
 
 </div>
 </div>
@@ -306,6 +419,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00647">647</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
+
 </div>
 </div>
 <a id="afd821cf9a2ae0ac2e4577a0d555c92a8" name="afd821cf9a2ae0ac2e4577a0d555c92a8"></a>
@@ -321,6 +436,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00629">629</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
 
 </div>
 </div>
@@ -354,6 +471,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00635">635</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
+
 </div>
 </div>
 <a id="a314cbce0c637e992b73637e7f3da2ca9" name="a314cbce0c637e992b73637e7f3da2ca9"></a>
@@ -386,6 +505,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00639">639</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
+
 </div>
 </div>
 <a id="a7326510f14ea964f8f0358b443d2f2d1" name="a7326510f14ea964f8f0358b443d2f2d1"></a>
@@ -417,6 +538,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="atmcd_8py_source.html#l00645">645</a> of file <a class="el" href="atmcd_8py_source.html">atmcd.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
 
 </div>
 </div>

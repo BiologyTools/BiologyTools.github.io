@@ -56,6 +56,31 @@ Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00014}{14}} of file 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00017}{17}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00018         \{}
+\DoxyCodeLine{00019             \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_a9c5def53048e5841d713adb79e649077}{Source}} = source.file;}
+\DoxyCodeLine{00020             SlideImage = im;}
+\DoxyCodeLine{00021             Image = im;}
+\DoxyCodeLine{00022             \textcolor{keywordtype}{double} minUnitsPerPixel;}
+\DoxyCodeLine{00023             \textcolor{keywordflow}{if} (source.PhysicalSizeX < source.PhysicalSizeY) minUnitsPerPixel = source.PhysicalSizeX; \textcolor{keywordflow}{else} minUnitsPerPixel = source.PhysicalSizeY;}
+\DoxyCodeLine{00024             \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} = UseRealResolution ? minUnitsPerPixel : 1;}
+\DoxyCodeLine{00025             \textcolor{keywordflow}{if} (\mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} <= 0) \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}} = 1;}
+\DoxyCodeLine{00026             var height = SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a57c6e672ac2aae589442fc5c360c5490}{Dimensions}}.Height;}
+\DoxyCodeLine{00027             var width = SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a57c6e672ac2aae589442fc5c360c5490}{Dimensions}}.Width;}
+\DoxyCodeLine{00028             \textcolor{comment}{//ExternInfo = GetInfo();}}
+\DoxyCodeLine{00029             Schema = \textcolor{keyword}{new} TileSchema}
+\DoxyCodeLine{00030             \{}
+\DoxyCodeLine{00031                 YAxis = YAxis.OSM,}
+\DoxyCodeLine{00032                 Format = \textcolor{stringliteral}{"{}jpg"{}},}
+\DoxyCodeLine{00033                 Extent = \textcolor{keyword}{new} Extent(0, -\/height, width, 0),}
+\DoxyCodeLine{00034                 OriginX = 0,}
+\DoxyCodeLine{00035                 OriginY = 0,}
+\DoxyCodeLine{00036             \};}
+\DoxyCodeLine{00037             InitResolutions(Schema.Resolutions, 256, 256);}
+\DoxyCodeLine{00038         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a402ee072b8130e2c396d261bb0094ad0}\label{class_bio_imager_1_1_slide_base_a402ee072b8130e2c396d261bb0094ad0}} 
@@ -68,6 +93,24 @@ Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00017}{17}} of file 
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00097}{97}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00098         \{}
+\DoxyCodeLine{00099             \textcolor{comment}{// Initialize a new byte array for RGB24 format}}
+\DoxyCodeLine{00100             \textcolor{keywordtype}{byte}[] rgbArray = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[(rgbaArray.Length / 4) * 3];}
+\DoxyCodeLine{00101 }
+\DoxyCodeLine{00102             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0, j = 0; i < rgbaArray.Length; i += 4, j += 3)}
+\DoxyCodeLine{00103             \{}
+\DoxyCodeLine{00104                 \textcolor{comment}{// Copy the R, G, B values, skip the A value}}
+\DoxyCodeLine{00105                 rgbArray[j] = rgbaArray[i];     \textcolor{comment}{// B}}
+\DoxyCodeLine{00106                 rgbArray[j + 1] = rgbaArray[i + 1]; \textcolor{comment}{// G}}
+\DoxyCodeLine{00107                 rgbArray[j + 2] = rgbaArray[i + 2]; \textcolor{comment}{// R}}
+\DoxyCodeLine{00108             \}}
+\DoxyCodeLine{00109 }
+\DoxyCodeLine{00110             \textcolor{keywordflow}{return} rgbArray;}
+\DoxyCodeLine{00111         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a1fa8aafe7bd9c98a06f78f5a5254cc81}\label{class_bio_imager_1_1_slide_base_a1fa8aafe7bd9c98a06f78f5a5254cc81}} 
 \index{BioImager.SlideBase@{BioImager.SlideBase}!DetectVendor@{DetectVendor}}
 \index{DetectVendor@{DetectVendor}!BioImager.SlideBase@{BioImager.SlideBase}}
@@ -78,6 +121,13 @@ Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00097}{97}} of file 
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00040}{40}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00041         \{}
+\DoxyCodeLine{00042             \textcolor{keywordflow}{return} SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a2dd7a756dbbfa217e73d517cb96eafc5}{DetectVendor}}(source);}
+\DoxyCodeLine{00043         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a47ab3f87805dd79a43d5e412b1fe92de}\label{class_bio_imager_1_1_slide_base_a47ab3f87805dd79a43d5e412b1fe92de}} 
 \index{BioImager.SlideBase@{BioImager.SlideBase}!Dispose@{Dispose}}
 \index{Dispose@{Dispose}!BioImager.SlideBase@{BioImager.SlideBase}}
@@ -92,6 +142,21 @@ Reimplemented from \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base}{Bio\
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00132}{132}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00133         \{}
+\DoxyCodeLine{00134             \textcolor{keywordflow}{if} (!disposedValue)}
+\DoxyCodeLine{00135             \{}
+\DoxyCodeLine{00136                 \textcolor{keywordflow}{if} (disposing)}
+\DoxyCodeLine{00137                 \{}
+\DoxyCodeLine{00138                     SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a6437c2431b3580cb39b7afcc68a44588}{Dispose}}();}
+\DoxyCodeLine{00139                 \}}
+\DoxyCodeLine{00140                 disposedValue = \textcolor{keyword}{true};}
+\DoxyCodeLine{00141             \}}
+\DoxyCodeLine{00142             base.Dispose(disposing);}
+\DoxyCodeLine{00143         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a428a8dbae75b752475930f95ed6acc76}\label{class_bio_imager_1_1_slide_base_a428a8dbae75b752475930f95ed6acc76}} 
 \index{BioImager.SlideBase@{BioImager.SlideBase}!GetExternImages@{GetExternImages}}
 \index{GetExternImages@{GetExternImages}!BioImager.SlideBase@{BioImager.SlideBase}}
@@ -113,6 +178,24 @@ Implements \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_a7367dc8bad3b
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00046}{46}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047         \{}
+\DoxyCodeLine{00048             \textcolor{keywordflow}{throw} \textcolor{keyword}{new} NotImplementedException();}
+\DoxyCodeLine{00049             \textcolor{comment}{/*}}
+\DoxyCodeLine{00050 \textcolor{comment}{            Dictionary<string, byte[]> images = new Dictionary<string, byte[]>();}}
+\DoxyCodeLine{00051 \textcolor{comment}{            var r = Math.Max(Schema.Extent.Height, Schema.Extent.Width) / 512;}}
+\DoxyCodeLine{00052 \textcolor{comment}{            images.Add("{}preview"{}, GetSlice(new SliceInfo \{ Extent = Schema.Extent, Resolution = r \}));}}
+\DoxyCodeLine{00053 \textcolor{comment}{            foreach (var item in SlideImage.GetAssociatedImages())}}
+\DoxyCodeLine{00054 \textcolor{comment}{            \{}}
+\DoxyCodeLine{00055 \textcolor{comment}{                var dim = item.Value.Dimensions;}}
+\DoxyCodeLine{00056 \textcolor{comment}{                images.Add(item.Key, ImageUtil.GetJpeg(item.Value.Data, 4, 4 * (int)dim.Width, (int)dim.Width, (int)dim.Height));}}
+\DoxyCodeLine{00057 \textcolor{comment}{            \}}}
+\DoxyCodeLine{00058 \textcolor{comment}{            return images;}}
+\DoxyCodeLine{00059 \textcolor{comment}{            */}}
+\DoxyCodeLine{00060         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a7661bc9da95051f475f0683004d4f307}\label{class_bio_imager_1_1_slide_base_a7661bc9da95051f475f0683004d4f307}} 
 \index{BioImager.SlideBase@{BioImager.SlideBase}!GetTile@{GetTile}}
 \index{GetTile@{GetTile}!BioImager.SlideBase@{BioImager.SlideBase}}
@@ -123,6 +206,25 @@ Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00046}{46}} of file 
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00081}{81}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00082         \{}
+\DoxyCodeLine{00083             var r = Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;}
+\DoxyCodeLine{00084             var tileWidth = Schema.Resolutions[tileInfo.Index.Level].TileWidth;}
+\DoxyCodeLine{00085             var tileHeight = Schema.Resolutions[tileInfo.Index.Level].TileHeight;}
+\DoxyCodeLine{00086             var curLevelOffsetXPixel = tileInfo.Extent.MinX / \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}};}
+\DoxyCodeLine{00087             var curLevelOffsetYPixel = -\/tileInfo.Extent.MaxY / \mbox{\hyperlink{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}{MinUnitsPerPixel}};}
+\DoxyCodeLine{00088             var curTileWidth = (int)(tileInfo.Extent.MaxX > Schema.Extent.Width ? tileWidth -\/ (tileInfo.Extent.MaxX -\/ Schema.Extent.Width) / r : tileWidth);}
+\DoxyCodeLine{00089             var curTileHeight = (int)(-\/tileInfo.Extent.MinY > Schema.Extent.Height ? tileHeight -\/ (-\/tileInfo.Extent.MinY -\/ Schema.Extent.Height) / r : tileHeight);}
+\DoxyCodeLine{00090             var bgraData = SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_ae995a8919336e3375eda58f15018fc58}{ReadRegion}}(tileInfo.Index.Level, (\textcolor{keywordtype}{long})curLevelOffsetXPixel, (long)curLevelOffsetYPixel, curTileWidth, curTileHeight);}
+\DoxyCodeLine{00091             \textcolor{comment}{//We check to see if the data is valid.}}
+\DoxyCodeLine{00092             \textcolor{keywordflow}{if} (bgraData.Length != curTileWidth * curTileHeight * 4)}
+\DoxyCodeLine{00093                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00094             \textcolor{keywordtype}{byte}[] bm = ConvertRgbaToRgb(bgraData);}
+\DoxyCodeLine{00095             \textcolor{keywordflow}{return} bm;}
+\DoxyCodeLine{00096         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_base_a9d03666b84e467489d2e9cac0b48ca69}\label{class_bio_imager_1_1_slide_base_a9d03666b84e467489d2e9cac0b48ca69}} 
 \index{BioImager.SlideBase@{BioImager.SlideBase}!InitResolutions@{InitResolutions}}
 \index{InitResolutions@{InitResolutions}!BioImager.SlideBase@{BioImager.SlideBase}}
@@ -133,6 +235,25 @@ Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00081}{81}} of file 
 
 Definition at line \mbox{\hyperlink{_slide_base_8cs_source_l00113}{113}} of file \mbox{\hyperlink{_slide_base_8cs_source}{Slide\+Base.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114         \{}
+\DoxyCodeLine{00115             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < SlideImage.\mbox{\hyperlink{class_bio_imager_1_1_slide_image_a1b9a761879415f61269d5f12755ebf0c}{LevelCount}}; i++)}
+\DoxyCodeLine{00116             \{}
+\DoxyCodeLine{00117                 \textcolor{comment}{/*}}
+\DoxyCodeLine{00118 \textcolor{comment}{                bool useInternalWidth = int.TryParse(ExternInfo.TryGetValue(\$"{}openslide.level[\{i\}].tile-\/width"{}, out var \_w) ? (string)\_w : null, out var w) \&\& w >= tileWidth;}}
+\DoxyCodeLine{00119 \textcolor{comment}{                bool useInternalHeight = int.TryParse(ExternInfo.TryGetValue(\$"{}openslide.level[\{i\}].tile-\/height"{}, out var \_h) ? (string)\_h : null, out var h) \&\& h >= tileHeight;}}
+\DoxyCodeLine{00120 \textcolor{comment}{}}
+\DoxyCodeLine{00121 \textcolor{comment}{                bool useInternalSize = useInternalHeight \&\& useInternalWidth;}}
+\DoxyCodeLine{00122 \textcolor{comment}{                var tw = useInternalSize ? w : tileWidth;}}
+\DoxyCodeLine{00123 \textcolor{comment}{                var th = useInternalSize ? h : tileHeight;}}
+\DoxyCodeLine{00124 \textcolor{comment}{                resolutions.Add(i, new Resolution(i, MinUnitsPerPixel * SlideImage.GetLevelDownsample(i), tw, th));}}
+\DoxyCodeLine{00125 \textcolor{comment}{                */}}
+\DoxyCodeLine{00126                 resolutions.Add(i, \textcolor{keyword}{new} BruTile.Resolution(i, SlideImage.BioImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_ae5525e42345d77b17d116e21f9efee50}{GetUnitPerPixel}}(i), tileWidth, tileHeight));}
+\DoxyCodeLine{00127             \}}
+\DoxyCodeLine{00128         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}

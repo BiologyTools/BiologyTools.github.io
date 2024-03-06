@@ -199,7 +199,31 @@ or hides a widget for that controlled device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00084">84</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   86</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">   87</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">   88</span>        self._device = device</div>
+<div class="line"><span class="lineno">   89</span> </div>
+<div class="line"><span class="lineno">   90</span>        self._button2window: typing.Dict[</div>
+<div class="line"><span class="lineno">   91</span>            QtWidgets.QPushButton, typing.Optional[QtWidgets.QMainWindow]</div>
+<div class="line"><span class="lineno">   92</span>        ] = {}</div>
+<div class="line"><span class="lineno">   93</span>        self._button2name: typing.Dict[QtWidgets.QPushButton, str] = {}</div>
+<div class="line"><span class="lineno">   94</span> </div>
+<div class="line"><span class="lineno">   95</span>        self._button_grp = QtWidgets.QButtonGroup(self)</div>
+<div class="line"><span class="lineno">   96</span>        self._button_grp.setExclusive(<span class="keyword">False</span>)</div>
+<div class="line"><span class="lineno">   97</span>        <span class="keywordflow">for</span> name <span class="keywordflow">in</span> self._device.devices.keys():</div>
+<div class="line"><span class="lineno">   98</span>            button = QtWidgets.QPushButton(name, parent=self)</div>
+<div class="line"><span class="lineno">   99</span>            button.setCheckable(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno">  100</span>            self._button_grp.addButton(button)</div>
+<div class="line"><span class="lineno">  101</span>            self._button2name[button] = name</div>
+<div class="line"><span class="lineno">  102</span>            self._button2window[button] = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  103</span>        self._button_grp.buttonToggled.connect(self.toggleDeviceWidget)</div>
+<div class="line"><span class="lineno">  104</span> </div>
+<div class="line"><span class="lineno">  105</span>        layout = QtWidgets.QVBoxLayout()</div>
+<div class="line"><span class="lineno">  106</span>        <span class="keywordflow">for</span> button <span class="keywordflow">in</span> self._button_grp.buttons():</div>
+<div class="line"><span class="lineno">  107</span>            layout.addWidget(button)</div>
+<div class="line"><span class="lineno">  108</span>        self.setLayout(layout)</div>
+<div class="line"><span class="lineno">  109</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -237,7 +261,26 @@ or hides a widget for that controlled device.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00110">110</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  112</span>    ) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  113</span>        <span class="keywordflow">if</span> checked:</div>
+<div class="line"><span class="lineno">  114</span>            device = self._device.devices[self._button2name[button]]</div>
+<div class="line"><span class="lineno">  115</span>            widget_cls = _guess_device_widget(device)</div>
+<div class="line"><span class="lineno">  116</span>            widget = widget_cls(device)</div>
+<div class="line"><span class="lineno">  117</span>            window = MainWindow(widget, parent=self)</div>
+<div class="line"><span class="lineno">  118</span>            self._button2window[button] = window</div>
+<div class="line"><span class="lineno">  119</span>            window.show()</div>
+<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  121</span>            window = self._button2window[button]</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">if</span> window <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  123</span>                _logger.error(</div>
+<div class="line"><span class="lineno">  124</span>                    <span class="stringliteral">&quot;unchecking subdevice button but there&#39;s no window&quot;</span></div>
+<div class="line"><span class="lineno">  125</span>                )</div>
+<div class="line"><span class="lineno">  126</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  127</span>                window.close()</div>
+<div class="line"><span class="lineno">  128</span>                self._button2window[button] = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  129</span> </div>
+<div class="line"><span class="lineno">  130</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

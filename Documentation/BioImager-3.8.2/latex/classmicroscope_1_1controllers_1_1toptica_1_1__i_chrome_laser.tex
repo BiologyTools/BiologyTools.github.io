@@ -47,6 +47,24 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{mic
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00171}{171}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00171     \textcolor{keyword}{def }\_\_init\_\_(self, conn: \_iChromeConnection, laser\_number: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00172         super().\_\_init\_\_()}
+\DoxyCodeLine{00173         self.\_conn = \_iChromeLaserConnection(conn, laser\_number)}
+\DoxyCodeLine{00174 }
+\DoxyCodeLine{00175         \textcolor{comment}{\# FIXME: set values to '0' because we need to pass an int as}}
+\DoxyCodeLine{00176         \textcolor{comment}{\# values for settings of type str.  Probably a bug on}}
+\DoxyCodeLine{00177         \textcolor{comment}{\# Device.set\_setting.}}
+\DoxyCodeLine{00178         self.add\_setting(\textcolor{stringliteral}{"{}label"{}}, \textcolor{stringliteral}{"{}str"{}}, self.\_conn.get\_label, \textcolor{keywordtype}{None}, values=0)}
+\DoxyCodeLine{00179         self.add\_setting(\textcolor{stringliteral}{"{}type"{}}, \textcolor{stringliteral}{"{}str"{}}, self.\_conn.get\_type, \textcolor{keywordtype}{None}, values=0)}
+\DoxyCodeLine{00180 }
+\DoxyCodeLine{00181         self.add\_setting(}
+\DoxyCodeLine{00182             \textcolor{stringliteral}{"{}delay"{}}, \textcolor{stringliteral}{"{}int"{}}, self.\_conn.get\_delay, \textcolor{keywordtype}{None}, values=tuple()}
+\DoxyCodeLine{00183         )}
+\DoxyCodeLine{00184 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a5771e2538a8f92999f5eed37e6e7b4cf}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a5771e2538a8f92999f5eed37e6e7b4cf}} 
@@ -64,6 +82,30 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00188}{188}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188     \textcolor{keyword}{def }get\_is\_on(self) -\/> bool:}
+\DoxyCodeLine{00189         \textcolor{keywordflow}{if} self.\_conn.get\_enable():}
+\DoxyCodeLine{00190             \textcolor{keywordflow}{if} self.\_conn.get\_cw():}
+\DoxyCodeLine{00191                 \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00192             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00193                 \textcolor{comment}{\# There doesn't seem to be command to check whether}}
+\DoxyCodeLine{00194                 \textcolor{comment}{\# the TTL line is currently high, so just return True}}
+\DoxyCodeLine{00195                 \textcolor{comment}{\# if set that way.}}
+\DoxyCodeLine{00196                 \textcolor{keywordflow}{return} self.\_conn.get\_use\_ttl()}
+\DoxyCodeLine{00197         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00198             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00199 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a61a8e4752bfe1ea09bf97a465ab0ce80}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a61a8e4752bfe1ea09bf97a465ab0ce80}} 
 \index{microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}!get\_status@{get\_status}}
 \index{get\_status@{get\_status}!microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}}
@@ -78,6 +120,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89
 
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00185}{185}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00185     \textcolor{keyword}{def }get\_status(self) -\/> typing.List[str]:}
+\DoxyCodeLine{00186         \textcolor{keywordflow}{return} self.\_conn.get\_status\_txt().split()}
+\DoxyCodeLine{00187 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aaed40d5fe8b49ddb994eb22bc9e5dceb}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_aaed40d5fe8b49ddb994eb22bc9e5dceb}} 
 \index{microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}!set\_trigger@{set\_trigger}}
@@ -94,6 +151,37 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00226}{226}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00228     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00229         \textcolor{keywordflow}{if} tmode \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} microscope.TriggerMode.BULB:}
+\DoxyCodeLine{00230             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00231                 \textcolor{stringliteral}{"{}only TriggerMode.BULB mode is supported"{}}}
+\DoxyCodeLine{00232             )}
+\DoxyCodeLine{00233 }
+\DoxyCodeLine{00234         \textcolor{comment}{\# From the manual it seems that cw and ttl parameters are}}
+\DoxyCodeLine{00235         \textcolor{comment}{\# mutually exclusive but also still need to be set separately.}}
+\DoxyCodeLine{00236         \textcolor{keywordflow}{if} ttype \textcolor{keywordflow}{is} microscope.TriggerType.HIGH:}
+\DoxyCodeLine{00237             self.\_conn.set\_cw(\textcolor{keyword}{False})}
+\DoxyCodeLine{00238             self.\_conn.set\_use\_ttl(\textcolor{keyword}{True})}
+\DoxyCodeLine{00239         \textcolor{keywordflow}{elif} ttype \textcolor{keywordflow}{is} microscope.TriggerType.SOFTWARE:}
+\DoxyCodeLine{00240             self.\_conn.set\_use\_ttl(\textcolor{keyword}{False})}
+\DoxyCodeLine{00241             self.\_conn.set\_cw(\textcolor{keyword}{True})}
+\DoxyCodeLine{00242         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00243             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_unsupported_feature_error}{microscope.UnsupportedFeatureError}}(}
+\DoxyCodeLine{00244                 \textcolor{stringliteral}{"{}only trigger type HIGH and SOFTWARE are supported"{}}}
+\DoxyCodeLine{00245             )}
+\DoxyCodeLine{00246 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{coolled_8py_source_l00094}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{coolled_8py_source_l00140}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00116}{microscope.\+controllers.\+lumencor.\+\_\+\+Light\+Channel\+Connection.\+\_\+conn}}, \mbox{\hyperlink{lumencor_8py_source_l00213}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00215}{microscope.\+controllers.\+prior.\+Pro\+Scan\+III.\+\_\+conn}}, \mbox{\hyperlink{prior_8py_source_l00232}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00110}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser\+Connection.\+\_\+conn}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00173}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00174}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00595}{microscope.\+controllers.\+zaber.\+Zaber\+Daisy\+Chain.\+\_\+conn}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00218}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00444}{microscope.\+stages.\+ludl.\+ludl\+MC2000.\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a3fe9ea761f8845570bbbf14c85d1450c}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_a3fe9ea761f8845570bbbf14c85d1450c}} 
 \index{microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}!trigger\_mode@{trigger\_mode}}
 \index{trigger\_mode@{trigger\_mode}!microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}}
@@ -108,6 +196,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00216}{216}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00216     \textcolor{keyword}{def }trigger\_mode(self) -\/> microscope.TriggerMode:}
+\DoxyCodeLine{00217         \textcolor{keywordflow}{return} microscope.TriggerMode.BULB}
+\DoxyCodeLine{00218 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_addad1b52c74a12de097be9b3a8912b91}\label{classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_addad1b52c74a12de097be9b3a8912b91}} 
 \index{microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}!trigger\_type@{trigger\_type}}
 \index{trigger\_type@{trigger\_type}!microscope.controllers.toptica.\_iChromeLaser@{microscope.controllers.toptica.\_iChromeLaser}}
@@ -121,6 +220,20 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_trigger_target_mi
 
 
 Definition at line \mbox{\hyperlink{controllers_2toptica_8py_source_l00220}{220}} of file \mbox{\hyperlink{controllers_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00220     \textcolor{keyword}{def }trigger\_type(self) -\/> microscope.TriggerType:}
+\DoxyCodeLine{00221         \textcolor{keywordflow}{if} self.\_conn.get\_use\_ttl():}
+\DoxyCodeLine{00222             \textcolor{keywordflow}{return} microscope.TriggerType.HIGH}
+\DoxyCodeLine{00223         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00224             \textcolor{keywordflow}{return} microscope.TriggerType.SOFTWARE}
+\DoxyCodeLine{00225 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l01113}{microscope.\+abc.\+Deformable\+Mirror.\+apply\+\_\+pattern()}}, and \mbox{\hyperlink{abc_8py_source_l00263}{microscope.\+abc.\+Trigger\+Target\+Mixin.\+trigger()}}.
 
 
 

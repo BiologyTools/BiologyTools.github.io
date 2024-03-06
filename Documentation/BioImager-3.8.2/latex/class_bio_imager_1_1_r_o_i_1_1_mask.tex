@@ -68,6 +68,17 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00541}{541}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00595}{595}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00596             \{}
+\DoxyCodeLine{00597                 this.width = width;}
+\DoxyCodeLine{00598                 this.height = height;}
+\DoxyCodeLine{00599                 PhysicalSizeX = physX;}
+\DoxyCodeLine{00600                 PhysicalSizeY = physY;}
+\DoxyCodeLine{00601                 mask = fts;}
+\DoxyCodeLine{00602             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_ada6c1656a7fdd1ef1d9da30345d92eab}\label{class_bio_imager_1_1_r_o_i_1_1_mask_ada6c1656a7fdd1ef1d9da30345d92eab}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!Mask@{Mask}}
 \index{Mask@{Mask}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -78,6 +89,25 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00595}{595}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00603}{603}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00604             \{}
+\DoxyCodeLine{00605                 this.width = width;}
+\DoxyCodeLine{00606                 this.height = height;}
+\DoxyCodeLine{00607                 PhysicalSizeX = physX;}
+\DoxyCodeLine{00608                 PhysicalSizeY = physY;}
+\DoxyCodeLine{00609                 mask = \textcolor{keyword}{new} \textcolor{keywordtype}{float}[bts.Length];}
+\DoxyCodeLine{00610                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{00611                 \{}
+\DoxyCodeLine{00612                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width; x++)}
+\DoxyCodeLine{00613                     \{}
+\DoxyCodeLine{00614                         \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00615                         mask[ind] = (float)BitConverter.ToSingle(bts, ind * 4);}
+\DoxyCodeLine{00616                     \}}
+\DoxyCodeLine{00617                 \}}
+\DoxyCodeLine{00618             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -91,6 +121,17 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00603}{603}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00701}{701}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00702             \{}
+\DoxyCodeLine{00703                 \textcolor{keywordflow}{if} (pixbuf != \textcolor{keyword}{null})}
+\DoxyCodeLine{00704                     pixbuf.Dispose();}
+\DoxyCodeLine{00705                 \textcolor{keywordflow}{if} (colored != \textcolor{keyword}{null})}
+\DoxyCodeLine{00706                     colored.Dispose();}
+\DoxyCodeLine{00707                 mask = \textcolor{keyword}{null};}
+\DoxyCodeLine{00708             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a9ec574dbaa03df5c6236628a6bd8a058}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a9ec574dbaa03df5c6236628a6bd8a058}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!GetBytes@{GetBytes}}
 \index{GetBytes@{GetBytes}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -101,6 +142,26 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00701}{701}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00684}{684}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00685             \{}
+\DoxyCodeLine{00686                 \textcolor{keywordtype}{byte}[] pixelData = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[width * height * 4];}
+\DoxyCodeLine{00687                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{00688                 \{}
+\DoxyCodeLine{00689                     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width; x++)}
+\DoxyCodeLine{00690                     \{}
+\DoxyCodeLine{00691                         \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00692                         \textcolor{keywordtype}{byte}[] bt = BitConverter.GetBytes(mask[ind]);}
+\DoxyCodeLine{00693                         pixelData[4 * ind] = bt[0];}
+\DoxyCodeLine{00694                         pixelData[4 * ind + 1] = bt[1];}
+\DoxyCodeLine{00695                         pixelData[4 * ind + 2] = bt[2];}
+\DoxyCodeLine{00696                         pixelData[4 * ind + 3] = bt[3];}
+\DoxyCodeLine{00697                     \}}
+\DoxyCodeLine{00698                 \}}
+\DoxyCodeLine{00699                 \textcolor{keywordflow}{return} pixelData;}
+\DoxyCodeLine{00700             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a5fc9cbf3817df602829e69a57fa3037f}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a5fc9cbf3817df602829e69a57fa3037f}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!GetColored@{GetColored}}
 \index{GetColored@{GetColored}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -111,6 +172,19 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00684}{684}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00674}{674}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00675             \{}
+\DoxyCodeLine{00676                 \textcolor{keywordflow}{if} (updateColored || forceUpdate)}
+\DoxyCodeLine{00677                 \{}
+\DoxyCodeLine{00678                     UpdateColored(col);}
+\DoxyCodeLine{00679                     \textcolor{keywordflow}{return} colored;}
+\DoxyCodeLine{00680                 \}}
+\DoxyCodeLine{00681                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00682                     \textcolor{keywordflow}{return} colored;}
+\DoxyCodeLine{00683             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_abe2dd90d797985cafa9c882e973615e4}\label{class_bio_imager_1_1_r_o_i_1_1_mask_abe2dd90d797985cafa9c882e973615e4}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!GetValue@{GetValue}}
 \index{GetValue@{GetValue}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -121,6 +195,16 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00674}{674}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00579}{579}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00580             \{}
+\DoxyCodeLine{00581                 \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00582                 \textcolor{keywordflow}{if} (ind > mask.Length)}
+\DoxyCodeLine{00583                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}Point "{}} + x + \textcolor{stringliteral}{"{},"{}} + y + \textcolor{stringliteral}{"{} is outside the mask."{}});}
+\DoxyCodeLine{00584                 \textcolor{keywordflow}{return} mask[ind];}
+\DoxyCodeLine{00585             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_ae5c0b3b1151bf5036c4708bb374741e4}\label{class_bio_imager_1_1_r_o_i_1_1_mask_ae5c0b3b1151bf5036c4708bb374741e4}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!IsSelected@{IsSelected}}
 \index{IsSelected@{IsSelected}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -131,6 +215,20 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00579}{579}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00568}{568}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00569             \{}
+\DoxyCodeLine{00570                 \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00571                 \textcolor{keywordflow}{if} (ind > mask.Length)}
+\DoxyCodeLine{00572                     \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00573                 \textcolor{keywordflow}{if} (mask[ind] > min)}
+\DoxyCodeLine{00574                 \{}
+\DoxyCodeLine{00575                     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{00576                 \}}
+\DoxyCodeLine{00577                 \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{00578             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a3c950cb59674f5d04bd5504813c900f2}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a3c950cb59674f5d04bd5504813c900f2}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!SetValue@{SetValue}}
 \index{SetValue@{SetValue}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -141,6 +239,18 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00568}{568}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00586}{586}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00587             \{}
+\DoxyCodeLine{00588                 \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00589                 \textcolor{keywordflow}{if} (ind > mask.Length)}
+\DoxyCodeLine{00590                     \textcolor{keywordflow}{throw} \textcolor{keyword}{new} ArgumentException(\textcolor{stringliteral}{"{}Point "{}} + x + \textcolor{stringliteral}{"{},"{}} + y + \textcolor{stringliteral}{"{} is outside the mask."{}});}
+\DoxyCodeLine{00591                 mask[ind] = val;}
+\DoxyCodeLine{00592                 updatePixbuf = \textcolor{keyword}{true};}
+\DoxyCodeLine{00593                 updateColored = \textcolor{keyword}{true};}
+\DoxyCodeLine{00594             \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -167,6 +277,42 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00543}{543}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00619}{619}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00620             \{}
+\DoxyCodeLine{00621                 \textcolor{keyword}{get}}
+\DoxyCodeLine{00622                 \{}
+\DoxyCodeLine{00623                     \textcolor{keywordflow}{if} (updatePixbuf)}
+\DoxyCodeLine{00624                     \{}
+\DoxyCodeLine{00625                         \textcolor{keywordflow}{if} (pixbuf != \textcolor{keyword}{null})}
+\DoxyCodeLine{00626                             pixbuf.Dispose();}
+\DoxyCodeLine{00627                         \textcolor{keywordtype}{byte}[] pixelData = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[width * height * 4];}
+\DoxyCodeLine{00628                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{00629                         \{}
+\DoxyCodeLine{00630                             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width; x++)}
+\DoxyCodeLine{00631                             \{}
+\DoxyCodeLine{00632                                 \textcolor{keywordtype}{int} ind = y * width + x;}
+\DoxyCodeLine{00633                                 \textcolor{keywordflow}{if} (mask[ind] > 0)}
+\DoxyCodeLine{00634                                 \{}
+\DoxyCodeLine{00635                                     pixelData[4 * ind] = (byte)(mask[ind] / 255);\textcolor{comment}{// Blue}}
+\DoxyCodeLine{00636                                     pixelData[4 * ind + 1] = (byte)(mask[ind] / 255);\textcolor{comment}{// Green}}
+\DoxyCodeLine{00637                                     pixelData[4 * ind + 2] = (byte)(mask[ind] / 255);\textcolor{comment}{// Red}}
+\DoxyCodeLine{00638                                     pixelData[4 * ind + 3] = 125;\textcolor{comment}{// Alpha}}
+\DoxyCodeLine{00639                                 \}}
+\DoxyCodeLine{00640                                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00641                                     pixelData[4 * ind + 3] = 0;}
+\DoxyCodeLine{00642                             \}}
+\DoxyCodeLine{00643                         \}}
+\DoxyCodeLine{00644                         pixbuf = \textcolor{keyword}{new} Bitmap(\textcolor{stringliteral}{"{}"{}}, width, height, PixelFormat.Format32bppArgb, pixelData, \textcolor{keyword}{new} ZCT(), 0);}
+\DoxyCodeLine{00645                         updatePixbuf = \textcolor{keyword}{false};}
+\DoxyCodeLine{00646                         \textcolor{keywordflow}{return} pixbuf;}
+\DoxyCodeLine{00647                     \}}
+\DoxyCodeLine{00648                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00649                         \textcolor{keywordflow}{return} pixbuf;}
+\DoxyCodeLine{00650                 \}}
+\DoxyCodeLine{00651             \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a51902c051db2a5679fd4211f5c591361}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a51902c051db2a5679fd4211f5c591361}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!Height@{Height}}
 \index{Height@{Height}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -177,6 +323,11 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00619}{619}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00548}{548}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00548 \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} height; \} \textcolor{keyword}{set} \{ height = value; \} \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a96bd1f56a176d3e9a6cf3d5c0b003915}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a96bd1f56a176d3e9a6cf3d5c0b003915}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!PhysicalSizeX@{PhysicalSizeX}}
 \index{PhysicalSizeX@{PhysicalSizeX}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -187,6 +338,11 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00548}{548}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00549}{549}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00549 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a081dedbe13d304271aabc131b9aafa2a}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a081dedbe13d304271aabc131b9aafa2a}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!PhysicalSizeY@{PhysicalSizeY}}
 \index{PhysicalSizeY@{PhysicalSizeY}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -197,6 +353,11 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00549}{549}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00550}{550}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00550 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_r_o_i_1_1_mask_a8d84869ddb207e4b06af577359e160a7}\label{class_bio_imager_1_1_r_o_i_1_1_mask_a8d84869ddb207e4b06af577359e160a7}} 
 \index{BioImager.ROI.Mask@{BioImager.ROI.Mask}!Width@{Width}}
 \index{Width@{Width}!BioImager.ROI.Mask@{BioImager.ROI.Mask}}
@@ -207,6 +368,11 @@ Definition at line \mbox{\hyperlink{_bio_8cs_source_l00550}{550}} of file \mbox{
 
 Definition at line \mbox{\hyperlink{_bio_8cs_source_l00547}{547}} of file \mbox{\hyperlink{_bio_8cs_source}{Bio.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00547 \{ \textcolor{keyword}{get} \{ \textcolor{keywordflow}{return} width; \} \textcolor{keyword}{set} \{ width = value; \} \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

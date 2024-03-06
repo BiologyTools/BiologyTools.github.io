@@ -305,7 +305,29 @@ able to support other trigger modes, but we only got access to the
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_serial_device_mixin.html">microscope.abc.SerialDeviceMixin</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00047">47</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   47</span>    <span class="keyword">def </span>__init__(self, com=None, baud=115200, timeout=0.1, **kwargs):</div>
+<div class="line"><span class="lineno">   48</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">   49</span>        self.connection = serial.Serial(</div>
+<div class="line"><span class="lineno">   50</span>            port=com,</div>
+<div class="line"><span class="lineno">   51</span>            baudrate=baud,</div>
+<div class="line"><span class="lineno">   52</span>            timeout=timeout,</div>
+<div class="line"><span class="lineno">   53</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><span class="lineno">   54</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">   55</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">   56</span>        )</div>
+<div class="line"><span class="lineno">   57</span>        <span class="comment"># Start a logger.</span></div>
+<div class="line"><span class="lineno">   58</span>        response = self.send(b<span class="stringliteral">&quot;sn?&quot;</span>)</div>
+<div class="line"><span class="lineno">   59</span>        _logger.info(<span class="stringliteral">&quot;Cobolt laser serial number: [%s]&quot;</span>, response.decode())</div>
+<div class="line"><span class="lineno">   60</span>        <span class="comment"># We need to ensure that autostart is disabled so that we can switch emission</span></div>
+<div class="line"><span class="lineno">   61</span>        <span class="comment"># on/off remotely.</span></div>
+<div class="line"><span class="lineno">   62</span>        response = self.send(b<span class="stringliteral">&quot;@cobas 0&quot;</span>)</div>
+<div class="line"><span class="lineno">   63</span>        _logger.info(<span class="stringliteral">&quot;Response to @cobas 0 [%s]&quot;</span>, response.decode())</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>        self._max_power_mw = float(self.send(b<span class="stringliteral">&quot;gmlp?&quot;</span>))</div>
+<div class="line"><span class="lineno">   66</span> </div>
+<div class="line"><span class="lineno">   67</span>        self.initialize()</div>
+<div class="line"><span class="lineno">   68</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -326,7 +348,11 @@ able to support other trigger modes, but we only got access to the
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00083">83</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   83</span>    <span class="keyword">def </span>clearFault(self):</div>
+<div class="line"><span class="lineno">   84</span>        self.send(b<span class="stringliteral">&quot;cf&quot;</span>)</div>
+<div class="line"><span class="lineno">   85</span>        <span class="keywordflow">return</span> self.get_status()</div>
+<div class="line"><span class="lineno">   86</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab9154c84c3ebd43632c250df6b8c7f8a" name="ab9154c84c3ebd43632c250df6b8c7f8a"></a>
@@ -348,6 +374,14 @@ able to support other trigger modes, but we only got access to the
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#add8e7f466e7a28137d6e0ceede74e15e">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00134">134</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  134</span>    <span class="keyword">def </span>disable(self):</div>
+<div class="line"><span class="lineno">  135</span>        _logger.info(<span class="stringliteral">&quot;Turning laser OFF.&quot;</span>)</div>
+<div class="line"><span class="lineno">  136</span>        <span class="keywordflow">return</span> self.send(b<span class="stringliteral">&quot;l0&quot;</span>).decode()</div>
+<div class="line"><span class="lineno">  137</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, and <a class="el" href="abc_8py_source.html#l00349">microscope.abc.Device.shutdown()</a>.</p>
 
 </div>
 </div>
@@ -370,6 +404,14 @@ able to support other trigger modes, but we only got access to the
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#a368b7bf7f4d13f9176d467fcb0dbf6f3">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00140">140</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  140</span>    <span class="keyword">def </span>get_is_on(self):</div>
+<div class="line"><span class="lineno">  141</span>        response = self.send(b<span class="stringliteral">&quot;l?&quot;</span>)</div>
+<div class="line"><span class="lineno">  142</span>        <span class="keywordflow">return</span> response == b<span class="stringliteral">&quot;1&quot;</span></div>
+<div class="line"><span class="lineno">  143</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="lights_2cobolt_8py_source.html#l00145">microscope.lights.cobolt.CoboltLaser._get_power_mw()</a>, <a class="el" href="lights_2obis_8py_source.html#l00174">microscope.lights.obis.ObisLaser._get_power_mw()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00183">microscope.lights.sapphire.SapphireLaser._get_power_mw()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00259">microscope.lights.toptica.TopticaiBeam._get_power_mw()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00065">microscope.lights.cobolt.CoboltLaser._max_power_mw</a>, <a class="el" href="lights_2obis_8py_source.html#l00070">microscope.lights.obis.ObisLaser._max_power_mw</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00080">microscope.lights.sapphire.SapphireLaser._max_power_mw</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00157">microscope.lights.cobolt.CoboltLaser._set_power_mw()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00262">microscope.lights.toptica.TopticaiBeam._set_power_mw()</a>, <a class="el" href="lights_2obis_8py_source.html#l00182">microscope.lights.obis.ObisLaser._set_power_mw()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00187">microscope.lights.sapphire.SapphireLaser._set_power_mw()</a>, <a class="el" href="abc_8py_source.html#l01212">microscope.abc.LightSource.get_is_on()</a>, <a class="el" href="coolled_8py_source.html#l00178">microscope.controllers.coolled._CoolLEDChannel.get_is_on()</a>, <a class="el" href="lumencor_8py_source.html#l00236">microscope.controllers.lumencor._SpectraIIILightChannel.get_is_on()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00188">microscope.controllers.toptica._iChromeLaser.get_is_on()</a>, <a class="el" href="zaber_8py_source.html#l00475">microscope.controllers.zaber._ZaberLED.get_is_on()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00136">microscope.lights.deepstar.DeepstarLaser.get_is_on()</a>, <a class="el" href="lights_2obis_8py_source.html#l00166">microscope.lights.obis.ObisLaser.get_is_on()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00179">microscope.lights.sapphire.SapphireLaser.get_is_on()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00245">microscope.lights.toptica.TopticaiBeam.get_is_on()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00362">microscope.simulators.SimulatedLightSource.get_is_on()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00136">microscope.lights.deepstar.DeepstarLaser.get_is_on()</a>, <a class="el" href="lights_2obis_8py_source.html#l00166">microscope.lights.obis.ObisLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>.</p>
 
 </div>
 </div>
@@ -392,6 +434,23 @@ able to support other trigger modes, but we only got access to the
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_light_source.html#ad89d3b36b76fa78d2617794df95502b2">microscope.abc.LightSource</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00088">88</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   88</span>    <span class="keyword">def </span>get_status(self):</div>
+<div class="line"><span class="lineno">   89</span>        result = []</div>
+<div class="line"><span class="lineno">   90</span>        <span class="keywordflow">for</span> cmd, stat <span class="keywordflow">in</span> [</div>
+<div class="line"><span class="lineno">   91</span>            (b<span class="stringliteral">&quot;l?&quot;</span>, <span class="stringliteral">&quot;Emission on?&quot;</span>),</div>
+<div class="line"><span class="lineno">   92</span>            (b<span class="stringliteral">&quot;p?&quot;</span>, <span class="stringliteral">&quot;Target power:&quot;</span>),</div>
+<div class="line"><span class="lineno">   93</span>            (b<span class="stringliteral">&quot;pa?&quot;</span>, <span class="stringliteral">&quot;Measured power:&quot;</span>),</div>
+<div class="line"><span class="lineno">   94</span>            (b<span class="stringliteral">&quot;f?&quot;</span>, <span class="stringliteral">&quot;Fault?&quot;</span>),</div>
+<div class="line"><span class="lineno">   95</span>            (b<span class="stringliteral">&quot;hrs?&quot;</span>, <span class="stringliteral">&quot;Head operating hours:&quot;</span>),</div>
+<div class="line"><span class="lineno">   96</span>        ]:</div>
+<div class="line"><span class="lineno">   97</span>            response = self.send(cmd)</div>
+<div class="line"><span class="lineno">   98</span>            result.append(stat + <span class="stringliteral">&quot; &quot;</span> + response.decode())</div>
+<div class="line"><span class="lineno">   99</span>        <span class="keywordflow">return</span> result</div>
+<div class="line"><span class="lineno">  100</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01013">microscope.abc.SerialDeviceMixin.connection</a>, <a class="el" href="thorlabs_8py_source.html#l00062">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.connection</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00049">microscope.lights.cobolt.CoboltLaser.connection</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00046">microscope.lights.deepstar.DeepstarLaser.connection</a>, <a class="el" href="lights_2obis_8py_source.html#l00036">microscope.lights.obis.ObisLaser.connection</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00060">microscope.lights.sapphire.SapphireLaser.connection</a>, <a class="el" href="abc_8py_source.html#l00307">microscope.abc.Device.disable()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="coolled_8py_source.html#l00175">microscope.controllers.coolled._CoolLEDChannel.disable()</a>, <a class="el" href="lumencor_8py_source.html#l00233">microscope.controllers.lumencor._SpectraIIILightChannel.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00134">microscope.lights.cobolt.CoboltLaser.disable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00173">microscope.lights.sapphire.SapphireLaser.disable()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00242">microscope.lights.toptica.TopticaiBeam.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -418,6 +477,17 @@ they should call it on their `__init__` method.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00110">110</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  110</span>    <span class="keyword">def </span>initialize(self):</div>
+<div class="line"><span class="lineno">  111</span>        self.connection.flushInput()</div>
+<div class="line"><span class="lineno">  112</span>        <span class="comment"># We don&#39;t want &#39;direct control&#39; mode.</span></div>
+<div class="line"><span class="lineno">  113</span>        self.send(b<span class="stringliteral">&quot;@cobasdr 0&quot;</span>)</div>
+<div class="line"><span class="lineno">  114</span>        <span class="comment"># Force laser into autostart mode.</span></div>
+<div class="line"><span class="lineno">  115</span>        self.send(b<span class="stringliteral">&quot;@cob1&quot;</span>)</div>
+<div class="line"><span class="lineno">  116</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01013">microscope.abc.SerialDeviceMixin.connection</a>, <a class="el" href="thorlabs_8py_source.html#l00062">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.connection</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00049">microscope.lights.cobolt.CoboltLaser.connection</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00046">microscope.lights.deepstar.DeepstarLaser.connection</a>, <a class="el" href="lights_2obis_8py_source.html#l00036">microscope.lights.obis.ObisLaser.connection</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00060">microscope.lights.sapphire.SapphireLaser.connection</a>, <a class="el" href="abc_8py_source.html#l01212">microscope.abc.LightSource.get_is_on()</a>, <a class="el" href="coolled_8py_source.html#l00178">microscope.controllers.coolled._CoolLEDChannel.get_is_on()</a>, <a class="el" href="lumencor_8py_source.html#l00236">microscope.controllers.lumencor._SpectraIIILightChannel.get_is_on()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00188">microscope.controllers.toptica._iChromeLaser.get_is_on()</a>, <a class="el" href="zaber_8py_source.html#l00475">microscope.controllers.zaber._ZaberLED.get_is_on()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00136">microscope.lights.deepstar.DeepstarLaser.get_is_on()</a>, <a class="el" href="lights_2obis_8py_source.html#l00166">microscope.lights.obis.ObisLaser.get_is_on()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00179">microscope.lights.sapphire.SapphireLaser.get_is_on()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00245">microscope.lights.toptica.TopticaiBeam.get_is_on()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00362">microscope.simulators.SimulatedLightSource.get_is_on()</a>, <a class="el" href="abc_8py_source.html#l01206">microscope.abc.LightSource.get_status()</a>, <a class="el" href="coolled_8py_source.html#l00163">microscope.controllers.coolled._CoolLEDChannel.get_status()</a>, <a class="el" href="lumencor_8py_source.html#l00226">microscope.controllers.lumencor._SpectraIIILightChannel.get_status()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00185">microscope.controllers.toptica._iChromeLaser.get_status()</a>, <a class="el" href="zaber_8py_source.html#l00459">microscope.controllers.zaber._ZaberLED.get_status()</a>, <a class="el" href="aurox_8py_source.html#l00201">microscope.filterwheels.aurox.Clarity.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00109">microscope.lights.sapphire.SapphireLaser.get_status()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00235">microscope.lights.toptica.TopticaiBeam.get_status()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00348">microscope.simulators.SimulatedLightSource.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01267">microscope.stages.linkam._LinkamBase.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01355">microscope.stages.linkam._LinkamMDSMixin.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="picam_8py_source.html#l00051">microscope.cameras.picam.PiCamera.__init__()</a>, <a class="el" href="ximea_8py_source.html#l00188">microscope.cameras.ximea.XimeaCamera.__init__()</a>, and <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>.</p>
 
 </div>
 </div>
@@ -448,6 +518,23 @@ they should call it on their `__init__` method.</pre>
 </div><div class="memdoc">
 <pre class="fragment">Send command and retrieve response.</pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00069">69</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>    <span class="keyword">def </span>send(self, command):</div>
+<div class="line"><span class="lineno">   70</span>        <span class="stringliteral">&quot;&quot;&quot;Send command and retrieve response.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">   71</span>        success = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">   72</span>        <span class="keywordflow">while</span> <span class="keywordflow">not</span> success:</div>
+<div class="line"><span class="lineno">   73</span>            self._write(command)</div>
+<div class="line"><span class="lineno">   74</span>            response = self._readline()</div>
+<div class="line"><span class="lineno">   75</span>            <span class="comment"># Catch zero-length responses to queries and retry.</span></div>
+<div class="line"><span class="lineno">   76</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> command.endswith(b<span class="stringliteral">&quot;?&quot;</span>):</div>
+<div class="line"><span class="lineno">   77</span>                success = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">elif</span> len(response) &gt; 0:</div>
+<div class="line"><span class="lineno">   79</span>                success = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">return</span> response</div>
+<div class="line"><span class="lineno">   81</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l01016">microscope.abc.SerialDeviceMixin._readline()</a>, <a class="el" href="thorlabs_8py_source.html#l00091">microscope.filterwheels.thorlabs.ThorlabsFilterWheel._readline()</a>, <a class="el" href="lights_2obis_8py_source.html#l00079">microscope.lights.obis.ObisLaser._readline()</a>, <a class="el" href="abc_8py_source.html#l01020">microscope.abc.SerialDeviceMixin._write()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00075">microscope.lights.deepstar.DeepstarLaser._write()</a>, <a class="el" href="lights_2obis_8py_source.html#l00074">microscope.lights.obis.ObisLaser._write()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00085">microscope.lights.sapphire.SapphireLaser._write()</a>, <a class="el" href="abc_8py_source.html#l01206">microscope.abc.LightSource.get_status()</a>, <a class="el" href="coolled_8py_source.html#l00163">microscope.controllers.coolled._CoolLEDChannel.get_status()</a>, <a class="el" href="lumencor_8py_source.html#l00226">microscope.controllers.lumencor._SpectraIIILightChannel.get_status()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00185">microscope.controllers.toptica._iChromeLaser.get_status()</a>, <a class="el" href="zaber_8py_source.html#l00459">microscope.controllers.zaber._ZaberLED.get_status()</a>, <a class="el" href="aurox_8py_source.html#l00201">microscope.filterwheels.aurox.Clarity.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00109">microscope.lights.sapphire.SapphireLaser.get_status()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00235">microscope.lights.toptica.TopticaiBeam.get_status()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00348">microscope.simulators.SimulatedLightSource.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01267">microscope.stages.linkam._LinkamBase.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01355">microscope.stages.linkam._LinkamMDSMixin.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2cobolt_8py_source.html#l00134">microscope.lights.cobolt.CoboltLaser.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00140">microscope.lights.cobolt.CoboltLaser.get_is_on()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00179">microscope.lights.sapphire.SapphireLaser.get_is_on()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00109">microscope.lights.sapphire.SapphireLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, and <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -465,6 +552,8 @@ they should call it on their `__init__` method.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="lights_2cobolt_8py_source.html#l00049">49</a> of file <a class="el" href="lights_2cobolt_8py_source.html">cobolt.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, and <a class="el" href="abc_8py_source.html#l01030">microscope.abc.SerialDeviceMixin.lock_comms()</a>.</p>
 
 </div>
 </div>

@@ -169,7 +169,10 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00019">19</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   20</span>        {</div>
+<div class="line"><span class="lineno">   21</span>            this.capacity = capacity;</div>
+<div class="line"><span class="lineno">   22</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -200,7 +203,27 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00036">36</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   37</span>        {</div>
+<div class="line"><span class="lineno">   38</span>            <span class="keywordflow">if</span> (cacheMap.Count &gt;= capacity)</div>
+<div class="line"><span class="lineno">   39</span>            {</div>
+<div class="line"><span class="lineno">   40</span>                var oldest = lruList.First;</div>
+<div class="line"><span class="lineno">   41</span>                <span class="keywordflow">if</span> (oldest != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">   42</span>                {</div>
+<div class="line"><span class="lineno">   43</span>                    lruList.RemoveFirst();</div>
+<div class="line"><span class="lineno">   44</span>                    cacheMap.Remove(oldest.Value.key);</div>
+<div class="line"><span class="lineno">   45</span>                }</div>
+<div class="line"><span class="lineno">   46</span>            }</div>
+<div class="line"><span class="lineno">   47</span> </div>
+<div class="line"><span class="lineno">   48</span>            <span class="keywordflow">if</span> (cacheMap.ContainsKey(key))</div>
+<div class="line"><span class="lineno">   49</span>            {</div>
+<div class="line"><span class="lineno">   50</span>                lruList.Remove(cacheMap[key]);</div>
+<div class="line"><span class="lineno">   51</span>            }</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>            var newNode = <span class="keyword">new</span> LinkedListNode&lt;(TKey key, TValue value)&gt;((key, value));</div>
+<div class="line"><span class="lineno">   54</span>            lruList.AddLast(newNode);</div>
+<div class="line"><span class="lineno">   55</span>            cacheMap[key] = newNode;</div>
+<div class="line"><span class="lineno">   56</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac4e9656c39f743dff5e477ed8a0a7175" name="ac4e9656c39f743dff5e477ed8a0a7175"></a>
@@ -220,7 +243,17 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00024">24</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   25</span>        {</div>
+<div class="line"><span class="lineno">   26</span>            <span class="keywordflow">if</span> (cacheMap.TryGetValue(key, out var node))</div>
+<div class="line"><span class="lineno">   27</span>            {</div>
+<div class="line"><span class="lineno">   28</span>                lruList.Remove(node);</div>
+<div class="line"><span class="lineno">   29</span>                lruList.AddLast(node);</div>
+<div class="line"><span class="lineno">   30</span>                <span class="keywordflow">return</span> node.Value.value;</div>
+<div class="line"><span class="lineno">   31</span>            }</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span>            <span class="keywordflow">return</span> <span class="keywordflow">default</span>(TValue);</div>
+<div class="line"><span class="lineno">   34</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

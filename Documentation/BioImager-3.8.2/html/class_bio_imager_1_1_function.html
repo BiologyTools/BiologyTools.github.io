@@ -216,7 +216,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00431">431</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  432</span>        {</div>
+<div class="line"><span class="lineno">  433</span>            Pressed,</div>
+<div class="line"><span class="lineno">  434</span>            Released</div>
+<div class="line"><span class="lineno">  435</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a32edf51b4d2b15e5c9b4f308a35c6402" name="a32edf51b4d2b15e5c9b4f308a35c6402"></a>
@@ -232,7 +236,35 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00401">401</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  402</span>        {</div>
+<div class="line"><span class="lineno">  403</span>            Key,</div>
+<div class="line"><span class="lineno">  404</span>            StageUp,</div>
+<div class="line"><span class="lineno">  405</span>            StageRight,</div>
+<div class="line"><span class="lineno">  406</span>            StageDown,</div>
+<div class="line"><span class="lineno">  407</span>            StageLeft,</div>
+<div class="line"><span class="lineno">  408</span>            FocusUp,</div>
+<div class="line"><span class="lineno">  409</span>            FocusDown,</div>
+<div class="line"><span class="lineno">  410</span>            StageFieldUp,</div>
+<div class="line"><span class="lineno">  411</span>            StageFieldRight,</div>
+<div class="line"><span class="lineno">  412</span>            StageFieldDown,</div>
+<div class="line"><span class="lineno">  413</span>            StageFieldLeft,</div>
+<div class="line"><span class="lineno">  414</span>            TakeImage,</div>
+<div class="line"><span class="lineno">  415</span>            TakeImageStack,</div>
+<div class="line"><span class="lineno">  416</span>            RL,</div>
+<div class="line"><span class="lineno">  417</span>            TL,</div>
+<div class="line"><span class="lineno">  418</span>            Objective,</div>
+<div class="line"><span class="lineno">  419</span>            StoreCoordinate,</div>
+<div class="line"><span class="lineno">  420</span>            NextCoordinate,</div>
+<div class="line"><span class="lineno">  421</span>            PreviousCoordinate,</div>
+<div class="line"><span class="lineno">  422</span>            NextSnapCoordinate,</div>
+<div class="line"><span class="lineno">  423</span>            PreviousSnapCoordinate,</div>
+<div class="line"><span class="lineno">  424</span>            Recording,</div>
+<div class="line"><span class="lineno">  425</span>            Property,</div>
+<div class="line"><span class="lineno">  426</span>            ImageJ,</div>
+<div class="line"><span class="lineno">  427</span>            Script,</div>
+<div class="line"><span class="lineno">  428</span>            None</div>
+<div class="line"><span class="lineno">  429</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -261,6 +293,23 @@ Properties</h2></td></tr>
 <p >It reads all the files in the Functions folder, parses them into <a class="el" href="class_bio_imager_1_1_function.html">Function</a> objects, and adds them to the Functions dictionary </p>
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00718">718</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  719</span>        {</div>
+<div class="line"><span class="lineno">  720</span>            <span class="keywordtype">string</span> st = Application.StartupPath + <span class="stringliteral">&quot;/Functions&quot;</span>;</div>
+<div class="line"><span class="lineno">  721</span>            <span class="keywordflow">if</span> (!Directory.Exists(st))</div>
+<div class="line"><span class="lineno">  722</span>                Directory.CreateDirectory(st);</div>
+<div class="line"><span class="lineno">  723</span>            <span class="keywordtype">string</span>[] sts = Directory.GetFiles(st);</div>
+<div class="line"><span class="lineno">  724</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; sts.Length; i++)</div>
+<div class="line"><span class="lineno">  725</span>            {</div>
+<div class="line"><span class="lineno">  726</span>                <span class="keywordtype">string</span> fs = System.IO.File.ReadAllText(sts[i]);</div>
+<div class="line"><span class="lineno">  727</span>                Function f = Function.Parse(fs);</div>
+<div class="line"><span class="lineno">  728</span>                <span class="keywordflow">if</span>(!Functions.ContainsKey(f.Name))</div>
+<div class="line"><span class="lineno">  729</span>                Functions.Add(f.Name, f);</div>
+<div class="line"><span class="lineno">  730</span>                App.AddMenu(f.MenuPath, f);</div>
+<div class="line"><span class="lineno">  731</span>                App.AddContextMenu(f.ContextPath, f);</div>
+<div class="line"><span class="lineno">  732</span>            }</div>
+<div class="line"><span class="lineno">  733</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_app_8cs_source.html#l00375">BioImager.App.AddContextMenu()</a>, and <a class="el" href="_app_8cs_source.html#l00367">BioImager.App.AddMenu()</a>.</p>
 
 </div>
 </div>
@@ -289,7 +338,19 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00561">561</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  562</span>        {</div>
+<div class="line"><span class="lineno">  563</span>            <span class="keywordflow">if</span> (s == <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  564</span>                <span class="keywordflow">return</span> <span class="keyword">new</span> Function();</div>
+<div class="line"><span class="lineno">  565</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  566</span>            {</div>
+<div class="line"><span class="lineno">  567</span>                <span class="keywordflow">return</span> JsonConvert.DeserializeObject&lt;Function&gt;(s);</div>
+<div class="line"><span class="lineno">  568</span>            }</div>
+<div class="line"><span class="lineno">  569</span>            <span class="keywordflow">catch</span> (Exception)</div>
+<div class="line"><span class="lineno">  570</span>            {</div>
+<div class="line"><span class="lineno">  571</span>                <span class="keywordflow">return</span> <span class="keyword">new</span> Function();</div>
+<div class="line"><span class="lineno">  572</span>            }</div>
+<div class="line"><span class="lineno">  573</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1e36f4c80af293cc36551615fb690f73" name="a1e36f4c80af293cc36551615fb690f73"></a>
@@ -317,6 +378,137 @@ Properties</h2></td></tr>
 <dl class="section return"><dt>Returns</dt><dd>The return value is the object that is being returned. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00586">586</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  587</span>        {</div>
+<div class="line"><span class="lineno">  588</span>            <span class="keywordflow">if</span>(FuncType == FunctionType.Key &amp;&amp; Script!=<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  589</span>            <span class="keywordflow">if</span>(imagej)</div>
+<div class="line"><span class="lineno">  590</span>            {</div>
+<div class="line"><span class="lineno">  591</span>                FuncType = FunctionType.ImageJ;</div>
+<div class="line"><span class="lineno">  592</span>            }</div>
+<div class="line"><span class="lineno">  593</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  594</span>                FuncType = FunctionType.Script;</div>
+<div class="line"><span class="lineno">  595</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.Script)</div>
+<div class="line"><span class="lineno">  596</span>            {</div>
+<div class="line"><span class="lineno">  597</span>                Scripting.RunString(script);</div>
+<div class="line"><span class="lineno">  598</span>            }</div>
+<div class="line"><span class="lineno">  599</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.ImageJ)</div>
+<div class="line"><span class="lineno">  600</span>            {</div>
+<div class="line"><span class="lineno">  601</span>                ImageJ.RunOnImage(script, <span class="keyword">false</span>, BioConsole.onTab, BioConsole.useBioformats, BioConsole.newTab);</div>
+<div class="line"><span class="lineno">  602</span>            }</div>
+<div class="line"><span class="lineno">  603</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.Property)</div>
+<div class="line"><span class="lineno">  604</span>            {</div>
+<div class="line"><span class="lineno">  605</span>                <span class="keywordflow">if</span> (Name.StartsWith(<span class="stringliteral">&quot;Get&quot;</span>))</div>
+<div class="line"><span class="lineno">  606</span>                {</div>
+<div class="line"><span class="lineno">  607</span>                    Automation.Recording r = (Automation.Recording)Automation.Properties[System.IO.Path.GetFileNameWithoutExtension(File)];</div>
+<div class="line"><span class="lineno">  608</span>                    <span class="keywordflow">return</span> r.Get();</div>
+<div class="line"><span class="lineno">  609</span>                }</div>
+<div class="line"><span class="lineno">  610</span>                <span class="keywordflow">else</span> <span class="keywordflow">if</span> (Name.StartsWith(<span class="stringliteral">&quot;Set&quot;</span>))</div>
+<div class="line"><span class="lineno">  611</span>                {</div>
+<div class="line"><span class="lineno">  612</span>                    Automation.Recording r = (Automation.Recording)Automation.Properties[System.IO.Path.GetFileNameWithoutExtension(File)];</div>
+<div class="line"><span class="lineno">  613</span>                    r.Set(Value.ToString());</div>
+<div class="line"><span class="lineno">  614</span>                }</div>
+<div class="line"><span class="lineno">  615</span> </div>
+<div class="line"><span class="lineno">  616</span>            }</div>
+<div class="line"><span class="lineno">  617</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.Key)</div>
+<div class="line"><span class="lineno">  618</span>            {</div>
+<div class="line"><span class="lineno">  619</span>                <span class="keywordflow">if</span> (Modifier != VirtualKeyCode.NONAME)</div>
+<div class="line"><span class="lineno">  620</span>                {</div>
+<div class="line"><span class="lineno">  621</span>                    input.Keyboard.ModifiedKeyStroke(Modifier, Key);</div>
+<div class="line"><span class="lineno">  622</span>                }</div>
+<div class="line"><span class="lineno">  623</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  624</span>                {</div>
+<div class="line"><span class="lineno">  625</span>                    input.Keyboard.KeyPress(Key);</div>
+<div class="line"><span class="lineno">  626</span>                }</div>
+<div class="line"><span class="lineno">  627</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  628</span>            }</div>
+<div class="line"><span class="lineno">  629</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.Recording)</div>
+<div class="line"><span class="lineno">  630</span>            {</div>
+<div class="line"><span class="lineno">  631</span>                Automation.Recording r = (Automation.Recording)Automation.Recordings[System.IO.Path.GetFileNameWithoutExtension(File)];</div>
+<div class="line"><span class="lineno">  632</span>                r.Run();</div>
+<div class="line"><span class="lineno">  633</span>            }</div>
+<div class="line"><span class="lineno">  634</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.Objective)</div>
+<div class="line"><span class="lineno">  635</span>            {</div>
+<div class="line"><span class="lineno">  636</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  637</span>            }</div>
+<div class="line"><span class="lineno">  638</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StoreCoordinate)</div>
+<div class="line"><span class="lineno">  639</span>            {</div>
+<div class="line"><span class="lineno">  640</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  641</span>            }</div>
+<div class="line"><span class="lineno">  642</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.NextCoordinate)</div>
+<div class="line"><span class="lineno">  643</span>            {</div>
+<div class="line"><span class="lineno">  644</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  645</span>            }</div>
+<div class="line"><span class="lineno">  646</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.PreviousCoordinate)</div>
+<div class="line"><span class="lineno">  647</span>            {</div>
+<div class="line"><span class="lineno">  648</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  649</span>            }</div>
+<div class="line"><span class="lineno">  650</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.NextSnapCoordinate)</div>
+<div class="line"><span class="lineno">  651</span>            {</div>
+<div class="line"><span class="lineno">  652</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  653</span>            }</div>
+<div class="line"><span class="lineno">  654</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.PreviousSnapCoordinate)</div>
+<div class="line"><span class="lineno">  655</span>            {</div>
+<div class="line"><span class="lineno">  656</span>                App.imager.PerformFunction(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  657</span>            }</div>
+<div class="line"><span class="lineno">  658</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageUp)</div>
+<div class="line"><span class="lineno">  659</span>            {</div>
+<div class="line"><span class="lineno">  660</span>                Microscope.MoveUp(Value);</div>
+<div class="line"><span class="lineno">  661</span>            }</div>
+<div class="line"><span class="lineno">  662</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageRight)</div>
+<div class="line"><span class="lineno">  663</span>            {</div>
+<div class="line"><span class="lineno">  664</span>                Microscope.MoveRight(Value);</div>
+<div class="line"><span class="lineno">  665</span>            }</div>
+<div class="line"><span class="lineno">  666</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageDown)</div>
+<div class="line"><span class="lineno">  667</span>            {</div>
+<div class="line"><span class="lineno">  668</span>                Microscope.MoveDown(Value);</div>
+<div class="line"><span class="lineno">  669</span>            }</div>
+<div class="line"><span class="lineno">  670</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageLeft)</div>
+<div class="line"><span class="lineno">  671</span>            {</div>
+<div class="line"><span class="lineno">  672</span>                Microscope.MoveLeft(Value);</div>
+<div class="line"><span class="lineno">  673</span>            }</div>
+<div class="line"><span class="lineno">  674</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.FocusUp)</div>
+<div class="line"><span class="lineno">  675</span>            {</div>
+<div class="line"><span class="lineno">  676</span>                Microscope.SetFocus(Value);</div>
+<div class="line"><span class="lineno">  677</span>            }</div>
+<div class="line"><span class="lineno">  678</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.FocusDown)</div>
+<div class="line"><span class="lineno">  679</span>            {</div>
+<div class="line"><span class="lineno">  680</span>                Microscope.SetFocus(-Value);</div>
+<div class="line"><span class="lineno">  681</span>            }</div>
+<div class="line"><span class="lineno">  682</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageFieldUp)</div>
+<div class="line"><span class="lineno">  683</span>            {</div>
+<div class="line"><span class="lineno">  684</span>                Microscope.MoveFieldUp();</div>
+<div class="line"><span class="lineno">  685</span>            }</div>
+<div class="line"><span class="lineno">  686</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageFieldRight)</div>
+<div class="line"><span class="lineno">  687</span>            {</div>
+<div class="line"><span class="lineno">  688</span>                Microscope.MoveFieldRight();</div>
+<div class="line"><span class="lineno">  689</span>            }</div>
+<div class="line"><span class="lineno">  690</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageFieldDown)</div>
+<div class="line"><span class="lineno">  691</span>            {</div>
+<div class="line"><span class="lineno">  692</span>                Microscope.MoveFieldDown();</div>
+<div class="line"><span class="lineno">  693</span>            }</div>
+<div class="line"><span class="lineno">  694</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.StageFieldLeft)</div>
+<div class="line"><span class="lineno">  695</span>            {</div>
+<div class="line"><span class="lineno">  696</span>                Microscope.MoveFieldLeft();</div>
+<div class="line"><span class="lineno">  697</span>            }</div>
+<div class="line"><span class="lineno">  698</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.TakeImage)</div>
+<div class="line"><span class="lineno">  699</span>            {</div>
+<div class="line"><span class="lineno">  700</span>                Microscope.TakeImage();</div>
+<div class="line"><span class="lineno">  701</span>            }</div>
+<div class="line"><span class="lineno">  702</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.TakeImageStack)</div>
+<div class="line"><span class="lineno">  703</span>            {</div>
+<div class="line"><span class="lineno">  704</span>                Microscope.TakeImageStack();</div>
+<div class="line"><span class="lineno">  705</span>            }</div>
+<div class="line"><span class="lineno">  706</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.RL)</div>
+<div class="line"><span class="lineno">  707</span>            {</div>
+<div class="line"><span class="lineno">  708</span>                Microscope.RLShutter.SetPosition((<span class="keywordtype">int</span>)Value);</div>
+<div class="line"><span class="lineno">  709</span>            }</div>
+<div class="line"><span class="lineno">  710</span>            <span class="keywordflow">if</span> (FuncType == Function.FunctionType.TL)</div>
+<div class="line"><span class="lineno">  711</span>            {</div>
+<div class="line"><span class="lineno">  712</span>                Microscope.TLShutter.SetPosition((<span class="keywordtype">int</span>)Value);</div>
+<div class="line"><span class="lineno">  713</span>            }</div>
+<div class="line"><span class="lineno">  714</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  715</span>        }</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_imager_8cs_source.html#l01338">BioImager.Imager.PerformFunction()</a>, <a class="el" href="_image_j_8cs_source.html#l00189">BioImager.ImageJ.RunOnImage()</a>, and <a class="el" href="_scripting_8cs_source.html#l00396">BioImager.Scripting.RunString()</a>.</p>
 
 </div>
 </div>
@@ -338,7 +530,19 @@ Properties</h2></td></tr>
 <p>It saves all the functions in the Functions dictionary to a file. </p>
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00735">735</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  736</span>        {</div>
+<div class="line"><span class="lineno">  737</span>            <span class="keywordtype">string</span> st = Application.StartupPath;</div>
+<div class="line"><span class="lineno">  738</span>            </div>
+<div class="line"><span class="lineno">  739</span>            <span class="keywordflow">if</span>(!Directory.Exists(st + <span class="stringliteral">&quot;/Functions&quot;</span>))</div>
+<div class="line"><span class="lineno">  740</span>            {</div>
+<div class="line"><span class="lineno">  741</span>                Directory.CreateDirectory(st + <span class="stringliteral">&quot;/Functions&quot;</span>);</div>
+<div class="line"><span class="lineno">  742</span>            }</div>
+<div class="line"><span class="lineno">  743</span>            <span class="keywordflow">foreach</span> (Function f <span class="keywordflow">in</span> Functions.Values)</div>
+<div class="line"><span class="lineno">  744</span>            {</div>
+<div class="line"><span class="lineno">  745</span>                System.IO.File.WriteAllText(st + <span class="stringliteral">&quot;/Functions/&quot;</span> + f.Name + <span class="stringliteral">&quot;.func&quot;</span>,f.Serialize());</div>
+<div class="line"><span class="lineno">  746</span>            }</div>
+<div class="line"><span class="lineno">  747</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a59929b0d575c0e15df1a45efb8c66c0d" name="a59929b0d575c0e15df1a45efb8c66c0d"></a>
@@ -357,7 +561,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00575">575</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  576</span>        {</div>
+<div class="line"><span class="lineno">  577</span>            <span class="keywordflow">return</span> JsonConvert.SerializeObject(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  578</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a697f707e2645848df131c260abbaedf1" name="a697f707e2645848df131c260abbaedf1"></a>
@@ -376,7 +583,10 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00557">557</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  558</span>        {</div>
+<div class="line"><span class="lineno">  559</span>            <span class="keywordflow">return</span> name + <span class="stringliteral">&quot;, &quot;</span> + MenuPath;</div>
+<div class="line"><span class="lineno">  560</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -450,7 +660,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00533">533</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  534</span>        {</div>
+<div class="line"><span class="lineno">  535</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  536</span>            {</div>
+<div class="line"><span class="lineno">  537</span>                <span class="keywordflow">return</span> menuPath;</div>
+<div class="line"><span class="lineno">  538</span>            }</div>
+<div class="line"><span class="lineno">  539</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  540</span>            {</div>
+<div class="line"><span class="lineno">  541</span>                menuPath = value;</div>
+<div class="line"><span class="lineno">  542</span>            }</div>
+<div class="line"><span class="lineno">  543</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ab4f609fdad43e3ae4362abe2a43dc7c1" name="ab4f609fdad43e3ae4362abe2a43dc7c1"></a>
@@ -474,7 +694,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00492">492</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  493</span>        {</div>
+<div class="line"><span class="lineno">  494</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> file; }</div>
+<div class="line"><span class="lineno">  495</span>            <span class="keyword">set</span> { file = value; }</div>
+<div class="line"><span class="lineno">  496</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a6e06a16f3784704505bb6065af198e53" name="a6e06a16f3784704505bb6065af198e53"></a>
@@ -498,7 +722,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00479">479</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  480</span>        {</div>
+<div class="line"><span class="lineno">  481</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  482</span>            {</div>
+<div class="line"><span class="lineno">  483</span>                <span class="keywordflow">return</span> functionType;</div>
+<div class="line"><span class="lineno">  484</span>            }</div>
+<div class="line"><span class="lineno">  485</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  486</span>            {</div>
+<div class="line"><span class="lineno">  487</span>                functionType = value;</div>
+<div class="line"><span class="lineno">  488</span>            }</div>
+<div class="line"><span class="lineno">  489</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ac60311e12fd273f84e5f17ca60cd578d" name="ac60311e12fd273f84e5f17ca60cd578d"></a>
@@ -522,7 +756,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00453">453</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  454</span>        {</div>
+<div class="line"><span class="lineno">  455</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  456</span>            {</div>
+<div class="line"><span class="lineno">  457</span>                <span class="keywordflow">return</span> key;</div>
+<div class="line"><span class="lineno">  458</span>            }</div>
+<div class="line"><span class="lineno">  459</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  460</span>            {</div>
+<div class="line"><span class="lineno">  461</span>                key = value;</div>
+<div class="line"><span class="lineno">  462</span>            }</div>
+<div class="line"><span class="lineno">  463</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a97a94526cff9fec54b23494143153609" name="a97a94526cff9fec54b23494143153609"></a>
@@ -546,7 +790,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00521">521</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  522</span>        {</div>
+<div class="line"><span class="lineno">  523</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  524</span>            {</div>
+<div class="line"><span class="lineno">  525</span>                <span class="keywordflow">return</span> menuPath;</div>
+<div class="line"><span class="lineno">  526</span>            }</div>
+<div class="line"><span class="lineno">  527</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  528</span>            {</div>
+<div class="line"><span class="lineno">  529</span>                menuPath = value;</div>
+<div class="line"><span class="lineno">  530</span>            }</div>
+<div class="line"><span class="lineno">  531</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aaa97cd6facfa057115492c3ba3353176" name="aaa97cd6facfa057115492c3ba3353176"></a>
@@ -570,7 +824,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00466">466</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  467</span>        {</div>
+<div class="line"><span class="lineno">  468</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  469</span>            {</div>
+<div class="line"><span class="lineno">  470</span>                <span class="keywordflow">return</span> modifier;</div>
+<div class="line"><span class="lineno">  471</span>            }</div>
+<div class="line"><span class="lineno">  472</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  473</span>            {</div>
+<div class="line"><span class="lineno">  474</span>                modifier = value;</div>
+<div class="line"><span class="lineno">  475</span>            }</div>
+<div class="line"><span class="lineno">  476</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa7a278269fb959ba371d15461c0172d8" name="aa7a278269fb959ba371d15461c0172d8"></a>
@@ -594,7 +858,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00509">509</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  510</span>        {</div>
+<div class="line"><span class="lineno">  511</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  512</span>            {</div>
+<div class="line"><span class="lineno">  513</span>                <span class="keywordflow">return</span> name;</div>
+<div class="line"><span class="lineno">  514</span>            }</div>
+<div class="line"><span class="lineno">  515</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  516</span>            {</div>
+<div class="line"><span class="lineno">  517</span>                name = value;</div>
+<div class="line"><span class="lineno">  518</span>            }</div>
+<div class="line"><span class="lineno">  519</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="af7a5214105fadad09db22f005c4ba44a" name="af7a5214105fadad09db22f005c4ba44a"></a>
@@ -618,7 +892,14 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00499">499</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  500</span>        {</div>
+<div class="line"><span class="lineno">  501</span>            <span class="keyword">get</span> { <span class="keywordflow">return</span> script; }</div>
+<div class="line"><span class="lineno">  502</span>            <span class="keyword">set</span> </div>
+<div class="line"><span class="lineno">  503</span>            { </div>
+<div class="line"><span class="lineno">  504</span>                script = value;</div>
+<div class="line"><span class="lineno">  505</span>            }</div>
+<div class="line"><span class="lineno">  506</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="acc711362e8c8163faaac6365c44177c0" name="acc711362e8c8163faaac6365c44177c0"></a>
@@ -642,7 +923,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00439">439</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  440</span>        {</div>
+<div class="line"><span class="lineno">  441</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  442</span>            {</div>
+<div class="line"><span class="lineno">  443</span>                <span class="keywordflow">return</span> buttonState;</div>
+<div class="line"><span class="lineno">  444</span>            }</div>
+<div class="line"><span class="lineno">  445</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  446</span>            {</div>
+<div class="line"><span class="lineno">  447</span>                buttonState = value;</div>
+<div class="line"><span class="lineno">  448</span>            }</div>
+<div class="line"><span class="lineno">  449</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aa3f2738a11a6fbdaac4e5b70a91968f1" name="aa3f2738a11a6fbdaac4e5b70a91968f1"></a>
@@ -666,7 +957,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_function_form_8cs_source.html#l00546">546</a> of file <a class="el" href="_function_form_8cs_source.html">FunctionForm.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  547</span>        {</div>
+<div class="line"><span class="lineno">  548</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  549</span>            {</div>
+<div class="line"><span class="lineno">  550</span>                <span class="keywordflow">return</span> val;</div>
+<div class="line"><span class="lineno">  551</span>            }</div>
+<div class="line"><span class="lineno">  552</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  553</span>            {</div>
+<div class="line"><span class="lineno">  554</span>                val = value;</div>
+<div class="line"><span class="lineno">  555</span>            }</div>
+<div class="line"><span class="lineno">  556</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

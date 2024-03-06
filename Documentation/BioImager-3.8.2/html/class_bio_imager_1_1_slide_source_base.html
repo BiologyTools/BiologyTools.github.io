@@ -272,7 +272,21 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00280">280</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  281</span>        {</div>
+<div class="line"><span class="lineno">  282</span>            <span class="comment">// Initialize a new byte array for RGB24 format</span></div>
+<div class="line"><span class="lineno">  283</span>            <span class="keywordtype">byte</span>[] rgbArray = <span class="keyword">new</span> <span class="keywordtype">byte</span>[(rgbaArray.Length / 4) * 3];</div>
+<div class="line"><span class="lineno">  284</span> </div>
+<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0, j = 0; i &lt; rgbaArray.Length; i += 4, j += 3)</div>
+<div class="line"><span class="lineno">  286</span>            {</div>
+<div class="line"><span class="lineno">  287</span>                <span class="comment">// Copy the R, G, B values, skip the A value</span></div>
+<div class="line"><span class="lineno">  288</span>                rgbArray[j] = rgbaArray[i + 2];     <span class="comment">// B</span></div>
+<div class="line"><span class="lineno">  289</span>                rgbArray[j + 1] = rgbaArray[i + 1]; <span class="comment">// G</span></div>
+<div class="line"><span class="lineno">  290</span>                rgbArray[j + 2] = rgbaArray[i]; <span class="comment">// R</span></div>
+<div class="line"><span class="lineno">  291</span>            }</div>
+<div class="line"><span class="lineno">  292</span> </div>
+<div class="line"><span class="lineno">  293</span>            <span class="keywordflow">return</span> rgbArray;</div>
+<div class="line"><span class="lineno">  294</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5d94f533cf75e177754efbaf2697cd23" name="a5d94f533cf75e177754efbaf2697cd23"></a>
@@ -316,7 +330,27 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00118">118</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  119</span>        {</div>
+<div class="line"><span class="lineno">  120</span>            </div>
+<div class="line"><span class="lineno">  121</span>            var ext = Path.GetExtension(source.file).ToUpper();</div>
+<div class="line"><span class="lineno">  122</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  123</span>            {</div>
+<div class="line"><span class="lineno">  124</span>                <span class="keywordflow">if</span> (keyValuePairs.TryGetValue(ext, out var factory) &amp;&amp; factory != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  125</span>                    <span class="keywordflow">return</span> factory.Invoke(source.file, enableCache);</div>
+<div class="line"><span class="lineno">  126</span> </div>
+<div class="line"><span class="lineno">  127</span>                <span class="keywordflow">if</span> (!<span class="keywordtype">string</span>.IsNullOrEmpty(SlideBase.DetectVendor(source.file)))</div>
+<div class="line"><span class="lineno">  128</span>                {</div>
+<div class="line"><span class="lineno">  129</span>                    SlideBase b = <span class="keyword">new</span> SlideBase(source, im, enableCache);</div>
+<div class="line"><span class="lineno">  130</span>                    </div>
+<div class="line"><span class="lineno">  131</span>                }</div>
+<div class="line"><span class="lineno">  132</span>            }</div>
+<div class="line"><span class="lineno">  133</span>            <span class="keywordflow">catch</span> (Exception e) </div>
+<div class="line"><span class="lineno">  134</span>            { </div>
+<div class="line"><span class="lineno">  135</span>                Console.WriteLine(e.Message); </div>
+<div class="line"><span class="lineno">  136</span>            }</div>
+<div class="line"><span class="lineno">  137</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  138</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a717e49bce0c6ae959213d258922554e6" name="a717e49bce0c6ae959213d258922554e6"></a>
@@ -335,7 +369,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00256">256</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  257</span>        {</div>
+<div class="line"><span class="lineno">  258</span>            Dispose(disposing: <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  259</span>            GC.SuppressFinalize(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  260</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a416d0097f1f3f7861aa9649f36545b59" name="a416d0097f1f3f7861aa9649f36545b59"></a>
@@ -363,7 +401,17 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00239">239</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  240</span>        {</div>
+<div class="line"><span class="lineno">  241</span>            <span class="keywordflow">if</span> (!disposedValue)</div>
+<div class="line"><span class="lineno">  242</span>            {</div>
+<div class="line"><span class="lineno">  243</span>                <span class="keywordflow">if</span> (disposing)</div>
+<div class="line"><span class="lineno">  244</span>                {</div>
+<div class="line"><span class="lineno">  245</span>                    <span class="comment">//_bgraCache.Dispose();</span></div>
+<div class="line"><span class="lineno">  246</span>                }</div>
+<div class="line"><span class="lineno">  247</span>                disposedValue = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  248</span>            }</div>
+<div class="line"><span class="lineno">  249</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a7367dc8bad3ba6cd287a6f28c7361eb6" name="a7367dc8bad3ba6cd287a6f28c7361eb6"></a>
@@ -415,7 +463,26 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00201">201</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  202</span>        {</div>
+<div class="line"><span class="lineno">  203</span>            <span class="keywordtype">int</span> width = image.Width;</div>
+<div class="line"><span class="lineno">  204</span>            <span class="keywordtype">int</span> height = image.Height;</div>
+<div class="line"><span class="lineno">  205</span>            <span class="keywordtype">byte</span>[] rgbBytes = <span class="keyword">new</span> <span class="keywordtype">byte</span>[width * height * 3]; <span class="comment">// 3 bytes per pixel (RGB)</span></div>
+<div class="line"><span class="lineno">  206</span> </div>
+<div class="line"><span class="lineno">  207</span>            <span class="keywordtype">int</span> byteIndex = 0;</div>
+<div class="line"><span class="lineno">  208</span>            <span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; height; y++)</div>
+<div class="line"><span class="lineno">  209</span>            {</div>
+<div class="line"><span class="lineno">  210</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; width; x++)</div>
+<div class="line"><span class="lineno">  211</span>                {</div>
+<div class="line"><span class="lineno">  212</span>                    Rgb24 pixel = image[x, y];</div>
+<div class="line"><span class="lineno">  213</span>                    rgbBytes[byteIndex++] = pixel.R;</div>
+<div class="line"><span class="lineno">  214</span>                    rgbBytes[byteIndex++] = pixel.G;</div>
+<div class="line"><span class="lineno">  215</span>                    rgbBytes[byteIndex++] = pixel.B;</div>
+<div class="line"><span class="lineno">  216</span>                }</div>
+<div class="line"><span class="lineno">  217</span>            }</div>
+<div class="line"><span class="lineno">  218</span> </div>
+<div class="line"><span class="lineno">  219</span>            <span class="keywordflow">return</span> rgbBytes;</div>
+<div class="line"><span class="lineno">  220</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ae6db3647a6652573b190bfd9ce493ae6" name="ae6db3647a6652573b190bfd9ce493ae6"></a>
@@ -446,6 +513,62 @@ Properties</h2></td></tr>
 <p>Implements <a class="el" href="interface_bio_imager_1_1_i_slice_provider.html#a7be2d4f5f71322e336c0cfb5663d8d8d">BioImager.ISliceProvider</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00147">147</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  148</span>        {</div>
+<div class="line"><span class="lineno">  149</span>            <span class="keywordflow">if</span> (sliceInfo.Extent.Width == 0 || sliceInfo.Extent.Height == 0)</div>
+<div class="line"><span class="lineno">  150</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  151</span> </div>
+<div class="line"><span class="lineno">  152</span>            <span class="keywordflow">if</span> (cache == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  153</span>                cache = <span class="keyword">new</span> TileCache(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  154</span>            var curLevel = Image.BioImage.<a class="code hl_function" href="class_bio_imager_1_1_bio_image.html#aaa23a18c990381351b03bc5155ff32c5">LevelFromResolution</a>(sliceInfo.Resolution);</div>
+<div class="line"><span class="lineno">  155</span>            var curUnitsPerPixel = Schema.Resolutions[curLevel].UnitsPerPixel;</div>
+<div class="line"><span class="lineno">  156</span>            var tileInfos = Schema.GetTileInfos(sliceInfo.Extent, curLevel);</div>
+<div class="line"><span class="lineno">  157</span>            List&lt;Tuple&lt;Extent, byte[]&gt;&gt; tiles = <span class="keyword">new</span> List&lt;Tuple&lt;Extent, byte[]&gt;&gt;();</div>
+<div class="line"><span class="lineno">  158</span>            <span class="keywordflow">foreach</span> (TileInfo t <span class="keywordflow">in</span> tileInfos)</div>
+<div class="line"><span class="lineno">  159</span>            {</div>
+<div class="line"><span class="lineno">  160</span>                <span class="keywordtype">byte</span>[] c = await cache.GetTile(t);</div>
+<div class="line"><span class="lineno">  161</span>                <span class="keywordflow">if</span>(c!=<span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  162</span>                tiles.Add(Tuple.Create(t.Extent.WorldToPixelInvertedY(curUnitsPerPixel), c));</div>
+<div class="line"><span class="lineno">  163</span>            }</div>
+<div class="line"><span class="lineno">  164</span>            var srcPixelExtent = sliceInfo.Extent.WorldToPixelInvertedY(curUnitsPerPixel);</div>
+<div class="line"><span class="lineno">  165</span>            var dstPixelExtent = sliceInfo.Extent.WorldToPixelInvertedY(sliceInfo.Resolution);</div>
+<div class="line"><span class="lineno">  166</span>            var dstPixelHeight = sliceInfo.Parame.DstPixelHeight &gt; 0 ? sliceInfo.Parame.DstPixelHeight : dstPixelExtent.Height;</div>
+<div class="line"><span class="lineno">  167</span>            var dstPixelWidth = sliceInfo.Parame.DstPixelWidth &gt; 0 ? sliceInfo.Parame.DstPixelWidth : dstPixelExtent.Width;</div>
+<div class="line"><span class="lineno">  168</span>            destExtent = <span class="keyword">new</span> Extent(0, 0, dstPixelWidth, dstPixelHeight);</div>
+<div class="line"><span class="lineno">  169</span>            sourceExtent = srcPixelExtent;</div>
+<div class="line"><span class="lineno">  170</span>            <span class="keywordflow">if</span> (UseVips)</div>
+<div class="line"><span class="lineno">  171</span>            {</div>
+<div class="line"><span class="lineno">  172</span>                <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  173</span>                {</div>
+<div class="line"><span class="lineno">  174</span>                    NetVips.Image im = OpenSlideGTK.ImageUtil.JoinVips(tiles, srcPixelExtent, <span class="keyword">new</span> Extent(0, 0, dstPixelWidth, dstPixelHeight));</div>
+<div class="line"><span class="lineno">  175</span>                    LastSlice = im.WriteToMemory();</div>
+<div class="line"><span class="lineno">  176</span>                    <span class="keywordflow">return</span> LastSlice;</div>
+<div class="line"><span class="lineno">  177</span>                }</div>
+<div class="line"><span class="lineno">  178</span>                <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><span class="lineno">  179</span>                {</div>
+<div class="line"><span class="lineno">  180</span>                    UseVips = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  181</span>                    Console.WriteLine(<span class="stringliteral">&quot;Failed to use LibVips please install Libvips for your platform.&quot;</span>);</div>
+<div class="line"><span class="lineno">  182</span>                    Console.WriteLine(e.Message);</div>
+<div class="line"><span class="lineno">  183</span>                }</div>
+<div class="line"><span class="lineno">  184</span>            }</div>
+<div class="line"><span class="lineno">  185</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  186</span>            {</div>
+<div class="line"><span class="lineno">  187</span>                Image&lt;Rgb24&gt; im = OpenSlideGTK.ImageUtil.Join(tiles, srcPixelExtent, <span class="keyword">new</span> Extent(0, 0, dstPixelWidth, dstPixelHeight));</div>
+<div class="line"><span class="lineno">  188</span>                <span class="keywordflow">if</span> (im != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  189</span>                {</div>
+<div class="line"><span class="lineno">  190</span>                    LastSlice = GetRgb24Bytes(im);</div>
+<div class="line"><span class="lineno">  191</span>                    im.Dispose();</div>
+<div class="line"><span class="lineno">  192</span>                }</div>
+<div class="line"><span class="lineno">  193</span>            }</div>
+<div class="line"><span class="lineno">  194</span>            <span class="keywordflow">catch</span> (Exception er)</div>
+<div class="line"><span class="lineno">  195</span>            {</div>
+<div class="line"><span class="lineno">  196</span>                Console.WriteLine(er.Message);</div>
+<div class="line"><span class="lineno">  197</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  198</span>            }</div>
+<div class="line"><span class="lineno">  199</span>            <span class="keywordflow">return</span> LastSlice;</div>
+<div class="line"><span class="lineno">  200</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_bio_image_html_aaa23a18c990381351b03bc5155ff32c5"><div class="ttname"><a href="class_bio_imager_1_1_bio_image.html#aaa23a18c990381351b03bc5155ff32c5">BioImager.BioImage.LevelFromResolution</a></div><div class="ttdeci">int LevelFromResolution(double Resolution)</div><div class="ttdoc">Returns the level of a given resolution.</div><div class="ttdef"><b>Definition:</b> <a href="_bio_8cs_source.html#l02589">Bio.cs:2589</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="_i_slide_source_8cs_source.html#l00378">BioImager.SliceInfo.Extent</a>, <a class="el" href="_bio_8cs_source.html#l02589">BioImager.BioImage.LevelFromResolution()</a>, and <a class="el" href="_i_slide_source_8cs_source.html#l00369">BioImager.SliceInfo.Resolution</a>.</p>
 
 </div>
 </div>
@@ -466,7 +589,24 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00262">262</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  263</span>        {</div>
+<div class="line"><span class="lineno">  264</span>            <span class="keywordflow">if</span> (tileInfo == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  265</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  266</span>            var r = Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;</div>
+<div class="line"><span class="lineno">  267</span>            var tileWidth = Schema.Resolutions[tileInfo.Index.Level].TileWidth;</div>
+<div class="line"><span class="lineno">  268</span>            var tileHeight = Schema.Resolutions[tileInfo.Index.Level].TileHeight;</div>
+<div class="line"><span class="lineno">  269</span>            var curLevelOffsetXPixel = tileInfo.Extent.MinX / Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;</div>
+<div class="line"><span class="lineno">  270</span>            var curLevelOffsetYPixel = -tileInfo.Extent.MaxY / Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;</div>
+<div class="line"><span class="lineno">  271</span>            var curTileWidth = (int)(tileInfo.Extent.MaxX &gt; Schema.Extent.Width ? tileWidth - (tileInfo.Extent.MaxX - Schema.Extent.Width) / r : tileWidth);</div>
+<div class="line"><span class="lineno">  272</span>            var curTileHeight = (int)(-tileInfo.Extent.MinY &gt; Schema.Extent.Height ? tileHeight - (-tileInfo.Extent.MinY - Schema.Extent.Height) / r : tileHeight);</div>
+<div class="line"><span class="lineno">  273</span>            var bgraData = await Image.ReadRegionAsync(tileInfo.Index.Level, (<span class="keywordtype">long</span>)curLevelOffsetXPixel, (long)curLevelOffsetYPixel, curTileWidth, curTileHeight);</div>
+<div class="line"><span class="lineno">  274</span>            <span class="comment">//We check to see if the data is valid.</span></div>
+<div class="line"><span class="lineno">  275</span>            <span class="keywordflow">if</span>(bgraData == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  276</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  277</span>            <span class="keywordtype">byte</span>[] bm = ConvertRgbaToRgb(bgraData);</div>
+<div class="line"><span class="lineno">  278</span>            <span class="keywordflow">return</span> bm;</div>
+<div class="line"><span class="lineno">  279</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a024daabc1a8e7435c20092d280d11b1d" name="a024daabc1a8e7435c20092d280d11b1d"></a>
@@ -513,7 +653,10 @@ Properties</h2></td></tr>
 </dl>
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00112">112</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  113</span>        {</div>
+<div class="line"><span class="lineno">  114</span>            keyValuePairs.Add(extensionUpper, factory);</div>
+<div class="line"><span class="lineno">  115</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -675,7 +818,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00228">228</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  228</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5f513298d37213d2b41de101e660e60a" name="a5f513298d37213d2b41de101e660e60a"></a>
@@ -703,7 +847,8 @@ Properties</h2></td></tr>
 <p>Implements <a class="el" href="interface_bio_imager_1_1_i_slide_extern_info.html#aec0a93721d8122d457ed465d24332dfb">BioImager.ISlideExternInfo</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00230">230</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  230</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2e014ad4ce5216c31f5fbfc8d72f0650" name="a2e014ad4ce5216c31f5fbfc8d72f0650"></a>
@@ -727,7 +872,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00222">222</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  222</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="afaba769547e1f9bab7389b22e208d59f" name="afaba769547e1f9bab7389b22e208d59f"></a>
@@ -755,7 +901,8 @@ Properties</h2></td></tr>
 <p>Implements <a class="el" href="interface_bio_imager_1_1_i_slice_provider.html#a49186589bfa3921a4d9b77ac996d9803">BioImager.ISliceProvider</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00140">140</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  140</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="ace56c9aed484b5cc24af8d4d104bd10e" name="ace56c9aed484b5cc24af8d4d104bd10e"></a>
@@ -779,7 +926,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00226">226</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  226</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5154baaeff461610151b478a7d413580" name="a5154baaeff461610151b478a7d413580"></a>
@@ -803,7 +951,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00224">224</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  224</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a9c5def53048e5841d713adb79e649077" name="a9c5def53048e5841d713adb79e649077"></a>
@@ -831,7 +980,8 @@ Properties</h2></td></tr>
 <p>Implements <a class="el" href="interface_bio_imager_1_1_i_slide_extern_info.html#acb0979d09580810d78abf897071ba9ca">BioImager.ISlideExternInfo</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00232">232</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  232</span>{ <span class="keyword">get</span>; <span class="keyword">protected</span> <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a19cef1a5cb0164fe71b798b5c4ae9e47" name="a19cef1a5cb0164fe71b798b5c4ae9e47"></a>
@@ -855,7 +1005,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_i_slide_source_8cs_source.html#l00103">103</a> of file <a class="el" href="_i_slide_source_8cs_source.html">ISlideSource.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  103</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; } = <span class="keyword">true</span>;</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

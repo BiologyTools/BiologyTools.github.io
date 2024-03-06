@@ -277,7 +277,18 @@ probably use a state machine library for that.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00136">136</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  136</span>    <span class="keyword">def </span>__init__(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  137</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  138</span> </div>
+<div class="line"><span class="lineno">  139</span>        self.key = <span class="stringliteral">&quot;on&quot;</span></div>
+<div class="line"><span class="lineno">  140</span>        self.status = <span class="stringliteral">&quot;laser ready&quot;</span>  <span class="comment"># Laser ready, status code 5</span></div>
+<div class="line"><span class="lineno">  141</span>        self.light = <span class="keyword">True</span>  <span class="comment"># Light Servo</span></div>
+<div class="line"><span class="lineno">  142</span>        self.tec = <span class="keyword">True</span>  <span class="comment"># TEC (Thermo-Electric Cooler) Servo</span></div>
+<div class="line"><span class="lineno">  143</span>        self.echo = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  144</span>        self.prompt = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  145</span>        self.power = CoherentSapphireLaserMock.default_power</div>
+<div class="line"><span class="lineno">  146</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -310,6 +321,166 @@ probably use a state machine library for that.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00158">158</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  158</span>    <span class="keyword">def </span>handle(self, command):</div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment"># Operator&#39;s manual mentions all commands in uppercase.</span></div>
+<div class="line"><span class="lineno">  160</span>        <span class="comment"># Experimentation shows that they are case insensitive.</span></div>
+<div class="line"><span class="lineno">  161</span>        command = command.upper()</div>
+<div class="line"><span class="lineno">  162</span> </div>
+<div class="line"><span class="lineno">  163</span>        answer = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  164</span> </div>
+<div class="line"><span class="lineno">  165</span>        <span class="comment"># Prompt</span></div>
+<div class="line"><span class="lineno">  166</span>        <span class="keywordflow">if</span> command == b<span class="stringliteral">&quot;&gt;=0&quot;</span>:</div>
+<div class="line"><span class="lineno">  167</span>            self.prompt = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  168</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;&gt;=1&quot;</span>:</div>
+<div class="line"><span class="lineno">  169</span>            self.prompt = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  170</span> </div>
+<div class="line"><span class="lineno">  171</span>        <span class="comment"># Echo</span></div>
+<div class="line"><span class="lineno">  172</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;E=0&quot;</span>:</div>
+<div class="line"><span class="lineno">  173</span>            self.echo = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  174</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;E=1&quot;</span>:</div>
+<div class="line"><span class="lineno">  175</span>            self.echo = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  176</span> </div>
+<div class="line"><span class="lineno">  177</span>        <span class="comment"># Head ID</span></div>
+<div class="line"><span class="lineno">  178</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?HID&quot;</span>:</div>
+<div class="line"><span class="lineno">  179</span>            answer = b<span class="stringliteral">&quot;505925.000&quot;</span></div>
+<div class="line"><span class="lineno">  180</span> </div>
+<div class="line"><span class="lineno">  181</span>        <span class="comment"># Head hours</span></div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?HH&quot;</span>:</div>
+<div class="line"><span class="lineno">  183</span>            answer = b<span class="stringliteral">&quot;   257:34&quot;</span></div>
+<div class="line"><span class="lineno">  184</span> </div>
+<div class="line"><span class="lineno">  185</span>        <span class="comment"># Key switch</span></div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?K&quot;</span>:</div>
+<div class="line"><span class="lineno">  187</span>            <span class="keywordflow">if</span> self.key == <span class="stringliteral">&quot;standby&quot;</span>:</div>
+<div class="line"><span class="lineno">  188</span>                answer = b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  189</span>            <span class="keywordflow">elif</span> self.key == <span class="stringliteral">&quot;on&quot;</span>:</div>
+<div class="line"><span class="lineno">  190</span>                answer = b<span class="stringliteral">&quot;1&quot;</span></div>
+<div class="line"><span class="lineno">  191</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  192</span>                <span class="keywordflow">raise</span> RuntimeError(<span class="stringliteral">&quot;unknown key state &#39;%s&#39;&quot;</span> % self.key)</div>
+<div class="line"><span class="lineno">  193</span> </div>
+<div class="line"><span class="lineno">  194</span>        <span class="comment"># Light servo</span></div>
+<div class="line"><span class="lineno">  195</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;L=0&quot;</span>:</div>
+<div class="line"><span class="lineno">  196</span>            self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  197</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;L=1&quot;</span>:</div>
+<div class="line"><span class="lineno">  198</span>            <span class="keywordflow">if</span> self.tec:</div>
+<div class="line"><span class="lineno">  199</span>                <span class="keywordflow">if</span> self.key == <span class="stringliteral">&quot;on&quot;</span>:</div>
+<div class="line"><span class="lineno">  200</span>                    self.light = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  201</span>                <span class="comment"># if key switch is not on, keep light off</span></div>
+<div class="line"><span class="lineno">  202</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  203</span>                answer = b<span class="stringliteral">&quot;TEC must be ON (T=1) to enable Light Output!&quot;</span></div>
+<div class="line"><span class="lineno">  204</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?L&quot;</span>:</div>
+<div class="line"><span class="lineno">  205</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.light <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  206</span> </div>
+<div class="line"><span class="lineno">  207</span>        <span class="comment"># TEC servo</span></div>
+<div class="line"><span class="lineno">  208</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;T=0&quot;</span>:</div>
+<div class="line"><span class="lineno">  209</span>            <span class="comment"># turning this off, also turns light servo off</span></div>
+<div class="line"><span class="lineno">  210</span>            self.tec = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  211</span>            self.light = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  212</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;T=1&quot;</span>:</div>
+<div class="line"><span class="lineno">  213</span>            self.tec = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  214</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?T&quot;</span>:</div>
+<div class="line"><span class="lineno">  215</span>            answer = b<span class="stringliteral">&quot;1&quot;</span> <span class="keywordflow">if</span> self.tec <span class="keywordflow">else</span> b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  216</span> </div>
+<div class="line"><span class="lineno">  217</span>        <span class="comment"># Laser power</span></div>
+<div class="line"><span class="lineno">  218</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?MINLP&quot;</span>:</div>
+<div class="line"><span class="lineno">  219</span>            answer = b<span class="stringliteral">&quot;20.000&quot;</span></div>
+<div class="line"><span class="lineno">  220</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?MAXLP&quot;</span>:</div>
+<div class="line"><span class="lineno">  221</span>            answer = b<span class="stringliteral">&quot;220.000&quot;</span></div>
+<div class="line"><span class="lineno">  222</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?P&quot;</span>:</div>
+<div class="line"><span class="lineno">  223</span>            <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.light:</div>
+<div class="line"><span class="lineno">  224</span>                answer = b<span class="stringliteral">&quot;0.000&quot;</span></div>
+<div class="line"><span class="lineno">  225</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  226</span>                answer = b<span class="stringliteral">&quot;%.3f&quot;</span> % (self.power)</div>
+<div class="line"><span class="lineno">  227</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?SP&quot;</span>:</div>
+<div class="line"><span class="lineno">  228</span>            answer = b<span class="stringliteral">&quot;%.3f&quot;</span> % (self.power)</div>
+<div class="line"><span class="lineno">  229</span>        <span class="keywordflow">elif</span> command.startswith(b<span class="stringliteral">&quot;P=&quot;</span>):</div>
+<div class="line"><span class="lineno">  230</span>            new_power = float(command[2:])</div>
+<div class="line"><span class="lineno">  231</span>            <span class="keywordflow">if</span> new_power &lt; 19.999999 <span class="keywordflow">or</span> new_power &gt; 220.00001:</div>
+<div class="line"><span class="lineno">  232</span>                answer = b<span class="stringliteral">&quot;value must be between 20.000 and 220.000&quot;</span></div>
+<div class="line"><span class="lineno">  233</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  234</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self.light:</div>
+<div class="line"><span class="lineno">  235</span>                    answer = b<span class="stringliteral">&quot;Note: Laser_Output is OFF (L=0)&quot;</span></div>
+<div class="line"><span class="lineno">  236</span>                self.power = new_power</div>
+<div class="line"><span class="lineno">  237</span> </div>
+<div class="line"><span class="lineno">  238</span>        <span class="comment"># Nominal output power</span></div>
+<div class="line"><span class="lineno">  239</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;NOMP&quot;</span>:</div>
+<div class="line"><span class="lineno">  240</span>            answer = b<span class="stringliteral">&quot;200&quot;</span></div>
+<div class="line"><span class="lineno">  241</span> </div>
+<div class="line"><span class="lineno">  242</span>        <span class="comment"># Laser type and nominal power</span></div>
+<div class="line"><span class="lineno">  243</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;LT&quot;</span>:</div>
+<div class="line"><span class="lineno">  244</span>            answer = b<span class="stringliteral">&quot;Sapphire 200mW&quot;</span></div>
+<div class="line"><span class="lineno">  245</span> </div>
+<div class="line"><span class="lineno">  246</span>        <span class="comment"># Laser head status</span></div>
+<div class="line"><span class="lineno">  247</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?STA&quot;</span>:</div>
+<div class="line"><span class="lineno">  248</span>            status_codes = {</div>
+<div class="line"><span class="lineno">  249</span>                <span class="stringliteral">&quot;start up&quot;</span>: b<span class="stringliteral">&quot;1&quot;</span>,</div>
+<div class="line"><span class="lineno">  250</span>                <span class="stringliteral">&quot;warmup&quot;</span>: b<span class="stringliteral">&quot;2&quot;</span>,</div>
+<div class="line"><span class="lineno">  251</span>                <span class="stringliteral">&quot;standby&quot;</span>: b<span class="stringliteral">&quot;3&quot;</span>,</div>
+<div class="line"><span class="lineno">  252</span>                <span class="stringliteral">&quot;laser on&quot;</span>: b<span class="stringliteral">&quot;4&quot;</span>,</div>
+<div class="line"><span class="lineno">  253</span>                <span class="stringliteral">&quot;laser ready&quot;</span>: b<span class="stringliteral">&quot;5&quot;</span>,</div>
+<div class="line"><span class="lineno">  254</span>                <span class="stringliteral">&quot;error&quot;</span>: b<span class="stringliteral">&quot;6&quot;</span>,</div>
+<div class="line"><span class="lineno">  255</span>            }</div>
+<div class="line"><span class="lineno">  256</span>            answer = status_codes[self.status]</div>
+<div class="line"><span class="lineno">  257</span> </div>
+<div class="line"><span class="lineno">  258</span>        <span class="comment"># Fault related commands.  We don&#39;t model any faults yet.</span></div>
+<div class="line"><span class="lineno">  259</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?F&quot;</span>:</div>
+<div class="line"><span class="lineno">  260</span>            answer = b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  261</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?FF&quot;</span>:</div>
+<div class="line"><span class="lineno">  262</span>            <span class="comment"># Two bytes with possible faults:</span></div>
+<div class="line"><span class="lineno">  263</span>            <span class="comment">#    0 - external interlock fault</span></div>
+<div class="line"><span class="lineno">  264</span>            <span class="comment">#    1 - diode temperature fault (both TEC and light</span></div>
+<div class="line"><span class="lineno">  265</span>            <span class="comment">#        servo off)</span></div>
+<div class="line"><span class="lineno">  266</span>            <span class="comment">#    2 - base plate temperature fault (both TEC and light</span></div>
+<div class="line"><span class="lineno">  267</span>            <span class="comment">#        servo off)</span></div>
+<div class="line"><span class="lineno">  268</span>            <span class="comment">#    3 - OEM controller LP temperature (both TEC and</span></div>
+<div class="line"><span class="lineno">  269</span>            <span class="comment">#        light servo off)</span></div>
+<div class="line"><span class="lineno">  270</span>            <span class="comment">#    4 - diode current fault</span></div>
+<div class="line"><span class="lineno">  271</span>            <span class="comment">#    5 - analog interface fault</span></div>
+<div class="line"><span class="lineno">  272</span>            <span class="comment">#    6 - base plate temperature fault (only light servo</span></div>
+<div class="line"><span class="lineno">  273</span>            <span class="comment">#        turned off)</span></div>
+<div class="line"><span class="lineno">  274</span>            <span class="comment">#    7 - diode temperature fault (only light servo turned</span></div>
+<div class="line"><span class="lineno">  275</span>            <span class="comment">#        off)</span></div>
+<div class="line"><span class="lineno">  276</span>            <span class="comment">#    8 - system warning/waiting for TEC servo to reach</span></div>
+<div class="line"><span class="lineno">  277</span>            <span class="comment">#        target temperature</span></div>
+<div class="line"><span class="lineno">  278</span>            <span class="comment">#    9 - head EEPROM fault</span></div>
+<div class="line"><span class="lineno">  279</span>            <span class="comment">#   10 - OEM controller LP EEPROM fault</span></div>
+<div class="line"><span class="lineno">  280</span>            <span class="comment">#   11 - EEPOT1 fault</span></div>
+<div class="line"><span class="lineno">  281</span>            <span class="comment">#   12 - EEPOT2 fault</span></div>
+<div class="line"><span class="lineno">  282</span>            <span class="comment">#   13 - laser ready</span></div>
+<div class="line"><span class="lineno">  283</span>            <span class="comment">#   14 - not implemented</span></div>
+<div class="line"><span class="lineno">  284</span>            <span class="comment">#   15 - not implemented</span></div>
+<div class="line"><span class="lineno">  285</span>            <span class="keywordflow">if</span> self.light:</div>
+<div class="line"><span class="lineno">  286</span>                <span class="comment"># Has a bit of its own, but it&#39;s not really a fault.</span></div>
+<div class="line"><span class="lineno">  287</span>                answer = b<span class="stringliteral">&quot;8192&quot;</span>  <span class="comment"># 00100000 00000000</span></div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  289</span>                answer = b<span class="stringliteral">&quot;0&quot;</span></div>
+<div class="line"><span class="lineno">  290</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?FL&quot;</span>:</div>
+<div class="line"><span class="lineno">  291</span>            <span class="comment"># Show faults in text.  This is a multiline reply, one</span></div>
+<div class="line"><span class="lineno">  292</span>            <span class="comment"># per fault, plus the header line.</span></div>
+<div class="line"><span class="lineno">  293</span>            answer = b<span class="stringliteral">&quot;Fault(s):\r\n\tNone&quot;</span></div>
+<div class="line"><span class="lineno">  294</span> </div>
+<div class="line"><span class="lineno">  295</span>        <span class="comment"># Software version</span></div>
+<div class="line"><span class="lineno">  296</span>        <span class="keywordflow">elif</span> command <span class="keywordflow">in</span> [b<span class="stringliteral">&quot;sv&quot;</span>, b<span class="stringliteral">&quot;svps&quot;</span>]:</div>
+<div class="line"><span class="lineno">  297</span>            answer = b<span class="stringliteral">&quot;8.005&quot;</span></div>
+<div class="line"><span class="lineno">  298</span> </div>
+<div class="line"><span class="lineno">  299</span>        <span class="comment"># Nominal laser wavelength</span></div>
+<div class="line"><span class="lineno">  300</span>        <span class="keywordflow">elif</span> command == b<span class="stringliteral">&quot;?WAVE&quot;</span>:</div>
+<div class="line"><span class="lineno">  301</span>            answer = b<span class="stringliteral">&quot;561&quot;</span></div>
+<div class="line"><span class="lineno">  302</span> </div>
+<div class="line"><span class="lineno">  303</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  304</span>            <span class="keywordflow">raise</span> NotImplementedError(</div>
+<div class="line"><span class="lineno">  305</span>                <span class="stringliteral">&quot;no handling for command &#39;%s&#39;&quot;</span> % command.decode(<span class="stringliteral">&quot;utf-8&quot;</span>)</div>
+<div class="line"><span class="lineno">  306</span>            )</div>
+<div class="line"><span class="lineno">  307</span> </div>
+<div class="line"><span class="lineno">  308</span>        <span class="keywordflow">if</span> answer <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  309</span>            self.in_buffer.write(answer + self.eol)</div>
+<div class="line"><span class="lineno">  310</span> </div>
+<div class="line"><span class="lineno">  311</span>        <span class="keywordflow">if</span> self.prompt:</div>
+<div class="line"><span class="lineno">  312</span>            self.in_buffer.write(b<span class="stringliteral">&quot;Sapphire:0-&gt; &quot;</span>)</div>
+<div class="line"><span class="lineno">  313</span>        <span class="keywordflow">return</span></div>
+<div class="line"><span class="lineno">  314</span> </div>
+<div class="line"><span class="lineno">  315</span> </div>
+</div><!-- fragment -->
+<p class="reference">Referenced by <a class="el" href="___s_d_k3_cam_8py_source.html#l00172">microscope.cameras._SDK3Cam.SDK3Camera.__init__()</a>, <a class="el" href="pvcam_8py_source.html#l01664">microscope.cameras.pvcam.PVCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="andorsdk3_8py_source.html#l00452">microscope.cameras.andorsdk3.AndorSDK3.initialize()</a>, <a class="el" href="pvcam_8py_source.html#l01676">microscope.cameras.pvcam.PVCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00404">microscope.cameras.andorsdk3.AndorSDK3.invalidate_buffers()</a>, <a class="el" href="pvcam_8py_source.html#l01885">microscope.cameras.pvcam.PVCamera.set_trigger()</a>, and <a class="el" href="pvcam_8py_source.html#l01847">microscope.cameras.pvcam.PVCamera.soft_trigger()</a>.</p>
 
 </div>
 </div>
@@ -342,7 +513,18 @@ probably use a state machine library for that.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html">microscope.testsuite.mock_devices.SerialMock</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00147">147</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  147</span>    <span class="keyword">def </span>write(self, data):</div>
+<div class="line"><span class="lineno">  148</span>        <span class="comment"># Echo as soon as we get data, do not wait for an EOL.  Also,</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment"># echo before handling the command because if will echo even</span></div>
+<div class="line"><span class="lineno">  150</span>        <span class="comment"># if the command is to turn the echo off.</span></div>
+<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">if</span> self.echo:</div>
+<div class="line"><span class="lineno">  152</span>            self.in_buffer.write(data)</div>
+<div class="line"><span class="lineno">  153</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  154</span>            <span class="comment"># If echo is off, we still echo EOLs</span></div>
+<div class="line"><span class="lineno">  155</span>            self.in_buffer.write(self.eol * data.count(self.eol))</div>
+<div class="line"><span class="lineno">  156</span>        <span class="keywordflow">return</span> super().write(data)</div>
+<div class="line"><span class="lineno">  157</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -479,6 +661,8 @@ probably use a state machine library for that.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="mock__devices_8py_source.html#l00121">121</a> of file <a class="el" href="mock__devices_8py_source.html">mock_devices.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="thorlabs_8py_source.html#l00037">microscope.filterwheels.thorlabs.ThorlabsFilterWheel.__init__()</a>.</p>
 
 </div>
 </div>

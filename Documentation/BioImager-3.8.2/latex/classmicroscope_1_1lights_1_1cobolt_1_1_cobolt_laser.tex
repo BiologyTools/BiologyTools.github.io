@@ -61,6 +61,32 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_serial_device_mix
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00047}{47}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00047     \textcolor{keyword}{def }\_\_init\_\_(self, com=None, baud=115200, timeout=0.1, **kwargs):}
+\DoxyCodeLine{00048         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00049         self.connection = serial.Serial(}
+\DoxyCodeLine{00050             port=com,}
+\DoxyCodeLine{00051             baudrate=baud,}
+\DoxyCodeLine{00052             timeout=timeout,}
+\DoxyCodeLine{00053             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00054             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00055             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00056         )}
+\DoxyCodeLine{00057         \textcolor{comment}{\# Start a logger.}}
+\DoxyCodeLine{00058         response = self.send(b\textcolor{stringliteral}{"{}sn?"{}})}
+\DoxyCodeLine{00059         \_logger.info(\textcolor{stringliteral}{"{}Cobolt laser serial number: [\%s]"{}}, response.decode())}
+\DoxyCodeLine{00060         \textcolor{comment}{\# We need to ensure that autostart is disabled so that we can switch emission}}
+\DoxyCodeLine{00061         \textcolor{comment}{\# on/off remotely.}}
+\DoxyCodeLine{00062         response = self.send(b\textcolor{stringliteral}{"{}@cobas 0"{}})}
+\DoxyCodeLine{00063         \_logger.info(\textcolor{stringliteral}{"{}Response to @cobas 0 [\%s]"{}}, response.decode())}
+\DoxyCodeLine{00064 }
+\DoxyCodeLine{00065         self.\_max\_power\_mw = float(self.send(b\textcolor{stringliteral}{"{}gmlp?"{}}))}
+\DoxyCodeLine{00066 }
+\DoxyCodeLine{00067         self.initialize()}
+\DoxyCodeLine{00068 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a5a33d9f9d6216c37b715064b7bd305e4}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a5a33d9f9d6216c37b715064b7bd305e4}} 
@@ -73,6 +99,14 @@ Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00047}{47}} of fi
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00083}{83}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00083     \textcolor{keyword}{def }clearFault(self):}
+\DoxyCodeLine{00084         self.send(b\textcolor{stringliteral}{"{}cf"{}})}
+\DoxyCodeLine{00085         \textcolor{keywordflow}{return} self.get\_status()}
+\DoxyCodeLine{00086 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ab9154c84c3ebd43632c250df6b8c7f8a}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ab9154c84c3ebd43632c250df6b8c7f8a}} 
 \index{microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}!disable@{disable}}
 \index{disable@{disable}!microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}}
@@ -87,6 +121,22 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_add8e7f466
 
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00134}{134}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00134     \textcolor{keyword}{def }disable(self):}
+\DoxyCodeLine{00135         \_logger.info(\textcolor{stringliteral}{"{}Turning laser OFF."{}})}
+\DoxyCodeLine{00136         \textcolor{keywordflow}{return} self.send(b\textcolor{stringliteral}{"{}l0"{}}).decode()}
+\DoxyCodeLine{00137 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00558}{microscope.\+abc.\+Data\+Device.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, and \mbox{\hyperlink{abc_8py_source_l00349}{microscope.\+abc.\+Device.\+shutdown()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ad1de1c1e65191547d1c8be9f15b93d55}} 
 \index{microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}!get\_is\_on@{get\_is\_on}}
@@ -103,6 +153,22 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{140}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140     \textcolor{keyword}{def }get\_is\_on(self):}
+\DoxyCodeLine{00141         response = self.send(b\textcolor{stringliteral}{"{}l?"{}})}
+\DoxyCodeLine{00142         \textcolor{keywordflow}{return} response == b\textcolor{stringliteral}{"{}1"{}}}
+\DoxyCodeLine{00143 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{lights_2cobolt_8py_source_l00145}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00174}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00183}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00259}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+get\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00065}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+max\+\_\+power\+\_\+mw}}, \mbox{\hyperlink{lights_2obis_8py_source_l00070}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+max\+\_\+power\+\_\+mw}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00080}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+max\+\_\+power\+\_\+mw}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00157}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00262}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00182}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00187}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+set\+\_\+power\+\_\+mw()}}, \mbox{\hyperlink{abc_8py_source_l01212}{microscope.\+abc.\+Light\+Source.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{coolled_8py_source_l00178}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lumencor_8py_source_l00236}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00188}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{zaber_8py_source_l00475}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00179}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00245}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00362}{microscope.\+simulators.\+Simulated\+Light\+Source.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_ac8ff82b6cf832b7e2c7014233eb314f3}} 
 \index{microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}!get\_status@{get\_status}}
 \index{get\_status@{get\_status}!microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}}
@@ -117,6 +183,31 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89
 
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{88}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00088     \textcolor{keyword}{def }get\_status(self):}
+\DoxyCodeLine{00089         result = []}
+\DoxyCodeLine{00090         \textcolor{keywordflow}{for} cmd, stat \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{00091             (b\textcolor{stringliteral}{"{}l?"{}}, \textcolor{stringliteral}{"{}Emission on?"{}}),}
+\DoxyCodeLine{00092             (b\textcolor{stringliteral}{"{}p?"{}}, \textcolor{stringliteral}{"{}Target power:"{}}),}
+\DoxyCodeLine{00093             (b\textcolor{stringliteral}{"{}pa?"{}}, \textcolor{stringliteral}{"{}Measured power:"{}}),}
+\DoxyCodeLine{00094             (b\textcolor{stringliteral}{"{}f?"{}}, \textcolor{stringliteral}{"{}Fault?"{}}),}
+\DoxyCodeLine{00095             (b\textcolor{stringliteral}{"{}hrs?"{}}, \textcolor{stringliteral}{"{}Head operating hours:"{}}),}
+\DoxyCodeLine{00096         ]:}
+\DoxyCodeLine{00097             response = self.send(cmd)}
+\DoxyCodeLine{00098             result.append(stat + \textcolor{stringliteral}{"{} "{}} + response.decode())}
+\DoxyCodeLine{00099         \textcolor{keywordflow}{return} result}
+\DoxyCodeLine{00100 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01013}{microscope.\+abc.\+Serial\+Device\+Mixin.\+connection}}, \mbox{\hyperlink{thorlabs_8py_source_l00062}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+connection}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00049}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+connection}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00046}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+connection}}, \mbox{\hyperlink{lights_2obis_8py_source_l00036}{microscope.\+lights.\+obis.\+Obis\+Laser.\+connection}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00060}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+connection}}, \mbox{\hyperlink{abc_8py_source_l00307}{microscope.\+abc.\+Device.\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00629}{microscope.\+abc.\+Data\+Device.\+disable()}}, \mbox{\hyperlink{coolled_8py_source_l00175}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+disable()}}, \mbox{\hyperlink{lumencor_8py_source_l00233}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+disable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00134}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+disable()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00173}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+disable()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00242}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+disable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a12000ac844b3a356ec150e76af96668f}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a12000ac844b3a356ec150e76af96668f}} 
 \index{microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}!initialize@{initialize}}
@@ -137,6 +228,25 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device_a84ae82a5c
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{110}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00110     \textcolor{keyword}{def }initialize(self):}
+\DoxyCodeLine{00111         self.connection.flushInput()}
+\DoxyCodeLine{00112         \textcolor{comment}{\# We don't want 'direct control' mode.}}
+\DoxyCodeLine{00113         self.send(b\textcolor{stringliteral}{"{}@cobasdr 0"{}})}
+\DoxyCodeLine{00114         \textcolor{comment}{\# Force laser into autostart mode.}}
+\DoxyCodeLine{00115         self.send(b\textcolor{stringliteral}{"{}@cob1"{}})}
+\DoxyCodeLine{00116 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01013}{microscope.\+abc.\+Serial\+Device\+Mixin.\+connection}}, \mbox{\hyperlink{thorlabs_8py_source_l00062}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+connection}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00049}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+connection}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00046}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+connection}}, \mbox{\hyperlink{lights_2obis_8py_source_l00036}{microscope.\+lights.\+obis.\+Obis\+Laser.\+connection}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00060}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+connection}}, \mbox{\hyperlink{abc_8py_source_l01212}{microscope.\+abc.\+Light\+Source.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{coolled_8py_source_l00178}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lumencor_8py_source_l00236}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00188}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{zaber_8py_source_l00475}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00179}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00245}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00362}{microscope.\+simulators.\+Simulated\+Light\+Source.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{abc_8py_source_l01206}{microscope.\+abc.\+Light\+Source.\+get\+\_\+status()}}, \mbox{\hyperlink{coolled_8py_source_l00163}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+get\+\_\+status()}}, \mbox{\hyperlink{lumencor_8py_source_l00226}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+get\+\_\+status()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00185}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{zaber_8py_source_l00459}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+get\+\_\+status()}}, \mbox{\hyperlink{aurox_8py_source_l00201}{microscope.\+filterwheels.\+aurox.\+Clarity.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00109}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00235}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+status()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00348}{microscope.\+simulators.\+Simulated\+Light\+Source.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01267}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+Base.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01355}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+MDSMixin.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01524}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
+
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}\label{classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser_a23aaffadc046df0a231fc9511e1363bd}} 
 \index{microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}!send@{send}}
 \index{send@{send}!microscope.lights.cobolt.CoboltLaser@{microscope.lights.cobolt.CoboltLaser}}
@@ -147,6 +257,31 @@ Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{110}} of f
  
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{69}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00069     \textcolor{keyword}{def }send(self, command):}
+\DoxyCodeLine{00070         \textcolor{stringliteral}{"{}"{}"{}Send command and retrieve response."{}"{}"{}}}
+\DoxyCodeLine{00071         success = \textcolor{keyword}{False}}
+\DoxyCodeLine{00072         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} success:}
+\DoxyCodeLine{00073             self.\_write(command)}
+\DoxyCodeLine{00074             response = self.\_readline()}
+\DoxyCodeLine{00075             \textcolor{comment}{\# Catch zero-\/length responses to queries and retry.}}
+\DoxyCodeLine{00076             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} command.endswith(b\textcolor{stringliteral}{"{}?"{}}):}
+\DoxyCodeLine{00077                 success = \textcolor{keyword}{True}}
+\DoxyCodeLine{00078             \textcolor{keywordflow}{elif} len(response) > 0:}
+\DoxyCodeLine{00079                 success = \textcolor{keyword}{True}}
+\DoxyCodeLine{00080         \textcolor{keywordflow}{return} response}
+\DoxyCodeLine{00081 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l01016}{microscope.\+abc.\+Serial\+Device\+Mixin.\+\_\+readline()}}, \mbox{\hyperlink{thorlabs_8py_source_l00091}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+readline()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00079}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+readline()}}, \mbox{\hyperlink{abc_8py_source_l01020}{microscope.\+abc.\+Serial\+Device\+Mixin.\+\_\+write()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00075}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+write()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00074}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+write()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00085}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+write()}}, \mbox{\hyperlink{abc_8py_source_l01206}{microscope.\+abc.\+Light\+Source.\+get\+\_\+status()}}, \mbox{\hyperlink{coolled_8py_source_l00163}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+get\+\_\+status()}}, \mbox{\hyperlink{lumencor_8py_source_l00226}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+get\+\_\+status()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00185}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{zaber_8py_source_l00459}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+get\+\_\+status()}}, \mbox{\hyperlink{aurox_8py_source_l00201}{microscope.\+filterwheels.\+aurox.\+Clarity.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00109}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00235}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+get\+\_\+status()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00348}{microscope.\+simulators.\+Simulated\+Light\+Source.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01267}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+Base.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01355}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+MDSMixin.\+get\+\_\+status()}}, \mbox{\hyperlink{linkam_8py_source_l01524}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2cobolt_8py_source_l00134}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+disable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00179}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00109}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, and \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}.
 
 
 
@@ -160,6 +295,10 @@ Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{69}} of fi
 
 
 Definition at line \mbox{\hyperlink{lights_2cobolt_8py_source_l00049}{49}} of file \mbox{\hyperlink{lights_2cobolt_8py_source}{cobolt.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, and \mbox{\hyperlink{abc_8py_source_l01030}{microscope.\+abc.\+Serial\+Device\+Mixin.\+lock\+\_\+comms()}}.
 
 
 

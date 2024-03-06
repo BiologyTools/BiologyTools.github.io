@@ -198,7 +198,59 @@ Args:
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00065">65</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   65</span>    <span class="keyword">def </span>__init__(self, port: str):</div>
+<div class="line"><span class="lineno">   66</span>        <span class="comment"># From the Toptica iBeam SMART manual:</span></div>
+<div class="line"><span class="lineno">   67</span>        <span class="comment"># Direct connection via COMx with 115200,8,N,1 and serial</span></div>
+<div class="line"><span class="lineno">   68</span>        <span class="comment"># interface handshake &quot;none&quot;. That means that no hardware</span></div>
+<div class="line"><span class="lineno">   69</span>        <span class="comment"># handshake (DTR, RTS) and no software handshake (XON,XOFF) of</span></div>
+<div class="line"><span class="lineno">   70</span>        <span class="comment"># the underlying operating system is supported.</span></div>
+<div class="line"><span class="lineno">   71</span>        serial_conn = serial.Serial(</div>
+<div class="line"><span class="lineno">   72</span>            port=port,</div>
+<div class="line"><span class="lineno">   73</span>            baudrate=115200,</div>
+<div class="line"><span class="lineno">   74</span>            timeout=1.0,</div>
+<div class="line"><span class="lineno">   75</span>            bytesize=serial.EIGHTBITS,</div>
+<div class="line"><span class="lineno">   76</span>            stopbits=serial.STOPBITS_ONE,</div>
+<div class="line"><span class="lineno">   77</span>            parity=serial.PARITY_NONE,</div>
+<div class="line"><span class="lineno">   78</span>            xonxoff=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">   79</span>            rtscts=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">   80</span>            dsrdtr=<span class="keyword">False</span>,</div>
+<div class="line"><span class="lineno">   81</span>        )</div>
+<div class="line"><span class="lineno">   82</span>        self._serial = <a class="code hl_class" href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a>(serial_conn)</div>
+<div class="line"><span class="lineno">   83</span> </div>
+<div class="line"><span class="lineno">   84</span>        <span class="comment"># We don&#39;t know what is the current verbosity state and so we</span></div>
+<div class="line"><span class="lineno">   85</span>        <span class="comment"># don&#39;t know yet what we should be reading back.  So blindly</span></div>
+<div class="line"><span class="lineno">   86</span>        <span class="comment"># set to the level we want, flush all output, and then check</span></div>
+<div class="line"><span class="lineno">   87</span>        <span class="comment"># if indeed this is a Toptica iBeam device.</span></div>
+<div class="line"><span class="lineno">   88</span>        <span class="keyword">with</span> self._serial.lock:</div>
+<div class="line"><span class="lineno">   89</span>            self._serial.write(b<span class="stringliteral">&quot;echo off\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   90</span>            self._serial.write(b<span class="stringliteral">&quot;prompt off\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   91</span>            <span class="comment"># The talk level we want is &#39;usual&#39;.  In theory we should</span></div>
+<div class="line"><span class="lineno">   92</span>            <span class="comment"># be able to use &#39;quiet&#39; which only answers queries but in</span></div>
+<div class="line"><span class="lineno">   93</span>            <span class="comment"># practice &#39;quiet&#39; does not answer some queries like &#39;show</span></div>
+<div class="line"><span class="lineno">   94</span>            <span class="comment"># serial&#39;.</span></div>
+<div class="line"><span class="lineno">   95</span>            self._serial.write(b<span class="stringliteral">&quot;talk usual\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">   96</span>            self._serial.readlines()  <span class="comment"># discard all pending lines</span></div>
+<div class="line"><span class="lineno">   97</span> </div>
+<div class="line"><span class="lineno">   98</span>        <span class="comment"># Empty command does nothing and returns nothing extra so we</span></div>
+<div class="line"><span class="lineno">   99</span>        <span class="comment"># use it to ensure this at least behaves like a Toptica iBeam.</span></div>
+<div class="line"><span class="lineno">  100</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  101</span>            self.command(b<span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">except</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a> <span class="keyword">as</span> e:</div>
+<div class="line"><span class="lineno">  103</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a>(</div>
+<div class="line"><span class="lineno">  104</span>                <span class="stringliteral">&quot;Failed to confirm Toptica iBeam on %s&quot;</span> % (port)</div>
+<div class="line"><span class="lineno">  105</span>            ) <span class="keyword">from</span> e</div>
+<div class="line"><span class="lineno">  106</span> </div>
+<div class="line"><span class="lineno">  107</span>        answer = self.command(b<span class="stringliteral">&quot;show serial&quot;</span>)</div>
+<div class="line"><span class="lineno">  108</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;SN: &quot;</span>):</div>
+<div class="line"><span class="lineno">  109</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  110</span>                <span class="stringliteral">&quot;Failed to parse serial from %s&quot;</span> % answer</div>
+<div class="line"><span class="lineno">  111</span>            )</div>
+<div class="line"><span class="lineno">  112</span>        _logger.info(<span class="stringliteral">&quot;got connection to Toptica iBeam %s&quot;</span>, answer.decode())</div>
+<div class="line"><span class="lineno">  113</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1__utils_1_1_shared_serial_html"><div class="ttname"><a href="classmicroscope_1_1__utils_1_1_shared_serial.html">microscope._utils.SharedSerial</a></div><div class="ttdef"><b>Definition:</b> <a href="__utils_8py_source.html#l00111">_utils.py:111</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>
+<div class="ttc" id="aclassmicroscope_1_1_initialise_error_html"><div class="ttname"><a href="classmicroscope_1_1_initialise_error.html">microscope.InitialiseError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00081">__init__.py:81</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -238,6 +290,58 @@ The returned bytes only include `ANSWER` without its own final
 array of bytes.
 </pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00114">114</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  114</span>    <span class="keyword">def </span>command(self, command: bytes) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  115</span>        <span class="stringliteral">&quot;&quot;&quot;Run command and return answer after minimal validation.</span></div>
+<div class="line"><span class="lineno">  116</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  117</span><span class="stringliteral">        The output of a command has the format::</span></div>
+<div class="line"><span class="lineno">  118</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  119</span><span class="stringliteral">            \r\nANSWER\r\n[OK]\r\n</span></div>
+<div class="line"><span class="lineno">  120</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  121</span><span class="stringliteral">        The returned bytes only include `ANSWER` without its own final</span></div>
+<div class="line"><span class="lineno">  122</span><span class="stringliteral">        `\r\n`.  This means that the </span><span class="keywordflow">return</span> value might be an empty</div>
+<div class="line"><span class="lineno">  123</span>        array of bytes.</div>
+<div class="line"><span class="lineno">  124</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  125</span><span class="stringliteral">        </span><span class="comment"># We expect to be on &#39;talk usual&#39; mode without prompt so each</span></div>
+<div class="line"><span class="lineno">  126</span>        <span class="comment"># command will end with [OK] on its own line.</span></div>
+<div class="line"><span class="lineno">  127</span>        <span class="keyword">with</span> self._serial.lock:</div>
+<div class="line"><span class="lineno">  128</span>            self._serial.write(command + b<span class="stringliteral">&quot;\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">  129</span>            <span class="comment"># An answer always starts with \r\n so there will be one</span></div>
+<div class="line"><span class="lineno">  130</span>            <span class="comment"># before [OK] even if this command is not a query.</span></div>
+<div class="line"><span class="lineno">  131</span>            answer = self._serial.read_until(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>)</div>
+<div class="line"><span class="lineno">  132</span> </div>
+<div class="line"><span class="lineno">  133</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;\r\n&quot;</span>):</div>
+<div class="line"><span class="lineno">  134</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  135</span>                <span class="stringliteral">&quot;answer to command %s does not start with CRLF.&quot;</span></div>
+<div class="line"><span class="lineno">  136</span>                <span class="stringliteral">&quot; This may be leftovers from a previous command:&quot;</span></div>
+<div class="line"><span class="lineno">  137</span>                <span class="stringliteral">&quot; %s&quot;</span> % (command, answer)</div>
+<div class="line"><span class="lineno">  138</span>            )</div>
+<div class="line"><span class="lineno">  139</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot;\r\n[OK]\r\n&quot;</span>):</div>
+<div class="line"><span class="lineno">  140</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  141</span>                <span class="stringliteral">&quot;Command %s failed or failed to read answer: %s&quot;</span></div>
+<div class="line"><span class="lineno">  142</span>                % (command, answer)</div>
+<div class="line"><span class="lineno">  143</span>            )</div>
+<div class="line"><span class="lineno">  144</span> </div>
+<div class="line"><span class="lineno">  145</span>        <span class="comment"># If an error occurred, the answer still ends in [OK].  We</span></div>
+<div class="line"><span class="lineno">  146</span>        <span class="comment"># need to check if the second line (first line is \r\n) is an</span></div>
+<div class="line"><span class="lineno">  147</span>        <span class="comment"># error code with the format &quot;%SYS-L-XXX, error description&quot;</span></div>
+<div class="line"><span class="lineno">  148</span>        <span class="comment"># where L is the error level (I for Information, W for</span></div>
+<div class="line"><span class="lineno">  149</span>        <span class="comment"># Warning, E for Error, and F for Fatal), and XXX is the error</span></div>
+<div class="line"><span class="lineno">  150</span>        <span class="comment"># code number.</span></div>
+<div class="line"><span class="lineno">  151</span>        <span class="keywordflow">if</span> answer[2:7] == b<span class="stringliteral">&quot;%SYS-&quot;</span> <span class="keywordflow">and</span> answer[7] != ord(b<span class="stringliteral">&quot;I&quot;</span>):</div>
+<div class="line"><span class="lineno">  152</span>            <span class="comment"># Errors of level I (information) should not raise an</span></div>
+<div class="line"><span class="lineno">  153</span>            <span class="comment"># exception since they can be replies to normal commands.</span></div>
+<div class="line"><span class="lineno">  154</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  155</span>                <span class="stringliteral">&quot;Command %s failed: %s&quot;</span> % (command, answer)</div>
+<div class="line"><span class="lineno">  156</span>            )</div>
+<div class="line"><span class="lineno">  157</span> </div>
+<div class="line"><span class="lineno">  158</span>        <span class="comment"># Exclude the first \r\n, the \r\n from a possible answer, and</span></div>
+<div class="line"><span class="lineno">  159</span>        <span class="comment"># the final [OK]\r\n</span></div>
+<div class="line"><span class="lineno">  160</span>        <span class="keywordflow">return</span> answer[2:-8]</div>
+<div class="line"><span class="lineno">  161</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="__utils_8py_source.html#l00115">microscope._utils.SharedSerial._serial</a>, <a class="el" href="coolled_8py_source.html#l00040">microscope.controllers.coolled._CoolLEDConnection._serial</a>, <a class="el" href="lumencor_8py_source.html#l00051">microscope.controllers.lumencor._SpectraIIIConnection._serial</a>, <a class="el" href="prior_8py_source.html#l00050">microscope.controllers.prior._ProScanIIIConnection._serial</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00055">microscope.controllers.toptica._iChromeConnection._serial</a>, <a class="el" href="zaber_8py_source.html#l00123">microscope.controllers.zaber._ZaberConnection._serial</a>, <a class="el" href="lights_2toptica_8py_source.html#l00082">microscope.lights.toptica._iBeamConnection._serial</a>, and <a class="el" href="ludl_8py_source.html#l00098">microscope.stages.ludl._LudlController._serial</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="zaber_8py_source.html#l00231">microscope.controllers.zaber._ZaberDeviceConnection.been_homed()</a>, <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>, <a class="el" href="zaber_8py_source.html#l00265">microscope.controllers.zaber._ZaberDeviceConnection.get_absolute_position()</a>, <a class="el" href="prior_8py_source.html#l00108">microscope.controllers.prior._ProScanIIIConnection.get_command()</a>, <a class="el" href="ludl_8py_source.html#l00189">microscope.stages.ludl._LudlController.get_command()</a>, <a class="el" href="zaber_8py_source.html#l00252">microscope.controllers.zaber._ZaberDeviceConnection.get_current_index()</a>, <a class="el" href="prior_8py_source.html#l00131">microscope.controllers.prior._ProScanIIIConnection.get_description()</a>, <a class="el" href="ludl_8py_source.html#l00257">microscope.stages.ludl._LudlController.get_description()</a>, <a class="el" href="zaber_8py_source.html#l00248">microscope.controllers.zaber._ZaberDeviceConnection.get_index_distance()</a>, <a class="el" href="zaber_8py_source.html#l00269">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_max()</a>, <a class="el" href="zaber_8py_source.html#l00273">microscope.controllers.zaber._ZaberDeviceConnection.get_limit_min()</a>, <a class="el" href="zaber_8py_source.html#l00227">microscope.controllers.zaber._ZaberDeviceConnection.get_number_axes()</a>, <a class="el" href="zaber_8py_source.html#l00240">microscope.controllers.zaber._ZaberDeviceConnection.get_rotation_length()</a>, <a class="el" href="zaber_8py_source.html#l00236">microscope.controllers.zaber._ZaberDeviceConnection.home()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00166">microscope.lights.toptica._iBeamConnection.laser_off()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00162">microscope.lights.toptica._iBeamConnection.laser_on()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00170">microscope.lights.toptica._iBeamConnection.set_normal_channel_power()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00179">microscope.lights.toptica._iBeamConnection.show_power_uW()</a>, and <a class="el" href="lights_2toptica_8py_source.html#l00188">microscope.lights.toptica._iBeamConnection.status_laser()</a>.</p>
 
 </div>
 </div>
@@ -258,6 +362,12 @@ array of bytes.
 </div><div class="memdoc">
 <pre class="fragment">Deactivate LD driver.</pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00166">166</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  166</span>    <span class="keyword">def </span>laser_off(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  167</span>        <span class="stringliteral">&quot;&quot;&quot;Deactivate LD driver.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  168</span>        self.command(b<span class="stringliteral">&quot;laser off&quot;</span>)</div>
+<div class="line"><span class="lineno">  169</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -278,6 +388,12 @@ array of bytes.
 </div><div class="memdoc">
 <pre class="fragment">Activate LD driver.</pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00162">162</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  162</span>    <span class="keyword">def </span>laser_on(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  163</span>        <span class="stringliteral">&quot;&quot;&quot;Activate LD driver.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  164</span>        self.command(b<span class="stringliteral">&quot;laser on&quot;</span>)</div>
+<div class="line"><span class="lineno">  165</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -313,6 +429,17 @@ want to be setting the power via channel 2 (channel 1 is the
 bias and we haven't seen a laser with a channel 3 yet).
 </pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00170">170</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  170</span>    <span class="keyword">def </span>set_normal_channel_power(self, power: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  171</span>        <span class="stringliteral">&quot;&quot;&quot;Set power in mW for channel 2 (normal operating level channel).</span></div>
+<div class="line"><span class="lineno">  172</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  173</span><span class="stringliteral">        We don&#39;t have channel number as an argument because we only</span></div>
+<div class="line"><span class="lineno">  174</span><span class="stringliteral">        want to be setting the power via channel 2 (channel 1 </span><span class="keywordflow">is</span> the</div>
+<div class="line"><span class="lineno">  175</span>        bias <span class="keywordflow">and</span> we haven<span class="stringliteral">&#39;t seen a laser with a channel 3 yet).</span></div>
+<div class="line"><span class="lineno">  176</span><span class="stringliteral">        &quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  177</span><span class="stringliteral">        self.command(b&quot;channel 2 power %f&quot;</span> % power)</div>
+<div class="line"><span class="lineno">  178</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -333,7 +460,20 @@ bias and we haven't seen a laser with a channel 3 yet).
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00192">192</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  192</span>    <span class="keyword">def </span>show_max_power(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  193</span>        <span class="comment"># There should be a cleaner way to get these, right?  We can</span></div>
+<div class="line"><span class="lineno">  194</span>        <span class="comment"># query the current limits (mA) but how do we go from there to</span></div>
+<div class="line"><span class="lineno">  195</span>        <span class="comment"># the power limits (mW)?</span></div>
+<div class="line"><span class="lineno">  196</span>        table = self.command(b<span class="stringliteral">&quot;show satellite&quot;</span>)</div>
+<div class="line"><span class="lineno">  197</span>        value = _get_table_value(table, key=b<span class="stringliteral">&quot;Pmax&quot;</span>)</div>
+<div class="line"><span class="lineno">  198</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> value.endswith(b<span class="stringliteral">&quot; mW&quot;</span>):</div>
+<div class="line"><span class="lineno">  199</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  200</span>                <span class="stringliteral">&quot;failed to parse power from %s&quot;</span> % value</div>
+<div class="line"><span class="lineno">  201</span>            )</div>
+<div class="line"><span class="lineno">  202</span>        <span class="keywordflow">return</span> float(value[:-3])</div>
+<div class="line"><span class="lineno">  203</span> </div>
+<div class="line"><span class="lineno">  204</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a1ae907c9f13da8ebdbc00aed7c40f122" name="a1ae907c9f13da8ebdbc00aed7c40f122"></a>
@@ -353,6 +493,17 @@ bias and we haven't seen a laser with a channel 3 yet).
 </div><div class="memdoc">
 <pre class="fragment">Returns actual laser power in µW.</pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00179">179</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  179</span>    <span class="keyword">def </span>show_power_uW(self) -&gt; float:</div>
+<div class="line"><span class="lineno">  180</span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual laser power in µW.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  181</span>        answer = self.command(b<span class="stringliteral">&quot;show power&quot;</span>)</div>
+<div class="line"><span class="lineno">  182</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> answer.startswith(b<span class="stringliteral">&quot;PIC  = &quot;</span>) <span class="keywordflow">and</span> <span class="keywordflow">not</span> answer.endswith(b<span class="stringliteral">&quot; uW  &quot;</span>):</div>
+<div class="line"><span class="lineno">  183</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  184</span>                <span class="stringliteral">&quot;failed to parse power from answer: %s&quot;</span> % answer</div>
+<div class="line"><span class="lineno">  185</span>            )</div>
+<div class="line"><span class="lineno">  186</span>        <span class="keywordflow">return</span> float(answer[7:-5])</div>
+<div class="line"><span class="lineno">  187</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>
@@ -373,6 +524,12 @@ bias and we haven't seen a laser with a channel 3 yet).
 </div><div class="memdoc">
 <pre class="fragment">Returns actual status of the LD driver (ON or OFF).</pre> 
 <p class="definition">Definition at line <a class="el" href="lights_2toptica_8py_source.html#l00188">188</a> of file <a class="el" href="lights_2toptica_8py_source.html">toptica.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  188</span>    <span class="keyword">def </span>status_laser(self) -&gt; bytes:</div>
+<div class="line"><span class="lineno">  189</span>        <span class="stringliteral">&quot;&quot;&quot;Returns actual status of the LD driver (ON or OFF).&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  190</span>        <span class="keywordflow">return</span> self.command(b<span class="stringliteral">&quot;status laser&quot;</span>)</div>
+<div class="line"><span class="lineno">  191</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="prior_8py_source.html#l00080">microscope.controllers.prior._ProScanIIIConnection.command()</a>, <a class="el" href="lights_2toptica_8py_source.html#l00114">microscope.lights.toptica._iBeamConnection.command()</a>, <a class="el" href="ludl_8py_source.html#l00142">microscope.stages.ludl._LudlController.command()</a>, and <a class="el" href="zaber_8py_source.html#l00189">microscope.controllers.zaber._ZaberDeviceConnection.command()</a>.</p>
 
 </div>
 </div>

@@ -313,6 +313,38 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#a5f1b35587bf81d7f0e8959297fdc2c12">microscope.stages.linkam._LinkamBase</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01419">1419</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1419</span>    <span class="keyword">def </span>__init__(self, uid=&quot;&quot;, **kwargs):</div>
+<div class="line"><span class="lineno"> 1420</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno"> 1421</span>        self.uid = uid</div>
+<div class="line"><span class="lineno"> 1422</span>        self.init_usb(self.uid)</div>
+<div class="line"><span class="lineno"> 1423</span>        self._cmsstatus = _CMSStatus()</div>
+<div class="line"><span class="lineno"> 1424</span>        self._cmserror = _CMSError()</div>
+<div class="line"><span class="lineno"> 1425</span>        <span class="comment"># Refill tracking</span></div>
+<div class="line"><span class="lineno"> 1426</span>        self._refills = dict(</div>
+<div class="line"><span class="lineno"> 1427</span>            {k: self.RefillTracker() <span class="keywordflow">for</span> k <span class="keywordflow">in</span> self._refill_map}</div>
+<div class="line"><span class="lineno"> 1428</span>        )</div>
+<div class="line"><span class="lineno"> 1429</span>        <span class="comment"># Condensor LED level when on</span></div>
+<div class="line"><span class="lineno"> 1430</span>        self._condensor_level = 100</div>
+<div class="line"><span class="lineno"> 1431</span>        self.add_setting(</div>
+<div class="line"><span class="lineno"> 1432</span>            <span class="stringliteral">&quot;condensor&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1433</span>            <span class="stringliteral">&quot;float&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1434</span>            self.get_condensor_level,</div>
+<div class="line"><span class="lineno"> 1435</span>            self.set_condensor_level,</div>
+<div class="line"><span class="lineno"> 1436</span>            (0, 100),</div>
+<div class="line"><span class="lineno"> 1437</span>        )</div>
+<div class="line"><span class="lineno"> 1438</span>        <span class="comment"># Connect to the stage.</span></div>
+<div class="line"><span class="lineno"> 1439</span>        <span class="keywordflow">if</span> self.uid:</div>
+<div class="line"><span class="lineno"> 1440</span>            <span class="comment"># Deviceserver needs uid to associate device to address, so call</span></div>
+<div class="line"><span class="lineno"> 1441</span>            <span class="comment"># open_comms directly to throw an exception on connection error.</span></div>
+<div class="line"><span class="lineno"> 1442</span>            self.open_comms()</div>
+<div class="line"><span class="lineno"> 1443</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1444</span>            <span class="comment"># Device id not required - just keep trying to connect until success.</span></div>
+<div class="line"><span class="lineno"> 1445</span>            self._reopen_comms()</div>
+<div class="line"><span class="lineno"> 1446</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>, <a class="el" href="linkam_8py_source.html#l01424">microscope.stages.linkam.LinkamCMS._cmserror</a>, <a class="el" href="linkam_8py_source.html#l01423">microscope.stages.linkam.LinkamCMS._cmsstatus</a>, <a class="el" href="linkam_8py_source.html#l01430">microscope.stages.linkam.LinkamCMS._condensor_level</a>, <a class="el" href="linkam_8py_source.html#l01375">microscope.stages.linkam.LinkamCMS._refill_map</a>, <a class="el" href="linkam_8py_source.html#l01426">microscope.stages.linkam.LinkamCMS._refills</a>, <a class="el" href="linkam_8py_source.html#l01214">microscope.stages.linkam._LinkamBase._reopen_comms()</a>, <a class="el" href="abc_8py_source.html#l00407">microscope.abc.Device.add_setting()</a>, <a class="el" href="linkam_8py_source.html#l01490">microscope.stages.linkam.LinkamCMS.get_condensor_level()</a>, <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>, <a class="el" href="linkam_8py_source.html#l01249">microscope.stages.linkam._LinkamBase.init_usb()</a>, <a class="el" href="linkam_8py_source.html#l01200">microscope.stages.linkam._LinkamBase.open_comms()</a>, <a class="el" href="linkam_8py_source.html#l01483">microscope.stages.linkam.LinkamCMS.set_condensor_level()</a>, and <a class="el" href="linkam_8py_source.html#l01421">microscope.stages.linkam.LinkamCMS.uid</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>.</p>
 
 </div>
 </div>
@@ -334,6 +366,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return the condensor level</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01490">1490</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1490</span>    <span class="keyword">def </span>get_condensor_level(self):</div>
+<div class="line"><span class="lineno"> 1491</span>        <span class="stringliteral">&quot;&quot;&quot;Return the condensor level&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1492</span>        <span class="keywordflow">return</span> self._condensor_level</div>
+<div class="line"><span class="lineno"> 1493</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01430">microscope.stages.linkam.LinkamCMS._condensor_level</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>.</p>
 
 </div>
 </div>
@@ -354,6 +394,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Report the state of the chamber light.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01471">1471</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1471</span>    <span class="keyword">def </span>get_light(self):</div>
+<div class="line"><span class="lineno"> 1472</span>        <span class="stringliteral">&quot;&quot;&quot;Report the state of the chamber light.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1473</span>        <span class="keywordflow">return</span> self.get_value(_StageValueType.CmsLight)</div>
+<div class="line"><span class="lineno"> 1474</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>.</p>
 
 </div>
 </div>
@@ -374,6 +420,26 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return the position, set point and stopped status of available motors.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01494">1494</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1494</span>    <span class="keyword">def </span>get_motors(self):</div>
+<div class="line"><span class="lineno"> 1495</span>        <span class="stringliteral">&quot;&quot;&quot;Return the position, set point and stopped status of available motors.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1496</span>        res = {}</div>
+<div class="line"><span class="lineno"> 1497</span>        <span class="keywordflow">for</span> axis <span class="keywordflow">in</span> <span class="stringliteral">&quot;XYZ&quot;</span>:</div>
+<div class="line"><span class="lineno"> 1498</span>            <span class="keywordflow">if</span> getattr(self._stageconfig.flags, <span class="stringliteral">&quot;motor&quot;</span> + axis):</div>
+<div class="line"><span class="lineno"> 1499</span>                res[axis] = (</div>
+<div class="line"><span class="lineno"> 1500</span>                    self.get_value(</div>
+<div class="line"><span class="lineno"> 1501</span>                        getattr(_StageValueType, <span class="stringliteral">&quot;MotorPos&quot;</span> + axis)</div>
+<div class="line"><span class="lineno"> 1502</span>                    ),</div>
+<div class="line"><span class="lineno"> 1503</span>                    self.get_value(</div>
+<div class="line"><span class="lineno"> 1504</span>                        getattr(_StageValueType, <span class="stringliteral">&quot;MotorSetpoint&quot;</span> + axis)</div>
+<div class="line"><span class="lineno"> 1505</span>                    ),</div>
+<div class="line"><span class="lineno"> 1506</span>                    getattr(self._status.flags, <span class="stringliteral">&quot;motorStopped&quot;</span> + axis),</div>
+<div class="line"><span class="lineno"> 1507</span>                )</div>
+<div class="line"><span class="lineno"> 1508</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1509</span>                res[axis] = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno"> 1510</span>        <span class="keywordflow">return</span> res</div>
+<div class="line"><span class="lineno"> 1511</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01079">microscope.stages.linkam._LinkamBase._stageconfig</a>, <a class="el" href="mirror_2mirao52e_8py_source.html#l00074">microscope.mirror.mirao52e.Mirao52e._status</a>, <a class="el" href="linkam_8py_source.html#l01081">microscope.stages.linkam._LinkamBase._status</a>, and <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>.</p>
 
 </div>
 </div>
@@ -406,6 +472,16 @@ Additional Inherited Members</h2></td></tr>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#ab56f7db058911151081d5255d602724d">microscope.stages.linkam._LinkamBase</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01524">1524</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1524</span>    <span class="keyword">def </span>get_status(self, *args):</div>
+<div class="line"><span class="lineno"> 1525</span>        <span class="stringliteral">&quot;&quot;&quot;Return a dict containing aggregated stage status.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1526</span>        status = super().get_status(*args, self._cmsstatus)</div>
+<div class="line"><span class="lineno"> 1527</span>        status.update(self.temperatures())</div>
+<div class="line"><span class="lineno"> 1528</span>        status.update(refills=self.refill_stats())</div>
+<div class="line"><span class="lineno"> 1529</span>        <span class="keywordflow">return</span> status</div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01423">microscope.stages.linkam.LinkamCMS._cmsstatus</a>, <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01520">microscope.stages.linkam.LinkamCMS.refill_stats()</a>, and <a class="el" href="linkam_8py_source.html#l01461">microscope.stages.linkam.LinkamCMS.temperatures()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00110">microscope.lights.cobolt.CoboltLaser.initialize()</a>, <a class="el" href="lights_2obis_8py_source.html#l00141">microscope.lights.obis.ObisLaser.initialize()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00148">microscope.lights.sapphire.SapphireLaser.initialize()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00069">microscope.lights.cobolt.CoboltLaser.send()</a>, and <a class="el" href="lights_2sapphire_8py_source.html#l00093">microscope.lights.sapphire.SapphireLaser.send()</a>.</p>
 
 </div>
 </div>
@@ -436,6 +512,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Start a refill of the sample chamber from the internal dewar</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01516">1516</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1516</span>    <span class="keyword">def </span>refill_chamber(self, state=True):</div>
+<div class="line"><span class="lineno"> 1517</span>        <span class="stringliteral">&quot;&quot;&quot;Start a refill of the sample chamber from the internal dewar&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1518</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self.set_value(_StageValueType.CmsSampleDewarFillSig, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno"> 1519</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01386">microscope.cameras.pvcam.PVStringParam.set_value()</a>, and <a class="el" href="linkam_8py_source.html#l01166">microscope.stages.linkam._LinkamBase.set_value()</a>.</p>
 
 </div>
 </div>
@@ -466,6 +548,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Start a refill of the internal dewar from an external reservoir</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01512">1512</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1512</span>    <span class="keyword">def </span>refill_dewar(self, state=True):</div>
+<div class="line"><span class="lineno"> 1513</span>        <span class="stringliteral">&quot;&quot;&quot;Start a refill of the internal dewar from an external reservoir&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1514</span><span class="stringliteral">        </span><span class="keywordflow">return</span> self.set_value(_StageValueType.CmsMainDewarFillSig, <span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno"> 1515</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01386">microscope.cameras.pvcam.PVStringParam.set_value()</a>, and <a class="el" href="linkam_8py_source.html#l01166">microscope.stages.linkam._LinkamBase.set_value()</a>.</p>
 
 </div>
 </div>
@@ -486,6 +574,14 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return information about refill times and cycle lengths.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01520">1520</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1520</span>    <span class="keyword">def </span>refill_stats(self):</div>
+<div class="line"><span class="lineno"> 1521</span>        <span class="stringliteral">&quot;&quot;&quot;Return information about refill times and cycle lengths.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1522</span>        <span class="keywordflow">return</span> dict([(k, v.as_dict()) <span class="keywordflow">for</span> k, v <span class="keywordflow">in</span> self._refills.items()])</div>
+<div class="line"><span class="lineno"> 1523</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01426">microscope.stages.linkam.LinkamCMS._refills</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>.</p>
 
 </div>
 </div>
@@ -516,6 +612,18 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Turn the condensor LED on or off.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01475">1475</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1475</span>    <span class="keyword">def </span>set_condensor(self, state):</div>
+<div class="line"><span class="lineno"> 1476</span>        <span class="stringliteral">&quot;&quot;&quot;Turn the condensor LED on or off.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1477</span>        <span class="keywordflow">if</span> state:</div>
+<div class="line"><span class="lineno"> 1478</span>            level = self._condensor_level</div>
+<div class="line"><span class="lineno"> 1479</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno"> 1480</span>            level = 0</div>
+<div class="line"><span class="lineno"> 1481</span>        self.set_value(_StageValueType.CmsCondenserLEDLevel, level)</div>
+<div class="line"><span class="lineno"> 1482</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01430">microscope.stages.linkam.LinkamCMS._condensor_level</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01386">microscope.cameras.pvcam.PVStringParam.set_value()</a>, and <a class="el" href="linkam_8py_source.html#l01166">microscope.stages.linkam._LinkamBase.set_value()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01483">microscope.stages.linkam.LinkamCMS.set_condensor_level()</a>.</p>
 
 </div>
 </div>
@@ -546,6 +654,17 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Set the condensor LED level</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01483">1483</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1483</span>    <span class="keyword">def </span>set_condensor_level(self, level):</div>
+<div class="line"><span class="lineno"> 1484</span>        <span class="stringliteral">&quot;&quot;&quot;Set the condensor LED level&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1485</span>        self._condensor_level = level</div>
+<div class="line"><span class="lineno"> 1486</span>        <span class="keywordflow">if</span> self.get_value(_StageValueType.CmsCondenserLEDLevel) &gt; 0:</div>
+<div class="line"><span class="lineno"> 1487</span>            <span class="comment"># Condnesor LED is on, so write out new level immediately.</span></div>
+<div class="line"><span class="lineno"> 1488</span>            self.set_condensor(<span class="keyword">True</span>)</div>
+<div class="line"><span class="lineno"> 1489</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01430">microscope.stages.linkam.LinkamCMS._condensor_level</a>, <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>, and <a class="el" href="linkam_8py_source.html#l01475">microscope.stages.linkam.LinkamCMS.set_condensor()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>.</p>
 
 </div>
 </div>
@@ -576,6 +695,12 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Set the state of the chamber light.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01467">1467</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1467</span>    <span class="keyword">def </span>set_light(self, state):</div>
+<div class="line"><span class="lineno"> 1468</span>        <span class="stringliteral">&quot;&quot;&quot;Set the state of the chamber light.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1469</span>        self.set_value(_StageValueType.CmsLight, state)</div>
+<div class="line"><span class="lineno"> 1470</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>, <a class="el" href="pvcam_8py_source.html#l01386">microscope.cameras.pvcam.PVStringParam.set_value()</a>, and <a class="el" href="linkam_8py_source.html#l01166">microscope.stages.linkam._LinkamBase.set_value()</a>.</p>
 
 </div>
 </div>
@@ -596,6 +721,16 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 <pre class="fragment">Return a dict of temperature sensor readings.</pre> 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01461">1461</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1461</span>    <span class="keyword">def </span>temperatures(self):</div>
+<div class="line"><span class="lineno"> 1462</span>        <span class="stringliteral">&quot;&quot;&quot;Return a dict of temperature sensor readings.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno"> 1463</span>        <span class="keywordflow">return</span> dict(</div>
+<div class="line"><span class="lineno"> 1464</span>            (key, self.get_value(svt)) <span class="keywordflow">for</span> key, svt <span class="keywordflow">in</span> self._heater_map.items()</div>
+<div class="line"><span class="lineno"> 1465</span>        )</div>
+<div class="line"><span class="lineno"> 1466</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="linkam_8py_source.html#l01379">microscope.stages.linkam.LinkamCMS._heater_map</a>, and <a class="el" href="linkam_8py_source.html#l01132">microscope.stages.linkam._LinkamBase.get_value()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01524">microscope.stages.linkam.LinkamCMS.get_status()</a>.</p>
 
 </div>
 </div>
@@ -613,6 +748,8 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="linkam_8py_source.html#l01421">1421</a> of file <a class="el" href="linkam_8py_source.html">linkam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="linkam_8py_source.html#l01419">microscope.stages.linkam.LinkamCMS.__init__()</a>.</p>
 
 </div>
 </div>

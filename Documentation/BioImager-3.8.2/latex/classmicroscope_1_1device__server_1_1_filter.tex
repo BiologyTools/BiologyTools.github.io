@@ -47,6 +47,17 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00152}{152}} of f
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00153}{153}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00153     \textcolor{keyword}{def }\_\_init\_\_(self):}
+\DoxyCodeLine{00154         self.last = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00155         self.count = 1}
+\DoxyCodeLine{00156         self.aggregate\_at = 3}
+\DoxyCodeLine{00157         self.repeat\_at = 5}
+\DoxyCodeLine{00158         self.stop\_at = self.aggregate\_at + 3 * self.repeat\_at}
+\DoxyCodeLine{00159 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_abbc2f3eec62fdd30bd8f1185289924fa}\label{classmicroscope_1_1device__server_1_1_filter_abbc2f3eec62fdd30bd8f1185289924fa}} 
@@ -61,6 +72,44 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00153}{153}} of f
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00160}{160}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00160     \textcolor{keyword}{def }filter(self, record):}
+\DoxyCodeLine{00161         \textcolor{stringliteral}{"{}"{}"{}Pass, aggregate or suppress consecutive repetitions of a log message."{}"{}"{}}}
+\DoxyCodeLine{00162         \textcolor{keywordflow}{if} self.last == record.msg:}
+\DoxyCodeLine{00163             \textcolor{comment}{\# Repeated message. Increment count.}}
+\DoxyCodeLine{00164             self.count += 1}
+\DoxyCodeLine{00165         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00166             \textcolor{comment}{\# New message. We've seen 1 instance of it.}}
+\DoxyCodeLine{00167             self.count = 1}
+\DoxyCodeLine{00168         \textcolor{comment}{\# Update self.last -\/ no further reference to last message}}
+\DoxyCodeLine{00169         \textcolor{comment}{\# needed in this call.}}
+\DoxyCodeLine{00170         self.last = record.msg}
+\DoxyCodeLine{00171         \textcolor{keywordflow}{if} self.count < self.aggregate\_at:}
+\DoxyCodeLine{00172             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00173         \textcolor{keywordflow}{elif} self.count == self.aggregate\_at:}
+\DoxyCodeLine{00174             record.msg = \textcolor{stringliteral}{"{}Aggregating reps. of: \%s"{}} \% (record.msg)}
+\DoxyCodeLine{00175             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00176         \textcolor{keywordflow}{elif} (}
+\DoxyCodeLine{00177             self.stop\_at > self.count > self.aggregate\_at}
+\DoxyCodeLine{00178             \textcolor{keywordflow}{and} ((self.count -\/ self.aggregate\_at) \% self.repeat\_at) == 0}
+\DoxyCodeLine{00179         ):}
+\DoxyCodeLine{00180             record.msg = \textcolor{stringliteral}{"{}\%d times: \%s"{}} \% (self.repeat\_at, record.msg)}
+\DoxyCodeLine{00181             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00182         \textcolor{keywordflow}{elif} self.count == self.stop\_at:}
+\DoxyCodeLine{00183             record.msg = \textcolor{stringliteral}{"{}Suppressing reps. of: \%s"{}} \% (record.msg)}
+\DoxyCodeLine{00184             \textcolor{keywordflow}{return} \textcolor{keyword}{True}}
+\DoxyCodeLine{00185         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00186             \textcolor{keywordflow}{return} \textcolor{keyword}{False}}
+\DoxyCodeLine{00187 }
+\DoxyCodeLine{00188 }
+\DoxyCodeLine{00189 \textcolor{preprocessor}{@dataclass(frozen=True)}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{device__server_8py_source_l00156}{microscope.\+device\+\_\+server.\+Filter.\+aggregate\+\_\+at}}, \mbox{\hyperlink{pvcam_8py_source_l01317}{microscope.\+cameras.\+pvcam.\+PVParam.\+count()}}, \mbox{\hyperlink{device__server_8py_source_l00155}{microscope.\+device\+\_\+server.\+Filter.\+count}}, \mbox{\hyperlink{_bio_8cs_source_l02266}{Bio\+Imager.\+Bio\+Image.\+Image\+JDesc.\+count}}, \mbox{\hyperlink{_slide_imager_8cs_source_l00309}{Bio\+Imager.\+Slide\+Imager.\+count}}, \mbox{\hyperlink{device__server_8py_source_l00154}{microscope.\+device\+\_\+server.\+Filter.\+last}}, \mbox{\hyperlink{device__server_8py_source_l00157}{microscope.\+device\+\_\+server.\+Filter.\+repeat\+\_\+at}}, and \mbox{\hyperlink{device__server_8py_source_l00158}{microscope.\+device\+\_\+server.\+Filter.\+stop\+\_\+at}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_ad91aca005d7e864d7f9185b47e1cc28e}\label{classmicroscope_1_1device__server_1_1_filter_ad91aca005d7e864d7f9185b47e1cc28e}} 
@@ -73,6 +122,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00160}{160}} of f
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00156}{156}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_a00ec921671500922c97a89bb92653418}\label{classmicroscope_1_1device__server_1_1_filter_a00ec921671500922c97a89bb92653418}} 
 \index{microscope.device\_server.Filter@{microscope.device\_server.Filter}!count@{count}}
 \index{count@{count}!microscope.device\_server.Filter@{microscope.device\_server.Filter}}
@@ -82,6 +135,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00156}{156}} of f
 
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00155}{155}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}, and \mbox{\hyperlink{pvcam_8py_source_l01371}{microscope.\+cameras.\+pvcam.\+PVEnum\+Param.\+values()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_a92299e51a7dc46620f08e38e8afbe464}\label{classmicroscope_1_1device__server_1_1_filter_a92299e51a7dc46620f08e38e8afbe464}} 
 \index{microscope.device\_server.Filter@{microscope.device\_server.Filter}!last@{last}}
@@ -93,6 +150,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00155}{155}} of f
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00154}{154}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_a0c96cbe6c9b28d59b5ca2c02895b449e}\label{classmicroscope_1_1device__server_1_1_filter_a0c96cbe6c9b28d59b5ca2c02895b449e}} 
 \index{microscope.device\_server.Filter@{microscope.device\_server.Filter}!repeat\_at@{repeat\_at}}
 \index{repeat\_at@{repeat\_at}!microscope.device\_server.Filter@{microscope.device\_server.Filter}}
@@ -103,6 +164,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00154}{154}} of f
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00157}{157}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
 
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1device__server_1_1_filter_ac24fa4ed543287a1bd9e084f84652e57}\label{classmicroscope_1_1device__server_1_1_filter_ac24fa4ed543287a1bd9e084f84652e57}} 
 \index{microscope.device\_server.Filter@{microscope.device\_server.Filter}!stop\_at@{stop\_at}}
 \index{stop\_at@{stop\_at}!microscope.device\_server.Filter@{microscope.device\_server.Filter}}
@@ -112,6 +177,10 @@ Definition at line \mbox{\hyperlink{device__server_8py_source_l00157}{157}} of f
 
 
 Definition at line \mbox{\hyperlink{device__server_8py_source_l00158}{158}} of file \mbox{\hyperlink{device__server_8py_source}{device\+\_\+server.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{device__server_8py_source_l00160}{microscope.\+device\+\_\+server.\+Filter.\+filter()}}.
 
 
 

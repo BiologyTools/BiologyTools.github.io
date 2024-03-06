@@ -279,6 +279,32 @@ in the docstrings.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1abc_1_1_camera.html#aa83a5fbd2c9d16bd7af0ad180702b365">microscope.abc.Camera</a>, <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a657d93b584e6915a33f4a853529330b4">microscope.simulators.SimulatedCamera</a>, <a class="el" href="classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html#a2affa7aa4fc988edbd7337e4a305b8f6">microscope.testsuite.devices.TestCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#a8958fbb797332a875b157cfc782b1012">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html#a5fa190172f9a8c7a93053942d69aa117">microscope.simulators.stage_aware_camera.StageAwareCamera</a>, and <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a5187efcee41e91c498c4b07b9a30842c">microscope.cameras.ximea.XimeaCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00558">558</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  558</span>    <span class="keyword">def </span>__init__(self, buffer_length: int = 0, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  559</span>        <span class="stringliteral">&quot;&quot;&quot;Derived.__init__ must call this at some point.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  560</span>        super().__init__(**kwargs)</div>
+<div class="line"><span class="lineno">  561</span>        <span class="comment"># A thread to fetch and dispatch data.</span></div>
+<div class="line"><span class="lineno">  562</span>        self._fetch_thread = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  563</span>        <span class="comment"># A flag to control the _fetch_thread.</span></div>
+<div class="line"><span class="lineno">  564</span>        self._fetch_thread_run = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  565</span>        <span class="comment"># A flag to indicate that this class uses a fetch callback.</span></div>
+<div class="line"><span class="lineno">  566</span>        self._using_callback = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  567</span>        <span class="comment"># Clients to which we send data.</span></div>
+<div class="line"><span class="lineno">  568</span>        self._clientStack = []</div>
+<div class="line"><span class="lineno">  569</span>        <span class="comment"># A set of live clients to avoid repeated dispatch to disconnected client.</span></div>
+<div class="line"><span class="lineno">  570</span>        self._liveClients = set()</div>
+<div class="line"><span class="lineno">  571</span>        <span class="comment"># A thread to dispatch data.</span></div>
+<div class="line"><span class="lineno">  572</span>        self._dispatch_thread = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  573</span>        <span class="comment"># A buffer for data dispatch.</span></div>
+<div class="line"><span class="lineno">  574</span>        self._dispatch_buffer = queue.Queue(maxsize=buffer_length)</div>
+<div class="line"><span class="lineno">  575</span>        <span class="comment"># A flag to indicate if device is ready to acquire.</span></div>
+<div class="line"><span class="lineno">  576</span>        self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  577</span>        <span class="comment"># A condition to signal arrival of a new data and unblock grab_next_data</span></div>
+<div class="line"><span class="lineno">  578</span>        self._new_data_condition = threading.Condition()</div>
+<div class="line"><span class="lineno">  579</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>, <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>, <a class="el" href="abc_8py_source.html#l00568">microscope.abc.DataDevice._clientStack</a>, <a class="el" href="abc_8py_source.html#l00574">microscope.abc.DataDevice._dispatch_buffer</a>, <a class="el" href="abc_8py_source.html#l00572">microscope.abc.DataDevice._dispatch_thread</a>, <a class="el" href="abc_8py_source.html#l00562">microscope.abc.DataDevice._fetch_thread</a>, <a class="el" href="abc_8py_source.html#l00564">microscope.abc.DataDevice._fetch_thread_run</a>, <a class="el" href="abc_8py_source.html#l00570">microscope.abc.DataDevice._liveClients</a>, <a class="el" href="abc_8py_source.html#l00578">microscope.abc.DataDevice._new_data_condition</a>, <a class="el" href="abc_8py_source.html#l00566">microscope.abc.DataDevice._using_callback</a>, <a class="el" href="andorsdk3_8py_source.html#l00343">microscope.cameras.andorsdk3.AndorSDK3._using_callback</a>, <a class="el" href="pvcam_8py_source.html#l01502">microscope.cameras.pvcam.PVCamera._using_callback</a>, <a class="el" href="abc_8py_source.html#l00307">microscope.abc.Device.disable()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="coolled_8py_source.html#l00175">microscope.controllers.coolled._CoolLEDChannel.disable()</a>, <a class="el" href="lumencor_8py_source.html#l00233">microscope.controllers.lumencor._SpectraIIILightChannel.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00134">microscope.lights.cobolt.CoboltLaser.disable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00173">microscope.lights.sapphire.SapphireLaser.disable()</a>, and <a class="el" href="lights_2toptica_8py_source.html#l00242">microscope.lights.toptica.TopticaiBeam.disable()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>.</p>
 
 </div>
 </div>
@@ -301,7 +327,11 @@ in the docstrings.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00580">580</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  580</span>    <span class="keyword">def </span>__del__(self):</div>
+<div class="line"><span class="lineno">  581</span>        self.disable()</div>
+<div class="line"><span class="lineno">  582</span>        super().__del__()</div>
+<div class="line"><span class="lineno">  583</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -324,6 +354,14 @@ in the docstrings.</pre>
 <p>Reimplemented in <a class="el" href="classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#af973ec14eadf331a2e5961239035d61e">microscope.cameras.andorsdk3.AndorSDK3</a>, <a class="el" href="classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#ac51c8c53d2c984e148e3cb0f4ce9bb56">microscope.cameras.atmcd.AndorAtmcd</a>, <a class="el" href="classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html#aa91b849a389efbfe431c43470439046b">microscope.cameras.picam.PiCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a127b891a2175b8dbc17958eda0aa4629">microscope.cameras.pvcam.PVCamera</a>, <a class="el" href="classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a43289094919fd33d2389c495f61fdaa6">microscope.cameras.ximea.XimeaCamera</a>, and <a class="el" href="classmicroscope_1_1simulators_1_1_simulated_camera.html#a99371761dfb5c1080144afc08b341c89">microscope.simulators.SimulatedCamera</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00588">588</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  588</span>    <span class="keyword">def </span>abort(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  589</span>        <span class="stringliteral">&quot;&quot;&quot;Stop acquisition as soon as possible.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  590</span>        self._acquiring = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  591</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00576">microscope.abc.DataDevice._acquiring</a>, <a class="el" href="andorsdk3_8py_source.html#l00331">microscope.cameras.andorsdk3.AndorSDK3._acquiring()</a>, <a class="el" href="atmcd_8py_source.html#l01412">microscope.cameras.atmcd.AndorAtmcd._acquiring()</a>, <a class="el" href="picam_8py_source.html#l00058">microscope.cameras.picam.PiCamera._acquiring</a>, <a class="el" href="pvcam_8py_source.html#l01610">microscope.cameras.pvcam.PVCamera._acquiring</a>, <a class="el" href="ximea_8py_source.html#l00190">microscope.cameras.ximea.XimeaCamera._acquiring</a>, and <a class="el" href="simulators_2____init_____8py_source.html#l00210">microscope.simulators.SimulatedCamera._acquiring</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="simulators_2____init_____8py_source.html#l00253">microscope.simulators.SimulatedCamera.abort()</a>, <a class="el" href="andorsdk3_8py_source.html#l00527">microscope.cameras.andorsdk3.AndorSDK3.get_id()</a>, <a class="el" href="atmcd_8py_source.html#l01618">microscope.cameras.atmcd.AndorAtmcd.get_id()</a>, <a class="el" href="picam_8py_source.html#l00144">microscope.cameras.picam.PiCamera.initialize()</a>, <a class="el" href="ximea_8py_source.html#l00259">microscope.cameras.ximea.XimeaCamera.initialize()</a>, <a class="el" href="andorsdk3_8py_source.html#l00588">microscope.cameras.andorsdk3.AndorSDK3.set_trigger()</a>, and <a class="el" href="abc_8py_source.html#l00484">microscope.abc.Device.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -348,6 +386,23 @@ Implement device-specific code in `_do_disable`.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#add8e7f466e7a28137d6e0ceede74e15e">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00629">629</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  629</span>    <span class="keyword">def </span>disable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  630</span>        <span class="stringliteral">&quot;&quot;&quot;Disable the data capture device.</span></div>
+<div class="line"><span class="lineno">  631</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  632</span><span class="stringliteral">        Implement device-specific code </span><span class="keywordflow">in</span> `_do_disable`.</div>
+<div class="line"><span class="lineno">  633</span> </div>
+<div class="line"><span class="lineno">  634</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  635</span><span class="stringliteral">        self.enabled = </span><span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  636</span>        <span class="keywordflow">if</span> self._fetch_thread:</div>
+<div class="line"><span class="lineno">  637</span>            <span class="keywordflow">if</span> self._fetch_thread.is_alive():</div>
+<div class="line"><span class="lineno">  638</span>                self._fetch_thread_run = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  639</span>                self._fetch_thread.join()</div>
+<div class="line"><span class="lineno">  640</span>        super().disable()</div>
+<div class="line"><span class="lineno">  641</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00768">microscope.abc.DataDevice._client</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00142">microscope.testsuite.devices.DummyDSP._client</a>, <a class="el" href="abc_8py_source.html#l00568">microscope.abc.DataDevice._clientStack</a>, <a class="el" href="abc_8py_source.html#l00574">microscope.abc.DataDevice._dispatch_buffer</a>, <a class="el" href="abc_8py_source.html#l00643">microscope.abc.DataDevice._fetch_data()</a>, <a class="el" href="atmcd_8py_source.html#l01599">microscope.cameras.atmcd.AndorAtmcd._fetch_data()</a>, <a class="el" href="picam_8py_source.html#l00136">microscope.cameras.picam.PiCamera._fetch_data()</a>, <a class="el" href="pvcam_8py_source.html#l01475">microscope.cameras.pvcam.PVCamera._fetch_data()</a>, <a class="el" href="ximea_8py_source.html#l00219">microscope.cameras.ximea.XimeaCamera._fetch_data()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00232">microscope.simulators.SimulatedCamera._fetch_data()</a>, <a class="el" href="stage__aware__camera_8py_source.html#l00098">microscope.simulators.stage_aware_camera.StageAwareCamera._fetch_data()</a>, <a class="el" href="andorsdk3_8py_source.html#l00414">microscope.cameras.andorsdk3.AndorSDK3._fetch_data()</a>, <a class="el" href="abc_8py_source.html#l00562">microscope.abc.DataDevice._fetch_thread</a>, <a class="el" href="abc_8py_source.html#l00564">microscope.abc.DataDevice._fetch_thread_run</a>, <a class="el" href="abc_8py_source.html#l00570">microscope.abc.DataDevice._liveClients</a>, <a class="el" href="abc_8py_source.html#l00656">microscope.abc.DataDevice._process_data()</a>, <a class="el" href="abc_8py_source.html#l00859">microscope.abc.Camera._process_data()</a>, <a class="el" href="abc_8py_source.html#l00745">microscope.abc.DataDevice._put()</a>, <a class="el" href="abc_8py_source.html#l00660">microscope.abc.DataDevice._send_data()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="abc_8py_source.html#l00289">microscope.abc.Device.enabled</a>, <a class="el" href="abc_8py_source.html#l00605">microscope.abc.DataDevice.enabled</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00114">microscope.testsuite.devices.DummySLM.enabled</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00558">microscope.abc.DataDevice.__init__()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00088">microscope.lights.cobolt.CoboltLaser.get_status()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00087">microscope.lights.deepstar.DeepstarLaser.get_status()</a>, <a class="el" href="lights_2obis_8py_source.html#l00094">microscope.lights.obis.ObisLaser.get_status()</a>, and <a class="el" href="abc_8py_source.html#l00349">microscope.abc.Device.shutdown()</a>.</p>
 
 </div>
 </div>
@@ -373,6 +428,45 @@ device specific code in `_do_enable`.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#ac7759ad4eb304422f07cfee215a73961">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00592">592</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  592</span>    <span class="keyword">def </span>enable(self) -&gt; None:</div>
+<div class="line"><span class="lineno">  593</span>        <span class="stringliteral">&quot;&quot;&quot;Enable the data capture device.</span></div>
+<div class="line"><span class="lineno">  594</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  595</span><span class="stringliteral">        Ensures that a data handling threads are running.  Implement</span></div>
+<div class="line"><span class="lineno">  596</span><span class="stringliteral">        device specific code </span><span class="keywordflow">in</span> `_do_enable`.</div>
+<div class="line"><span class="lineno">  597</span> </div>
+<div class="line"><span class="lineno">  598</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  599</span><span class="stringliteral">        _logger.debug(&quot;Enabling ...&quot;</span>)</div>
+<div class="line"><span class="lineno">  600</span>        <span class="comment"># Call device-specific code.</span></div>
+<div class="line"><span class="lineno">  601</span>        <span class="keywordflow">try</span>:</div>
+<div class="line"><span class="lineno">  602</span>            result = self._do_enable()</div>
+<div class="line"><span class="lineno">  603</span>        <span class="keywordflow">except</span> Exception <span class="keyword">as</span> err:</div>
+<div class="line"><span class="lineno">  604</span>            _logger.debug(<span class="stringliteral">&quot;Error in _do_enable:&quot;</span>, exc_info=err)</div>
+<div class="line"><span class="lineno">  605</span>            self.enabled = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  606</span>            <span class="keywordflow">raise</span> err</div>
+<div class="line"><span class="lineno">  607</span>        <span class="keywordflow">if</span> <span class="keywordflow">not</span> result:</div>
+<div class="line"><span class="lineno">  608</span>            self.enabled = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  609</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  610</span>            self.enabled = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  611</span>            <span class="comment"># Set up data fetching</span></div>
+<div class="line"><span class="lineno">  612</span>            <span class="keywordflow">if</span> self._using_callback:</div>
+<div class="line"><span class="lineno">  613</span>                <span class="keywordflow">if</span> self._fetch_thread:</div>
+<div class="line"><span class="lineno">  614</span>                    self._fetch_thread_run = <span class="keyword">False</span></div>
+<div class="line"><span class="lineno">  615</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  616</span>                <span class="keywordflow">if</span> <span class="keywordflow">not</span> self._fetch_thread <span class="keywordflow">or</span> <span class="keywordflow">not</span> self._fetch_thread.is_alive():</div>
+<div class="line"><span class="lineno">  617</span>                    self._fetch_thread = Thread(target=self._fetch_loop)</div>
+<div class="line"><span class="lineno">  618</span>                    self._fetch_thread.daemon = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  619</span>                    self._fetch_thread.start()</div>
+<div class="line"><span class="lineno">  620</span>            <span class="keywordflow">if</span> (</div>
+<div class="line"><span class="lineno">  621</span>                <span class="keywordflow">not</span> self._dispatch_thread</div>
+<div class="line"><span class="lineno">  622</span>                <span class="keywordflow">or</span> <span class="keywordflow">not</span> self._dispatch_thread.is_alive()</div>
+<div class="line"><span class="lineno">  623</span>            ):</div>
+<div class="line"><span class="lineno">  624</span>                self._dispatch_thread = Thread(target=self._dispatch_loop)</div>
+<div class="line"><span class="lineno">  625</span>                self._dispatch_thread.daemon = <span class="keyword">True</span></div>
+<div class="line"><span class="lineno">  626</span>                self._dispatch_thread.start()</div>
+<div class="line"><span class="lineno">  627</span>            _logger.debug(<span class="stringliteral">&quot;... enabled.&quot;</span>)</div>
+<div class="line"><span class="lineno">  628</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00684">microscope.abc.DataDevice._dispatch_loop()</a>, <a class="el" href="abc_8py_source.html#l00572">microscope.abc.DataDevice._dispatch_thread</a>, <a class="el" href="abc_8py_source.html#l00312">microscope.abc.Device._do_enable()</a>, <a class="el" href="andorsdk3_8py_source.html#l00538">microscope.cameras.andorsdk3.AndorSDK3._do_enable()</a>, <a class="el" href="atmcd_8py_source.html#l01654">microscope.cameras.atmcd.AndorAtmcd._do_enable()</a>, <a class="el" href="picam_8py_source.html#l00175">microscope.cameras.picam.PiCamera._do_enable()</a>, <a class="el" href="pvcam_8py_source.html#l01480">microscope.cameras.pvcam.PVCamera._do_enable()</a>, <a class="el" href="ximea_8py_source.html#l00338">microscope.cameras.ximea.XimeaCamera._do_enable()</a>, <a class="el" href="controllers_2toptica_8py_source.html#l00206">microscope.controllers.toptica._iChromeLaser._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00341">microscope.controllers.zaber._ZaberStage._do_enable()</a>, <a class="el" href="zaber_8py_source.html#l00462">microscope.controllers.zaber._ZaberLED._do_enable()</a>, <a class="el" href="aurox_8py_source.html#l00166">microscope.filterwheels.aurox.Clarity._do_enable()</a>, <a class="el" href="lights_2cobolt_8py_source.html#l00119">microscope.lights.cobolt.CoboltLaser._do_enable()</a>, <a class="el" href="lights_2deepstar_8py_source.html#l00096">microscope.lights.deepstar.DeepstarLaser._do_enable()</a>, <a class="el" href="lights_2obis_8py_source.html#l00109">microscope.lights.obis.ObisLaser._do_enable()</a>, <a class="el" href="lights_2sapphire_8py_source.html#l00153">microscope.lights.sapphire.SapphireLaser._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00261">microscope.simulators.SimulatedCamera._do_enable()</a>, <a class="el" href="simulators_2____init_____8py_source.html#l00351">microscope.simulators.SimulatedLightSource._do_enable()</a>, <a class="el" href="ludl_8py_source.html#l00347">microscope.stages.ludl._LudlStage._do_enable()</a>, <a class="el" href="abc_8py_source.html#l00710">microscope.abc.DataDevice._fetch_loop()</a>, <a class="el" href="abc_8py_source.html#l00562">microscope.abc.DataDevice._fetch_thread</a>, <a class="el" href="abc_8py_source.html#l00564">microscope.abc.DataDevice._fetch_thread_run</a>, <a class="el" href="abc_8py_source.html#l00566">microscope.abc.DataDevice._using_callback</a>, <a class="el" href="andorsdk3_8py_source.html#l00343">microscope.cameras.andorsdk3.AndorSDK3._using_callback</a>, <a class="el" href="pvcam_8py_source.html#l01502">microscope.cameras.pvcam.PVCamera._using_callback</a>, <a class="el" href="abc_8py_source.html#l00289">microscope.abc.Device.enabled</a>, <a class="el" href="abc_8py_source.html#l00605">microscope.abc.DataDevice.enabled</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00114">microscope.testsuite.devices.DummySLM.enabled</a>.</p>
 
 </div>
 </div>
@@ -407,6 +501,31 @@ Args:
     soft_trigger: calls :meth:`trigger` if `True`, waits for
         hardware trigger if `False`.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00789">789</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  789</span>    <span class="keyword">def </span>grab_next_data(self, soft_trigger: bool = <span class="keyword">True</span>):</div>
+<div class="line"><span class="lineno">  790</span>        <span class="stringliteral">&quot;&quot;&quot;Returns results from next trigger via a direct call.</span></div>
+<div class="line"><span class="lineno">  791</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  792</span><span class="stringliteral">        Args:</span></div>
+<div class="line"><span class="lineno">  793</span><span class="stringliteral">            soft_trigger: calls :meth:`trigger` </span><span class="keywordflow">if</span> `<span class="keyword">True</span>`, waits <span class="keywordflow">for</span></div>
+<div class="line"><span class="lineno">  794</span>                hardware trigger <span class="keywordflow">if</span> `<span class="keyword">False</span>`.</div>
+<div class="line"><span class="lineno">  795</span> </div>
+<div class="line"><span class="lineno">  796</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  797</span><span class="stringliteral">        </span><span class="keywordflow">if</span> <span class="keywordflow">not</span> self.enabled:</div>
+<div class="line"><span class="lineno">  798</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_disabled_device_error.html">microscope.DisabledDeviceError</a>(<span class="stringliteral">&quot;Camera not enabled.&quot;</span>)</div>
+<div class="line"><span class="lineno">  799</span>        self._new_data_condition.acquire()</div>
+<div class="line"><span class="lineno">  800</span>        <span class="comment"># Push self onto client stack.</span></div>
+<div class="line"><span class="lineno">  801</span>        self.set_client(self)</div>
+<div class="line"><span class="lineno">  802</span>        <span class="comment"># Wait for data from next trigger.</span></div>
+<div class="line"><span class="lineno">  803</span>        <span class="keywordflow">if</span> soft_trigger:</div>
+<div class="line"><span class="lineno">  804</span>            self.trigger()</div>
+<div class="line"><span class="lineno">  805</span>        self._new_data_condition.wait()</div>
+<div class="line"><span class="lineno">  806</span>        <span class="comment"># Pop self from client stack</span></div>
+<div class="line"><span class="lineno">  807</span>        self.set_client(<span class="keywordtype">None</span>)</div>
+<div class="line"><span class="lineno">  808</span>        <span class="comment"># Return the data.</span></div>
+<div class="line"><span class="lineno">  809</span>        <span class="keywordflow">return</span> self._new_data</div>
+<div class="line"><span class="lineno">  810</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_disabled_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_disabled_device_error.html">microscope.DisabledDeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00073">__init__.py:73</a></div></div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00815">microscope.abc.DataDevice._new_data</a>, <a class="el" href="abc_8py_source.html#l00578">microscope.abc.DataDevice._new_data_condition</a>, <a class="el" href="abc_8py_source.html#l00289">microscope.abc.Device.enabled</a>, <a class="el" href="abc_8py_source.html#l00605">microscope.abc.DataDevice.enabled</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00114">microscope.testsuite.devices.DummySLM.enabled</a>, <a class="el" href="testsuite_2devices_8py_source.html#l00208">microscope.testsuite.devices.DummyDSP.set_client()</a>, <a class="el" href="abc_8py_source.html#l00749">microscope.abc.DataDevice.set_client()</a>, <a class="el" href="abc_8py_source.html#l00263">microscope.abc.TriggerTargetMixin.trigger()</a>, and <a class="el" href="abc_8py_source.html#l01178">microscope.abc.DeformableMirror.trigger()</a>.</p>
 
 </div>
 </div>
@@ -437,6 +556,12 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">A passthrough for compatibility.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00785">785</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  785</span>    <span class="keyword">def </span>receiveClient(self, client_uri: str) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  786</span>        <span class="stringliteral">&quot;&quot;&quot;A passthrough for compatibility.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  787</span>        self.set_client(client_uri)</div>
+<div class="line"><span class="lineno">  788</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="testsuite_2devices_8py_source.html#l00208">microscope.testsuite.devices.DummyDSP.set_client()</a>, and <a class="el" href="abc_8py_source.html#l00749">microscope.abc.DataDevice.set_client()</a>.</p>
 
 </div>
 </div>
@@ -473,6 +598,15 @@ Args:
 </div><div class="memdoc">
 <pre class="fragment">Unblocks grab_next_frame so it can return.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00812">812</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  812</span>    <span class="keyword">def </span>receiveData(self, data, timestamp) -&gt; None:</div>
+<div class="line"><span class="lineno">  813</span>        <span class="stringliteral">&quot;&quot;&quot;Unblocks grab_next_frame so it can return.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  814</span>        <span class="keyword">with</span> self._new_data_condition:</div>
+<div class="line"><span class="lineno">  815</span>            self._new_data = (data, timestamp)</div>
+<div class="line"><span class="lineno">  816</span>            self._new_data_condition.notify()</div>
+<div class="line"><span class="lineno">  817</span> </div>
+<div class="line"><span class="lineno">  818</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00815">microscope.abc.DataDevice._new_data</a>, and <a class="el" href="abc_8py_source.html#l00578">microscope.abc.DataDevice._new_data_condition</a>.</p>
 
 </div>
 </div>
@@ -516,6 +650,40 @@ the current client is finished.  Avoiding this will require
 rework here to identify the caller and remove only that caller
 from the client stack.</pre> 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00749">749</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  749</span>    <span class="keyword">def </span>set_client(self, new_client) -&gt; None:</div>
+<div class="line"><span class="lineno">  750</span>        <span class="stringliteral">&quot;&quot;&quot;Set up a connection to our client.</span></div>
+<div class="line"><span class="lineno">  751</span><span class="stringliteral"></span> </div>
+<div class="line"><span class="lineno">  752</span><span class="stringliteral">        Clients now sit </span><span class="keywordflow">in</span> a stack so that a single device may send</div>
+<div class="line"><span class="lineno">  753</span>        different data to multiple clients <span class="keywordflow">in</span> a single experiment.</div>
+<div class="line"><span class="lineno">  754</span>        The usage <span class="keywordflow">is</span> currently::</div>
+<div class="line"><span class="lineno">  755</span> </div>
+<div class="line"><span class="lineno">  756</span>            device.set_client(client) <span class="comment"># Add client to top of stack</span></div>
+<div class="line"><span class="lineno">  757</span>            <span class="comment"># do stuff, send triggers, receive data</span></div>
+<div class="line"><span class="lineno">  758</span>            device.set_client(<span class="keywordtype">None</span>)   <span class="comment"># Pop top client off stack.</span></div>
+<div class="line"><span class="lineno">  759</span> </div>
+<div class="line"><span class="lineno">  760</span>        There <span class="keywordflow">is</span> a risk that some other client calls ``<span class="keywordtype">None</span>`` before</div>
+<div class="line"><span class="lineno">  761</span>        the current client <span class="keywordflow">is</span> finished.  Avoiding this will require</div>
+<div class="line"><span class="lineno">  762</span>        rework here to identify the caller <span class="keywordflow">and</span> remove only that caller</div>
+<div class="line"><span class="lineno">  763</span>        <span class="keyword">from</span> the client stack.</div>
+<div class="line"><span class="lineno">  764</span> </div>
+<div class="line"><span class="lineno">  765</span>        <span class="stringliteral">&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  766</span><span class="stringliteral">        </span><span class="keywordflow">if</span> new_client <span class="keywordflow">is</span> <span class="keywordflow">not</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  767</span>            <span class="keywordflow">if</span> isinstance(new_client, (str, Pyro4.core.URI)):</div>
+<div class="line"><span class="lineno">  768</span>                self._client = Pyro4.Proxy(new_client)</div>
+<div class="line"><span class="lineno">  769</span>            <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  770</span>                self._client = new_client</div>
+<div class="line"><span class="lineno">  771</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  772</span>            self._client = <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  773</span>        <span class="comment"># _client uses a setter. Log the result of assignment.</span></div>
+<div class="line"><span class="lineno">  774</span>        <span class="keywordflow">if</span> self._client <span class="keywordflow">is</span> <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  775</span>            _logger.info(<span class="stringliteral">&quot;Current client is None.&quot;</span>)</div>
+<div class="line"><span class="lineno">  776</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  777</span>            _logger.info(<span class="stringliteral">&quot;Current client is %s.&quot;</span>, str(self._client))</div>
+<div class="line"><span class="lineno">  778</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00768">microscope.abc.DataDevice._client</a>, and <a class="el" href="testsuite_2devices_8py_source.html#l00142">microscope.testsuite.devices.DummyDSP._client</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="clients_8py_source.html#l00090">microscope.clients.DataClient.enable()</a>, <a class="el" href="abc_8py_source.html#l00789">microscope.abc.DataDevice.grab_next_data()</a>, and <a class="el" href="abc_8py_source.html#l00785">microscope.abc.DataDevice.receiveClient()</a>.</p>
 
 </div>
 </div>
@@ -554,6 +722,14 @@ from the client stack.</pre>
 <p>Reimplemented from <a class="el" href="classmicroscope_1_1abc_1_1_device.html#a9f30a9b6676629c3694b49686238f2a0">microscope.abc.Device</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00780">780</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  780</span>    <span class="keyword">def </span>update_settings(self, settings, init: bool = <span class="keyword">False</span>) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  781</span>        <span class="stringliteral">&quot;&quot;&quot;Update settings, toggling acquisition if necessary.&quot;&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  782</span>        super().update_settings(settings, init)</div>
+<div class="line"><span class="lineno">  783</span> </div>
+</div><!-- fragment -->
+<p class="reference">References <a class="el" href="abc_8py_source.html#l00780">microscope.abc.DataDevice.update_settings()</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00780">microscope.abc.DataDevice.update_settings()</a>.</p>
 
 </div>
 </div>
@@ -571,6 +747,8 @@ from the client stack.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00605">605</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="abc_8py_source.html#l00307">microscope.abc.Device.disable()</a>, <a class="el" href="abc_8py_source.html#l00629">microscope.abc.DataDevice.disable()</a>, <a class="el" href="abc_8py_source.html#l00321">microscope.abc.Device.enable()</a>, <a class="el" href="abc_8py_source.html#l00592">microscope.abc.DataDevice.enable()</a>, and <a class="el" href="abc_8py_source.html#l00789">microscope.abc.DataDevice.grab_next_data()</a>.</p>
 
 </div>
 </div>
@@ -595,6 +773,8 @@ from the client stack.</pre>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="abc_8py_source.html#l00585">585</a> of file <a class="el" href="abc_8py_source.html">abc.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l01442">microscope.cameras.atmcd.AndorAtmcd.initialize()</a>, and <a class="el" href="atmcd_8py_source.html#l01770">microscope.cameras.atmcd.AndorAtmcd.set_trigger()</a>.</p>
 
 </div>
 </div>

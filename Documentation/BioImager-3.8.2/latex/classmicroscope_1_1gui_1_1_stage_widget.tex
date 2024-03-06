@@ -41,6 +41,36 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00412}{412}} of file \mbox{\
 Definition at line \mbox{\hyperlink{gui_8py_source_l00421}{421}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00421     \textcolor{keyword}{def }\_\_init\_\_(self, device: microscope.abc.Stage, *args, **kwargs) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00422         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00423         self.\_device = device}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425         layout = QtWidgets.QFormLayout(self)}
+\DoxyCodeLine{00426         \textcolor{keywordflow}{for} name, axis \textcolor{keywordflow}{in} self.\_device.axes.items():}
+\DoxyCodeLine{00427             label = \textcolor{stringliteral}{"{}\%s (\%s : \%s)"{}} \% (}
+\DoxyCodeLine{00428                 name,}
+\DoxyCodeLine{00429                 axis.limits.lower,}
+\DoxyCodeLine{00430                 axis.limits.upper,}
+\DoxyCodeLine{00431             )}
+\DoxyCodeLine{00432 }
+\DoxyCodeLine{00433             position\_box = QtWidgets.QDoubleSpinBox(parent=self)}
+\DoxyCodeLine{00434             position\_box.setMinimum(axis.limits.lower)}
+\DoxyCodeLine{00435             position\_box.setMaximum(axis.limits.upper)}
+\DoxyCodeLine{00436             position\_box.setValue(axis.position)}
+\DoxyCodeLine{00437             position\_box.setSingleStep(1.0)}
+\DoxyCodeLine{00438 }
+\DoxyCodeLine{00439             \textcolor{keyword}{def }setPositionSlot(position: float, name: str = name):}
+\DoxyCodeLine{00440                 \textcolor{keywordflow}{return} self.setPosition(name, position)}
+\DoxyCodeLine{00441 }
+\DoxyCodeLine{00442             position\_box.valueChanged.connect(setPositionSlot)}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444             layout.addRow(label, position\_box)}
+\DoxyCodeLine{00445         self.setLayout(layout)}
+\DoxyCodeLine{00446 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1gui_1_1_stage_widget_afc9571f97559458f64045a1fd298f6dd}\label{classmicroscope_1_1gui_1_1_stage_widget_afc9571f97559458f64045a1fd298f6dd}} 
@@ -53,6 +83,14 @@ Definition at line \mbox{\hyperlink{gui_8py_source_l00421}{421}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{gui_8py_source_l00447}{447}} of file \mbox{\hyperlink{gui_8py_source}{gui.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00447     \textcolor{keyword}{def }setPosition(self, name: str, position: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00448         self.\_device.axes[name].move\_to(position)}
+\DoxyCodeLine{00449 }
+\DoxyCodeLine{00450 }
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

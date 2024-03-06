@@ -42,6 +42,39 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source}{mic
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00427}{427}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00427     \textcolor{keyword}{def }\_\_init\_\_(self, dev\_conn: \_ZaberDeviceConnection, channel: int) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00428         super().\_\_init\_\_()}
+\DoxyCodeLine{00429         self.\_dev\_conn = dev\_conn}
+\DoxyCodeLine{00430         self.\_channel = channel}
+\DoxyCodeLine{00431         self.\_max\_flux = self.\_dev\_conn.get\_lamp\_max\_flux(self.\_channel)}
+\DoxyCodeLine{00432         self.add\_setting(}
+\DoxyCodeLine{00433             \textcolor{stringliteral}{"{}temperature"{}},}
+\DoxyCodeLine{00434             \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{00435             \textcolor{keyword}{lambda}: self.\_dev\_conn.get\_lamp\_temperature(self.\_channel),}
+\DoxyCodeLine{00436             \textcolor{keywordtype}{None},}
+\DoxyCodeLine{00437             values=tuple(),}
+\DoxyCodeLine{00438         )}
+\DoxyCodeLine{00439 }
+\DoxyCodeLine{00440         \textcolor{keywordflow}{for} our\_name, their\_name \textcolor{keywordflow}{in} [}
+\DoxyCodeLine{00441             (\textcolor{stringliteral}{"{}wavelength peak"{}}, \textcolor{stringliteral}{"{}lamp.wavelength.peak"{}}),}
+\DoxyCodeLine{00442             (\textcolor{stringliteral}{"{}wavelength fwhm"{}}, \textcolor{stringliteral}{"{}lamp.wavelength.fwhm"{}}),}
+\DoxyCodeLine{00443         ]:}
+\DoxyCodeLine{00444             reply = self.\_dev\_conn.command(}
+\DoxyCodeLine{00445                 b\textcolor{stringliteral}{"{}get \%s"{}} \% their\_name.encode(), self.\_channel}
+\DoxyCodeLine{00446             )}
+\DoxyCodeLine{00447             value = float(reply.response)}
+\DoxyCodeLine{00448             self.add\_setting(}
+\DoxyCodeLine{00449                 our\_name,}
+\DoxyCodeLine{00450                 \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{00451                 \textcolor{keyword}{lambda} x=value: x,}
+\DoxyCodeLine{00452                 \textcolor{keywordtype}{None},}
+\DoxyCodeLine{00453                 values=tuple(),}
+\DoxyCodeLine{00454             )}
+\DoxyCodeLine{00455 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_a051e0d64ac5b71856842a9bdc0d1e945}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_a051e0d64ac5b71856842a9bdc0d1e945}} 
@@ -59,6 +92,22 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_a368
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00475}{475}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00475     \textcolor{keyword}{def }get\_is\_on(self) -\/> bool:}
+\DoxyCodeLine{00476         \textcolor{keywordflow}{return} self.\_dev\_conn.get\_lamp\_is\_on(self.\_channel)}
+\DoxyCodeLine{00477 }
+\DoxyCodeLine{00478 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00430}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+channel}}, \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{lights_2cobolt_8py_source_l00140}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00136}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00166}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+is\+\_\+on()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_a045e59ced42fbc078d23d7a49fc2de31}\label{classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_a045e59ced42fbc078d23d7a49fc2de31}} 
 \index{microscope.controllers.zaber.\_ZaberLED@{microscope.controllers.zaber.\_ZaberLED}!get\_status@{get\_status}}
 \index{get\_status@{get\_status}!microscope.controllers.zaber.\_ZaberLED@{microscope.controllers.zaber.\_ZaberLED}}
@@ -73,6 +122,17 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_light_source_ad89
 
 
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00459}{459}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00459     \textcolor{keyword}{def }get\_status(self) -\/> typing.List[str]:}
+\DoxyCodeLine{00460         \textcolor{keywordflow}{return} super().get\_status()}
+\DoxyCodeLine{00461 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00110}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00141}{microscope.\+lights.\+obis.\+Obis\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00148}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+initialize()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00069}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+send()}}, and \mbox{\hyperlink{lights_2sapphire_8py_source_l00093}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+send()}}.
 
 
 

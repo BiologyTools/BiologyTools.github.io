@@ -49,6 +49,19 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_device}{microscop
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00333}{333}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00335     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00336         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00337         self.\_dev\_conn = conn}
+\DoxyCodeLine{00338         self.\_axes = \{}
+\DoxyCodeLine{00339             str(i): \_LudlStageAxis(self.\_dev\_conn, i)}
+\DoxyCodeLine{00340             \textcolor{keywordflow}{for} i \textcolor{keywordflow}{in} range(1, 3)\textcolor{comment}{\#self.\_dev\_conn.get\_number\_axes() + 1)}}
+\DoxyCodeLine{00341         \}}
+\DoxyCodeLine{00342         self.homed = \textcolor{keyword}{False}}
+\DoxyCodeLine{00343 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a6f4a0400521692c019cf3095968aae98}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a6f4a0400521692c019cf3095968aae98}} 
@@ -77,6 +90,21 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a4cf92f2e92
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00364}{364}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00364     \textcolor{keyword}{def }axes(self) -\/> typing.Mapping[str, microscope.abc.StageAxis]:}
+\DoxyCodeLine{00365         \textcolor{keywordflow}{return} self.\_axes}
+\DoxyCodeLine{00366 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00333}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+axes}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00459}{microscope.\+simulators.\+Simulated\+Stage.\+\_\+axes}}, and \mbox{\hyperlink{ludl_8py_source_l00338}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+axes}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l01515}{microscope.\+abc.\+Stage.\+limits()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00473}{microscope.\+simulators.\+Simulated\+Stage.\+move\+\_\+by()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00477}{microscope.\+simulators.\+Simulated\+Stage.\+move\+\_\+to()}}, and \mbox{\hyperlink{abc_8py_source_l01500}{microscope.\+abc.\+Stage.\+position()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_af736f9458ad0ea58992b8779f5936e59}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_af736f9458ad0ea58992b8779f5936e59}} 
 \index{microscope.stages.ludl.\_LudlStage@{microscope.stages.ludl.\_LudlStage}!may\_move\_on\_enable@{may\_move\_on\_enable}}
@@ -112,6 +140,18 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a825ead0c6b
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00359}{359}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00359     \textcolor{keyword}{def }may\_move\_on\_enable(self) -\/> bool:}
+\DoxyCodeLine{00360         \textcolor{keywordflow}{return} \textcolor{keywordflow}{not} self.homed}
+\DoxyCodeLine{00361 }
+\DoxyCodeLine{00362 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{ludl_8py_source_l00342}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+homed}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_abcbd10b185fb7a41db21988b4f8ca94d}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_abcbd10b185fb7a41db21988b4f8ca94d}} 
 \index{microscope.stages.ludl.\_LudlStage@{microscope.stages.ludl.\_LudlStage}!move\_by@{move\_by}}
 \index{move\_by@{move\_by}!microscope.stages.ludl.\_LudlStage@{microscope.stages.ludl.\_LudlStage}}
@@ -126,6 +166,22 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a19a92bfdb5
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00367}{367}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00367     \textcolor{keyword}{def }move\_by(self, delta: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00368         \textcolor{stringliteral}{"{}"{}"{}Move specified axes by the specified distance. "{}"{}"{}}}
+\DoxyCodeLine{00369         \textcolor{keywordflow}{for} axis\_name, axis\_delta \textcolor{keywordflow}{in} delta.items():}
+\DoxyCodeLine{00370             self.\_dev\_conn.move\_by\_relative\_position(}
+\DoxyCodeLine{00371                 int(axis\_name), int(axis\_delta),}
+\DoxyCodeLine{00372             )}
+\DoxyCodeLine{00373         self.\_dev\_conn.wait\_until\_idle()}
+\DoxyCodeLine{00374 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a4b63a6c124822faad762eeb8886f229f}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a4b63a6c124822faad762eeb8886f229f}} 
 \index{microscope.stages.ludl.\_LudlStage@{microscope.stages.ludl.\_LudlStage}!move\_to@{move\_to}}
@@ -143,6 +199,43 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_stage_a98bb8b3835
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00375}{375}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00375     \textcolor{keyword}{def }move\_to(self, position: typing.Mapping[str, float]) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00376         \textcolor{stringliteral}{"{}"{}"{}Move specified axes by the specified distance. "{}"{}"{}}}
+\DoxyCodeLine{00377         print(position)}
+\DoxyCodeLine{00378         \textcolor{keywordflow}{for} axis\_name, axis\_position \textcolor{keywordflow}{in} position.items():}
+\DoxyCodeLine{00379             self.\_dev\_conn.move\_to\_absolute\_position(}
+\DoxyCodeLine{00380                 int(axis\_name), int(axis\_position),}
+\DoxyCodeLine{00381             )}
+\DoxyCodeLine{00382         self.\_dev\_conn.wait\_until\_idle()}
+\DoxyCodeLine{00383 }
+\DoxyCodeLine{00384 \textcolor{comment}{\#    def assert\_filterwheel\_number(self, number: int) -\/> None:}}
+\DoxyCodeLine{00385 \textcolor{comment}{\#        assert number > 0 and number < 4}}
+\DoxyCodeLine{00386 }
+\DoxyCodeLine{00387 \textcolor{comment}{\#    def \_has\_thing(self, command: bytes, expected\_start: bytes) -\/> bool:}}
+\DoxyCodeLine{00388 \textcolor{comment}{\#        \# Use the commands that returns a description string to find}}
+\DoxyCodeLine{00389 \textcolor{comment}{\#        \# whether a specific device is connected.}}
+\DoxyCodeLine{00390 \textcolor{comment}{\#        with self.\_lock:}}
+\DoxyCodeLine{00391 \textcolor{comment}{\#            description = self.get\_description(command)}}
+\DoxyCodeLine{00392 \textcolor{comment}{\#            if not description.startswith(expected\_start):}}
+\DoxyCodeLine{00393 \textcolor{comment}{\#                self.read\_until\_timeout()}}
+\DoxyCodeLine{00394 \textcolor{comment}{\#                raise RuntimeError(}}
+\DoxyCodeLine{00395 \textcolor{comment}{\#                    "{}Failed to get description '\%s' (got '\%s')"{}}}
+\DoxyCodeLine{00396 \textcolor{comment}{\#                    \% (command.decode(), description.decode())}}
+\DoxyCodeLine{00397 \textcolor{comment}{\#                )}}
+\DoxyCodeLine{00398 \textcolor{comment}{\#        return not description.startswith(expected\_start + b"{}NONE\(\backslash\)r"{})}}
+\DoxyCodeLine{00399 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{zaber_8py_source_l00302}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00332}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00381}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00429}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{zaber_8py_source_l00493}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LEDController.\+\_\+dev\+\_\+conn}}, \mbox{\hyperlink{ludl_8py_source_l00276}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+\_\+dev\+\_\+conn}}, and \mbox{\hyperlink{ludl_8py_source_l00337}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+dev\+\_\+conn}}.
+
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00298}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage\+Axis.\+limits()}}, and \mbox{\hyperlink{simulators_2____init_____8py_source_l00420}{microscope.\+simulators.\+Simulated\+Stage\+Axis.\+move\+\_\+by()}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a7e58bd8f985215fb5549552656c4e54d}\label{classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_a7e58bd8f985215fb5549552656c4e54d}} 
@@ -154,6 +247,10 @@ Definition at line \mbox{\hyperlink{ludl_8py_source_l00375}{375}} of file \mbox{
 
 
 Definition at line \mbox{\hyperlink{ludl_8py_source_l00342}{342}} of file \mbox{\hyperlink{ludl_8py_source}{ludl.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{ludl_8py_source_l00359}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+may\+\_\+move\+\_\+on\+\_\+enable()}}.
 
 
 

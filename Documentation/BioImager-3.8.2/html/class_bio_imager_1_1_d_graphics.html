@@ -182,7 +182,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00015">15</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   15</span>{ }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -231,7 +232,11 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00080">80</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   81</span>        {</div>
+<div class="line"><span class="lineno">   82</span>            <span class="comment">// Render the graphics scene.</span></div>
+<div class="line"><span class="lineno">   83</span>            <span class="keywordflow">return</span> Render(r, g, b, interval, alpha);</div>
+<div class="line"><span class="lineno">   84</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="aef45ba95341dae8fe00134d2986f3b8e" name="aef45ba95341dae8fe00134d2986f3b8e"></a>
@@ -267,7 +272,52 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00018">18</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   19</span>        {</div>
+<div class="line"><span class="lineno">   20</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">   21</span>            {</div>
+<div class="line"><span class="lineno">   22</span>                <span class="comment">// Create the Direct3D object.</span></div>
+<div class="line"><span class="lineno">   23</span>                D3D = <span class="keyword">new</span> DDX11();</div>
+<div class="line"><span class="lineno">   24</span> </div>
+<div class="line"><span class="lineno">   25</span>                <span class="comment">// I nitialize the Direct3D object.</span></div>
+<div class="line"><span class="lineno">   26</span>                <span class="keywordflow">if</span> (!D3D.Initialize(configuration, windowHandle))</div>
+<div class="line"><span class="lineno">   27</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   28</span> </div>
+<div class="line"><span class="lineno">   29</span>                <span class="comment">// Create the camera object</span></div>
+<div class="line"><span class="lineno">   30</span>                Camera = <span class="keyword">new</span> DCamera();</div>
+<div class="line"><span class="lineno">   31</span> </div>
+<div class="line"><span class="lineno">   32</span>                <span class="comment">// Set the initial position of the camera.</span></div>
+<div class="line"><span class="lineno">   33</span>                Camera.SetPosition(0.1f, -0.1f, -1);</div>
+<div class="line"><span class="lineno">   34</span> </div>
+<div class="line"><span class="lineno">   35</span>                <span class="comment">// Create the model object.</span></div>
+<div class="line"><span class="lineno">   36</span>                Model = <span class="keyword">new</span> DModel();</div>
+<div class="line"><span class="lineno">   37</span> </div>
+<div class="line"><span class="lineno">   38</span>                <span class="comment">// Initialize the model object.</span></div>
+<div class="line"><span class="lineno">   39</span>                <span class="keywordflow">if</span> (!Model.Initialize(D3D.Device, im))</div>
+<div class="line"><span class="lineno">   40</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   41</span> </div>
+<div class="line"><span class="lineno">   42</span>                <span class="comment">// Create the color shader object.</span></div>
+<div class="line"><span class="lineno">   43</span>                ColorShader = <span class="keyword">new</span> DColorShader();</div>
+<div class="line"><span class="lineno">   44</span> </div>
+<div class="line"><span class="lineno">   45</span>                <span class="comment">// Initialize the color shader object.</span></div>
+<div class="line"><span class="lineno">   46</span>                <span class="keywordflow">if</span> (!ColorShader.Initialize(D3D.Device, windowHandle, im.bitsPerPixel))</div>
+<div class="line"><span class="lineno">   47</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>                <span class="comment">// Create the Timer</span></div>
+<div class="line"><span class="lineno">   50</span>                Timer = <span class="keyword">new</span> DTimer();</div>
+<div class="line"><span class="lineno">   51</span> </div>
+<div class="line"><span class="lineno">   52</span>                <span class="comment">// Initialize the Timer</span></div>
+<div class="line"><span class="lineno">   53</span>                <span class="keywordflow">if</span> (!Timer.Initialize())</div>
+<div class="line"><span class="lineno">   54</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   55</span>                BitsPerPixel = im.bitsPerPixel;</div>
+<div class="line"><span class="lineno">   56</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   57</span>            }</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">catch</span> (Exception ex)</div>
+<div class="line"><span class="lineno">   59</span>            {</div>
+<div class="line"><span class="lineno">   60</span>                MessageBox.Show(<span class="stringliteral">&quot;Could not initialize Direct3D\nError is &#39;&quot;</span> + ex.Message + <span class="stringliteral">&quot;&#39;&quot;</span>);</div>
+<div class="line"><span class="lineno">   61</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   62</span>            }</div>
+<div class="line"><span class="lineno">   63</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a3fe4e3b2c232934548d2bc40b4f40f19" name="a3fe4e3b2c232934548d2bc40b4f40f19"></a>
@@ -286,7 +336,22 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00064">64</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   65</span>        {</div>
+<div class="line"><span class="lineno">   66</span>            <span class="comment">// Release the camera object.</span></div>
+<div class="line"><span class="lineno">   67</span>            Camera = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   68</span>            Timer = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   69</span> </div>
+<div class="line"><span class="lineno">   70</span>            <span class="comment">// Release the color shader object.</span></div>
+<div class="line"><span class="lineno">   71</span>            ColorShader?.ShutDown();</div>
+<div class="line"><span class="lineno">   72</span>            ColorShader = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   73</span>            <span class="comment">// Release the model object.</span></div>
+<div class="line"><span class="lineno">   74</span>            Model?.ShutDown();</div>
+<div class="line"><span class="lineno">   75</span>            Model = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   76</span>            <span class="comment">// Release the Direct3D object.</span></div>
+<div class="line"><span class="lineno">   77</span>            D3D?.ShutDown();</div>
+<div class="line"><span class="lineno">   78</span>            D3D = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   79</span>        }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
@@ -311,7 +376,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00013">13</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   13</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a2cf2eaa0d0ceeedcbf89ef058eff735d" name="a2cf2eaa0d0ceeedcbf89ef058eff735d"></a>
@@ -335,7 +401,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00009">9</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">    9</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a5293907b90db210918bc442f7ada5ae5" name="a5293907b90db210918bc442f7ada5ae5"></a>
@@ -359,7 +426,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00008">8</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">    8</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a73a8657303cdcaddc4a05da3650a73eb" name="a73a8657303cdcaddc4a05da3650a73eb"></a>
@@ -383,7 +451,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00010">10</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   10</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <a id="a11874d2c9a186026c9bff21c5d315113" name="a11874d2c9a186026c9bff21c5d315113"></a>
@@ -407,7 +476,8 @@ Properties</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="_d_graphics_8cs_source.html#l00012">12</a> of file <a class="el" href="_d_graphics_8cs_source.html">DGraphics.cs</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">   12</span>{ <span class="keyword">get</span>; <span class="keyword">set</span>; }</div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>

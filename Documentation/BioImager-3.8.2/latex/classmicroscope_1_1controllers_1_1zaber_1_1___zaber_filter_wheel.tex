@@ -38,6 +38,35 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1abc_1_1_filter_wheel}{mic
 Definition at line \mbox{\hyperlink{zaber_8py_source_l00378}{378}} of file \mbox{\hyperlink{zaber_8py_source}{zaber.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00380     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00381         self.\_dev\_conn = \_ZaberDeviceConnection(conn, device\_address)}
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383         \textcolor{keywordflow}{if} self.\_dev\_conn.get\_number\_axes() != 1:}
+\DoxyCodeLine{00384             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00385                 \textcolor{stringliteral}{"{}Device with address \%d is not a filter wheel"{}} \% device\_address}
+\DoxyCodeLine{00386             )}
+\DoxyCodeLine{00387 }
+\DoxyCodeLine{00388         rotation\_length = self.\_dev\_conn.get\_rotation\_length(1)}
+\DoxyCodeLine{00389         \textcolor{keywordflow}{if} rotation\_length <= 0:}
+\DoxyCodeLine{00390             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00391                 \textcolor{stringliteral}{"{}Device with address \%d is not a filter wheel"{}} \% device\_address}
+\DoxyCodeLine{00392             )}
+\DoxyCodeLine{00393         positions = int(rotation\_length / self.\_dev\_conn.get\_index\_distance(1))}
+\DoxyCodeLine{00394 }
+\DoxyCodeLine{00395         super().\_\_init\_\_(positions, **kwargs)}
+\DoxyCodeLine{00396 }
+\DoxyCodeLine{00397         \textcolor{comment}{\# Before a device can moved, it first needs to establish a}}
+\DoxyCodeLine{00398         \textcolor{comment}{\# reference to the home position.  We won't be able to move}}
+\DoxyCodeLine{00399         \textcolor{comment}{\# unless we home it first.  On a stage this happens during}}
+\DoxyCodeLine{00400         \textcolor{comment}{\# enable because the stage movemenet can be dangerous but on a}}
+\DoxyCodeLine{00401         \textcolor{comment}{\# filter wheel this is fine.}}
+\DoxyCodeLine{00402         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} self.\_dev\_conn.been\_homed():}
+\DoxyCodeLine{00403             self.\_dev\_conn.home()}
+\DoxyCodeLine{00404 }
+
+\end{DoxyCode}
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

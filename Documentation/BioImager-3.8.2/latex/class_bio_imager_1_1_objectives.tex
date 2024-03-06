@@ -49,6 +49,16 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00371}{371}} of file
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00375}{375}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00376         \{}
+\DoxyCodeLine{00377             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < count; i++)}
+\DoxyCodeLine{00378             \{}
+\DoxyCodeLine{00379                 List.Add(\textcolor{keyword}{new} Objective(i));}
+\DoxyCodeLine{00380             \}}
+\DoxyCodeLine{00381         \}}
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{class_bio_imager_1_1_objectives_a8552670c460deb92284dc9ae268a4bd1}\label{class_bio_imager_1_1_objectives_a8552670c460deb92284dc9ae268a4bd1}} 
@@ -61,6 +71,13 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00375}{375}} of file
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00530}{530}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00531         \{}
+\DoxyCodeLine{00532             \textcolor{keywordflow}{return} List[(short)GetPosition()];}
+\DoxyCodeLine{00533         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_objectives_a3d39e318139518541e51d59c8e49d3a6}\label{class_bio_imager_1_1_objectives_a3d39e318139518541e51d59c8e49d3a6}} 
 \index{BioImager.Objectives@{BioImager.Objectives}!GetPosition@{GetPosition}}
 \index{GetPosition@{GetPosition}!BioImager.Objectives@{BioImager.Objectives}}
@@ -71,6 +88,79 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00530}{530}} of file
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00460}{460}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00461         \{}
+\DoxyCodeLine{00462             \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00463             \{}
+\DoxyCodeLine{00464                 \mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{BioImager.MicroscopeConsole.Command}} com = BioImager.MicroscopeConsole.RunCommand}
+\DoxyCodeLine{00465                     (\textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.GetObjective, \textcolor{keyword}{null}));}
+\DoxyCodeLine{00466                 \textcolor{keywordflow}{return} (\textcolor{keywordtype}{int})com.doubles[0];}
+\DoxyCodeLine{00467             \}}
+\DoxyCodeLine{00468             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}))}
+\DoxyCodeLine{00469             \{}
+\DoxyCodeLine{00470                 \textcolor{keywordflow}{return} Microscope.sdk.GetNosePiece();}
+\DoxyCodeLine{00471             \}}
+\DoxyCodeLine{00472             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00473             \{}
+\DoxyCodeLine{00474                 \textcolor{keywordflow}{return} PycroManager.Objectives.GetPosition();}
+\DoxyCodeLine{00475             \}}
+\DoxyCodeLine{00476             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(!Properties.Settings.Default.PMicroscope \&\& Automation.Properties.ContainsKey(\textcolor{stringliteral}{"{}GetO1"{}}))}
+\DoxyCodeLine{00477             \{}
+\DoxyCodeLine{00478                 \textcolor{keywordflow}{if} (Function.Functions.ContainsKey(\textcolor{stringliteral}{"{}GetO7"{}}))}
+\DoxyCodeLine{00479                 \{}
+\DoxyCodeLine{00480                     \textcolor{keywordtype}{bool} b;}
+\DoxyCodeLine{00481                     \textcolor{comment}{//We check each objective button state to determine which objective we currently are in.}}
+\DoxyCodeLine{00482                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get01"{}});}
+\DoxyCodeLine{00483                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00484                         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00485                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get02"{}});}
+\DoxyCodeLine{00486                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00487                         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00488                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get03"{}});}
+\DoxyCodeLine{00489                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00490                         \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{00491                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get04"{}});}
+\DoxyCodeLine{00492                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00493                         \textcolor{keywordflow}{return} 3;}
+\DoxyCodeLine{00494                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get05"{}});}
+\DoxyCodeLine{00495                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00496                         \textcolor{keywordflow}{return} 4;}
+\DoxyCodeLine{00497                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get06"{}});}
+\DoxyCodeLine{00498                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00499                         \textcolor{keywordflow}{return} 5;}
+\DoxyCodeLine{00500                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get07"{}});}
+\DoxyCodeLine{00501                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00502                         \textcolor{keywordflow}{return} 6;}
+\DoxyCodeLine{00503                 \}}
+\DoxyCodeLine{00504                 \textcolor{keywordflow}{else}}
+\DoxyCodeLine{00505                 \{}
+\DoxyCodeLine{00506                     \textcolor{keywordtype}{bool} b;}
+\DoxyCodeLine{00507                     \textcolor{comment}{//We check each objective button state to determine which objective we currently are in.}}
+\DoxyCodeLine{00508                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get01"{}});}
+\DoxyCodeLine{00509                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00510                         \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00511                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get02"{}});}
+\DoxyCodeLine{00512                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00513                         \textcolor{keywordflow}{return} 1;}
+\DoxyCodeLine{00514                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get03"{}});}
+\DoxyCodeLine{00515                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00516                         \textcolor{keywordflow}{return} 2;}
+\DoxyCodeLine{00517                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get04"{}});}
+\DoxyCodeLine{00518                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00519                         \textcolor{keywordflow}{return} 3;}
+\DoxyCodeLine{00520                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get05"{}});}
+\DoxyCodeLine{00521                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00522                         \textcolor{keywordflow}{return} 4;}
+\DoxyCodeLine{00523                     b = (bool)Automation.GetProperty(\textcolor{stringliteral}{"{}Get06"{}});}
+\DoxyCodeLine{00524                     \textcolor{keywordflow}{if} (b)}
+\DoxyCodeLine{00525                         \textcolor{keywordflow}{return} 5;}
+\DoxyCodeLine{00526                 \}}
+\DoxyCodeLine{00527             \}}
+\DoxyCodeLine{00528             \textcolor{keywordflow}{return} 0;}
+\DoxyCodeLine{00529         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_objectives_a6f0bac237fb165223e6c33835992f5f3}\label{class_bio_imager_1_1_objectives_a6f0bac237fb165223e6c33835992f5f3}} 
 \index{BioImager.Objectives@{BioImager.Objectives}!SetPosition@{SetPosition}}
 \index{SetPosition@{SetPosition}!BioImager.Objectives@{BioImager.Objectives}}
@@ -90,6 +180,35 @@ The return value is a boolean.
 
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00437}{437}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00438         \{}
+\DoxyCodeLine{00439             \textcolor{keywordflow}{if} (Recorder.recordMicroscope)}
+\DoxyCodeLine{00440                 Recorder.AddLine(\textcolor{stringliteral}{"{}Microscope.Objectives.SetObjective("{}} + index + \textcolor{stringliteral}{"{});"{}});}
+\DoxyCodeLine{00441             this.index = index;}
+\DoxyCodeLine{00442             \textcolor{keywordflow}{if} (!Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}) \&\& !Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}Prio"{}}) \&\& Function.Functions.ContainsKey(\textcolor{stringliteral}{"{}SetO"{}} + index))}
+\DoxyCodeLine{00443             \{}
+\DoxyCodeLine{00444                 Function f = Function.Functions[\textcolor{stringliteral}{"{}SetO"{}} + index];}
+\DoxyCodeLine{00445                 App.imager.PerformFunction(f);}
+\DoxyCodeLine{00446                 \textcolor{keywordflow}{return};}
+\DoxyCodeLine{00447             \}}
+\DoxyCodeLine{00448             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(Properties.Settings.Default.LibPath.Contains(\textcolor{stringliteral}{"{}MTB"{}}))}
+\DoxyCodeLine{00449             \{}
+\DoxyCodeLine{00450                 \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.RunCommand(}
+\DoxyCodeLine{00451                     \textcolor{keyword}{new} \mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}(\mbox{\hyperlink{namespace_bio_imager}{BioImager}}.\mbox{\hyperlink{class_bio_imager_1_1_microscope_console}{MicroscopeConsole}}.\mbox{\hyperlink{struct_bio_imager_1_1_microscope_console_1_1_command}{Command}}.Type.SetObjective, \textcolor{keyword}{new} \textcolor{keywordtype}{double}[] \{ index \}));}
+\DoxyCodeLine{00452                 this.index = index;}
+\DoxyCodeLine{00453             \}}
+\DoxyCodeLine{00454             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(Properties.Settings.Default.PycroManager)}
+\DoxyCodeLine{00455             \{}
+\DoxyCodeLine{00456                 PycroManager.Objectives.SetPosition(index);}
+\DoxyCodeLine{00457             \}}
+\DoxyCodeLine{00458         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_imager_8cs_source_l01338}{Bio\+Imager.\+Imager.\+Perform\+Function()}}.
 
 
 
@@ -127,6 +246,20 @@ Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00412}{412}} of file
 
 Definition at line \mbox{\hyperlink{_microscope_8cs_source_l00419}{419}} of file \mbox{\hyperlink{_microscope_8cs_source}{Microscope.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00420         \{}
+\DoxyCodeLine{00421             \textcolor{keyword}{get}}
+\DoxyCodeLine{00422             \{}
+\DoxyCodeLine{00423                 \textcolor{keywordflow}{return} GetPosition();}
+\DoxyCodeLine{00424             \}}
+\DoxyCodeLine{00425             \textcolor{keyword}{set}}
+\DoxyCodeLine{00426             \{}
+\DoxyCodeLine{00427                 \mbox{\hyperlink{class_bio_imager_1_1_objectives_a6f0bac237fb165223e6c33835992f5f3}{SetPosition}}(value);}
+\DoxyCodeLine{00428             \}}
+\DoxyCodeLine{00429         \}}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

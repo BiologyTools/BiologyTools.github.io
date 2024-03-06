@@ -67,6 +67,14 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1abc_1_1_camera_aa83a5fbd2c9
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00288}{288}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00288     \textcolor{keyword}{def }\_\_init\_\_(self) -\/> None:}
+\DoxyCodeLine{00289         self.enabled = \textcolor{keyword}{False}}
+\DoxyCodeLine{00290         self.\_settings: typing.Dict[str, \_Setting] = \{\}}
+\DoxyCodeLine{00291 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a2ef1d1788cc5d1a708a0209f2cd5fe11}\label{classmicroscope_1_1abc_1_1_device_a2ef1d1788cc5d1a708a0209f2cd5fe11}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!\_\_del\_\_@{\_\_del\_\_}}
 \index{\_\_del\_\_@{\_\_del\_\_}!microscope.abc.Device@{microscope.abc.Device}}
@@ -81,6 +89,13 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1stages_1_1linkam_1_1___link
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00292}{292}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00292     \textcolor{keyword}{def }\_\_del\_\_(self) -\/> None:}
+\DoxyCodeLine{00293         self.shutdown()}
+\DoxyCodeLine{00294 }
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Function Documentation}
@@ -119,6 +134,58 @@ so I'd have to write access functions, anyway.\end{DoxyVerb}
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00399}{399}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00407     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00408         \textcolor{stringliteral}{"{}"{}"{}Add a setting definition.}}
+\DoxyCodeLine{00409 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00410 \textcolor{stringliteral}{        Args:}}
+\DoxyCodeLine{00411 \textcolor{stringliteral}{            name: the setting's name.}}
+\DoxyCodeLine{00412 \textcolor{stringliteral}{            dtype: a data type }\textcolor{keyword}{from} `\textcolor{stringliteral}{"{}int"{}}`, `\textcolor{stringliteral}{"{}float"{}}`, `\textcolor{stringliteral}{"{}bool"{}}`,}
+\DoxyCodeLine{00413                 `\textcolor{stringliteral}{"{}enum"{}}`, \textcolor{keywordflow}{or} `\textcolor{stringliteral}{"{}str"{}}` (see `DTYPES`).}
+\DoxyCodeLine{00414             get\_func: a function to get the current value.}
+\DoxyCodeLine{00415             set\_func: a function to set the value.}
+\DoxyCodeLine{00416             values: a description of allowed values dependent on}
+\DoxyCodeLine{00417                 dtype, \textcolor{keywordflow}{or} function that returns a description.}
+\DoxyCodeLine{00418             readonly: an optional function to indicate \textcolor{keywordflow}{if} the setting}
+\DoxyCodeLine{00419                 \textcolor{keywordflow}{is} readonly.  A setting may be readonly temporarily,}
+\DoxyCodeLine{00420                 so this function will \textcolor{keywordflow}{return} `\textcolor{keyword}{True}` \textcolor{keywordflow}{or} `\textcolor{keyword}{False}` to}
+\DoxyCodeLine{00421                 indicate its current state.  If set to no `\textcolor{keywordtype}{None}`}
+\DoxyCodeLine{00422                 (default), then its value will be dependent on the}
+\DoxyCodeLine{00423                 value of `set\_func`.}
+\DoxyCodeLine{00424 }
+\DoxyCodeLine{00425         A client needs some way of knowing a setting name \textcolor{keywordflow}{and} data}
+\DoxyCodeLine{00426         type, retrieving the current value \textcolor{keywordflow}{and}, \textcolor{keywordflow}{if} settable, a way to}
+\DoxyCodeLine{00427         retrieve allowable values, \textcolor{keywordflow}{and} set the value.  We store this}
+\DoxyCodeLine{00428         info \textcolor{keywordflow}{in} a dictionary.  I considered having a `Setting1 \textcolor{keyword}{class}}
+\DoxyCodeLine{00429         \textcolor{keyword}{with} getter, setter, etc., \textcolor{keywordflow}{and} adding `Setting` instances \textcolor{keyword}{as}}
+\DoxyCodeLine{00430         device attributes, but Pyro does \textcolor{keywordflow}{not} support dot notation to}
+\DoxyCodeLine{00431         access the functions we need (e.g. `Device.some\_setting.set`),}
+\DoxyCodeLine{00432         so I\textcolor{stringliteral}{'d have to write access functions, anyway.}}
+\DoxyCodeLine{00433 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00434 \textcolor{stringliteral}{        "{}"{}"{}}}
+\DoxyCodeLine{00435 \textcolor{stringliteral}{        }\textcolor{keywordflow}{if} dtype \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} DTYPES:}
+\DoxyCodeLine{00436             \textcolor{keywordflow}{raise} ValueError(\textcolor{stringliteral}{"{}Unsupported dtype."{}})}
+\DoxyCodeLine{00437         \textcolor{keywordflow}{elif} \textcolor{keywordflow}{not} (isinstance(values, DTYPES[dtype]) \textcolor{keywordflow}{or} callable(values)):}
+\DoxyCodeLine{00438             \textcolor{keywordflow}{raise} TypeError(}
+\DoxyCodeLine{00439                 \textcolor{stringliteral}{"{}Invalid values type for \%s '\%s': expected function or \%s"{}}}
+\DoxyCodeLine{00440                 \% (dtype, name, DTYPES[dtype])}
+\DoxyCodeLine{00441             )}
+\DoxyCodeLine{00442         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00443             self.\_settings[name] = \_Setting(}
+\DoxyCodeLine{00444                 name, dtype, get\_func, set\_func, values, readonly}
+\DoxyCodeLine{00445             )}
+\DoxyCodeLine{00446 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00829}{microscope.\+abc.\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00157}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00052}{microscope.\+testsuite.\+devices.\+Test\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00067}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{linkam_8py_source_l01419}{microscope.\+stages.\+linkam.\+Linkam\+CMS.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00452}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+initialize()}}, \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, and \mbox{\hyperlink{ximea_8py_source_l00259}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_afe429f2c599262063f3efb9482b475b8}\label{classmicroscope_1_1abc_1_1_device_afe429f2c599262063f3efb9482b475b8}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!describe\_setting@{describe\_setting}}
 \index{describe\_setting@{describe\_setting}!microscope.abc.Device@{microscope.abc.Device}}
@@ -130,6 +197,18 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00399}{399}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00476}{476}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00476     \textcolor{keyword}{def }describe\_setting(self, name: str):}
+\DoxyCodeLine{00477         \textcolor{stringliteral}{"{}"{}"{}Return ordered setting descriptions as a list of dicts."{}"{}"{}}}
+\DoxyCodeLine{00478         \textcolor{keywordflow}{return} self.\_settings[name].describe()}
+\DoxyCodeLine{00479 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a930dd852e501ecb229a6eda52a9fb435}\label{classmicroscope_1_1abc_1_1_device_a930dd852e501ecb229a6eda52a9fb435}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!describe\_settings@{describe\_settings}}
 \index{describe\_settings@{describe\_settings}!microscope.abc.Device@{microscope.abc.Device}}
@@ -140,6 +219,18 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00476}{476}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00480}{480}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00480     \textcolor{keyword}{def }describe\_settings(self):}
+\DoxyCodeLine{00481         \textcolor{stringliteral}{"{}"{}"{}Return ordered setting descriptions as a list of dicts."{}"{}"{}}}
+\DoxyCodeLine{00482         \textcolor{keywordflow}{return} [(k, v.describe()) \textcolor{keywordflow}{for} (k, v) \textcolor{keywordflow}{in} self.\_settings.items()]}
+\DoxyCodeLine{00483 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_add8e7f466e7a28137d6e0ceede74e15e}\label{classmicroscope_1_1abc_1_1_device_add8e7f466e7a28137d6e0ceede74e15e}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!disable@{disable}}
@@ -156,6 +247,23 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a1ee17c
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00307}{307}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00307     \textcolor{keyword}{def }disable(self) -\/> None:}
+\DoxyCodeLine{00308         \textcolor{stringliteral}{"{}"{}"{}Disable the device for a short period for inactivity."{}"{}"{}}}
+\DoxyCodeLine{00309         self.\_do\_disable()}
+\DoxyCodeLine{00310         self.enabled = \textcolor{keyword}{False}}
+\DoxyCodeLine{00311 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00298}{microscope.\+abc.\+Device.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00534}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{atmcd_8py_source_l01650}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{picam_8py_source_l00168}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{pvcam_8py_source_l01613}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{ximea_8py_source_l00335}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00209}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{zaber_8py_source_l00466}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{aurox_8py_source_l00172}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00128}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00152}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00258}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00358}{microscope.\+simulators.\+Simulated\+Light\+Source.\+\_\+do\+\_\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00289}{microscope.\+abc.\+Device.\+enabled}}, \mbox{\hyperlink{abc_8py_source_l00605}{microscope.\+abc.\+Data\+Device.\+enabled}}, and \mbox{\hyperlink{testsuite_2devices_8py_source_l00114}{microscope.\+testsuite.\+devices.\+Dummy\+SLM.\+enabled}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00558}{microscope.\+abc.\+Data\+Device.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00088}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00087}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+get\+\_\+status()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00094}{microscope.\+lights.\+obis.\+Obis\+Laser.\+get\+\_\+status()}}, and \mbox{\hyperlink{abc_8py_source_l00349}{microscope.\+abc.\+Device.\+shutdown()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_ac7759ad4eb304422f07cfee215a73961}\label{classmicroscope_1_1abc_1_1_device_ac7759ad4eb304422f07cfee215a73961}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!enable@{enable}}
 \index{enable@{enable}!microscope.abc.Device@{microscope.abc.Device}}
@@ -171,6 +279,21 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_ad1a6e5
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00321}{321}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00321     \textcolor{keyword}{def }enable(self) -\/> None:}
+\DoxyCodeLine{00322         \textcolor{stringliteral}{"{}"{}"{}Enable the device."{}"{}"{}}}
+\DoxyCodeLine{00323         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00324             self.enabled = self.\_do\_enable()}
+\DoxyCodeLine{00325         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00326             \_logger.debug(\textcolor{stringliteral}{"{}Error in \_do\_enable:"{}}, exc\_info=err)}
+\DoxyCodeLine{00327 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00312}{microscope.\+abc.\+Device.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00538}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{atmcd_8py_source_l01654}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{picam_8py_source_l00175}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{pvcam_8py_source_l01480}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{ximea_8py_source_l00338}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00206}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{zaber_8py_source_l00341}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{zaber_8py_source_l00462}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{aurox_8py_source_l00166}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00119}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00096}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00109}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00153}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00261}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00351}{microscope.\+simulators.\+Simulated\+Light\+Source.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{ludl_8py_source_l00347}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{abc_8py_source_l00289}{microscope.\+abc.\+Device.\+enabled}}, \mbox{\hyperlink{abc_8py_source_l00605}{microscope.\+abc.\+Data\+Device.\+enabled}}, and \mbox{\hyperlink{testsuite_2devices_8py_source_l00114}{microscope.\+testsuite.\+devices.\+Dummy\+SLM.\+enabled}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a33a60cd231f8ae2c781a288a63712da0}\label{classmicroscope_1_1abc_1_1_device_a33a60cd231f8ae2c781a288a63712da0}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!get\_all\_settings@{get\_all\_settings}}
 \index{get\_all\_settings@{get\_all\_settings}!microscope.abc.Device@{microscope.abc.Device}}
@@ -182,6 +305,27 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00321}{321}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00455}{455}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00455     \textcolor{keyword}{def }get\_all\_settings(self):}
+\DoxyCodeLine{00456         \textcolor{stringliteral}{"{}"{}"{}Return ordered settings as a list of dicts."{}"{}"{}}}
+\DoxyCodeLine{00457         \textcolor{comment}{\# Fetching some settings may fail depending on device state.}}
+\DoxyCodeLine{00458         \textcolor{comment}{\# Report these values as 'None' and continue fetching other settings.}}
+\DoxyCodeLine{00459         \textcolor{keyword}{def }catch(f):}
+\DoxyCodeLine{00460             \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00461                 \textcolor{keywordflow}{return} f()}
+\DoxyCodeLine{00462             \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00463                 \_logger.error(\textcolor{stringliteral}{"{}getting \%s: \%s"{}}, f.\_\_self\_\_.name, err)}
+\DoxyCodeLine{00464                 \textcolor{keywordflow}{return} \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00465 }
+\DoxyCodeLine{00466         \textcolor{keywordflow}{return} \{k: catch(v.get) \textcolor{keywordflow}{for} k, v \textcolor{keywordflow}{in} self.\_settings.items()\}}
+\DoxyCodeLine{00467 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_ad7df11492cd21392cc41021e2304fe4f}\label{classmicroscope_1_1abc_1_1_device_ad7df11492cd21392cc41021e2304fe4f}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!get\_is\_enabled@{get\_is\_enabled}}
 \index{get\_is\_enabled@{get\_is\_enabled}!microscope.abc.Device@{microscope.abc.Device}}
@@ -192,6 +336,13 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00455}{455}} of file \mbox{\
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00295}{295}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00295     \textcolor{keyword}{def }get\_is\_enabled(self) -\/> bool:}
+\DoxyCodeLine{00296         \textcolor{keywordflow}{return} self.enabled}
+\DoxyCodeLine{00297 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a440ac6b85c3111e007f95423b17c4a98}\label{classmicroscope_1_1abc_1_1_device_a440ac6b85c3111e007f95423b17c4a98}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!get\_setting@{get\_setting}}
 \index{get\_setting@{get\_setting}!microscope.abc.Device@{microscope.abc.Device}}
@@ -202,6 +353,26 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00295}{295}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00447}{447}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00447     \textcolor{keyword}{def }get\_setting(self, name: str):}
+\DoxyCodeLine{00448         \textcolor{stringliteral}{"{}"{}"{}Return the current value of a setting."{}"{}"{}}}
+\DoxyCodeLine{00449         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00450             \textcolor{keywordflow}{return} self.\_settings[name].get()}
+\DoxyCodeLine{00451         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00452             \_logger.error(\textcolor{stringliteral}{"{}in get\_setting(\%s):"{}}, name, exc\_info=err)}
+\DoxyCodeLine{00453             \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{00454 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l01618}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+get\+\_\+id()}}, \mbox{\hyperlink{atmcd_8py_source_l01752}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+soft\+\_\+trigger()}}, and \mbox{\hyperlink{abc_8py_source_l00484}{microscope.\+abc.\+Device.\+update\+\_\+settings()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}\label{classmicroscope_1_1abc_1_1_device_a84ae82a5c5a20f3906ccdd4229a39023}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!initialize@{initialize}}
@@ -222,6 +393,24 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1cameras_1_1andorsdk3_1_1_an
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00339}{339}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00339     \textcolor{keyword}{def }initialize(self) -\/> None:}
+\DoxyCodeLine{00340         \textcolor{stringliteral}{"{}"{}"{}Initialize the device.}}
+\DoxyCodeLine{00341 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00342 \textcolor{stringliteral}{        If devices have this method (}\textcolor{keywordflow}{not} required, \textcolor{keywordflow}{and} many don\textcolor{stringliteral}{'t),}}
+\DoxyCodeLine{00343 \textcolor{stringliteral}{        then they should call it }\textcolor{keyword}{as} part of the initialisation, i.e.,}
+\DoxyCodeLine{00344         they should call it on their `\_\_init\_\_` method.}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00347 \textcolor{stringliteral}{        }\textcolor{keywordflow}{pass}}
+\DoxyCodeLine{00348 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{picam_8py_source_l00051}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{ximea_8py_source_l00188}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, and \mbox{\hyperlink{picam_8py_source_l00144}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+initialize()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_ab2c54086d9210ce21903155b84a7d379}\label{classmicroscope_1_1abc_1_1_device_ab2c54086d9210ce21903155b84a7d379}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!set\_setting@{set\_setting}}
 \index{set\_setting@{set\_setting}!microscope.abc.Device@{microscope.abc.Device}}
@@ -232,6 +421,26 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00339}{339}} of file \mbox{\
  
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00468}{468}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00468     \textcolor{keyword}{def }set\_setting(self, name: str, value) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00469         \textcolor{stringliteral}{"{}"{}"{}Set a setting."{}"{}"{}}}
+\DoxyCodeLine{00470         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00471             self.\_settings[name].set(value)}
+\DoxyCodeLine{00472         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} err:}
+\DoxyCodeLine{00473             \_logger.error(\textcolor{stringliteral}{"{}in set\_setting(\%s):"{}}, name, exc\_info=err)}
+\DoxyCodeLine{00474             \textcolor{keywordflow}{raise}}
+\DoxyCodeLine{00475 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}.
+
+
+
+Referenced by \mbox{\hyperlink{atmcd_8py_source_l01442}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+initialize()}}, and \mbox{\hyperlink{atmcd_8py_source_l01770}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+set\+\_\+trigger()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a7e3ee3d63ee099e1a3b9df649fb28c5c}\label{classmicroscope_1_1abc_1_1_device_a7e3ee3d63ee099e1a3b9df649fb28c5c}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!shutdown@{shutdown}}
@@ -282,6 +491,64 @@ a state that it can be reconnected.
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00349}{349}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00349     \textcolor{keyword}{def }shutdown(self) -\/> None:}
+\DoxyCodeLine{00350         \textcolor{stringliteral}{"{}"{}"{}Shutdown the device.}}
+\DoxyCodeLine{00351 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00352 \textcolor{stringliteral}{        Disable }\textcolor{keywordflow}{and} disconnect the device.  This method should be}
+\DoxyCodeLine{00353         called before destructing the device object, to ensure that}
+\DoxyCodeLine{00354         the device \textcolor{keywordflow}{is} actually shutdown.}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356         After `shutdown`, the device object \textcolor{keywordflow}{is} no longer usable \textcolor{keywordflow}{and}}
+\DoxyCodeLine{00357         calling any other method \textcolor{keywordflow}{is} undefined behaviour.  The only}
+\DoxyCodeLine{00358         exception `shutdown` itself which can be called consecutively,}
+\DoxyCodeLine{00359         \textcolor{keywordflow}{and} after the first time will have no effect.}
+\DoxyCodeLine{00360 }
+\DoxyCodeLine{00361         A device object that has been shutdown can\textcolor{stringliteral}{'t be reinitialised.}}
+\DoxyCodeLine{00362 \textcolor{stringliteral}{        Instead of reusing the object, a new one should be created}}
+\DoxyCodeLine{00363 \textcolor{stringliteral}{        instead.  This means that `shutdown` will leave the device }\textcolor{keywordflow}{in}}
+\DoxyCodeLine{00364         a state that it can be reconnected.}
+\DoxyCodeLine{00365 }
+\DoxyCodeLine{00366         .. code-\/block:: python}
+\DoxyCodeLine{00367 }
+\DoxyCodeLine{00368             device = SomeDevice()}
+\DoxyCodeLine{00369             device.shutdown()}
+\DoxyCodeLine{00370 }
+\DoxyCodeLine{00371             \textcolor{comment}{\# Multiple calls to shutdown are OK}}
+\DoxyCodeLine{00372             device.shutdown()}
+\DoxyCodeLine{00373             device.shutdown()}
+\DoxyCodeLine{00374 }
+\DoxyCodeLine{00375             \textcolor{comment}{\# After shutdown, everything else is undefined behaviour.}}
+\DoxyCodeLine{00376             device.enable()  \textcolor{comment}{\# undefined behaviour}}
+\DoxyCodeLine{00377             device.get\_setting(\textcolor{stringliteral}{"{}speed"{}})  \textcolor{comment}{\# undefined behaviour}}
+\DoxyCodeLine{00378 }
+\DoxyCodeLine{00379             \textcolor{comment}{\# To reinitialise the device, construct a new instance.}}
+\DoxyCodeLine{00380             device = SomeDevice()}
+\DoxyCodeLine{00381 }
+\DoxyCodeLine{00382 }
+\DoxyCodeLine{00383         .. note::}
+\DoxyCodeLine{00384 }
+\DoxyCodeLine{00385             While `\_\_del\_\_` calls `shutdown`, one should \textcolor{keywordflow}{not} rely on}
+\DoxyCodeLine{00386             it.  Python does \textcolor{keywordflow}{not} guarante that `\_\_del\_\_` will be}
+\DoxyCodeLine{00387             called when the interpreter exits so \textcolor{keywordflow}{if} `shutdown` \textcolor{keywordflow}{is} \textcolor{keywordflow}{not}}
+\DoxyCodeLine{00388             called explicitely, the devices might \textcolor{keywordflow}{not} be shutdown.}
+\DoxyCodeLine{00389 }
+\DoxyCodeLine{00390         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00391 \textcolor{stringliteral}{        }\textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00392             self.disable()}
+\DoxyCodeLine{00393         \textcolor{keywordflow}{except} Exception \textcolor{keyword}{as} e:}
+\DoxyCodeLine{00394             \_logger.warning(\textcolor{stringliteral}{"{}Exception in disable() during shutdown: \%s"{}}, e)}
+\DoxyCodeLine{00395         \_logger.info(\textcolor{stringliteral}{"{}Shutting down ... ... ..."{}})}
+\DoxyCodeLine{00396         self.\_do\_shutdown()}
+\DoxyCodeLine{00397         \_logger.info(\textcolor{stringliteral}{"{}... ... ... ... shut down completed."{}})}
+\DoxyCodeLine{00398 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00329}{microscope.\+abc.\+Device.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{abc_8py_source_l01346}{microscope.\+abc.\+Controller.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00530}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{atmcd_8py_source_l01623}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{picam_8py_source_l00171}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{pvcam_8py_source_l01618}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{ximea_8py_source_l00423}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{coolled_8py_source_l00160}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lumencor_8py_source_l00220}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{prior_8py_source_l00241}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIFilter\+Wheel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00212}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{zaber_8py_source_l00338}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{zaber_8py_source_l00405}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Filter\+Wheel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{zaber_8py_source_l00456}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{aurox_8py_source_l00283}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{thorlabs_8py_source_l00075}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00102}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00123}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00129}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00141}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00232}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{alpao_8py_source_l00202}{microscope.\+mirror.\+alpao.\+Alpao\+Deformable\+Mirror.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{mirror_2bmc_8py_source_l00072}{microscope.\+mirror.\+bmc.\+BMCDeformable\+Mirror.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{mirror_2mirao52e_8py_source_l00106}{microscope.\+mirror.\+mirao52e.\+Mirao52e.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00308}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00335}{microscope.\+simulators.\+Simulated\+Filter\+Wheel.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00355}{microscope.\+simulators.\+Simulated\+Light\+Source.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00384}{microscope.\+simulators.\+Simulated\+Deformable\+Mirror.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00463}{microscope.\+simulators.\+Simulated\+Stage.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{linkam_8py_source_l01089}{microscope.\+stages.\+linkam.\+\_\+\+Linkam\+Base.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{ludl_8py_source_l00344}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00103}{microscope.\+testsuite.\+devices.\+Dummy\+SLM.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00145}{microscope.\+testsuite.\+devices.\+Dummy\+DSP.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{testsuite_2devices_8py_source_l00246}{microscope.\+testsuite.\+devices.\+Test\+Floating\+Device.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{test__device__server_8py_source_l00047}{microscope.\+testsuite.\+test\+\_\+device\+\_\+server.\+Expose\+PIDDevice.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{test__device__server_8py_source_l00193}{microscope.\+testsuite.\+test\+\_\+device\+\_\+server.\+Device\+With\+Port.\+\_\+do\+\_\+shutdown()}}, \mbox{\hyperlink{abc_8py_source_l00307}{microscope.\+abc.\+Device.\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00629}{microscope.\+abc.\+Data\+Device.\+disable()}}, \mbox{\hyperlink{coolled_8py_source_l00175}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDChannel.\+disable()}}, \mbox{\hyperlink{lumencor_8py_source_l00233}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIILight\+Channel.\+disable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00134}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+disable()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00173}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+disable()}}, and \mbox{\hyperlink{lights_2toptica_8py_source_l00242}{microscope.\+lights.\+toptica.\+Topticai\+Beam.\+disable()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a9f30a9b6676629c3694b49686238f2a0}\label{classmicroscope_1_1abc_1_1_device_a9f30a9b6676629c3694b49686238f2a0}} 
 \index{microscope.abc.Device@{microscope.abc.Device}!update\_settings@{update\_settings}}
 \index{update\_settings@{update\_settings}!microscope.abc.Device@{microscope.abc.Device}}
@@ -298,6 +565,54 @@ Reimplemented in \mbox{\hyperlink{classmicroscope_1_1abc_1_1_data_device_a307a47
 Definition at line \mbox{\hyperlink{abc_8py_source_l00484}{484}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00484     \textcolor{keyword}{def }update\_settings(self, incoming, init: bool = \textcolor{keyword}{False}):}
+\DoxyCodeLine{00485         \textcolor{stringliteral}{"{}"{}"{}Update settings based on dict of settings and values."{}"{}"{}}}
+\DoxyCodeLine{00486         \textcolor{keywordflow}{if} init:}
+\DoxyCodeLine{00487             \textcolor{comment}{\# Assume nothing about state: set everything.}}
+\DoxyCodeLine{00488             my\_keys = set(self.\_settings.keys())}
+\DoxyCodeLine{00489             their\_keys = set(incoming.keys())}
+\DoxyCodeLine{00490             update\_keys = my\_keys \& their\_keys}
+\DoxyCodeLine{00491             \textcolor{keywordflow}{if} update\_keys != my\_keys:}
+\DoxyCodeLine{00492                 missing = \textcolor{stringliteral}{"{}, "{}}.join([k \textcolor{keywordflow}{for} k \textcolor{keywordflow}{in} my\_keys -\/ their\_keys])}
+\DoxyCodeLine{00493                 msg = (}
+\DoxyCodeLine{00494                     \textcolor{stringliteral}{"{}update\_settings init=True but missing keys: \%s."{}} \% missing}
+\DoxyCodeLine{00495                 )}
+\DoxyCodeLine{00496                 \_logger.debug(msg)}
+\DoxyCodeLine{00497                 \textcolor{keywordflow}{raise} Exception(msg)}
+\DoxyCodeLine{00498         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00499             \textcolor{comment}{\# Only update changed values.}}
+\DoxyCodeLine{00500             my\_keys = set(self.\_settings.keys())}
+\DoxyCodeLine{00501             their\_keys = set(incoming.keys())}
+\DoxyCodeLine{00502             update\_keys = set(}
+\DoxyCodeLine{00503                 key}
+\DoxyCodeLine{00504                 \textcolor{keywordflow}{for} key \textcolor{keywordflow}{in} my\_keys \& their\_keys}
+\DoxyCodeLine{00505                 \textcolor{keywordflow}{if} self.get\_setting(key) != incoming[key]}
+\DoxyCodeLine{00506             )}
+\DoxyCodeLine{00507         results = \{\}}
+\DoxyCodeLine{00508         \textcolor{comment}{\# Update values.}}
+\DoxyCodeLine{00509         \textcolor{keywordflow}{for} key \textcolor{keywordflow}{in} update\_keys:}
+\DoxyCodeLine{00510             \textcolor{keywordflow}{if} key \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} my\_keys \textcolor{keywordflow}{or} \textcolor{keywordflow}{not} self.\_settings[key].set:}
+\DoxyCodeLine{00511                 \textcolor{comment}{\# Setting not recognised or no set function implemented}}
+\DoxyCodeLine{00512                 results[key] = NotImplemented}
+\DoxyCodeLine{00513                 update\_keys.remove(key)}
+\DoxyCodeLine{00514                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00515             \textcolor{keywordflow}{if} self.\_settings[key].readonly():}
+\DoxyCodeLine{00516                 \textcolor{keywordflow}{continue}}
+\DoxyCodeLine{00517             self.\_settings[key].set(incoming[key])}
+\DoxyCodeLine{00518         \textcolor{comment}{\# Read back values in second loop.}}
+\DoxyCodeLine{00519         \textcolor{keywordflow}{for} key \textcolor{keywordflow}{in} update\_keys:}
+\DoxyCodeLine{00520             results[key] = self.\_settings[key].get()}
+\DoxyCodeLine{00521         \textcolor{keywordflow}{return} results}
+\DoxyCodeLine{00522 }
+\DoxyCodeLine{00523 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{abc_8py_source_l00312}{microscope.\+abc.\+Device.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00538}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{atmcd_8py_source_l01654}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{picam_8py_source_l00175}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{pvcam_8py_source_l01480}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{ximea_8py_source_l00338}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00206}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{zaber_8py_source_l00341}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Stage.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{zaber_8py_source_l00462}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+LED.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{aurox_8py_source_l00166}{microscope.\+filterwheels.\+aurox.\+Clarity.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2cobolt_8py_source_l00119}{microscope.\+lights.\+cobolt.\+Cobolt\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2deepstar_8py_source_l00096}{microscope.\+lights.\+deepstar.\+Deepstar\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2obis_8py_source_l00109}{microscope.\+lights.\+obis.\+Obis\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{lights_2sapphire_8py_source_l00153}{microscope.\+lights.\+sapphire.\+Sapphire\+Laser.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00261}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00351}{microscope.\+simulators.\+Simulated\+Light\+Source.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{ludl_8py_source_l00347}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Stage.\+\_\+do\+\_\+enable()}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}, \mbox{\hyperlink{abc_8py_source_l00588}{microscope.\+abc.\+Data\+Device.\+abort()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00446}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+abort()}}, \mbox{\hyperlink{atmcd_8py_source_l01424}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+abort()}}, \mbox{\hyperlink{picam_8py_source_l00186}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+abort()}}, \mbox{\hyperlink{pvcam_8py_source_l01664}{microscope.\+cameras.\+pvcam.\+PVCamera.\+abort()}}, \mbox{\hyperlink{ximea_8py_source_l00246}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+abort()}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00253}{microscope.\+simulators.\+Simulated\+Camera.\+abort()}}, and \mbox{\hyperlink{abc_8py_source_l00447}{microscope.\+abc.\+Device.\+get\+\_\+setting()}}.
+
+
 
 \doxysubsection{Member Data Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1abc_1_1_device_a640a17ad1c1008f954cd4a1dba9b54fc}\label{classmicroscope_1_1abc_1_1_device_a640a17ad1c1008f954cd4a1dba9b54fc}} 
@@ -309,6 +624,10 @@ Definition at line \mbox{\hyperlink{abc_8py_source_l00484}{484}} of file \mbox{\
 
 
 Definition at line \mbox{\hyperlink{abc_8py_source_l00289}{289}} of file \mbox{\hyperlink{abc_8py_source}{abc.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{abc_8py_source_l00307}{microscope.\+abc.\+Device.\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00629}{microscope.\+abc.\+Data\+Device.\+disable()}}, \mbox{\hyperlink{abc_8py_source_l00321}{microscope.\+abc.\+Device.\+enable()}}, \mbox{\hyperlink{abc_8py_source_l00592}{microscope.\+abc.\+Data\+Device.\+enable()}}, and \mbox{\hyperlink{abc_8py_source_l00789}{microscope.\+abc.\+Data\+Device.\+grab\+\_\+next\+\_\+data()}}.
 
 
 

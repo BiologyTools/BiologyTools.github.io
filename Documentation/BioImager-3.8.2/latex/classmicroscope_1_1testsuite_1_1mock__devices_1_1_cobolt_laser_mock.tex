@@ -79,6 +79,25 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1mock__device
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00333}{333}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00333     \textcolor{keyword}{def }\_\_init\_\_(self, *args, **kwargs):}
+\DoxyCodeLine{00334         super().\_\_init\_\_(*args, **kwargs)}
+\DoxyCodeLine{00335 }
+\DoxyCodeLine{00336         self.power = CoboltLaserMock.default\_power}
+\DoxyCodeLine{00337         self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00338 }
+\DoxyCodeLine{00339         self.interlock\_open = \textcolor{keyword}{False}}
+\DoxyCodeLine{00340 }
+\DoxyCodeLine{00341         self.auto\_start = \textcolor{keyword}{False}}
+\DoxyCodeLine{00342         self.direct\_control = \textcolor{keyword}{False}}
+\DoxyCodeLine{00343 }
+\DoxyCodeLine{00344         self.on\_after\_interlock = \textcolor{keyword}{False}}
+\DoxyCodeLine{00345 }
+\DoxyCodeLine{00346         self.fault = \textcolor{keywordtype}{None}}
+\DoxyCodeLine{00347 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock_a1db0f40adb9cfd5e2d6ba57e1707f906}\label{classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock_a1db0f40adb9cfd5e2d6ba57e1707f906}} 
@@ -94,6 +113,140 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1testsuite_1_1mock__device
 
 
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00348}{348}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00348     \textcolor{keyword}{def }handle(self, command):}
+\DoxyCodeLine{00349         \textcolor{comment}{\# Leading and trailing whitespace is ignored.}}
+\DoxyCodeLine{00350         command = command.strip()}
+\DoxyCodeLine{00351 }
+\DoxyCodeLine{00352         \textcolor{comment}{\# Acknowledgment string if command is not a query and there}}
+\DoxyCodeLine{00353         \textcolor{comment}{\# is no error.}}
+\DoxyCodeLine{00354         answer = b\textcolor{stringliteral}{"{}OK"{}}}
+\DoxyCodeLine{00355 }
+\DoxyCodeLine{00356         \textcolor{keywordflow}{if} command == b\textcolor{stringliteral}{"{}sn?"{}}:  \textcolor{comment}{\# serial number}}
+\DoxyCodeLine{00357             answer = b\textcolor{stringliteral}{"{}7863"{}}}
+\DoxyCodeLine{00358         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}gcn?"{}}:}
+\DoxyCodeLine{00359             answer = b\textcolor{stringliteral}{"{}Macro-\/Gen5b-\/SHG-\/0501\_4W-\/RevA"{}}}
+\DoxyCodeLine{00360         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}ver?"{}} \textcolor{keywordflow}{or} command == b\textcolor{stringliteral}{"{}gfv?"{}}:}
+\DoxyCodeLine{00361             answer = b\textcolor{stringliteral}{"{}50070"{}}}
+\DoxyCodeLine{00362         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}gfvlas?"{}}:}
+\DoxyCodeLine{00363             answer = b\textcolor{stringliteral}{"{}This laser head does not have firmware."{}}}
+\DoxyCodeLine{00364         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}hrs?"{}}:  \textcolor{comment}{\# System operating hours}}
+\DoxyCodeLine{00365             answer = b\textcolor{stringliteral}{"{}828.98"{}}}
+\DoxyCodeLine{00366 }
+\DoxyCodeLine{00367         \textcolor{comment}{\# TODO: This whole @cob0 and @cob1 need better testing on}}
+\DoxyCodeLine{00368         \textcolor{comment}{\# what it actually does.  Documentation says that @cob1 is}}
+\DoxyCodeLine{00369         \textcolor{comment}{\# "{}Laser ON after interlock.  Forces laser into}}
+\DoxyCodeLine{00370         \textcolor{comment}{\# autostart. without checking if autostart is enabled"{}.}}
+\DoxyCodeLine{00371         \textcolor{comment}{\# @cob0 is undocumented.}}
+\DoxyCodeLine{00372 }
+\DoxyCodeLine{00373         \textcolor{comment}{\# May be a bug but the commands @cob0 and @cob1 both have the}}
+\DoxyCodeLine{00374         \textcolor{comment}{\# effect of also turning off the laser.}}
+\DoxyCodeLine{00375         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cob1"{}}:}
+\DoxyCodeLine{00376             self.on\_after\_interlock = \textcolor{keyword}{True}}
+\DoxyCodeLine{00377             self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00378         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cob0"{}}:}
+\DoxyCodeLine{00379             self.on\_after\_interlock = \textcolor{keyword}{False}}
+\DoxyCodeLine{00380             self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00381 }
+\DoxyCodeLine{00382         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobas?"{}}:}
+\DoxyCodeLine{00383             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.auto\_start \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00384         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobas 0"{}}:}
+\DoxyCodeLine{00385             self.auto\_start = \textcolor{keyword}{False}}
+\DoxyCodeLine{00386         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobas 1"{}}:}
+\DoxyCodeLine{00387             self.auto\_start = \textcolor{keyword}{True}}
+\DoxyCodeLine{00388 }
+\DoxyCodeLine{00389         \textcolor{comment}{\# Laser state}}
+\DoxyCodeLine{00390         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}l?"{}}:}
+\DoxyCodeLine{00391             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.light \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00392         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}l1"{}}:}
+\DoxyCodeLine{00393             \textcolor{keywordflow}{if} self.auto\_start:}
+\DoxyCodeLine{00394                 answer = b\textcolor{stringliteral}{"{}Syntax error: not allowed in autostart mode."{}}}
+\DoxyCodeLine{00395             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00396                 self.light = \textcolor{keyword}{True}}
+\DoxyCodeLine{00397         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}l0"{}}:}
+\DoxyCodeLine{00398             self.light = \textcolor{keyword}{False}}
+\DoxyCodeLine{00399 }
+\DoxyCodeLine{00400         \textcolor{comment}{\# Output power}}
+\DoxyCodeLine{00401         \textcolor{keywordflow}{elif} command.startswith(b\textcolor{stringliteral}{"{}p "{}}):}
+\DoxyCodeLine{00402             \textcolor{comment}{\# The p command takes values in W so convert to mW}}
+\DoxyCodeLine{00403             new\_power = float(command[2:]) * 1000.0}
+\DoxyCodeLine{00404             \textcolor{keywordflow}{if} new\_power > self.max\_power \textcolor{keywordflow}{or} new\_power < self.min\_power:}
+\DoxyCodeLine{00405                 answer = b\textcolor{stringliteral}{"{}Syntax error: Value is out of range."{}}}
+\DoxyCodeLine{00406             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00407                 self.power = new\_power}
+\DoxyCodeLine{00408         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}p?"{}}:}
+\DoxyCodeLine{00409             answer = b\textcolor{stringliteral}{"{}\%.4f"{}} \% (self.power / 1000.0)}
+\DoxyCodeLine{00410         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}pa?"{}}:}
+\DoxyCodeLine{00411             \textcolor{keywordflow}{if} self.light:}
+\DoxyCodeLine{00412                 answer = b\textcolor{stringliteral}{"{}\%.4f"{}} \% (self.power / 1000.0)}
+\DoxyCodeLine{00413             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00414                 answer = b\textcolor{stringliteral}{"{}0.0000"{}}}
+\DoxyCodeLine{00415 }
+\DoxyCodeLine{00416         \textcolor{comment}{\# Undocumented.  Seems to be the same as 'p ...'}}
+\DoxyCodeLine{00417         \textcolor{keywordflow}{elif} command.startswith(b\textcolor{stringliteral}{"{}@cobasp "{}}):}
+\DoxyCodeLine{00418             \textcolor{keywordflow}{return} self.handle(command[6:])}
+\DoxyCodeLine{00419 }
+\DoxyCodeLine{00420         \textcolor{comment}{\# Direct control}}
+\DoxyCodeLine{00421         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobasdr?"{}}:}
+\DoxyCodeLine{00422             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.direct\_control \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00423         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobasdr 0"{}}:}
+\DoxyCodeLine{00424             self.direct\_control = \textcolor{keyword}{False}}
+\DoxyCodeLine{00425         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}@cobasdr 1"{}}:}
+\DoxyCodeLine{00426             self.direct\_control = \textcolor{keyword}{False}}
+\DoxyCodeLine{00427 }
+\DoxyCodeLine{00428         \textcolor{comment}{\# Undocumented.  Seems to returns maximum laser power in mW.}}
+\DoxyCodeLine{00429         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}gmlp?"{}}:}
+\DoxyCodeLine{00430             answer = b\textcolor{stringliteral}{"{}600.000000"{}}}
+\DoxyCodeLine{00431 }
+\DoxyCodeLine{00432         \textcolor{comment}{\# Are you there?}}
+\DoxyCodeLine{00433         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}?"{}}:}
+\DoxyCodeLine{00434             answer = b\textcolor{stringliteral}{"{}OK"{}}}
+\DoxyCodeLine{00435 }
+\DoxyCodeLine{00436         \textcolor{comment}{\# Get operating fault}}
+\DoxyCodeLine{00437         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}f?"{}}:}
+\DoxyCodeLine{00438             \textcolor{comment}{\# The errors (which we don't model yet) are:}}
+\DoxyCodeLine{00439             \textcolor{comment}{\#   1 = temperature error}}
+\DoxyCodeLine{00440             \textcolor{comment}{\#   3 = interlock}}
+\DoxyCodeLine{00441             \textcolor{comment}{\#   4 = constant power fault}}
+\DoxyCodeLine{00442             answer = b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00443 }
+\DoxyCodeLine{00444         \textcolor{comment}{\# Interlock state}}
+\DoxyCodeLine{00445         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}ilk?"{}}:}
+\DoxyCodeLine{00446             answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.interlock\_open \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00447 }
+\DoxyCodeLine{00448         \textcolor{comment}{\# Autostart program state}}
+\DoxyCodeLine{00449         \textcolor{keywordflow}{elif} command == b\textcolor{stringliteral}{"{}cobast?"{}}:}
+\DoxyCodeLine{00450             \textcolor{comment}{\# This is completely undocumented.  Manual}}
+\DoxyCodeLine{00451             \textcolor{comment}{\# experimentation seems to be:}}
+\DoxyCodeLine{00452             \textcolor{comment}{\# 0 = laser off with @cob0}}
+\DoxyCodeLine{00453             \textcolor{comment}{\# 1 = laser off with @cob1}}
+\DoxyCodeLine{00454             \textcolor{comment}{\# 2 = waiting for temperature}}
+\DoxyCodeLine{00455             \textcolor{comment}{\# 3 = warming up}}
+\DoxyCodeLine{00456             \textcolor{comment}{\# 4 = completed (laser on)}}
+\DoxyCodeLine{00457             \textcolor{comment}{\# 5 = fault (such as interlock)}}
+\DoxyCodeLine{00458             \textcolor{comment}{\# 6 = aborted}}
+\DoxyCodeLine{00459             \textcolor{keywordflow}{if} self.light:}
+\DoxyCodeLine{00460                 answer = b\textcolor{stringliteral}{"{}4"{}}}
+\DoxyCodeLine{00461             \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00462                 answer = b\textcolor{stringliteral}{"{}1"{}} \textcolor{keywordflow}{if} self.on\_after\_interlock \textcolor{keywordflow}{else} b\textcolor{stringliteral}{"{}0"{}}}
+\DoxyCodeLine{00463 }
+\DoxyCodeLine{00464         \textcolor{keywordflow}{else}:}
+\DoxyCodeLine{00465             \textcolor{keywordflow}{raise} NotImplementedError(}
+\DoxyCodeLine{00466                 \textcolor{stringliteral}{"{}no handling for command '\%s'"{}} \% command.decode(\textcolor{stringliteral}{"{}utf-\/8"{}})}
+\DoxyCodeLine{00467             )}
+\DoxyCodeLine{00468 }
+\DoxyCodeLine{00469         \textcolor{comment}{\# Sending a command is done with '\(\backslash\)r' only.  However,}}
+\DoxyCodeLine{00470         \textcolor{comment}{\# responses from the hardware end with '\(\backslash\)r\(\backslash\)n'.}}
+\DoxyCodeLine{00471         self.in\_buffer.write(answer + b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00472 }
+\DoxyCodeLine{00473 }
+
+\end{DoxyCode}
+
+
+Referenced by \mbox{\hyperlink{___s_d_k3_cam_8py_source_l00172}{microscope.\+cameras.\+\_\+\+SDK3\+Cam.\+SDK3\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{pvcam_8py_source_l01664}{microscope.\+cameras.\+pvcam.\+PVCamera.\+abort()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00527}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+get\+\_\+id()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00452}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+initialize()}}, \mbox{\hyperlink{pvcam_8py_source_l01676}{microscope.\+cameras.\+pvcam.\+PVCamera.\+initialize()}}, \mbox{\hyperlink{andorsdk3_8py_source_l00404}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+invalidate\+\_\+buffers()}}, \mbox{\hyperlink{pvcam_8py_source_l01885}{microscope.\+cameras.\+pvcam.\+PVCamera.\+set\+\_\+trigger()}}, and \mbox{\hyperlink{pvcam_8py_source_l01847}{microscope.\+cameras.\+pvcam.\+PVCamera.\+soft\+\_\+trigger()}}.
 
 
 
@@ -167,6 +320,10 @@ Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00326}{326}} of fi
 
 
 Definition at line \mbox{\hyperlink{mock__devices_8py_source_l00319}{319}} of file \mbox{\hyperlink{mock__devices_8py_source}{mock\+\_\+devices.\+py}}.
+
+
+
+Referenced by \mbox{\hyperlink{thorlabs_8py_source_l00037}{microscope.\+filterwheels.\+thorlabs.\+Thorlabs\+Filter\+Wheel.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock_a34433774f569c11b7b2558faf4631992}\label{classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock_a34433774f569c11b7b2558faf4631992}} 
 \index{microscope.testsuite.mock\_devices.CoboltLaserMock@{microscope.testsuite.mock\_devices.CoboltLaserMock}!fault@{fault}}

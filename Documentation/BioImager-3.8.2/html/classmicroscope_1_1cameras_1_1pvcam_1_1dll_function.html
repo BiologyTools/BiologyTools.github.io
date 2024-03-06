@@ -223,7 +223,31 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l00738">738</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  738</span>    <span class="keyword">def </span>__init__(self, name, args=[], argnames=[], buf_len=-1, lib=_lib):</div>
+<div class="line"><span class="lineno">  739</span>        self.f = getattr(lib, name)</div>
+<div class="line"><span class="lineno">  740</span>        self.f.restype = rs_bool</div>
+<div class="line"><span class="lineno">  741</span>        self.f.argtypes = [stripMeta(a) <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args]</div>
+<div class="line"><span class="lineno">  742</span> </div>
+<div class="line"><span class="lineno">  743</span>        self.fargs = args</div>
+<div class="line"><span class="lineno">  744</span>        self.fargnames = argnames</div>
+<div class="line"><span class="lineno">  745</span>        self.name = name</div>
+<div class="line"><span class="lineno">  746</span> </div>
+<div class="line"><span class="lineno">  747</span>        self.inp = [<span class="keywordflow">not</span> isinstance(a, OUTPUT) <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args]</div>
+<div class="line"><span class="lineno">  748</span>        self.in_args = [a <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args <span class="keywordflow">if</span> <span class="keywordflow">not</span> isinstance(a, OUTPUT)]</div>
+<div class="line"><span class="lineno">  749</span>        self.out_args = [a <span class="keywordflow">for</span> a <span class="keywordflow">in</span> args <span class="keywordflow">if</span> isinstance(a, OUTPUT)]</div>
+<div class="line"><span class="lineno">  750</span> </div>
+<div class="line"><span class="lineno">  751</span>        self.buf_len = buf_len</div>
+<div class="line"><span class="lineno">  752</span> </div>
+<div class="line"><span class="lineno">  753</span>        docstring = name + <span class="stringliteral">&quot;\n\nArguments:\n===========\n&quot;</span></div>
+<div class="line"><span class="lineno">  754</span>        <span class="keywordflow">for</span> i <span class="keywordflow">in</span> range(len(args)):</div>
+<div class="line"><span class="lineno">  755</span>            an = <span class="stringliteral">&quot;&quot;</span></div>
+<div class="line"><span class="lineno">  756</span>            <span class="keywordflow">if</span> i &lt; len(argnames):</div>
+<div class="line"><span class="lineno">  757</span>                an = argnames[i]</div>
+<div class="line"><span class="lineno">  758</span>            docstring += <span class="stringliteral">&quot;\t%s\t%s\n&quot;</span> % (args[i], an)</div>
+<div class="line"><span class="lineno">  759</span> </div>
+<div class="line"><span class="lineno">  760</span>        self.f.__doc__ = docstring</div>
+<div class="line"><span class="lineno">  761</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -260,7 +284,62 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l00762">762</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  762</span>    <span class="keyword">def </span>__call__(self, *args, **kwargs):</div>
+<div class="line"><span class="lineno">  763</span>        ars = []</div>
+<div class="line"><span class="lineno">  764</span>        i = 0</div>
+<div class="line"><span class="lineno">  765</span>        ret = []</div>
+<div class="line"><span class="lineno">  766</span>        <span class="comment"># pl_get_param buffer length depends on the parameter being fetched, so</span></div>
+<div class="line"><span class="lineno">  767</span>        <span class="comment"># use kwargs to pass buffer length.</span></div>
+<div class="line"><span class="lineno">  768</span>        <span class="keywordflow">if</span> <span class="stringliteral">&quot;buf_len&quot;</span> <span class="keywordflow">in</span> kwargs:</div>
+<div class="line"><span class="lineno">  769</span>            bs = kwargs[<span class="stringliteral">&quot;buf_len&quot;</span>]</div>
+<div class="line"><span class="lineno">  770</span>        <span class="keywordflow">elif</span> self.name == <span class="stringliteral">&quot;pl_get_enum_param&quot;</span>:</div>
+<div class="line"><span class="lineno">  771</span>            <span class="comment"># last argument is buffer length</span></div>
+<div class="line"><span class="lineno">  772</span>            bs = args[-1]</div>
+<div class="line"><span class="lineno">  773</span>        <span class="keywordflow">elif</span> self.buf_len &gt;= 0:</div>
+<div class="line"><span class="lineno">  774</span>            bs = self.buf_len</div>
+<div class="line"><span class="lineno">  775</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  776</span>            bs = 256</div>
+<div class="line"><span class="lineno">  777</span>        <span class="comment"># May have been passed a ctype; if so, fetch its value.</span></div>
+<div class="line"><span class="lineno">  778</span>        <span class="keywordflow">if</span> isinstance(bs, ctypes._SimpleCData):</div>
+<div class="line"><span class="lineno">  779</span>            bs = bs.value</div>
+<div class="line"><span class="lineno">  780</span> </div>
+<div class="line"><span class="lineno">  781</span>        <span class="keywordflow">for</span> j <span class="keywordflow">in</span> range(len(self.inp)):</div>
+<div class="line"><span class="lineno">  782</span>            <span class="keywordflow">if</span> self.inp[j]:  <span class="comment"># an input</span></div>
+<div class="line"><span class="lineno">  783</span>                <span class="keywordflow">if</span> self.f.argtypes[j] <span class="keywordflow">is</span> CALLBACK <span class="keywordflow">and</span> <span class="keywordflow">not</span> isinstance(</div>
+<div class="line"><span class="lineno">  784</span>                    args[i], CALLBACK</div>
+<div class="line"><span class="lineno">  785</span>                ):</div>
+<div class="line"><span class="lineno">  786</span>                    ars.append(CALLBACK(args[i]))</div>
+<div class="line"><span class="lineno">  787</span>                <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  788</span>                    ars.append(args[i])</div>
+<div class="line"><span class="lineno">  789</span>                i += 1</div>
+<div class="line"><span class="lineno">  790</span>            <span class="keywordflow">else</span>:  <span class="comment"># an output</span></div>
+<div class="line"><span class="lineno">  791</span>                r, ar = self.fargs[j].get_var(bs)</div>
+<div class="line"><span class="lineno">  792</span>                ars.append(ar)</div>
+<div class="line"><span class="lineno">  793</span>                ret.append(r)</div>
+<div class="line"><span class="lineno">  794</span>                <span class="comment"># print r, r._type_</span></div>
+<div class="line"><span class="lineno">  795</span> </div>
+<div class="line"><span class="lineno">  796</span>        <span class="comment"># print (self.name, ars)</span></div>
+<div class="line"><span class="lineno">  797</span>        res = self.f(*ars)</div>
+<div class="line"><span class="lineno">  798</span>        <span class="comment"># print res</span></div>
+<div class="line"><span class="lineno">  799</span> </div>
+<div class="line"><span class="lineno">  800</span>        <span class="keywordflow">if</span> res == <span class="keyword">False</span>:</div>
+<div class="line"><span class="lineno">  801</span>            err_code = _lib.pl_error_code()</div>
+<div class="line"><span class="lineno">  802</span>            err_msg = ctypes.create_string_buffer(ERROR_MSG_LEN)</div>
+<div class="line"><span class="lineno">  803</span>            _lib.pl_error_message(err_code, err_msg)</div>
+<div class="line"><span class="lineno">  804</span>            <span class="keywordflow">raise</span> <a class="code hl_class" href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a>(</div>
+<div class="line"><span class="lineno">  805</span>                <span class="stringliteral">&quot;pvcam error %d: %s&quot;</span> % (err_code, err_msg.value)</div>
+<div class="line"><span class="lineno">  806</span>            )</div>
+<div class="line"><span class="lineno">  807</span> </div>
+<div class="line"><span class="lineno">  808</span>        <span class="keywordflow">if</span> len(ret) == 0:</div>
+<div class="line"><span class="lineno">  809</span>            <span class="keywordflow">return</span> <span class="keywordtype">None</span></div>
+<div class="line"><span class="lineno">  810</span>        <span class="keywordflow">if</span> len(ret) == 1:</div>
+<div class="line"><span class="lineno">  811</span>            <span class="keywordflow">return</span> ret[0]</div>
+<div class="line"><span class="lineno">  812</span>        <span class="keywordflow">else</span>:</div>
+<div class="line"><span class="lineno">  813</span>            <span class="keywordflow">return</span> ret</div>
+<div class="line"><span class="lineno">  814</span> </div>
+<div class="line"><span class="lineno">  815</span> </div>
+<div class="ttc" id="aclassmicroscope_1_1_device_error_html"><div class="ttname"><a href="classmicroscope_1_1_device_error.html">microscope.DeviceError</a></div><div class="ttdef"><b>Definition:</b> <a href="____init_____8py_source.html#l00030">__init__.py:30</a></div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
@@ -294,6 +373,8 @@ Public Attributes</h2></td></tr>
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l00739">739</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
 
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
+
 </div>
 </div>
 <a id="a60c69a1615d1ee3d78b9b133023cddde" name="a60c69a1615d1ee3d78b9b133023cddde"></a>
@@ -325,6 +406,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l00743">743</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="atmcd_8py_source.html#l00663">microscope.cameras.atmcd.dllFunction.__call__()</a>.</p>
 
 </div>
 </div>
@@ -373,6 +456,8 @@ Public Attributes</h2></td></tr>
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="pvcam_8py_source.html#l00745">745</a> of file <a class="el" href="pvcam_8py_source.html">pvcam.py</a>.</p>
+
+<p class="reference">Referenced by <a class="el" href="pvcam_8py_source.html#l01203">microscope.cameras.pvcam.PVParam.factory()</a>, <a class="el" href="pvcam_8py_source.html#l01238">microscope.cameras.pvcam.PVParam.set_value()</a>, and <a class="el" href="pvcam_8py_source.html#l01341">microscope.cameras.pvcam.PVEnumParam.set_value()</a>.</p>
 
 </div>
 </div>

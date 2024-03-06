@@ -50,6 +50,59 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00051}{51}} of f
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00065}{65}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00065     \textcolor{keyword}{def }\_\_init\_\_(self, port: str):}
+\DoxyCodeLine{00066         \textcolor{comment}{\# From the Toptica iBeam SMART manual:}}
+\DoxyCodeLine{00067         \textcolor{comment}{\# Direct connection via COMx with 115200,8,N,1 and serial}}
+\DoxyCodeLine{00068         \textcolor{comment}{\# interface handshake "{}none"{}. That means that no hardware}}
+\DoxyCodeLine{00069         \textcolor{comment}{\# handshake (DTR, RTS) and no software handshake (XON,XOFF) of}}
+\DoxyCodeLine{00070         \textcolor{comment}{\# the underlying operating system is supported.}}
+\DoxyCodeLine{00071         serial\_conn = serial.Serial(}
+\DoxyCodeLine{00072             port=port,}
+\DoxyCodeLine{00073             baudrate=115200,}
+\DoxyCodeLine{00074             timeout=1.0,}
+\DoxyCodeLine{00075             bytesize=serial.EIGHTBITS,}
+\DoxyCodeLine{00076             stopbits=serial.STOPBITS\_ONE,}
+\DoxyCodeLine{00077             parity=serial.PARITY\_NONE,}
+\DoxyCodeLine{00078             xonxoff=\textcolor{keyword}{False},}
+\DoxyCodeLine{00079             rtscts=\textcolor{keyword}{False},}
+\DoxyCodeLine{00080             dsrdtr=\textcolor{keyword}{False},}
+\DoxyCodeLine{00081         )}
+\DoxyCodeLine{00082         self.\_serial = \mbox{\hyperlink{classmicroscope_1_1__utils_1_1_shared_serial}{microscope.\_utils.SharedSerial}}(serial\_conn)}
+\DoxyCodeLine{00083 }
+\DoxyCodeLine{00084         \textcolor{comment}{\# We don't know what is the current verbosity state and so we}}
+\DoxyCodeLine{00085         \textcolor{comment}{\# don't know yet what we should be reading back.  So blindly}}
+\DoxyCodeLine{00086         \textcolor{comment}{\# set to the level we want, flush all output, and then check}}
+\DoxyCodeLine{00087         \textcolor{comment}{\# if indeed this is a Toptica iBeam device.}}
+\DoxyCodeLine{00088         \textcolor{keyword}{with} self.\_serial.lock:}
+\DoxyCodeLine{00089             self.\_serial.write(b\textcolor{stringliteral}{"{}echo off\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00090             self.\_serial.write(b\textcolor{stringliteral}{"{}prompt off\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00091             \textcolor{comment}{\# The talk level we want is 'usual'.  In theory we should}}
+\DoxyCodeLine{00092             \textcolor{comment}{\# be able to use 'quiet' which only answers queries but in}}
+\DoxyCodeLine{00093             \textcolor{comment}{\# practice 'quiet' does not answer some queries like 'show}}
+\DoxyCodeLine{00094             \textcolor{comment}{\# serial'.}}
+\DoxyCodeLine{00095             self.\_serial.write(b\textcolor{stringliteral}{"{}talk usual\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00096             self.\_serial.readlines()  \textcolor{comment}{\# discard all pending lines}}
+\DoxyCodeLine{00097 }
+\DoxyCodeLine{00098         \textcolor{comment}{\# Empty command does nothing and returns nothing extra so we}}
+\DoxyCodeLine{00099         \textcolor{comment}{\# use it to ensure this at least behaves like a Toptica iBeam.}}
+\DoxyCodeLine{00100         \textcolor{keywordflow}{try}:}
+\DoxyCodeLine{00101             self.command(b\textcolor{stringliteral}{"{}"{}})}
+\DoxyCodeLine{00102         \textcolor{keywordflow}{except} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}} \textcolor{keyword}{as} e:}
+\DoxyCodeLine{00103             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00104                 \textcolor{stringliteral}{"{}Failed to confirm Toptica iBeam on \%s"{}} \% (port)}
+\DoxyCodeLine{00105             ) \textcolor{keyword}{from} e}
+\DoxyCodeLine{00106 }
+\DoxyCodeLine{00107         answer = self.command(b\textcolor{stringliteral}{"{}show serial"{}})}
+\DoxyCodeLine{00108         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}SN: "{}}):}
+\DoxyCodeLine{00109             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00110                 \textcolor{stringliteral}{"{}Failed to parse serial from \%s"{}} \% answer}
+\DoxyCodeLine{00111             )}
+\DoxyCodeLine{00112         \_logger.info(\textcolor{stringliteral}{"{}got connection to Toptica iBeam \%s"{}}, answer.decode())}
+\DoxyCodeLine{00113 }
+
+\end{DoxyCode}
+
 
 \doxysubsection{Member Function Documentation}
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_ad7451ff2b3be0d9c1f474526d96d935a}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_ad7451ff2b3be0d9c1f474526d96d935a}} 
@@ -72,6 +125,66 @@ array of bytes.
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{114}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00114     \textcolor{keyword}{def }command(self, command: bytes) -\/> bytes:}
+\DoxyCodeLine{00115         \textcolor{stringliteral}{"{}"{}"{}Run command and return answer after minimal validation.}}
+\DoxyCodeLine{00116 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00117 \textcolor{stringliteral}{        The output of a command has the format::}}
+\DoxyCodeLine{00118 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00119 \textcolor{stringliteral}{            \(\backslash\)r\(\backslash\)nANSWER\(\backslash\)r\(\backslash\)n[OK]\(\backslash\)r\(\backslash\)n}}
+\DoxyCodeLine{00120 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00121 \textcolor{stringliteral}{        The returned bytes only include `ANSWER` without its own final}}
+\DoxyCodeLine{00122 \textcolor{stringliteral}{        `\(\backslash\)r\(\backslash\)n`.  This means that the }\textcolor{keywordflow}{return} value might be an empty}
+\DoxyCodeLine{00123         array of bytes.}
+\DoxyCodeLine{00124         \textcolor{stringliteral}{"{}"{}"{}}}
+\DoxyCodeLine{00125 \textcolor{stringliteral}{        }\textcolor{comment}{\# We expect to be on 'talk usual' mode without prompt so each}}
+\DoxyCodeLine{00126         \textcolor{comment}{\# command will end with [OK] on its own line.}}
+\DoxyCodeLine{00127         \textcolor{keyword}{with} self.\_serial.lock:}
+\DoxyCodeLine{00128             self.\_serial.write(command + b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00129             \textcolor{comment}{\# An answer always starts with \(\backslash\)r\(\backslash\)n so there will be one}}
+\DoxyCodeLine{00130             \textcolor{comment}{\# before [OK] even if this command is not a query.}}
+\DoxyCodeLine{00131             answer = self.\_serial.read\_until(b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n[OK]\(\backslash\)r\(\backslash\)n"{}})}
+\DoxyCodeLine{00132 }
+\DoxyCodeLine{00133         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n"{}}):}
+\DoxyCodeLine{00134             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00135                 \textcolor{stringliteral}{"{}answer to command \%s does not start with CRLF."{}}}
+\DoxyCodeLine{00136                 \textcolor{stringliteral}{"{} This may be leftovers from a previous command:"{}}}
+\DoxyCodeLine{00137                 \textcolor{stringliteral}{"{} \%s"{}} \% (command, answer)}
+\DoxyCodeLine{00138             )}
+\DoxyCodeLine{00139         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.endswith(b\textcolor{stringliteral}{"{}\(\backslash\)r\(\backslash\)n[OK]\(\backslash\)r\(\backslash\)n"{}}):}
+\DoxyCodeLine{00140             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00141                 \textcolor{stringliteral}{"{}Command \%s failed or failed to read answer: \%s"{}}}
+\DoxyCodeLine{00142                 \% (command, answer)}
+\DoxyCodeLine{00143             )}
+\DoxyCodeLine{00144 }
+\DoxyCodeLine{00145         \textcolor{comment}{\# If an error occurred, the answer still ends in [OK].  We}}
+\DoxyCodeLine{00146         \textcolor{comment}{\# need to check if the second line (first line is \(\backslash\)r\(\backslash\)n) is an}}
+\DoxyCodeLine{00147         \textcolor{comment}{\# error code with the format "{}\%SYS-\/L-\/XXX, error description"{}}}
+\DoxyCodeLine{00148         \textcolor{comment}{\# where L is the error level (I for Information, W for}}
+\DoxyCodeLine{00149         \textcolor{comment}{\# Warning, E for Error, and F for Fatal), and XXX is the error}}
+\DoxyCodeLine{00150         \textcolor{comment}{\# code number.}}
+\DoxyCodeLine{00151         \textcolor{keywordflow}{if} answer[2:7] == b\textcolor{stringliteral}{"{}\%SYS-\/"{}} \textcolor{keywordflow}{and} answer[7] != ord(b\textcolor{stringliteral}{"{}I"{}}):}
+\DoxyCodeLine{00152             \textcolor{comment}{\# Errors of level I (information) should not raise an}}
+\DoxyCodeLine{00153             \textcolor{comment}{\# exception since they can be replies to normal commands.}}
+\DoxyCodeLine{00154             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00155                 \textcolor{stringliteral}{"{}Command \%s failed: \%s"{}} \% (command, answer)}
+\DoxyCodeLine{00156             )}
+\DoxyCodeLine{00157 }
+\DoxyCodeLine{00158         \textcolor{comment}{\# Exclude the first \(\backslash\)r\(\backslash\)n, the \(\backslash\)r\(\backslash\)n from a possible answer, and}}
+\DoxyCodeLine{00159         \textcolor{comment}{\# the final [OK]\(\backslash\)r\(\backslash\)n}}
+\DoxyCodeLine{00160         \textcolor{keywordflow}{return} answer[2:-\/8]}
+\DoxyCodeLine{00161 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{__utils_8py_source_l00115}{microscope.\+\_\+utils.\+Shared\+Serial.\+\_\+serial}}, \mbox{\hyperlink{coolled_8py_source_l00040}{microscope.\+controllers.\+coolled.\+\_\+\+Cool\+LEDConnection.\+\_\+serial}}, \mbox{\hyperlink{lumencor_8py_source_l00051}{microscope.\+controllers.\+lumencor.\+\_\+\+Spectra\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{prior_8py_source_l00050}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+\_\+serial}}, \mbox{\hyperlink{controllers_2toptica_8py_source_l00055}{microscope.\+controllers.\+toptica.\+\_\+i\+Chrome\+Connection.\+\_\+serial}}, \mbox{\hyperlink{zaber_8py_source_l00123}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Connection.\+\_\+serial}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00082}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+\_\+serial}}, and \mbox{\hyperlink{ludl_8py_source_l00098}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+\_\+serial}}.
+
+
+
+Referenced by \mbox{\hyperlink{zaber_8py_source_l00231}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+been\+\_\+homed()}}, \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00265}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+absolute\+\_\+position()}}, \mbox{\hyperlink{prior_8py_source_l00108}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00189}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+command()}}, \mbox{\hyperlink{zaber_8py_source_l00252}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+current\+\_\+index()}}, \mbox{\hyperlink{prior_8py_source_l00131}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+get\+\_\+description()}}, \mbox{\hyperlink{ludl_8py_source_l00257}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+get\+\_\+description()}}, \mbox{\hyperlink{zaber_8py_source_l00248}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+index\+\_\+distance()}}, \mbox{\hyperlink{zaber_8py_source_l00269}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+max()}}, \mbox{\hyperlink{zaber_8py_source_l00273}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+limit\+\_\+min()}}, \mbox{\hyperlink{zaber_8py_source_l00227}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+number\+\_\+axes()}}, \mbox{\hyperlink{zaber_8py_source_l00240}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+get\+\_\+rotation\+\_\+length()}}, \mbox{\hyperlink{zaber_8py_source_l00236}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+home()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+off()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00162}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+laser\+\_\+on()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+set\+\_\+normal\+\_\+channel\+\_\+power()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+show\+\_\+power\+\_\+u\+W()}}, and \mbox{\hyperlink{lights_2toptica_8py_source_l00188}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+status\+\_\+laser()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a58f076d97c5a62722cd50a179ba6c34d}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a58f076d97c5a62722cd50a179ba6c34d}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!laser\_off@{laser\_off}}
 \index{laser\_off@{laser\_off}!microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}}
@@ -83,6 +196,18 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{114}} of 
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{166}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00166     \textcolor{keyword}{def }laser\_off(self) -\/> None:}
+\DoxyCodeLine{00167         \textcolor{stringliteral}{"{}"{}"{}Deactivate LD driver."{}"{}"{}}}
+\DoxyCodeLine{00168         self.command(b\textcolor{stringliteral}{"{}laser off"{}})}
+\DoxyCodeLine{00169 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a4737b82bf1a0a7859fbbb65824e34b2c}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a4737b82bf1a0a7859fbbb65824e34b2c}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!laser\_on@{laser\_on}}
 \index{laser\_on@{laser\_on}!microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}}
@@ -93,6 +218,18 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00166}{166}} of 
  
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00162}{162}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00162     \textcolor{keyword}{def }laser\_on(self) -\/> None:}
+\DoxyCodeLine{00163         \textcolor{stringliteral}{"{}"{}"{}Activate LD driver."{}"{}"{}}}
+\DoxyCodeLine{00164         self.command(b\textcolor{stringliteral}{"{}laser on"{}})}
+\DoxyCodeLine{00165 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a8cb2fee603f800679afd2cd29f8aac4c}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a8cb2fee603f800679afd2cd29f8aac4c}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!set\_normal\_channel\_power@{set\_normal\_channel\_power}}
@@ -110,6 +247,23 @@ bias and we haven't seen a laser with a channel 3 yet).
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{170}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00170     \textcolor{keyword}{def }set\_normal\_channel\_power(self, power: float) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00171         \textcolor{stringliteral}{"{}"{}"{}Set power in mW for channel 2 (normal operating level channel).}}
+\DoxyCodeLine{00172 \textcolor{stringliteral}{}}
+\DoxyCodeLine{00173 \textcolor{stringliteral}{        We don't have channel number as an argument because we only}}
+\DoxyCodeLine{00174 \textcolor{stringliteral}{        want to be setting the power via channel 2 (channel 1 }\textcolor{keywordflow}{is} the}
+\DoxyCodeLine{00175         bias \textcolor{keywordflow}{and} we haven\textcolor{stringliteral}{'t seen a laser with a channel 3 yet).}}
+\DoxyCodeLine{00176 \textcolor{stringliteral}{        "{}"{}"{}}}
+\DoxyCodeLine{00177 \textcolor{stringliteral}{        self.command(b"{}channel 2 power \%f"{}} \% power)}
+\DoxyCodeLine{00178 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a4f6bbf34292a779eda92fb5eb69deea1}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a4f6bbf34292a779eda92fb5eb69deea1}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!show\_max\_power@{show\_max\_power}}
 \index{show\_max\_power@{show\_max\_power}!microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}}
@@ -120,6 +274,23 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00170}{170}} of 
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00192}{192}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00192     \textcolor{keyword}{def }show\_max\_power(self) -\/> float:}
+\DoxyCodeLine{00193         \textcolor{comment}{\# There should be a cleaner way to get these, right?  We can}}
+\DoxyCodeLine{00194         \textcolor{comment}{\# query the current limits (mA) but how do we go from there to}}
+\DoxyCodeLine{00195         \textcolor{comment}{\# the power limits (mW)?}}
+\DoxyCodeLine{00196         table = self.command(b\textcolor{stringliteral}{"{}show satellite"{}})}
+\DoxyCodeLine{00197         value = \_get\_table\_value(table, key=b\textcolor{stringliteral}{"{}Pmax"{}})}
+\DoxyCodeLine{00198         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} value.endswith(b\textcolor{stringliteral}{"{} mW"{}}):}
+\DoxyCodeLine{00199             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00200                 \textcolor{stringliteral}{"{}failed to parse power from \%s"{}} \% value}
+\DoxyCodeLine{00201             )}
+\DoxyCodeLine{00202         \textcolor{keywordflow}{return} float(value[:-\/3])}
+\DoxyCodeLine{00203 }
+\DoxyCodeLine{00204 }
+
+\end{DoxyCode}
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a1ae907c9f13da8ebdbc00aed7c40f122}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_a1ae907c9f13da8ebdbc00aed7c40f122}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!show\_power\_uW@{show\_power\_uW}}
 \index{show\_power\_uW@{show\_power\_uW}!microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}}
@@ -131,6 +302,23 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00192}{192}} of 
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{179}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00179     \textcolor{keyword}{def }show\_power\_uW(self) -\/> float:}
+\DoxyCodeLine{00180         \textcolor{stringliteral}{"{}"{}"{}Returns actual laser power in µW."{}"{}"{}}}
+\DoxyCodeLine{00181         answer = self.command(b\textcolor{stringliteral}{"{}show power"{}})}
+\DoxyCodeLine{00182         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} answer.startswith(b\textcolor{stringliteral}{"{}PIC  = "{}}) \textcolor{keywordflow}{and} \textcolor{keywordflow}{not} answer.endswith(b\textcolor{stringliteral}{"{} uW  "{}}):}
+\DoxyCodeLine{00183             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_device_error}{microscope.DeviceError}}(}
+\DoxyCodeLine{00184                 \textcolor{stringliteral}{"{}failed to parse power from answer: \%s"{}} \% answer}
+\DoxyCodeLine{00185             )}
+\DoxyCodeLine{00186         \textcolor{keywordflow}{return} float(answer[7:-\/5])}
+\DoxyCodeLine{00187 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
+
 \mbox{\Hypertarget{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_aef2726bafd493cb8ea6249c2d9cb2eb1}\label{classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection_aef2726bafd493cb8ea6249c2d9cb2eb1}} 
 \index{microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}!status\_laser@{status\_laser}}
 \index{status\_laser@{status\_laser}!microscope.lights.toptica.\_iBeamConnection@{microscope.lights.toptica.\_iBeamConnection}}
@@ -141,6 +329,18 @@ Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00179}{179}} of 
  
 
 Definition at line \mbox{\hyperlink{lights_2toptica_8py_source_l00188}{188}} of file \mbox{\hyperlink{lights_2toptica_8py_source}{toptica.\+py}}.
+
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00188     \textcolor{keyword}{def }status\_laser(self) -\/> bytes:}
+\DoxyCodeLine{00189         \textcolor{stringliteral}{"{}"{}"{}Returns actual status of the LD driver (ON or OFF)."{}"{}"{}}}
+\DoxyCodeLine{00190         \textcolor{keywordflow}{return} self.command(b\textcolor{stringliteral}{"{}status laser"{}})}
+\DoxyCodeLine{00191 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{prior_8py_source_l00080}{microscope.\+controllers.\+prior.\+\_\+\+Pro\+Scan\+IIIConnection.\+command()}}, \mbox{\hyperlink{lights_2toptica_8py_source_l00114}{microscope.\+lights.\+toptica.\+\_\+i\+Beam\+Connection.\+command()}}, \mbox{\hyperlink{ludl_8py_source_l00142}{microscope.\+stages.\+ludl.\+\_\+\+Ludl\+Controller.\+command()}}, and \mbox{\hyperlink{zaber_8py_source_l00189}{microscope.\+controllers.\+zaber.\+\_\+\+Zaber\+Device\+Connection.\+command()}}.
 
 
 

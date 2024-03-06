@@ -90,6 +90,24 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00100}{100}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00280}{280}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00281         \{}
+\DoxyCodeLine{00282             \textcolor{comment}{// Initialize a new byte array for RGB24 format}}
+\DoxyCodeLine{00283             \textcolor{keywordtype}{byte}[] rgbArray = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[(rgbaArray.Length / 4) * 3];}
+\DoxyCodeLine{00284 }
+\DoxyCodeLine{00285             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0, j = 0; i < rgbaArray.Length; i += 4, j += 3)}
+\DoxyCodeLine{00286             \{}
+\DoxyCodeLine{00287                 \textcolor{comment}{// Copy the R, G, B values, skip the A value}}
+\DoxyCodeLine{00288                 rgbArray[j] = rgbaArray[i + 2];     \textcolor{comment}{// B}}
+\DoxyCodeLine{00289                 rgbArray[j + 1] = rgbaArray[i + 1]; \textcolor{comment}{// G}}
+\DoxyCodeLine{00290                 rgbArray[j + 2] = rgbaArray[i]; \textcolor{comment}{// R}}
+\DoxyCodeLine{00291             \}}
+\DoxyCodeLine{00292 }
+\DoxyCodeLine{00293             \textcolor{keywordflow}{return} rgbArray;}
+\DoxyCodeLine{00294         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a5d94f533cf75e177754efbaf2697cd23}\label{class_bio_imager_1_1_slide_source_base_a5d94f533cf75e177754efbaf2697cd23}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Create@{Create}}
 \index{Create@{Create}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -100,6 +118,30 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00280}{280}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00118}{118}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00119         \{}
+\DoxyCodeLine{00120             }
+\DoxyCodeLine{00121             var ext = Path.GetExtension(source.file).ToUpper();}
+\DoxyCodeLine{00122             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00123             \{}
+\DoxyCodeLine{00124                 \textcolor{keywordflow}{if} (keyValuePairs.TryGetValue(ext, out var factory) \&\& factory != \textcolor{keyword}{null})}
+\DoxyCodeLine{00125                     \textcolor{keywordflow}{return} factory.Invoke(source.file, enableCache);}
+\DoxyCodeLine{00126 }
+\DoxyCodeLine{00127                 \textcolor{keywordflow}{if} (!\textcolor{keywordtype}{string}.IsNullOrEmpty(SlideBase.DetectVendor(source.file)))}
+\DoxyCodeLine{00128                 \{}
+\DoxyCodeLine{00129                     SlideBase b = \textcolor{keyword}{new} SlideBase(source, im, enableCache);}
+\DoxyCodeLine{00130                     }
+\DoxyCodeLine{00131                 \}}
+\DoxyCodeLine{00132             \}}
+\DoxyCodeLine{00133             \textcolor{keywordflow}{catch} (Exception e) }
+\DoxyCodeLine{00134             \{ }
+\DoxyCodeLine{00135                 Console.WriteLine(e.Message); }
+\DoxyCodeLine{00136             \}}
+\DoxyCodeLine{00137             \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00138         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a717e49bce0c6ae959213d258922554e6}\label{class_bio_imager_1_1_slide_source_base_a717e49bce0c6ae959213d258922554e6}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Dispose@{Dispose}}
 \index{Dispose@{Dispose}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -110,6 +152,14 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00118}{118}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00256}{256}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00257         \{}
+\DoxyCodeLine{00258             Dispose(disposing: \textcolor{keyword}{true});}
+\DoxyCodeLine{00259             GC.SuppressFinalize(\textcolor{keyword}{this});}
+\DoxyCodeLine{00260         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a416d0097f1f3f7861aa9649f36545b59}\label{class_bio_imager_1_1_slide_source_base_a416d0097f1f3f7861aa9649f36545b59}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Dispose@{Dispose}}
 \index{Dispose@{Dispose}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -120,6 +170,20 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00256}{256}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00239}{239}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00240         \{}
+\DoxyCodeLine{00241             \textcolor{keywordflow}{if} (!disposedValue)}
+\DoxyCodeLine{00242             \{}
+\DoxyCodeLine{00243                 \textcolor{keywordflow}{if} (disposing)}
+\DoxyCodeLine{00244                 \{}
+\DoxyCodeLine{00245                     \textcolor{comment}{//\_bgraCache.Dispose();}}
+\DoxyCodeLine{00246                 \}}
+\DoxyCodeLine{00247                 disposedValue = \textcolor{keyword}{true};}
+\DoxyCodeLine{00248             \}}
+\DoxyCodeLine{00249         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a7367dc8bad3ba6cd287a6f28c7361eb6}\label{class_bio_imager_1_1_slide_source_base_a7367dc8bad3ba6cd287a6f28c7361eb6}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!GetExternImages@{GetExternImages}}
 \index{GetExternImages@{GetExternImages}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -151,6 +215,29 @@ Implemented in \mbox{\hyperlink{class_bio_imager_1_1_slide_base_a428a8dbae75b752
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00201}{201}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00202         \{}
+\DoxyCodeLine{00203             \textcolor{keywordtype}{int} width = image.Width;}
+\DoxyCodeLine{00204             \textcolor{keywordtype}{int} height = image.Height;}
+\DoxyCodeLine{00205             \textcolor{keywordtype}{byte}[] rgbBytes = \textcolor{keyword}{new} \textcolor{keywordtype}{byte}[width * height * 3]; \textcolor{comment}{// 3 bytes per pixel (RGB)}}
+\DoxyCodeLine{00206 }
+\DoxyCodeLine{00207             \textcolor{keywordtype}{int} byteIndex = 0;}
+\DoxyCodeLine{00208             \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < height; y++)}
+\DoxyCodeLine{00209             \{}
+\DoxyCodeLine{00210                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < width; x++)}
+\DoxyCodeLine{00211                 \{}
+\DoxyCodeLine{00212                     Rgb24 pixel = image[x, y];}
+\DoxyCodeLine{00213                     rgbBytes[byteIndex++] = pixel.R;}
+\DoxyCodeLine{00214                     rgbBytes[byteIndex++] = pixel.G;}
+\DoxyCodeLine{00215                     rgbBytes[byteIndex++] = pixel.B;}
+\DoxyCodeLine{00216                 \}}
+\DoxyCodeLine{00217             \}}
+\DoxyCodeLine{00218 }
+\DoxyCodeLine{00219             \textcolor{keywordflow}{return} rgbBytes;}
+\DoxyCodeLine{00220         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_ae6db3647a6652573b190bfd9ce493ae6}\label{class_bio_imager_1_1_slide_source_base_ae6db3647a6652573b190bfd9ce493ae6}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!GetSlice@{GetSlice}}
 \index{GetSlice@{GetSlice}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -177,6 +264,67 @@ Implements \mbox{\hyperlink{interface_bio_imager_1_1_i_slice_provider_a7be2d4f5f
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00147}{147}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00148         \{}
+\DoxyCodeLine{00149             \textcolor{keywordflow}{if} (sliceInfo.Extent.Width == 0 || sliceInfo.Extent.Height == 0)}
+\DoxyCodeLine{00150                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00151 }
+\DoxyCodeLine{00152             \textcolor{keywordflow}{if} (cache == \textcolor{keyword}{null})}
+\DoxyCodeLine{00153                 cache = \textcolor{keyword}{new} TileCache(\textcolor{keyword}{this});}
+\DoxyCodeLine{00154             var curLevel = Image.BioImage.\mbox{\hyperlink{class_bio_imager_1_1_bio_image_aaa23a18c990381351b03bc5155ff32c5}{LevelFromResolution}}(sliceInfo.Resolution);}
+\DoxyCodeLine{00155             var curUnitsPerPixel = Schema.Resolutions[curLevel].UnitsPerPixel;}
+\DoxyCodeLine{00156             var tileInfos = Schema.GetTileInfos(sliceInfo.Extent, curLevel);}
+\DoxyCodeLine{00157             List<Tuple<Extent, byte[]>> tiles = \textcolor{keyword}{new} List<Tuple<Extent, byte[]>>();}
+\DoxyCodeLine{00158             \textcolor{keywordflow}{foreach} (TileInfo t \textcolor{keywordflow}{in} tileInfos)}
+\DoxyCodeLine{00159             \{}
+\DoxyCodeLine{00160                 \textcolor{keywordtype}{byte}[] c = await cache.GetTile(t);}
+\DoxyCodeLine{00161                 \textcolor{keywordflow}{if}(c!=\textcolor{keyword}{null})}
+\DoxyCodeLine{00162                 tiles.Add(Tuple.Create(t.Extent.WorldToPixelInvertedY(curUnitsPerPixel), c));}
+\DoxyCodeLine{00163             \}}
+\DoxyCodeLine{00164             var srcPixelExtent = sliceInfo.Extent.WorldToPixelInvertedY(curUnitsPerPixel);}
+\DoxyCodeLine{00165             var dstPixelExtent = sliceInfo.Extent.WorldToPixelInvertedY(sliceInfo.Resolution);}
+\DoxyCodeLine{00166             var dstPixelHeight = sliceInfo.Parame.DstPixelHeight > 0 ? sliceInfo.Parame.DstPixelHeight : dstPixelExtent.Height;}
+\DoxyCodeLine{00167             var dstPixelWidth = sliceInfo.Parame.DstPixelWidth > 0 ? sliceInfo.Parame.DstPixelWidth : dstPixelExtent.Width;}
+\DoxyCodeLine{00168             destExtent = \textcolor{keyword}{new} Extent(0, 0, dstPixelWidth, dstPixelHeight);}
+\DoxyCodeLine{00169             sourceExtent = srcPixelExtent;}
+\DoxyCodeLine{00170             \textcolor{keywordflow}{if} (UseVips)}
+\DoxyCodeLine{00171             \{}
+\DoxyCodeLine{00172                 \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00173                 \{}
+\DoxyCodeLine{00174                     NetVips.Image im = OpenSlideGTK.ImageUtil.JoinVips(tiles, srcPixelExtent, \textcolor{keyword}{new} Extent(0, 0, dstPixelWidth, dstPixelHeight));}
+\DoxyCodeLine{00175                     LastSlice = im.WriteToMemory();}
+\DoxyCodeLine{00176                     \textcolor{keywordflow}{return} LastSlice;}
+\DoxyCodeLine{00177                 \}}
+\DoxyCodeLine{00178                 \textcolor{keywordflow}{catch} (Exception e)}
+\DoxyCodeLine{00179                 \{}
+\DoxyCodeLine{00180                     UseVips = \textcolor{keyword}{false};}
+\DoxyCodeLine{00181                     Console.WriteLine(\textcolor{stringliteral}{"{}Failed to use LibVips please install Libvips for your platform."{}});}
+\DoxyCodeLine{00182                     Console.WriteLine(e.Message);}
+\DoxyCodeLine{00183                 \}}
+\DoxyCodeLine{00184             \}}
+\DoxyCodeLine{00185             \textcolor{keywordflow}{try}}
+\DoxyCodeLine{00186             \{}
+\DoxyCodeLine{00187                 Image<Rgb24> im = OpenSlideGTK.ImageUtil.Join(tiles, srcPixelExtent, \textcolor{keyword}{new} Extent(0, 0, dstPixelWidth, dstPixelHeight));}
+\DoxyCodeLine{00188                 \textcolor{keywordflow}{if} (im != \textcolor{keyword}{null})}
+\DoxyCodeLine{00189                 \{}
+\DoxyCodeLine{00190                     LastSlice = GetRgb24Bytes(im);}
+\DoxyCodeLine{00191                     im.Dispose();}
+\DoxyCodeLine{00192                 \}}
+\DoxyCodeLine{00193             \}}
+\DoxyCodeLine{00194             \textcolor{keywordflow}{catch} (Exception er)}
+\DoxyCodeLine{00195             \{}
+\DoxyCodeLine{00196                 Console.WriteLine(er.Message);}
+\DoxyCodeLine{00197                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00198             \}}
+\DoxyCodeLine{00199             \textcolor{keywordflow}{return} LastSlice;}
+\DoxyCodeLine{00200         \}}
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{_i_slide_source_8cs_source_l00378}{Bio\+Imager.\+Slice\+Info.\+Extent}}, \mbox{\hyperlink{_bio_8cs_source_l02589}{Bio\+Imager.\+Bio\+Image.\+Level\+From\+Resolution()}}, and \mbox{\hyperlink{_i_slide_source_8cs_source_l00369}{Bio\+Imager.\+Slice\+Info.\+Resolution}}.
+
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a6cc776b373c9f0a4d34cae225455a9f6}\label{class_bio_imager_1_1_slide_source_base_a6cc776b373c9f0a4d34cae225455a9f6}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!GetTileAsync@{GetTileAsync}}
 \index{GetTileAsync@{GetTileAsync}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -187,6 +335,27 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00147}{147}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00262}{262}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00263         \{}
+\DoxyCodeLine{00264             \textcolor{keywordflow}{if} (tileInfo == \textcolor{keyword}{null})}
+\DoxyCodeLine{00265                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00266             var r = Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;}
+\DoxyCodeLine{00267             var tileWidth = Schema.Resolutions[tileInfo.Index.Level].TileWidth;}
+\DoxyCodeLine{00268             var tileHeight = Schema.Resolutions[tileInfo.Index.Level].TileHeight;}
+\DoxyCodeLine{00269             var curLevelOffsetXPixel = tileInfo.Extent.MinX / Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;}
+\DoxyCodeLine{00270             var curLevelOffsetYPixel = -\/tileInfo.Extent.MaxY / Schema.Resolutions[tileInfo.Index.Level].UnitsPerPixel;}
+\DoxyCodeLine{00271             var curTileWidth = (int)(tileInfo.Extent.MaxX > Schema.Extent.Width ? tileWidth -\/ (tileInfo.Extent.MaxX -\/ Schema.Extent.Width) / r : tileWidth);}
+\DoxyCodeLine{00272             var curTileHeight = (int)(-\/tileInfo.Extent.MinY > Schema.Extent.Height ? tileHeight -\/ (-\/tileInfo.Extent.MinY -\/ Schema.Extent.Height) / r : tileHeight);}
+\DoxyCodeLine{00273             var bgraData = await Image.ReadRegionAsync(tileInfo.Index.Level, (\textcolor{keywordtype}{long})curLevelOffsetXPixel, (long)curLevelOffsetYPixel, curTileWidth, curTileHeight);}
+\DoxyCodeLine{00274             \textcolor{comment}{//We check to see if the data is valid.}}
+\DoxyCodeLine{00275             \textcolor{keywordflow}{if}(bgraData == \textcolor{keyword}{null})}
+\DoxyCodeLine{00276                 \textcolor{keywordflow}{return} \textcolor{keyword}{null};}
+\DoxyCodeLine{00277             \textcolor{keywordtype}{byte}[] bm = ConvertRgbaToRgb(bgraData);}
+\DoxyCodeLine{00278             \textcolor{keywordflow}{return} bm;}
+\DoxyCodeLine{00279         \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a024daabc1a8e7435c20092d280d11b1d}\label{class_bio_imager_1_1_slide_source_base_a024daabc1a8e7435c20092d280d11b1d}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Resister@{Resister}}
 \index{Resister@{Resister}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -208,6 +377,13 @@ resister decode for Specific format
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00112}{112}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00113         \{}
+\DoxyCodeLine{00114             keyValuePairs.Add(extensionUpper, factory);}
+\DoxyCodeLine{00115         \}}
+
+\end{DoxyCode}
 
 
 \doxysubsection{Member Data Documentation}
@@ -284,6 +460,11 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00145}{145}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00228}{228}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00228 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a5f513298d37213d2b41de101e660e60a}\label{class_bio_imager_1_1_slide_source_base_a5f513298d37213d2b41de101e660e60a}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!ExternInfo@{ExternInfo}}
 \index{ExternInfo@{ExternInfo}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -302,6 +483,11 @@ Implements \mbox{\hyperlink{interface_bio_imager_1_1_i_slide_extern_info_aec0a93
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00230}{230}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00230 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a2e014ad4ce5216c31f5fbfc8d72f0650}\label{class_bio_imager_1_1_slide_source_base_a2e014ad4ce5216c31f5fbfc8d72f0650}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Image@{Image}}
 \index{Image@{Image}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -312,6 +498,11 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00230}{230}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00222}{222}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00222 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}\label{class_bio_imager_1_1_slide_source_base_afaba769547e1f9bab7389b22e208d59f}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!MinUnitsPerPixel@{MinUnitsPerPixel}}
 \index{MinUnitsPerPixel@{MinUnitsPerPixel}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -330,6 +521,11 @@ Implements \mbox{\hyperlink{interface_bio_imager_1_1_i_slice_provider_a49186589b
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00140}{140}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00140 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_ace56c9aed484b5cc24af8d4d104bd10e}\label{class_bio_imager_1_1_slide_source_base_ace56c9aed484b5cc24af8d4d104bd10e}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Name@{Name}}
 \index{Name@{Name}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -340,6 +536,11 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00140}{140}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00226}{226}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00226 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a5154baaeff461610151b478a7d413580}\label{class_bio_imager_1_1_slide_source_base_a5154baaeff461610151b478a7d413580}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Schema@{Schema}}
 \index{Schema@{Schema}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -350,6 +551,11 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00226}{226}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00224}{224}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00224 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a9c5def53048e5841d713adb79e649077}\label{class_bio_imager_1_1_slide_source_base_a9c5def53048e5841d713adb79e649077}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!Source@{Source}}
 \index{Source@{Source}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -368,6 +574,11 @@ Implements \mbox{\hyperlink{interface_bio_imager_1_1_i_slide_extern_info_acb0979
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00232}{232}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00232 \{ \textcolor{keyword}{get}; \textcolor{keyword}{protected} \textcolor{keyword}{set}; \}}
+
+\end{DoxyCode}
 \mbox{\Hypertarget{class_bio_imager_1_1_slide_source_base_a19cef1a5cb0164fe71b798b5c4ae9e47}\label{class_bio_imager_1_1_slide_source_base_a19cef1a5cb0164fe71b798b5c4ae9e47}} 
 \index{BioImager.SlideSourceBase@{BioImager.SlideSourceBase}!UseRealResolution@{UseRealResolution}}
 \index{UseRealResolution@{UseRealResolution}!BioImager.SlideSourceBase@{BioImager.SlideSourceBase}}
@@ -378,6 +589,11 @@ Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00232}{232}} of 
 
 Definition at line \mbox{\hyperlink{_i_slide_source_8cs_source_l00103}{103}} of file \mbox{\hyperlink{_i_slide_source_8cs_source}{ISlide\+Source.\+cs}}.
 
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00103 \{ \textcolor{keyword}{get}; \textcolor{keyword}{set}; \} = \textcolor{keyword}{true};}
+
+\end{DoxyCode}
 
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}

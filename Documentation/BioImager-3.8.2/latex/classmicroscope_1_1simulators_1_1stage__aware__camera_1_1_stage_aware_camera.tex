@@ -51,6 +51,49 @@ Reimplemented from \mbox{\hyperlink{classmicroscope_1_1simulators_1_1_simulated_
 Definition at line \mbox{\hyperlink{stage__aware__camera_8py_source_l00061}{61}} of file \mbox{\hyperlink{stage__aware__camera_8py_source}{stage\+\_\+aware\+\_\+camera.\+py}}.
 
 
+\begin{DoxyCode}{0}
+\DoxyCodeLine{00067     ) -\/> \textcolor{keywordtype}{None}:}
+\DoxyCodeLine{00068         super().\_\_init\_\_(**kwargs)}
+\DoxyCodeLine{00069         self.\_image = image}
+\DoxyCodeLine{00070         self.\_stage = stage}
+\DoxyCodeLine{00071         self.\_filterwheel = filterwheel}
+\DoxyCodeLine{00072         self.\_pixel\_size = 1.0}
+\DoxyCodeLine{00073 }
+\DoxyCodeLine{00074         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} all([name \textcolor{keywordflow}{in} stage.axes.keys() \textcolor{keywordflow}{for} name \textcolor{keywordflow}{in} [\textcolor{stringliteral}{"{}x"{}}, \textcolor{stringliteral}{"{}y"{}}, \textcolor{stringliteral}{"{}z"{}}]]):}
+\DoxyCodeLine{00075             \textcolor{keywordflow}{raise} \mbox{\hyperlink{classmicroscope_1_1_initialise_error}{microscope.InitialiseError}}(}
+\DoxyCodeLine{00076                 \textcolor{stringliteral}{"{}stage for StageAwareCamera requires x, y, and z axis"{}}}
+\DoxyCodeLine{00077             )}
+\DoxyCodeLine{00078         \textcolor{keywordflow}{if} image.shape[2] != self.\_filterwheel.n\_positions:}
+\DoxyCodeLine{00079             \textcolor{keywordflow}{raise} ValueError(}
+\DoxyCodeLine{00080                 \textcolor{stringliteral}{"{}image has \%d channels but filterwheel has \%d positions"{}}}
+\DoxyCodeLine{00081             )}
+\DoxyCodeLine{00082 }
+\DoxyCodeLine{00083         \textcolor{comment}{\# Empty the settings dict, most of them are for testing}}
+\DoxyCodeLine{00084         \textcolor{comment}{\# settings, and the rest is specific to the image generator}}
+\DoxyCodeLine{00085         \textcolor{comment}{\# which we don't need.  We probably should have a simpler}}
+\DoxyCodeLine{00086         \textcolor{comment}{\# SimulatedCamera that we could subclass.}}
+\DoxyCodeLine{00087         self.\_settings = \{\}}
+\DoxyCodeLine{00088 }
+\DoxyCodeLine{00089         self.add\_setting(}
+\DoxyCodeLine{00090             \textcolor{stringliteral}{"{}pixel size"{}},}
+\DoxyCodeLine{00091             \textcolor{stringliteral}{"{}float"{}},}
+\DoxyCodeLine{00092             \textcolor{keyword}{lambda}: self.\_pixel\_size,}
+\DoxyCodeLine{00093             \textcolor{keyword}{lambda} pxsz: setattr(self, \textcolor{stringliteral}{"{}\_pixel\_size"{}}, pxsz),}
+\DoxyCodeLine{00094             \textcolor{comment}{\# technically should be: (nextafter(0.0, inf), nextafter(inf, 0.0))}}
+\DoxyCodeLine{00095             values=(0.0, float(\textcolor{stringliteral}{"{}inf"{}})),}
+\DoxyCodeLine{00096         )}
+\DoxyCodeLine{00097 }
+
+\end{DoxyCode}
+
+
+References \mbox{\hyperlink{stage__aware__camera_8py_source_l00067}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}, \mbox{\hyperlink{abc_8py_source_l00576}{microscope.\+abc.\+Data\+Device.\+\_\+acquiring}}, \mbox{\hyperlink{andorsdk3_8py_source_l00331}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+acquiring()}}, \mbox{\hyperlink{atmcd_8py_source_l01412}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+acquiring()}}, \mbox{\hyperlink{picam_8py_source_l00058}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{pvcam_8py_source_l01610}{microscope.\+cameras.\+pvcam.\+PVCamera.\+\_\+acquiring}}, \mbox{\hyperlink{ximea_8py_source_l00190}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00210}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+acquiring}}, \mbox{\hyperlink{atmcd_8py_source_l01378}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+binning}}, \mbox{\hyperlink{ximea_8py_source_l00196}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+binning}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00161}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+binning}}, \mbox{\hyperlink{andorsdk3_8py_source_l00262}{microscope.\+cameras.\+andorsdk3.\+Andor\+SDK3.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{picam_8py_source_l00059}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00211}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+exposure\+\_\+time}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00071}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+filterwheel}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00069}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+image}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00072}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+pixel\+\_\+size}}, \mbox{\hyperlink{atmcd_8py_source_l01377}{microscope.\+cameras.\+atmcd.\+Andor\+Atmcd.\+\_\+roi}}, \mbox{\hyperlink{ximea_8py_source_l00195}{microscope.\+cameras.\+ximea.\+Ximea\+Camera.\+\_\+roi}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00160}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+roi}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00214}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+sent}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00087}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+settings}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00070}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+stage}}, \mbox{\hyperlink{picam_8py_source_l00060}{microscope.\+cameras.\+picam.\+Pi\+Camera.\+\_\+triggered}}, \mbox{\hyperlink{simulators_2____init_____8py_source_l00212}{microscope.\+simulators.\+Simulated\+Camera.\+\_\+triggered}}, \mbox{\hyperlink{stage__aware__camera_8py_source_l00099}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+triggered}}, and \mbox{\hyperlink{abc_8py_source_l00407}{microscope.\+abc.\+Device.\+add\+\_\+setting()}}.
+
+
+
+Referenced by \mbox{\hyperlink{stage__aware__camera_8py_source_l00067}{microscope.\+simulators.\+stage\+\_\+aware\+\_\+camera.\+Stage\+Aware\+Camera.\+\_\+\+\_\+init\+\_\+\+\_\+()}}.
+
+
 
 The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
 \item 

@@ -201,7 +201,33 @@ limits.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00421">421</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  421</span>    <span class="keyword">def </span>__init__(self, device: microscope.abc.Stage, *args, **kwargs) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  422</span>        super().__init__(*args, **kwargs)</div>
+<div class="line"><span class="lineno">  423</span>        self._device = device</div>
+<div class="line"><span class="lineno">  424</span> </div>
+<div class="line"><span class="lineno">  425</span>        layout = QtWidgets.QFormLayout(self)</div>
+<div class="line"><span class="lineno">  426</span>        <span class="keywordflow">for</span> name, axis <span class="keywordflow">in</span> self._device.axes.items():</div>
+<div class="line"><span class="lineno">  427</span>            label = <span class="stringliteral">&quot;%s (%s : %s)&quot;</span> % (</div>
+<div class="line"><span class="lineno">  428</span>                name,</div>
+<div class="line"><span class="lineno">  429</span>                axis.limits.lower,</div>
+<div class="line"><span class="lineno">  430</span>                axis.limits.upper,</div>
+<div class="line"><span class="lineno">  431</span>            )</div>
+<div class="line"><span class="lineno">  432</span> </div>
+<div class="line"><span class="lineno">  433</span>            position_box = QtWidgets.QDoubleSpinBox(parent=self)</div>
+<div class="line"><span class="lineno">  434</span>            position_box.setMinimum(axis.limits.lower)</div>
+<div class="line"><span class="lineno">  435</span>            position_box.setMaximum(axis.limits.upper)</div>
+<div class="line"><span class="lineno">  436</span>            position_box.setValue(axis.position)</div>
+<div class="line"><span class="lineno">  437</span>            position_box.setSingleStep(1.0)</div>
+<div class="line"><span class="lineno">  438</span> </div>
+<div class="line"><span class="lineno">  439</span>            <span class="keyword">def </span>setPositionSlot(position: float, name: str = name):</div>
+<div class="line"><span class="lineno">  440</span>                <span class="keywordflow">return</span> self.setPosition(name, position)</div>
+<div class="line"><span class="lineno">  441</span> </div>
+<div class="line"><span class="lineno">  442</span>            position_box.valueChanged.connect(setPositionSlot)</div>
+<div class="line"><span class="lineno">  443</span> </div>
+<div class="line"><span class="lineno">  444</span>            layout.addRow(label, position_box)</div>
+<div class="line"><span class="lineno">  445</span>        self.setLayout(layout)</div>
+<div class="line"><span class="lineno">  446</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
@@ -238,7 +264,11 @@ limits.
 </div><div class="memdoc">
 
 <p class="definition">Definition at line <a class="el" href="gui_8py_source.html#l00447">447</a> of file <a class="el" href="gui_8py_source.html">gui.py</a>.</p>
-
+<div class="fragment"><div class="line"><span class="lineno">  447</span>    <span class="keyword">def </span>setPosition(self, name: str, position: float) -&gt; <span class="keywordtype">None</span>:</div>
+<div class="line"><span class="lineno">  448</span>        self._device.axes[name].move_to(position)</div>
+<div class="line"><span class="lineno">  449</span> </div>
+<div class="line"><span class="lineno">  450</span> </div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
