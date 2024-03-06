@@ -1,5 +1,6 @@
 var class_bio_core_1_1_r_o_i =
 [
+    [ "Mask", "class_bio_core_1_1_r_o_i_1_1_mask.html", null ],
     [ "AddPoint", "class_bio_core_1_1_r_o_i.html#a31abc01f44ac1cad6941e20019149b68", null ],
     [ "AddPoints", "class_bio_core_1_1_r_o_i.html#a517b979889a4cae1a6fbfce8fa80ea21", null ],
     [ "AddPoints", "class_bio_core_1_1_r_o_i.html#a4facd6c75fec8bf710a30c8593089c99", null ],

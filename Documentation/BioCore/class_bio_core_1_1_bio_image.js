@@ -1,6 +1,7 @@
 var class_bio_core_1_1_bio_image =
 [
     [ "ImageJDesc", "class_bio_core_1_1_bio_image_1_1_image_j_desc.html", null ],
+    [ "WellPlate", "class_bio_core_1_1_bio_image_1_1_well_plate.html", "class_bio_core_1_1_bio_image_1_1_well_plate" ],
     [ "Bake", "class_bio_core_1_1_bio_image.html#acdaf80c3b9b53e2999005882af5a50ff", null ],
     [ "Bake", "class_bio_core_1_1_bio_image.html#abbe0ea2173a47c43d594801702bd14fe", null ],
     [ "Dispose", "class_bio_core_1_1_bio_image.html#a3b05057b01b592b1a58101b254c28b71", null ],
@@ -15,13 +16,16 @@ var class_bio_core_1_1_bio_image =
     [ "GetImageByCoord", "class_bio_core_1_1_bio_image.html#aaeefd4b70e62837cb6088b3fe9f95f20", null ],
     [ "GetIndex", "class_bio_core_1_1_bio_image.html#a367c2b154439034c127eb83adbae6d48", null ],
     [ "GetIndexRGB", "class_bio_core_1_1_bio_image.html#aaf9debe417bb92ae13bce1f8d7fa324b", null ],
+    [ "GetLevelDownsample", "class_bio_core_1_1_bio_image.html#a45a576274055df669ba423143a14a9fe", null ],
     [ "GetRGBBitmap", "class_bio_core_1_1_bio_image.html#a6f5a265dfbf263e49b5e2e6dabac59b1", null ],
+    [ "GetUnitPerPixel", "class_bio_core_1_1_bio_image.html#a567e496ef55dc7df31a0c3a80714ffc6", null ],
     [ "GetValue", "class_bio_core_1_1_bio_image.html#a56ee6fed97e9d9b77e5ce4d37346393f", null ],
     [ "GetValue", "class_bio_core_1_1_bio_image.html#ab26322062ee545bac46127ba6e93a396", null ],
     [ "GetValue", "class_bio_core_1_1_bio_image.html#ae3964c18047d4404225434ab1c1fd2f9", null ],
     [ "GetValueRGB", "class_bio_core_1_1_bio_image.html#a6439dbf5bc507ccdc692311b01c1689d", null ],
     [ "GetValueRGB", "class_bio_core_1_1_bio_image.html#ae34035b0edd7e5d57c22505bd0e006c7", null ],
     [ "GetValueRGB", "class_bio_core_1_1_bio_image.html#a0297b2f5117c0d6f734c662adca4366b", null ],
+    [ "LevelFromResolution", "class_bio_core_1_1_bio_image.html#ad0e29f500ae74a1f4a90b69d40fb0a4c", null ],
     [ "RotateFlip", "class_bio_core_1_1_bio_image.html#add7c632329d0ed6313cff7f6c6159d8a", null ],
     [ "SetValue", "class_bio_core_1_1_bio_image.html#a1b00ff3b2a2537f4186ac7ab82410b8d", null ],
     [ "SetValue", "class_bio_core_1_1_bio_image.html#afe4018b741e3a39a627b4adc1b2fa380", null ],
@@ -48,6 +52,7 @@ var class_bio_core_1_1_bio_image =
     [ "ToStageSpace", "class_bio_core_1_1_bio_image.html#a7b314b28e32dab771e59390ed7afd916", null ],
     [ "ToString", "class_bio_core_1_1_bio_image.html#a220e33ce5f83ceedde0edb02455c274f", null ],
     [ "Update", "class_bio_core_1_1_bio_image.html#a62dc999d3526641f5897a9d9844b9648", null ],
+    [ "UpdateBuffersPyramidal", "class_bio_core_1_1_bio_image.html#a07d15a5947653e0d068e3176e9229497", null ],
     [ "UpdateCoords", "class_bio_core_1_1_bio_image.html#ab062c92b19e36e0ab196341b8e4e4d03", null ],
     [ "UpdateCoords", "class_bio_core_1_1_bio_image.html#a16d002fc32f6710fcc0621b56a0abdfa", null ]
 ];

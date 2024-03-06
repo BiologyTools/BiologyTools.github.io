@@ -16,6 +16,5 @@ var searchData=
   ['pointstostring_13',['PointsToString',['../class_bio_core_1_1_r_o_i.html#a600851fcd535664e5b59fc375986d644',1,'BioCore::ROI']]],
   ['progress_14',['Progress',['../class_bio_core_1_1_progress.html',1,'BioCore']]],
   ['pxhmicron_15',['PxHmicron',['../class_bio_core_1_1_image_view.html#af28b4d360810b6818d425744418bc9f0',1,'BioCore::ImageView']]],
-  ['pxwmicron_16',['PxWmicron',['../class_bio_core_1_1_image_view.html#a65aca25bba7efa87392fec16eafcc881',1,'BioCore::ImageView']]],
-  ['pyramidalorigin_17',['PyramidalOrigin',['../class_bio_core_1_1_image_view.html#a566a43b2d5da5a908f6fbed810cce676',1,'BioCore::ImageView']]]
+  ['pxwmicron_16',['PxWmicron',['../class_bio_core_1_1_image_view.html#a65aca25bba7efa87392fec16eafcc881',1,'BioCore::ImageView']]]
 ];

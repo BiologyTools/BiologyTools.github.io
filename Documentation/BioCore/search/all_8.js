@@ -7,7 +7,7 @@ var searchData=
   ['imagestostack_4',['ImagesToStack',['../class_bio_core_1_1_images_to_stack.html',1,'BioCore.ImagesToStack'],['../class_bio_core_1_1_bio_image.html#adddc3124595801f62e1237770ed82a27',1,'BioCore.BioImage.ImagesToStack()']]],
   ['imagesview_5',['ImagesView',['../class_bio_core_1_1_source_1_1_images_view.html',1,'BioCore::Source']]],
   ['imagetoviewspace_6',['ImageToViewSpace',['../class_bio_core_1_1_image_view.html#afde8eb77544db9abb24f059ec8652c4d',1,'BioCore::ImageView']]],
-  ['imageview_7',['ImageView',['../class_bio_core_1_1_image_view.html',1,'BioCore.ImageView'],['../class_bio_core_1_1_image_view.html#ab14fec64ec62851512cdff5781b9bcb4',1,'BioCore.ImageView.ImageView(BioImage im, bool OpenWithOpenSlide=true)'],['../class_bio_core_1_1_image_view.html#ad5ea2967c4338fc8de19cb2b556138d8',1,'BioCore.ImageView.ImageView()']]],
+  ['imageview_7',['ImageView',['../class_bio_core_1_1_image_view.html',1,'BioCore.ImageView'],['../class_bio_core_1_1_image_view.html#aab76fd325de1604bf05b0573484150e7',1,'BioCore.ImageView.ImageView(BioImage im)'],['../class_bio_core_1_1_image_view.html#ad5ea2967c4338fc8de19cb2b556138d8',1,'BioCore.ImageView.ImageView()']]],
   ['imagewindow_8',['ImageWindow',['../class_bio_core_1_1_image_window.html',1,'BioCore']]],
   ['importroiscsv_9',['ImportROIsCSV',['../class_bio_core_1_1_bio_image.html#a4138d5367428802cf422df9eef0378a2',1,'BioCore::BioImage']]],
   ['init_10',['Init',['../class_bio_core_1_1_filter.html#aec093075efc1c80cc92b65bc13c31491',1,'BioCore::Filter']]],

@@ -2,7 +2,7 @@ var searchData=
 [
   ['imagestostack_0',['ImagesToStack',['../class_bio_core_1_1_bio_image.html#adddc3124595801f62e1237770ed82a27',1,'BioCore::BioImage']]],
   ['imagetoviewspace_1',['ImageToViewSpace',['../class_bio_core_1_1_image_view.html#afde8eb77544db9abb24f059ec8652c4d',1,'BioCore::ImageView']]],
-  ['imageview_2',['ImageView',['../class_bio_core_1_1_image_view.html#ab14fec64ec62851512cdff5781b9bcb4',1,'BioCore.ImageView.ImageView(BioImage im, bool OpenWithOpenSlide=true)'],['../class_bio_core_1_1_image_view.html#ad5ea2967c4338fc8de19cb2b556138d8',1,'BioCore.ImageView.ImageView()']]],
+  ['imageview_2',['ImageView',['../class_bio_core_1_1_image_view.html#aab76fd325de1604bf05b0573484150e7',1,'BioCore.ImageView.ImageView(BioImage im)'],['../class_bio_core_1_1_image_view.html#ad5ea2967c4338fc8de19cb2b556138d8',1,'BioCore.ImageView.ImageView()']]],
   ['importroiscsv_3',['ImportROIsCSV',['../class_bio_core_1_1_bio_image.html#a4138d5367428802cf422df9eef0378a2',1,'BioCore::BioImage']]],
   ['init_4',['Init',['../class_bio_core_1_1_filter.html#aec093075efc1c80cc92b65bc13c31491',1,'BioCore::Filter']]],
   ['initelements_5',['InitElements',['../class_bio_core_1_1_recordings.html#a7105dd1e3bd8f46e0478992e9443a4e9',1,'BioCore::Recordings']]],

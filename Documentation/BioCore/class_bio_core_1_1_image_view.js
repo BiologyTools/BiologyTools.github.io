@@ -1,6 +1,6 @@
 var class_bio_core_1_1_image_view =
 [
-    [ "ImageView", "class_bio_core_1_1_image_view.html#ab14fec64ec62851512cdff5781b9bcb4", null ],
+    [ "ImageView", "class_bio_core_1_1_image_view.html#aab76fd325de1604bf05b0573484150e7", null ],
     [ "ImageView", "class_bio_core_1_1_image_view.html#ad5ea2967c4338fc8de19cb2b556138d8", null ],
     [ "AddImage", "class_bio_core_1_1_image_view.html#a5808071db58946a57fa592fdd6a293ca", null ],
     [ "CopySelection", "class_bio_core_1_1_image_view.html#ab79bf133eb7f2a1a6578dcb7ebe52331", null ],
@@ -57,7 +57,6 @@ var class_bio_core_1_1_image_view =
     [ "Path", "class_bio_core_1_1_image_view.html#a488578d0ff2b54c353be0ea7384ba2d8", null ],
     [ "PxHmicron", "class_bio_core_1_1_image_view.html#af28b4d360810b6818d425744418bc9f0", null ],
     [ "PxWmicron", "class_bio_core_1_1_image_view.html#a65aca25bba7efa87392fec16eafcc881", null ],
-    [ "PyramidalOrigin", "class_bio_core_1_1_image_view.html#a566a43b2d5da5a908f6fbed810cce676", null ],
     [ "RChannel", "class_bio_core_1_1_image_view.html#a869deab4c625ee9a27a7e3e643e9944a", null ],
     [ "Resolution", "class_bio_core_1_1_image_view.html#aafa2eeefec9e50507c04b1ec3f3d1f23", null ],
     [ "Scale", "class_bio_core_1_1_image_view.html#a3856c80228cecc6e9d55ff499236b9da", null ],

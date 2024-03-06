@@ -60,7 +60,8 @@ var hierarchy =
       [ "BioCore.Graphics.Direct2D", "class_bio_core_1_1_graphics_1_1_direct2_d.html", null ],
       [ "BioCore.Graphics.Graphics", "class_bio_core_1_1_graphics_1_1_graphics.html", null ],
       [ "BioCore.Graphics.Pen", "struct_bio_core_1_1_graphics_1_1_pen.html", null ],
-      [ "BioCore.ImageView", "class_bio_core_1_1_image_view.html", null ]
+      [ "BioCore.ImageView", "class_bio_core_1_1_image_view.html", null ],
+      [ "BioCore.ROI.Mask", "class_bio_core_1_1_r_o_i_1_1_mask.html", null ]
     ] ],
     [ "BioCore.ImageInfo", "class_bio_core_1_1_image_info.html", null ],
     [ "BioCore.ImageJ", "class_bio_core_1_1_image_j.html", null ],
@@ -90,6 +91,7 @@ var hierarchy =
     [ "BioCore.ROI", "class_bio_core_1_1_r_o_i.html", null ],
     [ "BioCore.ImageJ.RoiDecoder", "class_bio_core_1_1_image_j_1_1_roi_decoder.html", null ],
     [ "BioCore.ImageJ.RoiEncoder", "class_bio_core_1_1_image_j_1_1_roi_encoder.html", null ],
+    [ "BioCore.BioImage.WellPlate.Well.Sample", "class_bio_core_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html", null ],
     [ "BioCore.Scripting.Script", "class_bio_core_1_1_scripting_1_1_script.html", null ],
     [ "BioCore.Stage", "class_bio_core_1_1_stage.html", null ],
     [ "BioCore.Scripting.State", "class_bio_core_1_1_scripting_1_1_state.html", null ],
@@ -106,6 +108,8 @@ var hierarchy =
       [ "BioCore.ImageView", "class_bio_core_1_1_image_view.html", null ]
     ] ],
     [ "BioCore.VolumeD", "struct_bio_core_1_1_volume_d.html", null ],
+    [ "BioCore.BioImage.WellPlate.Well", "class_bio_core_1_1_bio_image_1_1_well_plate_1_1_well.html", null ],
+    [ "BioCore.BioImage.WellPlate", "class_bio_core_1_1_bio_image_1_1_well_plate.html", null ],
     [ "BioCore.Win32", "class_bio_core_1_1_win32.html", null ],
     [ "BioCore.ZCT", "struct_bio_core_1_1_z_c_t.html", null ],
     [ "BioCore.ZCTXY", "struct_bio_core_1_1_z_c_t_x_y.html", null ]
