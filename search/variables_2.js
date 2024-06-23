@@ -1,0 +1,25 @@
+var searchData=
+[
+  ['c_5fposition_0',['C_POSITION',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#ad8ec3dd384ddccd6385741416d443dd4',1,'BioGTK::ImageJ::RoiDecoder']]],
+  ['cache_1',['cache',['../class_bio_1_1_slide_source_base.html#a1b47b7fb49c7b9322f4ef70095fb460b',1,'Bio::SlideSourceBase']]],
+  ['changer_2',['changer',['../class_bio_g_t_k_1_1_objectives.html#aa80964f96bd8f0cd3c10f1c7c2f8150c',1,'BioGTK::Objectives']]],
+  ['changertype_3',['changerType',['../class_bio_g_t_k_1_1_objectives.html#ad2cb693601566b493317489b24b08974',1,'BioGTK::Objectives']]],
+  ['channel_4',['channel',['../class_bio_g_t_k_1_1_histogram_control.html#ab467e7fb4f2b4c62f846ddfe06a14586',1,'BioGTK::HistogramControl']]],
+  ['channels_5',['Channels',['../class_bio_g_t_k_1_1_bio_image.html#a0b8b41e1220cc2059e9330d490adc9c9',1,'BioGTK::BioImage']]],
+  ['channels_6',['channels',['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a670eb57cc48ebb9065de33457a6e05ee',1,'BioGTK::BioImage::ImageJDesc']]],
+  ['closed_7',['closed',['../class_bio_g_t_k_1_1_r_o_i.html#a984c89049653f853166063b36c449d0a',1,'BioGTK::ROI']]],
+  ['color_8',['color',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#abd4e6fd32d210d8d08f43b09dc36da5c',1,'BioGTK::Tools::Tool']]],
+  ['colorone_9',['colorOne',['../class_bio_g_t_k_1_1_tools.html#ab7742f6afea35c8903b39e419f26e32b',1,'BioGTK::Tools']]],
+  ['colortool_10',['colorTool',['../class_bio_g_t_k_1_1_tools.html#a6e26f7c6ccc0a87e09e2b92c928e652e',1,'BioGTK::Tools']]],
+  ['columns_11',['columns',['../class_bio_g_t_k_1_1_bio_image.html#ab9b5f910221623bcd8b6e20a91a87982',1,'BioGTK::BioImage']]],
+  ['config_12',['config',['../class_bio_g_t_k_1_1_objectives_1_1_objective.html#aa997e54a0bceac7de3e46e0a51610f2a',1,'BioGTK::Objectives::Objective']]],
+  ['configuration_13',['Configuration',['../class_bio_g_t_k_1_1_objectives_1_1_objective.html#a3488d695db894494c26bae8596da8848',1,'BioGTK::Objectives::Objective']]],
+  ['contextmenu_14',['contextMenu',['../class_bio_g_t_k_1_1_image_view.html#a4abe4acbf6db6d58e4df602653fd4262',1,'BioGTK::ImageView']]],
+  ['coord_15',['coord',['../class_bio_g_t_k_1_1_r_o_i.html#aa3c55ad5cec082aa241fb50440f20852',1,'BioGTK::ROI']]],
+  ['coordinates_16',['COORDINATES',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#adbf3436b3433b8f7047516d6b2d6ec4d',1,'BioGTK::ImageJ::RoiDecoder']]],
+  ['coords_17',['Coords',['../class_bio_g_t_k_1_1_bio_image.html#a1867a998544b5956d04f08f7d4e94031',1,'BioGTK::BioImage']]],
+  ['count_18',['count',['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a8bd3ca4de372cf58fc133b057192a101',1,'BioGTK::BioImage::ImageJDesc']]],
+  ['counters_5foffset_19',['COUNTERS_OFFSET',['../class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html#a3b3eeed64698fa668ba285ed6b1fb9e0',1,'BioGTK::ImageJ::RoiDecoder']]],
+  ['currenttool_20',['currentTool',['../class_bio_g_t_k_1_1_tools.html#a4d9327b3e4d95df24e59b7fc3076fa0f',1,'BioGTK::Tools']]],
+  ['curunitsperpixel_21',['curUnitsPerPixel',['../class_bio_1_1_slide_source_base.html#a401386896ba7d7446c4424e01a9cb768',1,'Bio::SlideSourceBase']]]
+];
