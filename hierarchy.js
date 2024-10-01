@@ -1,9 +1,6 @@
 var hierarchy =
 [
-    [ "BaseLayer", null, [
-      [ "Bio.SlideSliceLayer", "class_bio_1_1_slide_slice_layer.html", null ]
-    ] ],
-    [ "BioGTK.ImageJ.Macro.Command", "class_bio_g_t_k_1_1_image_j_1_1_macro_1_1_command.html", null ],
+    [ "BioGTK.Fiji.Macro.Command", "class_bio_g_t_k_1_1_fiji_1_1_macro_1_1_command.html", null ],
     [ "Gtk.Dialog", null, [
       [ "BioGTK.ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", null ],
       [ "BioGTK.ColorTool", "class_bio_g_t_k_1_1_color_tool.html", null ],
@@ -15,10 +12,9 @@ var hierarchy =
       [ "BioGTK.Tolerance", "class_bio_g_t_k_1_1_tolerance.html", null ],
       [ "BioGTK.Updater", "class_bio_g_t_k_1_1_updater.html", null ]
     ] ],
-    [ "BioGTK.Filt", "class_bio_g_t_k_1_1_filt.html", null ],
     [ "BioGTK.Focus", "class_bio_g_t_k_1_1_focus.html", null ],
+    [ "BioGTK.Fiji.Macro.Function", "class_bio_g_t_k_1_1_fiji_1_1_macro_1_1_function.html", null ],
     [ "BioGTK.Function", "class_bio_g_t_k_1_1_function.html", null ],
-    [ "BioGTK.ImageJ.Macro.Function", "class_bio_g_t_k_1_1_image_j_1_1_macro_1_1_function.html", null ],
     [ "BioGTK.QuPath.GeoJsonFeature", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_feature.html", null ],
     [ "BioGTK.QuPath.GeoJsonFeatureCollection", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_feature_collection.html", null ],
     [ "BioGTK.QuPath.GeoJsonGeometry", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_geometry.html", null ],
@@ -30,60 +26,23 @@ var hierarchy =
     [ "BioGTK.QuPath.GeoJsonPoint", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_point.html", null ],
     [ "BioGTK.QuPath.GeoJsonPolygon", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_polygon.html", null ],
     [ "BioGTK.Updater.GitHubFile", "class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html", null ],
-    [ "IDisposable", null, [
-      [ "Bio.SlideImage", "class_bio_1_1_slide_image.html", null ],
-      [ "Bio.SlideSourceBase", "class_bio_1_1_slide_source_base.html", [
-        [ "Bio.SlideBase", "class_bio_1_1_slide_base.html", null ]
-      ] ],
-      [ "BioGTK.BioImage", "class_bio_g_t_k_1_1_bio_image.html", null ],
-      [ "BioGTK.ROI", "class_bio_g_t_k_1_1_r_o_i.html", null ],
-      [ "BioGTK.ROI.Mask", "class_bio_g_t_k_1_1_r_o_i_1_1_mask.html", null ]
-    ] ],
-    [ "BioGTK.ImageInfo", "class_bio_g_t_k_1_1_image_info.html", null ],
-    [ "BioGTK.BioImage.ImageJDesc", "class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html", null ],
-    [ "Bio.ImageUtil", "class_bio_1_1_image_util.html", null ],
-    [ "Bio.LruCache< TileInformation, TValue >.Info", "class_bio_1_1_lru_cache_1_1_info.html", null ],
+    [ "BioGTK.ImageJ", "class_bio_g_t_k_1_1_image_j.html", null ],
     [ "BioGTK.Plugin.IPlugin", "interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html", null ],
-    [ "Bio.ISliceProvider", "interface_bio_1_1_i_slice_provider.html", [
-      [ "Bio.ISlideSource", "interface_bio_1_1_i_slide_source.html", [
-        [ "Bio.SlideSourceBase", "class_bio_1_1_slide_source_base.html", null ]
-      ] ]
-    ] ],
-    [ "Bio.ISlideExternInfo", "interface_bio_1_1_i_slide_extern_info.html", [
-      [ "Bio.ISlideSource", "interface_bio_1_1_i_slide_source.html", null ]
-    ] ],
-    [ "ITileSource", null, [
-      [ "Bio.ISlideSource", "interface_bio_1_1_i_slide_source.html", null ]
-    ] ],
     [ "BioGTK.Updater.GitHubFile.Links", "class_bio_g_t_k_1_1_updater_1_1_git_hub_file_1_1_links.html", null ],
-    [ "Bio.LruCache< TileInformation, TValue >", "class_bio_1_1_lru_cache.html", null ],
-    [ "Bio.LruCache< Bio.TileInformation, byte[]>", "class_bio_1_1_lru_cache.html", null ],
     [ "BioGTK.ML.ML.Model", "class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html", null ],
     [ "BioGTK.Objectives.Objective", "class_bio_g_t_k_1_1_objectives_1_1_objective.html", null ],
     [ "BioGTK.Objectives", "class_bio_g_t_k_1_1_objectives.html", null ],
     [ "BioGTK.Plugin", "class_bio_g_t_k_1_1_plugin.html", null ],
     [ "BioGTK.QuPath.Properties", "class_bio_g_t_k_1_1_qu_path_1_1_properties.html", null ],
     [ "BioGTK.QuPath", "class_bio_g_t_k_1_1_qu_path.html", null ],
-    [ "BioGTK.RectangleD", "struct_bio_g_t_k_1_1_rectangle_d.html", null ],
-    [ "BioGTK.Resolution", "struct_bio_g_t_k_1_1_resolution.html", null ],
     [ "BioGTK.RLShutter", "class_bio_g_t_k_1_1_r_l_shutter.html", null ],
-    [ "BioGTK.ImageJ.RoiDecoder", "class_bio_g_t_k_1_1_image_j_1_1_roi_decoder.html", null ],
-    [ "BioGTK.ImageJ.RoiEncoder", "class_bio_g_t_k_1_1_image_j_1_1_roi_encoder.html", null ],
-    [ "BioGTK.BioImage.WellPlate.Well.Sample", "class_bio_g_t_k_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html", null ],
+    [ "BioGTK.Fiji.RoiDecoder", "class_bio_g_t_k_1_1_fiji_1_1_roi_decoder.html", null ],
+    [ "BioGTK.Fiji.RoiEncoder", "class_bio_g_t_k_1_1_fiji_1_1_roi_encoder.html", null ],
     [ "BioGTK.Scripting.Script", "class_bio_g_t_k_1_1_scripting_1_1_script.html", null ],
-    [ "Bio.SliceInfo", "class_bio_1_1_slice_info.html", null ],
-    [ "Bio.SliceParame", "class_bio_1_1_slice_parame.html", null ],
     [ "BioGTK.Stage", "class_bio_g_t_k_1_1_stage.html", null ],
     [ "BioGTK.Scripting.State", "class_bio_g_t_k_1_1_scripting_1_1_state.html", null ],
-    [ "Bio.TileCache", "class_bio_1_1_tile_cache.html", null ],
-    [ "Bio.TileInformation", "class_bio_1_1_tile_information.html", null ],
-    [ "TileLayer", null, [
-      [ "Bio.SlideTileLayer", "class_bio_1_1_slide_tile_layer.html", null ]
-    ] ],
     [ "BioGTK.TLShutter", "class_bio_g_t_k_1_1_t_l_shutter.html", null ],
     [ "BioGTK.Tools.Tool", "class_bio_g_t_k_1_1_tools_1_1_tool.html", null ],
-    [ "BioGTK.BioImage.WellPlate.Well", "class_bio_g_t_k_1_1_bio_image_1_1_well_plate_1_1_well.html", null ],
-    [ "BioGTK.BioImage.WellPlate", "class_bio_g_t_k_1_1_bio_image_1_1_well_plate.html", null ],
     [ "Gtk.Window", null, [
       [ "BioGTK.About", "class_bio_g_t_k_1_1_about.html", null ],
       [ "BioGTK.BioConsole", "class_bio_g_t_k_1_1_bio_console.html", null ],

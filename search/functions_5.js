@@ -1,16 +1,13 @@
 var searchData=
 [
-  ['filestostack_0',['FilesToStack',['../class_bio_g_t_k_1_1_bio_image.html#ae351c8b6c0d198c9a02a97747db9aa38',1,'BioGTK::BioImage']]],
-  ['filt_1',['Filt',['../class_bio_g_t_k_1_1_filt.html#aab5cbed5491d599b3c0495dc6c6c480f',1,'BioGTK::Filt']]],
-  ['filtersmenuclick_2',['filtersMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a61d126b63aea2e49cfe8896e3cc182a4',1,'BioGTK::TabsView']]],
-  ['filtersview_3',['FiltersView',['../class_bio_g_t_k_1_1_filters_view.html#a817b8100c04f9f86a13422263ad69b71',1,'BioGTK::FiltersView']]],
-  ['findfocus_4',['FindFocus',['../class_bio_g_t_k_1_1_bio_image.html#acf0dbd72d918d5013c8daca47c4a894b',1,'BioGTK::BioImage']]],
-  ['focus_5',['Focus',['../class_bio_g_t_k_1_1_focus.html#aac710bf979d0eea2ef6300dbdba79392',1,'BioGTK::Focus']]],
-  ['foldertostack_6',['FolderToStack',['../class_bio_g_t_k_1_1_bio_image.html#a64fab899bd35462d7829813f1eeef848',1,'BioGTK::BioImage']]],
-  ['fromcolor_7',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
-  ['fromimage_8',['FromImage',['../class_bio_g_t_k_1_1_bio_image_1_1_image_j_desc.html#a2efa77ca2c5be81e081305563abdd9e8',1,'BioGTK::BioImage::ImageJDesc']]],
-  ['fromroi_9',['FromROI',['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_point.html#a7379458de481e826d74c40120d1474be',1,'BioGTK.QuPath.GeoJsonPoint.FromROI()'],['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_line_string.html#a06ad1c0d82dcfac6aa4c1e52a0351b01',1,'BioGTK.QuPath.GeoJsonLineString.FromROI()'],['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_polygon.html#a66674b8d2e49c38a33c0abd3cf9b80c7',1,'BioGTK.QuPath.GeoJsonPolygon.FromROI()']]],
-  ['function_10',['Function',['../class_bio_g_t_k_1_1_image_j_1_1_macro_1_1_function.html#a13f65c1ec2dd2ce5c235c8194f36f378',1,'BioGTK::ImageJ::Macro::Function']]],
-  ['functions_11',['Functions',['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK::Functions']]],
-  ['functionstoolmenuclick_12',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
+  ['getbioimage_0',['GetBioImage',['../class_bio_g_t_k_1_1_image_j.html#a59aad28f0e89aa06d118453d8c7de9a1',1,'BioGTK::ImageJ']]],
+  ['getcoordinate_1',['GetCoordinate',['../class_bio_g_t_k_1_1_image_view.html#a4a2eb270b0ebd39274abfd652e8314b6',1,'BioGTK::ImageView']]],
+  ['getdown_2',['GetDown',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#aae2dd011f0b6f083079a0f60820a2523',1,'BioGTK::Scripting::State']]],
+  ['getmove_3',['GetMove',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ae29498cfd768862f2e2879c37094cd80',1,'BioGTK::Scripting::State']]],
+  ['getnone_4',['GetNone',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ac1dee01a3b75eaae56a5e43412180682',1,'BioGTK::Scripting::State']]],
+  ['getroi_5',['getRoi',['../class_bio_g_t_k_1_1_fiji_1_1_roi_decoder.html#a4aee99eb9edbcfe2cb8fbe04f431a60e',1,'BioGTK::Fiji::RoiDecoder']]],
+  ['getstate_6',['GetState',['../class_bio_g_t_k_1_1_scripting.html#a9e93251402a3a8f8d7806bdea582a5b9',1,'BioGTK::Scripting']]],
+  ['gettool_7',['GetTool',['../class_bio_g_t_k_1_1_tools.html#a1c551ee1521e32e3d042fd5ce6bf4065',1,'BioGTK.Tools.GetTool(string name)'],['../class_bio_g_t_k_1_1_tools.html#a8aa3c758bb078b4e5d6ed3f8349395c8',1,'BioGTK.Tools.GetTool(Tool.Type typ)']]],
+  ['getup_8',['GetUp',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ab02c2a161a3ba01d3a43a70917ea18c2',1,'BioGTK::Scripting::State']]],
+  ['gotoimage_9',['GoToImage',['../class_bio_g_t_k_1_1_image_view.html#ac4a301e2a9eed8a20edbb86a231d4484',1,'BioGTK.ImageView.GoToImage()'],['../class_bio_g_t_k_1_1_image_view.html#ae3a3aaf970ac9718670d87187448afda',1,'BioGTK.ImageView.GoToImage(int i)']]]
 ];

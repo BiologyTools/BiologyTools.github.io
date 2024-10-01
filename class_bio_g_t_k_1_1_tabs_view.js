@@ -1,6 +1,5 @@
 var class_bio_g_t_k_1_1_tabs_view =
 [
-    [ "TabsView", "class_bio_g_t_k_1_1_tabs_view.html#a5a0de4f33fbe020b09ad1f7ad44cff65", null ],
     [ "AboutClick", "class_bio_g_t_k_1_1_tabs_view.html#a160734b8f843b2b99421ec82780b7dbc", null ],
     [ "addImagesToTabMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a043d4597c2f48053febd97b5d5245c33", null ],
     [ "addOMEImagesToTabClick", "class_bio_g_t_k_1_1_tabs_view.html#abb382517e4b4e4f8c5259ee889eddd06", null ],
@@ -36,8 +35,5 @@ var class_bio_g_t_k_1_1_tabs_view =
     [ "to32BitMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a0018d66dae0fe7c0cc8ba9c6bde687df", null ],
     [ "to48BitMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a4fadea234e00c78948d167c256e2ff54", null ],
     [ "to8BitMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a36a923f25fd8cb5f77be0a8f0e4eb15a", null ],
-    [ "toolsMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a8cf0db5f018aaf60752f9e0bb2a400d1", null ],
-    [ "ImageJMenu", "class_bio_g_t_k_1_1_tabs_view.html#adeede7f25f97dff4461d9838e25648f9", null ],
-    [ "MainMenu", "class_bio_g_t_k_1_1_tabs_view.html#ac8b5ab474938627cdb7786c95ba9336f", null ],
-    [ "viewers", "class_bio_g_t_k_1_1_tabs_view.html#ab7e7abef01f043af1dfc830a3a4daffd", null ]
+    [ "toolsMenuClick", "class_bio_g_t_k_1_1_tabs_view.html#a8cf0db5f018aaf60752f9e0bb2a400d1", null ]
 ];

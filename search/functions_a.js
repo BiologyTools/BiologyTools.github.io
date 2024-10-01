@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['keydownevent_0',['KeyDownEvent',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a191f4df95a1232d6d479a8e90ec1609b',1,'BioGTK::Plugin::IPlugin']]],
-  ['keyupevent_1',['KeyUpEvent',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a7a48894e4105607e1cda87d0dc94f856',1,'BioGTK::Plugin::IPlugin']]]
+  ['parse_0',['Parse',['../class_bio_g_t_k_1_1_function.html#aea2e97e9e3936d8a926835a23511c93e',1,'BioGTK::Function']]],
+  ['pasteselection_1',['PasteSelection',['../class_bio_g_t_k_1_1_image_view.html#a63edf5bc6ae134b71a84007bb77e697b',1,'BioGTK::ImageView']]],
+  ['performfunction_2',['PerformFunction',['../class_bio_g_t_k_1_1_function.html#af95efd223fbb79cd97574ad3683c6bde',1,'BioGTK::Function']]]
 ];
