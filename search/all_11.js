@@ -12,5 +12,5 @@ var searchData=
   ['updatestacks_9',['UpdateStacks',['../class_bio_g_t_k_1_1_apply_filter.html#a399105b435445b762e3a0286bf252195',1,'BioGTK.ApplyFilter.UpdateStacks()'],['../class_bio_g_t_k_1_1_stack_tools.html#ac5b3a65661cc1b62e53b230f3fe98ce7',1,'BioGTK.StackTools.UpdateStacks()']]],
   ['updatestate_10',['UpdateState',['../class_bio_g_t_k_1_1_scripting.html#ab471bfd1464966012668fa992eb68bc8',1,'BioGTK::Scripting']]],
   ['updatestatus_11',['UpdateStatus',['../class_bio_g_t_k_1_1_image_view.html#af30cac8e394db9ec2db4ae13ff896847',1,'BioGTK::ImageView']]],
-  ['updateview_12',['UpdateView',['../class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95',1,'BioGTK.HistogramControl.UpdateView()'],['../class_bio_g_t_k_1_1_image_view.html#a6efb775e5319c70214dfebee95e6ce93',1,'BioGTK.ImageView.UpdateView()'],['../class_bio_g_t_k_1_1_tools.html#a82a19783e72b28f437454deb77eaee87',1,'BioGTK.Tools.UpdateView()']]]
+  ['updateview_12',['UpdateView',['../class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95',1,'BioGTK.HistogramControl.UpdateView()'],['../class_bio_g_t_k_1_1_image_view.html#a0774b2bfb9f31cc120bb509642099063',1,'BioGTK.ImageView.UpdateView()'],['../class_bio_g_t_k_1_1_tools.html#a82a19783e72b28f437454deb77eaee87',1,'BioGTK.Tools.UpdateView()']]]
 ];

@@ -1,0 +1,25 @@
+var class_bio_g_t_k_1_1_objectives_1_1_objective =
+[
+    [ "Objective", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#aa3d7326e85179a93574fafaa76e9a47c", null ],
+    [ "Objective", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a1de2c1fa44a1c6728872f54d5a9b3019", null ],
+    [ "ToString", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a5ad59d8532fca3d7cd45153414c0881d", null ],
+    [ "AcquisitionExposure", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a9300ff57709e3328ac45db560225fc96", null ],
+    [ "config", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#aa997e54a0bceac7de3e46e0a51610f2a", null ],
+    [ "Configuration", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a3488d695db894494c26bae8596da8848", null ],
+    [ "ElementType", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ac6cf8652c063ac3a67cac230c6dcc6a8", null ],
+    [ "Features", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a8185aaf9d875f6ac1afa839c2598e908", null ],
+    [ "FocusMoveAmount", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#af334e0479a857f6c2ca3f09b6336d393", null ],
+    [ "Index", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#aa9e0bde760c1f9799990e23efd012bdb", null ],
+    [ "LocateExposure", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a717808bf7a24512a8ee852584a2beb60", null ],
+    [ "Magnification", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ad4ae1f5824d7d5107be1b31a540b5dc4", null ],
+    [ "Modes", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a77ac65a84c140805b169e0f16b576a17", null ],
+    [ "MoveAmountL", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ac82005ad6d553aed1d4d46ec03aa38d3", null ],
+    [ "MoveAmountR", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ac8b1f511bc47aa222f3e7e8e6d5817fa", null ],
+    [ "Name", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a73aff8bcfb3eaff271db7a2b7b3e76b2", null ],
+    [ "NumericAperture", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a636facfb663330696f34056a97ccb118", null ],
+    [ "Oil", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#abe4922c35f79473e67ee55cc870152f2", null ],
+    [ "UniqueName", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ab486a5b21904dc86464c503592fa081f", null ],
+    [ "ViewHeight", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a6af35c8119c1086b9b01444e7ded4829", null ],
+    [ "ViewWidth", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#a646723c4529e49b0bdb4abffad874f9d", null ],
+    [ "WorkingDistance", "class_bio_g_t_k_1_1_objectives_1_1_objective.html#ad7eae173d2776acf86b68d287cf0fc3f", null ]
+];

@@ -1,0 +1,24 @@
+var searchData=
+[
+  ['parame_0',['Parame',['../class_bio_1_1_slice_info.html#a2e688ed7d1382dc3decf063a8a947925',1,'Bio::SliceInfo']]],
+  ['path_1',['Path',['../class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html#a9ff15c2af59726a2388b23aa9bc06dcd',1,'BioGTK::Updater::GitHubFile']]],
+  ['physicalsizex_2',['PhysicalSizeX',['../struct_bio_g_t_k_1_1_resolution.html#acd776320cc58c20b2272bca84bc768d7',1,'BioGTK.Resolution.PhysicalSizeX'],['../class_bio_g_t_k_1_1_r_o_i_1_1_mask.html#a98e14c475980931412008642caecacb8',1,'BioGTK.ROI.Mask.PhysicalSizeX'],['../class_bio_g_t_k_1_1_image_info.html#a4201e7d7491ee05f5be64db3f7b0e144',1,'BioGTK.ImageInfo.PhysicalSizeX'],['../class_bio_g_t_k_1_1_bio_image.html#a77266cbd1516688d5a6991aedba2a09c',1,'BioGTK.BioImage.PhysicalSizeX']]],
+  ['physicalsizey_3',['PhysicalSizeY',['../struct_bio_g_t_k_1_1_resolution.html#a084ef3e949eb4972fd55882ff120cdce',1,'BioGTK.Resolution.PhysicalSizeY'],['../class_bio_g_t_k_1_1_r_o_i_1_1_mask.html#aca994b380164e6f99cc0111b1ba452fd',1,'BioGTK.ROI.Mask.PhysicalSizeY'],['../class_bio_g_t_k_1_1_image_info.html#a90d0d71bbf7ba9e75a52d111490e46e4',1,'BioGTK.ImageInfo.PhysicalSizeY'],['../class_bio_g_t_k_1_1_bio_image.html#ae7e90580b1eb0b246b61b4fa663aff6f',1,'BioGTK.BioImage.PhysicalSizeY']]],
+  ['physicalsizez_4',['PhysicalSizeZ',['../struct_bio_g_t_k_1_1_resolution.html#a8244b3ed478de7fc4a03205788369199',1,'BioGTK.Resolution.PhysicalSizeZ'],['../class_bio_g_t_k_1_1_image_info.html#a6e08020b08d29bf33649a036c39545f3',1,'BioGTK.ImageInfo.PhysicalSizeZ'],['../class_bio_g_t_k_1_1_bio_image.html#acebc177c2ad93264b46c8c8769241595',1,'BioGTK.BioImage.PhysicalSizeZ']]],
+  ['pixbuf_5',['Pixbuf',['../class_bio_g_t_k_1_1_r_o_i_1_1_mask.html#ae1dfcaf3702c0476aef5323e858a5720',1,'BioGTK::ROI::Mask']]],
+  ['pixelformat_6',['PixelFormat',['../struct_bio_g_t_k_1_1_resolution.html#a94078d381ae0a42e6016b9dbf26372b3',1,'BioGTK::Resolution']]],
+  ['plane_7',['plane',['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_geometry.html#a869fff1d73302286567a4cf496e13f0c',1,'BioGTK.QuPath.GeoJsonGeometry.plane'],['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_point.html#a77167ea84f6be52775db389d7cdae98b',1,'BioGTK.QuPath.GeoJsonPoint.plane'],['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_line_string.html#aea2b30ba1fe57d9c0d6e06c5f79ba9b6',1,'BioGTK.QuPath.GeoJsonLineString.plane'],['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_polygon.html#a566133f4a3ec6227e2c1a6b8b4d2f1a0',1,'BioGTK.QuPath.GeoJsonPolygon.plane']]],
+  ['plots_8',['Plots',['../class_bio_g_t_k_1_1_plot.html#a4c9f99bdeee3e190c1ef6af4dff37eae',1,'BioGTK::Plot']]],
+  ['point_9',['Point',['../class_bio_g_t_k_1_1_r_o_i.html#a783f28798d2158d21901123970184258',1,'BioGTK::ROI']]],
+  ['pointsd_10',['PointsD',['../class_bio_g_t_k_1_1_r_o_i.html#a7a88354c7437d150c87a310480811d5f',1,'BioGTK::ROI']]],
+  ['pointsimage_11',['PointsImage',['../class_bio_g_t_k_1_1_r_o_i.html#a495b2bcdc6630c18ba1557a8d9a74a99',1,'BioGTK::ROI']]],
+  ['position_12',['Position',['../class_bio_g_t_k_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html#a6a6910a789ea689c9414484218c103b1',1,'BioGTK::BioImage::WellPlate::Well::Sample']]],
+  ['progressvalue_13',['progressValue',['../class_bio_g_t_k_1_1_bio_image.html#a9d4b09418afb905748c738551a347188',1,'BioGTK::BioImage']]],
+  ['progressvalue_14',['ProgressValue',['../class_bio_g_t_k_1_1_progress.html#a975543acc90c6f58f96223e3ffd77f07',1,'BioGTK::Progress']]],
+  ['properties_15',['properties',['../class_bio_g_t_k_1_1_qu_path_1_1_geo_json_feature.html#aeb247435306efb7011b1a0c488c4d44e',1,'BioGTK::QuPath::GeoJsonFeature']]],
+  ['pxhmicron_16',['PxHmicron',['../class_bio_g_t_k_1_1_image_view.html#a881d859b67250027da2d553d2e441cfa',1,'BioGTK::ImageView']]],
+  ['pxwmicron_17',['PxWmicron',['../class_bio_g_t_k_1_1_image_view.html#af3aef2708e60f50f6e9d14cbbe141d92',1,'BioGTK::ImageView']]],
+  ['pyramidalorigin_18',['PyramidalOrigin',['../class_bio_g_t_k_1_1_bio_image.html#aafba455ac9483f328f9c2ea2beab7d15',1,'BioGTK.BioImage.PyramidalOrigin'],['../class_bio_g_t_k_1_1_image_view.html#a95a1844c2e5706b91d85f9f7c4556914',1,'BioGTK.ImageView.PyramidalOrigin']]],
+  ['pyramidalorigintransformed_19',['PyramidalOriginTransformed',['../class_bio_g_t_k_1_1_image_view.html#aa577e33ab776db5eb25ba1840f8daaf2',1,'BioGTK::ImageView']]],
+  ['pyramidalsize_20',['PyramidalSize',['../class_bio_g_t_k_1_1_bio_image.html#ab387d20731d70b83c8a66d9889aed072',1,'BioGTK::BioImage']]]
+];
