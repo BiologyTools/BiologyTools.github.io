@@ -33,5 +33,9 @@ var class_bio_g_t_k_1_1_image_view =
     [ "UpdateImage", "class_bio_g_t_k_1_1_image_view.html#ac6375f4bdcdf256331719e1e0c0b339c", null ],
     [ "UpdateImages", "class_bio_g_t_k_1_1_image_view.html#a574af75d8150b8121e163d2f5bc32105", null ],
     [ "UpdateStatus", "class_bio_g_t_k_1_1_image_view.html#af30cac8e394db9ec2db4ae13ff896847", null ],
+<<<<<<< HEAD
     [ "UpdateView", "class_bio_g_t_k_1_1_image_view.html#a0774b2bfb9f31cc120bb509642099063", null ]
+=======
+    [ "UpdateView", "class_bio_g_t_k_1_1_image_view.html#a6efb775e5319c70214dfebee95e6ce93", null ]
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 ];

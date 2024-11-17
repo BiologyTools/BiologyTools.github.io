@@ -8,9 +8,17 @@ var dir_669348b718faff750adc1226db43aa73 =
     [ "ChannelsTool.cs", "_channels_tool_8cs_source.html", null ],
     [ "ColorTool.cs", "_color_tool_8cs_source.html", null ],
     [ "ComboPicker.cs", "_combo_picker_8cs_source.html", null ],
+<<<<<<< HEAD
     [ "Filters.cs", "_filters_8cs_source.html", null ],
     [ "Functions.cs", "_functions_8cs_source.html", null ],
     [ "HistogramControl.cs", "_histogram_control_8cs_source.html", null ],
+=======
+    [ "Fiji.cs", "_fiji_8cs_source.html", null ],
+    [ "Filters.cs", "_filters_8cs_source.html", null ],
+    [ "Functions.cs", "_functions_8cs_source.html", null ],
+    [ "HistogramControl.cs", "_histogram_control_8cs_source.html", null ],
+    [ "ImageJ.cs", "_image_j_8cs_source.html", null ],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "ImageView.cs", "_image_view_8cs_source.html", null ],
     [ "MagicSelect.cs", "_magic_select_8cs_source.html", null ],
     [ "Microscope.cs", "_microscope_8cs_source.html", null ],
@@ -27,6 +35,10 @@ var dir_669348b718faff750adc1226db43aa73 =
     [ "ROIManager.cs", "_r_o_i_manager_8cs_source.html", null ],
     [ "Scripting.cs", "_scripting_8cs_source.html", null ],
     [ "Search.cs", "_search_8cs_source.html", null ],
+<<<<<<< HEAD
+=======
+    [ "Settings.cs", "_settings_8cs_source.html", null ],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "SetTool.cs", "_set_tool_8cs_source.html", null ],
     [ "StackTools.cs", "_stack_tools_8cs_source.html", null ],
     [ "TabsView.cs", "_tabs_view_8cs_source.html", null ],

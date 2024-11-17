@@ -1,6 +1,10 @@
 var searchData=
 [
+<<<<<<< HEAD
   ['save_0',['save',['../class_bio_lib_1_1_fiji_1_1_roi_encoder.html#a0261a6bcad6211acdc6ec8c868fa8b0c',1,'BioLib::Fiji::RoiEncoder']]],
+=======
+  ['save_0',['save',['../class_bio_lib_1_1_image_j_1_1_roi_encoder.html#a1070ad79e1bcbcc51301301f459be5d6',1,'BioLib::ImageJ::RoiEncoder']]],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['saveasync_1',['SaveAsync',['../class_bio_lib_1_1_bio_image.html#a6a0e5f00b165c51a69bb7cf9b41777cb',1,'BioLib::BioImage']]],
   ['savefile_2',['SaveFile',['../class_bio_lib_1_1_bio_image.html#a17a9dfbe050b1f6b8ea90e48d62bff0c',1,'BioLib::BioImage']]],
   ['saveomepyramidal_3',['SaveOMEPyramidal',['../class_bio_lib_1_1_bio_image.html#a8b4ee308c1ea43cb385cc1ecc8ff837e',1,'BioLib::BioImage']]],

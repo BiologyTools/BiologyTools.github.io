@@ -1,5 +1,9 @@
 var hierarchy =
 [
+<<<<<<< HEAD
+=======
+    [ "BioGTK.Fiji.Macro.Command", "class_bio_g_t_k_1_1_fiji_1_1_macro_1_1_command.html", null ],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "Gtk.Dialog", null, [
       [ "BioGTK.ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", null ],
       [ "BioGTK.ColorTool", "class_bio_g_t_k_1_1_color_tool.html", null ],
@@ -12,6 +16,7 @@ var hierarchy =
       [ "BioGTK.Updater", "class_bio_g_t_k_1_1_updater.html", null ]
     ] ],
     [ "BioGTK.Focus", "class_bio_g_t_k_1_1_focus.html", null ],
+    [ "BioGTK.Fiji.Macro.Function", "class_bio_g_t_k_1_1_fiji_1_1_macro_1_1_function.html", null ],
     [ "BioGTK.Function", "class_bio_g_t_k_1_1_function.html", null ],
     [ "BioGTK.QuPath.GeoJsonFeature", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_feature.html", null ],
     [ "BioGTK.QuPath.GeoJsonFeatureCollection", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_feature_collection.html", null ],
@@ -24,6 +29,10 @@ var hierarchy =
     [ "BioGTK.QuPath.GeoJsonPoint", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_point.html", null ],
     [ "BioGTK.QuPath.GeoJsonPolygon", "class_bio_g_t_k_1_1_qu_path_1_1_geo_json_polygon.html", null ],
     [ "BioGTK.Updater.GitHubFile", "class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html", null ],
+<<<<<<< HEAD
+=======
+    [ "BioGTK.ImageJ", "class_bio_g_t_k_1_1_image_j.html", null ],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "BioGTK.Plugin.IPlugin", "interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html", null ],
     [ "BioGTK.Updater.GitHubFile.Links", "class_bio_g_t_k_1_1_updater_1_1_git_hub_file_1_1_links.html", null ],
     [ "BioGTK.ML.ML.Model", "class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html", null ],
@@ -33,6 +42,11 @@ var hierarchy =
     [ "BioGTK.QuPath.Properties", "class_bio_g_t_k_1_1_qu_path_1_1_properties.html", null ],
     [ "BioGTK.QuPath", "class_bio_g_t_k_1_1_qu_path.html", null ],
     [ "BioGTK.RLShutter", "class_bio_g_t_k_1_1_r_l_shutter.html", null ],
+<<<<<<< HEAD
+=======
+    [ "BioGTK.Fiji.RoiDecoder", "class_bio_g_t_k_1_1_fiji_1_1_roi_decoder.html", null ],
+    [ "BioGTK.Fiji.RoiEncoder", "class_bio_g_t_k_1_1_fiji_1_1_roi_encoder.html", null ],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "BioGTK.Scripting.Script", "class_bio_g_t_k_1_1_scripting_1_1_script.html", null ],
     [ "BioGTK.Stage", "class_bio_g_t_k_1_1_stage.html", null ],
     [ "BioGTK.Scripting.State", "class_bio_g_t_k_1_1_scripting_1_1_state.html", null ],

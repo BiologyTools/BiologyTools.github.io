@@ -2,7 +2,11 @@ var searchData=
 [
   ['sample_0',['Sample',['../class_bio_lib_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html',1,'BioLib::BioImage::WellPlate::Well']]],
   ['samplemode_1',['SampleMode',['../class_bio_lib_1_1_slice_parame.html#a4620d7895cd31e9abe0d5ab3dc48dd11',1,'BioLib.SliceParame.SampleMode'],['../namespace_bio_lib.html#a00b5d1e026054ecb42e9eb41abc8ea03',1,'BioLib.SampleMode']]],
+<<<<<<< HEAD
   ['save_2',['save',['../class_bio_lib_1_1_fiji_1_1_roi_encoder.html#a0261a6bcad6211acdc6ec8c868fa8b0c',1,'BioLib::Fiji::RoiEncoder']]],
+=======
+  ['save_2',['save',['../class_bio_lib_1_1_image_j_1_1_roi_encoder.html#a1070ad79e1bcbcc51301301f459be5d6',1,'BioLib::ImageJ::RoiEncoder']]],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['saveasync_3',['SaveAsync',['../class_bio_lib_1_1_bio_image.html#a6a0e5f00b165c51a69bb7cf9b41777cb',1,'BioLib::BioImage']]],
   ['savefile_4',['SaveFile',['../class_bio_lib_1_1_bio_image.html#a17a9dfbe050b1f6b8ea90e48d62bff0c',1,'BioLib::BioImage']]],
   ['saveomepyramidal_5',['SaveOMEPyramidal',['../class_bio_lib_1_1_bio_image.html#a8b4ee308c1ea43cb385cc1ecc8ff837e',1,'BioLib::BioImage']]],

@@ -23,12 +23,20 @@ var searchData=
   ['getpoints_20',['GetPoints',['../class_bio_lib_1_1_r_o_i.html#a46ac91df835d2cfa668e6c6b1fb25382',1,'BioLib::ROI']]],
   ['getpointsf_21',['GetPointsF',['../class_bio_lib_1_1_r_o_i.html#a620e255c103d996123b48ff3f4a12f81',1,'BioLib::ROI']]],
   ['getrgbbitmap_22',['GetRGBBitmap',['../class_bio_lib_1_1_bio_image.html#a3d54353f96e0f604e1d33934eb4b45e8',1,'BioLib::BioImage']]],
+<<<<<<< HEAD
   ['getroi_23',['getRoi',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a59466d4ca9cecf499de9bc88d9a42a8f',1,'BioLib::Fiji::RoiDecoder']]],
+=======
+  ['getroi_23',['getRoi',['../class_bio_lib_1_1_image_j_1_1_roi_decoder.html#a5516de7f0312319bf14520a05658c56d',1,'BioLib::ImageJ::RoiDecoder']]],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['getselectbound_24',['GetSelectBound',['../class_bio_lib_1_1_r_o_i.html#ac73b1b86f89f54929682263b180a8393',1,'BioLib::ROI']]],
   ['getselectboxes_25',['GetSelectBoxes',['../class_bio_lib_1_1_r_o_i.html#a5fcaec65207e3bb2e292f484fd40abc1',1,'BioLib.ROI.GetSelectBoxes(double s)'],['../class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374',1,'BioLib.ROI.GetSelectBoxes()']]],
   ['getslice_26',['GetSlice',['../class_bio_lib_1_1_slide_source_base.html#a1ab35a1a3040b62dd1a2b4c72517c410',1,'BioLib.SlideSourceBase.GetSlice()'],['../interface_bio_lib_1_1_i_slice_provider.html#a87b93f9328818b79059a8b29af0f5d8d',1,'BioLib.ISliceProvider.GetSlice()']]],
   ['getstring_27',['GetString',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#a769699da2cfbb75de65253396682fc02',1,'BioLib::BioImage::ImageJDesc']]],
+<<<<<<< HEAD
   ['gettile_28',['GetTile',['../class_bio_lib_1_1_bio_image.html#aff6d6196a8b12ce14cc28292ce10c71c',1,'BioLib::BioImage']]],
+=======
+  ['gettile_28',['GetTile',['../class_bio_lib_1_1_bio_image.html#aca5fd50eefdbbe538de6180d7a1c10da',1,'BioLib::BioImage']]],
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['getunitperpixel_29',['GetUnitPerPixel',['../class_bio_lib_1_1_bio_image.html#a4b4b0f1eadedb59021609f27ea9a0851',1,'BioLib::BioImage']]],
   ['getvalue_30',['GetValue',['../class_bio_lib_1_1_bio_image.html#afebe6f4818c94896e68622ffc985d01e',1,'BioLib.BioImage.GetValue(ZCTXY coord)'],['../class_bio_lib_1_1_bio_image.html#a95dce270d5d63f09d9136daa46dc42c6',1,'BioLib.BioImage.GetValue(ZCT coord, int x, int y)'],['../class_bio_lib_1_1_bio_image.html#a0eaa6ed4817bb5f9a6e0e2e930008c97',1,'BioLib.BioImage.GetValue(int z, int c, int t, int x, int y)']]],
   ['getvaluergb_31',['GetValueRGB',['../class_bio_lib_1_1_bio_image.html#a1ba63c4562ed8df9091f8de2b5111b48',1,'BioLib.BioImage.GetValueRGB(ZCTXY coord, int index)'],['../class_bio_lib_1_1_bio_image.html#a36c70047a418a6c6cf73a9382217bc1b',1,'BioLib.BioImage.GetValueRGB(ZCT coord, int x, int y, int RGBindex)'],['../class_bio_lib_1_1_bio_image.html#a054dc1795245f737d716b533a5de0042',1,'BioLib.BioImage.GetValueRGB(int z, int c, int t, int x, int y, int RGBindex)']]]

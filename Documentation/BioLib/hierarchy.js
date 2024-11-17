@@ -6,7 +6,10 @@ var hierarchy =
     [ "BaseLayer", null, [
       [ "BioLib.SlideSliceLayer", "class_bio_lib_1_1_slide_slice_layer.html", null ]
     ] ],
+<<<<<<< HEAD
     [ "BioLib.Fiji.Macro.Command", "class_bio_lib_1_1_fiji_1_1_macro_1_1_command.html", null ],
+=======
+>>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
     [ "BioLib.Filt", "class_bio_lib_1_1_filt.html", null ],
     [ "Bio.Graphics.FloodFillRange", "struct_bio_1_1_graphics_1_1_flood_fill_range.html", null ],
     [ "Bio.Graphics.FloodFillRangeQueue", "class_bio_1_1_graphics_1_1_flood_fill_range_queue.html", null ],
