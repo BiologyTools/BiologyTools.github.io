@@ -203,6 +203,65 @@ BioImage.SaveFile(<span class="hljs-string">"file"</span>,<span class="hljs-stri
 b.To24Bit();
 </code></pre>
 </div><!-- doc-content -->
+<h1 id="biolib">BioLib</h1>
+<p><img src="https://img.shields.io/nuget/dt/BioLib" alt="Nuget"> <a href="https://doi.org/10.5281/zenodo.8127022"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.8127022.svg" alt="DOI"></a></p>
+<p>A GUI-less version of Bio .NET library for editing &amp; annotating various microscopy image formats. Supports all bioformats supported images. Integrates with ImageJ, running ImageJ filters &amp; macro functions. Supports Windows, Linux and Mac. Check out the <a href="https://biologytools.github.io/Documentation/BioLib/index.html">documentation.</a></p>
+<h2 id="usage">Usage</h2>
+<pre><code><span class="hljs-comment">//First call BioImage.Initialize to </span>
+<span class="hljs-comment">//initialize the Bioformats library.</span>
+BioImage.Initialize();
+
+<span class="hljs-comment">//Once initialized you can open OME, ImageJ tiff files, and Bio Tiff files with:</span>
+BioImage b = BioImage.OpenFile(<span class="hljs-string">"file"</span>);
+
+<span class="hljs-comment">//Or if you want to use specifically the OME image reader you can use BioImage.OpenOME</span>
+BioImage b = BioImage.OpenOME(<span class="hljs-string">"file"</span>);
+
+<span class="hljs-comment">//If you are working with a pyramidal image you can open a portion of a tiled image with OpenOME.</span>
+<span class="hljs-comment">//BioImage.OpenOME(string file, int serie, bool tab, bool addToImages, bool tile, int tilex, int tiley, int tileSizeX, int tileSizeY)</span>
+
+<span class="hljs-comment">//You can specify whether to open in a newtab as well as whether to add the image to </span>
+<span class="hljs-comment">//the Images.images table. As well as specify whether to open as a tile with the specified </span>
+<span class="hljs-comment">//tile X,Y position &amp; tile width &amp; height.    </span>
+BioImage.OpenOME(<span class="hljs-string">"file"</span>,<span class="hljs-number">0</span>,false,false,true,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">600</span>,<span class="hljs-number">600</span>);
+<span class="hljs-comment">//This will open a portion of the image as a tile and won't add it to the Images table.</span>
+
+<span class="hljs-comment">//Once you have opened a tiled image with BioImage.OpenOME you can call the </span>
+<span class="hljs-comment">//GetTile(BioImage b, ZCT coord, int serie, int tilex, int tiley, int tileSizeX, int tileSizeY) method</span>
+<span class="hljs-comment">// to quickly get another tile from different portion of the image. For BioGTK &amp; BioLib</span>
+Bitmap bm = BioImage.GetTile(b, new ZCT(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>), <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>, <span class="hljs-number">600</span>, <span class="hljs-number">600</span>);
+
+<span class="hljs-comment">//To get the current coordinate of the ImageView you can call GetCoordinate.</span>
+ZCT cord = v.GetCoordinate();
+<span class="hljs-comment">//or to set the current coordinate</span>
+v.SetCoordinate(new ZCT(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>));
+
+<span class="hljs-comment">//To create a point as well as any other ROI type you can call the ROI create methods.</span>
+ROI p = ROI.CreatePoint(cord, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);
+ROI rect = ROI.CreateRectangle(cord, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">100</span>, <span class="hljs-number">100</span>);
+
+<span class="hljs-comment">//Usage of Graphics class for 16 &amp; 48 bit images as well as regular bit depth images</span>
+<span class="hljs-comment">//is very similar to System.Graphics.</span>
+<span class="hljs-comment">//We create a new Graphics object by passing the Bitmap for BioGTK &amp; BioLib and BufferInfo for BioCore</span>
+Graphics g = Graphics.FromImage(b.Buffers[<span class="hljs-number">0</span>]);
+
+<span class="hljs-comment">//Then we create a pen by passing a ColorS which represent a Color with, </span>
+<span class="hljs-comment">//a higher bit depth (unsigned short) rather than a byte.</span>
+g.pen = new Pen(new ColorS(ushort.MaxValue, ushort.MaxValue, ushort.MaxValue));
+
+<span class="hljs-comment">//Then we can call the familiar methods DrawLine, DrawPolygon, FillPolygon etc.</span>
+g.DrawLine(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">100</span>,<span class="hljs-number">100</span>);
+<span class="hljs-comment">//Finally we dispose the Graphics object.</span>
+g.Dispose();
+
+<span class="hljs-comment">//We can also save the resulting image given the ID of the image in the Images table.</span>
+<span class="hljs-comment">//All images opened with BioImage.OpenFile or BioImage.OpenOME are added to the </span>
+<span class="hljs-comment">//Images.images table with the filename as an ID.</span>
+BioImage.SaveFile(<span class="hljs-string">"file"</span>,<span class="hljs-string">"path"</span>);
+
+<span class="hljs-comment">//To convert between different pixel formats we can call for example To24Bit.</span>
+b.To24Bit();
+</code></pre>
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
