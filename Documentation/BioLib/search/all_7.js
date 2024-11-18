@@ -8,11 +8,7 @@ var searchData=
   ['imageutil_5',['ImageUtil',['../class_bio_lib_1_1_image_util.html',1,'BioLib']]],
   ['importroiscsv_6',['ImportROIsCSV',['../class_bio_lib_1_1_bio_image.html#ae74e13dfef39281cd92b663a08971131',1,'BioLib::BioImage']]],
   ['info_7',['Info',['../class_bio_lib_1_1_info.html',1,'BioLib']]],
-<<<<<<< HEAD
   ['initialize_8',['Initialize',['../class_bio_lib_1_1_bio_image.html#aff02913f4fdad5ac06def579563aa71e',1,'BioLib.BioImage.Initialize()'],['../class_bio_lib_1_1_slide_image.html#ae5cd75ef3e38fc58bf306876589bfe7e',1,'BioLib.SlideImage.Initialize()']]],
-=======
-  ['initialize_8',['Initialize',['../class_bio_lib_1_1_bio_image.html#aa160c131d64388b94a05cd8ed76eb00f',1,'BioLib.BioImage.Initialize()'],['../class_bio_lib_1_1_slide_image.html#ae5cd75ef3e38fc58bf306876589bfe7e',1,'BioLib.SlideImage.Initialize()']]],
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['isliceprovider_9',['ISliceProvider',['../interface_bio_lib_1_1_i_slice_provider.html',1,'BioLib']]],
   ['islideexterninfo_10',['ISlideExternInfo',['../interface_bio_lib_1_1_i_slide_extern_info.html',1,'BioLib']]],
   ['islidesource_11',['ISlideSource',['../interface_bio_lib_1_1_i_slide_source.html',1,'BioLib']]],

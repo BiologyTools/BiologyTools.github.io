@@ -51,11 +51,7 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_abstract_flood_filler_8cs_source.html",
-<<<<<<< HEAD
 "class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374"
-=======
-"class_bio_lib_1_1_r_o_i.html#a332f4bc59ed2081effc14f9424f092ab"
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -2,7 +2,6 @@ var NAVTREEINDEX0 =
 {
 "_abstract_flood_filler_8cs_source.html":[2,0,0,0,0],
 "_bio_8cs_source.html":[2,0,0,1,1],
-<<<<<<< HEAD
 "_fiji_8cs_source.html":[2,0,0,1,2],
 "_flood_fill_range_queue_8cs_source.html":[2,0,0,0,1],
 "_graphics_8cs_source.html":[2,0,0,0,2],
@@ -13,26 +12,11 @@ var NAVTREEINDEX0 =
 "_queue_linear_flood_filler_8cs_source.html":[2,0,0,0,3],
 "_recorder_8cs_source.html":[2,0,0,1,6],
 "_settings_8cs_source.html":[2,0,0,1,7],
-=======
-"_flood_fill_range_queue_8cs_source.html":[2,0,0,0,1],
-"_graphics_8cs_source.html":[2,0,0,0,2],
-"_i_slide_source_8cs_source.html":[2,0,0,1,0,0],
-"_image_j_8cs_source.html":[2,0,0,1,2],
-"_microscope_8cs_source.html":[2,0,0,1,3],
-"_qu_path_8cs_source.html":[2,0,0,1,4],
-"_queue_linear_flood_filler_8cs_source.html":[2,0,0,0,3],
-"_recorder_8cs_source.html":[2,0,0,1,5],
-"_settings_8cs_source.html":[2,0,0,1,6],
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 "_slide_base_8cs_source.html":[2,0,0,1,0,1],
 "_slide_image_8cs_source.html":[2,0,0,1,0,2],
 "_slide_slice_layer_8cs_source.html":[2,0,0,1,0,3],
 "_slide_tile_layer_8cs_source.html":[2,0,0,1,0,4],
-<<<<<<< HEAD
 "_stitch_8cs_source.html":[2,0,0,1,8],
-=======
-"_stitch_8cs_source.html":[2,0,0,1,7],
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 "_utilities_8cs_source.html":[2,0,0,1,0,5],
 "annotated.html":[1,0],
 "class_bio_1_1_graphics_1_1_abstract_flood_filler.html":[0,0,0,0,0],
@@ -265,10 +249,5 @@ var NAVTREEINDEX0 =
 "class_bio_lib_1_1_r_l_shutter.html":[1,0,1,13],
 "class_bio_lib_1_1_r_o_i.html":[0,0,1,14],
 "class_bio_lib_1_1_r_o_i.html":[1,0,1,14],
-<<<<<<< HEAD
 "class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374":[0,0,1,14,10]
-=======
-"class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374":[0,0,1,14,10],
-"class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374":[1,0,1,14,10]
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 };

@@ -1,9 +1,6 @@
 var NAVTREEINDEX1 =
 {
-<<<<<<< HEAD
 "class_bio_lib_1_1_r_o_i.html#a043f209f03c44847b52d38b2d2f00374":[1,0,1,14,10],
-=======
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
 "class_bio_lib_1_1_r_o_i.html#a332f4bc59ed2081effc14f9424f092ab":[0,0,1,14,6],
 "class_bio_lib_1_1_r_o_i.html#a332f4bc59ed2081effc14f9424f092ab":[1,0,1,14,6],
 "class_bio_lib_1_1_r_o_i.html#a46ac91df835d2cfa668e6c6b1fb25382":[0,0,1,14,7],
