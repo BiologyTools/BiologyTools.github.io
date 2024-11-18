@@ -1,7 +1,6 @@
 var searchData=
 [
   ['save_0',['Save',['../class_bio_g_t_k_1_1_function.html#a6dbd0cf1f1b942edd61e7b5ed11c9495',1,'BioGTK::Function']]],
-<<<<<<< HEAD
   ['saveall_1',['SaveAll',['../class_bio_g_t_k_1_1_function.html#ad38cf8de97c1b81bb7fb0da50d23336a',1,'BioGTK::Function']]],
   ['saveselectedomeclick_2',['saveSelectedOMEClick',['../class_bio_g_t_k_1_1_tabs_view.html#a3da201cbb15db0e405b0d4616e49df78',1,'BioGTK::TabsView']]],
   ['saveselectedtiffclick_3',['saveSelectedTiffClick',['../class_bio_g_t_k_1_1_tabs_view.html#a3544eb3df32dec3805c677c2254edc17',1,'BioGTK::TabsView']]],
@@ -14,20 +13,6 @@ var searchData=
   ['search_10',['Search',['../class_bio_g_t_k_1_1_search.html',1,'BioGTK']]],
   ['serialize_11',['Serialize',['../class_bio_g_t_k_1_1_function.html#ac759528dddd2133de304c7f72d3dec94',1,'BioGTK::Function']]],
   ['setimagejpath_12',['SetImageJPath',['../class_bio_g_t_k_1_1_tabs_view.html#a3d41aea405918162d4418f6ef96dbf67',1,'BioGTK::TabsView']]],
-=======
-  ['save_1',['save',['../class_bio_g_t_k_1_1_fiji_1_1_roi_encoder.html#a92b64efce2b5dd59798120524ac98f0a',1,'BioGTK::Fiji::RoiEncoder']]],
-  ['saveall_2',['SaveAll',['../class_bio_g_t_k_1_1_function.html#ad38cf8de97c1b81bb7fb0da50d23336a',1,'BioGTK::Function']]],
-  ['saveselectedomeclick_3',['saveSelectedOMEClick',['../class_bio_g_t_k_1_1_tabs_view.html#a3da201cbb15db0e405b0d4616e49df78',1,'BioGTK::TabsView']]],
-  ['saveselectedtiffclick_4',['saveSelectedTiffClick',['../class_bio_g_t_k_1_1_tabs_view.html#a3544eb3df32dec3805c677c2254edc17',1,'BioGTK::TabsView']]],
-  ['saveseriesmenuclick_5',['saveSeriesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#aafa0f28281d1462bec55cf7f6974fe2c',1,'BioGTK::TabsView']]],
-  ['savetabomeclick_6',['saveTabOMEClick',['../class_bio_g_t_k_1_1_tabs_view.html#a5fc21301866a86968f299f686d3e80b1',1,'BioGTK::TabsView']]],
-  ['savetabtiffmenuclick_7',['saveTabTiffMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#acab42e86e43ceceb1b509911f2d57364',1,'BioGTK::TabsView']]],
-  ['script_8',['Script',['../class_bio_g_t_k_1_1_scripting_1_1_script.html',1,'BioGTK::Scripting']]],
-  ['scripting_9',['Scripting',['../class_bio_g_t_k_1_1_scripting.html',1,'BioGTK']]],
-  ['scriptrunnermenuclick_10',['scriptRunnerMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a81e10c3e7dfdc80d433999b8f649bc82',1,'BioGTK::TabsView']]],
-  ['search_11',['Search',['../class_bio_g_t_k_1_1_search.html',1,'BioGTK']]],
-  ['serialize_12',['Serialize',['../class_bio_g_t_k_1_1_function.html#ac759528dddd2133de304c7f72d3dec94',1,'BioGTK::Function']]],
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
   ['setposition_13',['SetPosition',['../class_bio_g_t_k_1_1_stage.html#a9962d0de8264b6f8d40a2a3e77e3652e',1,'BioGTK::Stage']]],
   ['setpositionx_14',['SetPositionX',['../class_bio_g_t_k_1_1_stage.html#a53fa2c97779405f85cffecc0f923aa32',1,'BioGTK::Stage']]],
   ['settool_15',['SetTool',['../class_bio_g_t_k_1_1_set_tool.html',1,'BioGTK']]],

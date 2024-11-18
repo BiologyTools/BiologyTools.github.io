@@ -16,10 +16,6 @@ var annotated_dup =
       [ "Function", "class_bio_g_t_k_1_1_function.html", "class_bio_g_t_k_1_1_function" ],
       [ "Functions", "class_bio_g_t_k_1_1_functions.html", "class_bio_g_t_k_1_1_functions" ],
       [ "HistogramControl", "class_bio_g_t_k_1_1_histogram_control.html", "class_bio_g_t_k_1_1_histogram_control" ],
-<<<<<<< HEAD
-=======
-      [ "ImageJ", "class_bio_g_t_k_1_1_image_j.html", null ],
->>>>>>> 96dd6e1ae8c9c0d581cec97f970611521812ce8f
       [ "ImageView", "class_bio_g_t_k_1_1_image_view.html", "class_bio_g_t_k_1_1_image_view" ],
       [ "NodeView", "class_bio_g_t_k_1_1_node_view.html", "class_bio_g_t_k_1_1_node_view" ],
       [ "NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
