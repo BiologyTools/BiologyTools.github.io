@@ -7,7 +7,9 @@ var annotated_dup =
     [ "BioGTK", "namespace_bio_g_t_k.html", [
       [ "About", "class_bio_g_t_k_1_1_about.html", null ],
       [ "ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", "class_bio_g_t_k_1_1_apply_filter" ],
+      [ "AutoSAM", "class_bio_g_t_k_1_1_auto_s_a_m.html", null ],
       [ "BioConsole", "class_bio_g_t_k_1_1_bio_console.html", "class_bio_g_t_k_1_1_bio_console" ],
+      [ "BoxPromotion", "class_bio_g_t_k_1_1_box_promotion.html", null ],
       [ "ChannelsTool", "class_bio_g_t_k_1_1_channels_tool.html", "class_bio_g_t_k_1_1_channels_tool" ],
       [ "ColorTool", "class_bio_g_t_k_1_1_color_tool.html", "class_bio_g_t_k_1_1_color_tool" ],
       [ "ComboPicker", "class_bio_g_t_k_1_1_combo_picker.html", null ],
@@ -17,6 +19,9 @@ var annotated_dup =
       [ "Functions", "class_bio_g_t_k_1_1_functions.html", "class_bio_g_t_k_1_1_functions" ],
       [ "HistogramControl", "class_bio_g_t_k_1_1_histogram_control.html", "class_bio_g_t_k_1_1_histogram_control" ],
       [ "ImageView", "class_bio_g_t_k_1_1_image_view.html", "class_bio_g_t_k_1_1_image_view" ],
+      [ "MaskData", "class_bio_g_t_k_1_1_mask_data.html", null ],
+      [ "MaskPromotion", "class_bio_g_t_k_1_1_mask_promotion.html", null ],
+      [ "MicroSAM", "class_bio_g_t_k_1_1_micro_s_a_m.html", "class_bio_g_t_k_1_1_micro_s_a_m" ],
       [ "NodeView", "class_bio_g_t_k_1_1_node_view.html", "class_bio_g_t_k_1_1_node_view" ],
       [ "NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
       [ "Objectives", "class_bio_g_t_k_1_1_objectives.html", "class_bio_g_t_k_1_1_objectives" ],
@@ -24,10 +29,14 @@ var annotated_dup =
       [ "Play", "class_bio_g_t_k_1_1_play.html", "class_bio_g_t_k_1_1_play" ],
       [ "Plot", "class_bio_g_t_k_1_1_plot.html", "class_bio_g_t_k_1_1_plot" ],
       [ "Plugin", "class_bio_g_t_k_1_1_plugin.html", "class_bio_g_t_k_1_1_plugin" ],
+      [ "PointPromotion", "class_bio_g_t_k_1_1_point_promotion.html", null ],
       [ "Progress", "class_bio_g_t_k_1_1_progress.html", null ],
+      [ "Promotion", "class_bio_g_t_k_1_1_promotion.html", null ],
       [ "Recorder", "class_bio_g_t_k_1_1_recorder.html", "class_bio_g_t_k_1_1_recorder" ],
       [ "Resolutions", "class_bio_g_t_k_1_1_resolutions.html", "class_bio_g_t_k_1_1_resolutions" ],
       [ "RLShutter", "class_bio_g_t_k_1_1_r_l_shutter.html", null ],
+      [ "SAM", "class_bio_g_t_k_1_1_s_a_m.html", "class_bio_g_t_k_1_1_s_a_m" ],
+      [ "SAMTool", "class_bio_g_t_k_1_1_s_a_m_tool.html", "class_bio_g_t_k_1_1_s_a_m_tool" ],
       [ "Scripting", "class_bio_g_t_k_1_1_scripting.html", "class_bio_g_t_k_1_1_scripting" ],
       [ "Search", "class_bio_g_t_k_1_1_search.html", null ],
       [ "SetTool", "class_bio_g_t_k_1_1_set_tool.html", "class_bio_g_t_k_1_1_set_tool" ],
@@ -38,6 +47,7 @@ var annotated_dup =
       [ "TLShutter", "class_bio_g_t_k_1_1_t_l_shutter.html", null ],
       [ "Tolerance", "class_bio_g_t_k_1_1_tolerance.html", "class_bio_g_t_k_1_1_tolerance" ],
       [ "Tools", "class_bio_g_t_k_1_1_tools.html", "class_bio_g_t_k_1_1_tools" ],
+      [ "Transforms", "class_bio_g_t_k_1_1_transforms.html", "class_bio_g_t_k_1_1_transforms" ],
       [ "Updater", "class_bio_g_t_k_1_1_updater.html", "class_bio_g_t_k_1_1_updater" ]
     ] ]
 ];
