@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">6.0.0</span>
+   &#160;<span id="projectnumber">6.3.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -295,67 +295,67 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00214">214</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  214</span>                                                           : base(handle)</div>
-<div class="line"><span class="lineno">  215</span>        {</div>
-<div class="line"><span class="lineno">  216</span>            _builder = builder;</div>
-<div class="line"><span class="lineno">  217</span>            App.tabsView = <span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">  218</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">  219</span>            filteredMenu.Active = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  220</span>            <a class="code hl_function" href="#a46fc819cb00e57bdf27c91edb18ce0c7">SetupHandlers</a>();</div>
-<div class="line"><span class="lineno">  221</span>            progress = Progress.Create(title, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);</div>
-<div class="line"><span class="lineno">  222</span>            Function.InitializeMainMenu();</div>
-<div class="line"><span class="lineno">  223</span>            filechooser =</div>
-<div class="line"><span class="lineno">  224</span>        <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>,</div>
-<div class="line"><span class="lineno">  225</span>            <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno">  226</span>            FileChooserAction.Open,</div>
-<div class="line"><span class="lineno">  227</span>            <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno">  228</span>            <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  229</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  230</span>            Menu m = <span class="keyword">new</span> Menu();</div>
-<div class="line"><span class="lineno">  231</span>            <span class="keywordflow">foreach</span> (RotateFlipType flip <span class="keywordflow">in</span> (RotateFlipType[])Enum.GetValues(typeof(RotateFlipType)))</div>
-<div class="line"><span class="lineno">  232</span>            {</div>
-<div class="line"><span class="lineno">  233</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(flip.ToString());</div>
-<div class="line"><span class="lineno">  234</span>                mi.ButtonPressEvent += RotateFlip_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  235</span>                m.Append(mi);</div>
-<div class="line"><span class="lineno">  236</span>            }</div>
-<div class="line"><span class="lineno">  237</span>            rotateFlipMenu.Submenu = m;</div>
-<div class="line"><span class="lineno">  238</span>            rotateFlipMenu.ShowAll();</div>
-<div class="line"><span class="lineno">  239</span>            <span class="keywordtype">string</span> a = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div>
-<div class="line"><span class="lineno">  240</span>            Menu me = <span class="keyword">new</span> Menu();</div>
-<div class="line"><span class="lineno">  241</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">char</span> c <span class="keywordflow">in</span> a)</div>
-<div class="line"><span class="lineno">  242</span>            {</div>
-<div class="line"><span class="lineno">  243</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(c.ToString());</div>
-<div class="line"><span class="lineno">  244</span>                Menu men = <span class="keyword">new</span> Menu();</div>
-<div class="line"><span class="lineno">  245</span>                <span class="keywordflow">foreach</span> (Fiji.Macro.Command command in Fiji.Macro.Commands.Values)</div>
-<div class="line"><span class="lineno">  246</span>                {</div>
-<div class="line"><span class="lineno">  247</span>                    <span class="keywordflow">if</span> (command.Name.StartsWith(c))</div>
-<div class="line"><span class="lineno">  248</span>                    {</div>
-<div class="line"><span class="lineno">  249</span>                        MenuItem menuItem = <span class="keyword">new</span> MenuItem(command.Name.ToString());</div>
-<div class="line"><span class="lineno">  250</span>                        menuItem.ButtonPressEvent += CommandMenuItem_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  251</span>                        men.Append(menuItem);</div>
-<div class="line"><span class="lineno">  252</span>                    }</div>
-<div class="line"><span class="lineno">  253</span>                }</div>
-<div class="line"><span class="lineno">  254</span>                mi.Submenu = men;</div>
-<div class="line"><span class="lineno">  255</span>                me.Append(mi);</div>
-<div class="line"><span class="lineno">  256</span>            }</div>
-<div class="line"><span class="lineno">  257</span>            commandsMenu.Submenu = me;</div>
-<div class="line"><span class="lineno">  258</span>            commandsMenu.ShowAll();</div>
-<div class="line"><span class="lineno">  259</span>            recentMenu.Submenu = recent;</div>
-<div class="line"><span class="lineno">  260</span> </div>
-<div class="line"><span class="lineno">  261</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">  262</span>            Menu rm = <span class="keyword">new</span> Menu();</div>
-<div class="line"><span class="lineno">  263</span>            <span class="keywordflow">foreach</span>(Scripting.Script s in Scripting.scripts.Values)</div>
-<div class="line"><span class="lineno">  264</span>            {</div>
-<div class="line"><span class="lineno">  265</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(s.name);</div>
-<div class="line"><span class="lineno">  266</span>                mi.ButtonPressEvent += Mi_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  267</span>                rm.Append(mi);</div>
-<div class="line"><span class="lineno">  268</span>            }</div>
-<div class="line"><span class="lineno">  269</span>            <span class="comment">//runMenu.ShowAll();</span></div>
-<div class="line"><span class="lineno">  270</span>            Plugins.Initialize();</div>
-<div class="line"><span class="lineno">  271</span>            ML.ML.Initialize();</div>
-<div class="line"><span class="lineno">  272</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a46fc819cb00e57bdf27c91edb18ce0c7"><div class="ttname"><a href="#a46fc819cb00e57bdf27c91edb18ce0c7">BioGTK.TabsView.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">This function sets up the event handlers for the menu items.</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00369">TabsView.cs:369</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00216">216</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  216</span>                                                           : base(handle)</div>
+<div class="line"><span class="lineno">  217</span>        {</div>
+<div class="line"><span class="lineno">  218</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">  219</span>            App.tabsView = <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">  220</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  221</span>            filteredMenu.Active = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  222</span>            <a class="code hl_function" href="#a46fc819cb00e57bdf27c91edb18ce0c7">SetupHandlers</a>();</div>
+<div class="line"><span class="lineno">  223</span>            progress = Progress.Create(title, <span class="stringliteral">&quot;&quot;</span>, <span class="stringliteral">&quot;&quot;</span>);</div>
+<div class="line"><span class="lineno">  224</span>            Function.InitializeMainMenu();</div>
+<div class="line"><span class="lineno">  225</span>            filechooser =</div>
+<div class="line"><span class="lineno">  226</span>        <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>,</div>
+<div class="line"><span class="lineno">  227</span>            <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno">  228</span>            FileChooserAction.Open,</div>
+<div class="line"><span class="lineno">  229</span>            <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno">  230</span>            <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  231</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  232</span>            Menu m = <span class="keyword">new</span> Menu();</div>
+<div class="line"><span class="lineno">  233</span>            <span class="keywordflow">foreach</span> (RotateFlipType flip <span class="keywordflow">in</span> (RotateFlipType[])Enum.GetValues(typeof(RotateFlipType)))</div>
+<div class="line"><span class="lineno">  234</span>            {</div>
+<div class="line"><span class="lineno">  235</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(flip.ToString());</div>
+<div class="line"><span class="lineno">  236</span>                mi.ButtonPressEvent += RotateFlip_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  237</span>                m.Append(mi);</div>
+<div class="line"><span class="lineno">  238</span>            }</div>
+<div class="line"><span class="lineno">  239</span>            rotateFlipMenu.Submenu = m;</div>
+<div class="line"><span class="lineno">  240</span>            rotateFlipMenu.ShowAll();</div>
+<div class="line"><span class="lineno">  241</span>            <span class="keywordtype">string</span> a = <span class="stringliteral">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;</span>;</div>
+<div class="line"><span class="lineno">  242</span>            Menu me = <span class="keyword">new</span> Menu();</div>
+<div class="line"><span class="lineno">  243</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">char</span> c <span class="keywordflow">in</span> a)</div>
+<div class="line"><span class="lineno">  244</span>            {</div>
+<div class="line"><span class="lineno">  245</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(c.ToString());</div>
+<div class="line"><span class="lineno">  246</span>                Menu men = <span class="keyword">new</span> Menu();</div>
+<div class="line"><span class="lineno">  247</span>                <span class="keywordflow">foreach</span> (Fiji.Macro.Command command in Fiji.Macro.Commands.Values)</div>
+<div class="line"><span class="lineno">  248</span>                {</div>
+<div class="line"><span class="lineno">  249</span>                    <span class="keywordflow">if</span> (command.Name.StartsWith(c))</div>
+<div class="line"><span class="lineno">  250</span>                    {</div>
+<div class="line"><span class="lineno">  251</span>                        MenuItem menuItem = <span class="keyword">new</span> MenuItem(command.Name.ToString());</div>
+<div class="line"><span class="lineno">  252</span>                        menuItem.ButtonPressEvent += CommandMenuItem_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  253</span>                        men.Append(menuItem);</div>
+<div class="line"><span class="lineno">  254</span>                    }</div>
+<div class="line"><span class="lineno">  255</span>                }</div>
+<div class="line"><span class="lineno">  256</span>                mi.Submenu = men;</div>
+<div class="line"><span class="lineno">  257</span>                me.Append(mi);</div>
+<div class="line"><span class="lineno">  258</span>            }</div>
+<div class="line"><span class="lineno">  259</span>            commandsMenu.Submenu = me;</div>
+<div class="line"><span class="lineno">  260</span>            commandsMenu.ShowAll();</div>
+<div class="line"><span class="lineno">  261</span>            recentMenu.Submenu = recent;</div>
+<div class="line"><span class="lineno">  262</span> </div>
+<div class="line"><span class="lineno">  263</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  264</span>            Menu rm = <span class="keyword">new</span> Menu();</div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">foreach</span>(Scripting.Script s in Scripting.scripts.Values)</div>
+<div class="line"><span class="lineno">  266</span>            {</div>
+<div class="line"><span class="lineno">  267</span>                MenuItem mi = <span class="keyword">new</span> MenuItem(s.name);</div>
+<div class="line"><span class="lineno">  268</span>                mi.ButtonPressEvent += Mi_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  269</span>                rm.Append(mi);</div>
+<div class="line"><span class="lineno">  270</span>            }</div>
+<div class="line"><span class="lineno">  271</span>            <span class="comment">//runMenu.ShowAll();</span></div>
+<div class="line"><span class="lineno">  272</span>            Plugins.Initialize();</div>
+<div class="line"><span class="lineno">  273</span>            ML.ML.Initialize();</div>
+<div class="line"><span class="lineno">  274</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a46fc819cb00e57bdf27c91edb18ce0c7"><div class="ttname"><a href="#a46fc819cb00e57bdf27c91edb18ce0c7">BioGTK.TabsView.SetupHandlers</a></div><div class="ttdeci">void SetupHandlers()</div><div class="ttdoc">This function sets up the event handlers for the menu items.</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00371">TabsView.cs:371</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -395,12 +395,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01458">1458</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1459</span>        {</div>
-<div class="line"><span class="lineno"> 1460</span>            App.about = About.Create();</div>
-<div class="line"><span class="lineno"> 1461</span>            App.about.Show();</div>
-<div class="line"><span class="lineno"> 1462</span>            App.about.Present();</div>
-<div class="line"><span class="lineno"> 1463</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01499">1499</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1500</span>        {</div>
+<div class="line"><span class="lineno"> 1501</span>            App.about = About.Create();</div>
+<div class="line"><span class="lineno"> 1502</span>            App.about.Show();</div>
+<div class="line"><span class="lineno"> 1503</span>            App.about.Present();</div>
+<div class="line"><span class="lineno"> 1504</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -440,24 +440,24 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the filechooser dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01046">1046</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1047</span>        {</div>
-<div class="line"><span class="lineno"> 1048</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose file to add to current tab.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1049</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno"> 1050</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1051</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1052</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1053</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno"> 1054</span>            {</div>
-<div class="line"><span class="lineno"> 1055</span>                StartProgress(<span class="stringliteral">&quot;Add Image to Tab&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1056</span>                await BioImage.OpenAsync(item, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, 0);</div>
-<div class="line"><span class="lineno"> 1057</span>                BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno"> 1058</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno"> 1059</span>                StopProgress();</div>
-<div class="line"><span class="lineno"> 1060</span>            }</div>
-<div class="line"><span class="lineno"> 1061</span>            this.ShowAll();</div>
-<div class="line"><span class="lineno"> 1062</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a4152e50796b80a5a8477e8473f7cab98"><div class="ttname"><a href="#a4152e50796b80a5a8477e8473f7cab98">BioGTK.TabsView.AddTab</a></div><div class="ttdeci">void AddTab(BioImage im)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00860">TabsView.cs:860</a></div></div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01087">1087</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1088</span>        {</div>
+<div class="line"><span class="lineno"> 1089</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose file to add to current tab.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1090</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1091</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1092</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1093</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1094</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno"> 1095</span>            {</div>
+<div class="line"><span class="lineno"> 1096</span>                StartProgress(<span class="stringliteral">&quot;Add Image to Tab&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1097</span>                await BioImage.OpenAsync(item, <span class="keyword">false</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, 0);</div>
+<div class="line"><span class="lineno"> 1098</span>                BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno"> 1099</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno"> 1100</span>                StopProgress();</div>
+<div class="line"><span class="lineno"> 1101</span>            }</div>
+<div class="line"><span class="lineno"> 1102</span>            this.ShowAll();</div>
+<div class="line"><span class="lineno"> 1103</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a4152e50796b80a5a8477e8473f7cab98"><div class="ttname"><a href="#a4152e50796b80a5a8477e8473f7cab98">BioGTK.TabsView.AddTab</a></div><div class="ttdeci">void AddTab(BioImage im)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00901">TabsView.cs:901</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -497,23 +497,23 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the filechooser dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01070">1070</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1071</span>        {</div>
-<div class="line"><span class="lineno"> 1072</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME file to add to current tab.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1073</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno"> 1074</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1075</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1076</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1077</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno"> 1078</span>            {</div>
-<div class="line"><span class="lineno"> 1079</span>                StartProgress(<span class="stringliteral">&quot;Add Image to Tab&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1080</span>                await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, 0);</div>
-<div class="line"><span class="lineno"> 1081</span>                BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno"> 1082</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno"> 1083</span>                StopProgress();</div>
-<div class="line"><span class="lineno"> 1084</span>            }</div>
-<div class="line"><span class="lineno"> 1085</span>            this.Show();</div>
-<div class="line"><span class="lineno"> 1086</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01111">1111</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1112</span>        {</div>
+<div class="line"><span class="lineno"> 1113</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME file to add to current tab.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1114</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1115</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1116</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1117</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1118</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno"> 1119</span>            {</div>
+<div class="line"><span class="lineno"> 1120</span>                StartProgress(<span class="stringliteral">&quot;Add Image to Tab&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1121</span>                await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">false</span>, <span class="keyword">true</span>, 0);</div>
+<div class="line"><span class="lineno"> 1122</span>                BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno"> 1123</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno"> 1124</span>                StopProgress();</div>
+<div class="line"><span class="lineno"> 1125</span>            }</div>
+<div class="line"><span class="lineno"> 1126</span>            this.Show();</div>
+<div class="line"><span class="lineno"> 1127</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -539,39 +539,39 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00860">860</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  861</span>        {</div>
-<div class="line"><span class="lineno">  862</span>            <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">  863</span>            {</div>
-<div class="line"><span class="lineno">  864</span>                Application.Invoke(delegate</div>
-<div class="line"><span class="lineno">  865</span>                {</div>
-<div class="line"><span class="lineno">  866</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> vi = 0; vi &lt; viewers.Count; vi++)</div>
-<div class="line"><span class="lineno">  867</span>                    {</div>
-<div class="line"><span class="lineno">  868</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; viewers[vi].Images.Count; i++)</div>
-<div class="line"><span class="lineno">  869</span>                        {</div>
-<div class="line"><span class="lineno">  870</span>                            <span class="keywordflow">if</span> (viewers[vi].Images[i].Filename == im.Filename)</div>
-<div class="line"><span class="lineno">  871</span>                                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  872</span>                        }</div>
-<div class="line"><span class="lineno">  873</span>                    }</div>
-<div class="line"><span class="lineno">  874</span>                    ImageView v = ImageView.Create(im);</div>
-<div class="line"><span class="lineno">  875</span>                    viewers.Add(v);</div>
-<div class="line"><span class="lineno">  876</span>                    Label dummy = <span class="keyword">new</span> Gtk.Label(System.IO.Path.GetDirectoryName(im.file.Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>)) + <span class="stringliteral">&quot;/&quot;</span> + im.Filename);</div>
-<div class="line"><span class="lineno">  877</span>                    dummy.Text = im.file.Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>) + <span class="stringliteral">&quot;/&quot;</span> + im.Filename;</div>
-<div class="line"><span class="lineno">  878</span>                    dummy.Visible = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  879</span>                    Label l = <span class="keyword">new</span> Gtk.Label(System.IO.Path.GetFileName(im.Filename));</div>
-<div class="line"><span class="lineno">  880</span>                    l.Text = System.IO.Path.GetFileName(im.Filename);</div>
-<div class="line"><span class="lineno">  881</span>                    tabsView.AppendPage(dummy, l);                </div>
-<div class="line"><span class="lineno">  882</span>                    Console.WriteLine(<span class="stringliteral">&quot;New tab added for &quot;</span> + im.Filename);</div>
-<div class="line"><span class="lineno">  883</span>                    App.nodeView.UpdateItems();</div>
-<div class="line"><span class="lineno">  884</span>                    tabsView.ShowAll();</div>
-<div class="line"><span class="lineno">  885</span>                    v.Show();</div>
-<div class="line"><span class="lineno">  886</span>                });</div>
-<div class="line"><span class="lineno">  887</span>            }</div>
-<div class="line"><span class="lineno">  888</span>            <span class="keywordflow">catch</span> (Exception e)</div>
-<div class="line"><span class="lineno">  889</span>            {</div>
-<div class="line"><span class="lineno">  890</span>                Console.WriteLine(e.ToString());</div>
-<div class="line"><span class="lineno">  891</span>            }</div>
-<div class="line"><span class="lineno">  892</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00901">901</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  902</span>        {</div>
+<div class="line"><span class="lineno">  903</span>            <span class="keywordflow">try</span></div>
+<div class="line"><span class="lineno">  904</span>            {</div>
+<div class="line"><span class="lineno">  905</span>                Application.Invoke(delegate</div>
+<div class="line"><span class="lineno">  906</span>                {</div>
+<div class="line"><span class="lineno">  907</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> vi = 0; vi &lt; viewers.Count; vi++)</div>
+<div class="line"><span class="lineno">  908</span>                    {</div>
+<div class="line"><span class="lineno">  909</span>                        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; viewers[vi].Images.Count; i++)</div>
+<div class="line"><span class="lineno">  910</span>                        {</div>
+<div class="line"><span class="lineno">  911</span>                            <span class="keywordflow">if</span> (viewers[vi].Images[i].Filename == im.Filename)</div>
+<div class="line"><span class="lineno">  912</span>                                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  913</span>                        }</div>
+<div class="line"><span class="lineno">  914</span>                    }</div>
+<div class="line"><span class="lineno">  915</span>                    ImageView v = ImageView.Create(im);</div>
+<div class="line"><span class="lineno">  916</span>                    viewers.Add(v);</div>
+<div class="line"><span class="lineno">  917</span>                    Label dummy = <span class="keyword">new</span> Gtk.Label(System.IO.Path.GetDirectoryName(im.file.Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>)) + <span class="stringliteral">&quot;/&quot;</span> + im.Filename);</div>
+<div class="line"><span class="lineno">  918</span>                    dummy.Text = im.file.Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>) + <span class="stringliteral">&quot;/&quot;</span> + im.Filename;</div>
+<div class="line"><span class="lineno">  919</span>                    dummy.Visible = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  920</span>                    Label l = <span class="keyword">new</span> Gtk.Label(System.IO.Path.GetFileName(im.Filename));</div>
+<div class="line"><span class="lineno">  921</span>                    l.Text = System.IO.Path.GetFileName(im.Filename);</div>
+<div class="line"><span class="lineno">  922</span>                    tabsView.AppendPage(dummy, l);                </div>
+<div class="line"><span class="lineno">  923</span>                    Console.WriteLine(<span class="stringliteral">&quot;New tab added for &quot;</span> + im.Filename);</div>
+<div class="line"><span class="lineno">  924</span>                    App.nodeView.UpdateItems();</div>
+<div class="line"><span class="lineno">  925</span>                    tabsView.ShowAll();</div>
+<div class="line"><span class="lineno">  926</span>                    v.Show();</div>
+<div class="line"><span class="lineno">  927</span>                });</div>
+<div class="line"><span class="lineno">  928</span>            }</div>
+<div class="line"><span class="lineno">  929</span>            <span class="keywordflow">catch</span> (Exception e)</div>
+<div class="line"><span class="lineno">  930</span>            {</div>
+<div class="line"><span class="lineno">  931</span>                Console.WriteLine(e.ToString());</div>
+<div class="line"><span class="lineno">  932</span>            }</div>
+<div class="line"><span class="lineno">  933</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -632,16 +632,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01324">1324</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1325</span>        {</div>
-<div class="line"><span class="lineno"> 1326</span>            BioImage.AutoThreshold(ImageView.SelectedImage, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1327</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.bitsPerPixel &gt; 8)</div>
-<div class="line"><span class="lineno"> 1328</span>                ImageView.SelectedImage.StackThreshold(<span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1329</span>            <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno"> 1330</span>                ImageView.SelectedImage.StackThreshold(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno"> 1331</span>            App.viewer.UpdateImage();</div>
-<div class="line"><span class="lineno"> 1332</span>            App.viewer.UpdateView();</div>
-<div class="line"><span class="lineno"> 1333</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01365">1365</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1366</span>        {</div>
+<div class="line"><span class="lineno"> 1367</span>            BioImage.AutoThreshold(ImageView.SelectedImage, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1368</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage.bitsPerPixel &gt; 8)</div>
+<div class="line"><span class="lineno"> 1369</span>                ImageView.SelectedImage.StackThreshold(<span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1370</span>            <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno"> 1371</span>                ImageView.SelectedImage.StackThreshold(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno"> 1372</span>            App.viewer.UpdateImage();</div>
+<div class="line"><span class="lineno"> 1373</span>            App.viewer.UpdateView();</div>
+<div class="line"><span class="lineno"> 1374</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -680,14 +680,14 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01338">1338</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1339</span>        {</div>
-<div class="line"><span class="lineno"> 1340</span>            <span class="keywordflow">if</span> (App.viewer == <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1341</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1342</span>            App.channelsTool = ChannelsTool.Create();</div>
-<div class="line"><span class="lineno"> 1343</span>            App.channelsTool.Show();</div>
-<div class="line"><span class="lineno"> 1344</span>            App.channelsTool.Present();</div>
-<div class="line"><span class="lineno"> 1345</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01379">1379</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1380</span>        {</div>
+<div class="line"><span class="lineno"> 1381</span>            <span class="keywordflow">if</span> (App.viewer == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1382</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1383</span>            App.channelsTool = ChannelsTool.Create();</div>
+<div class="line"><span class="lineno"> 1384</span>            App.channelsTool.Show();</div>
+<div class="line"><span class="lineno"> 1385</span>            App.channelsTool.Present();</div>
+<div class="line"><span class="lineno"> 1386</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -726,12 +726,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01437">1437</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1438</span>        {</div>
-<div class="line"><span class="lineno"> 1439</span>            App.console = BioConsole.Create();</div>
-<div class="line"><span class="lineno"> 1440</span>            App.console.Show();</div>
-<div class="line"><span class="lineno"> 1441</span>            App.console.Present();</div>
-<div class="line"><span class="lineno"> 1442</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01478">1478</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1479</span>        {</div>
+<div class="line"><span class="lineno"> 1480</span>            App.console = BioConsole.Create();</div>
+<div class="line"><span class="lineno"> 1481</span>            App.console.Show();</div>
+<div class="line"><span class="lineno"> 1482</span>            App.console.Present();</div>
+<div class="line"><span class="lineno"> 1483</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -760,11 +760,11 @@ Protected Member Functions</h2></td></tr>
 <p>It creates a new instance of the <a class="el" href="class_bio_g_t_k_1_1_tabs_view.html">TabsView</a> class, which is a class that inherits from Gtk.Window</p>
 <dl class="section return"><dt>Returns</dt><dd>A new instance of the <a class="el" href="class_bio_g_t_k_1_1_tabs_view.html">TabsView</a> class. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00207">207</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  208</span>        {</div>
-<div class="line"><span class="lineno">  209</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/TabsView.glade&quot;</span>, FileMode.Open));</div>
-<div class="line"><span class="lineno">  210</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> TabsView(builder, builder.GetObject(<span class="stringliteral">&quot;TabsView&quot;</span>).Handle);</div>
-<div class="line"><span class="lineno">  211</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00209">209</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  210</span>        {</div>
+<div class="line"><span class="lineno">  211</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/TabsView.glade&quot;</span>, FileMode.Open));</div>
+<div class="line"><span class="lineno">  212</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> TabsView(builder, builder.GetObject(<span class="stringliteral">&quot;TabsView&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">  213</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -804,30 +804,30 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01295">1295</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1296</span>        {</div>
-<div class="line"><span class="lineno"> 1297</span>            Gtk.FileChooserDialog folderchooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set folder of images for export.&quot;</span>,</div>
-<div class="line"><span class="lineno"> 1298</span>          <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno"> 1299</span>          FileChooserAction.SelectFolder,</div>
-<div class="line"><span class="lineno"> 1300</span>          <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno"> 1301</span>          <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
-<div class="line"><span class="lineno"> 1302</span>            folderchooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno"> 1303</span>            <span class="keywordflow">if</span> (folderchooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
-<div class="line"><span class="lineno"> 1304</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1305</span>            <span class="keywordtype">string</span> folder = folderchooser.Filename;</div>
-<div class="line"><span class="lineno"> 1306</span>            folderchooser.Destroy();</div>
-<div class="line"><span class="lineno"> 1307</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set filename for CSV to export.&quot;</span>,</div>
-<div class="line"><span class="lineno"> 1308</span>           <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno"> 1309</span>           FileChooserAction.Save,</div>
-<div class="line"><span class="lineno"> 1310</span>           <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno"> 1311</span>           <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
-<div class="line"><span class="lineno"> 1312</span>            filechooser.SelectMultiple = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno"> 1313</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
-<div class="line"><span class="lineno"> 1314</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1315</span>            <span class="keywordtype">string</span> file = filechooser.Filename;</div>
-<div class="line"><span class="lineno"> 1316</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1317</span>            BioImage.ExportROIFolder(folder, file);</div>
-<div class="line"><span class="lineno"> 1318</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01336">1336</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1337</span>        {</div>
+<div class="line"><span class="lineno"> 1338</span>            Gtk.FileChooserDialog folderchooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set folder of images for export.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1339</span>          <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno"> 1340</span>          FileChooserAction.SelectFolder,</div>
+<div class="line"><span class="lineno"> 1341</span>          <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno"> 1342</span>          <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
+<div class="line"><span class="lineno"> 1343</span>            folderchooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1344</span>            <span class="keywordflow">if</span> (folderchooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
+<div class="line"><span class="lineno"> 1345</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1346</span>            <span class="keywordtype">string</span> folder = folderchooser.Filename;</div>
+<div class="line"><span class="lineno"> 1347</span>            folderchooser.Destroy();</div>
+<div class="line"><span class="lineno"> 1348</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set filename for CSV to export.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1349</span>           <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno"> 1350</span>           FileChooserAction.Save,</div>
+<div class="line"><span class="lineno"> 1351</span>           <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno"> 1352</span>           <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
+<div class="line"><span class="lineno"> 1353</span>            filechooser.SelectMultiple = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1354</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
+<div class="line"><span class="lineno"> 1355</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1356</span>            <span class="keywordtype">string</span> file = filechooser.Filename;</div>
+<div class="line"><span class="lineno"> 1357</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1358</span>            BioImage.ExportROIFolder(folder, file);</div>
+<div class="line"><span class="lineno"> 1359</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -866,19 +866,19 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01257">1257</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1258</span>        {</div>
-<div class="line"><span class="lineno"> 1259</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set filename for export.&quot;</span>,</div>
-<div class="line"><span class="lineno"> 1260</span>           <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno"> 1261</span>           FileChooserAction.Save,</div>
-<div class="line"><span class="lineno"> 1262</span>           <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno"> 1263</span>           <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
-<div class="line"><span class="lineno"> 1264</span>            filechooser.SelectMultiple = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno"> 1265</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
-<div class="line"><span class="lineno"> 1266</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1267</span>            BioImage.ExportROIsCSV(filechooser.Filename, ImageView.SelectedImage.Annotations);</div>
-<div class="line"><span class="lineno"> 1268</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1269</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01298">1298</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1299</span>        {</div>
+<div class="line"><span class="lineno"> 1300</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Set filename for export.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1301</span>           <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno"> 1302</span>           FileChooserAction.Save,</div>
+<div class="line"><span class="lineno"> 1303</span>           <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno"> 1304</span>           <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
+<div class="line"><span class="lineno"> 1305</span>            filechooser.SelectMultiple = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1306</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
+<div class="line"><span class="lineno"> 1307</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1308</span>            BioImage.ExportROIsCSV(filechooser.Filename, ImageView.SelectedImage.Annotations);</div>
+<div class="line"><span class="lineno"> 1309</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1310</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -917,12 +917,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01416">1416</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1417</span>        {</div>
-<div class="line"><span class="lineno"> 1418</span>            App.filters = FiltersView.Create();</div>
-<div class="line"><span class="lineno"> 1419</span>            App.filters.Show();</div>
-<div class="line"><span class="lineno"> 1420</span>            App.filters.Present();</div>
-<div class="line"><span class="lineno"> 1421</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01457">1457</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1458</span>        {</div>
+<div class="line"><span class="lineno"> 1459</span>            App.filters = FiltersView.Create();</div>
+<div class="line"><span class="lineno"> 1460</span>            App.filters.Show();</div>
+<div class="line"><span class="lineno"> 1461</span>            App.filters.Present();</div>
+<div class="line"><span class="lineno"> 1462</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -961,12 +961,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01427">1427</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1428</span>        {</div>
-<div class="line"><span class="lineno"> 1429</span>            App.funcs = Functions.Create();</div>
-<div class="line"><span class="lineno"> 1430</span>            App.funcs.Show();</div>
-<div class="line"><span class="lineno"> 1431</span>            App.funcs.Present();</div>
-<div class="line"><span class="lineno"> 1432</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01468">1468</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1469</span>        {</div>
+<div class="line"><span class="lineno"> 1470</span>            App.funcs = Functions.Create();</div>
+<div class="line"><span class="lineno"> 1471</span>            App.funcs.Show();</div>
+<div class="line"><span class="lineno"> 1472</span>            App.funcs.Present();</div>
+<div class="line"><span class="lineno"> 1473</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1079,21 +1079,21 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01204">1204</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1205</span>        {</div>
-<div class="line"><span class="lineno"> 1206</span>            Gtk.FileChooserDialog filechooser =</div>
-<div class="line"><span class="lineno"> 1207</span>    <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose images to convert to stack.&quot;</span>,</div>
-<div class="line"><span class="lineno"> 1208</span>        <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno"> 1209</span>        FileChooserAction.Save,</div>
-<div class="line"><span class="lineno"> 1210</span>        <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno"> 1211</span>        <span class="stringliteral">&quot;Save&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1212</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno"> 1213</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1214</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1215</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1216</span>            BioImage b = BioImage.ImagesToStack(filechooser.Filenames, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1217</span>            <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(b);</div>
-<div class="line"><span class="lineno"> 1218</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01245">1245</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1246</span>        {</div>
+<div class="line"><span class="lineno"> 1247</span>            Gtk.FileChooserDialog filechooser =</div>
+<div class="line"><span class="lineno"> 1248</span>    <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose images to convert to stack.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1249</span>        <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno"> 1250</span>        FileChooserAction.Save,</div>
+<div class="line"><span class="lineno"> 1251</span>        <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno"> 1252</span>        <span class="stringliteral">&quot;Save&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1253</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1254</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1255</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1256</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1257</span>            BioImage b = BioImage.ImagesToStack(filechooser.Filenames, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1258</span>            <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(b);</div>
+<div class="line"><span class="lineno"> 1259</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1132,22 +1132,22 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01274">1274</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1275</span>        {</div>
-<div class="line"><span class="lineno"> 1276</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose the file to open.&quot;</span>,</div>
-<div class="line"><span class="lineno"> 1277</span>          <span class="keyword">this</span>,</div>
-<div class="line"><span class="lineno"> 1278</span>          FileChooserAction.Open,</div>
-<div class="line"><span class="lineno"> 1279</span>          <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno"> 1280</span>          <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
-<div class="line"><span class="lineno"> 1281</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno"> 1282</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
-<div class="line"><span class="lineno"> 1283</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1284</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno"> 1285</span>            {</div>
-<div class="line"><span class="lineno"> 1286</span>                ImageView.SelectedImage.Annotations.AddRange(BioImage.ImportROIsCSV(item));</div>
-<div class="line"><span class="lineno"> 1287</span>            }</div>
-<div class="line"><span class="lineno"> 1288</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1289</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01315">1315</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1316</span>        {</div>
+<div class="line"><span class="lineno"> 1317</span>            Gtk.FileChooserDialog filechooser = <span class="keyword">new</span> Gtk.FileChooserDialog(<span class="stringliteral">&quot;Choose the file to open.&quot;</span>,</div>
+<div class="line"><span class="lineno"> 1318</span>          <span class="keyword">this</span>,</div>
+<div class="line"><span class="lineno"> 1319</span>          FileChooserAction.Open,</div>
+<div class="line"><span class="lineno"> 1320</span>          <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno"> 1321</span>          <span class="stringliteral">&quot;Ok&quot;</span>, ResponseType.Ok);</div>
+<div class="line"><span class="lineno"> 1322</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1323</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Ok)</div>
+<div class="line"><span class="lineno"> 1324</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1325</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno"> 1326</span>            {</div>
+<div class="line"><span class="lineno"> 1327</span>                ImageView.SelectedImage.Annotations.AddRange(BioImage.ImportROIsCSV(item));</div>
+<div class="line"><span class="lineno"> 1328</span>            }</div>
+<div class="line"><span class="lineno"> 1329</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1330</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1173,22 +1173,22 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01493">1493</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1494</span>        {</div>
-<div class="line"><span class="lineno"> 1495</span>            BioImage b = BioImage.OpenFile(file);</div>
-<div class="line"><span class="lineno"> 1496</span>            ImageView view = ImageView.Create(b);</div>
-<div class="line"><span class="lineno"> 1497</span>            <span class="keywordflow">if</span> (!viewers.Contains(App.viewer))</div>
-<div class="line"><span class="lineno"> 1498</span>                viewers.Add(view);</div>
-<div class="line"><span class="lineno"> 1499</span>            Label dummy = <span class="keyword">new</span> Gtk.Label(b.Filename);</div>
-<div class="line"><span class="lineno"> 1500</span>            dummy.Text = b.Filename;</div>
-<div class="line"><span class="lineno"> 1501</span>            dummy.UseMarkup = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno"> 1502</span>            dummy.Visible = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno"> 1503</span>            Label l = <span class="keyword">new</span> Gtk.Label(b.Filename);</div>
-<div class="line"><span class="lineno"> 1504</span>            l.Text = b.Filename;</div>
-<div class="line"><span class="lineno"> 1505</span>            l.UseMarkup = <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno"> 1506</span>            tabsView.AppendPage(dummy, l);</div>
-<div class="line"><span class="lineno"> 1507</span>            view.Present();</div>
-<div class="line"><span class="lineno"> 1508</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01534">1534</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1535</span>        {</div>
+<div class="line"><span class="lineno"> 1536</span>            BioImage b = BioImage.OpenFile(file);</div>
+<div class="line"><span class="lineno"> 1537</span>            ImageView view = ImageView.Create(b);</div>
+<div class="line"><span class="lineno"> 1538</span>            <span class="keywordflow">if</span> (!viewers.Contains(App.viewer))</div>
+<div class="line"><span class="lineno"> 1539</span>                viewers.Add(view);</div>
+<div class="line"><span class="lineno"> 1540</span>            Label dummy = <span class="keyword">new</span> Gtk.Label(b.Filename);</div>
+<div class="line"><span class="lineno"> 1541</span>            dummy.Text = b.Filename;</div>
+<div class="line"><span class="lineno"> 1542</span>            dummy.UseMarkup = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1543</span>            dummy.Visible = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1544</span>            Label l = <span class="keyword">new</span> Gtk.Label(b.Filename);</div>
+<div class="line"><span class="lineno"> 1545</span>            l.Text = b.Filename;</div>
+<div class="line"><span class="lineno"> 1546</span>            l.UseMarkup = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno"> 1547</span>            tabsView.AppendPage(dummy, l);</div>
+<div class="line"><span class="lineno"> 1548</span>            view.Present();</div>
+<div class="line"><span class="lineno"> 1549</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1228,23 +1228,23 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00901">901</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  902</span>        {</div>
-<div class="line"><span class="lineno">  903</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  904</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  905</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  906</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  907</span>            <span class="keywordtype">string</span>[] sts = filechooser.Filenames;</div>
-<div class="line"><span class="lineno">  908</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno">  909</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> sts)</div>
-<div class="line"><span class="lineno">  910</span>            {</div>
-<div class="line"><span class="lineno">  911</span>                StartProgress(<span class="stringliteral">&quot;Open File&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno">  912</span>                await BioImage.OpenAsync(item,<span class="keyword">false</span>,<span class="keyword">true</span>,<span class="keyword">true</span>,0);</div>
-<div class="line"><span class="lineno">  913</span>                BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno">  914</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno">  915</span>                StopProgress();</div>
-<div class="line"><span class="lineno">  916</span>            }</div>
-<div class="line"><span class="lineno">  917</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00942">942</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  943</span>        {</div>
+<div class="line"><span class="lineno">  944</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  945</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  946</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno">  947</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  948</span>            <span class="keywordtype">string</span>[] sts = filechooser.Filenames;</div>
+<div class="line"><span class="lineno">  949</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno">  950</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> sts)</div>
+<div class="line"><span class="lineno">  951</span>            {</div>
+<div class="line"><span class="lineno">  952</span>                StartProgress(<span class="stringliteral">&quot;Open File&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno">  953</span>                await BioImage.OpenAsync(item,<span class="keyword">false</span>,<span class="keyword">true</span>,<span class="keyword">true</span>,0);</div>
+<div class="line"><span class="lineno">  954</span>                BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno">  955</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno">  956</span>                StopProgress();</div>
+<div class="line"><span class="lineno">  957</span>            }</div>
+<div class="line"><span class="lineno">  958</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1284,22 +1284,22 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00925">925</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  926</span>        {</div>
-<div class="line"><span class="lineno">  927</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  928</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  929</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  930</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  931</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno">  932</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno">  933</span>            {</div>
-<div class="line"><span class="lineno">  934</span>                StartProgress(<span class="stringliteral">&quot;Open OME&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno">  935</span>                await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>,0);</div>
-<div class="line"><span class="lineno">  936</span>                BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno">  937</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno">  938</span>                StopProgress();</div>
-<div class="line"><span class="lineno">  939</span>            }</div>
-<div class="line"><span class="lineno">  940</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00966">966</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  967</span>        {</div>
+<div class="line"><span class="lineno">  968</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  969</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  970</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno">  971</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  972</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno">  973</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno">  974</span>            {</div>
+<div class="line"><span class="lineno">  975</span>                StartProgress(<span class="stringliteral">&quot;Open OME&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno">  976</span>                await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>,0);</div>
+<div class="line"><span class="lineno">  977</span>                BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno">  978</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno">  979</span>                StopProgress();</div>
+<div class="line"><span class="lineno">  980</span>            }</div>
+<div class="line"><span class="lineno">  981</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1339,27 +1339,27 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>A list of file names. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00948">948</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  949</span>        {</div>
-<div class="line"><span class="lineno">  950</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME Series file to open.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  951</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  952</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  953</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  954</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno">  955</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno">  956</span>            {</div>
-<div class="line"><span class="lineno">  957</span>                StartProgress(<span class="stringliteral">&quot;Open OME&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno">  958</span>                <span class="keywordtype">int</span> s = BioImage.GetSeriesCount(item);</div>
-<div class="line"><span class="lineno">  959</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; s; i++)</div>
-<div class="line"><span class="lineno">  960</span>                {</div>
-<div class="line"><span class="lineno">  961</span>                    await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, i);</div>
-<div class="line"><span class="lineno">  962</span>                    BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno">  963</span>                    <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno">  964</span>                }</div>
-<div class="line"><span class="lineno">  965</span>            }</div>
-<div class="line"><span class="lineno">  966</span>            tabsView.ShowAll();</div>
-<div class="line"><span class="lineno">  967</span>            </div>
-<div class="line"><span class="lineno">  968</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00989">989</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  990</span>        {</div>
+<div class="line"><span class="lineno">  991</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose OME Series file to open.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  992</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  993</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno">  994</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  995</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno">  996</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno">  997</span>            {</div>
+<div class="line"><span class="lineno">  998</span>                StartProgress(<span class="stringliteral">&quot;Open OME&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno">  999</span>                <span class="keywordtype">int</span> s = BioImage.GetSeriesCount(item);</div>
+<div class="line"><span class="lineno"> 1000</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; s; i++)</div>
+<div class="line"><span class="lineno"> 1001</span>                {</div>
+<div class="line"><span class="lineno"> 1002</span>                    await BioImage.OpenAsync(item, <span class="keyword">true</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, i);</div>
+<div class="line"><span class="lineno"> 1003</span>                    BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno"> 1004</span>                    <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno"> 1005</span>                }</div>
+<div class="line"><span class="lineno"> 1006</span>            }</div>
+<div class="line"><span class="lineno"> 1007</span>            tabsView.ShowAll();</div>
+<div class="line"><span class="lineno"> 1008</span>            </div>
+<div class="line"><span class="lineno"> 1009</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1399,23 +1399,23 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00976">976</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  977</span>        {</div>
-<div class="line"><span class="lineno">  978</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose series file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  979</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  980</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  981</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  982</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno">  983</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
-<div class="line"><span class="lineno">  984</span>            {</div>
-<div class="line"><span class="lineno">  985</span>                StartProgress(<span class="stringliteral">&quot;Open OME Series&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
-<div class="line"><span class="lineno">  986</span>                await BioImage.OpenAsync(item, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, 0);</div>
-<div class="line"><span class="lineno">  987</span>                BioImage im = Images.GetImage(item);</div>
-<div class="line"><span class="lineno">  988</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
-<div class="line"><span class="lineno">  989</span>                StopProgress();</div>
-<div class="line"><span class="lineno">  990</span>            }</div>
-<div class="line"><span class="lineno">  991</span>            tabsView.Show();</div>
-<div class="line"><span class="lineno">  992</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01017">1017</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1018</span>        {</div>
+<div class="line"><span class="lineno"> 1019</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Choose series file to open&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Open, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1020</span>            filechooser.SelectMultiple = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno"> 1021</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1022</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1023</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1024</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> item <span class="keywordflow">in</span> filechooser.Filenames)</div>
+<div class="line"><span class="lineno"> 1025</span>            {</div>
+<div class="line"><span class="lineno"> 1026</span>                StartProgress(<span class="stringliteral">&quot;Open OME Series&quot;</span>, <span class="stringliteral">&quot;Opening&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1027</span>                await BioImage.OpenAsync(item, <span class="keyword">false</span>, <span class="keyword">true</span>, <span class="keyword">true</span>, 0);</div>
+<div class="line"><span class="lineno"> 1028</span>                BioImage im = Images.GetImage(item);</div>
+<div class="line"><span class="lineno"> 1029</span>                <a class="code hl_function" href="#a4152e50796b80a5a8477e8473f7cab98">AddTab</a>(im);</div>
+<div class="line"><span class="lineno"> 1030</span>                StopProgress();</div>
+<div class="line"><span class="lineno"> 1031</span>            }</div>
+<div class="line"><span class="lineno"> 1032</span>            tabsView.Show();</div>
+<div class="line"><span class="lineno"> 1033</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1441,28 +1441,28 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01468">1468</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1469</span>        {</div>
-<div class="line"><span class="lineno"> 1470</span>            <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><span class="lineno"> 1471</span>            <span class="keywordflow">foreach</span> (Widget item <span class="keywordflow">in</span> tabsView.Children)</div>
-<div class="line"><span class="lineno"> 1472</span>            {</div>
-<div class="line"><span class="lineno"> 1473</span>                Gtk.Label l = item as Gtk.Label;</div>
-<div class="line"><span class="lineno"> 1474</span>                <span class="keywordtype">string</span> name = System.IO.Path.GetFileName(l.LabelMarkup);</div>
-<div class="line"><span class="lineno"> 1475</span>                <span class="keywordflow">if</span> (name == tabName)</div>
-<div class="line"><span class="lineno"> 1476</span>                {</div>
-<div class="line"><span class="lineno"> 1477</span>                    ImageView iv = viewers[i];</div>
-<div class="line"><span class="lineno"> 1478</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v = 0; v &lt; iv.Images.Count; v++)</div>
-<div class="line"><span class="lineno"> 1479</span>                    {</div>
-<div class="line"><span class="lineno"> 1480</span>                        Images.RemoveImage(iv.Images[v]);</div>
-<div class="line"><span class="lineno"> 1481</span>                    }</div>
-<div class="line"><span class="lineno"> 1482</span>                    tabsView.Remove(item);</div>
-<div class="line"><span class="lineno"> 1483</span>                    viewers.RemoveAt(i);</div>
-<div class="line"><span class="lineno"> 1484</span>                    App.nodeView.UpdateItems();</div>
-<div class="line"><span class="lineno"> 1485</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1486</span>                }</div>
-<div class="line"><span class="lineno"> 1487</span>                i++;</div>
-<div class="line"><span class="lineno"> 1488</span>            }</div>
-<div class="line"><span class="lineno"> 1489</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01509">1509</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1510</span>        {</div>
+<div class="line"><span class="lineno"> 1511</span>            <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><span class="lineno"> 1512</span>            <span class="keywordflow">foreach</span> (Widget item <span class="keywordflow">in</span> tabsView.Children)</div>
+<div class="line"><span class="lineno"> 1513</span>            {</div>
+<div class="line"><span class="lineno"> 1514</span>                Gtk.Label l = item as Gtk.Label;</div>
+<div class="line"><span class="lineno"> 1515</span>                <span class="keywordtype">string</span> name = System.IO.Path.GetFileName(l.LabelMarkup);</div>
+<div class="line"><span class="lineno"> 1516</span>                <span class="keywordflow">if</span> (name == tabName)</div>
+<div class="line"><span class="lineno"> 1517</span>                {</div>
+<div class="line"><span class="lineno"> 1518</span>                    ImageView iv = viewers[i];</div>
+<div class="line"><span class="lineno"> 1519</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> v = 0; v &lt; iv.Images.Count; v++)</div>
+<div class="line"><span class="lineno"> 1520</span>                    {</div>
+<div class="line"><span class="lineno"> 1521</span>                        Images.RemoveImage(iv.Images[v]);</div>
+<div class="line"><span class="lineno"> 1522</span>                    }</div>
+<div class="line"><span class="lineno"> 1523</span>                    tabsView.Remove(item);</div>
+<div class="line"><span class="lineno"> 1524</span>                    viewers.RemoveAt(i);</div>
+<div class="line"><span class="lineno"> 1525</span>                    App.nodeView.UpdateItems();</div>
+<div class="line"><span class="lineno"> 1526</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1527</span>                }</div>
+<div class="line"><span class="lineno"> 1528</span>                i++;</div>
+<div class="line"><span class="lineno"> 1529</span>            }</div>
+<div class="line"><span class="lineno"> 1530</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1507,20 +1507,20 @@ Protected Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00473">473</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  474</span>        {</div>
-<div class="line"><span class="lineno">  475</span>            <span class="keywordtype">int</span> i = 0;</div>
-<div class="line"><span class="lineno">  476</span>            <span class="keywordflow">foreach</span> (Widget item <span class="keywordflow">in</span> tabsView.Children)</div>
-<div class="line"><span class="lineno">  477</span>            {</div>
-<div class="line"><span class="lineno">  478</span>                <span class="comment">// Get the tab widget for the page and set the new title</span></div>
-<div class="line"><span class="lineno">  479</span>                Label l = (Label)tabsView.GetTabLabel(tabsView.GetNthPage(i));</div>
-<div class="line"><span class="lineno">  480</span>                <span class="keywordflow">if</span> (l.Text == name)</div>
-<div class="line"><span class="lineno">  481</span>                {</div>
-<div class="line"><span class="lineno">  482</span>                    l.Text = newName;</div>
-<div class="line"><span class="lineno">  483</span>                    <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno">  484</span>                }</div>
-<div class="line"><span class="lineno">  485</span>            }</div>
-<div class="line"><span class="lineno">  486</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00514">514</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  515</span>        {</div>
+<div class="line"><span class="lineno">  516</span>            <span class="keywordtype">int</span> i = 0;</div>
+<div class="line"><span class="lineno">  517</span>            <span class="keywordflow">foreach</span> (Widget item <span class="keywordflow">in</span> tabsView.Children)</div>
+<div class="line"><span class="lineno">  518</span>            {</div>
+<div class="line"><span class="lineno">  519</span>                <span class="comment">// Get the tab widget for the page and set the new title</span></div>
+<div class="line"><span class="lineno">  520</span>                Label l = (Label)tabsView.GetTabLabel(tabsView.GetNthPage(i));</div>
+<div class="line"><span class="lineno">  521</span>                <span class="keywordflow">if</span> (l.Text == name)</div>
+<div class="line"><span class="lineno">  522</span>                {</div>
+<div class="line"><span class="lineno">  523</span>                    l.Text = newName;</div>
+<div class="line"><span class="lineno">  524</span>                    <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  525</span>                }</div>
+<div class="line"><span class="lineno">  526</span>            }</div>
+<div class="line"><span class="lineno">  527</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1559,12 +1559,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01246">1246</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1247</span>        {</div>
-<div class="line"><span class="lineno"> 1248</span>            App.roiManager = <a class="code hl_class" href="class_bio_1_1_r_o_i_manager.html">ROIManager</a>.Create();   </div>
-<div class="line"><span class="lineno"> 1249</span>            App.roiManager.Show();</div>
-<div class="line"><span class="lineno"> 1250</span>            App.roiManager.Present();</div>
-<div class="line"><span class="lineno"> 1251</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01287">1287</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1288</span>        {</div>
+<div class="line"><span class="lineno"> 1289</span>            App.roiManager = <a class="code hl_class" href="class_bio_1_1_r_o_i_manager.html">ROIManager</a>.Create();   </div>
+<div class="line"><span class="lineno"> 1290</span>            App.roiManager.Show();</div>
+<div class="line"><span class="lineno"> 1291</span>            App.roiManager.Present();</div>
+<div class="line"><span class="lineno"> 1292</span>        }</div>
 <div class="ttc" id="aclass_bio_1_1_r_o_i_manager_html"><div class="ttname"><a href="class_bio_1_1_r_o_i_manager.html">Bio.ROIManager</a></div><div class="ttdef"><b>Definition</b> <a href="_r_o_i_manager_8cs_source.html#l00015">ROIManager.cs:16</a></div></div>
 </div><!-- fragment -->
 </div>
@@ -1605,16 +1605,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the filechooser dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01144">1144</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1145</span>        {</div>
-<div class="line"><span class="lineno"> 1146</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Selected OME Image to File&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1147</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1148</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1149</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1150</span>            StartProgress(<span class="stringliteral">&quot;Save Selected OME&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1151</span>            await BioImage.SaveAsync(filechooser.Filename, ImageView.SelectedImage.Filename, 0, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1152</span>            StopProgress();</div>
-<div class="line"><span class="lineno"> 1153</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01185">1185</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1186</span>        {</div>
+<div class="line"><span class="lineno"> 1187</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Selected OME Image to File&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1188</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1189</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1190</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1191</span>            StartProgress(<span class="stringliteral">&quot;Save Selected OME&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1192</span>            await BioImage.SaveAsync(filechooser.Filename, ImageView.SelectedImage.Filename, 0, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1193</span>            StopProgress();</div>
+<div class="line"><span class="lineno"> 1194</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1654,16 +1654,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01128">1128</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1129</span>        {</div>
-<div class="line"><span class="lineno"> 1130</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Selected Image To TIFF&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1131</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1132</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1133</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1134</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>,<span class="stringliteral">&quot;Saving&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1135</span>            await BioImage.SaveAsync(filechooser.Filename,ImageView.SelectedImage.Filename, 0, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno"> 1136</span>            StopProgress();</div>
-<div class="line"><span class="lineno"> 1137</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01169">1169</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1170</span>        {</div>
+<div class="line"><span class="lineno"> 1171</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Selected Image To TIFF&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1172</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1173</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1174</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1175</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>,<span class="stringliteral">&quot;Saving&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1176</span>            await BioImage.SaveAsync(filechooser.Filename,ImageView.SelectedImage.Filename, 0, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno"> 1177</span>            StopProgress();</div>
+<div class="line"><span class="lineno"> 1178</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1702,16 +1702,16 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01190">1190</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1191</span>        {</div>
-<div class="line"><span class="lineno"> 1192</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save TIFF series.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1193</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1194</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1195</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1196</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1197</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1198</span>            StopProgress();</div>
-<div class="line"><span class="lineno"> 1199</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01231">1231</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1232</span>        {</div>
+<div class="line"><span class="lineno"> 1233</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save TIFF series.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1234</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1235</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1236</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1237</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1238</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1239</span>            StopProgress();</div>
+<div class="line"><span class="lineno"> 1240</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1751,16 +1751,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response from the filechooser dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01160">1160</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1161</span>        {</div>
-<div class="line"><span class="lineno"> 1162</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Tab as an OME image.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1163</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1164</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1165</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1166</span>            StartProgress(<span class="stringliteral">&quot;Save Selected OME&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1167</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">true</span>);</div>
-<div class="line"><span class="lineno"> 1168</span>            StopProgress();</div>
-<div class="line"><span class="lineno"> 1169</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01201">1201</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1202</span>        {</div>
+<div class="line"><span class="lineno"> 1203</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Tab as an OME image.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1204</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1205</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1206</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1207</span>            StartProgress(<span class="stringliteral">&quot;Save Selected OME&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1208</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno"> 1209</span>            StopProgress();</div>
+<div class="line"><span class="lineno"> 1210</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1800,16 +1800,16 @@ Protected Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>The response type of the filechooser dialog. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01176">1176</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1177</span>        {</div>
-<div class="line"><span class="lineno"> 1178</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Tab as an image.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno"> 1179</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno"> 1180</span>                <span class="keywordflow">return</span>;</div>
-<div class="line"><span class="lineno"> 1181</span>            filechooser.Hide();</div>
-<div class="line"><span class="lineno"> 1182</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
-<div class="line"><span class="lineno"> 1183</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">false</span>);     </div>
-<div class="line"><span class="lineno"> 1184</span>            StopProgress();</div>
-<div class="line"><span class="lineno"> 1185</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01217">1217</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1218</span>        {</div>
+<div class="line"><span class="lineno"> 1219</span>            filechooser = <span class="keyword">new</span> FileChooserDialog(<span class="stringliteral">&quot;Save Tab as an image.&quot;</span>, <span class="keyword">this</span>, FileChooserAction.Save, <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel, <span class="stringliteral">&quot;OK&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno"> 1220</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno"> 1221</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno"> 1222</span>            filechooser.Hide();</div>
+<div class="line"><span class="lineno"> 1223</span>            StartProgress(<span class="stringliteral">&quot;Save Selected Tiff&quot;</span>, <span class="stringliteral">&quot;Saving&quot;</span>);</div>
+<div class="line"><span class="lineno"> 1224</span>            await BioImage.SaveSeriesAsync(App.viewer.Images.ToArray(), filechooser.Filename, <span class="keyword">false</span>);     </div>
+<div class="line"><span class="lineno"> 1225</span>            StopProgress();</div>
+<div class="line"><span class="lineno"> 1226</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1848,12 +1848,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01447">1447</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1448</span>        {</div>
-<div class="line"><span class="lineno"> 1449</span>            App.scripting = Scripting.Create();</div>
-<div class="line"><span class="lineno"> 1450</span>            App.scripting.Show();</div>
-<div class="line"><span class="lineno"> 1451</span>            App.scripting.Present();</div>
-<div class="line"><span class="lineno"> 1452</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01488">1488</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1489</span>        {</div>
+<div class="line"><span class="lineno"> 1490</span>            App.scripting = Scripting.Create();</div>
+<div class="line"><span class="lineno"> 1491</span>            App.scripting.Show();</div>
+<div class="line"><span class="lineno"> 1492</span>            App.scripting.Present();</div>
+<div class="line"><span class="lineno"> 1493</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1882,31 +1882,31 @@ Protected Member Functions</h2></td></tr>
 <p>This function creates a file chooser dialog that allows the user to select the location of the ImageJ executable</p>
 <dl class="section return"><dt>Returns</dt><dd>A boolean value. </dd></dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00278">278</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  279</span>        {</div>
-<div class="line"><span class="lineno">  280</span>            <span class="keywordtype">string</span> st = BioLib.Settings.GetSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>);</div>
-<div class="line"><span class="lineno">  281</span>            <span class="keywordflow">if</span> (st != <span class="stringliteral">&quot;&quot;</span>)</div>
-<div class="line"><span class="lineno">  282</span>            {</div>
-<div class="line"><span class="lineno">  283</span>                Fiji.ImageJPath = BioLib.Settings.GetSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>);</div>
-<div class="line"><span class="lineno">  284</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  285</span>            }</div>
-<div class="line"><span class="lineno">  286</span>            <span class="keywordtype">string</span> title = <span class="stringliteral">&quot;Select ImageJ Executable Location&quot;</span>;</div>
-<div class="line"><span class="lineno">  287</span>            <span class="keywordflow">if</span> (OperatingSystem.IsMacOS())</div>
-<div class="line"><span class="lineno">  288</span>                title = <span class="stringliteral">&quot;Select ImageJ Executable Location (Fiji.app/Contents/MacOS/ImageJ-macosx)&quot;</span>;</div>
-<div class="line"><span class="lineno">  289</span>            Gtk.FileChooserDialog filechooser =</div>
-<div class="line"><span class="lineno">  290</span>    <span class="keyword">new</span> Gtk.FileChooserDialog(title, Scripting.window,</div>
-<div class="line"><span class="lineno">  291</span>        FileChooserAction.Open,</div>
-<div class="line"><span class="lineno">  292</span>        <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
-<div class="line"><span class="lineno">  293</span>        <span class="stringliteral">&quot;Save&quot;</span>, ResponseType.Accept);</div>
-<div class="line"><span class="lineno">  294</span>            filechooser.SetCurrentFolder(System.IO.Path.GetDirectoryName(Environment.ProcessPath));</div>
-<div class="line"><span class="lineno">  295</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
-<div class="line"><span class="lineno">  296</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><span class="lineno">  297</span>            Fiji.ImageJPath = filechooser.Filename;</div>
-<div class="line"><span class="lineno">  298</span>            BioLib.Settings.AddSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>, filechooser.Filename);</div>
-<div class="line"><span class="lineno">  299</span>            filechooser.Destroy();</div>
-<div class="line"><span class="lineno">  300</span>            BioLib.Settings.Save();</div>
-<div class="line"><span class="lineno">  301</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  302</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00280">280</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  281</span>        {</div>
+<div class="line"><span class="lineno">  282</span>            <span class="keywordtype">string</span> st = BioLib.Settings.GetSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>);</div>
+<div class="line"><span class="lineno">  283</span>            <span class="keywordflow">if</span> (st != <span class="stringliteral">&quot;&quot;</span>)</div>
+<div class="line"><span class="lineno">  284</span>            {</div>
+<div class="line"><span class="lineno">  285</span>                Fiji.ImageJPath = BioLib.Settings.GetSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>);</div>
+<div class="line"><span class="lineno">  286</span>                <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  287</span>            }</div>
+<div class="line"><span class="lineno">  288</span>            <span class="keywordtype">string</span> title = <span class="stringliteral">&quot;Select ImageJ Executable Location&quot;</span>;</div>
+<div class="line"><span class="lineno">  289</span>            <span class="keywordflow">if</span> (OperatingSystem.IsMacOS())</div>
+<div class="line"><span class="lineno">  290</span>                title = <span class="stringliteral">&quot;Select ImageJ Executable Location (Fiji.app/Contents/MacOS/ImageJ-macosx)&quot;</span>;</div>
+<div class="line"><span class="lineno">  291</span>            Gtk.FileChooserDialog filechooser =</div>
+<div class="line"><span class="lineno">  292</span>    <span class="keyword">new</span> Gtk.FileChooserDialog(title, Scripting.window,</div>
+<div class="line"><span class="lineno">  293</span>        FileChooserAction.Open,</div>
+<div class="line"><span class="lineno">  294</span>        <span class="stringliteral">&quot;Cancel&quot;</span>, ResponseType.Cancel,</div>
+<div class="line"><span class="lineno">  295</span>        <span class="stringliteral">&quot;Save&quot;</span>, ResponseType.Accept);</div>
+<div class="line"><span class="lineno">  296</span>            filechooser.SetCurrentFolder(System.IO.Path.GetDirectoryName(Environment.ProcessPath));</div>
+<div class="line"><span class="lineno">  297</span>            <span class="keywordflow">if</span> (filechooser.Run() != (<span class="keywordtype">int</span>)ResponseType.Accept)</div>
+<div class="line"><span class="lineno">  298</span>                <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  299</span>            Fiji.ImageJPath = filechooser.Filename;</div>
+<div class="line"><span class="lineno">  300</span>            BioLib.Settings.AddSettings(<span class="stringliteral">&quot;ImageJPath&quot;</span>, filechooser.Filename);</div>
+<div class="line"><span class="lineno">  301</span>            filechooser.Destroy();</div>
+<div class="line"><span class="lineno">  302</span>            BioLib.Settings.Save();</div>
+<div class="line"><span class="lineno">  303</span>            <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  304</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1933,10 +1933,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00853">853</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  854</span>        {</div>
-<div class="line"><span class="lineno">  855</span>            tabsView.Page = i;</div>
-<div class="line"><span class="lineno">  856</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00894">894</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  895</span>        {</div>
+<div class="line"><span class="lineno">  896</span>            tabsView.Page = i;</div>
+<div class="line"><span class="lineno">  897</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -1975,12 +1975,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01235">1235</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1236</span>        {</div>
-<div class="line"><span class="lineno"> 1237</span>            App.setTool = SetTool.Create();</div>
-<div class="line"><span class="lineno"> 1238</span>            App.setTool.Show();</div>
-<div class="line"><span class="lineno"> 1239</span>            App.setTool.Present();</div>
-<div class="line"><span class="lineno"> 1240</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01276">1276</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1277</span>        {</div>
+<div class="line"><span class="lineno"> 1278</span>            App.setTool = SetTool.Create();</div>
+<div class="line"><span class="lineno"> 1279</span>            App.setTool.Show();</div>
+<div class="line"><span class="lineno"> 1280</span>            App.setTool.Present();</div>
+<div class="line"><span class="lineno"> 1281</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2009,118 +2009,127 @@ Protected Member Functions</h2></td></tr>
 
 <p>This function sets up the event handlers for the menu items. </p>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00369">369</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  370</span>        {</div>
-<div class="line"><span class="lineno">  371</span>            openImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a7f74351dca44ada13a82908ff408a53b">openImagesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  372</span>            openOMEImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a9734ffc8d9368c7215541cd89ac5d98c">openOMEImagesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  373</span>            openOMESeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#a5b116b7ffcc0e4edd9dbeac42a39a0c2">openOMESeriesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  374</span>            openSeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#a60ea4a33e938ad8ba9f9011c622a9940">openSeriesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  375</span>            openQuPathProject.ButtonPressEvent += openQuPathProjectMenuClick;</div>
-<div class="line"><span class="lineno">  376</span>            addImagesToTabMenu.ButtonPressEvent += <a class="code hl_function" href="#a043d4597c2f48053febd97b5d5245c33">addImagesToTabMenuClick</a>;</div>
-<div class="line"><span class="lineno">  377</span>            addOMEImagesToTab.ButtonPressEvent += <a class="code hl_function" href="#abb382517e4b4e4f8c5259ee889eddd06">addOMEImagesToTabClick</a>;</div>
-<div class="line"><span class="lineno">  378</span>            saveSelectedTiff.ButtonPressEvent += <a class="code hl_function" href="#a3544eb3df32dec3805c677c2254edc17">saveSelectedTiffClick</a>;</div>
-<div class="line"><span class="lineno">  379</span>            saveSelectedOME.ButtonPressEvent += <a class="code hl_function" href="#a3da201cbb15db0e405b0d4616e49df78">saveSelectedOMEClick</a>;</div>
-<div class="line"><span class="lineno">  380</span>            saveNumPyBut.ButtonPressEvent += SaveNumPyBut_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  381</span> </div>
-<div class="line"><span class="lineno">  382</span>            saveTabOME.ButtonPressEvent += <a class="code hl_function" href="#a5fc21301866a86968f299f686d3e80b1">saveTabOMEClick</a>;</div>
-<div class="line"><span class="lineno">  383</span>            saveTabTiffMenu.ButtonPressEvent += <a class="code hl_function" href="#acab42e86e43ceceb1b509911f2d57364">saveTabTiffMenuClick</a>;</div>
-<div class="line"><span class="lineno">  384</span>            saveSeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#aafa0f28281d1462bec55cf7f6974fe2c">saveSeriesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  385</span>            savePyramidalMenu.ButtonPressEvent += SavePyramidalMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  386</span>            saveQuPathProject.ButtonPressEvent += saveQuPathProject_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  387</span>            imagesToStack.ButtonPressEvent += <a class="code hl_function" href="#aabbb852f46aca19631e6bfe3d3540317">imagesToStackClick</a>;</div>
-<div class="line"><span class="lineno">  388</span> </div>
-<div class="line"><span class="lineno">  389</span>            rgbMenu.ButtonPressEvent += RgbMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  390</span>            filteredMenu.ButtonPressEvent += FilteredMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  391</span>            rawMenu.ButtonPressEvent += RawMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  392</span>            emissionMenu.ButtonPressEvent += EmissionMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  393</span> </div>
-<div class="line"><span class="lineno">  394</span>            toolsMenu.ButtonPressEvent += <a class="code hl_function" href="#a8cf0db5f018aaf60752f9e0bb2a400d1">toolsMenuClick</a>;</div>
-<div class="line"><span class="lineno">  395</span>            setToolMenu.ButtonPressEvent += <a class="code hl_function" href="#ae49e120c55a0785947d9ea9a921dad3c">setToolMenuClick</a>;</div>
-<div class="line"><span class="lineno">  396</span>            runSAMMenu.ButtonPressEvent += RunSAMMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  397</span>            runMicroSAMMenu.ButtonPressEvent += RunMicroSAMMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  398</span>            plateToolMenu.ButtonPressEvent += PlateToolMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  399</span>            extractRegionMenu.ButtonPressEvent += ExtractRegionMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  400</span> </div>
-<div class="line"><span class="lineno">  401</span>            roiManagerMenu.ButtonPressEvent += <a class="code hl_function" href="#af633beb47583df1bd55b6135659482c4">roiManagerMenuClick</a>;</div>
-<div class="line"><span class="lineno">  402</span>            exportROIsToCSVMenu.ButtonPressEvent += <a class="code hl_function" href="#a3655d5f2222df2f1e8df3e0e44a52a75">exportROIsToCSVMenuClick</a>;</div>
-<div class="line"><span class="lineno">  403</span>            importROIsFromCSVMenu.ButtonPressEvent += <a class="code hl_function" href="#ac13694c7b38a99a893c751e086c6a28c">importROIsFromCSVMenuClick</a>;</div>
-<div class="line"><span class="lineno">  404</span>            exportROIsOfFolderOfImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a2e5095b7687b28f107c0faa4f94b1171">exportROIsOfFolderOfImagesMenuClick</a>;</div>
-<div class="line"><span class="lineno">  405</span>            importROIsFromImageJMenu.ButtonPressEvent += ImportROIsFromImageJMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  406</span>            exportROIsFromImageJMenu.ButtonPressEvent += ExportROIsFromImageJMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  407</span>            importROIQuPath.ButtonPressEvent += ImportROIQuPath_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  408</span>            exportROIQuPath.ButtonPressEvent += ExportROIQuPath_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  409</span> </div>
-<div class="line"><span class="lineno">  410</span>            autoThresholdAllMenu.ButtonPressEvent += <a class="code hl_function" href="#a3e5addee094b7b113f0ad8a798dccd22">autoThresholdAllMenuClick</a>;</div>
-<div class="line"><span class="lineno">  411</span>            channelsToolMenu.ButtonPressEvent += <a class="code hl_function" href="#aa1f26f028a9c5eb0b00b6c15fb95c846">channelsToolMenuClick</a>;</div>
-<div class="line"><span class="lineno">  412</span>            switchRedBlueMenu.ButtonPressEvent += <a class="code hl_function" href="#abc04383af0dad9f6a28010f13da9ec49">switchRedBlueMenuClick</a>;</div>
-<div class="line"><span class="lineno">  413</span> </div>
-<div class="line"><span class="lineno">  414</span>            stackToolMenu.ButtonPressEvent += <a class="code hl_function" href="#a963c1532f4149e6c5b19ab90d04d3467">stackToolMenuClick</a>;</div>
-<div class="line"><span class="lineno">  415</span>            focusMenu.ButtonPressEvent += FocusMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  416</span> </div>
-<div class="line"><span class="lineno">  417</span>            to8BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a36a923f25fd8cb5f77be0a8f0e4eb15a">to8BitMenuClick</a>;</div>
-<div class="line"><span class="lineno">  418</span>            to16BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a5eb05f2a46f1dbafbb8a08a87fc288b4">to16BitMenuClick</a>;</div>
-<div class="line"><span class="lineno">  419</span>            to24BitMenu.ButtonPressEvent += <a class="code hl_function" href="#ab39101704963b41e3e1592069b663a9d">to24BitMenuClick</a>;</div>
-<div class="line"><span class="lineno">  420</span>            to32BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a0018d66dae0fe7c0cc8ba9c6bde687df">to32BitMenuClick</a>;</div>
-<div class="line"><span class="lineno">  421</span>            to48BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a4fadea234e00c78948d167c256e2ff54">to48BitMenuClick</a>;</div>
-<div class="line"><span class="lineno">  422</span>            toFloatMenu.ButtonPressEvent += ToFloatMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  423</span>            toShortMenu.ButtonPressEvent += ToShortMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  424</span> </div>
-<div class="line"><span class="lineno">  425</span>            filtersMenu.ButtonPressEvent += <a class="code hl_function" href="#a61d126b63aea2e49cfe8896e3cc182a4">filtersMenuClick</a>;</div>
-<div class="line"><span class="lineno">  426</span>            functionsToolMenu.ButtonPressEvent += <a class="code hl_function" href="#a6c62b16786eba3d152609ddea2588c79">functionsToolMenuClick</a>;</div>
-<div class="line"><span class="lineno">  427</span>            consoleMenu.ButtonPressEvent += <a class="code hl_function" href="#abd671248c4fd64ef9d1d7c3f948bee74">consoleMenuClick</a>;</div>
-<div class="line"><span class="lineno">  428</span>            scriptRunnerMenu.ButtonPressEvent += <a class="code hl_function" href="#a81e10c3e7dfdc80d433999b8f649bc82">scriptRunnerMenuClick</a>;</div>
-<div class="line"><span class="lineno">  429</span>            scriptRecorderMenu.ButtonPressEvent += ScriptRecorderMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  430</span> </div>
-<div class="line"><span class="lineno">  431</span>            aboutMenu.ButtonPressEvent += <a class="code hl_function" href="#a160734b8f843b2b99421ec82780b7dbc">AboutClick</a>;</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l00371">371</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  372</span>        {</div>
+<div class="line"><span class="lineno">  373</span>            openImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a7f74351dca44ada13a82908ff408a53b">openImagesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  374</span>            openOMEImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a9734ffc8d9368c7215541cd89ac5d98c">openOMEImagesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  375</span>            openOMESeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#a5b116b7ffcc0e4edd9dbeac42a39a0c2">openOMESeriesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  376</span>            openSeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#a60ea4a33e938ad8ba9f9011c622a9940">openSeriesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  377</span>            openQuPathProject.ButtonPressEvent += openQuPathProjectMenuClick;</div>
+<div class="line"><span class="lineno">  378</span>            addImagesToTabMenu.ButtonPressEvent += <a class="code hl_function" href="#a043d4597c2f48053febd97b5d5245c33">addImagesToTabMenuClick</a>;</div>
+<div class="line"><span class="lineno">  379</span>            addOMEImagesToTab.ButtonPressEvent += <a class="code hl_function" href="#abb382517e4b4e4f8c5259ee889eddd06">addOMEImagesToTabClick</a>;</div>
+<div class="line"><span class="lineno">  380</span>            saveSelectedTiff.ButtonPressEvent += <a class="code hl_function" href="#a3544eb3df32dec3805c677c2254edc17">saveSelectedTiffClick</a>;</div>
+<div class="line"><span class="lineno">  381</span>            saveSelectedOME.ButtonPressEvent += <a class="code hl_function" href="#a3da201cbb15db0e405b0d4616e49df78">saveSelectedOMEClick</a>;</div>
+<div class="line"><span class="lineno">  382</span>            saveNumPyBut.ButtonPressEvent += SaveNumPyBut_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  383</span> </div>
+<div class="line"><span class="lineno">  384</span>            saveTabOME.ButtonPressEvent += <a class="code hl_function" href="#a5fc21301866a86968f299f686d3e80b1">saveTabOMEClick</a>;</div>
+<div class="line"><span class="lineno">  385</span>            saveTabTiffMenu.ButtonPressEvent += <a class="code hl_function" href="#acab42e86e43ceceb1b509911f2d57364">saveTabTiffMenuClick</a>;</div>
+<div class="line"><span class="lineno">  386</span>            saveSeriesMenu.ButtonPressEvent += <a class="code hl_function" href="#aafa0f28281d1462bec55cf7f6974fe2c">saveSeriesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  387</span>            savePyramidalMenu.ButtonPressEvent += SavePyramidalMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  388</span>            saveQuPathProject.ButtonPressEvent += saveQuPathProject_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  389</span>            imagesToStack.ButtonPressEvent += <a class="code hl_function" href="#aabbb852f46aca19631e6bfe3d3540317">imagesToStackClick</a>;</div>
+<div class="line"><span class="lineno">  390</span> </div>
+<div class="line"><span class="lineno">  391</span>            rgbMenu.ButtonPressEvent += RgbMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  392</span>            filteredMenu.ButtonPressEvent += FilteredMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  393</span>            rawMenu.ButtonPressEvent += RawMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  394</span>            emissionMenu.ButtonPressEvent += EmissionMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  395</span> </div>
+<div class="line"><span class="lineno">  396</span>            toolsMenu.ButtonPressEvent += <a class="code hl_function" href="#a8cf0db5f018aaf60752f9e0bb2a400d1">toolsMenuClick</a>;</div>
+<div class="line"><span class="lineno">  397</span>            setToolMenu.ButtonPressEvent += <a class="code hl_function" href="#ae49e120c55a0785947d9ea9a921dad3c">setToolMenuClick</a>;</div>
+<div class="line"><span class="lineno">  398</span>            runSAMMenu.ButtonPressEvent += RunSAMMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  399</span>            runMicroSAMMenu.ButtonPressEvent += RunMicroSAMMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  400</span>            plateToolMenu.ButtonPressEvent += PlateToolMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  401</span>            extractRegionMenu.ButtonPressEvent += ExtractRegionMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  402</span> </div>
+<div class="line"><span class="lineno">  403</span>            roiManagerMenu.ButtonPressEvent += <a class="code hl_function" href="#af633beb47583df1bd55b6135659482c4">roiManagerMenuClick</a>;</div>
+<div class="line"><span class="lineno">  404</span>            exportROIsToCSVMenu.ButtonPressEvent += <a class="code hl_function" href="#a3655d5f2222df2f1e8df3e0e44a52a75">exportROIsToCSVMenuClick</a>;</div>
+<div class="line"><span class="lineno">  405</span>            importROIsFromCSVMenu.ButtonPressEvent += <a class="code hl_function" href="#ac13694c7b38a99a893c751e086c6a28c">importROIsFromCSVMenuClick</a>;</div>
+<div class="line"><span class="lineno">  406</span>            exportROIsOfFolderOfImagesMenu.ButtonPressEvent += <a class="code hl_function" href="#a2e5095b7687b28f107c0faa4f94b1171">exportROIsOfFolderOfImagesMenuClick</a>;</div>
+<div class="line"><span class="lineno">  407</span>            importROIsFromImageJMenu.ButtonPressEvent += ImportROIsFromImageJMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  408</span>            exportROIsFromImageJMenu.ButtonPressEvent += ExportROIsFromImageJMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  409</span>            importROIQuPath.ButtonPressEvent += ImportROIQuPath_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  410</span>            exportROIQuPath.ButtonPressEvent += ExportROIQuPath_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  411</span> </div>
+<div class="line"><span class="lineno">  412</span>            autoThresholdAllMenu.ButtonPressEvent += <a class="code hl_function" href="#a3e5addee094b7b113f0ad8a798dccd22">autoThresholdAllMenuClick</a>;</div>
+<div class="line"><span class="lineno">  413</span>            channelsToolMenu.ButtonPressEvent += <a class="code hl_function" href="#aa1f26f028a9c5eb0b00b6c15fb95c846">channelsToolMenuClick</a>;</div>
+<div class="line"><span class="lineno">  414</span>            switchRedBlueMenu.ButtonPressEvent += <a class="code hl_function" href="#abc04383af0dad9f6a28010f13da9ec49">switchRedBlueMenuClick</a>;</div>
+<div class="line"><span class="lineno">  415</span> </div>
+<div class="line"><span class="lineno">  416</span>            stackToolMenu.ButtonPressEvent += <a class="code hl_function" href="#a963c1532f4149e6c5b19ab90d04d3467">stackToolMenuClick</a>;</div>
+<div class="line"><span class="lineno">  417</span>            focusMenu.ButtonPressEvent += FocusMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  418</span> </div>
+<div class="line"><span class="lineno">  419</span>            to8BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a36a923f25fd8cb5f77be0a8f0e4eb15a">to8BitMenuClick</a>;</div>
+<div class="line"><span class="lineno">  420</span>            to16BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a5eb05f2a46f1dbafbb8a08a87fc288b4">to16BitMenuClick</a>;</div>
+<div class="line"><span class="lineno">  421</span>            to24BitMenu.ButtonPressEvent += <a class="code hl_function" href="#ab39101704963b41e3e1592069b663a9d">to24BitMenuClick</a>;</div>
+<div class="line"><span class="lineno">  422</span>            to32BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a0018d66dae0fe7c0cc8ba9c6bde687df">to32BitMenuClick</a>;</div>
+<div class="line"><span class="lineno">  423</span>            to48BitMenu.ButtonPressEvent += <a class="code hl_function" href="#a4fadea234e00c78948d167c256e2ff54">to48BitMenuClick</a>;</div>
+<div class="line"><span class="lineno">  424</span>            toFloatMenu.ButtonPressEvent += ToFloatMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  425</span>            toShortMenu.ButtonPressEvent += ToShortMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  426</span> </div>
+<div class="line"><span class="lineno">  427</span>            filtersMenu.ButtonPressEvent += <a class="code hl_function" href="#a61d126b63aea2e49cfe8896e3cc182a4">filtersMenuClick</a>;</div>
+<div class="line"><span class="lineno">  428</span>            functionsToolMenu.ButtonPressEvent += <a class="code hl_function" href="#a6c62b16786eba3d152609ddea2588c79">functionsToolMenuClick</a>;</div>
+<div class="line"><span class="lineno">  429</span>            consoleMenu.ButtonPressEvent += <a class="code hl_function" href="#abd671248c4fd64ef9d1d7c3f948bee74">consoleMenuClick</a>;</div>
+<div class="line"><span class="lineno">  430</span>            scriptRunnerMenu.ButtonPressEvent += <a class="code hl_function" href="#a81e10c3e7dfdc80d433999b8f649bc82">scriptRunnerMenuClick</a>;</div>
+<div class="line"><span class="lineno">  431</span>            scriptRecorderMenu.ButtonPressEvent += ScriptRecorderMenu_ButtonPressEvent;</div>
 <div class="line"><span class="lineno">  432</span> </div>
-<div class="line"><span class="lineno">  433</span>            tabClose.ButtonPressEvent += TabClose_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  434</span>            tabDuplicate.ButtonPressEvent += TabDuplicate_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  435</span>            this.FocusInEvent += TabsView_FocusInEvent;</div>
-<div class="line"><span class="lineno">  436</span>            rgbMenu.ButtonPressEvent += RgbMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  437</span>            filteredMenu.ButtonPressEvent += FilteredMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  438</span>            rawMenu.ButtonPressEvent += RawMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  439</span>            emissionMenu.ButtonPressEvent += EmissionMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  440</span>            tabsView.SwitchPage += TabsView_SwitchPage;</div>
-<div class="line"><span class="lineno">  441</span>            tabsView.ButtonPressEvent += TabsView_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  442</span>            this.WindowStateEvent += TabsView_WindowStateEvent;</div>
-<div class="line"><span class="lineno">  443</span>            this.DeleteEvent += TabsView_DeleteEvent;</div>
-<div class="line"><span class="lineno">  444</span> </div>
-<div class="line"><span class="lineno">  445</span>            searchMenu.ButtonPressEvent += SearchMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  446</span>            updateMenu.ButtonPressEvent += UpdateMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  447</span>            renameMenu.ButtonPressEvent += RenameMenu_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  448</span>        }</div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a0018d66dae0fe7c0cc8ba9c6bde687df"><div class="ttname"><a href="#a0018d66dae0fe7c0cc8ba9c6bde687df">BioGTK.TabsView.to32BitMenuClick</a></div><div class="ttdeci">void to32BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01399">TabsView.cs:1399</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a043d4597c2f48053febd97b5d5245c33"><div class="ttname"><a href="#a043d4597c2f48053febd97b5d5245c33">BioGTK.TabsView.addImagesToTabMenuClick</a></div><div class="ttdeci">async void addImagesToTabMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01046">TabsView.cs:1046</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a160734b8f843b2b99421ec82780b7dbc"><div class="ttname"><a href="#a160734b8f843b2b99421ec82780b7dbc">BioGTK.TabsView.AboutClick</a></div><div class="ttdeci">void AboutClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01458">TabsView.cs:1458</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a2e5095b7687b28f107c0faa4f94b1171"><div class="ttname"><a href="#a2e5095b7687b28f107c0faa4f94b1171">BioGTK.TabsView.exportROIsOfFolderOfImagesMenuClick</a></div><div class="ttdeci">void exportROIsOfFolderOfImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01295">TabsView.cs:1295</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3544eb3df32dec3805c677c2254edc17"><div class="ttname"><a href="#a3544eb3df32dec3805c677c2254edc17">BioGTK.TabsView.saveSelectedTiffClick</a></div><div class="ttdeci">async void saveSelectedTiffClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01128">TabsView.cs:1128</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3655d5f2222df2f1e8df3e0e44a52a75"><div class="ttname"><a href="#a3655d5f2222df2f1e8df3e0e44a52a75">BioGTK.TabsView.exportROIsToCSVMenuClick</a></div><div class="ttdeci">void exportROIsToCSVMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01257">TabsView.cs:1257</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a36a923f25fd8cb5f77be0a8f0e4eb15a"><div class="ttname"><a href="#a36a923f25fd8cb5f77be0a8f0e4eb15a">BioGTK.TabsView.to8BitMenuClick</a></div><div class="ttdeci">void to8BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01375">TabsView.cs:1375</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3da201cbb15db0e405b0d4616e49df78"><div class="ttname"><a href="#a3da201cbb15db0e405b0d4616e49df78">BioGTK.TabsView.saveSelectedOMEClick</a></div><div class="ttdeci">async void saveSelectedOMEClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01144">TabsView.cs:1144</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3e5addee094b7b113f0ad8a798dccd22"><div class="ttname"><a href="#a3e5addee094b7b113f0ad8a798dccd22">BioGTK.TabsView.autoThresholdAllMenuClick</a></div><div class="ttdeci">void autoThresholdAllMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01324">TabsView.cs:1324</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a4fadea234e00c78948d167c256e2ff54"><div class="ttname"><a href="#a4fadea234e00c78948d167c256e2ff54">BioGTK.TabsView.to48BitMenuClick</a></div><div class="ttdeci">void to48BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01407">TabsView.cs:1407</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5b116b7ffcc0e4edd9dbeac42a39a0c2"><div class="ttname"><a href="#a5b116b7ffcc0e4edd9dbeac42a39a0c2">BioGTK.TabsView.openOMESeriesMenuClick</a></div><div class="ttdeci">async void openOMESeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00948">TabsView.cs:948</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5eb05f2a46f1dbafbb8a08a87fc288b4"><div class="ttname"><a href="#a5eb05f2a46f1dbafbb8a08a87fc288b4">BioGTK.TabsView.to16BitMenuClick</a></div><div class="ttdeci">void to16BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01383">TabsView.cs:1383</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5fc21301866a86968f299f686d3e80b1"><div class="ttname"><a href="#a5fc21301866a86968f299f686d3e80b1">BioGTK.TabsView.saveTabOMEClick</a></div><div class="ttdeci">async void saveTabOMEClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01160">TabsView.cs:1160</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a60ea4a33e938ad8ba9f9011c622a9940"><div class="ttname"><a href="#a60ea4a33e938ad8ba9f9011c622a9940">BioGTK.TabsView.openSeriesMenuClick</a></div><div class="ttdeci">async void openSeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00976">TabsView.cs:976</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a61d126b63aea2e49cfe8896e3cc182a4"><div class="ttname"><a href="#a61d126b63aea2e49cfe8896e3cc182a4">BioGTK.TabsView.filtersMenuClick</a></div><div class="ttdeci">void filtersMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01416">TabsView.cs:1416</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a6c62b16786eba3d152609ddea2588c79"><div class="ttname"><a href="#a6c62b16786eba3d152609ddea2588c79">BioGTK.TabsView.functionsToolMenuClick</a></div><div class="ttdeci">void functionsToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01427">TabsView.cs:1427</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a7f74351dca44ada13a82908ff408a53b"><div class="ttname"><a href="#a7f74351dca44ada13a82908ff408a53b">BioGTK.TabsView.openImagesMenuClick</a></div><div class="ttdeci">async void openImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00901">TabsView.cs:901</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a81e10c3e7dfdc80d433999b8f649bc82"><div class="ttname"><a href="#a81e10c3e7dfdc80d433999b8f649bc82">BioGTK.TabsView.scriptRunnerMenuClick</a></div><div class="ttdeci">void scriptRunnerMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01447">TabsView.cs:1447</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a8cf0db5f018aaf60752f9e0bb2a400d1"><div class="ttname"><a href="#a8cf0db5f018aaf60752f9e0bb2a400d1">BioGTK.TabsView.toolsMenuClick</a></div><div class="ttdeci">void toolsMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01224">TabsView.cs:1224</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a963c1532f4149e6c5b19ab90d04d3467"><div class="ttname"><a href="#a963c1532f4149e6c5b19ab90d04d3467">BioGTK.TabsView.stackToolMenuClick</a></div><div class="ttdeci">void stackToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01364">TabsView.cs:1364</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a9734ffc8d9368c7215541cd89ac5d98c"><div class="ttname"><a href="#a9734ffc8d9368c7215541cd89ac5d98c">BioGTK.TabsView.openOMEImagesMenuClick</a></div><div class="ttdeci">async void openOMEImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00925">TabsView.cs:925</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aa1f26f028a9c5eb0b00b6c15fb95c846"><div class="ttname"><a href="#aa1f26f028a9c5eb0b00b6c15fb95c846">BioGTK.TabsView.channelsToolMenuClick</a></div><div class="ttdeci">void channelsToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01338">TabsView.cs:1338</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aabbb852f46aca19631e6bfe3d3540317"><div class="ttname"><a href="#aabbb852f46aca19631e6bfe3d3540317">BioGTK.TabsView.imagesToStackClick</a></div><div class="ttdeci">void imagesToStackClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01204">TabsView.cs:1204</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aafa0f28281d1462bec55cf7f6974fe2c"><div class="ttname"><a href="#aafa0f28281d1462bec55cf7f6974fe2c">BioGTK.TabsView.saveSeriesMenuClick</a></div><div class="ttdeci">async void saveSeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01190">TabsView.cs:1190</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ab39101704963b41e3e1592069b663a9d"><div class="ttname"><a href="#ab39101704963b41e3e1592069b663a9d">BioGTK.TabsView.to24BitMenuClick</a></div><div class="ttdeci">void to24BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01391">TabsView.cs:1391</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abb382517e4b4e4f8c5259ee889eddd06"><div class="ttname"><a href="#abb382517e4b4e4f8c5259ee889eddd06">BioGTK.TabsView.addOMEImagesToTabClick</a></div><div class="ttdeci">async void addOMEImagesToTabClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01070">TabsView.cs:1070</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abc04383af0dad9f6a28010f13da9ec49"><div class="ttname"><a href="#abc04383af0dad9f6a28010f13da9ec49">BioGTK.TabsView.switchRedBlueMenuClick</a></div><div class="ttdeci">void switchRedBlueMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01350">TabsView.cs:1350</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abd671248c4fd64ef9d1d7c3f948bee74"><div class="ttname"><a href="#abd671248c4fd64ef9d1d7c3f948bee74">BioGTK.TabsView.consoleMenuClick</a></div><div class="ttdeci">void consoleMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01437">TabsView.cs:1437</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ac13694c7b38a99a893c751e086c6a28c"><div class="ttname"><a href="#ac13694c7b38a99a893c751e086c6a28c">BioGTK.TabsView.importROIsFromCSVMenuClick</a></div><div class="ttdeci">void importROIsFromCSVMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01274">TabsView.cs:1274</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_acab42e86e43ceceb1b509911f2d57364"><div class="ttname"><a href="#acab42e86e43ceceb1b509911f2d57364">BioGTK.TabsView.saveTabTiffMenuClick</a></div><div class="ttdeci">async void saveTabTiffMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01176">TabsView.cs:1176</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ae49e120c55a0785947d9ea9a921dad3c"><div class="ttname"><a href="#ae49e120c55a0785947d9ea9a921dad3c">BioGTK.TabsView.setToolMenuClick</a></div><div class="ttdeci">void setToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01235">TabsView.cs:1235</a></div></div>
-<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_af633beb47583df1bd55b6135659482c4"><div class="ttname"><a href="#af633beb47583df1bd55b6135659482c4">BioGTK.TabsView.roiManagerMenuClick</a></div><div class="ttdeci">void roiManagerMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01246">TabsView.cs:1246</a></div></div>
+<div class="line"><span class="lineno">  433</span>            aboutMenu.ButtonPressEvent += <a class="code hl_function" href="#a160734b8f843b2b99421ec82780b7dbc">AboutClick</a>;</div>
+<div class="line"><span class="lineno">  434</span> </div>
+<div class="line"><span class="lineno">  435</span>            tabClose.ButtonPressEvent += TabClose_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  436</span>            tabDuplicate.ButtonPressEvent += TabDuplicate_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  437</span>            this.FocusInEvent += TabsView_FocusInEvent;</div>
+<div class="line"><span class="lineno">  438</span>            rgbMenu.ButtonPressEvent += RgbMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  439</span>            filteredMenu.ButtonPressEvent += FilteredMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  440</span>            rawMenu.ButtonPressEvent += RawMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  441</span>            emissionMenu.ButtonPressEvent += EmissionMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  442</span>            tabsView.SwitchPage += TabsView_SwitchPage;</div>
+<div class="line"><span class="lineno">  443</span>            tabsView.ButtonPressEvent += TabsView_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  444</span>            this.WindowStateEvent += TabsView_WindowStateEvent;</div>
+<div class="line"><span class="lineno">  445</span>            this.DeleteEvent += TabsView_DeleteEvent;</div>
+<div class="line"><span class="lineno">  446</span>            omeroMenu.ButtonPressEvent += OmeroMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  447</span> </div>
+<div class="line"><span class="lineno">  448</span>            searchMenu.ButtonPressEvent += SearchMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  449</span>            updateMenu.ButtonPressEvent += UpdateMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  450</span>            renameMenu.ButtonPressEvent += RenameMenu_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  451</span> </div>
+<div class="line"><span class="lineno">  452</span>            <span class="comment">// Enable drag-and-drop for this window</span></div>
+<div class="line"><span class="lineno">  453</span>            Gtk.Drag.DestSet(<span class="keyword">this</span>, DestDefaults.All, <span class="keyword">new</span> TargetEntry[]</div>
+<div class="line"><span class="lineno">  454</span>            {</div>
+<div class="line"><span class="lineno">  455</span>            new TargetEntry(<span class="stringliteral">&quot;text/uri-list&quot;</span>, TargetFlags.OtherApp, 0)</div>
+<div class="line"><span class="lineno">  456</span>            }, Gdk.DragAction.Copy);</div>
+<div class="line"><span class="lineno">  457</span>            this.DragDataReceived += TabsView_DragDataReceived;</div>
+<div class="line"><span class="lineno">  458</span> </div>
+<div class="line"><span class="lineno">  459</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a0018d66dae0fe7c0cc8ba9c6bde687df"><div class="ttname"><a href="#a0018d66dae0fe7c0cc8ba9c6bde687df">BioGTK.TabsView.to32BitMenuClick</a></div><div class="ttdeci">void to32BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01440">TabsView.cs:1440</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a043d4597c2f48053febd97b5d5245c33"><div class="ttname"><a href="#a043d4597c2f48053febd97b5d5245c33">BioGTK.TabsView.addImagesToTabMenuClick</a></div><div class="ttdeci">async void addImagesToTabMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01087">TabsView.cs:1087</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a160734b8f843b2b99421ec82780b7dbc"><div class="ttname"><a href="#a160734b8f843b2b99421ec82780b7dbc">BioGTK.TabsView.AboutClick</a></div><div class="ttdeci">void AboutClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01499">TabsView.cs:1499</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a2e5095b7687b28f107c0faa4f94b1171"><div class="ttname"><a href="#a2e5095b7687b28f107c0faa4f94b1171">BioGTK.TabsView.exportROIsOfFolderOfImagesMenuClick</a></div><div class="ttdeci">void exportROIsOfFolderOfImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01336">TabsView.cs:1336</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3544eb3df32dec3805c677c2254edc17"><div class="ttname"><a href="#a3544eb3df32dec3805c677c2254edc17">BioGTK.TabsView.saveSelectedTiffClick</a></div><div class="ttdeci">async void saveSelectedTiffClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01169">TabsView.cs:1169</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3655d5f2222df2f1e8df3e0e44a52a75"><div class="ttname"><a href="#a3655d5f2222df2f1e8df3e0e44a52a75">BioGTK.TabsView.exportROIsToCSVMenuClick</a></div><div class="ttdeci">void exportROIsToCSVMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01298">TabsView.cs:1298</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a36a923f25fd8cb5f77be0a8f0e4eb15a"><div class="ttname"><a href="#a36a923f25fd8cb5f77be0a8f0e4eb15a">BioGTK.TabsView.to8BitMenuClick</a></div><div class="ttdeci">void to8BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01416">TabsView.cs:1416</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3da201cbb15db0e405b0d4616e49df78"><div class="ttname"><a href="#a3da201cbb15db0e405b0d4616e49df78">BioGTK.TabsView.saveSelectedOMEClick</a></div><div class="ttdeci">async void saveSelectedOMEClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01185">TabsView.cs:1185</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a3e5addee094b7b113f0ad8a798dccd22"><div class="ttname"><a href="#a3e5addee094b7b113f0ad8a798dccd22">BioGTK.TabsView.autoThresholdAllMenuClick</a></div><div class="ttdeci">void autoThresholdAllMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01365">TabsView.cs:1365</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a4fadea234e00c78948d167c256e2ff54"><div class="ttname"><a href="#a4fadea234e00c78948d167c256e2ff54">BioGTK.TabsView.to48BitMenuClick</a></div><div class="ttdeci">void to48BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01448">TabsView.cs:1448</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5b116b7ffcc0e4edd9dbeac42a39a0c2"><div class="ttname"><a href="#a5b116b7ffcc0e4edd9dbeac42a39a0c2">BioGTK.TabsView.openOMESeriesMenuClick</a></div><div class="ttdeci">async void openOMESeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00989">TabsView.cs:989</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5eb05f2a46f1dbafbb8a08a87fc288b4"><div class="ttname"><a href="#a5eb05f2a46f1dbafbb8a08a87fc288b4">BioGTK.TabsView.to16BitMenuClick</a></div><div class="ttdeci">void to16BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01424">TabsView.cs:1424</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a5fc21301866a86968f299f686d3e80b1"><div class="ttname"><a href="#a5fc21301866a86968f299f686d3e80b1">BioGTK.TabsView.saveTabOMEClick</a></div><div class="ttdeci">async void saveTabOMEClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01201">TabsView.cs:1201</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a60ea4a33e938ad8ba9f9011c622a9940"><div class="ttname"><a href="#a60ea4a33e938ad8ba9f9011c622a9940">BioGTK.TabsView.openSeriesMenuClick</a></div><div class="ttdeci">async void openSeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01017">TabsView.cs:1017</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a61d126b63aea2e49cfe8896e3cc182a4"><div class="ttname"><a href="#a61d126b63aea2e49cfe8896e3cc182a4">BioGTK.TabsView.filtersMenuClick</a></div><div class="ttdeci">void filtersMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01457">TabsView.cs:1457</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a6c62b16786eba3d152609ddea2588c79"><div class="ttname"><a href="#a6c62b16786eba3d152609ddea2588c79">BioGTK.TabsView.functionsToolMenuClick</a></div><div class="ttdeci">void functionsToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01468">TabsView.cs:1468</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a7f74351dca44ada13a82908ff408a53b"><div class="ttname"><a href="#a7f74351dca44ada13a82908ff408a53b">BioGTK.TabsView.openImagesMenuClick</a></div><div class="ttdeci">async void openImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00942">TabsView.cs:942</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a81e10c3e7dfdc80d433999b8f649bc82"><div class="ttname"><a href="#a81e10c3e7dfdc80d433999b8f649bc82">BioGTK.TabsView.scriptRunnerMenuClick</a></div><div class="ttdeci">void scriptRunnerMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01488">TabsView.cs:1488</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a8cf0db5f018aaf60752f9e0bb2a400d1"><div class="ttname"><a href="#a8cf0db5f018aaf60752f9e0bb2a400d1">BioGTK.TabsView.toolsMenuClick</a></div><div class="ttdeci">void toolsMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01265">TabsView.cs:1265</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a963c1532f4149e6c5b19ab90d04d3467"><div class="ttname"><a href="#a963c1532f4149e6c5b19ab90d04d3467">BioGTK.TabsView.stackToolMenuClick</a></div><div class="ttdeci">void stackToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01405">TabsView.cs:1405</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_a9734ffc8d9368c7215541cd89ac5d98c"><div class="ttname"><a href="#a9734ffc8d9368c7215541cd89ac5d98c">BioGTK.TabsView.openOMEImagesMenuClick</a></div><div class="ttdeci">async void openOMEImagesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l00966">TabsView.cs:966</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aa1f26f028a9c5eb0b00b6c15fb95c846"><div class="ttname"><a href="#aa1f26f028a9c5eb0b00b6c15fb95c846">BioGTK.TabsView.channelsToolMenuClick</a></div><div class="ttdeci">void channelsToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01379">TabsView.cs:1379</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aabbb852f46aca19631e6bfe3d3540317"><div class="ttname"><a href="#aabbb852f46aca19631e6bfe3d3540317">BioGTK.TabsView.imagesToStackClick</a></div><div class="ttdeci">void imagesToStackClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01245">TabsView.cs:1245</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_aafa0f28281d1462bec55cf7f6974fe2c"><div class="ttname"><a href="#aafa0f28281d1462bec55cf7f6974fe2c">BioGTK.TabsView.saveSeriesMenuClick</a></div><div class="ttdeci">async void saveSeriesMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01231">TabsView.cs:1231</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ab39101704963b41e3e1592069b663a9d"><div class="ttname"><a href="#ab39101704963b41e3e1592069b663a9d">BioGTK.TabsView.to24BitMenuClick</a></div><div class="ttdeci">void to24BitMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01432">TabsView.cs:1432</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abb382517e4b4e4f8c5259ee889eddd06"><div class="ttname"><a href="#abb382517e4b4e4f8c5259ee889eddd06">BioGTK.TabsView.addOMEImagesToTabClick</a></div><div class="ttdeci">async void addOMEImagesToTabClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01111">TabsView.cs:1111</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abc04383af0dad9f6a28010f13da9ec49"><div class="ttname"><a href="#abc04383af0dad9f6a28010f13da9ec49">BioGTK.TabsView.switchRedBlueMenuClick</a></div><div class="ttdeci">void switchRedBlueMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01391">TabsView.cs:1391</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_abd671248c4fd64ef9d1d7c3f948bee74"><div class="ttname"><a href="#abd671248c4fd64ef9d1d7c3f948bee74">BioGTK.TabsView.consoleMenuClick</a></div><div class="ttdeci">void consoleMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01478">TabsView.cs:1478</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ac13694c7b38a99a893c751e086c6a28c"><div class="ttname"><a href="#ac13694c7b38a99a893c751e086c6a28c">BioGTK.TabsView.importROIsFromCSVMenuClick</a></div><div class="ttdeci">void importROIsFromCSVMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01315">TabsView.cs:1315</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_acab42e86e43ceceb1b509911f2d57364"><div class="ttname"><a href="#acab42e86e43ceceb1b509911f2d57364">BioGTK.TabsView.saveTabTiffMenuClick</a></div><div class="ttdeci">async void saveTabTiffMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01217">TabsView.cs:1217</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_ae49e120c55a0785947d9ea9a921dad3c"><div class="ttname"><a href="#ae49e120c55a0785947d9ea9a921dad3c">BioGTK.TabsView.setToolMenuClick</a></div><div class="ttdeci">void setToolMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01276">TabsView.cs:1276</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_tabs_view_html_af633beb47583df1bd55b6135659482c4"><div class="ttname"><a href="#af633beb47583df1bd55b6135659482c4">BioGTK.TabsView.roiManagerMenuClick</a></div><div class="ttdeci">void roiManagerMenuClick(object sender, EventArgs a)</div><div class="ttdef"><b>Definition</b> <a href="_tabs_view_8cs_source.html#l01287">TabsView.cs:1287</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2159,12 +2168,12 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01364">1364</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1365</span>        {</div>
-<div class="line"><span class="lineno"> 1366</span>            App.stack = StackTools.Create();</div>
-<div class="line"><span class="lineno"> 1367</span>            App.stack.Show();</div>
-<div class="line"><span class="lineno"> 1368</span>            App.stack.Present();</div>
-<div class="line"><span class="lineno"> 1369</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01405">1405</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1406</span>        {</div>
+<div class="line"><span class="lineno"> 1407</span>            App.stack = StackTools.Create();</div>
+<div class="line"><span class="lineno"> 1408</span>            App.stack.Show();</div>
+<div class="line"><span class="lineno"> 1409</span>            App.stack.Present();</div>
+<div class="line"><span class="lineno"> 1410</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2203,15 +2212,15 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01350">1350</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1351</span>        {</div>
-<div class="line"><span class="lineno"> 1352</span>            <span class="keywordflow">foreach</span> (AForge.Bitmap bf in ImageView.SelectedImage.Buffers)</div>
-<div class="line"><span class="lineno"> 1353</span>            {</div>
-<div class="line"><span class="lineno"> 1354</span>                bf.SwitchRedBlue();</div>
-<div class="line"><span class="lineno"> 1355</span>            }</div>
-<div class="line"><span class="lineno"> 1356</span>            App.viewer.UpdateImage();</div>
-<div class="line"><span class="lineno"> 1357</span>            App.viewer.UpdateView();</div>
-<div class="line"><span class="lineno"> 1358</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01391">1391</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1392</span>        {</div>
+<div class="line"><span class="lineno"> 1393</span>            <span class="keywordflow">foreach</span> (AForge.Bitmap bf in ImageView.SelectedImage.Buffers)</div>
+<div class="line"><span class="lineno"> 1394</span>            {</div>
+<div class="line"><span class="lineno"> 1395</span>                bf.SwitchRedBlue();</div>
+<div class="line"><span class="lineno"> 1396</span>            }</div>
+<div class="line"><span class="lineno"> 1397</span>            App.viewer.UpdateImage();</div>
+<div class="line"><span class="lineno"> 1398</span>            App.viewer.UpdateView();</div>
+<div class="line"><span class="lineno"> 1399</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2250,10 +2259,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01383">1383</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1384</span>        {</div>
-<div class="line"><span class="lineno"> 1385</span>            ImageView.SelectedImage.To16Bit();</div>
-<div class="line"><span class="lineno"> 1386</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01424">1424</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1425</span>        {</div>
+<div class="line"><span class="lineno"> 1426</span>            ImageView.SelectedImage.To16Bit();</div>
+<div class="line"><span class="lineno"> 1427</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2292,10 +2301,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01391">1391</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1392</span>        {</div>
-<div class="line"><span class="lineno"> 1393</span>            ImageView.SelectedImage.To24Bit();</div>
-<div class="line"><span class="lineno"> 1394</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01432">1432</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1433</span>        {</div>
+<div class="line"><span class="lineno"> 1434</span>            ImageView.SelectedImage.To24Bit();</div>
+<div class="line"><span class="lineno"> 1435</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2334,10 +2343,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01399">1399</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1400</span>        {</div>
-<div class="line"><span class="lineno"> 1401</span>            ImageView.SelectedImage.To32Bit();</div>
-<div class="line"><span class="lineno"> 1402</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01440">1440</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1441</span>        {</div>
+<div class="line"><span class="lineno"> 1442</span>            ImageView.SelectedImage.To32Bit();</div>
+<div class="line"><span class="lineno"> 1443</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2376,10 +2385,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01407">1407</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1408</span>        {</div>
-<div class="line"><span class="lineno"> 1409</span>            ImageView.SelectedImage.To48Bit();</div>
-<div class="line"><span class="lineno"> 1410</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01448">1448</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1449</span>        {</div>
+<div class="line"><span class="lineno"> 1450</span>            ImageView.SelectedImage.To48Bit();</div>
+<div class="line"><span class="lineno"> 1451</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2418,10 +2427,10 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01375">1375</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1376</span>        {</div>
-<div class="line"><span class="lineno"> 1377</span>            ImageView.SelectedImage.To8Bit();</div>
-<div class="line"><span class="lineno"> 1378</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01416">1416</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1417</span>        {</div>
+<div class="line"><span class="lineno"> 1418</span>            ImageView.SelectedImage.To8Bit();</div>
+<div class="line"><span class="lineno"> 1419</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -2460,13 +2469,13 @@ Protected Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01224">1224</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno"> 1225</span>        {</div>
-<div class="line"><span class="lineno"> 1226</span>            <span class="keywordflow">if</span>(App.tools == <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1227</span>            App.tools = Tools.Create();</div>
-<div class="line"><span class="lineno"> 1228</span>            App.tools.Show();</div>
-<div class="line"><span class="lineno"> 1229</span>            App.tools.Present();</div>
-<div class="line"><span class="lineno"> 1230</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_tabs_view_8cs_source.html#l01265">1265</a> of file <a class="el" href="_tabs_view_8cs_source.html">TabsView.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno"> 1266</span>        {</div>
+<div class="line"><span class="lineno"> 1267</span>            <span class="keywordflow">if</span>(App.tools == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1268</span>            App.tools = Tools.Create();</div>
+<div class="line"><span class="lineno"> 1269</span>            App.tools.Show();</div>
+<div class="line"><span class="lineno"> 1270</span>            App.tools.Present();</div>
+<div class="line"><span class="lineno"> 1271</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>

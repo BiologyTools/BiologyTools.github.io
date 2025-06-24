@@ -5,6 +5,7 @@ var hierarchy =
       [ "BioGTK.ApplyFilter", "class_bio_g_t_k_1_1_apply_filter.html", null ],
       [ "BioGTK.ColorTool", "class_bio_g_t_k_1_1_color_tool.html", null ],
       [ "BioGTK.ComboPicker", "class_bio_g_t_k_1_1_combo_picker.html", null ],
+      [ "BioGTK.Login", "class_bio_g_t_k_1_1_login.html", null ],
       [ "BioGTK.NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
       [ "BioGTK.Progress", "class_bio_g_t_k_1_1_progress.html", null ],
       [ "BioGTK.Resolutions", "class_bio_g_t_k_1_1_resolutions.html", null ],
@@ -22,6 +23,7 @@ var hierarchy =
         [ "BioGTK.MicroSAM", "class_bio_g_t_k_1_1_micro_s_a_m.html", null ]
       ] ]
     ] ],
+    [ "BioGTK.OMERO.Image", "class_bio_g_t_k_1_1_o_m_e_r_o_1_1_image.html", null ],
     [ "BioGTK.Plugin.IPlugin", "interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html", null ],
     [ "BioGTK.Updater.GitHubFile.Links", "class_bio_g_t_k_1_1_updater_1_1_git_hub_file_1_1_links.html", null ],
     [ "BioGTK.MaskPromotion", "class_bio_g_t_k_1_1_mask_promotion.html", null ],
@@ -49,6 +51,7 @@ var hierarchy =
       [ "BioGTK.HistogramControl", "class_bio_g_t_k_1_1_histogram_control.html", null ],
       [ "BioGTK.ImageView", "class_bio_g_t_k_1_1_image_view.html", null ],
       [ "BioGTK.NodeView", "class_bio_g_t_k_1_1_node_view.html", null ],
+      [ "BioGTK.OMERO", "class_bio_g_t_k_1_1_o_m_e_r_o.html", null ],
       [ "BioGTK.PlateTool", "class_bio_g_t_k_1_1_plate_tool.html", null ],
       [ "BioGTK.Play", "class_bio_g_t_k_1_1_play.html", null ],
       [ "BioGTK.Plot", "class_bio_g_t_k_1_1_plot.html", null ],
