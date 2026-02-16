@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioLib
-   &#160;<span id="projectnumber">3.7.0</span>
+   &#160;<span id="projectnumber">3.9.1</span>
    </div>
    <div id="projectbrief">A GUI-less version of Bio .NET library for editing &amp; annotating various microscopy image formats.</div>
   </td>
@@ -187,55 +187,55 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>Name</b></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno"> 1874</span>            {</div>
-<div class="line"><span class="lineno"> 1875</span>                ID = b.meta.getPlateID(b.series);</div>
-<div class="line"><span class="lineno"> 1876</span>                Name = b.meta.getPlateName(b.series);</div>
-<div class="line"><span class="lineno"> 1877</span>                <span class="keywordtype">double</span> x, y;</div>
-<div class="line"><span class="lineno"> 1878</span>                <span class="keywordflow">if</span> (b.meta.getPlateWellOriginX(b.series) != <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1879</span>                    x = b.meta.getPlateWellOriginX(b.series).value().doubleValue();</div>
-<div class="line"><span class="lineno"> 1880</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno"> 1881</span>                    x = 0;</div>
-<div class="line"><span class="lineno"> 1882</span>                <span class="keywordflow">if</span> (b.meta.getPlateWellOriginY(b.series) != <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1883</span>                    y = b.meta.getPlateWellOriginY(b.series).value().doubleValue();</div>
-<div class="line"><span class="lineno"> 1884</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno"> 1885</span>                    y = 0;</div>
-<div class="line"><span class="lineno"> 1886</span>                Origin = <span class="keyword">new</span> PointD(x, y);</div>
-<div class="line"><span class="lineno"> 1887</span>                <span class="keywordtype">int</span> ws = b.meta.getWellCount(b.series);</div>
-<div class="line"><span class="lineno"> 1888</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; ws; i++)</div>
-<div class="line"><span class="lineno"> 1889</span>                {</div>
-<div class="line"><span class="lineno"> 1890</span>                    Well w = <span class="keyword">new</span> Well();</div>
-<div class="line"><span class="lineno"> 1891</span>                    w.ID = b.meta.getWellID(b.series, i);</div>
-<div class="line"><span class="lineno"> 1892</span>                    w.Column = b.meta.getWellColumn(b.series, i).getNumberValue().intValue();</div>
-<div class="line"><span class="lineno"> 1893</span>                    w.Row = b.meta.getWellRow(b.series, i).getNumberValue().intValue();</div>
-<div class="line"><span class="lineno"> 1894</span>                    <span class="keywordtype">int</span> wsc = b.meta.getWellSampleCount(b.series, i);</div>
-<div class="line"><span class="lineno"> 1895</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> s = 0; s &lt; wsc; s++)</div>
-<div class="line"><span class="lineno"> 1896</span>                    {</div>
-<div class="line"><span class="lineno"> 1897</span>                        Well.Sample sa = <span class="keyword">new</span> Well.Sample();</div>
-<div class="line"><span class="lineno"> 1898</span>                        sa.Time = b.meta.getWellSampleTimepoint(b.series, i, s);</div>
-<div class="line"><span class="lineno"> 1899</span>                        sa.Index = b.meta.getWellSampleIndex(b.series, i, s).getNumberValue().intValue();</div>
-<div class="line"><span class="lineno"> 1900</span>                        <span class="keywordtype">double</span> sx, sy;</div>
-<div class="line"><span class="lineno"> 1901</span>                        <span class="keywordflow">if</span> (b.meta.getWellSamplePositionX(b.series, i, s) != <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1902</span>                            sx = b.meta.getWellSamplePositionX(b.series, i, s).value().doubleValue();</div>
-<div class="line"><span class="lineno"> 1903</span>                        <span class="keywordflow">else</span> sx = 0;</div>
-<div class="line"><span class="lineno"> 1904</span>                        <span class="keywordflow">if</span> (b.meta.getWellSamplePositionY(b.series, i, s) != <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1905</span>                            sy = b.meta.getWellSamplePositionY(b.series, i, s).value().doubleValue();</div>
-<div class="line"><span class="lineno"> 1906</span>                        <span class="keywordflow">else</span> sy = 0;</div>
-<div class="line"><span class="lineno"> 1907</span>                        sa.Position = <span class="keyword">new</span> PointD(sx, sy);</div>
-<div class="line"><span class="lineno"> 1908</span>                        sa.ID = b.meta.getWellSampleID(b.series, i, s);</div>
-<div class="line"><span class="lineno"> 1909</span>                        w.Samples.Add(sa);</div>
-<div class="line"><span class="lineno"> 1910</span>                    }</div>
-<div class="line"><span class="lineno"> 1911</span>                    ome.xml.model.primitives.Color c = b.meta.getWellColor(b.series, i);</div>
-<div class="line"><span class="lineno"> 1912</span>                    <span class="keywordflow">if</span> (c != <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno"> 1913</span>                        w.Color = System.Drawing.Color.FromArgb(c.getAlpha(), c.getRed(), c.getGreen(), c.getBlue());</div>
-<div class="line"><span class="lineno"> 1914</span>                    Wells.Add(w);</div>
-<div class="line"><span class="lineno"> 1915</span>                }</div>
-<div class="line"><span class="lineno"> 1916</span> </div>
-<div class="line"><span class="lineno"> 1917</span>            }</div>
+<div class="fragment"><div class="line"><span class="lineno"> 1886</span>            {</div>
+<div class="line"><span class="lineno"> 1887</span>                ID = b.meta.getPlateID(b.series);</div>
+<div class="line"><span class="lineno"> 1888</span>                Name = b.meta.getPlateName(b.series);</div>
+<div class="line"><span class="lineno"> 1889</span>                <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><span class="lineno"> 1890</span>                <span class="keywordflow">if</span> (b.meta.getPlateWellOriginX(b.series) != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1891</span>                    x = b.meta.getPlateWellOriginX(b.series).value().doubleValue();</div>
+<div class="line"><span class="lineno"> 1892</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno"> 1893</span>                    x = 0;</div>
+<div class="line"><span class="lineno"> 1894</span>                <span class="keywordflow">if</span> (b.meta.getPlateWellOriginY(b.series) != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1895</span>                    y = b.meta.getPlateWellOriginY(b.series).value().doubleValue();</div>
+<div class="line"><span class="lineno"> 1896</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno"> 1897</span>                    y = 0;</div>
+<div class="line"><span class="lineno"> 1898</span>                Origin = <span class="keyword">new</span> PointD(x, y);</div>
+<div class="line"><span class="lineno"> 1899</span>                <span class="keywordtype">int</span> ws = b.meta.getWellCount(b.series);</div>
+<div class="line"><span class="lineno"> 1900</span>                <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; ws; i++)</div>
+<div class="line"><span class="lineno"> 1901</span>                {</div>
+<div class="line"><span class="lineno"> 1902</span>                    Well w = <span class="keyword">new</span> Well();</div>
+<div class="line"><span class="lineno"> 1903</span>                    w.ID = b.meta.getWellID(b.series, i);</div>
+<div class="line"><span class="lineno"> 1904</span>                    w.Column = b.meta.getWellColumn(b.series, i).getNumberValue().intValue();</div>
+<div class="line"><span class="lineno"> 1905</span>                    w.Row = b.meta.getWellRow(b.series, i).getNumberValue().intValue();</div>
+<div class="line"><span class="lineno"> 1906</span>                    <span class="keywordtype">int</span> wsc = b.meta.getWellSampleCount(b.series, i);</div>
+<div class="line"><span class="lineno"> 1907</span>                    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> s = 0; s &lt; wsc; s++)</div>
+<div class="line"><span class="lineno"> 1908</span>                    {</div>
+<div class="line"><span class="lineno"> 1909</span>                        Well.Sample sa = <span class="keyword">new</span> Well.Sample();</div>
+<div class="line"><span class="lineno"> 1910</span>                        sa.Time = b.meta.getWellSampleTimepoint(b.series, i, s);</div>
+<div class="line"><span class="lineno"> 1911</span>                        sa.Index = b.meta.getWellSampleIndex(b.series, i, s).getNumberValue().intValue();</div>
+<div class="line"><span class="lineno"> 1912</span>                        <span class="keywordtype">double</span> sx, sy;</div>
+<div class="line"><span class="lineno"> 1913</span>                        <span class="keywordflow">if</span> (b.meta.getWellSamplePositionX(b.series, i, s) != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1914</span>                            sx = b.meta.getWellSamplePositionX(b.series, i, s).value().doubleValue();</div>
+<div class="line"><span class="lineno"> 1915</span>                        <span class="keywordflow">else</span> sx = 0;</div>
+<div class="line"><span class="lineno"> 1916</span>                        <span class="keywordflow">if</span> (b.meta.getWellSamplePositionY(b.series, i, s) != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1917</span>                            sy = b.meta.getWellSamplePositionY(b.series, i, s).value().doubleValue();</div>
+<div class="line"><span class="lineno"> 1918</span>                        <span class="keywordflow">else</span> sy = 0;</div>
+<div class="line"><span class="lineno"> 1919</span>                        sa.Position = <span class="keyword">new</span> PointD(sx, sy);</div>
+<div class="line"><span class="lineno"> 1920</span>                        sa.ID = b.meta.getWellSampleID(b.series, i, s);</div>
+<div class="line"><span class="lineno"> 1921</span>                        w.Samples.Add(sa);</div>
+<div class="line"><span class="lineno"> 1922</span>                    }</div>
+<div class="line"><span class="lineno"> 1923</span>                    ome.xml.model.primitives.Color c = b.meta.getWellColor(b.series, i);</div>
+<div class="line"><span class="lineno"> 1924</span>                    <span class="keywordflow">if</span> (c != <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno"> 1925</span>                        w.Color = System.Drawing.Color.FromArgb(c.getAlpha(), c.getRed(), c.getGreen(), c.getBlue());</div>
+<div class="line"><span class="lineno"> 1926</span>                    Wells.Add(w);</div>
+<div class="line"><span class="lineno"> 1927</span>                }</div>
+<div class="line"><span class="lineno"> 1928</span> </div>
+<div class="line"><span class="lineno"> 1929</span>            }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>Source/<b>Bio.cs</b></li>
+<li>BioLib/Source/<b>Bio.cs</b></li>
 </ul>
 </div><!-- contents -->
 </div><!-- doc-content -->

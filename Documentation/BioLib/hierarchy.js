@@ -74,9 +74,7 @@ var hierarchy =
     [ "BioLib.SliceInfo", "class_bio_lib_1_1_slice_info.html", null ],
     [ "BioLib.SliceParame", "class_bio_lib_1_1_slice_parame.html", null ],
     [ "BioLib.Stage", "class_bio_lib_1_1_stage.html", null ],
-    [ "BioLib.Stitch", "class_bio_lib_1_1_stitch.html", null ],
     [ "BioLib.TileCache", "class_bio_lib_1_1_tile_cache.html", null ],
-    [ "BioLib.Stitch.TileData", "struct_bio_lib_1_1_stitch_1_1_tile_data.html", null ],
     [ "BioLib.TileInformation", "class_bio_lib_1_1_tile_information.html", null ],
     [ "TileLayer", null, [
       [ "BioLib.SlideTileLayer", "class_bio_lib_1_1_slide_tile_layer.html", null ]

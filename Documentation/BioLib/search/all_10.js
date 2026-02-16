@@ -26,8 +26,7 @@ var searchData=
   ['splitchannels_23',['SplitChannels',['../class_bio_lib_1_1_bio_image.html#a937c5e39b170b54a73a1a16012955a75',1,'BioLib.BioImage.SplitChannels()'],['../class_bio_lib_1_1_bio_image.html#a4b804f9bdabd385463a198818e7df6f1',1,'BioLib.BioImage.SplitChannels(BioImage bb)'],['../class_bio_lib_1_1_bio_image.html#ab02f8f4228443c5dd98a51f21c06c823',1,'BioLib.BioImage.SplitChannels(string name)']]],
   ['stackthreshold_24',['StackThreshold',['../class_bio_lib_1_1_bio_image.html#aa484c8e1eec04537e72f34cd7554046c',1,'BioLib::BioImage']]],
   ['stage_25',['Stage',['../class_bio_lib_1_1_stage.html',1,'BioLib']]],
-  ['stitch_26',['Stitch',['../class_bio_lib_1_1_stitch.html',1,'BioLib']]],
-  ['stringtopoints_27',['stringToPoints',['../class_bio_lib_1_1_r_o_i.html#a6b33717a4c97372d0a94d7c5c8080169',1,'BioLib::ROI']]],
-  ['stringtoroi_28',['StringToROI',['../class_bio_lib_1_1_bio_image.html#a616c510a1434e4cbcef43b0f10db3993',1,'BioLib::BioImage']]],
-  ['substack_29',['Substack',['../class_bio_lib_1_1_bio_image.html#a7212327484af53ba88a87c0ae6f2dc7b',1,'BioLib::BioImage']]]
+  ['stringtopoints_26',['stringToPoints',['../class_bio_lib_1_1_r_o_i.html#a6b33717a4c97372d0a94d7c5c8080169',1,'BioLib::ROI']]],
+  ['stringtoroi_27',['StringToROI',['../class_bio_lib_1_1_bio_image.html#a616c510a1434e4cbcef43b0f10db3993',1,'BioLib::BioImage']]],
+  ['substack_28',['Substack',['../class_bio_lib_1_1_bio_image.html#a7212327484af53ba88a87c0ae6f2dc7b',1,'BioLib::BioImage']]]
 ];

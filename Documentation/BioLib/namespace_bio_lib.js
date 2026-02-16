@@ -25,7 +25,6 @@ var namespace_bio_lib =
     [ "SlideSourceBase", "class_bio_lib_1_1_slide_source_base.html", "class_bio_lib_1_1_slide_source_base" ],
     [ "SlideTileLayer", "class_bio_lib_1_1_slide_tile_layer.html", null ],
     [ "Stage", "class_bio_lib_1_1_stage.html", null ],
-    [ "Stitch", "class_bio_lib_1_1_stitch.html", "class_bio_lib_1_1_stitch" ],
     [ "TileCache", "class_bio_lib_1_1_tile_cache.html", null ],
     [ "TileInformation", "class_bio_lib_1_1_tile_information.html", null ],
     [ "TLShutter", "class_bio_lib_1_1_t_l_shutter.html", null ],

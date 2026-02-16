@@ -20,6 +20,7 @@ var class_bio_lib_1_1_bio_image =
     [ "GetIndexRGB", "class_bio_lib_1_1_bio_image.html#ae5d0c1a3935684e1caee1bdd5f371c8e", null ],
     [ "GetLevelDownsample", "class_bio_lib_1_1_bio_image.html#af560374a319eb0a7a75f7eca54904c24", null ],
     [ "GetRGBBitmap", "class_bio_lib_1_1_bio_image.html#a3d54353f96e0f604e1d33934eb4b45e8", null ],
+    [ "GetTile", "class_bio_lib_1_1_bio_image.html#acf00cc9ca215a7b19e78c9c1e3ca8694", null ],
     [ "GetUnitPerPixel", "class_bio_lib_1_1_bio_image.html#a4b4b0f1eadedb59021609f27ea9a0851", null ],
     [ "GetValue", "class_bio_lib_1_1_bio_image.html#a0eaa6ed4817bb5f9a6e0e2e930008c97", null ],
     [ "GetValue", "class_bio_lib_1_1_bio_image.html#a95dce270d5d63f09d9136daa46dc42c6", null ],
@@ -53,7 +54,7 @@ var class_bio_lib_1_1_bio_image =
     [ "ToStageSpace", "class_bio_lib_1_1_bio_image.html#a5c7674d46f9087925e6f8221b3eebe63", null ],
     [ "ToString", "class_bio_lib_1_1_bio_image.html#a46b27bfab51f5ddc76e51a6cf1d70983", null ],
     [ "Update", "class_bio_lib_1_1_bio_image.html#a76239b6b9b3c540c5cfd72e7fb7675ce", null ],
-    [ "UpdateBuffersPyramidal", "class_bio_lib_1_1_bio_image.html#a65f38cf8c165aed10a40f60ddf4182bc", null ],
+    [ "UpdateBuffersPyramidal", "class_bio_lib_1_1_bio_image.html#a95a21044e16324e32ef60808946bffb6", null ],
     [ "UpdateCoords", "class_bio_lib_1_1_bio_image.html#a321eb92615dc029875c49746b48dcd18", null ],
     [ "UpdateCoords", "class_bio_lib_1_1_bio_image.html#ab88dfe30482003d163513997a55d70ae", null ],
     [ "UpdateCoords", "class_bio_lib_1_1_bio_image.html#a1b048563258fe4aa120c3e5691749b32", null ]

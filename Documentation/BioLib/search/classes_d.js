@@ -9,6 +9,5 @@ var searchData=
   ['slideslicelayer_6',['SlideSliceLayer',['../class_bio_lib_1_1_slide_slice_layer.html',1,'BioLib']]],
   ['slidesourcebase_7',['SlideSourceBase',['../class_bio_lib_1_1_slide_source_base.html',1,'BioLib']]],
   ['slidetilelayer_8',['SlideTileLayer',['../class_bio_lib_1_1_slide_tile_layer.html',1,'BioLib']]],
-  ['stage_9',['Stage',['../class_bio_lib_1_1_stage.html',1,'BioLib']]],
-  ['stitch_10',['Stitch',['../class_bio_lib_1_1_stitch.html',1,'BioLib']]]
+  ['stage_9',['Stage',['../class_bio_lib_1_1_stage.html',1,'BioLib']]]
 ];

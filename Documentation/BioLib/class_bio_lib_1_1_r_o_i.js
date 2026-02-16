@@ -1,10 +1,10 @@
 var class_bio_lib_1_1_r_o_i =
 [
     [ "Mask", "class_bio_lib_1_1_r_o_i_1_1_mask.html", null ],
-    [ "AddPoint", "class_bio_lib_1_1_r_o_i.html#a6e12da5318b335a2c6140f7c58b8a740", null ],
-    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#a8e7b265a0250ddfd5f2155c854727db7", null ],
-    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#ae8a8e293de02334b5da67696bf84065d", null ],
-    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#adf4c7167c4ac9a63e0177e97a6ee030a", null ],
+    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#ab4b099a74881e73b5b4901bf6a5910dd", null ],
+    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#a9cf715794e19bb4f8cc28cf84cea9f7b", null ],
+    [ "AddPoints", "class_bio_lib_1_1_r_o_i.html#a8697d5fa714d33c7c67646e20d2623ca", null ],
+    [ "ConvertToMicron", "class_bio_lib_1_1_r_o_i.html#ac03ad88552164ad767209ae128ba962c", null ],
     [ "GetPoint", "class_bio_lib_1_1_r_o_i.html#abb1576fd30bbc12357a569d18afe7b2e", null ],
     [ "GetPointCount", "class_bio_lib_1_1_r_o_i.html#a332f4bc59ed2081effc14f9424f092ab", null ],
     [ "GetPoints", "class_bio_lib_1_1_r_o_i.html#a46ac91df835d2cfa668e6c6b1fb25382", null ],
