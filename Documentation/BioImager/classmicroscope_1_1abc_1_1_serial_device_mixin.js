@@ -1,5 +1,5 @@
 var classmicroscope_1_1abc_1_1_serial_device_mixin =
 [
-    [ "__init__", "classmicroscope_1_1abc_1_1_serial_device_mixin.html#a223e61b484d5f3da1ce4a53794685ae2", null ],
-    [ "connection", "classmicroscope_1_1abc_1_1_serial_device_mixin.html#a9e3ba09d83f3a9e56cae14813c6423ea", null ]
+    [ "_readline", "classmicroscope_1_1abc_1_1_serial_device_mixin.html#a205a23113fc38758669bcd395f2e04e0", null ],
+    [ "_write", "classmicroscope_1_1abc_1_1_serial_device_mixin.html#a8e3761fe687e216f753641d3bf57400a", null ]
 ];

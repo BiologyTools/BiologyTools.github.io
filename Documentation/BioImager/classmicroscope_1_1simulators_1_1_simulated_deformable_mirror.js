@@ -1,4 +1,5 @@
 var classmicroscope_1_1simulators_1_1_simulated_deformable_mirror =
 [
-    [ "get_current_pattern", "classmicroscope_1_1simulators_1_1_simulated_deformable_mirror.html#a5f28ebc4ae8716c1b14edf456d9b9d02", null ]
+    [ "_do_shutdown", "classmicroscope_1_1simulators_1_1_simulated_deformable_mirror.html#a66a83f9cd31eaae7fa02a426226b6062", null ],
+    [ "get_current_pattern", "classmicroscope_1_1simulators_1_1_simulated_deformable_mirror.html#aee242d539f491e340fdf675d247652dd", null ]
 ];

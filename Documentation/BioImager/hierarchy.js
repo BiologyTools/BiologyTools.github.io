@@ -162,9 +162,6 @@ var hierarchy =
       [ "microscope.cameras._SDK3Cam.ATString", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string.html", null ]
     ] ],
     [ "BioImager.Automation", "class_bio_imager_1_1_automation.html", null ],
-    [ "BaseLayer", null, [
-      [ "BioImager.SlideSliceLayer", "class_bio_imager_1_1_slide_slice_layer.html", null ]
-    ] ],
     [ "BioImager.SlideImager.BaseLevel", "class_bio_imager_1_1_slide_imager_1_1_base_level.html", null ],
     [ "microscope.cameras._SDK3Cam.camReg", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg.html", null ],
     [ "microscope.clients.Client", "classmicroscope_1_1clients_1_1_client.html", [
@@ -172,13 +169,8 @@ var hierarchy =
     ] ],
     [ "BioImager.ImageJ.Macro.Command", "class_bio_imager_1_1_image_j_1_1_macro_1_1_command.html", null ],
     [ "BioImager.MicroscopeConsole.Command", "struct_bio_imager_1_1_microscope_console_1_1_command.html", null ],
-    [ "BioImager.PycroManager.Conf", "struct_bio_imager_1_1_pycro_manager_1_1_conf.html", null ],
-    [ "BioImager.Configuration", "class_bio_imager_1_1_configuration.html", null ],
+    [ "BioImager.MicroManager.Conf", "struct_bio_imager_1_1_micro_manager_1_1_conf.html", null ],
     [ "BioImager.Imager.ControllerFuncs", "class_bio_imager_1_1_imager_1_1_controller_funcs.html", null ],
-    [ "BioImager.DBitmap", "class_bio_imager_1_1_d_bitmap.html", null ],
-    [ "BioImager.DCamera", "class_bio_imager_1_1_d_camera.html", null ],
-    [ "BioImager.DColorShader", "class_bio_imager_1_1_d_color_shader.html", null ],
-    [ "BioImager.DDX11", "class_bio_imager_1_1_d_d_x11.html", null ],
     [ "microscope.device_server.DeviceServerOptions", "classmicroscope_1_1device__server_1_1_device_server_options.html", null ],
     [ "microscope.testsuite.test_devices.DeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests.html", [
       [ "microscope.testsuite.test_devices.CameraTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_camera_tests.html", [
@@ -207,15 +199,10 @@ var hierarchy =
         [ "microscope.testsuite.test_devices.TestDummySLM", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m.html", null ]
       ] ]
     ] ],
-    [ "BioImager.DGraphics", "class_bio_imager_1_1_d_graphics.html", null ],
     [ "BioImager.DInput", "class_bio_imager_1_1_d_input.html", null ],
     [ "microscope.cameras._SDK3.dllFunction", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html", null ],
     [ "microscope.cameras.atmcd.dllFunction", "classmicroscope_1_1cameras_1_1atmcd_1_1dll_function.html", null ],
     [ "microscope.cameras.pvcam.dllFunction", "classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html", null ],
-    [ "BioImager.DModel", "class_bio_imager_1_1_d_model.html", null ],
-    [ "BioImager.DSystem", "class_bio_imager_1_1_d_system.html", null ],
-    [ "BioImager.DSystemConfiguration", "class_bio_imager_1_1_d_system_configuration.html", null ],
-    [ "BioImager.DTimer", "class_bio_imager_1_1_d_timer.html", null ],
     [ "enum.Enum", null, [
       [ "microscope.TriggerMode", "classmicroscope_1_1_trigger_mode.html", null ],
       [ "microscope.TriggerType", "classmicroscope_1_1_trigger_type.html", null ],
@@ -243,7 +230,6 @@ var hierarchy =
       ] ],
       [ "microscope.cameras.atmcd.AtmcdException", "classmicroscope_1_1cameras_1_1atmcd_1_1_atmcd_exception.html", null ]
     ] ],
-    [ "BioImager.Filt", "class_bio_imager_1_1_filt.html", null ],
     [ "logging.Filter", null, [
       [ "microscope.device_server.Filter", "classmicroscope_1_1device__server_1_1_filter.html", null ]
     ] ],
@@ -271,9 +257,11 @@ var hierarchy =
       [ "BioImager.Layers", "class_bio_imager_1_1_layers.html", null ],
       [ "BioImager.Library", "class_bio_imager_1_1_library.html", null ],
       [ "BioImager.Light", "class_bio_imager_1_1_light.html", null ],
+      [ "BioImager.Login", "class_bio_imager_1_1_login.html", null ],
       [ "BioImager.MagicSelect", "class_bio_imager_1_1_magic_select.html", null ],
       [ "BioImager.MicroscopeSetup", "class_bio_imager_1_1_microscope_setup.html", null ],
       [ "BioImager.NodeView", "class_bio_imager_1_1_node_view.html", null ],
+      [ "BioImager.OMERO", "class_bio_imager_1_1_o_m_e_r_o.html", null ],
       [ "BioImager.OpenInTab", "class_bio_imager_1_1_open_in_tab.html", null ],
       [ "BioImager.PlaySpeed", "class_bio_imager_1_1_play_speed.html", null ],
       [ "BioImager.Plot", "class_bio_imager_1_1_plot.html", null ],
@@ -295,46 +283,25 @@ var hierarchy =
       [ "BioImager.TabsView", "class_bio_imager_1_1_tabs_view.html", null ],
       [ "BioImager.TextInput", "class_bio_imager_1_1_text_input.html", null ],
       [ "BioImager.Tools", "class_bio_imager_1_1_tools.html", null ],
-      [ "BioImager.View3D", "class_bio_imager_1_1_view3_d.html", null ],
       [ "BioImager.XMLView", "class_bio_imager_1_1_x_m_l_view.html", null ]
     ] ],
     [ "BioImager.Function", "class_bio_imager_1_1_function.html", null ],
     [ "BioImager.ImageJ.Macro.Function", "class_bio_imager_1_1_image_j_1_1_macro_1_1_function.html", null ],
+    [ "GameWindow", null, [
+      [ "BioImager.GLWindow", "class_bio_imager_1_1_g_l_window.html", null ]
+    ] ],
     [ "BioImager.HXPShutter", "class_bio_imager_1_1_h_x_p_shutter.html", null ],
     [ "IDisposable", null, [
-      [ "BioImager.BioImage", "class_bio_imager_1_1_bio_image.html", null ],
-      [ "BioImager.Direct2D", "class_bio_imager_1_1_direct2_d.html", null ],
       [ "BioImager.Graphics.Graphics", "class_bio_imager_1_1_graphics_1_1_graphics.html", null ],
       [ "BioImager.Graphics.Pen", "struct_bio_imager_1_1_graphics_1_1_pen.html", null ],
-      [ "BioImager.ImageView", "class_bio_imager_1_1_image_view.html", null ],
-      [ "BioImager.ROI.Mask", "class_bio_imager_1_1_r_o_i_1_1_mask.html", null ],
-      [ "BioImager.SlideImage", "class_bio_imager_1_1_slide_image.html", null ],
-      [ "BioImager.SlideSourceBase", "class_bio_imager_1_1_slide_source_base.html", [
-        [ "BioImager.SlideBase", "class_bio_imager_1_1_slide_base.html", null ]
-      ] ]
+      [ "BioImager.ImageView", "class_bio_imager_1_1_image_view.html", null ]
     ] ],
-    [ "BioImager.ImageInfo", "class_bio_imager_1_1_image_info.html", null ],
     [ "BioImager.ImageJ", "class_bio_imager_1_1_image_j.html", null ],
-    [ "BioImager.BioImage.ImageJDesc", "class_bio_imager_1_1_bio_image_1_1_image_j_desc.html", null ],
-    [ "BioImager.LruCache< TileInformation, TValue >.Info", "class_bio_imager_1_1_lru_cache_1_1_info.html", null ],
     [ "BioImager.Plugin.IPlugin", "interface_bio_imager_1_1_plugin_1_1_i_plugin.html", null ],
-    [ "BioImager.ISliceProvider", "interface_bio_imager_1_1_i_slice_provider.html", [
-      [ "BioImager.ISlideSource", "interface_bio_imager_1_1_i_slide_source.html", [
-        [ "BioImager.SlideSourceBase", "class_bio_imager_1_1_slide_source_base.html", null ]
-      ] ]
-    ] ],
-    [ "BioImager.ISlideExternInfo", "interface_bio_imager_1_1_i_slide_extern_info.html", [
-      [ "BioImager.ISlideSource", "interface_bio_imager_1_1_i_slide_source.html", null ]
-    ] ],
-    [ "ITileSource", null, [
-      [ "BioImager.ISlideSource", "interface_bio_imager_1_1_i_slide_source.html", null ]
-    ] ],
     [ "BioImager.ImageView.Layer", "struct_bio_imager_1_1_image_view_1_1_layer.html", null ],
     [ "BioImager.SlideImager.Level", "class_bio_imager_1_1_slide_imager_1_1_level.html", null ],
     [ "BioImager.Lib", "class_bio_imager_1_1_lib.html", null ],
     [ "BioImager.LightSource", "class_bio_imager_1_1_light_source.html", null ],
-    [ "BioImager.LruCache< TileInformation, TValue >", "class_bio_imager_1_1_lru_cache.html", null ],
-    [ "BioImager.LruCache< BioImager.TileInformation, byte[]>", "class_bio_imager_1_1_lru_cache.html", null ],
     [ "metaclass", null, [
       [ "microscope.abc.Controller", "classmicroscope_1_1abc_1_1_controller.html", null ],
       [ "microscope.abc.DataDevice", "classmicroscope_1_1abc_1_1_data_device.html", null ],
@@ -348,6 +315,7 @@ var hierarchy =
       [ "microscope.abc.StageAxis", "classmicroscope_1_1abc_1_1_stage_axis.html", null ],
       [ "microscope.abc.TriggerTargetMixin", "classmicroscope_1_1abc_1_1_trigger_target_mixin.html", null ]
     ] ],
+    [ "BioImager.ML.ML.Model", "class_bio_imager_1_1_m_l_1_1_m_l_1_1_model.html", null ],
     [ "BioImager.MouseOperations", "class_bio_imager_1_1_mouse_operations.html", null ],
     [ "BioImager.MouseOperations.MousePoint", "struct_bio_imager_1_1_mouse_operations_1_1_mouse_point.html", null ],
     [ "typing.NamedTuple", null, [
@@ -359,8 +327,8 @@ var hierarchy =
     [ "BioImager.NodeView.Node", "class_bio_imager_1_1_node_view_1_1_node.html", null ],
     [ "BioImager.Recordings.Node", "class_bio_imager_1_1_recordings_1_1_node.html", null ],
     [ "BioImager.Lib.ObjectInfo", "class_bio_imager_1_1_lib_1_1_object_info.html", null ],
+    [ "BioImager.MicroManager.Objectives.Objective", "class_bio_imager_1_1_micro_manager_1_1_objectives_1_1_objective.html", null ],
     [ "BioImager.Objectives.Objective", "class_bio_imager_1_1_objectives_1_1_objective.html", null ],
-    [ "BioImager.PycroManager.Objectives.Objective", "class_bio_imager_1_1_pycro_manager_1_1_objectives_1_1_objective.html", null ],
     [ "BioImager.Objectives", "class_bio_imager_1_1_objectives.html", null ],
     [ "BioImager.Plugin", "class_bio_imager_1_1_plugin.html", null ],
     [ "BioImager.PMicroscope", "class_bio_imager_1_1_p_microscope.html", null ],
@@ -397,15 +365,12 @@ var hierarchy =
     [ "BioImager.Automation.Recording", "class_bio_imager_1_1_automation_1_1_recording.html", null ],
     [ "BioImager.Win32.Rect", "struct_bio_imager_1_1_win32_1_1_rect.html", null ],
     [ "microscope.stages.linkam.LinkamCMS.RefillTracker", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker.html", null ],
-    [ "BioImager.Resolution", "struct_bio_imager_1_1_resolution.html", null ],
     [ "RichTextBox", null, [
       [ "BioImager.CodeView.ScrollTextBox", "class_bio_imager_1_1_code_view_1_1_scroll_text_box.html", null ]
     ] ],
     [ "BioImager.RLShutter", "class_bio_imager_1_1_r_l_shutter.html", null ],
-    [ "BioImager.ROI", "class_bio_imager_1_1_r_o_i.html", null ],
     [ "BioImager.ImageJ.RoiDecoder", "class_bio_imager_1_1_image_j_1_1_roi_decoder.html", null ],
     [ "BioImager.ImageJ.RoiEncoder", "class_bio_imager_1_1_image_j_1_1_roi_encoder.html", null ],
-    [ "BioImager.BioImage.WellPlate.Well.Sample", "class_bio_imager_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html", null ],
     [ "BioImager.Scripting.Script", "class_bio_imager_1_1_scripting_1_1_script.html", null ],
     [ "BioImager.SDK", "class_bio_imager_1_1_s_d_k.html", null ],
     [ "microscope.cameras._SDK3Cam.SDK3Camera", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_s_d_k3_camera.html", null ],
@@ -428,9 +393,8 @@ var hierarchy =
       [ "microscope.win32.MicroscopeWindowsService", "classmicroscope_1_1win32_1_1_microscope_windows_service.html", null ]
     ] ],
     [ "microscope._utils.SharedSerial", "classmicroscope_1_1__utils_1_1_shared_serial.html", null ],
-    [ "BioImager.PycroManager.Shutters.Shutter", "class_bio_imager_1_1_pycro_manager_1_1_shutters_1_1_shutter.html", null ],
-    [ "BioImager.SliceInfo", "class_bio_imager_1_1_slice_info.html", null ],
-    [ "BioImager.SliceParame", "class_bio_imager_1_1_slice_parame.html", null ],
+    [ "BioImager.MicroManager.Shutters.Shutter", "class_bio_imager_1_1_micro_manager_1_1_shutters_1_1_shutter.html", null ],
+    [ "BioImager.SlideRenderer", "class_bio_imager_1_1_slide_renderer.html", null ],
     [ "BioImager.Stage", "class_bio_imager_1_1_stage.html", null ],
     [ "BioImager.Scripting.State", "class_bio_imager_1_1_scripting_1_1_state.html", null ],
     [ "ctypes.Structure", null, [
@@ -497,11 +461,7 @@ var hierarchy =
       [ "microscope.testsuite.test_client.ExposedDeformableMirror", "classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror.html", null ]
     ] ],
     [ "microscope.testsuite.test_settings.ThingWithSomething", "classmicroscope_1_1testsuite_1_1test__settings_1_1_thing_with_something.html", null ],
-    [ "BioImager.TileCache", "class_bio_imager_1_1_tile_cache.html", null ],
-    [ "BioImager.TileInformation", "class_bio_imager_1_1_tile_information.html", null ],
-    [ "TileLayer", null, [
-      [ "BioImager.SlideTileLayer", "class_bio_imager_1_1_slide_tile_layer.html", null ]
-    ] ],
+    [ "BioImager.TileRenderInfo", "struct_bio_imager_1_1_tile_render_info.html", null ],
     [ "BioImager.TLShutter", "class_bio_imager_1_1_t_l_shutter.html", null ],
     [ "BioImager.Tools.Tool", "class_bio_imager_1_1_tools_1_1_tool.html", null ],
     [ "microscope.cameras.pvcam.TriggerMode", "classmicroscope_1_1cameras_1_1pvcam_1_1_trigger_mode.html", null ],
@@ -523,8 +483,6 @@ var hierarchy =
       [ "BioImager.HistogramControl", "class_bio_imager_1_1_histogram_control.html", null ],
       [ "BioImager.ImageView", "class_bio_imager_1_1_image_view.html", null ]
     ] ],
-    [ "BioImager.BioImage.WellPlate.Well", "class_bio_imager_1_1_bio_image_1_1_well_plate_1_1_well.html", null ],
-    [ "BioImager.BioImage.WellPlate", "class_bio_imager_1_1_bio_image_1_1_well_plate.html", null ],
     [ "BioImager.Win32", "class_bio_imager_1_1_win32.html", null ],
     [ "c_int", null, [
       [ "microscope.cameras.atmcd.AT_DDGLiteChannelId", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_t___d_d_g_lite_channel_id.html", null ],
@@ -538,6 +496,9 @@ var hierarchy =
     ] ],
     [ "FilterWheelBase", null, [
       [ "microscope.filterwheels.aurox.Clarity", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html", null ]
+    ] ],
+    [ "GLControl", null, [
+      [ "BioImager.SlideGLArea", "class_bio_imager_1_1_slide_g_l_area.html", null ]
     ] ],
     [ "IntEnum", null, [
       [ "microscope.cameras.atmcd.AcquisitionMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode.html", null ],

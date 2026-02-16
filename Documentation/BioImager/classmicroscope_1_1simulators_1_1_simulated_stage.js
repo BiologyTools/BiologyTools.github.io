@@ -1,5 +1,6 @@
 var classmicroscope_1_1simulators_1_1_simulated_stage =
 [
+    [ "_do_shutdown", "classmicroscope_1_1simulators_1_1_simulated_stage.html#ab4e63976f0022e28296cbc5423de57e8", null ],
     [ "axes", "classmicroscope_1_1simulators_1_1_simulated_stage.html#aa09063d616ef150b85f237467ed3fd91", null ],
     [ "may_move_on_enable", "classmicroscope_1_1simulators_1_1_simulated_stage.html#aa2887476f57aa058e0c08fca054a2844", null ],
     [ "move_by", "classmicroscope_1_1simulators_1_1_simulated_stage.html#a71580c0f72073e69d8265b0f823d31e0", null ],

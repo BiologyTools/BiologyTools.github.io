@@ -17,12 +17,11 @@ var searchData=
   ['colordemosaicinfo_14',['COLORDEMOSAICINFO',['../classmicroscope_1_1cameras_1_1atmcd_1_1_c_o_l_o_r_d_e_m_o_s_a_i_c_i_n_f_o.html',1,'microscope::cameras::atmcd']]],
   ['colortool_15',['ColorTool',['../class_bio_imager_1_1_color_tool.html',1,'BioImager']]],
   ['command_16',['Command',['../class_bio_imager_1_1_image_j_1_1_macro_1_1_command.html',1,'BioImager.ImageJ.Macro.Command'],['../struct_bio_imager_1_1_microscope_console_1_1_command.html',1,'BioImager.MicroscopeConsole.Command']]],
-  ['conf_17',['Conf',['../struct_bio_imager_1_1_pycro_manager_1_1_conf.html',1,'BioImager::PycroManager']]],
-  ['configuration_18',['Configuration',['../class_bio_imager_1_1_configuration.html',1,'BioImager']]],
-  ['controller_19',['Controller',['../classmicroscope_1_1abc_1_1_controller.html',1,'microscope::abc']]],
-  ['controllererror_20',['ControllerError',['../classmicroscope_1_1stages_1_1linkam_1_1_controller_error.html',1,'microscope::stages::linkam']]],
-  ['controllerfuncs_21',['ControllerFuncs',['../class_bio_imager_1_1_imager_1_1_controller_funcs.html',1,'BioImager::Imager']]],
-  ['controllertests_22',['ControllerTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_controller_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['controllerwidget_23',['ControllerWidget',['../classmicroscope_1_1gui_1_1_controller_widget.html',1,'microscope::gui']]],
-  ['coolled_24',['CoolLED',['../classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d.html',1,'microscope::controllers::coolled']]]
+  ['conf_17',['Conf',['../struct_bio_imager_1_1_micro_manager_1_1_conf.html',1,'BioImager::MicroManager']]],
+  ['controller_18',['Controller',['../classmicroscope_1_1abc_1_1_controller.html',1,'microscope::abc']]],
+  ['controllererror_19',['ControllerError',['../classmicroscope_1_1stages_1_1linkam_1_1_controller_error.html',1,'microscope::stages::linkam']]],
+  ['controllerfuncs_20',['ControllerFuncs',['../class_bio_imager_1_1_imager_1_1_controller_funcs.html',1,'BioImager::Imager']]],
+  ['controllertests_21',['ControllerTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_controller_tests.html',1,'microscope::testsuite::test_devices']]],
+  ['controllerwidget_22',['ControllerWidget',['../classmicroscope_1_1gui_1_1_controller_widget.html',1,'microscope::gui']]],
+  ['coolled_23',['CoolLED',['../classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d.html',1,'microscope::controllers::coolled']]]
 ];

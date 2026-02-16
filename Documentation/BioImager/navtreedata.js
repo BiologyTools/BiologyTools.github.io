@@ -26,11 +26,7 @@ var NAVTREE =
 [
   [ "BioImager", "index.html", [
     [ "Packages", "namespaces.html", [
-      [ "Package List", "namespaces.html", "namespaces_dup" ],
-      [ "Package Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
+      [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -39,7 +35,8 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "Properties", "functions_prop.html", null ],
+        [ "Events", "functions_evnt.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
@@ -51,12 +48,12 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "____init_____8py_source.html",
-"class_bio_imager_1_1_bio_image.html#a9718aff886f9680f725b837e5c377f8d",
-"class_bio_imager_1_1_image_view.html#a254cd6f481616f703218126672f4326c",
-"class_bio_imager_1_1_r_o_i.html#a04ee3e3675a08572d633d0a7ddbe4e2d",
-"class_bio_imager_1_1_view3_d.html#ae74ee0a23600f95ac02d8b6ec545e014",
-"classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection.html",
-"classmicroscope_1_1stages_1_1ludl_1_1ludl_m_c2000.html"
+"class_bio_imager_1_1_graphics_1_1_pen_tool.html#ab2b57f4e96adbaeb100ba7f0646fedb6",
+"class_bio_imager_1_1_node_view.html#aa9dcab7309eb54010f54ebcfebf9e457",
+"classmicroscope_1_1_r_o_i.html",
+"classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html",
+"classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html#a1a81b9500fd2c9bfdb9e2930941bbc2c",
+"dir_13ca6d3fdf6262f402651b398cc0c76f.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

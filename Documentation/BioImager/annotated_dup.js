@@ -17,24 +17,11 @@ var annotated_dup =
       [ "ApplyFilter", "class_bio_imager_1_1_apply_filter.html", "class_bio_imager_1_1_apply_filter" ],
       [ "Automation", "class_bio_imager_1_1_automation.html", "class_bio_imager_1_1_automation" ],
       [ "BioConsole", "class_bio_imager_1_1_bio_console.html", "class_bio_imager_1_1_bio_console" ],
-      [ "BioImage", "class_bio_imager_1_1_bio_image.html", "class_bio_imager_1_1_bio_image" ],
       [ "CellImager", "class_bio_imager_1_1_cell_imager.html", "class_bio_imager_1_1_cell_imager" ],
       [ "ChannelsTool", "class_bio_imager_1_1_channels_tool.html", "class_bio_imager_1_1_channels_tool" ],
       [ "CodeView", "class_bio_imager_1_1_code_view.html", "class_bio_imager_1_1_code_view" ],
       [ "ColorTool", "class_bio_imager_1_1_color_tool.html", "class_bio_imager_1_1_color_tool" ],
-      [ "Configuration", "class_bio_imager_1_1_configuration.html", "class_bio_imager_1_1_configuration" ],
-      [ "DBitmap", "class_bio_imager_1_1_d_bitmap.html", null ],
-      [ "DCamera", "class_bio_imager_1_1_d_camera.html", null ],
-      [ "DColorShader", "class_bio_imager_1_1_d_color_shader.html", null ],
-      [ "DDX11", "class_bio_imager_1_1_d_d_x11.html", null ],
-      [ "DGraphics", "class_bio_imager_1_1_d_graphics.html", null ],
       [ "DInput", "class_bio_imager_1_1_d_input.html", null ],
-      [ "Direct2D", "class_bio_imager_1_1_direct2_d.html", null ],
-      [ "DModel", "class_bio_imager_1_1_d_model.html", null ],
-      [ "DSystem", "class_bio_imager_1_1_d_system.html", null ],
-      [ "DSystemConfiguration", "class_bio_imager_1_1_d_system_configuration.html", null ],
-      [ "DTimer", "class_bio_imager_1_1_d_timer.html", null ],
-      [ "Filt", "class_bio_imager_1_1_filt.html", null ],
       [ "Filter", "class_bio_imager_1_1_filter.html", "class_bio_imager_1_1_filter" ],
       [ "FilterWheel", "class_bio_imager_1_1_filter_wheel.html", "class_bio_imager_1_1_filter_wheel" ],
       [ "FloodFillRange", "struct_bio_imager_1_1_flood_fill_range.html", null ],
@@ -42,9 +29,9 @@ var annotated_dup =
       [ "Focus", "class_bio_imager_1_1_focus.html", "class_bio_imager_1_1_focus" ],
       [ "Function", "class_bio_imager_1_1_function.html", "class_bio_imager_1_1_function" ],
       [ "FunctionForm", "class_bio_imager_1_1_function_form.html", "class_bio_imager_1_1_function_form" ],
+      [ "GLWindow", "class_bio_imager_1_1_g_l_window.html", null ],
       [ "HistogramControl", "class_bio_imager_1_1_histogram_control.html", "class_bio_imager_1_1_histogram_control" ],
       [ "HXPShutter", "class_bio_imager_1_1_h_x_p_shutter.html", "class_bio_imager_1_1_h_x_p_shutter" ],
-      [ "ImageInfo", "class_bio_imager_1_1_image_info.html", "class_bio_imager_1_1_image_info" ],
       [ "ImageJ", "class_bio_imager_1_1_image_j.html", "class_bio_imager_1_1_image_j" ],
       [ "Imager", "class_bio_imager_1_1_imager.html", "class_bio_imager_1_1_imager" ],
       [ "ImagesToStack", "class_bio_imager_1_1_images_to_stack.html", "class_bio_imager_1_1_images_to_stack" ],
@@ -52,20 +39,18 @@ var annotated_dup =
       [ "ImageTiles", "class_bio_imager_1_1_image_tiles.html", "class_bio_imager_1_1_image_tiles" ],
       [ "ImageView", "class_bio_imager_1_1_image_view.html", "class_bio_imager_1_1_image_view" ],
       [ "ImageWindow", "class_bio_imager_1_1_image_window.html", "class_bio_imager_1_1_image_window" ],
-      [ "ISliceProvider", "interface_bio_imager_1_1_i_slice_provider.html", "interface_bio_imager_1_1_i_slice_provider" ],
-      [ "ISlideExternInfo", "interface_bio_imager_1_1_i_slide_extern_info.html", "interface_bio_imager_1_1_i_slide_extern_info" ],
-      [ "ISlideSource", "interface_bio_imager_1_1_i_slide_source.html", null ],
       [ "Layers", "class_bio_imager_1_1_layers.html", "class_bio_imager_1_1_layers" ],
       [ "Lib", "class_bio_imager_1_1_lib.html", "class_bio_imager_1_1_lib" ],
       [ "Library", "class_bio_imager_1_1_library.html", "class_bio_imager_1_1_library" ],
       [ "Light", "class_bio_imager_1_1_light.html", "class_bio_imager_1_1_light" ],
       [ "LightSource", "class_bio_imager_1_1_light_source.html", "class_bio_imager_1_1_light_source" ],
-      [ "LruCache", "class_bio_imager_1_1_lru_cache.html", "class_bio_imager_1_1_lru_cache" ],
+      [ "Login", "class_bio_imager_1_1_login.html", "class_bio_imager_1_1_login" ],
       [ "MagicSelect", "class_bio_imager_1_1_magic_select.html", "class_bio_imager_1_1_magic_select" ],
       [ "MicroscopeSetup", "class_bio_imager_1_1_microscope_setup.html", "class_bio_imager_1_1_microscope_setup" ],
       [ "MouseOperations", "class_bio_imager_1_1_mouse_operations.html", "class_bio_imager_1_1_mouse_operations" ],
       [ "NodeView", "class_bio_imager_1_1_node_view.html", "class_bio_imager_1_1_node_view" ],
       [ "Objectives", "class_bio_imager_1_1_objectives.html", "class_bio_imager_1_1_objectives" ],
+      [ "OMERO", "class_bio_imager_1_1_o_m_e_r_o.html", "class_bio_imager_1_1_o_m_e_r_o" ],
       [ "OpenInTab", "class_bio_imager_1_1_open_in_tab.html", "class_bio_imager_1_1_open_in_tab" ],
       [ "PlaySpeed", "class_bio_imager_1_1_play_speed.html", "class_bio_imager_1_1_play_speed" ],
       [ "Plot", "class_bio_imager_1_1_plot.html", "class_bio_imager_1_1_plot" ],
@@ -76,10 +61,8 @@ var annotated_dup =
       [ "RangeTool", "class_bio_imager_1_1_range_tool.html", "class_bio_imager_1_1_range_tool" ],
       [ "Recorder", "class_bio_imager_1_1_recorder.html", "class_bio_imager_1_1_recorder" ],
       [ "Recordings", "class_bio_imager_1_1_recordings.html", "class_bio_imager_1_1_recordings" ],
-      [ "Resolution", "struct_bio_imager_1_1_resolution.html", null ],
       [ "Resolutions", "class_bio_imager_1_1_resolutions.html", "class_bio_imager_1_1_resolutions" ],
       [ "RLShutter", "class_bio_imager_1_1_r_l_shutter.html", "class_bio_imager_1_1_r_l_shutter" ],
-      [ "ROI", "class_bio_imager_1_1_r_o_i.html", "class_bio_imager_1_1_r_o_i" ],
       [ "ROIManager", "class_bio_imager_1_1_r_o_i_manager.html", "class_bio_imager_1_1_r_o_i_manager" ],
       [ "Scripting", "class_bio_imager_1_1_scripting.html", "class_bio_imager_1_1_scripting" ],
       [ "SDK", "class_bio_imager_1_1_s_d_k.html", null ],
@@ -87,24 +70,17 @@ var annotated_dup =
       [ "Series", "class_bio_imager_1_1_series.html", "class_bio_imager_1_1_series" ],
       [ "SetTool", "class_bio_imager_1_1_set_tool.html", "class_bio_imager_1_1_set_tool" ],
       [ "Setup", "class_bio_imager_1_1_setup.html", "class_bio_imager_1_1_setup" ],
-      [ "SliceInfo", "class_bio_imager_1_1_slice_info.html", "class_bio_imager_1_1_slice_info" ],
-      [ "SliceParame", "class_bio_imager_1_1_slice_parame.html", "class_bio_imager_1_1_slice_parame" ],
-      [ "SlideBase", "class_bio_imager_1_1_slide_base.html", "class_bio_imager_1_1_slide_base" ],
-      [ "SlideImage", "class_bio_imager_1_1_slide_image.html", "class_bio_imager_1_1_slide_image" ],
+      [ "SlideGLArea", "class_bio_imager_1_1_slide_g_l_area.html", "class_bio_imager_1_1_slide_g_l_area" ],
       [ "SlideImager", "class_bio_imager_1_1_slide_imager.html", "class_bio_imager_1_1_slide_imager" ],
-      [ "SlideSliceLayer", "class_bio_imager_1_1_slide_slice_layer.html", null ],
-      [ "SlideSourceBase", "class_bio_imager_1_1_slide_source_base.html", "class_bio_imager_1_1_slide_source_base" ],
-      [ "SlideTileLayer", "class_bio_imager_1_1_slide_tile_layer.html", null ],
+      [ "SlideRenderer", "class_bio_imager_1_1_slide_renderer.html", null ],
       [ "StackTools", "class_bio_imager_1_1_stack_tools.html", "class_bio_imager_1_1_stack_tools" ],
       [ "Stage", "class_bio_imager_1_1_stage.html", "class_bio_imager_1_1_stage" ],
       [ "StageTool", "class_bio_imager_1_1_stage_tool.html", "class_bio_imager_1_1_stage_tool" ],
       [ "TabsView", "class_bio_imager_1_1_tabs_view.html", "class_bio_imager_1_1_tabs_view" ],
       [ "TextInput", "class_bio_imager_1_1_text_input.html", "class_bio_imager_1_1_text_input" ],
-      [ "TileCache", "class_bio_imager_1_1_tile_cache.html", null ],
-      [ "TileInformation", "class_bio_imager_1_1_tile_information.html", null ],
+      [ "TileRenderInfo", "struct_bio_imager_1_1_tile_render_info.html", null ],
       [ "TLShutter", "class_bio_imager_1_1_t_l_shutter.html", "class_bio_imager_1_1_t_l_shutter" ],
       [ "Tools", "class_bio_imager_1_1_tools.html", "class_bio_imager_1_1_tools" ],
-      [ "View3D", "class_bio_imager_1_1_view3_d.html", "class_bio_imager_1_1_view3_d" ],
       [ "Win32", "class_bio_imager_1_1_win32.html", "class_bio_imager_1_1_win32" ],
       [ "XmlTreeDisplay", "class_bio_imager_1_1_xml_tree_display.html", null ],
       [ "XMLView", "class_bio_imager_1_1_x_m_l_view.html", "class_bio_imager_1_1_x_m_l_view" ]
@@ -135,7 +111,7 @@ var annotated_dup =
         [ "FilterWheel", "classmicroscope_1_1abc_1_1_filter_wheel.html", "classmicroscope_1_1abc_1_1_filter_wheel" ],
         [ "FloatingDeviceMixin", "classmicroscope_1_1abc_1_1_floating_device_mixin.html", "classmicroscope_1_1abc_1_1_floating_device_mixin" ],
         [ "LightSource", "classmicroscope_1_1abc_1_1_light_source.html", "classmicroscope_1_1abc_1_1_light_source" ],
-        [ "SerialDeviceMixin", "classmicroscope_1_1abc_1_1_serial_device_mixin.html", null ],
+        [ "SerialDeviceMixin", "classmicroscope_1_1abc_1_1_serial_device_mixin.html", "classmicroscope_1_1abc_1_1_serial_device_mixin" ],
         [ "Stage", "classmicroscope_1_1abc_1_1_stage.html", "classmicroscope_1_1abc_1_1_stage" ],
         [ "StageAxis", "classmicroscope_1_1abc_1_1_stage_axis.html", "classmicroscope_1_1abc_1_1_stage_axis" ],
         [ "TriggerTargetMixin", "classmicroscope_1_1abc_1_1_trigger_target_mixin.html", "classmicroscope_1_1abc_1_1_trigger_target_mixin" ]
@@ -221,7 +197,7 @@ var annotated_dup =
         ] ]
       ] ],
       [ "clients", null, [
-        [ "Client", "classmicroscope_1_1clients_1_1_client.html", null ],
+        [ "Client", "classmicroscope_1_1clients_1_1_client.html", "classmicroscope_1_1clients_1_1_client" ],
         [ "DataClient", "classmicroscope_1_1clients_1_1_data_client.html", "classmicroscope_1_1clients_1_1_data_client" ]
       ] ],
       [ "controllers", null, [
@@ -239,7 +215,7 @@ var annotated_dup =
         ] ],
         [ "prior", null, [
           [ "_ProScanIIIConnection", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection" ],
-          [ "_ProScanIIIFilterWheel", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_filter_wheel.html", null ],
+          [ "_ProScanIIIFilterWheel", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_filter_wheel.html", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_filter_wheel" ],
           [ "ProScanIII", "classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i.html", "classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i" ]
         ] ],
         [ "toptica", null, [
@@ -251,7 +227,7 @@ var annotated_dup =
         [ "zaber", null, [
           [ "_ZaberConnection", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection.html", null ],
           [ "_ZaberDeviceConnection", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection" ],
-          [ "_ZaberFilterWheel", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel.html", null ],
+          [ "_ZaberFilterWheel", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel" ],
           [ "_ZaberLED", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d" ],
           [ "_ZaberLEDController", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d_controller" ],
           [ "_ZaberReply", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_reply" ],
@@ -311,10 +287,10 @@ var annotated_dup =
           [ "AlpaoDeformableMirror", "classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror.html", "classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror" ]
         ] ],
         [ "bmc", null, [
-          [ "BMCDeformableMirror", "classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html", null ]
+          [ "BMCDeformableMirror", "classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html", "classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror" ]
         ] ],
         [ "mirao52e", null, [
-          [ "Mirao52e", "classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e.html", null ]
+          [ "Mirao52e", "classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e.html", "classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e" ]
         ] ]
       ] ],
       [ "simulators", null, [
@@ -325,7 +301,7 @@ var annotated_dup =
         [ "SimulatedCamera", "classmicroscope_1_1simulators_1_1_simulated_camera.html", "classmicroscope_1_1simulators_1_1_simulated_camera" ],
         [ "SimulatedController", "classmicroscope_1_1simulators_1_1_simulated_controller.html", "classmicroscope_1_1simulators_1_1_simulated_controller" ],
         [ "SimulatedDeformableMirror", "classmicroscope_1_1simulators_1_1_simulated_deformable_mirror.html", "classmicroscope_1_1simulators_1_1_simulated_deformable_mirror" ],
-        [ "SimulatedFilterWheel", "classmicroscope_1_1simulators_1_1_simulated_filter_wheel.html", null ],
+        [ "SimulatedFilterWheel", "classmicroscope_1_1simulators_1_1_simulated_filter_wheel.html", "classmicroscope_1_1simulators_1_1_simulated_filter_wheel" ],
         [ "SimulatedLightSource", "classmicroscope_1_1simulators_1_1_simulated_light_source.html", "classmicroscope_1_1simulators_1_1_simulated_light_source" ],
         [ "SimulatedStage", "classmicroscope_1_1simulators_1_1_simulated_stage.html", "classmicroscope_1_1simulators_1_1_simulated_stage" ],
         [ "SimulatedStageAxis", "classmicroscope_1_1simulators_1_1_simulated_stage_axis.html", "classmicroscope_1_1simulators_1_1_simulated_stage_axis" ]
@@ -367,8 +343,8 @@ var annotated_dup =
       [ "testsuite", null, [
         [ "devices", null, [
           [ "CamEnum", "classmicroscope_1_1testsuite_1_1devices_1_1_cam_enum.html", null ],
-          [ "DummyDSP", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p.html", null ],
-          [ "DummySLM", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m.html", null ],
+          [ "DummyDSP", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p.html", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p" ],
+          [ "DummySLM", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m.html", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m" ],
           [ "TestCamera", "classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html", "classmicroscope_1_1testsuite_1_1devices_1_1_test_camera" ],
           [ "TestFloatingDevice", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device" ],
           [ "TestLaser", "classmicroscope_1_1testsuite_1_1devices_1_1_test_laser.html", null ]
@@ -377,7 +353,7 @@ var annotated_dup =
           [ "CoboltLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock.html", null ],
           [ "CoherentSapphireLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock.html", null ],
           [ "OmicronDeepstarLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock.html", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock" ],
-          [ "SerialMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html", null ]
+          [ "SerialMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock" ]
         ] ],
         [ "test_client", null, [
           [ "ExposedDeformableMirror", "classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror.html", null ],
@@ -388,8 +364,8 @@ var annotated_dup =
           [ "BaseTestDeviceServer", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server.html", null ],
           [ "BaseTestServeDevices", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices.html", null ],
           [ "DeviceServerExceptionQueue", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue.html", null ],
-          [ "DeviceWithPort", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port.html", null ],
-          [ "ExposePIDDevice", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device.html", null ],
+          [ "DeviceWithPort", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port" ],
+          [ "ExposePIDDevice", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device" ],
           [ "TestClashingArguments", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_clashing_arguments.html", null ],
           [ "TestConfigLoader", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader" ],
           [ "TestFloatingDeviceIndexInjection", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection.html", null ],

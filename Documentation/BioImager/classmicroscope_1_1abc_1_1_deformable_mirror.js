@@ -1,5 +1,7 @@
 var classmicroscope_1_1abc_1_1_deformable_mirror =
 [
+    [ "_do_trigger", "classmicroscope_1_1abc_1_1_deformable_mirror.html#ac48cfcbd97c96aa987aafd2a552ae435", null ],
+    [ "_validate_patterns", "classmicroscope_1_1abc_1_1_deformable_mirror.html#aa91f1ea3302142e8458b52591ee4bfc9", null ],
     [ "apply_pattern", "classmicroscope_1_1abc_1_1_deformable_mirror.html#aacb167c682dc78cef01fa9bd8119280b", null ],
     [ "next_pattern", "classmicroscope_1_1abc_1_1_deformable_mirror.html#a00ad32bca0d8dade56582b3e0b57f2b3", null ],
     [ "queue_patterns", "classmicroscope_1_1abc_1_1_deformable_mirror.html#aabc55f14c48d6e983aa07f6de760c0da", null ],

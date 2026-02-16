@@ -1,5 +1,6 @@
 var classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection =
 [
+    [ "_command_and_validate", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html#ac572bdd3726af6d48e366796073a9f1e", null ],
     [ "command", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html#a3517e8ba90492c3474bc76a11ff7edd7", null ],
     [ "get_command", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html#a167fdc88c080eed2ec3404ef030ae659", null ],
     [ "get_description", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html#a26501c5e53335aba39feeabd749cd063", null ],

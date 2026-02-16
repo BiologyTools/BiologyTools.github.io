@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['scrollchanged_0',['ScrollChanged',['../class_bio_imager_1_1_code_view_1_1_scroll_text_box.html#ab18a81d348a7c9fa454fb440f228f433',1,'BioImager::CodeView::ScrollTextBox']]]
+  ['glready_0',['GLReady',['../class_bio_imager_1_1_slide_g_l_area.html#a2dd7d648a1217ace0f02bcb7d377f156',1,'BioImager::SlideGLArea']]]
 ];
