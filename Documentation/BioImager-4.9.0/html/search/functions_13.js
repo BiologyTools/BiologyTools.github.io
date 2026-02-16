@@ -1,0 +1,22 @@
+var searchData=
+[
+  ['update_5fsettings_0',['update_settings',['../classmicroscope_1_1abc_1_1_device.html#a3be37f7f4ecf662170709126d7fc078c',1,'microscope.abc.Device.update_settings()'],['../classmicroscope_1_1abc_1_1_data_device.html#a307a47932192c807d0501bb0a30d9a37',1,'microscope.abc.DataDevice.update_settings()']]],
+  ['updatechannel_1',['UpdateChannel',['../class_bio_imager_1_1_histogram_control.html#a8434166f720aed6abe735cd31d7647d5',1,'BioImager::HistogramControl']]],
+  ['updateenablestate_2',['updateEnableState',['../classmicroscope_1_1gui_1_1_camera_widget.html#a93f7b018d4ca06253ca1ba5914d34e90',1,'microscope.gui.CameraWidget.updateEnableState()'],['../classmicroscope_1_1gui_1_1_light_source_widget.html#a59f279bc62db9299289b210437013987',1,'microscope.gui.LightSourceWidget.updateEnableState()']]],
+  ['updategui_3',['UpdateGUI',['../class_bio_imager_1_1_color_tool.html#a5c2ed395e51f3e294c145a3aa1f7e9a7',1,'BioImager.ColorTool.UpdateGUI()'],['../class_bio_imager_1_1_light.html#a3e0b449ba2d042617c27d9feadb19fe7',1,'BioImager.Light.UpdateGUI()']]],
+  ['updateimage_4',['UpdateImage',['../class_bio_imager_1_1_image_view.html#a0e9084cef81901f6353ff8837a7f2f7a',1,'BioImager.ImageView.UpdateImage()'],['../class_bio_imager_1_1_plot.html#a29f940b471ed3bbe5a9f16de5047d806',1,'BioImager.Plot.UpdateImage()']]],
+  ['updateimages_5',['UpdateImages',['../class_bio_imager_1_1_image_view.html#a607a4043ae1d808906446a25b0ee0913',1,'BioImager::ImageView']]],
+  ['updateitems_6',['UpdateItems',['../class_bio_imager_1_1_channels_tool.html#a296c218a6b0364f78ab489ce34907133',1,'BioImager.ChannelsTool.UpdateItems()'],['../class_bio_imager_1_1_series.html#ad98c5d5316ea814014aca64970d95b0a',1,'BioImager.Series.UpdateItems()']]],
+  ['updateoverlay_7',['UpdateOverlay',['../class_bio_imager_1_1_image_view.html#a7cb44ed22361eaf2baf2b3ce79aed3d6',1,'BioImager::ImageView']]],
+  ['updatergbchannels_8',['UpdateRGBChannels',['../class_bio_imager_1_1_image_view.html#ac95440148d2cf0e5e46cb846ece7b215',1,'BioImager::ImageView']]],
+  ['updatescroll_9',['UpdateScroll',['../class_bio_imager_1_1_code_view.html#ac2765b878c6bbedff91987261117d0bd',1,'BioImager::CodeView']]],
+  ['updateselectboxsize_10',['UpdateSelectBoxSize',['../class_bio_imager_1_1_image_view.html#a9434ab9ee90b4e13f318d55ab6c77bfb',1,'BioImager::ImageView']]],
+  ['updateselected_11',['UpdateSelected',['../class_bio_imager_1_1_tools.html#a16a5aabb40065c4d44e459b662a57263',1,'BioImager::Tools']]],
+  ['updatestacks_12',['UpdateStacks',['../class_bio_imager_1_1_apply_filter.html#a5098852a936a56e623ef40e28a72df35',1,'BioImager.ApplyFilter.UpdateStacks()'],['../class_bio_imager_1_1_stack_tools.html#a462dc83c430cca69be3dccb9813236f9',1,'BioImager.StackTools.UpdateStacks()']]],
+  ['updatestate_13',['UpdateState',['../class_bio_imager_1_1_scripting.html#ae1ff106fe8d534242c5a371d9fb87af2',1,'BioImager::Scripting']]],
+  ['updatestatus_14',['UpdateStatus',['../class_bio_imager_1_1_imager.html#a2d41da3ba8542e641e5d834e85987395',1,'BioImager.Imager.UpdateStatus()'],['../class_bio_imager_1_1_image_view.html#a77d0940fc94d71f1629cb3d50b385262',1,'BioImager.ImageView.UpdateStatus()']]],
+  ['updateswlimit_15',['UpdateSWLimit',['../class_bio_imager_1_1_stage.html#a5744af87c4ecf45b1ecfc3dc16397be2',1,'BioImager::Stage']]],
+  ['updateview_16',['UpdateView',['../class_bio_imager_1_1_histogram_control.html#a8b0286a5192bf2a38bf657d8b8b8ed29',1,'BioImager.HistogramControl.UpdateView()'],['../class_bio_imager_1_1_image_view.html#adc65e6e60745ab28f68c3e63642f547e',1,'BioImager.ImageView.UpdateView()'],['../class_bio_imager_1_1_image_view.html#a115c2fa4698fcf4f52419c10104ec249',1,'BioImager.ImageView.UpdateView(bool refresh)']]],
+  ['updateviewmode_17',['UpdateViewMode',['../class_bio_imager_1_1_tabs_view.html#a659d1b3833dd4d34eb5024cc647bfa2b',1,'BioImager::TabsView']]],
+  ['uploadtiletexture_18',['UploadTileTexture',['../class_bio_imager_1_1_slide_g_l_area.html#a8fcf027dbd7839fdeeb13806b6d15da5',1,'BioImager::SlideGLArea']]]
+];
