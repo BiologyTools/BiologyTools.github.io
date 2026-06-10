@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['performance_20considerations_0',['Performance Considerations',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md10',1,'Performance Considerations'],['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md52',1,'Performance Considerations']]],
+  ['performance_20notes_1',['Performance notes',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_writer.html#autotoc_md20',1,'']]],
+  ['physical_20coordinates_20roi_20in_20microns_2',['Read using physical coordinates (ROI in microns)',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md27',1,'']]],
+  ['physicalroi_3',['PhysicalROI',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html',1,'ZarrNET::Core::OmeZarr::Coordinates']]],
+  ['physicalroi_20tt_20and_20tt_20pixelregion_20tt_4',['&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md45',1,'']]],
+  ['physicaltopixel_5',['PhysicalToPixel',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a020a93099702b82091e9cfa6ade379a1',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformService']]],
+  ['pixelformat_6',['PixelFormat',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175c',1,'ZarrNET::Core::Helpers']]],
+  ['pixelregion_7',['PixelRegion',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html',1,'ZarrNET::Core::OmeZarr::Coordinates']]],
+  ['pixelregion_20tt_8',['&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md45',1,'']]],
+  ['pixeltophysical_9',['PixelToPhysical',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a789f170ec3e770eebd1df5514ff6ad5b',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformService']]],
+  ['plane_20as_20image_20file_20using_20imagesharp_10',['Save plane as image file (using ImageSharp)',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md51',1,'']]],
+  ['plane_20from_20a_20multiscale_20image_11',['Read a single 2D plane from a multiscale image',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md26',1,'']]],
+  ['planeresult_12',['PlaneResult',['../class_zarr_n_e_t_1_1_core_1_1_helpers_1_1_plane_result.html',1,'ZarrNET::Core::Helpers']]],
+  ['planeresult_20tt_13',['&lt;tt&gt;PlaneResult&lt;/tt&gt;',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md44',1,'']]],
+  ['planes_14',['Read all channels as separate planes',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md48',1,'']]],
+  ['planned_15',['Planned',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md15',1,'']]],
+  ['plate_16',['Process an entire HCS plate',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md50',1,'']]],
+  ['plate_20structure_17',['Navigate HCS Plate structure',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md30',1,'']]],
+  ['platemetadata_18',['PlateMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_plate_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['platenode_19',['PlateNode',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node.html',1,'ZarrNET::Core::Nodes']]],
+  ['please_20use_20image_20sc_20forum_20for_20discussion_20',['Please use image.sc forum for discussion.',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md62',1,'']]],
+  ['possible_21',['Possible',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md16',1,'']]],
+  ['principles_22',['Design Principles',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md33',1,'']]],
+  ['process_20an_20entire_20hcs_20plate_23',['Process an entire HCS plate',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md50',1,'']]],
+  ['provided_24',['Examples Provided',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md11',1,'']]]
+];
