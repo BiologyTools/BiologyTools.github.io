@@ -1,0 +1,27 @@
+var structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName =
+[
+    [ "JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a65d9832e9c4c69a26e1e844aa81773b4", null ],
+    [ "JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ac02a44b8a755cc7429b41bc8fd6b5e0d", null ],
+    [ "JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ac5680c659ffa1d4d2fcd2e4ba464957b", null ],
+    [ "JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#aa61f9833bcc65c87663b0f59b0f15e56", null ],
+    [ "Equals", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a7eefbf8a4914cdbd5d007f41907d1e58", null ],
+    [ "Equals", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a672bd569fc586900e85859b04c1bfa99", null ],
+    [ "GetHashCode", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a35fe43b8db795d4d2e721e8db109ea94", null ],
+    [ "GetParent", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a5376b576048ae203829de12d442a5d0e", null ],
+    [ "GetSimpleName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a4c9e13b9cffb6c322d261b3aef1b477d", null ],
+    [ "IsChildOf", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a697c87e3ed8130a76dcf41f3b3458b94", null ],
+    [ "IsMemberOf", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ada34b6b0b40c254eb6233e3090dedd72", null ],
+    [ "operator JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a5fb4b7109b43846756ce814be535b850", null ],
+    [ "operator JavaPackageName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a9a9baf590eb6aad698f88a9aadc15a9c", null ],
+    [ "operator ReadOnlyMemory< char >", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a7d89ba3e91ce337959a016327536375c", null ],
+    [ "operator string", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a32e2c4d3ff98ba596ce05d72456f92e4", null ],
+    [ "operator!=", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ab877ce8648f2eb4ce674988234935ed0", null ],
+    [ "operator==", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ae597836a18fb9ec998ff911fc3ebb91c", null ],
+    [ "ToString", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ab00c75f4025de6dce157bffc29931c8b", null ],
+    [ "value", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a064688775acd3a700316c01ace978638", null ],
+    [ "Empty", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a094317eb36fdd7fc058db87e1f7ff814", null ],
+    [ "IsEmpty", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#a697450492e07d65b75b52bf622ad8069", null ],
+    [ "Parent", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ab762d38c9215cd0029b2c6bfefed6c87", null ],
+    [ "SimpleName", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#af961074cf3459c0b86f56df3f7a0498e", null ],
+    [ "Value", "structIKVM_1_1Runtime_1_1Syntax_1_1JavaPackageName.html#ac4133ac23ce045b18e922dc84068b042", null ]
+];

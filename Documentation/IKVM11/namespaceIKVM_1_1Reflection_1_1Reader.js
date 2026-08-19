@@ -1,0 +1,26 @@
+var namespaceIKVM_1_1Reflection_1_1Reader =
+[
+    [ "AssemblyReader", "classIKVM_1_1Reflection_1_1Reader_1_1AssemblyReader.html", "classIKVM_1_1Reflection_1_1Reader_1_1AssemblyReader" ],
+    [ "Authenticode", "classIKVM_1_1Reflection_1_1Reader_1_1Authenticode.html", null ],
+    [ "ByteReader", "classIKVM_1_1Reflection_1_1Reader_1_1ByteReader.html", null ],
+    [ "EventInfoImpl", "classIKVM_1_1Reflection_1_1Reader_1_1EventInfoImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1EventInfoImpl" ],
+    [ "FieldDefImpl", "classIKVM_1_1Reflection_1_1Reader_1_1FieldDefImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1FieldDefImpl" ],
+    [ "GenericTypeParameter", "classIKVM_1_1Reflection_1_1Reader_1_1GenericTypeParameter.html", "classIKVM_1_1Reflection_1_1Reader_1_1GenericTypeParameter" ],
+    [ "IMAGE_DATA_DIRECTORY", "structIKVM_1_1Reflection_1_1Reader_1_1IMAGE__DATA__DIRECTORY.html", "structIKVM_1_1Reflection_1_1Reader_1_1IMAGE__DATA__DIRECTORY" ],
+    [ "IMAGE_FILE_HEADER", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__FILE__HEADER.html", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__FILE__HEADER" ],
+    [ "IMAGE_NT_HEADERS", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__NT__HEADERS.html", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__NT__HEADERS" ],
+    [ "IMAGE_OPTIONAL_HEADER", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__OPTIONAL__HEADER.html", "classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__OPTIONAL__HEADER" ],
+    [ "MetadataReader", "classIKVM_1_1Reflection_1_1Reader_1_1MetadataReader.html", null ],
+    [ "MethodDefImpl", "classIKVM_1_1Reflection_1_1Reader_1_1MethodDefImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1MethodDefImpl" ],
+    [ "ModuleReader", "classIKVM_1_1Reflection_1_1Reader_1_1ModuleReader.html", "classIKVM_1_1Reflection_1_1Reader_1_1ModuleReader" ],
+    [ "MSDOS_HEADER", "classIKVM_1_1Reflection_1_1Reader_1_1MSDOS__HEADER.html", null ],
+    [ "ParameterInfoImpl", "classIKVM_1_1Reflection_1_1Reader_1_1ParameterInfoImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1ParameterInfoImpl" ],
+    [ "PEReader", "classIKVM_1_1Reflection_1_1Reader_1_1PEReader.html", null ],
+    [ "PropertyInfoImpl", "classIKVM_1_1Reflection_1_1Reader_1_1PropertyInfoImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1PropertyInfoImpl" ],
+    [ "ResourceModule", "classIKVM_1_1Reflection_1_1Reader_1_1ResourceModule.html", "classIKVM_1_1Reflection_1_1Reader_1_1ResourceModule" ],
+    [ "SectionHeader", "classIKVM_1_1Reflection_1_1Reader_1_1SectionHeader.html", "classIKVM_1_1Reflection_1_1Reader_1_1SectionHeader" ],
+    [ "StreamHeader", "classIKVM_1_1Reflection_1_1Reader_1_1StreamHeader.html", null ],
+    [ "TypeDefImpl", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl" ],
+    [ "TypeParameterType", "classIKVM_1_1Reflection_1_1Reader_1_1TypeParameterType.html", "classIKVM_1_1Reflection_1_1Reader_1_1TypeParameterType" ],
+    [ "UnboundGenericMethodParameter", "classIKVM_1_1Reflection_1_1Reader_1_1UnboundGenericMethodParameter.html", "classIKVM_1_1Reflection_1_1Reader_1_1UnboundGenericMethodParameter" ]
+];

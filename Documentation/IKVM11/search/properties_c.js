@@ -1,0 +1,18 @@
+var searchData=
+[
+  ['language_0',['Language',['../classIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1Document.html#a3584f87042a8c9b0ee78642e4ca5c6f8',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::Document']]],
+  ['languagevendor_1',['LanguageVendor',['../classIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1Document.html#a771e93cfec4635681f9ca7c2726d179d',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::Document']]],
+  ['length_2',['Length',['../classIKVM_1_1Reflection_1_1Writer_1_1SkipStream.html#ae858110618a59157cd9cf5c69fde2c42',1,'IKVM::Reflection::Writer::SkipStream']]],
+  ['lib_3',['Lib',['../classIKVM_1_1Tools_1_1Runner_1_1Exporter_1_1IkvmExporterOptions.html#a9cc6071860bcf96e76877dd3a57f86dc',1,'IKVM.Tools.Runner.Exporter.IkvmExporterOptions.Lib'],['../classIKVM_1_1Tools_1_1Runner_1_1Importer_1_1IkvmImporterOptions.html#ac159e32d2fcbaea0a497656e8b354124',1,'IKVM.Tools.Runner.Importer.IkvmImporterOptions.Lib']]],
+  ['libraries_4',['Libraries',['../classIKVM_1_1Tools_1_1Importer_1_1ImportOptions.html#afbdd6bf6177433b4cd01423d76608f80',1,'IKVM.Tools.Importer.ImportOptions.Libraries'],['../classIKVM_1_1Tools_1_1Exporter_1_1ExportCommandOptions.html#af53f3431c01d2366d36f765718a8a15f',1,'IKVM.Tools.Exporter.ExportCommandOptions.Libraries'],['../classIKVM_1_1Tools_1_1Exporter_1_1ExportOptions.html#a0d517446001b3c86f5f1ce77915a2204',1,'IKVM.Tools.Exporter.ExportOptions.Libraries']]],
+  ['libraryoption_5',['LibraryOption',['../classIKVM_1_1Tools_1_1Importer_1_1ImportCommand.html#a2aa3de7a17cec041cce8f3caff609089',1,'IKVM::Tools::Importer::ImportCommand']]],
+  ['lineno_6',['LineNo',['../classIKVM_1_1Attributes_1_1LineNumberTableAttribute_1_1LineNumberWriter.html#a229478fa3630e18cde4fb68fbb22c915',1,'IKVM::Attributes::LineNumberTableAttribute::LineNumberWriter']]],
+  ['linenumber_7',['LineNumber',['../classIKVM_1_1Tools_1_1Importer_1_1MapXml_1_1MapXmlElement.html#ab120dcc7c5da4ef74232bbfccbce2e7b',1,'IKVM::Tools::Importer::MapXml::MapXmlElement']]],
+  ['lineposition_8',['LinePosition',['../classIKVM_1_1Tools_1_1Importer_1_1MapXml_1_1MapXmlElement.html#a75d7f40bd41591255fe0361584f0b506',1,'IKVM::Tools::Importer::MapXml::MapXmlElement']]],
+  ['lines_9',['Lines',['../structIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1SequencePoint.html#a0c0f3a82ace3571a90db51ca9e3b2b54',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::SequencePoint']]],
+  ['locals_10',['Locals',['../classIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1Scope.html#a236ecd5eb1b1032cb936fc1b44c04858',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::Scope']]],
+  ['localsignaturehandle_11',['LocalSignatureHandle',['../classIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1Method.html#aafc2b546e3268ab4f66a0715218d5ce9',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::Method']]],
+  ['location_12',['Location',['../classIKVM_1_1Reflection_1_1MissingAssembly.html#a1472d2186f93a8469b85d273facbac29',1,'IKVM.Reflection.MissingAssembly.Location'],['../classIKVM_1_1Reflection_1_1Reader_1_1AssemblyReader.html#afd294c17d454a97f6fba482386f152a4',1,'IKVM.Reflection.Reader.AssemblyReader.Location']]],
+  ['log_13',['Log',['../classIKVM_1_1Tools_1_1Importer_1_1ImportOptions.html#a1af85f862454919ac408bafeef35e4c6',1,'IKVM.Tools.Importer.ImportOptions.Log'],['../classIKVM_1_1Tools_1_1Exporter_1_1ExportCommandOptions.html#a353493e7297f92458b356d09bb7babf7',1,'IKVM.Tools.Exporter.ExportCommandOptions.Log']]],
+  ['logoption_14',['LogOption',['../classIKVM_1_1Tools_1_1Importer_1_1ImportCommand.html#a3d7a6b9ca6ae427a2d145074d60cc569',1,'IKVM::Tools::Importer::ImportCommand']]]
+];

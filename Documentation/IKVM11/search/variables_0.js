@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['_5fbuffer_0',['_buffer',['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingByteBufferWriter.html#aeb02dbed40ea891a747415d4c07dd219',1,'IKVM::CoreLib::Text::EncodingByteBufferWriter']]],
+  ['_5fbyteswritten_1',['_bytesWritten',['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingByteBufferWriter.html#a4f8ff5be029cbbb9f67e2e2b84996499',1,'IKVM.CoreLib.Text.EncodingByteBufferWriter._bytesWritten'],['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingSpanWriter.html#af3729be38bfab70affeeffc308a3ed02',1,'IKVM.CoreLib.Text.EncodingSpanWriter._bytesWritten']]],
+  ['_5fcharswritten_2',['_charsWritten',['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingByteBufferWriter.html#a49627fad864122c78745fab45a300600',1,'IKVM.CoreLib.Text.EncodingByteBufferWriter._charsWritten'],['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingSpanWriter.html#afd7f8b022c7aa2542b652d21bdd0989a',1,'IKVM.CoreLib.Text.EncodingSpanWriter._charsWritten']]],
+  ['_5fcontext_3',['_context',['../structIKVM_1_1Runtime_1_1CodeInfo.html#ad347f47e5e56432ad2da9db64d945439',1,'IKVM.Runtime.CodeInfo._context'],['../structIKVM_1_1Runtime_1_1InstructionState.html#a657ba26b5aec919c2f8da8cf497a8d17',1,'IKVM.Runtime.InstructionState._context']]],
+  ['_5fencoding_4',['_encoding',['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingByteBufferWriter.html#a691934da8b8952636c8dc036ef54b357',1,'IKVM.CoreLib.Text.EncodingByteBufferWriter._encoding'],['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingSpanWriter.html#af6d29cc48c1ac92ee3534be33121cc34',1,'IKVM.CoreLib.Text.EncodingSpanWriter._encoding']]],
+  ['_5fflags_5',['_flags',['../structIKVM_1_1Runtime_1_1InstructionState.html#a3fd62b3643d266fdf8f79f05e1aae54e',1,'IKVM::Runtime::InstructionState']]],
+  ['_5flocals_6',['_locals',['../structIKVM_1_1Runtime_1_1InstructionState.html#a1c07a362e5aa588567001ed6db74367b',1,'IKVM::Runtime::InstructionState']]],
+  ['_5fpc_7',['_pc',['../structIKVM_1_1Runtime_1_1StackState.html#aca6a998eadd070c5b7af55baebc30573',1,'IKVM::Runtime::StackState']]],
+  ['_5fsp_8',['_sp',['../structIKVM_1_1Runtime_1_1StackState.html#a422ff85d368f9c4af4275d634a938cd7',1,'IKVM::Runtime::StackState']]],
+  ['_5fspan_9',['_span',['../structIKVM_1_1CoreLib_1_1Text_1_1EncodingSpanWriter.html#ac708120d03df7bc3ed6d8c9cab0281e4',1,'IKVM::CoreLib::Text::EncodingSpanWriter']]],
+  ['_5fstack_10',['_stack',['../structIKVM_1_1Runtime_1_1InstructionState.html#a6205f5d5009f11ee9f69e0c33c1b2c8a',1,'IKVM::Runtime::InstructionState']]],
+  ['_5fstackend_11',['_stackEnd',['../structIKVM_1_1Runtime_1_1InstructionState.html#a7ef035049419d97e2bdc2181f3b0dd43',1,'IKVM::Runtime::InstructionState']]],
+  ['_5fstacklen_12',['_stackLen',['../structIKVM_1_1Runtime_1_1InstructionState.html#aa05757096d55ccda54d160249014d8c4',1,'IKVM::Runtime::InstructionState']]],
+  ['_5fstate_13',['_state',['../structIKVM_1_1Runtime_1_1CodeInfo.html#a63135b5a27bd59b5a7c21a4c42af9d82',1,'IKVM.Runtime.CodeInfo._state'],['../structIKVM_1_1Runtime_1_1StackState.html#a6d153cfa87d1ead196069f43d76f875e',1,'IKVM.Runtime.StackState._state']]],
+  ['_5fstream_14',['_stream',['../structjava_1_1util_1_1function_1_1StreamWrapper.html#ab6960d2f3b9c7e480f80010ad95e5430',1,'java::util::function::StreamWrapper']]],
+  ['_5funinitializedthis_15',['_uninitializedThis',['../structIKVM_1_1Runtime_1_1InstructionState.html#af96f716a32ea437ac5d09125bc489be9',1,'IKVM::Runtime::InstructionState']]]
+];

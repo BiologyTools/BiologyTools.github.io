@@ -1,0 +1,6 @@
+var searchData=
+[
+  ['unknown_0',['Unknown',['../namespaceIKVM_1_1CoreLib_1_1Diagnostics.html#aabecca33fac599a13f8f7ce633778d51a88183b946cc5f0e8c96b2e66e1c74a7e',1,'IKVM.CoreLib.Diagnostics.Unknown'],['../namespaceIKVM_1_1Reflection_1_1Emit.html#a20aa9ee38fdb5280766fc51fa371a4fda88183b946cc5f0e8c96b2e66e1c74a7e',1,'IKVM.Reflection.Emit.Unknown']]],
+  ['unspecified_1',['Unspecified',['../namespaceIKVM_1_1Tools_1_1Importer.html#a7314e224bd405c4aab389a8260840da5a6fcdc090caeade09d0efd6253932b6f5',1,'IKVM.Tools.Importer.Unspecified'],['../namespaceIKVM_1_1Tools_1_1Importer.html#afc73a9d667730b25936a68dfa8a051d1a6fcdc090caeade09d0efd6253932b6f5',1,'IKVM.Tools.Importer.Unspecified'],['../namespaceIKVM_1_1Tools_1_1Importer.html#a6f5daef8963acf0df87302b5ccae8c57a6fcdc090caeade09d0efd6253932b6f5',1,'IKVM.Tools.Importer.Unspecified']]],
+  ['unused_2',['Unused',['../classIKVM_1_1Runtime_1_1ByteCodeHelper.html#aee820c36da62929593f49717758be9e4a92e592d90b9548016776a6fb68dccded',1,'IKVM.Runtime.ByteCodeHelper.Unused'],['../namespaceIKVM_1_1Runtime.html#a7d59d092bdfea7d473057b4def4d3982a92e592d90b9548016776a6fb68dccded',1,'IKVM.Runtime.Unused'],['../namespaceIKVM_1_1Runtime.html#acb8742106da68d0b8502fdfd6563fc05a92e592d90b9548016776a6fb68dccded',1,'IKVM.Runtime.Unused']]]
+];

@@ -1,0 +1,25 @@
+var classIKVM_1_1Runtime_1_1ClassFile =
+[
+    [ "Dispose", "classIKVM_1_1Runtime_1_1ClassFile.html#a5dd6bc5642eb6a328526c56a07ecb48a", null ],
+    [ "IsValidFieldDescriptor", "classIKVM_1_1Runtime_1_1ClassFile.html#af666500703ee7a6008faaf02302b40c6", null ],
+    [ "IsValidFieldDescriptor", "classIKVM_1_1Runtime_1_1ClassFile.html#ae97489e5b0e84c3d10b7124158cbbccc", null ],
+    [ "IsValidFieldDescriptor", "classIKVM_1_1Runtime_1_1ClassFile.html#a2baedfc9ebafe15c4255e6dc6322cd8f", null ],
+    [ "IsValidFieldName", "classIKVM_1_1Runtime_1_1ClassFile.html#a1c9a83eec12ee584fb36ca0ffc965a41", null ],
+    [ "IsValidFieldName", "classIKVM_1_1Runtime_1_1ClassFile.html#a5105633745908ca6f4c3300fa494cc0e", null ],
+    [ "IsValidMethodDescriptor", "classIKVM_1_1Runtime_1_1ClassFile.html#addd553cf22810a47547fa0ae142d0fe0", null ],
+    [ "IsValidMethodDescriptor", "classIKVM_1_1Runtime_1_1ClassFile.html#a1e13eb426539c4404093b391add397de", null ],
+    [ "IsValidMethodName", "classIKVM_1_1Runtime_1_1ClassFile.html#a25dbc5e45ea21d1cda56b0ad4c2a3533", null ],
+    [ "IsValidMethodName", "classIKVM_1_1Runtime_1_1ClassFile.html#ace5eed8437bd907cf3efab14af62bf51", null ],
+    [ "IsValidPre49Identifier", "classIKVM_1_1Runtime_1_1ClassFile.html#a76455af7b7488dd65d35c41b0c78334f", null ],
+    [ "IsValidPre49Identifier", "classIKVM_1_1Runtime_1_1ClassFile.html#a20b57869a10c38c10702052e51ade075", null ],
+    [ "Link", "classIKVM_1_1Runtime_1_1ClassFile.html#a68aa21f670be2ab2b3bb8be66d701c79", null ],
+    [ "IsAbstract", "classIKVM_1_1Runtime_1_1ClassFile.html#a3a0b4d2478ee186e3d3c776137dacae9", null ],
+    [ "IsAnnotation", "classIKVM_1_1Runtime_1_1ClassFile.html#a4243f4a5c236f9629c16824b692b163e", null ],
+    [ "IsEnum", "classIKVM_1_1Runtime_1_1ClassFile.html#a8831ed8ee4226bb6a3ec792e420dec8a", null ],
+    [ "IsFinal", "classIKVM_1_1Runtime_1_1ClassFile.html#a12edc73d84e18afb7973aaa98b87ba6b", null ],
+    [ "IsInterface", "classIKVM_1_1Runtime_1_1ClassFile.html#a4b79672ae07110fe88c4b21f4dfeff54", null ],
+    [ "IsPublic", "classIKVM_1_1Runtime_1_1ClassFile.html#ac2c57c620aac67a9ffdf21eb4f647941", null ],
+    [ "IsSuper", "classIKVM_1_1Runtime_1_1ClassFile.html#a787ca69709daafc706a1e8cb8c888511", null ],
+    [ "MajorVersion", "classIKVM_1_1Runtime_1_1ClassFile.html#ace3378e4b9513b7c8efce38c1de65a66", null ],
+    [ "Modifiers", "classIKVM_1_1Runtime_1_1ClassFile.html#aed14a9b716de27491f497ec27729f31b", null ]
+];

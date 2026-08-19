@@ -1,0 +1,4 @@
+var namespaceIKVM_1_1Runtime_1_1Util_1_1Java_1_1Lang_1_1Invoke =
+[
+    [ "NativeInvokerBytecodeGenerator", "classIKVM_1_1Runtime_1_1Util_1_1Java_1_1Lang_1_1Invoke_1_1NativeInvokerBytecodeGenerator.html", "classIKVM_1_1Runtime_1_1Util_1_1Java_1_1Lang_1_1Invoke_1_1NativeInvokerBytecodeGenerator" ]
+];

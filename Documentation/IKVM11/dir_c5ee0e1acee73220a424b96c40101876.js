@@ -1,0 +1,28 @@
+var dir_c5ee0e1acee73220a424b96c40101876 =
+[
+    [ "AsyncDiagnosticChannelWriter.cs", "AsyncDiagnosticChannelWriter_8cs.html", "AsyncDiagnosticChannelWriter_8cs" ],
+    [ "ConsoleDiagnosticFormatter.cs", "ConsoleDiagnosticFormatter_8cs.html", "ConsoleDiagnosticFormatter_8cs" ],
+    [ "ConsoleDiagnosticFormatterFactory.cs", "ConsoleDiagnosticFormatterFactory_8cs.html", "ConsoleDiagnosticFormatterFactory_8cs" ],
+    [ "ConsoleDiagnosticFormatterOptions.cs", "ConsoleDiagnosticFormatterOptions_8cs.html", "ConsoleDiagnosticFormatterOptions_8cs" ],
+    [ "DiagnosticChannelFormatter.cs", "DiagnosticChannelFormatter_8cs.html", "DiagnosticChannelFormatter_8cs" ],
+    [ "DiagnosticChannelFormatterOptions.cs", "DiagnosticChannelFormatterOptions_8cs.html", "DiagnosticChannelFormatterOptions_8cs" ],
+    [ "DiagnosticChannelProvider.cs", "DiagnosticChannelProvider_8cs.html", "DiagnosticChannelProvider_8cs" ],
+    [ "DiagnosticChannelWriterExtensions.cs", "DiagnosticChannelWriterExtensions_8cs.html", "DiagnosticChannelWriterExtensions_8cs" ],
+    [ "DiagnosticFormatterProvider.cs", "DiagnosticFormatterProvider_8cs.html", "DiagnosticFormatterProvider_8cs" ],
+    [ "DiagnosticServiceCollectionExtensions.cs", "DiagnosticServiceCollectionExtensions_8cs.html", "DiagnosticServiceCollectionExtensions_8cs" ],
+    [ "FileDiagnosticChannelFactory.cs", "FileDiagnosticChannelFactory_8cs.html", "FileDiagnosticChannelFactory_8cs" ],
+    [ "FormattedDiagnosticHandler.cs", "FormattedDiagnosticHandler_8cs.html", "FormattedDiagnosticHandler_8cs" ],
+    [ "GenericChannelDiagnosticFormatterFactory.cs", "GenericChannelDiagnosticFormatterFactory_8cs.html", "GenericChannelDiagnosticFormatterFactory_8cs" ],
+    [ "IDiagnosticChannel.cs", "IDiagnosticChannel_8cs.html", "IDiagnosticChannel_8cs" ],
+    [ "IDiagnosticChannelFactory.cs", "IDiagnosticChannelFactory_8cs.html", "IDiagnosticChannelFactory_8cs" ],
+    [ "IDiagnosticChannelWriter.cs", "IDiagnosticChannelWriter_8cs.html", "IDiagnosticChannelWriter_8cs" ],
+    [ "IDiagnosticFormatter.cs", "IDiagnosticFormatter_8cs.html", "IDiagnosticFormatter_8cs" ],
+    [ "IDiagnosticFormatterFactory.cs", "IDiagnosticFormatterFactory_8cs.html", "IDiagnosticFormatterFactory_8cs" ],
+    [ "JsonDiagnosticFormatter.cs", "JsonDiagnosticFormatter_8cs.html", "JsonDiagnosticFormatter_8cs" ],
+    [ "JsonDiagnosticFormatterFactory.cs", "JsonDiagnosticFormatterFactory_8cs.html", "JsonDiagnosticFormatterFactory_8cs" ],
+    [ "JsonDiagnosticFormatterOptions.cs", "JsonDiagnosticFormatterOptions_8cs.html", "JsonDiagnosticFormatterOptions_8cs" ],
+    [ "StreamDiagnosticChannel.cs", "StreamDiagnosticChannel_8cs.html", "StreamDiagnosticChannel_8cs" ],
+    [ "TextDiagnosticFormatter.cs", "TextDiagnosticFormatter_8cs.html", "TextDiagnosticFormatter_8cs" ],
+    [ "TextDiagnosticFormatterFactory.cs", "TextDiagnosticFormatterFactory_8cs.html", "TextDiagnosticFormatterFactory_8cs" ],
+    [ "TextDiagnosticFormatterOptions.cs", "TextDiagnosticFormatterOptions_8cs.html", "TextDiagnosticFormatterOptions_8cs" ]
+];

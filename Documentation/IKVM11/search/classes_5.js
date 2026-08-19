@@ -1,0 +1,28 @@
+var searchData=
+[
+  ['faketypes_0',['FakeTypes',['../classIKVM_1_1Tools_1_1Exporter_1_1FakeTypes.html',1,'IKVM.Tools.Exporter.FakeTypes'],['../classIKVM_1_1Tools_1_1Importer_1_1FakeTypes.html',1,'IKVM.Tools.Importer.FakeTypes']]],
+  ['fatalcompilererrorexception_1',['FatalCompilerErrorException',['../classIKVM_1_1Tools_1_1Importer_1_1FatalCompilerErrorException.html',1,'IKVM::Tools::Importer']]],
+  ['fdlibm_2',['fdlibm',['../classIKVM_1_1Runtime_1_1Util_1_1Java_1_1Lang_1_1fdlibm.html',1,'IKVM::Runtime::Util::Java::Lang']]],
+  ['field_3',['Field',['../classIKVM_1_1Java_1_1Externs_1_1java_1_1lang_1_1reflect_1_1Field.html',1,'IKVM.Java.Externs.java.lang.reflect.Field'],['../classIKVM_1_1Tools_1_1Importer_1_1MapXml_1_1Field.html',1,'IKVM.Tools.Importer.MapXml.Field']]],
+  ['fielddefimpl_4',['FieldDefImpl',['../classIKVM_1_1Reflection_1_1Reader_1_1FieldDefImpl.html',1,'IKVM::Reflection::Reader']]],
+  ['fieldinfowithreflectedtype_5',['FieldInfoWithReflectedType',['../classIKVM_1_1Reflection_1_1FieldInfoWithReflectedType.html',1,'IKVM::Reflection']]],
+  ['fieldlayouttable_6',['FieldLayoutTable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FieldLayoutTable.html',1,'IKVM::Reflection::Metadata']]],
+  ['fieldmarshaltable_7',['FieldMarshalTable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FieldMarshalTable.html',1,'IKVM::Reflection::Metadata']]],
+  ['fieldptrtable_8',['FieldPtrTable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FieldPtrTable.html',1,'IKVM::Reflection::Metadata']]],
+  ['fieldrvatable_9',['FieldRVATable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FieldRVATable.html',1,'IKVM::Reflection::Metadata']]],
+  ['fieldsignature_10',['FieldSignature',['../classIKVM_1_1Reflection_1_1FieldSignature.html',1,'IKVM::Reflection']]],
+  ['fieldtable_11',['FieldTable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FieldTable.html',1,'IKVM::Reflection::Metadata']]],
+  ['filedescriptor_12',['FileDescriptor',['../classIKVM_1_1Java_1_1Externs_1_1java_1_1io_1_1FileDescriptor.html',1,'IKVM::Java::Externs::java::io']]],
+  ['filediagnosticchannelfactory_13',['FileDiagnosticChannelFactory',['../classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FileDiagnosticChannelFactory.html',1,'IKVM::Tools::Core::Diagnostics']]],
+  ['fileinputstream_14',['FileInputStream',['../classIKVM_1_1Java_1_1Externs_1_1java_1_1io_1_1FileInputStream.html',1,'IKVM::Java::Externs::java::io']]],
+  ['fileoutputstream_15',['FileOutputStream',['../classIKVM_1_1Java_1_1Externs_1_1java_1_1io_1_1FileOutputStream.html',1,'IKVM::Java::Externs::java::io']]],
+  ['filetable_16',['FileTable',['../classIKVM_1_1Reflection_1_1Metadata_1_1FileTable.html',1,'IKVM::Reflection::Metadata']]],
+  ['findlocalvarstate_17',['FindLocalVarState',['../structIKVM_1_1Runtime_1_1LocalVarInfo_1_1FindLocalVarState.html',1,'IKVM::Runtime::LocalVarInfo']]],
+  ['findlocalvarstoresite_18',['FindLocalVarStoreSite',['../structIKVM_1_1Runtime_1_1LocalVarInfo_1_1FindLocalVarStoreSite.html',1,'IKVM::Runtime::LocalVarInfo']]],
+  ['float_19',['Float',['../classIKVM_1_1Java_1_1Externs_1_1java_1_1lang_1_1Float.html',1,'IKVM::Java::Externs::java::lang']]],
+  ['floatconverter_20',['FloatConverter',['../structIKVM_1_1Runtime_1_1FloatConverter.html',1,'IKVM::Runtime']]],
+  ['formatteddiagnostichandler_21',['FormattedDiagnosticHandler',['../classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FormattedDiagnosticHandler.html',1,'IKVM::Tools::Core::Diagnostics']]],
+  ['funcprivilegedaction_22',['FuncPrivilegedAction',['../classIKVM_1_1Runtime_1_1Util_1_1Java_1_1Security_1_1FuncPrivilegedAction.html',1,'IKVM::Runtime::Util::Java::Security']]],
+  ['functionpointertype_23',['FunctionPointerType',['../classIKVM_1_1Reflection_1_1FunctionPointerType.html',1,'IKVM::Reflection']]],
+  ['fusion_24',['Fusion',['../classIKVM_1_1Reflection_1_1Fusion.html',1,'IKVM::Reflection']]]
+];

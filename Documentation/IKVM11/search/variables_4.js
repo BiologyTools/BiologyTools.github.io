@@ -1,0 +1,26 @@
+var searchData=
+[
+  ['d_0',['d',['../structIKVM_1_1Runtime_1_1DoubleConverter.html#aa2bcaf481e5f079884d18c8d8a8af73e',1,'IKVM.Runtime.DoubleConverter.d'],['../structIKVM_1_1Runtime_1_1JNI_1_1JValue.html#a5864e546ea815e587ac4fd731d6a1f23',1,'IKVM.Runtime.JNI.JValue.d']]],
+  ['data_1',['data',['../structIKVM_1_1Runtime_1_1InstructionState_1_1LocalStoreSites.html#a41341b0d26ada49d10848e0f7d009e4b',1,'IKVM.Runtime.InstructionState.LocalStoreSites.data'],['../structIKVM_1_1Runtime_1_1LocalVarInfo_1_1FindLocalVarStoreSite.html#ad69113de6a56d014343bac1c29a5bb06',1,'IKVM.Runtime.LocalVarInfo.FindLocalVarStoreSite.data']]],
+  ['datadirectory_2',['DataDirectory',['../classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__OPTIONAL__HEADER.html#a040759b657e41519b52d6fb811ae536c',1,'IKVM::Reflection::Reader::IMAGE_OPTIONAL_HEADER']]],
+  ['default_3',['Default',['../classIKVM_1_1CoreLib_1_1System_1_1LexicographicListComparer.html#af09aca905a4d11739c34574ab351854e',1,'IKVM.CoreLib.System.LexicographicListComparer.Default'],['../classIKVM_1_1CoreLib_1_1System_1_1LexicographicListComparer.html#a1700e682136f3f7872155aeb8f959358',1,'IKVM.CoreLib.System.LexicographicListComparer.Default']]],
+  ['defineclass_4',['DefineClass',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#ae5bcf85ea9495716c830db6708201fdc',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['defineclassdelegate_5',['DefineClassDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a84a904c9427d351aa253326322443a76',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['delaysignrequireskey_6',['DelaySignRequiresKey',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#a266314314237446902cec8751fc3a876',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['deleteglobalref_7',['DeleteGlobalRef',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a4be5d1a2fa97a2e20a6a42245aece101',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['deleteglobalrefdelegate_8',['DeleteGlobalRefDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a5d616e7636bf2b68789fe53bdfab5b0f',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['deletelocalref_9',['DeleteLocalRef',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a9dc3bec58446ef4bea0d0fd80dde1a38',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['deletelocalrefdelegate_10',['DeleteLocalRefDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a5c66d077f889d62cbc77e80c3948357b',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['deleteweakglobalref_11',['DeleteWeakGlobalRef',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#ab7fa1be8ba872a0aaf03895607f711e5',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['deleteweakglobalrefdelegate_12',['DeleteWeakGlobalRefDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a4374ea4b86c6ff63db5fe7574c4dc697',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['depth_13',['Depth',['../structIKVM_1_1Tools_1_1Importer_1_1ImportArgLevel.html#ae8b6b9f766587db6d546786e082e4347',1,'IKVM::Tools::Importer::ImportArgLevel']]],
+  ['directoryseparatorchars_14',['DirectorySeparatorChars',['../classIKVM_1_1Runtime_1_1Extensions_1_1PathExtensions.html#a5f70100bbc7f04bcc552b26bd4248f89',1,'IKVM::Runtime::Extensions::PathExtensions']]],
+  ['dllcharacteristics_15',['DllCharacteristics',['../classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__OPTIONAL__HEADER.html#aba60ce97161a3ef1d309549e6afdb9b0',1,'IKVM::Reflection::Reader::IMAGE_OPTIONAL_HEADER']]],
+  ['document_16',['document',['../structIKVM_1_1Reflection_1_1Diagnostics_1_1PortablePdbSymbolWriter_1_1SequencePoint.html#aa5883a75133aba9cde4d71fe844a227a',1,'IKVM::Reflection::Diagnostics::PortablePdbSymbolWriter::SequencePoint']]],
+  ['doublearraytype_17',['DoubleArrayType',['../classIKVM_1_1Runtime_1_1MethodAnalyzerFactory.html#a2a58dcb7d1c5f48060f7391e6a065d26',1,'IKVM::Runtime::MethodAnalyzerFactory']]],
+  ['duplicateassemblyreference_18',['DuplicateAssemblyReference',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#ac9817b5e057e3b0f886ff87ca1bbb9a1',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['duplicateclassname_19',['DuplicateClassName',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#a967f184ccf8fa1f0fb8a8d63efebf849',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['duplicateikvmlangproperty_20',['DuplicateIkvmLangProperty',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#affe2ab9586e7e56175599ba2c1923933',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['duplicateproxy_21',['DuplicateProxy',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#ae1610ef8a52162e1d6443a8a19fe0271',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['duplicateresourcename_22',['DuplicateResourceName',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#a2346a9bd6e69c0fb4c21579e37ab8840',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]]
+];

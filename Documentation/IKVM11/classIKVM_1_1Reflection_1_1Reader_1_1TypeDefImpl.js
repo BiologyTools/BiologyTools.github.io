@@ -1,0 +1,25 @@
+var classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl =
+[
+    [ "__GetDeclaredEvents", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a0a08b4497ab0b51138a6b10139bb3ea1", null ],
+    [ "__GetDeclaredFields", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#ab2e555f9f0bd5bb1dbf6f9a08006429f", null ],
+    [ "__GetDeclaredInterfaces", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#ab315e4599bf4c41a8127b4c591293d8f", null ],
+    [ "__GetDeclaredMethods", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#aa41145164877cfc3ebb820e692784ec9", null ],
+    [ "__GetDeclaredProperties", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a6fcc85022d52f8792895113696657875", null ],
+    [ "__GetDeclaredTypes", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a582b9a65b23efcb4ec3ed8d9696322c9", null ],
+    [ "__GetGenericArgumentsCustomModifiers", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#ad64e9d99bf640815495a2da2651a00ae", null ],
+    [ "__GetLayout", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a9795398fc0a168b8392a32e3e2a7b808", null ],
+    [ "__GetMethodImplMap", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a3f9bcb4f05c91033bf099a07f87b555a", null ],
+    [ "GetGenericArguments", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a57be4d476242c63677d95efb15ea6fa7", null ],
+    [ "GetGenericTypeDefinition", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a5970d467aefb3047226c520f23f88edd", null ],
+    [ "ToString", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a165c01743774ef761420ab81f693df4b", null ],
+    [ "Attributes", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a041fdbaca9e84fd6a8ccb9b18b846dad", null ],
+    [ "BaseType", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a0a65b29c7ed7f66ef1dc42f531e6922a", null ],
+    [ "DeclaringType", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a2be7268ff8bdf4b220e819e7ddd61712", null ],
+    [ "FullName", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a1b28897f9ccb9b232e25f3b98fca4166", null ],
+    [ "IsGenericType", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a81688bb4c2a6094aac12cbaa69485836", null ],
+    [ "IsGenericTypeDefinition", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a671e851499f3f9f625d3d47d05195eb4", null ],
+    [ "IsValueTypeImpl", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#aa1311e360e59ff5913df2e61bd88ef77", null ],
+    [ "MetadataToken", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a60dc2cf13737027ef2144f06ac0270f0", null ],
+    [ "Module", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a20d67ba66df9660e9ba014c16100a3d8", null ],
+    [ "Name", "classIKVM_1_1Reflection_1_1Reader_1_1TypeDefImpl.html#a0c2ca5bd897b2173aeebe35030674d84", null ]
+];

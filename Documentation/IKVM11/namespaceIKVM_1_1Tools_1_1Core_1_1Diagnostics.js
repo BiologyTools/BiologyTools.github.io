@@ -1,0 +1,28 @@
+var namespaceIKVM_1_1Tools_1_1Core_1_1Diagnostics =
+[
+    [ "AsyncDiagnosticChannelWriter", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1AsyncDiagnosticChannelWriter.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1AsyncDiagnosticChannelWriter" ],
+    [ "ConsoleDiagnosticFormatter", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1ConsoleDiagnosticFormatter.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1ConsoleDiagnosticFormatter" ],
+    [ "ConsoleDiagnosticFormatterFactory", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1ConsoleDiagnosticFormatterFactory.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1ConsoleDiagnosticFormatterFactory" ],
+    [ "ConsoleDiagnosticFormatterOptions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1ConsoleDiagnosticFormatterOptions.html", null ],
+    [ "DiagnosticChannelFormatter", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelFormatter.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelFormatter" ],
+    [ "DiagnosticChannelFormatterOptions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelFormatterOptions.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelFormatterOptions" ],
+    [ "DiagnosticChannelProvider", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelProvider.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelProvider" ],
+    [ "DiagnosticChannelWriterExtensions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelWriterExtensions.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticChannelWriterExtensions" ],
+    [ "DiagnosticFormatterProvider", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticFormatterProvider.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticFormatterProvider" ],
+    [ "DiagnosticServiceCollectionExtensions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticServiceCollectionExtensions.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1DiagnosticServiceCollectionExtensions" ],
+    [ "FileDiagnosticChannelFactory", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FileDiagnosticChannelFactory.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FileDiagnosticChannelFactory" ],
+    [ "FormattedDiagnosticHandler", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FormattedDiagnosticHandler.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1FormattedDiagnosticHandler" ],
+    [ "GenericChannelDiagnosticFormatterFactory", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1GenericChannelDiagnosticFormatterFactory.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1GenericChannelDiagnosticFormatterFactory" ],
+    [ "IDiagnosticChannel", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannel.html", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannel" ],
+    [ "IDiagnosticChannelFactory", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannelFactory.html", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannelFactory" ],
+    [ "IDiagnosticChannelWriter", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannelWriter.html", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticChannelWriter" ],
+    [ "IDiagnosticFormatter", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticFormatter.html", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticFormatter" ],
+    [ "IDiagnosticFormatterFactory", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticFormatterFactory.html", "interfaceIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1IDiagnosticFormatterFactory" ],
+    [ "JsonDiagnosticFormatter", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatter.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatter" ],
+    [ "JsonDiagnosticFormatterFactory", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatterFactory.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatterFactory" ],
+    [ "JsonDiagnosticFormatterOptions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatterOptions.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1JsonDiagnosticFormatterOptions" ],
+    [ "StreamDiagnosticChannel", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1StreamDiagnosticChannel.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1StreamDiagnosticChannel" ],
+    [ "TextDiagnosticFormatter", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatter.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatter" ],
+    [ "TextDiagnosticFormatterFactory", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatterFactory.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatterFactory" ],
+    [ "TextDiagnosticFormatterOptions", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatterOptions.html", "classIKVM_1_1Tools_1_1Core_1_1Diagnostics_1_1TextDiagnosticFormatterOptions" ]
+];

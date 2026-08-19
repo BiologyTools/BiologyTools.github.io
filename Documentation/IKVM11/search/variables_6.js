@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['f_0',['f',['../structIKVM_1_1Reflection_1_1SingleConverter.html#acb9f99890cbe568c6a2b6573e37908b5',1,'IKVM.Reflection.SingleConverter.f'],['../structIKVM_1_1Runtime_1_1FloatConverter.html#aff202840b97adc7484e09a05a91ee4d1',1,'IKVM.Runtime.FloatConverter.f'],['../structIKVM_1_1Runtime_1_1JNI_1_1JValue.html#a1035b6cf381c550ef91e29a4670764fe',1,'IKVM.Runtime.JNI.JValue.f']]],
+  ['fatalerror_1',['FatalError',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#ac6e89dbe16071f4e47a9e0acc46dca1d',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['fatalerrordelegate_2',['FatalErrorDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a64467f106cfa3904644589361b68b279',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['filealignment_3',['FileAlignment',['../classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__OPTIONAL__HEADER.html#aa9963e667cb96d9570188f67a9f5807e',1,'IKVM::Reflection::Reader::IMAGE_OPTIONAL_HEADER']]],
+  ['fileformatlimitationexceeded_4',['FileFormatLimitationExceeded',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#a18a7516d8a4a45f36c83c18dd5420fb6',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['fileheader_5',['FileHeader',['../classIKVM_1_1Reflection_1_1Reader_1_1IMAGE__NT__HEADERS.html#a67ad62213ff1878d09f8b141a4155203',1,'IKVM::Reflection::Reader::IMAGE_NT_HEADERS']]],
+  ['filenotfound_6',['FileNotFound',['../classIKVM_1_1CoreLib_1_1Diagnostics_1_1Diagnostic.html#a78cd61a190cb3ea0b3a3cd02778c1c72',1,'IKVM::CoreLib::Diagnostics::Diagnostic']]],
+  ['findclass_7',['FindClass',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#aff55740947cc625300c680e960f25ad6',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['findclassdelegate_8',['FindClassDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a4f1b901efacf314b4e3a4493349a366e',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['firstvtableentry_9',['firstVtableEntry',['../structIKVM_1_1Runtime_1_1JNI_1_1JavaVM.html#a2d646cb9a551a7bd99a2ebe727e664e7',1,'IKVM::Runtime::JNI::JavaVM']]],
+  ['floatarraytype_10',['FloatArrayType',['../classIKVM_1_1Runtime_1_1MethodAnalyzerFactory.html#a98af813e7d5695c68874f1ebdb7c5e77',1,'IKVM::Runtime::MethodAnalyzerFactory']]],
+  ['fnptr_11',['fnPtr',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeMethod.html#a2daa1b7819ba853ea5a3ebdb95c4c147',1,'IKVM::Runtime::JNI::JNINativeMethod']]],
+  ['fromreflectedfield_12',['FromReflectedField',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#aa8093b1ba8a3993168fc77572c9fde52',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['fromreflectedfielddelegate_13',['FromReflectedFieldDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a862420b84d185a0e464f14e4c190493d',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['fromreflectedmethod_14',['FromReflectedMethod',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#ae46afc99b1bbb44020ee9ce1b5c4a6db',1,'IKVM::Runtime::JNI::JNINativeInterface']]],
+  ['fromreflectedmethoddelegate_15',['FromReflectedMethodDelegate',['../structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a7c2a7e5e93bfaaa27e28fdfcb71be3d3',1,'IKVM::Runtime::JNI::JNINativeInterface']]]
+];
