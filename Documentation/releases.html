@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Releases | BiologyTools Documentation</title>
+  <meta name="description" content="Releases | BiologyTools Documentation" />
+  <style>
+    :root {
+      --primary-color: #4498FF;
+      --primary-dark-color: #2F7FE8;
+      --primary-light-color: #6CB0FF;
+      --primary-lighter-color: #D6E9FF;
+      --primary-lightest-color: #EEF6FF;
+      --page-background-color: #f6f7fb;
+      --page-foreground-color: #243041;
+      --page-secondary-foreground-color: #607086;
+      --separator-color: rgba(46, 60, 84, 0.12);
+      --panel-background: rgba(255, 255, 255, 0.82);
+      --panel-strong-background: rgba(255, 255, 255, 0.94);
+      --shadow: 0 20px 50px rgba(30, 41, 59, 0.12);
+      --site-blue: #324067;
+      --site-blue-foreground: #f1fdff;
+      --site-link: #3d5ef0;
+      --site-link-hover: #2d4ccf;
+      --accent-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-dark-color));
+    }
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --page-background-color: #1c1d1f;
+      --page-foreground-color: #d2dbde;
+      --page-secondary-foreground-color: #859399;
+      --separator-color: #3a3246;
+      --panel-background: rgba(25, 26, 28, 0.88);
+      --panel-strong-background: rgba(25, 26, 28, 0.96);
+      --shadow: 0 22px 62px rgba(0, 0, 0, 0.38);
+      --site-blue: #171d32;
+      --site-blue-foreground: #f1fdff;
+      --site-link: #9eb7ff;
+      --site-link-hover: #c4d2ff;
+      --primary-light-color: #4779ac;
+      --primary-lighter-color: #191e21;
+      --primary-lightest-color: #191a1c;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--page-foreground-color);
+      background:
+        radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--primary-color) 26%, transparent), transparent 30%),
+        radial-gradient(circle at 86% 8%, color-mix(in srgb, var(--primary-light-color) 22%, transparent), transparent 28%),
+        linear-gradient(180deg, var(--page-background-color) 0%, color-mix(in srgb, var(--page-background-color) 94%, var(--primary-lightest-color)) 100%);
+      transition: background 180ms ease, color 180ms ease;
+    }
+    a { color: var(--site-link); }
+    a:hover { color: var(--site-link-hover); }
+    .wrap { max-width: 1180px; margin: 0 auto; padding: 40px 24px 56px; }
+    .hero, .panel, .card {
+      background: var(--panel-background);
+      border: 1px solid var(--separator-color);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+    .hero { border-radius: 30px; padding: 34px; margin-bottom: 22px; }
+    .bar { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; }
+    .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary-dark-color); }
+    .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light-color)); box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 22%, transparent); }
+    .theme-toggle {
+      appearance: none; border: 1px solid var(--separator-color); background: var(--panel-strong-background); color: var(--page-foreground-color);
+      border-radius: 999px; padding: 10px 15px; font-weight: 700; cursor: pointer;
+    }
+    h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 0.98; letter-spacing: -0.05em; }
+    .lede { margin: 0; max-width: 72ch; font-size: 1.03rem; line-height: 1.72; color: var(--page-secondary-foreground-color); }
+    .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+    .button {
+      display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 12px 18px; border-radius: 999px; text-decoration: none;
+      font-weight: 700; color: var(--site-blue-foreground); background: var(--accent-gradient);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--primary-color) 28%, transparent);
+    }
+    .button.secondary { color: var(--page-foreground-color); background: color-mix(in srgb, var(--panel-strong-background) 86%, transparent); border: 1px solid var(--separator-color); box-shadow: none; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+    .card { border-radius: 22px; padding: 22px; text-decoration: none; color: inherit; transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease; }
+    .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary-color) 50%, var(--separator-color)); box-shadow: 0 24px 60px rgba(16, 36, 61, 0.16); }
+    .card h2, .card h3 { margin: 0 0 10px; }
+    .card p { margin: 0; line-height: 1.65; color: var(--page-secondary-foreground-color); }
+    .list { margin: 14px 0 0; padding-left: 18px; color: var(--page-secondary-foreground-color); line-height: 1.7; }
+    .panel { border-radius: 22px; padding: 22px; }
+    .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 28px 2px 14px; }
+    .section-head h2 { margin: 0; font-size: 1.3rem; }
+    .section-head p { margin: 0; color: var(--page-secondary-foreground-color); }
+    .archives { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+    .archive-link { display: inline-flex; justify-content: space-between; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 16px; text-decoration: none; color: var(--page-foreground-color); background: var(--panel-background); border: 1px solid var(--separator-color); transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease; }
+    .archive-link:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--primary-color) 50%, var(--separator-color)); }
+    footer { margin-top: 34px; color: var(--page-secondary-foreground-color); font-size: 0.95rem; }
+    @media (max-width: 900px) { .grid, .archives { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .wrap { padding: 16px 14px 40px; } .hero { padding: 22px; border-radius: 22px; } }
+  </style>
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const key = 'biologytools-docs-theme';
+      function apply(theme) {
+        root.setAttribute('data-theme', theme);
+        const button = document.getElementById('themeToggle');
+        if (button) {
+          const dark = theme === 'dark';
+          button.setAttribute('aria-pressed', String(dark));
+          button.textContent = dark ? 'Switch to day mode' : 'Switch to night mode';
+        }
+      }
+      const stored = localStorage.getItem(key);
+      const preferredDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      apply(stored || (preferredDark ? 'dark' : 'light'));
+      window.addEventListener('DOMContentLoaded', function () {
+        const button = document.getElementById('themeToggle');
+        if (!button) return;
+        button.addEventListener('click', function () {
+          const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+          localStorage.setItem(key, next);
+          apply(next);
+        });
+      });
+    })();
+  </script>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="bar"><nav class="nav" aria-label="Site navigation"><a href="./">Home</a><a href="./projects.html">Projects</a><a href="./releases.html">Releases</a><a href="./getting-started.html">Getting Started</a><a href="./troubleshooting.html">Troubleshooting</a><a href="./archive.html">Archive</a><a href="./search.html">Search</a><a href="./release-notes.html">Release Notes</a></nav>
+        <div class="eyebrow">BiologyTools Documentation</div>
+        <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Switch to night mode</button>
+      </div>
+      <h1>Versioned docs and release archives.</h1>
+      <p class="lede">Use this page to reach a specific published version without scanning the whole documentation tree.</p>
+      <div class="actions">
+        <a class="button" href="System.Collections.Hashtable.href">System.Collections.Hashtable.text</a>
+        <a class="button secondary" href="System.Collections.Hashtable.href">System.Collections.Hashtable.text</a>
+      </div>
+    </section>
+    <div class="section-head"><h2>Current Releases</h2><p>Versioned documentation archives.</p></div>
+    <section class="archives">
+      <a class="archive-link" href="./BioLib/"><span>BioLib</span><strong>Current</strong></a>
+      <a class="archive-link" href="./BioImager/"><span>BioImager</span><strong>Current</strong></a>
+      <a class="archive-link" href="./BioGTK/"><span>BioGTK</span><strong>Current</strong></a>
+      <a class="archive-link" href="./BioCore-4.0.1/"><span>BioCore</span><strong>4.0.1</strong></a>
+      <a class="archive-link" href="./BioGTK-6.5.0/"><span>BioGTK</span><strong>6.5.0</strong></a>
+      <a class="archive-link" href="./BioImager-4.9.0/"><span>BioImager</span><strong>4.9.0</strong></a>
+      <a class="archive-link" href="./BioLib-3.9.1/"><span>BioLib</span><strong>3.9.1</strong></a>
+      <a class="archive-link" href="./SciChain-0.3.1/"><span>SciChain</span><strong>0.3.1</strong></a>
+      <a class="archive-link" href="./SciChainLib-0.2.1/"><span>SciChainLib</span><strong>0.2.1</strong></a>
+    </section>
+    <footer>This page is the right place for version-specific documentation links.</footer>
+  </main>
+</body>
+</html>
+
