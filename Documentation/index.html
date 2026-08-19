@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -7,15 +7,44 @@
   <meta name="description" content="Documentation hub for BiologyTools projects." />
   <style>
     :root {
-      color-scheme: light;
-      --bg: #f4f7fb;
-      --panel: rgba(255, 255, 255, 0.86);
-      --panel-border: rgba(24, 44, 82, 0.12);
-      --text: #10243d;
-      --muted: #5d6d82;
-      --accent: #2563eb;
-      --accent-2: #0f766e;
-      --shadow: 0 18px 50px rgba(16, 36, 61, 0.12);
+      --primary-color: #af7fe4;
+      --primary-dark-color: #9270e4;
+      --primary-light-color: #7aabd6;
+      --primary-lighter-color: #cae1f1;
+      --primary-lightest-color: #e9f1f8;
+      --page-background-color: #f6f7fb;
+      --page-foreground-color: #243041;
+      --page-secondary-foreground-color: #607086;
+      --separator-color: rgba(46, 60, 84, 0.12);
+      --panel-background: rgba(255, 255, 255, 0.82);
+      --panel-strong-background: rgba(255, 255, 255, 0.94);
+      --shadow: 0 20px 50px rgba(30, 41, 59, 0.12);
+      --radius-large: 24px;
+      --radius-medium: 16px;
+      --radius-small: 10px;
+      --site-blue: #324067;
+      --site-blue-foreground: #f1fdff;
+      --site-link: #3d5ef0;
+      --site-link-hover: #2d4ccf;
+      --accent-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-dark-color));
+    }
+
+    html[data-theme="dark"] {
+      color-scheme: dark;
+      --page-background-color: #1c1d1f;
+      --page-foreground-color: #d2dbde;
+      --page-secondary-foreground-color: #859399;
+      --separator-color: #3a3246;
+      --panel-background: rgba(25, 26, 28, 0.88);
+      --panel-strong-background: rgba(25, 26, 28, 0.96);
+      --shadow: 0 22px 62px rgba(0, 0, 0, 0.38);
+      --site-blue: #171d32;
+      --site-blue-foreground: #f1fdff;
+      --site-link: #9eb7ff;
+      --site-link-hover: #c4d2ff;
+      --primary-light-color: #4779ac;
+      --primary-lighter-color: #191e21;
+      --primary-lightest-color: #191a1c;
     }
 
     * { box-sizing: border-box; }
@@ -23,17 +52,21 @@
 
     body {
       font-family: "Segoe UI", Arial, sans-serif;
-      color: var(--text);
+      color: var(--page-foreground-color);
       background:
-        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 28%),
-        radial-gradient(circle at 90% 10%, rgba(15, 118, 110, 0.12), transparent 24%),
-        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+        radial-gradient(circle at 12% 12%, color-mix(in srgb, var(--primary-color) 22%, transparent), transparent 30%),
+        radial-gradient(circle at 86% 8%, color-mix(in srgb, var(--primary-light-color) 20%, transparent), transparent 28%),
+        linear-gradient(180deg, var(--page-background-color) 0%, color-mix(in srgb, var(--page-background-color) 94%, var(--primary-lightest-color)) 100%);
+      transition: background 180ms ease, color 180ms ease;
     }
+
+    a { color: var(--site-link); }
+    a:hover { color: var(--site-link-hover); }
 
     .wrap {
       max-width: 1240px;
       margin: 0 auto;
-      padding: 56px 24px 72px;
+      padding: 48px 24px 64px;
     }
 
     .hero {
@@ -46,28 +79,49 @@
 
     .hero-panel,
     .side-panel,
-    .card {
-      background: var(--panel);
-      border: 1px solid var(--panel-border);
+    .card,
+    .archive-link {
+      background: var(--panel-background);
+      border: 1px solid var(--separator-color);
       box-shadow: var(--shadow);
       backdrop-filter: blur(14px);
     }
 
     .hero-panel {
-      border-radius: 28px;
-      padding: 42px;
+      border-radius: 30px;
+      padding: 40px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-panel::after {
+      content: "";
+      position: absolute;
+      inset: auto -12% -35% auto;
+      width: 320px;
+      height: 320px;
+      border-radius: 50%;
+      background: radial-gradient(circle, color-mix(in srgb, var(--primary-color) 34%, transparent) 0%, transparent 68%);
+      pointer-events: none;
+    }
+
+    .toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 18px;
     }
 
     .eyebrow {
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      font-size: 0.85rem;
+      font-size: 0.84rem;
       font-weight: 700;
       letter-spacing: 0.12em;
       text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 18px;
+      color: var(--primary-dark-color);
     }
 
     .eyebrow::before {
@@ -75,23 +129,39 @@
       width: 10px;
       height: 10px;
       border-radius: 999px;
-      background: linear-gradient(135deg, var(--accent), var(--accent-2));
-      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+      background: linear-gradient(135deg, var(--primary-color), var(--primary-light-color));
+      box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 18%, transparent);
+    }
+
+    .theme-toggle {
+      appearance: none;
+      border: 1px solid var(--separator-color);
+      background: var(--panel-strong-background);
+      color: var(--page-foreground-color);
+      border-radius: 999px;
+      padding: 11px 16px;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: none;
+    }
+
+    .theme-toggle:hover {
+      border-color: color-mix(in srgb, var(--primary-color) 40%, var(--separator-color));
     }
 
     h1 {
       margin: 0 0 16px;
-      font-size: clamp(2.2rem, 4vw, 4.4rem);
+      font-size: clamp(2.2rem, 4vw, 4.5rem);
       line-height: 0.98;
-      letter-spacing: -0.05em;
+      letter-spacing: -0.06em;
     }
 
     .lede {
       margin: 0;
-      max-width: 68ch;
-      font-size: 1.08rem;
-      line-height: 1.7;
-      color: var(--muted);
+      max-width: 72ch;
+      font-size: 1.06rem;
+      line-height: 1.72;
+      color: var(--page-secondary-foreground-color);
     }
 
     .quick-links {
@@ -99,6 +169,8 @@
       flex-wrap: wrap;
       gap: 12px;
       margin-top: 26px;
+      position: relative;
+      z-index: 1;
     }
 
     .button {
@@ -110,24 +182,26 @@
       border-radius: 999px;
       text-decoration: none;
       font-weight: 700;
-      color: white;
-      background: linear-gradient(135deg, var(--accent), #1d4ed8);
-      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.25);
+      color: var(--site-blue-foreground);
+      background: var(--accent-gradient);
+      box-shadow: 0 14px 30px color-mix(in srgb, var(--primary-color) 24%, transparent);
     }
 
     .button.secondary {
-      color: var(--text);
-      background: rgba(255, 255, 255, 0.78);
-      border: 1px solid rgba(16, 36, 61, 0.12);
+      color: var(--page-foreground-color);
+      background: color-mix(in srgb, var(--panel-strong-background) 86%, transparent);
+      border: 1px solid var(--separator-color);
       box-shadow: none;
     }
 
     .side-panel {
-      border-radius: 28px;
+      border-radius: 30px;
       padding: 28px;
       display: grid;
       gap: 14px;
       align-content: start;
+      background: linear-gradient(180deg, color-mix(in srgb, var(--site-blue) 16%, var(--panel-background)), var(--panel-background));
+      color: var(--page-foreground-color);
     }
 
     .side-title {
@@ -137,7 +211,7 @@
 
     .side-panel p {
       margin: 0;
-      color: var(--muted);
+      color: var(--page-secondary-foreground-color);
       line-height: 1.6;
     }
 
@@ -151,13 +225,15 @@
     .stat {
       padding: 14px;
       border-radius: 18px;
-      background: rgba(16, 36, 61, 0.04);
+      background: color-mix(in srgb, var(--page-background-color) 72%, var(--primary-lightest-color));
+      border: 1px solid var(--separator-color);
     }
 
     .stat strong {
       display: block;
-      font-size: 1.15rem;
+      font-size: 1.08rem;
       margin-bottom: 4px;
+      color: var(--page-foreground-color);
     }
 
     .section-head {
@@ -175,7 +251,7 @@
 
     .section-head p {
       margin: 0;
-      color: var(--muted);
+      color: var(--page-secondary-foreground-color);
     }
 
     .grid {
@@ -192,9 +268,10 @@
       transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
     }
 
-    .card:hover {
+    .card:hover,
+    .archive-link:hover {
       transform: translateY(-3px);
-      border-color: rgba(37, 99, 235, 0.28);
+      border-color: color-mix(in srgb, var(--primary-color) 42%, var(--separator-color));
       box-shadow: 0 24px 60px rgba(16, 36, 61, 0.16);
     }
 
@@ -206,7 +283,7 @@
     .card p {
       margin: 0;
       line-height: 1.65;
-      color: var(--muted);
+      color: var(--page-secondary-foreground-color);
     }
 
     .meta {
@@ -220,8 +297,8 @@
       font-size: 0.82rem;
       padding: 7px 11px;
       border-radius: 999px;
-      background: rgba(37, 99, 235, 0.10);
-      color: var(--accent);
+      background: color-mix(in srgb, var(--primary-lighter-color) 55%, transparent);
+      color: var(--primary-dark-color);
       font-weight: 700;
     }
 
@@ -238,21 +315,20 @@
       gap: 10px;
       padding: 12px 14px;
       border-radius: 16px;
-      background: rgba(255, 255, 255, 0.8);
-      border: 1px solid rgba(16, 36, 61, 0.10);
       text-decoration: none;
-      color: var(--text);
+      color: var(--page-foreground-color);
       box-shadow: 0 10px 22px rgba(16, 36, 61, 0.06);
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
     }
 
     .archive-link span {
-      color: var(--muted);
+      color: var(--page-secondary-foreground-color);
       font-size: 0.92rem;
     }
 
     footer {
       margin-top: 40px;
-      color: var(--muted);
+      color: var(--page-secondary-foreground-color);
       font-size: 0.95rem;
     }
 
@@ -263,14 +339,15 @@
 
     @media (max-width: 920px) {
       .hero { grid-template-columns: 1fr; }
-      .hero-panel { padding: 32px; }
+      .hero-panel { padding: 30px; }
     }
 
     @media (max-width: 560px) {
-      .wrap { padding: 20px 16px 44px; }
+      .wrap { padding: 18px 16px 40px; }
       .hero-panel, .side-panel, .card { border-radius: 20px; }
       .stats { grid-template-columns: 1fr; }
       .grid, .archive-grid { grid-template-columns: 1fr; }
+      .toolbar { flex-direction: column; align-items: flex-start; }
     }
   </style>
 </head>
@@ -278,7 +355,11 @@
   <main class="wrap">
     <section class="hero">
       <div class="hero-panel">
-        <div class="eyebrow">BiologyTools Documentation</div>
+        <div class="toolbar">
+          <div class="eyebrow">BiologyTools Documentation</div>
+          <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Switch to night mode</button>
+        </div>
+
         <h1>Project docs, organized in one place.</h1>
         <p class="lede">
           Find the published documentation for the BiologyTools projects below. The main project sites are surfaced first, followed by the historical version archives that are still available under the same documentation root.
@@ -422,8 +503,33 @@
     </section>
 
     <footer>
-      If you want, I can also turn the archive section into grouped filters by project so the page stays shorter while still exposing every version.
+      Main palette follows the BiologyTools docs theme. The toggle saves your preference in the browser.
     </footer>
   </main>
+
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const button = document.getElementById('themeToggle');
+      const storageKey = 'biologytools-docs-theme';
+
+      function applyTheme(theme) {
+        root.setAttribute('data-theme', theme);
+        const dark = theme === 'dark';
+        button.setAttribute('aria-pressed', String(dark));
+        button.textContent = dark ? 'Switch to day mode' : 'Switch to night mode';
+      }
+
+      const stored = localStorage.getItem(storageKey);
+      const preferredDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      applyTheme(stored || (preferredDark ? 'dark' : 'light'));
+
+      button.addEventListener('click', function () {
+        const next = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+        localStorage.setItem(storageKey, next);
+        applyTheme(next);
+      });
+    })();
+  </script>
 </body>
 </html>
