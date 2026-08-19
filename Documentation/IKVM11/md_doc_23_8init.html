@@ -100,15 +100,15 @@ $(function(){initNavTree('md_doc_23_8init.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Initialization</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md35"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md36"></a></p>
 <p>IKVM11 contains the bulk of the open source OpenJDK project, especially its Java SE 11 base class library. This set of classes requires some upfront initialization. In a normal Java distribution this is initiated by the VM itself. However, since IKVM11 can be loaded as a .NET assembly, making the Java base class library immediately available to users, IKVM11 needs to initialize the base class library before any user access to the classes occurs.</p>
 <p>In addition to this IKVM11 distributes multiple versions of the OpenJDK 11 base class library compiled for the three major operating systems: Windows, Linux and macOS. Before access to the base class library happens the correct .NET assembly has to be loaded.</p>
-<h1><a class="anchor" id="autotoc_md36"></a>
+<h1><a class="anchor" id="autotoc_md37"></a>
 .NET</h1>
 <p>Loading of the base class library assembly on .NET is relatively simple. The IKVM11 NuGet package distributes multiple assemblies within the <code>runtimes/{rid}/lib/{tfm}</code> directory. The .NET SDK is capable of configuring your .NET application which references IKVM11 to either load the correct assembly at runtime in the case of framework-dependent builds or to include only the required assembly in the case of framework-independent builds. This is done by writing the correct entries into your <code>.deps.json</code> file.</p>
 <p>In addition to that we distribute a reference assembly in the NuGet package which the compiler uses to build your code irrespective of the final assembly or assemblies that are distributed.</p>
 <p>Initialization of the base class library happens when the <code><a class="el" href="namespaceIKVM_1_1Runtime.html">IKVM.Runtime</a></code> assembly is loaded. Since the base class library depends upon <code><a class="el" href="namespaceIKVM_1_1Runtime.html">IKVM.Runtime</a></code>, <code><a class="el" href="namespaceIKVM_1_1Runtime.html">IKVM.Runtime</a></code> has a chance to initiate initialization before user code calls or accesses the classes in the base class library.</p>
-<h1><a class="anchor" id="autotoc_md37"></a>
+<h1><a class="anchor" id="autotoc_md38"></a>
 .NET Framework</h1>
 <p>The situation for .NET Framework is different. Framework supports no mechanism similar to <code>.deps.json</code> nor does it include any other method by which to alter how the runtime locates assemblies BEFORE an attempt by user code is made to load that assembly on the basis of the running operating system. This isn't usually a big deal as Framework-independent builds aren't something that users often do: Windows is usually assumed to be the target OS. However, Mono does exist.</p>
 <p>IKVM11 cannot solve this issue alone without intervention from Mono. There is no way to cleanly ensure one variant of an assembly is loaded when that assembly's loading can be driven by other unknown assemblies that depend upon it. So, until then, we leave the issue unresolved.</p>

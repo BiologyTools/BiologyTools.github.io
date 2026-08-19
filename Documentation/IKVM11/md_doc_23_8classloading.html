@@ -100,7 +100,7 @@ $(function(){initNavTree('md_doc_23_8classloading.html',''); initResizable(true)
   <div class="headertitle"><div class="title">Class Loading</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md34"></a></p>
+<div class="textblock"><p><a class="anchor" id="autotoc_md35"></a></p>
 <p>Class loading is a complicated subject in Java, and IKVM11 makes it more so. In Java each class is expected to have an associated class loader by which it can resolve additional classes or resources at runtime. And each class loader has a clear hierarchy of parent class loaders by which it can dispatch requests. This is quite unlike .NET which has a more tangled runtime dependency model.</p>
 <p>Within the IKVM11 dynamic model, the traditional Java class loader design is respected. Thus you can create instances of <code>URLClassLoader</code> and others, parent them to each other, and expect it to work. Existing Java code should work without changes when loaded dynamically.</p>
 <p>Static compilation is a different matter. When static compiling your Java code to a .NET assembly all that remains at runtime is the .NET assembly. There is no Class Loader that caused that code to launch. It's just assemblies present in the <code>AppDomain</code> or <code>AssemblyLoadContext</code>. However, Java code needs to still be able to examine .NET types at runtime and find a <code>java.lang.ClassLoader</code> associated with the <code>java.lang.Class</code> types you are accessing. To accomplish this we introduce <code>ikvm.runtime.AssemblyClassLoader</code>.</p>

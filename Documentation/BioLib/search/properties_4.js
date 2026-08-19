@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['minunitsperpixel_0',['MinUnitsPerPixel',['../class_bio_lib_1_1_slide_source_base.html#abac0a81213d1a4edc921286781de2b1b',1,'BioLib.SlideSourceBase.MinUnitsPerPixel'],['../interface_bio_lib_1_1_i_slice_provider.html#a68981ead57157e20d78ad11dedc719ba',1,'BioLib.ISliceProvider.MinUnitsPerPixel']]]
+  ['entryid_0',['EntryID',['../class_bio_lib_1_1_qu_path_1_1_image.html#ad9d84732afa04aa262e1ab1a6cb9ae28',1,'BioLib::QuPath::Image']]]
 ];

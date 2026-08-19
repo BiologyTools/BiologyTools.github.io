@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['alphamode_0',['AlphaMode',['../_d_bitmap_8cs.html#aca3e76693d8fd34fe7808da494f572d7',1,'AlphaMode():&#160;DBitmap.cs'],['../_direct2_d_8cs.html#aca3e76693d8fd34fe7808da494f572d7',1,'AlphaMode():&#160;Direct2D.cs']]]
+  ['application_0',['Application',['../_image_view_8cs.html#ad269a4a33025e9df937c26f23c084ce5',1,'ImageView.cs']]]
 ];

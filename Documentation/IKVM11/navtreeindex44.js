@@ -1,5 +1,6 @@
 var NAVTREEINDEX44 =
 {
+"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a1a0c7a9bdff7dbd492b9c473dad77d89":[9,0,0,1,3,16,26],
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a2030fd43476691932eb1560754f03d7d":[8,0,0,1,5,16,76],
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a2030fd43476691932eb1560754f03d7d":[9,0,0,1,3,16,76],
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a203aae2c16ad0281fed1ad9814d3b9af":[8,0,0,1,5,16,56],
@@ -236,18 +237,17 @@ var NAVTREEINDEX44 =
 "k__tan_8cs.html":[10,0,1,2,7,1,0,0,5],
 "k__tan_8cs_source.html":[10,0,1,2,7,1,0,0,5],
 "md_doc_20_8index.html":[1],
-"md_doc_20_8index.html#autotoc_md19":[1,0],
-"md_doc_20_8index.html#autotoc_md20":[1,1],
+"md_doc_20_8index.html#autotoc_md20":[1,0],
+"md_doc_20_8index.html#autotoc_md21":[1,1],
 "md_doc_21_8usage.html":[2],
-"md_doc_21_8usage.html#autotoc_md22":[2,0],
-"md_doc_21_8usage.html#autotoc_md23":[2,1],
-"md_doc_21_8usage.html#autotoc_md24":[2,1,0],
-"md_doc_21_8usage.html#autotoc_md25":[2,1,1],
-"md_doc_21_8usage.html#autotoc_md26":[2,1,2],
-"md_doc_21_8usage.html#autotoc_md27":[2,1,3],
-"md_doc_21_8usage.html#autotoc_md28":[2,1,4],
-"md_doc_21_8usage.html#autotoc_md29":[2,1,5],
-"md_doc_21_8usage.html#autotoc_md30":[2,1,6],
-"md_doc_22_8compilation.html":[3],
-"md_doc_22_8compilation.html#autotoc_md32":[3,0]
+"md_doc_21_8usage.html#autotoc_md23":[2,0],
+"md_doc_21_8usage.html#autotoc_md24":[2,1],
+"md_doc_21_8usage.html#autotoc_md25":[2,1,0],
+"md_doc_21_8usage.html#autotoc_md26":[2,1,1],
+"md_doc_21_8usage.html#autotoc_md27":[2,1,2],
+"md_doc_21_8usage.html#autotoc_md28":[2,1,3],
+"md_doc_21_8usage.html#autotoc_md29":[2,1,4],
+"md_doc_21_8usage.html#autotoc_md30":[2,1,5],
+"md_doc_21_8usage.html#autotoc_md31":[2,1,6],
+"md_doc_22_8compilation.html":[3]
 };

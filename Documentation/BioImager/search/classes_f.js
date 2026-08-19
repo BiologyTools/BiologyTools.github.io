@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['queuelinearfloodfiller_0',['QueueLinearFloodFiller',['../class_bio_imager_1_1_queue_linear_flood_filler.html',1,'BioImager']]]
+  ['urldialog_0',['UrlDialog',['../class_bio_imager_1_1_source_1_1_url_dialog.html',1,'BioImager::Source']]]
 ];

@@ -1,5 +1,6 @@
 var NAVTREEINDEX48 =
 {
+"namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a16a881c987927d9158de62e663f06efea069e7821d3b4c0bbf437147263eb4d0e":[8,0,0,5,3,2,4,2],
 "namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a16a881c987927d9158de62e663f06efea6adf97f83acf6453d4a6a4b1070f3754":[8,0,0,5,3,2,4,0],
 "namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a16a881c987927d9158de62e663f06efeaffc76680cc670c734ff4d0aeed7558f6":[8,0,0,5,3,2,4,1],
 "namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a1f2ab27c34d93576ff4986615de61971":[8,0,0,5,3,2,5],
@@ -248,6 +249,5 @@ var NAVTREEINDEX48 =
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac6807ebd70fb1201af8db3966e7b7151":[8,0,0,1,2,2,6],
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac6807ebd70fb1201af8db3966e7b7151":[9,0,0,1,1,2,6],
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac6bd0cfaaa491d376baac3bec6034fd9":[8,0,0,1,2,2,60],
-"structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac6bd0cfaaa491d376baac3bec6034fd9":[9,0,0,1,1,2,60],
-"structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac8a411162a7c1ba0205ae46484f42ebe":[8,0,0,1,2,2,23]
+"structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac6bd0cfaaa491d376baac3bec6034fd9":[9,0,0,1,1,2,60]
 };

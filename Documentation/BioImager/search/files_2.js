@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['bio_2ecs_0',['Bio.cs',['../_bio_8cs.html',1,'']]],
-  ['bioconsole_2ecs_1',['BioConsole.cs',['../_bio_console_8cs.html',1,'']]],
-  ['bioconsole_2edesigner_2ecs_2',['BioConsole.Designer.cs',['../_bio_console_8_designer_8cs.html',1,'']]],
-  ['bioformats_2ecs_3',['BioFormats.cs',['../_bio_formats_8cs.html',1,'']]],
-  ['bmc_2epy_4',['BMC.py',['../__wrappers_2bmc_8py.html',1,'']]],
-  ['bmc_2epy_5',['bmc.py',['../mirror_2bmc_8py.html',1,'']]]
+  ['cellimager_2ecs_0',['CellImager.cs',['../_cell_imager_8cs.html',1,'']]],
+  ['cellimager_2edesigner_2ecs_1',['CellImager.Designer.cs',['../_cell_imager_8_designer_8cs.html',1,'']]],
+  ['channelstool_2ecs_2',['ChannelsTool.cs',['../_channels_tool_8cs.html',1,'']]],
+  ['channelstool_2edesigner_2ecs_3',['ChannelsTool.designer.cs',['../_channels_tool_8designer_8cs.html',1,'']]],
+  ['codeview_2ecs_4',['CodeView.cs',['../_code_view_8cs.html',1,'']]],
+  ['codeview_2edesigner_2ecs_5',['CodeView.Designer.cs',['../_code_view_8_designer_8cs.html',1,'']]],
+  ['colortool_2ecs_6',['ColorTool.cs',['../_color_tool_8cs.html',1,'']]],
+  ['colortool_2edesigner_2ecs_7',['ColorTool.Designer.cs',['../_color_tool_8_designer_8cs.html',1,'']]],
+  ['constants_2ecs_8',['constants.cs',['../constants_8cs.html',1,'']]]
 ];

@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['password_0',['password',['../class_bio_lib_1_1_o_m_e_r_o.html#a440dffa8d281a99b2039a1f14a1f9c01',1,'BioLib::OMERO']]],
+  ['planes_1',['Planes',['../class_bio_lib_1_1_bio_image.html#aa0b49ecff7cb39231a035c48b6bfae27',1,'BioLib.BioImage.Planes'],['../_bio_8cs.html#a1d5357539d5578dba337c6302f28714f',1,'Planes:&#160;Bio.cs']]],
+  ['planes_2',['planes',['../_bio_8cs.html#a6d72eb4ef4e320b472a233bff1d5c564',1,'Bio.cs']]],
+  ['plate_3',['Plate',['../class_bio_lib_1_1_bio_image.html#a9ade7d8714317e7c5561fe46e351c0b1',1,'BioLib::BioImage']]],
+  ['point_5ftype_4',['POINT_TYPE',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#afdd7a0ca19d3deba31915a0acc8b5dea',1,'BioLib::Fiji::RoiDecoder']]],
+  ['port_5',['port',['../class_bio_lib_1_1_o_m_e_r_o.html#a4ded545502fa7787ab1f57bcdfc22a93',1,'BioLib::OMERO']]],
+  ['position_6',['POSITION',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#ab8486385bf43e3a00a11aed883000880',1,'BioLib::Fiji::RoiDecoder']]],
+  ['position_7',['position',['../class_bio_lib_1_1_t_l_shutter.html#adf718a129b7ec7a3c04d2cf238808911',1,'BioLib.TLShutter.position'],['../class_bio_lib_1_1_r_l_shutter.html#a5c3d96b3dadea13e31fe505a1ed56478',1,'BioLib.RLShutter.position']]],
+  ['progfile_8',['progFile',['../class_bio_lib_1_1_bio_image.html#a7ba7d2bc002cc43f222d78fe68526950',1,'BioLib::BioImage']]],
+  ['progress_9',['Progress',['../class_bio_lib_1_1_bio_image.html#ae850bf16d6fdab61b19492560dea81ab',1,'BioLib::BioImage']]],
+  ['progress_10',['progress',['../class_bio_lib_1_1_o_m_e_r_o.html#ab370008778088140e5d5ec06c5302a82',1,'BioLib::OMERO']]],
+  ['prompt_5fbefore_5fdeleting_11',['PROMPT_BEFORE_DELETING',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a75d1d0e79a6c428692aa2a15b1194b6d',1,'BioLib::Fiji::RoiDecoder']]],
+  ['properties_12',['properties',['../class_bio_lib_1_1_r_o_i.html#aeccc6e39095081ce33d97fc3577525b9',1,'BioLib::ROI']]],
+  ['px_13',['px',['../struct_bio_lib_1_1_resolution.html#afd1cd99cdb6d3e415405c0d3d4e3d99f',1,'BioLib::Resolution']]],
+  ['py_14',['py',['../struct_bio_lib_1_1_resolution.html#ae09e5105a4bd80f7c115c9933cdb46e1',1,'BioLib::Resolution']]],
+  ['pz_15',['pz',['../struct_bio_lib_1_1_resolution.html#a04e8b0b7d44d30be519c55cfa941e884',1,'BioLib::Resolution']]]
+];

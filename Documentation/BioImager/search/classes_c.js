@@ -1,5 +1,13 @@
 var searchData=
 [
-  ['node_0',['Node',['../class_bio_imager_1_1_filter_1_1_node.html',1,'BioImager.Filter.Node'],['../class_bio_imager_1_1_node_view_1_1_node.html',1,'BioImager.NodeView.Node'],['../class_bio_imager_1_1_recordings_1_1_node.html',1,'BioImager.Recordings.Node']]],
-  ['nodeview_1',['NodeView',['../class_bio_imager_1_1_node_view.html',1,'BioImager']]]
+  ['rangetool_0',['RangeTool',['../class_bio_imager_1_1_range_tool.html',1,'BioImager']]],
+  ['recorder_1',['Recorder',['../class_bio_imager_1_1_recorder.html',1,'BioImager']]],
+  ['recording_2',['Recording',['../class_bio_imager_1_1_automation_1_1_recording.html',1,'BioImager::Automation']]],
+  ['recordings_3',['Recordings',['../class_bio_imager_1_1_recordings.html',1,'BioImager']]],
+  ['rect_4',['Rect',['../struct_bio_imager_1_1_win32_1_1_rect.html',1,'BioImager::Win32']]],
+  ['resolutions_5',['Resolutions',['../class_bio_imager_1_1_resolutions.html',1,'BioImager']]],
+  ['rlshutter_6',['RLShutter',['../class_bio_imager_1_1_r_l_shutter.html',1,'BioImager']]],
+  ['roidecoder_7',['RoiDecoder',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html',1,'BioImager::ImageJ']]],
+  ['roiencoder_8',['RoiEncoder',['../class_bio_imager_1_1_image_j_1_1_roi_encoder.html',1,'BioImager::ImageJ']]],
+  ['roimanager_9',['ROIManager',['../class_bio_imager_1_1_r_o_i_manager.html',1,'BioImager']]]
 ];

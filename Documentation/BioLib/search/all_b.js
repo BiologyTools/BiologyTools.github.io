@@ -1,8 +1,23 @@
 var searchData=
 [
-  ['nearest_0',['Nearest',['../namespace_bio_lib.html#a00b5d1e026054ecb42e9eb41abc8ea03a60494f02d440f316319dd0fad40ad007',1,'BioLib']]],
-  ['nearestdown_1',['NearestDown',['../namespace_bio_lib.html#a00b5d1e026054ecb42e9eb41abc8ea03a53900cd1720265aa17b45de63caee36f',1,'BioLib']]],
-  ['nearestup_2',['NearestUp',['../namespace_bio_lib.html#a00b5d1e026054ecb42e9eb41abc8ea03a62ce87ce856ea9cf8fc3acf54d71a942',1,'BioLib']]],
-  ['npyheader_3',['NpyHeader',['../class_bio_lib_1_1_num_py_1_1_npy_header.html',1,'BioLib::NumPy']]],
-  ['numpy_4',['NumPy',['../class_bio_lib_1_1_num_py.html',1,'BioLib']]]
+  ['label_0',['Label',['../class_bio_lib_1_1_r_o_i.html#ac1ec263bfd165b710f10848910000448ab021df6aac4654c454f46c77646e745f',1,'BioLib::ROI']]],
+  ['labelresolution_1',['LabelResolution',['../class_bio_lib_1_1_bio_image.html#ae8d50d020f172103f44dcff0cc9b0e3f',1,'BioLib::BioImage']]],
+  ['lastid_2',['LastID',['../class_bio_lib_1_1_qu_path_1_1_project.html#a648f4a738cb40e03c1567f76b1a21aac',1,'BioLib::QuPath::Project']]],
+  ['left_3',['LEFT',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#aebf2cf46acb030c4abdf650af8b2ed5f',1,'BioLib::Fiji::RoiDecoder']]],
+  ['level_4',['Level',['../class_bio_lib_1_1_qu_path_1_1_level.html',1,'BioLib.QuPath.Level'],['../class_bio_lib_1_1_bio_image.html#ac5d68f1657083f88acc345d1ab5789a7',1,'BioLib.BioImage.Level']]],
+  ['levelcount_5',['LevelCount',['../class_bio_lib_1_1_slide_image.html#a1bd870d569b309a41a82da69031b8c02',1,'BioLib::SlideImage']]],
+  ['levelf_6',['levelf',['../_bio_8cs.html#acdd6c6e61a5401b342fe4969b9392bb3',1,'Bio.cs']]],
+  ['levelfromresolution_7',['LevelFromResolution',['../class_bio_lib_1_1_bio_image.html#a28d996c0e27c666b7c3e0c0d0f67a64f',1,'BioLib::BioImage']]],
+  ['levels_8',['Levels',['../class_bio_lib_1_1_qu_path_1_1_metadata.html#ae6f4cf5bc6b2cc5a6dd16379553bb58c',1,'BioLib::QuPath::Metadata']]],
+  ['levels_9',['levels',['../_bio_8cs.html#a96ec39474fe84ede4dc97af2961853a1',1,'Bio.cs']]],
+  ['libvips_10',['LibVips',['../_bio_8cs.html#a7223aa4c7315c0efe61fc9d4e1be1609aafaa3eea2aef6090f49e91cc2ee7ca9b',1,'Bio.cs']]],
+  ['line_11',['Line',['../class_bio_lib_1_1_r_o_i.html#ac1ec263bfd165b710f10848910000448a4803e6b9e63dabf04de980788d6a13c4',1,'BioLib::ROI']]],
+  ['list_12',['List',['../class_bio_lib_1_1_objectives.html#a97cbac28ec5011412e3808f3ffb100a6',1,'BioLib::Objectives']]],
+  ['littleendian_13',['littleEndian',['../class_bio_lib_1_1_bio_image.html#a50f72563aed186ff1512edacd101a0af',1,'BioLib::BioImage']]],
+  ['loading_14',['Loading',['../class_bio_lib_1_1_bio_image.html#aacb1fd142c5fa9ba20e1f4f18c1ea449',1,'BioLib::BioImage']]],
+  ['loadtimems_15',['loadTimeMS',['../class_bio_lib_1_1_bio_image.html#ad63b477e207bb8f87dd0461ffa8eeaa8',1,'BioLib::BioImage']]],
+  ['loadtimeticks_16',['loadTimeTicks',['../class_bio_lib_1_1_bio_image.html#ad32c1281ae3e265b452a441b689bca2b',1,'BioLib::BioImage']]],
+  ['locateexposure_17',['LocateExposure',['../class_bio_lib_1_1_objectives_1_1_objective.html#abbc0348bf9f48a71bf9374c98c81ecd6',1,'BioLib::Objectives::Objective']]],
+  ['loop_18',['loop',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#a6729adf1608985c7f3caacc3c6d4db96',1,'BioLib::BioImage::ImageJDesc']]],
+  ['lowerlimit_19',['lowerLimit',['../class_bio_lib_1_1_focus.html#af1caa3bd0330b02a039894a1ce4496d4',1,'BioLib::Focus']]]
 ];

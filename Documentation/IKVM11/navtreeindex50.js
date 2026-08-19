@@ -1,5 +1,6 @@
 var NAVTREEINDEX50 =
 {
+"structIKVM_1_1Runtime_1_1ByteCodeMetaData.html":[8,0,0,4,17],
 "structIKVM_1_1Runtime_1_1ByteCodeMetaData.html":[9,0,0,4,16],
 "structIKVM_1_1Runtime_1_1ByteCodeMetaData.html#ab19d0b05f84f8bc2a6323a8ac22a7253":[8,0,0,4,17,0],
 "structIKVM_1_1Runtime_1_1ByteCodeMetaData.html#ab19d0b05f84f8bc2a6323a8ac22a7253":[9,0,0,4,16,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX50 =
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a15d3b2997b64244db79743d3d8ac87c4":[8,0,0,4,2,8,243],
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a15d3b2997b64244db79743d3d8ac87c4":[9,0,0,4,2,8,243],
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a16248032fc92f0e8fd7944d98aa2f345":[8,0,0,4,2,8,168],
-"structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a16248032fc92f0e8fd7944d98aa2f345":[9,0,0,4,2,8,168],
-"structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a16270d139056d3f8e435985a3c92b8eb":[8,0,0,4,2,8,67]
+"structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a16248032fc92f0e8fd7944d98aa2f345":[9,0,0,4,2,8,168]
 };

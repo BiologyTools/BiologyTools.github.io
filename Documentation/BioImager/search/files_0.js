@@ -1,7 +1,11 @@
 var searchData=
 [
-  ['_5f_5finit_5f_5f_2epy_0',['__init__.py',['../____init_____8py.html',1,'(Global Namespace)'],['../__wrappers_2____init_____8py.html',1,'(Global Namespace)'],['../cameras_2____init_____8py.html',1,'(Global Namespace)'],['../controllers_2____init_____8py.html',1,'(Global Namespace)'],['../filterwheels_2____init_____8py.html',1,'(Global Namespace)'],['../lasers_2____init_____8py.html',1,'(Global Namespace)'],['../lights_2____init_____8py.html',1,'(Global Namespace)'],['../mirror_2____init_____8py.html',1,'(Global Namespace)'],['../simulators_2____init_____8py.html',1,'(Global Namespace)'],['../stages_2____init_____8py.html',1,'(Global Namespace)'],['../testsuite_2____init_____8py.html',1,'(Global Namespace)']]],
-  ['_5fsdk3_2epy_1',['_SDK3.py',['../___s_d_k3_8py.html',1,'']]],
-  ['_5fsdk3cam_2epy_2',['_SDK3Cam.py',['../___s_d_k3_cam_8py.html',1,'']]],
-  ['_5futils_2epy_3',['_utils.py',['../__utils_8py.html',1,'']]]
+  ['about_2ecs_0',['About.cs',['../_about_8cs.html',1,'']]],
+  ['about_2edesigner_2ecs_1',['About.Designer.cs',['../_about_8_designer_8cs.html',1,'']]],
+  ['action_2ecs_2',['Action.cs',['../_action_8cs.html',1,'']]],
+  ['action_2edesigner_2ecs_3',['Action.Designer.cs',['../_action_8_designer_8cs.html',1,'']]],
+  ['app_2ecs_4',['App.cs',['../_app_8cs.html',1,'']]],
+  ['applyfilter_2ecs_5',['ApplyFilter.cs',['../_apply_filter_8cs.html',1,'']]],
+  ['applyfilter_2edesigner_2ecs_6',['ApplyFilter.Designer.cs',['../_apply_filter_8_designer_8cs.html',1,'']]],
+  ['automation_2ecs_7',['Automation.cs',['../_automation_8cs.html',1,'']]]
 ];

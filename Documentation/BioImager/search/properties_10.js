@@ -1,5 +1,28 @@
 var searchData=
 [
-  ['waitverticalblanking_0',['WaitVerticalBlanking',['../class_bio_imager_1_1_configuration.html#a8730d470dbd9f909a67998f674033dda',1,'BioImager::Configuration']]],
-  ['width_1',['Width',['../class_bio_imager_1_1_configuration.html#af3e30488873d7cd5a136ea7f509c4b71',1,'BioImager::Configuration']]]
+  ['scale_0',['Scale',['../class_bio_imager_1_1_image_view.html#a0ae66d6b6ba4cdbc65ce29a00541e244',1,'BioImager::ImageView']]],
+  ['script_1',['Script',['../class_bio_imager_1_1_function.html#af7a5214105fadad09db22f005c4ba44a',1,'BioImager.Function.Script'],['../class_bio_imager_1_1_set_tool.html#abaa73d05c8915aced85751d61d031cb2',1,'BioImager.SetTool.Script']]],
+  ['selectedbuffer_2',['SelectedBuffer',['../class_bio_imager_1_1_image_view.html#adbff0750ef86a9c0bcd1da94a02e581c',1,'BioImager::ImageView']]],
+  ['selectedchannel_3',['SelectedChannel',['../class_bio_imager_1_1_channels_tool.html#a0646d0911fc836170b640538b0688017',1,'BioImager::ChannelsTool']]],
+  ['selectedimage_4',['SelectedImage',['../class_bio_imager_1_1_image_view.html#adb4c06232fd38edebbac614378efd9b8',1,'BioImager.ImageView.SelectedImage'],['../class_bio_imager_1_1_tabs_view.html#ac4f33db0e0389071aa5b043a8f2d8752',1,'BioImager.TabsView.SelectedImage']]],
+  ['selectedindex_5',['SelectedIndex',['../class_bio_imager_1_1_image_view.html#ad8ba23b577c13188d8d1c18c1572d350',1,'BioImager::ImageView']]],
+  ['selectedsample_6',['SelectedSample',['../class_bio_imager_1_1_channels_tool.html#a862da990a0077c46200da0a40918c518',1,'BioImager::ChannelsTool']]],
+  ['selectedviewer_7',['SelectedViewer',['../class_bio_imager_1_1_tabs_view.html#af1f92754df0203eaa35644519c85cf72',1,'BioImager::TabsView']]],
+  ['shape_8',['Shape',['../class_bio_imager_1_1_m_l_1_1_m_l_1_1_model.html#a04849bedd0ad4b4ca8d0df0171df471c',1,'BioImager::ML::ML::Model']]],
+  ['showcontrols_9',['ShowControls',['../class_bio_imager_1_1_image_view.html#a24d3d36836b688e599297db5f8ee4122',1,'BioImager::ImageView']]],
+  ['showmasks_10',['ShowMasks',['../class_bio_imager_1_1_image_view.html#af06176bbe14eef58e377e3fdc3268675',1,'BioImager::ImageView']]],
+  ['showoverview_11',['ShowOverview',['../class_bio_imager_1_1_image_view.html#a27cd27c8e71582a4836eebf7b21effe2',1,'BioImager::ImageView']]],
+  ['showstage_12',['ShowStage',['../class_bio_imager_1_1_image_view.html#a07103552c1404d5e979d11f897206dad',1,'BioImager::ImageView']]],
+  ['showstatus_13',['ShowStatus',['../class_bio_imager_1_1_image_view.html#a9e83ae1e2627dd93602e540fc83e7c08',1,'BioImager::ImageView']]],
+  ['sizec_14',['SizeC',['../class_bio_imager_1_1_images_to_stack.html#aaf2f13dfc1c2f2e15c22cbd4bccd1a77',1,'BioImager::ImagesToStack']]],
+  ['sizet_15',['SizeT',['../class_bio_imager_1_1_images_to_stack.html#a6b13f42051aa7501925129a3c7b3c510',1,'BioImager::ImagesToStack']]],
+  ['sizex_16',['SizeX',['../class_bio_imager_1_1_image_tiles.html#adff4c26f121bdf1cb77ead8b0a6ceeec',1,'BioImager::ImageTiles']]],
+  ['sizey_17',['SizeY',['../class_bio_imager_1_1_image_tiles.html#ad866ed2e16f81e5ac401c3a3fa8950be',1,'BioImager::ImageTiles']]],
+  ['sizez_18',['SizeZ',['../class_bio_imager_1_1_images_to_stack.html#aad726576a2bf4fff2fcdf45c0c3ca00b',1,'BioImager::ImagesToStack']]],
+  ['sliceincrement_19',['SliceIncrement',['../class_bio_imager_1_1_imager.html#ab8a3147b9d49d5659502f5b80c627b89',1,'BioImager::Imager']]],
+  ['slicesperslide_20',['SlicesPerSlide',['../class_bio_imager_1_1_imager.html#ad4673ce646192db296e6fbdb8d2b9fe8',1,'BioImager::Imager']]],
+  ['stackhistogram_21',['StackHistogram',['../class_bio_imager_1_1_histogram_control.html#a617b5faf470e2f2da5cd57ce49487124',1,'BioImager::HistogramControl']]],
+  ['state_22',['State',['../class_bio_imager_1_1_function.html#acc711362e8c8163faaac6365c44177c0',1,'BioImager::Function']]],
+  ['status_23',['Status',['../class_bio_imager_1_1_o_m_e_r_o.html#aeaca389aad53485e922eb7f9ae142916',1,'BioImager.OMERO.Status'],['../class_bio_imager_1_1_progress.html#a3ca3c30af844dcb63f63c4649064b0a5',1,'BioImager.Progress.Status']]],
+  ['strokewidth_24',['StrokeWidth',['../class_bio_imager_1_1_tools.html#a590eb41ebe2c3700c7370a89c1d3d868',1,'BioImager::Tools']]]
 ];

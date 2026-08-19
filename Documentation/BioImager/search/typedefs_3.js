@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['factory_0',['Factory',['../_direct2_d_8cs.html#a168b8c96a03e495c18234f12ba33b98a',1,'Direct2D.cs']]]
+  ['graphics_0',['Graphics',['../_o_m_e_r_o_8cs.html#a04c07b960e13ab551fb1a42a95d1d9b3',1,'OMERO.cs']]]
 ];

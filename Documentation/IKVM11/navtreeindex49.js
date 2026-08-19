@@ -1,5 +1,6 @@
 var NAVTREEINDEX49 =
 {
+"structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac8a411162a7c1ba0205ae46484f42ebe":[8,0,0,1,2,2,23],
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac8a411162a7c1ba0205ae46484f42ebe":[9,0,0,1,1,2,23],
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#acb0743197bc2d0061d0c5c18bdcfec93":[8,0,0,1,2,2,96],
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#acb0743197bc2d0061d0c5c18bdcfec93":[9,0,0,1,1,2,96],
@@ -248,6 +249,5 @@ var NAVTREEINDEX49 =
 "structIKVM_1_1Reflection_1_1Writer_1_1RESOURCEHEADER.html":[8,0,0,3,6,5],
 "structIKVM_1_1Reflection_1_1Writer_1_1RESOURCEHEADER.html":[9,0,0,3,4,5],
 "structIKVM_1_1Reflection_1_1Writer_1_1RESOURCEHEADER.html#a535120d265c278e99e71234ecbea1e1d":[8,0,0,3,6,5,0],
-"structIKVM_1_1Reflection_1_1Writer_1_1RESOURCEHEADER.html#a535120d265c278e99e71234ecbea1e1d":[9,0,0,3,4,5,0],
-"structIKVM_1_1Runtime_1_1ByteCodeMetaData.html":[8,0,0,4,17]
+"structIKVM_1_1Reflection_1_1Writer_1_1RESOURCEHEADER.html#a535120d265c278e99e71234ecbea1e1d":[9,0,0,3,4,5,0]
 };

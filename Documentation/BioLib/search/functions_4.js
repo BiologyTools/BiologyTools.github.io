@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['enqueue_0',['Enqueue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html#a3dc2d86b2e4d9ca54270f66d1dc19e53',1,'Bio::Graphics::FloodFillRangeQueue']]],
-  ['exportroifolder_1',['ExportROIFolder',['../class_bio_lib_1_1_bio_image.html#a20a36586911ac7de046cf4b1365e25a9',1,'BioLib::BioImage']]],
-  ['exportroiscsv_2',['ExportROIsCSV',['../class_bio_lib_1_1_bio_image.html#a3630ab9b3a2e82e6d733b122d8035c89',1,'BioLib::BioImage']]],
-  ['extractregionfromtiledtiff_3',['ExtractRegionFromTiledTiff',['../class_bio_lib_1_1_bio_image.html#a5ffba6296ad569d81719a60fa1edae2f',1,'BioLib::BioImage']]]
+  ['detectvendor_0',['DetectVendor',['../class_bio_lib_1_1_slide_base.html#a15b4b40f6f4fe933663211d37a94157e',1,'BioLib.SlideBase.DetectVendor()'],['../class_bio_lib_1_1_slide_image.html#a4fd871c3644bb20b0f9095b3d98d7798',1,'BioLib.SlideImage.DetectVendor()']]],
+  ['dispose_1',['Dispose',['../class_bio_lib_1_1_slide_base.html#a4076d8af36b214fee0003d723191468e',1,'BioLib.SlideBase.Dispose()'],['../class_bio_lib_1_1_slide_image.html#a0191e66cab16671088238e12e2b3ab01',1,'BioLib.SlideImage.Dispose(bool disposing)'],['../class_bio_lib_1_1_slide_image.html#ac22d902abd977dc2d2a2ab23aefa188d',1,'BioLib.SlideImage.Dispose()'],['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a4ddb80778717d90a75debf0d5f6c6010',1,'BioLib.ROI.Mask.Dispose()'],['../class_bio_lib_1_1_r_o_i.html#a68aec0fcc88446a1863d651f53e2c4eb',1,'BioLib.ROI.Dispose()'],['../_bio_8cs.html#a6e2d745cdb7a7b983f861ed6a9a541a7',1,'Dispose():&#160;Bio.cs']]],
+  ['distanceto_2',['DistanceTo',['../class_bio_lib_1_1_r_o_i.html#a323f6ffcb53f094a2104dc1014d732a5',1,'BioLib::ROI']]]
 ];

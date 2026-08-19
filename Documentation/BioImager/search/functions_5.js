@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['enable_0',['enable',['../classmicroscope_1_1abc_1_1_device.html#ac7759ad4eb304422f07cfee215a73961',1,'microscope.abc.Device.enable()'],['../classmicroscope_1_1abc_1_1_data_device.html#ad1a6e54ec4324cdc4bcfcb80a8d99ef8',1,'microscope.abc.DataDevice.enable()'],['../classmicroscope_1_1clients_1_1_data_client.html#aadb6bc8ad887c13acbc62c192e17b29c',1,'microscope.clients.DataClient.enable()'],['../classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel.html#ada812f986a1e28bab732bc76a4eff07f',1,'microscope.controllers.coolled._CoolLEDChannel.enable()'],['../classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel.html#ad267aa79697c1f45df2f6bbe49772469',1,'microscope.controllers.lumencor._SpectraIIILightChannel.enable()'],['../classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html#a6c8e9ce41dfba25d8201d0a566e9ac94',1,'microscope.lights.toptica.TopticaiBeam.enable()']]],
-  ['end_5frefill_1',['end_refill',['../classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker.html#a252a924da58792b9ba4d5d1b4ba41038',1,'microscope::stages::linkam::LinkamCMS::RefillTracker']]],
-  ['enqueue_2',['Enqueue',['../class_bio_imager_1_1_flood_fill_range_queue.html#a611fba263090c345dcdac1ea165449b5',1,'BioImager::FloodFillRangeQueue']]]
+  ['filter_0',['Filter',['../class_bio_imager_1_1_filter.html#ab0fee66abd7f15607cd6b2fa9e0379af',1,'BioImager::Filter']]],
+  ['filterwheel_1',['FilterWheel',['../class_bio_imager_1_1_filter_wheel.html#a68bcd60821010ce3c47c5d266ed53469',1,'BioImager.FilterWheel.FilterWheel()'],['../class_bio_imager_1_1_filter_wheel.html#af8d7c217fad3fb717544a858ac804088',1,'BioImager.FilterWheel.FilterWheel(object o)']]],
+  ['focus_2',['Focus',['../class_bio_imager_1_1_focus.html#a4c17fd00e2f019b04bce13a0aaf4c957',1,'BioImager::Focus']]],
+  ['function_3',['Function',['../class_bio_imager_1_1_image_j_1_1_macro_1_1_function.html#aaf7039bd8569a7967a89ca2b14d4dcf7',1,'BioImager::ImageJ::Macro::Function']]],
+  ['functionform_4',['FunctionForm',['../class_bio_imager_1_1_function_form.html#a9c75399b5cadf6300ec346dada618e12',1,'BioImager.FunctionForm.FunctionForm(Function func)'],['../class_bio_imager_1_1_function_form.html#a04b7ae80f22da2de2f4984cc8dcc6e26',1,'BioImager.FunctionForm.FunctionForm(Function func, string name)']]]
 ];

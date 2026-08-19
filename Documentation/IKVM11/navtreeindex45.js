@@ -1,10 +1,11 @@
 var NAVTREEINDEX45 =
 {
-"md_doc_22_8compilation.html#autotoc_md33":[3,1],
+"md_doc_22_8compilation.html#autotoc_md33":[3,0],
+"md_doc_22_8compilation.html#autotoc_md34":[3,1],
 "md_doc_23_8classloading.html":[4],
 "md_doc_23_8init.html":[5],
-"md_doc_23_8init.html#autotoc_md36":[5,0],
-"md_doc_23_8init.html#autotoc_md37":[5,1],
+"md_doc_23_8init.html#autotoc_md37":[5,0],
+"md_doc_23_8init.html#autotoc_md38":[5,1],
 "md_doc_2tools_2ikvmc.html":[6],
 "md_doc_2tools_2ikvmstub.html":[7],
 "namespaceIKVM.html":[8,0,0],
@@ -248,6 +249,5 @@ var NAVTREEINDEX45 =
 "namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca00b6e239cd4aa8b54d70eb1104a15669":[8,0,0,4,123,156],
 "namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca03ca4aa46834680f5bd8aca09d9918e2":[8,0,0,4,123,148],
 "namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca055fa724970bc20b7cdef3da4107a2c0":[8,0,0,4,123,25],
-"namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca0579ad077c535585994fb778f9aac927":[8,0,0,4,123,190],
-"namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca0728b03af1419fcc942520db73c74aed":[8,0,0,4,123,117]
+"namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca0579ad077c535585994fb778f9aac927":[8,0,0,4,123,190]
 };

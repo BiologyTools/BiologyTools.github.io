@@ -1,5 +1,6 @@
 var NAVTREEINDEX42 =
 {
+"interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a79d0cdd202b5ab8c910ce149568bee6f":[9,0,0,1,1,5,140],
 "interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a7aea563d0896eff6cb747c9c784591fe":[8,0,0,1,2,5,28],
 "interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a7aea563d0896eff6cb747c9c784591fe":[9,0,0,1,1,5,28],
 "interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a7d56cb5e55d2484a0d000703a917053a":[8,0,0,1,2,5,58],
@@ -248,6 +249,5 @@ var NAVTREEINDEX42 =
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#ab26f56e8d29dbb50646e3deedd6edc92":[9,0,0,1,3,6,5],
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acb5fe0452c5feefaf2a96d8b0b8b6e18":[8,0,0,1,5,6,10],
 "interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acb5fe0452c5feefaf2a96d8b0b8b6e18":[9,0,0,1,3,6,10],
-"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acf2f0d5d1b838f8f387884dfda791cdb":[8,0,0,1,5,6,1],
-"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acf2f0d5d1b838f8f387884dfda791cdb":[9,0,0,1,3,6,1]
+"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acf2f0d5d1b838f8f387884dfda791cdb":[8,0,0,1,5,6,1]
 };

@@ -100,8 +100,8 @@ $(function(){initNavTree('md_doc_21_8usage.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Usage</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md21"></a></p>
-<h1><a class="anchor" id="autotoc_md22"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md22"></a></p>
+<h1><a class="anchor" id="autotoc_md23"></a>
 Installation</h1>
 <p>IKVM11 can be added to a .NET SDK-style project by installing the IKVM11 NuGet package provided on nuget.org. This can be done by either running <code>dotnet add package IKVM11</code> or by manually editing your project file and inserting a <code>PackageReference</code>.</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">ItemGroup</span>&gt;</div>
@@ -117,7 +117,7 @@ Installation</h1>
 <div class="line">    var set = <span class="keyword">new</span> TreeSet&lt;Integer&gt;();</div>
 <div class="line">}</div>
 </div><!-- fragment --><p>Java classes are made available as .NET classes mapping the Java package name to the .NET namespace name. Java primitive types are exposed to .NET primitive types.</p>
-<h1><a class="anchor" id="autotoc_md23"></a>
+<h1><a class="anchor" id="autotoc_md24"></a>
 IkvmReference</h1>
 <p>The <code>IkvmReference</code> functionality is an extension to the MSBuild system for SDK-style .NET projects that allows easy referencing of Java resources such as classes and JARs from .NET projects. The simplest case is just adding a JAR file to your .NET project:</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">ItemGroup</span>&gt;</div>
@@ -132,29 +132,29 @@ IkvmReference</h1>
 <div class="line">    MyJavaClass.javaMethod();</div>
 <div class="line">}</div>
 </div><!-- fragment --><p><code>IkvmReference</code> inherits the same capabilities as the <a href="https://learn.microsoft.com/en-us/visualstudio/msbuild/common-msbuild-project-items?view=vs-2022#reference"><code>Reference</code></a> element. In fact the <code>IkvmReference</code> simply produces <code>Reference</code> entries in the background after converting the Java code to .NET code. In addition to this <code>IkvmReference</code> provides a number of metadata options to customize that conversion process.</p>
-<h2><a class="anchor" id="autotoc_md24"></a>
+<h2><a class="anchor" id="autotoc_md25"></a>
 <code>Include</code></h2>
 <p>Include can be one of:</p><ul>
 <li>path to a JAR file</li>
 <li>path to a directory</li>
 <li>an otherwise unimportant name (if <code>Compile</code> is used instead)</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md25"></a>
+<h2><a class="anchor" id="autotoc_md26"></a>
 <code>AssemblyName</code>, <code>AssemblyVersion</code> and <code>AssemblyFileVersion</code></h2>
 <p>IKVM11 attempts to infer the assembly name from the original Java code with the following steps:</p><ul>
 <li>AssemblyName or AssemblyVersion being explicitely defined.</li>
 <li>Following the rules defined by the <a href="https://github.com/ikvmnet/ikvm#automatic-module-name-specification"><code>Automatic-Module-Name</code></a> specification. This is a specification that originated with JDK9.</li>
 </ul>
-<h2><a class="anchor" id="autotoc_md26"></a>
+<h2><a class="anchor" id="autotoc_md27"></a>
 KeyFile</h2>
 <p>Specifies the filename containing the cryptographic key. When this option is used, the compiler inserts the public key from the specified file into the assembly manifest and then signs the final assembly with the private key.</p>
-<h2><a class="anchor" id="autotoc_md27"></a>
+<h2><a class="anchor" id="autotoc_md28"></a>
 DelaySign</h2>
 <p>This option causes the compiler to reserve space in the output file so that a digital signature can be added later. Use DelaySign if you only want to place the public key in the assembly. The DelaySign option has no effect unless used with KeyFile.</p>
-<h2><a class="anchor" id="autotoc_md28"></a>
+<h2><a class="anchor" id="autotoc_md29"></a>
 Compile</h2>
 <p>A semi-colon separated list of Java class path items to compile into the assembly. By default this value is the Identity of the item, if the identity of the item is an existing JAR file or directory (not yet supported). MSBuild globs are supported to reference multiple JAR or .class files.</p>
-<h2><a class="anchor" id="autotoc_md29"></a>
+<h2><a class="anchor" id="autotoc_md30"></a>
 References</h2>
 <p>Optional semi-colon separated list of other <code>IkvmReference</code> identity values to specify as a reference to the current one. For example, if <code>foo.jar</code> depends on <code>bar.jar</code>, include both as <code>IkvmReference</code> items, but specify the identity of <code>bar.jar</code> on the References metadata of <code>foo.jar</code>. This is required if you intend to include two different JAR files to produce two different assemblies and the code of these items depends upon each other.</p>
 <div class="fragment"><div class="line">&lt;<span class="keywordtype">ItemGroup</span>&gt;</div>
@@ -163,7 +163,7 @@ References</h2>
 <div class="line">&lt;/<span class="keywordtype">ItemGroup</span>&gt;</div>
 </div><!-- fragment --><p>In the above case we want to compile two different Java items into two different output assemblies. However, classes within <code>bar.jar</code> depend on classes within <code>foo.jar</code>. When <code>References</code> is present the build process can use this information to find classes from one in the other. The ultimate result is two output assemblies that that reference each other. One has to be built before the other, and so this information is required.</p>
 <p>For more information see <a class="el" href="md_doc_22_8compilation.html">Compilation</a>.</p>
-<h2><a class="anchor" id="autotoc_md30"></a>
+<h2><a class="anchor" id="autotoc_md31"></a>
 ClassLoader</h2>
 <p>A fully qualified classs name of the custom <code>ClassLoader</code> implementation to use as a delegation parent. Examples include <code>ikvm.runtime.AppDomainAssemblyClassLoader</code> and <code>ikvm.runtime.ClassPathAssemblyClassLoader</code>.</p>
 <p>For more information see ClassLoaders. </p>

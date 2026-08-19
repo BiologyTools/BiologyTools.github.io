@@ -1,4 +1,0 @@
-var classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition =
-[
-    [ "test_function_in_device_definition", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition.html#a0c229adaf570f7f7ed8381f56ddf5045", null ]
-];

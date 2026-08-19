@@ -1,26 +1,4 @@
 var searchData=
 [
-  ['dataclient_0',['DataClient',['../classmicroscope_1_1clients_1_1_data_client.html',1,'microscope::clients']]],
-  ['datadevice_1',['DataDevice',['../classmicroscope_1_1abc_1_1_data_device.html',1,'microscope::abc']]],
-  ['deepstarlaser_2',['DeepstarLaser',['../classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser.html',1,'microscope::lights::deepstar']]],
-  ['deformablemirror_3',['DeformableMirror',['../classmicroscope_1_1abc_1_1_deformable_mirror.html',1,'microscope::abc']]],
-  ['deformablemirrortests_4',['DeformableMirrorTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_deformable_mirror_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['deformablemirrorwidget_5',['DeformableMirrorWidget',['../classmicroscope_1_1gui_1_1_deformable_mirror_widget.html',1,'microscope::gui']]],
-  ['device_6',['Device',['../classmicroscope_1_1abc_1_1_device.html',1,'microscope::abc']]],
-  ['deviceerror_7',['DeviceError',['../classmicroscope_1_1_device_error.html',1,'microscope']]],
-  ['deviceserver_8',['DeviceServer',['../classmicroscope_1_1device__server_1_1_device_server.html',1,'microscope::device_server']]],
-  ['deviceserverexceptionqueue_9',['DeviceServerExceptionQueue',['../classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue.html',1,'microscope::testsuite::test_device_server']]],
-  ['deviceserveroptions_10',['DeviceServerOptions',['../classmicroscope_1_1device__server_1_1_device_server_options.html',1,'microscope::device_server']]],
-  ['devicesettingswidget_11',['DeviceSettingsWidget',['../classmicroscope_1_1gui_1_1_device_settings_widget.html',1,'microscope::gui']]],
-  ['devicetests_12',['DeviceTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['devicewithport_13',['DeviceWithPort',['../classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port.html',1,'microscope::testsuite::test_device_server']]],
-  ['dinput_14',['DInput',['../class_bio_imager_1_1_d_input.html',1,'BioImager']]],
-  ['disableddeviceerror_15',['DisabledDeviceError',['../classmicroscope_1_1_disabled_device_error.html',1,'microscope']]],
-  ['dllfunction_16',['dllFunction',['../classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html',1,'microscope.cameras._SDK3.dllFunction'],['../classmicroscope_1_1cameras_1_1atmcd_1_1dll_function.html',1,'microscope.cameras.atmcd.dllFunction'],['../classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html',1,'microscope.cameras.pvcam.dllFunction']]],
-  ['dm_17',['DM',['../classmicroscope_1_1__wrappers_1_1asdk_1_1_d_m.html',1,'microscope._wrappers.asdk.DM'],['../classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m.html',1,'microscope._wrappers.BMC.DM']]],
-  ['dm_5fdriver_18',['DM_DRIVER',['../classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___d_r_i_v_e_r.html',1,'microscope::_wrappers::BMC']]],
-  ['dm_5fpriv_19',['DM_PRIV',['../classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___p_r_i_v.html',1,'microscope::_wrappers::BMC']]],
-  ['dsptests_20',['DSPTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_d_s_p_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['dummydsp_21',['DummyDSP',['../classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p.html',1,'microscope::testsuite::devices']]],
-  ['dummyslm_22',['DummySLM',['../classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m.html',1,'microscope::testsuite::devices']]]
+  ['glwindow_0',['GLWindow',['../class_bio_imager_1_1_g_l_window.html',1,'BioImager']]]
 ];

@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['selected_0',['Selected',['../class_bio_lib_1_1_r_o_i.html#ac751f7efcc4983fbdbb0644f50821302',1,'BioLib::ROI']]],
+  ['selectedbuffer_1',['SelectedBuffer',['../class_bio_lib_1_1_bio_image.html#a1133bf03b6279f37603bbb8b7fad4a9b',1,'BioLib::BioImage']]],
+  ['series_2',['Series',['../class_bio_lib_1_1_image_info.html#a8c0376731403ca818dd320c2ae83144f',1,'BioLib::ImageInfo']]],
+  ['series_3',['series',['../class_bio_lib_1_1_bio_image.html#af8bd3b21cc6915d043d4825d5c84ea6a',1,'BioLib::BioImage']]],
+  ['serverbuilder_4',['ServerBuilder',['../class_bio_lib_1_1_qu_path_1_1_image.html#afecb010fc55344cf3dd5491ff55b973f',1,'BioLib::QuPath::Image']]],
+  ['shape_5',['shape',['../class_bio_lib_1_1_num_py_1_1_npy_header.html#af7ab36d1b934adeb176913b413cc72fc',1,'BioLib::NumPy::NpyHeader']]],
+  ['sizec_6',['SizeC',['../class_bio_lib_1_1_bio_image.html#a84b59e28188d5cddc81d33ce72df8157',1,'BioLib::BioImage']]],
+  ['sizeinbytes_7',['SizeInBytes',['../struct_bio_lib_1_1_resolution.html#a6f510b174a77ddbc6da3d7e6446c3457',1,'BioLib::Resolution']]],
+  ['sizet_8',['SizeT',['../class_bio_lib_1_1_bio_image.html#a1054f02084b3c4f3378fb1b0d5a1d1ba',1,'BioLib.BioImage.SizeT'],['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a17091c34c43fbe08952006fd872afe07',1,'BioLib.QuPath.Metadata.SizeT']]],
+  ['sizex_9',['SizeX',['../struct_bio_lib_1_1_resolution.html#a46fa279cbc95b296e4eb660c97c5e86c',1,'BioLib.Resolution.SizeX'],['../class_bio_lib_1_1_bio_image.html#a37c8c0c297aa14f684d3c15284b64aa3',1,'BioLib.BioImage.SizeX']]],
+  ['sizey_10',['SizeY',['../struct_bio_lib_1_1_resolution.html#a30eed098a6a52458c15f05b8fd6623ab',1,'BioLib.Resolution.SizeY'],['../class_bio_lib_1_1_bio_image.html#a2a2b98b73b0ae4f27f29865153bae1cb',1,'BioLib.BioImage.SizeY']]],
+  ['sizez_11',['SizeZ',['../class_bio_lib_1_1_bio_image.html#ae1b0a3db475c54d8f4f993f0ed7131e2',1,'BioLib.BioImage.SizeZ'],['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a61dc30014af760b1783a47218672dc57',1,'BioLib.QuPath.Metadata.SizeZ']]],
+  ['slidebase_12',['SlideBase',['../class_bio_lib_1_1_bio_image.html#a4295bacf0833abacbbb9532f34913640',1,'BioLib::BioImage']]],
+  ['sourcefile_13',['SourceFile',['../class_bio_lib_1_1_bio_image.html#ae722eb366b5a91dceb70df999c980f07',1,'BioLib::BioImage']]],
+  ['stackorder_14',['StackOrder',['../class_bio_lib_1_1_bio_image.html#adc0b54c8f885ab71800ecbb67c08772a',1,'BioLib::BioImage']]],
+  ['stagesizex_15',['StageSizeX',['../struct_bio_lib_1_1_resolution.html#acee227a4a1c2d894e4deb6a502a3655b',1,'BioLib.Resolution.StageSizeX'],['../class_bio_lib_1_1_image_info.html#ae20fbdb50385e704921dd5deb81aa72b',1,'BioLib.ImageInfo.StageSizeX'],['../class_bio_lib_1_1_bio_image.html#a8d64d4d188edc1262275dd5e14f5794d',1,'BioLib.BioImage.StageSizeX']]],
+  ['stagesizey_16',['StageSizeY',['../struct_bio_lib_1_1_resolution.html#ac352403e9072194a6b5b2bbeb626bf5b',1,'BioLib.Resolution.StageSizeY'],['../class_bio_lib_1_1_image_info.html#a21d800bbc76f5ad04071f68bee9ae872',1,'BioLib.ImageInfo.StageSizeY'],['../class_bio_lib_1_1_bio_image.html#a2826abe15e7ed5d3d36dd22b008b2c61',1,'BioLib.BioImage.StageSizeY']]],
+  ['stagesizez_17',['StageSizeZ',['../struct_bio_lib_1_1_resolution.html#a44c072541bc1e675f575d48690a57469',1,'BioLib.Resolution.StageSizeZ'],['../class_bio_lib_1_1_image_info.html#a123e0579db65076561afc547bd2a1784',1,'BioLib.ImageInfo.StageSizeZ'],['../class_bio_lib_1_1_bio_image.html#af10df1c9e8d8abe96a09ad0b26fe4f46',1,'BioLib.BioImage.StageSizeZ']]],
+  ['statistics_18',['Statistics',['../class_bio_lib_1_1_bio_image.html#abe2cc61832e81421d70fc29193788154',1,'BioLib::BioImage']]],
+  ['status_19',['Status',['../class_bio_lib_1_1_bio_image.html#a9bd942798634f8027230f1b58f350525',1,'BioLib::BioImage']]]
+];

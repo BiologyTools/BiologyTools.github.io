@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['plottype_0',['PlotType',['../class_bio_imager_1_1_plot.html#ad27e926d43fc58d42a7325026f49837e',1,'BioImager::Plot']]]
+  ['scripttype_0',['ScriptType',['../class_bio_imager_1_1_scripting.html#a59f304a2a0307ae6e7a058dc7236fa14',1,'BioImager::Scripting']]]
 ];

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['vipssupport_0',['VipsSupport',['../class_bio_lib_1_1_bio_image.html#a51b8f8a482fa882cc88917b6e9d3eee3',1,'BioLib::BioImage']]]
+  ['validate_0',['Validate',['../class_bio_lib_1_1_r_o_i.html#a855ded92dec1b2c607614807aa98dfdb',1,'BioLib::ROI']]]
 ];

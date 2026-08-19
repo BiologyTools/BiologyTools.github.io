@@ -1,15 +1,11 @@
 var searchData=
 [
-  ['filter_0',['Filter',['../class_bio_imager_1_1_filter.html',1,'BioImager.Filter'],['../classmicroscope_1_1device__server_1_1_filter.html',1,'microscope.device_server.Filter']]],
-  ['filterwheel_1',['FilterWheel',['../class_bio_imager_1_1_filter_wheel.html',1,'BioImager.FilterWheel'],['../classmicroscope_1_1abc_1_1_filter_wheel.html',1,'microscope.abc.FilterWheel']]],
-  ['filterwheeltests_2',['FilterWheelTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['filterwheelwidget_3',['FilterWheelWidget',['../classmicroscope_1_1gui_1_1_filter_wheel_widget.html',1,'microscope::gui']]],
-  ['floatingdevicemixin_4',['FloatingDeviceMixin',['../classmicroscope_1_1abc_1_1_floating_device_mixin.html',1,'microscope::abc']]],
-  ['floodfillrange_5',['FloodFillRange',['../struct_bio_imager_1_1_flood_fill_range.html',1,'BioImager']]],
-  ['floodfillrangequeue_6',['FloodFillRangeQueue',['../class_bio_imager_1_1_flood_fill_range_queue.html',1,'BioImager']]],
-  ['floodtool_7',['FloodTool',['../class_bio_imager_1_1_graphics_1_1_flood_tool.html',1,'BioImager::Graphics']]],
-  ['focus_8',['Focus',['../class_bio_imager_1_1_focus.html',1,'BioImager']]],
-  ['frame_5finfo_9',['FRAME_INFO',['../classmicroscope_1_1cameras_1_1pvcam_1_1_f_r_a_m_e___i_n_f_o.html',1,'microscope::cameras::pvcam']]],
-  ['function_10',['Function',['../class_bio_imager_1_1_function.html',1,'BioImager.Function'],['../class_bio_imager_1_1_image_j_1_1_macro_1_1_function.html',1,'BioImager.ImageJ.Macro.Function']]],
-  ['functionform_11',['FunctionForm',['../class_bio_imager_1_1_function_form.html',1,'BioImager']]]
+  ['imagej_0',['ImageJ',['../class_bio_imager_1_1_image_j.html',1,'BioImager']]],
+  ['imager_1',['Imager',['../class_bio_imager_1_1_imager.html',1,'BioImager']]],
+  ['imagestostack_2',['ImagesToStack',['../class_bio_imager_1_1_images_to_stack.html',1,'BioImager']]],
+  ['imagesview_3',['ImagesView',['../class_bio_imager_1_1_images_view.html',1,'BioImager']]],
+  ['imagetiles_4',['ImageTiles',['../class_bio_imager_1_1_image_tiles.html',1,'BioImager']]],
+  ['imageview_5',['ImageView',['../class_bio_imager_1_1_image_view.html',1,'BioImager']]],
+  ['imagewindow_6',['ImageWindow',['../class_bio_imager_1_1_image_window.html',1,'BioImager']]],
+  ['iplugin_7',['IPlugin',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html',1,'BioImager::Plugin']]]
 ];

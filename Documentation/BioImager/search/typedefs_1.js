@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bitmap_0',['Bitmap',['../_abstract_flood_filler_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;AbstractFloodFiller.cs'],['../_d_bitmap_8cs.html#a9b16955db1694922bdd12f949ba3d5db',1,'Bitmap():&#160;DBitmap.cs'],['../_graphics_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;Graphics.cs'],['../_view3_d_8cs.html#aaa7e65ced069c8845d55f660ed6e55ee',1,'Bitmap():&#160;View3D.cs'],['../_bio_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;Bio.cs'],['../_histogram_control_8cs.html#aaa7e65ced069c8845d55f660ed6e55ee',1,'Bitmap():&#160;HistogramControl.cs'],['../_imager_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;Imager.cs'],['../_image_view_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;ImageView.cs'],['../_microscope_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap():&#160;Microscope.cs']]]
+  ['bioimage_0',['BioImage',['../_tabs_view_8cs.html#a15ce494133d4505c7576669c15ea5fc8',1,'TabsView.cs']]],
+  ['bitmap_1',['Bitmap',['../_histogram_control_8cs.html#ad2a29b98cc8fbb215157424da02a731a',1,'Bitmap:&#160;HistogramControl.cs'],['../_image_view_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'Bitmap:&#160;ImageView.cs']]]
 ];

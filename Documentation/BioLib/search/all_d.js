@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['pen_0',['Pen',['../struct_bio_1_1_graphics_1_1_pen.html',1,'Bio::Graphics']]],
-  ['pixelcalibration_1',['PixelCalibration',['../class_bio_lib_1_1_qu_path_1_1_pixel_calibration.html',1,'BioLib::QuPath']]],
-  ['pixeldimension_2',['PixelDimension',['../class_bio_lib_1_1_qu_path_1_1_pixel_dimension.html',1,'BioLib::QuPath']]],
-  ['pointinpolygon_3',['PointInPolygon',['../class_bio_1_1_graphics_1_1_graphics.html#aa1814fcf4590201c482aa96470e98ec7',1,'Bio::Graphics::Graphics']]],
-  ['pointstostring_4',['PointsToString',['../class_bio_lib_1_1_r_o_i.html#af3c1a3d4d37ddbc1c49a89a6ed4c762a',1,'BioLib::ROI']]],
-  ['prepareforfloodfill_5',['PrepareForFloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ad3579e973bc7d5cbe50fb5648836d32b',1,'Bio::Graphics::AbstractFloodFiller']]],
-  ['project_6',['Project',['../class_bio_lib_1_1_qu_path_1_1_project.html',1,'BioLib::QuPath']]],
-  ['properties_7',['Properties',['../class_bio_lib_1_1_qu_path_1_1_properties.html',1,'BioLib::QuPath']]]
+  ['n_5fcoordinates_0',['N_COORDINATES',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a64844b9c4e1f5fd2094657ab440b17c0',1,'BioLib::Fiji::RoiDecoder']]],
+  ['name_1',['Name',['../class_bio_lib_1_1_bio_image_1_1_well_plate.html#a1a7fecb45461404d81d27fa093f999a2',1,'BioLib.BioImage.WellPlate.Name'],['../class_bio_lib_1_1_fiji_1_1_macro_1_1_command.html#abe9295d85a3b833045eb99d4844686b4',1,'BioLib.Fiji.Macro.Command.Name'],['../class_bio_lib_1_1_fiji_1_1_macro_1_1_function.html#add0d8a6885a53edd9e28876b315d8326',1,'BioLib.Fiji.Macro.Function.Name'],['../class_bio_lib_1_1_objectives_1_1_objective.html#a75ab5cc86cba0387609784e8a25fee02',1,'BioLib.Objectives.Objective.Name'],['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a02af167210cdabb217b82bd44aded318',1,'BioLib.QuPath.Metadata.Name'],['../class_bio_lib_1_1_qu_path_1_1_channel.html#a7cb6a5fd7c9cea870ba3e0694cd9f253',1,'BioLib.QuPath.Channel.Name']]],
+  ['name_2',['name',['../class_bio_lib_1_1_filt.html#af1f0f2cf95b82962ee677c491b8e65b7',1,'BioLib::Filt']]],
+  ['name_5flength_3',['NAME_LENGTH',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a5c31ffbf5926d4277ef85b53eb225ff2',1,'BioLib::Fiji::RoiDecoder']]],
+  ['name_5foffset_4',['NAME_OFFSET',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a0cf6ac051db3bfd02528ce872803e4bc',1,'BioLib::Fiji::RoiDecoder']]],
+  ['napari_2ecs_5',['Napari.cs',['../_napari_8cs.html',1,'']]],
+  ['npydatatype_6',['NpyDataType',['../class_bio_lib_1_1_num_py.html#a03900a45b797e52031a86c97afd417c1',1,'BioLib.NumPy.NpyDataType'],['../class_bio_lib_1_1_num_py.html#aa6aa6c65ecd2c57cdff5baffa9638506',1,'BioLib.NumPy.NpyDataType']]],
+  ['npyheader_7',['NpyHeader',['../class_bio_lib_1_1_num_py_1_1_npy_header.html',1,'BioLib::NumPy']]],
+  ['numericaperture_8',['NumericAperture',['../class_bio_lib_1_1_objectives_1_1_objective.html#a3e0df9804d0f466746104e6fd8db531f',1,'BioLib::Objectives::Objective']]],
+  ['numpy_9',['NumPy',['../class_bio_lib_1_1_num_py.html',1,'BioLib']]]
 ];

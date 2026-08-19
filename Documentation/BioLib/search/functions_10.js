@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['update_0',['Update',['../class_bio_lib_1_1_bio_image.html#ad83eb85b0ff068a12c0bea3f6c7de9cb',1,'BioLib.BioImage.Update(BioImage b)'],['../class_bio_lib_1_1_bio_image.html#a76239b6b9b3c540c5cfd72e7fb7675ce',1,'BioLib.BioImage.Update()']]],
+  ['update_0',['Update',['../_bio_8cs.html#aec0783b5a136e042adcc47bae4fe5291',1,'Bio.cs']]],
   ['updateboundingbox_1',['UpdateBoundingBox',['../class_bio_lib_1_1_r_o_i.html#a5b46e97d3eabf635b8b9cf037b368a95',1,'BioLib::ROI']]],
-  ['updatebufferspyramidal_2',['UpdateBuffersPyramidal',['../class_bio_lib_1_1_bio_image.html#a95a21044e16324e32ef60808946bffb6',1,'BioLib::BioImage']]],
-  ['updatecoords_3',['UpdateCoords',['../class_bio_lib_1_1_bio_image.html#a321eb92615dc029875c49746b48dcd18',1,'BioLib.BioImage.UpdateCoords()'],['../class_bio_lib_1_1_bio_image.html#ab88dfe30482003d163513997a55d70ae',1,'BioLib.BioImage.UpdateCoords(int sz, int sc, int st)'],['../class_bio_lib_1_1_bio_image.html#a1b048563258fe4aa120c3e5691749b32',1,'BioLib.BioImage.UpdateCoords(int sz, int sc, int st, Order order)']]],
-  ['updatepoint_4',['UpdatePoint',['../class_bio_lib_1_1_r_o_i.html#aae7f19ceebe6fe12e22e031ec6c45b05',1,'BioLib::ROI']]]
+  ['updatebufferspyramidal_2',['UpdateBuffersPyramidal',['../_bio_8cs.html#a4ad4dbaaebd028af70d629198665bb70',1,'Bio.cs']]],
+  ['updatebufferswells_3',['UpdateBuffersWells',['../_bio_8cs.html#abd46759e0a188f8f0df8a919512f8bc2',1,'Bio.cs']]],
+  ['updatecoords_4',['UpdateCoords',['../class_bio_lib_1_1_bio_image.html#a321eb92615dc029875c49746b48dcd18',1,'BioLib.BioImage.UpdateCoords()'],['../class_bio_lib_1_1_bio_image.html#ab88dfe30482003d163513997a55d70ae',1,'BioLib.BioImage.UpdateCoords(int sz, int sc, int st)'],['../class_bio_lib_1_1_bio_image.html#a1b048563258fe4aa120c3e5691749b32',1,'BioLib.BioImage.UpdateCoords(int sz, int sc, int st, Order order)']]],
+  ['updatepoint_5',['UpdatePoint',['../class_bio_lib_1_1_r_o_i.html#aae7f19ceebe6fe12e22e031ec6c45b05',1,'BioLib::ROI']]],
+  ['updateswlimit_6',['UpdateSWLimit',['../class_bio_lib_1_1_stage.html#acd06d27916e995002de616cc6d94f464',1,'BioLib::Stage']]],
+  ['upload_7',['Upload',['../class_bio_lib_1_1_o_m_e_r_o.html#acf5f9a3afaf713d18ae9da0758ea6636',1,'BioLib::OMERO']]]
 ];

@@ -27,29 +27,29 @@ var NAVTREE =
   [ "IKVM11", "index.html", [
     [ "IKVM11 - Java SE 11 Virtual Machine for .NET", "index.html", "index" ],
     [ "Overview", "md_doc_20_8index.html", [
-      [ "Topics", "md_doc_20_8index.html#autotoc_md19", null ],
-      [ "Tools", "md_doc_20_8index.html#autotoc_md20", null ]
+      [ "Topics", "md_doc_20_8index.html#autotoc_md20", null ],
+      [ "Tools", "md_doc_20_8index.html#autotoc_md21", null ]
     ] ],
     [ "Usage", "md_doc_21_8usage.html", [
-      [ "Installation", "md_doc_21_8usage.html#autotoc_md22", null ],
-      [ "IkvmReference", "md_doc_21_8usage.html#autotoc_md23", [
-        [ "Include", "md_doc_21_8usage.html#autotoc_md24", null ],
-        [ "AssemblyName, AssemblyVersion and AssemblyFileVersion", "md_doc_21_8usage.html#autotoc_md25", null ],
-        [ "KeyFile", "md_doc_21_8usage.html#autotoc_md26", null ],
-        [ "DelaySign", "md_doc_21_8usage.html#autotoc_md27", null ],
-        [ "Compile", "md_doc_21_8usage.html#autotoc_md28", null ],
-        [ "References", "md_doc_21_8usage.html#autotoc_md29", null ],
-        [ "ClassLoader", "md_doc_21_8usage.html#autotoc_md30", null ]
+      [ "Installation", "md_doc_21_8usage.html#autotoc_md23", null ],
+      [ "IkvmReference", "md_doc_21_8usage.html#autotoc_md24", [
+        [ "Include", "md_doc_21_8usage.html#autotoc_md25", null ],
+        [ "AssemblyName, AssemblyVersion and AssemblyFileVersion", "md_doc_21_8usage.html#autotoc_md26", null ],
+        [ "KeyFile", "md_doc_21_8usage.html#autotoc_md27", null ],
+        [ "DelaySign", "md_doc_21_8usage.html#autotoc_md28", null ],
+        [ "Compile", "md_doc_21_8usage.html#autotoc_md29", null ],
+        [ "References", "md_doc_21_8usage.html#autotoc_md30", null ],
+        [ "ClassLoader", "md_doc_21_8usage.html#autotoc_md31", null ]
       ] ]
     ] ],
     [ "Compilation", "md_doc_22_8compilation.html", [
-      [ "Dynamic Compilation", "md_doc_22_8compilation.html#autotoc_md32", null ],
-      [ "Static Compilation", "md_doc_22_8compilation.html#autotoc_md33", null ]
+      [ "Dynamic Compilation", "md_doc_22_8compilation.html#autotoc_md33", null ],
+      [ "Static Compilation", "md_doc_22_8compilation.html#autotoc_md34", null ]
     ] ],
     [ "Class Loading", "md_doc_23_8classloading.html", null ],
     [ "Initialization", "md_doc_23_8init.html", [
-      [ ".NET", "md_doc_23_8init.html#autotoc_md36", null ],
-      [ ".NET Framework", "md_doc_23_8init.html#autotoc_md37", null ]
+      [ ".NET", "md_doc_23_8init.html#autotoc_md37", null ],
+      [ ".NET Framework", "md_doc_23_8init.html#autotoc_md38", null ]
     ] ],
     [ "ikvmc Tool", "md_doc_2tools_2ikvmc.html", null ],
     [ "ikvmstub Tool", "md_doc_2tools_2ikvmstub.html", null ],
@@ -128,13 +128,13 @@ var NAVTREEINDEX =
 "classIKVM_1_1Tools_1_1Runner_1_1Importer_1_1IkvmImporterOptions.html#a901a481548906eb02c551971a759d666",
 "classjava_1_1util_1_1SetWrapper.html#ace5526c24049a66a2d1df5f26f442b48",
 "functions_func.html",
-"interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a7aea563d0896eff6cb747c9c784591fe",
-"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#ad0e18710b5c71fad0287dc0db9d6678c",
-"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a2030fd43476691932eb1560754f03d7d",
+"interfaceIKVM_1_1CoreLib_1_1Diagnostics_1_1IDiagnosticHandler.html#a79d0cdd202b5ab8c910ce149568bee6f",
+"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1IFieldSymbol.html#acf2f0d5d1b838f8f387884dfda791cdb",
+"interfaceIKVM_1_1CoreLib_1_1Symbols_1_1ITypeSymbol.html#a1a0c7a9bdff7dbd492b9c473dad77d89",
 "md_doc_22_8compilation.html#autotoc_md33",
-"namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca097f4b113d543477320d9651b19f1223",
-"namespaceIKVM_1_1Runtime.html#af3c5799cd44a81f69537fb704f1d3db7a616231fe1b20498996398cf9c6c37da1",
-"namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a16a881c987927d9158de62e663f06efea6adf97f83acf6453d4a6a4b1070f3754",
+"namespaceIKVM_1_1Runtime.html#ae514249ad5de1884a6f8b22f127c916ca0728b03af1419fcc942520db73c74aed",
+"namespaceIKVM_1_1Runtime.html#af3c5799cd44a81f69537fb704f1d3db7a5f299d6ad90287f3c71047890f7cb17d",
+"namespaceIKVM_1_1Tools_1_1Runner_1_1Importer.html#a16a881c987927d9158de62e663f06efea069e7821d3b4c0bbf437147263eb4d0e",
 "structIKVM_1_1CoreLib_1_1Diagnostics_1_1DiagnosticEvent.html#ac8a411162a7c1ba0205ae46484f42ebe",
 "structIKVM_1_1Runtime_1_1ByteCodeMetaData.html",
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#a16270d139056d3f8e435985a3c92b8eb",

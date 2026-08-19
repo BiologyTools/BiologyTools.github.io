@@ -1,7 +1,17 @@
 var searchData=
 [
-  ['laser_5foff_0',['laser_off',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['laser_5fon_1',['laser_on',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['limits_2',['limits',['../classmicroscope_1_1abc_1_1_stage_axis.html#a538a855a503270a2f367d1ba6e9b0274',1,'microscope.abc.StageAxis.limits()'],['../classmicroscope_1_1abc_1_1_stage.html#a0dd6bdc7ce3afa46d24bab22c9fe6953',1,'microscope.abc.Stage.limits()'],['../classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_axis.html#ad43e5b478ef31ba4bd572d9c2e620e9a',1,'microscope.controllers.zaber._ZaberStageAxis.limits()'],['../classmicroscope_1_1simulators_1_1_simulated_stage_axis.html#a4be39d53ed9170f2f66750f5c8abbcb3',1,'microscope.simulators.SimulatedStageAxis.limits()'],['../classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis.html#a7f17397b728c325edec168527bee8fd7',1,'microscope.stages.ludl._LudlStageAxis.limits()']]],
-  ['lock_5fcomms_3',['lock_comms',['../classmicroscope_1_1abc_1_1_serial_device_mixin.html#ada5dd646c655dee45fb66d2210cfb2e9',1,'microscope::abc::SerialDeviceMixin']]]
+  ['layer_0',['Layer',['../struct_bio_imager_1_1_image_view_1_1_layer.html#a4fb2823c3a3d2980ce163469adfd23bd',1,'BioImager.ImageView.Layer.Layer(double d)'],['../struct_bio_imager_1_1_image_view_1_1_layer.html#a8706f54acb09838c38dd3a0ca2676b14',1,'BioImager.ImageView.Layer.Layer(double d, bool enabled)']]],
+  ['layers_1',['Layers',['../class_bio_imager_1_1_layers.html#ac1d5ccb696eea5efd51fb2ea1728ec38',1,'BioImager::Layers']]],
+  ['leftclick_2',['LeftClick',['../class_bio_imager_1_1_mouse_operations.html#ad90a64f05dad54d161fdf6c48e34212f',1,'BioImager::MouseOperations']]],
+  ['leftdown_3',['LeftDown',['../class_bio_imager_1_1_mouse_operations.html#aa612f922cb81f4b318baec732de0c1d0',1,'BioImager::MouseOperations']]],
+  ['leftup_4',['LeftUp',['../class_bio_imager_1_1_mouse_operations.html#a4d224858c63af5821ff79d83bfb32ee8',1,'BioImager::MouseOperations']]],
+  ['level_5',['Level',['../class_bio_imager_1_1_slide_imager_1_1_level.html#a4b9ac4615400c671fcbda56118244fc7',1,'BioImager.SlideImager.Level.Level(double w, double h, PixelFormat pf, int levels, Enums.ForeignTiffCompression comp, double physX, double physY)'],['../class_bio_imager_1_1_slide_imager_1_1_level.html#a25dbac23fd7b1f5c5cd75cb4f1d3e56e',1,'BioImager.SlideImager.Level.Level(double w, double h, PixelFormat pf)']]],
+  ['lib_6',['Lib',['../class_bio_imager_1_1_lib.html#a4cb1c74b65ba21b5d07da213c12b49d2',1,'BioImager::Lib']]],
+  ['library_7',['Library',['../class_bio_imager_1_1_library.html#aef80c5f4a67c3566076921da50f8be9e',1,'BioImager::Library']]],
+  ['light_8',['Light',['../class_bio_imager_1_1_light.html#acfe248d260e0928e0405728b6146ef41',1,'BioImager::Light']]],
+  ['lightsource_9',['LightSource',['../class_bio_imager_1_1_light_source.html#aad005f05f200a2a032c38bc58ffd27e2',1,'BioImager::LightSource']]],
+  ['load_10',['Load',['../class_bio_imager_1_1_imager_1_1_profile.html#a4aa4f00172fa7aa6e47331eb39f2af42',1,'BioImager::Imager::Profile']]],
+  ['loadsettings_11',['LoadSettings',['../class_bio_imager_1_1_imager_1_1_controller_funcs.html#a81ded088c552ddd6cc61bf2731ce3d21',1,'BioImager::Imager::ControllerFuncs']]],
+  ['login_12',['Login',['../class_bio_imager_1_1_login.html#a2f17ca85168d8a0ad02557a57fb205fb',1,'BioImager::Login']]],
+  ['logline_13',['LogLine',['../class_bio_imager_1_1_scripting.html#a883e06b587c9d11f3e4eae60c2b7a275',1,'BioImager::Scripting']]]
 ];

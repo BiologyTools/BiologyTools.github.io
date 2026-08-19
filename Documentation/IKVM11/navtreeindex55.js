@@ -1,5 +1,6 @@
 var NAVTREEINDEX55 =
 {
+"structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#af74fd8afb9d0dccd9ee6130e70d662fd":[8,0,0,4,2,8,283],
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#af74fd8afb9d0dccd9ee6130e70d662fd":[9,0,0,4,2,8,283],
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#af750ae010d2a5bc23e2a01bef0751f45":[8,0,0,4,2,8,469],
 "structIKVM_1_1Runtime_1_1JNI_1_1JNINativeInterface.html#af750ae010d2a5bc23e2a01bef0751f45":[9,0,0,4,2,8,469],
@@ -248,6 +249,5 @@ var NAVTREEINDEX55 =
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#a86c5bb96046c02e7e3c2e76c902d0aff":[8,0,0,4,4,1,12],
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#a86c5bb96046c02e7e3c2e76c902d0aff":[9,0,0,4,4,1,12],
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#a899f257688033b351416101aebc49513":[8,0,0,4,4,1,5],
-"structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#a899f257688033b351416101aebc49513":[9,0,0,4,4,1,5],
-"structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#aba78e12956697d3e16e1b217cc8cebbb":[8,0,0,4,4,1,15]
+"structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#a899f257688033b351416101aebc49513":[9,0,0,4,4,1,5]
 };

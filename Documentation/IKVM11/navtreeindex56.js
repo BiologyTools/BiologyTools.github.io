@@ -1,5 +1,6 @@
 var NAVTREEINDEX56 =
 {
+"structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#aba78e12956697d3e16e1b217cc8cebbb":[8,0,0,4,4,1,15],
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#aba78e12956697d3e16e1b217cc8cebbb":[9,0,0,4,4,1,15],
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#acfcce7b28c81e8576809186642ff057b":[8,0,0,4,4,1,8],
 "structIKVM_1_1Runtime_1_1Syntax_1_1JavaSimplePackageName.html#acfcce7b28c81e8576809186642ff057b":[9,0,0,4,4,1,8],

@@ -1,0 +1,21 @@
+var searchData=
+[
+  ['bar_0',['Bar',['../class_bio_g_t_k_1_1_plot.html#a03a7d9ca9de74648dbfb9024e14116f2addc35f88fa71b6ef142ae61f35364653',1,'BioGTK::Plot']]],
+  ['bchannel_1',['BChannel',['../class_bio_g_t_k_1_1_image_view.html#abd1d449df3d2a49db7f6ab08d7ba43bf',1,'BioGTK::ImageView']]],
+  ['benabled_2',['bEnabled',['../class_bio_g_t_k_1_1_tools.html#a644517344cbdf2166e7271af03830c37',1,'BioGTK::Tools']]],
+  ['bin_3',['Bin',['../class_bio_g_t_k_1_1_histogram_control.html#a72291add11957d8cccf2d205d489aa01',1,'BioGTK::HistogramControl']]],
+  ['bio_4',['Bio',['../namespace_bio.html',1,'']]],
+  ['bioconsole_5',['BioConsole',['../class_bio_g_t_k_1_1_bio_console.html',1,'BioGTK.BioConsole'],['../class_bio_g_t_k_1_1_bio_console.html#a6ec430edea80195e573a9b9704c903dd',1,'BioGTK.BioConsole.BioConsole()']]],
+  ['bioconsole_2ecs_6',['BioConsole.cs',['../_bio_console_8cs.html',1,'']]],
+  ['biogtk_7',['BioGTK',['../namespace_bio_g_t_k.html',1,'BioGTK'],['../index.html',1,'BioGTK']]],
+  ['biogtk_3a_3aml_8',['ML',['../namespace_bio_g_t_k_1_1_m_l.html',1,'BioGTK']]],
+  ['biolib_9',['BioLib',['../namespace_bio_lib.html',1,'']]],
+  ['bitmap_10',['Bitmap',['../_m_l_8cs.html#a5ed305bd2d2d30db525508b3fdbba701',1,'ML.cs']]],
+  ['bitmaptoskimage_11',['BitmapToSKImage',['../class_bio_g_t_k_1_1_image_view.html#a3696c2b5ca589264a54c5440258c416e',1,'BioGTK::ImageView']]],
+  ['bounds_12',['Bounds',['../class_bio_g_t_k_1_1_skia_stitching_pipeline_1_1_tile_request.html#aa2feb80b280bd080e37d9d2f05de6467',1,'BioGTK::SkiaStitchingPipeline::TileRequest']]],
+  ['bounds_13',['bounds',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#a74d7e113956ff585c05ed62a38543b87',1,'BioGTK::Tools::Tool']]],
+  ['brush_14',['brush',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#afe6ea42d5c9a22476ceee46e28376d48a68f6f171811b2cede3c3a4084ad9918c',1,'BioGTK::Tools::Tool']]],
+  ['bucket_15',['bucket',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#afe6ea42d5c9a22476ceee46e28376d48ac2bfd01762cfbe4e34cc97b9769b4238',1,'BioGTK::Tools::Tool']]],
+  ['buts_16',['buts',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#aad56a2b068231b4c80b8f38a4c406108',1,'BioGTK::Scripting::State']]],
+  ['buttonstate_17',['ButtonState',['../class_bio_g_t_k_1_1_function.html#aff1efb13e050f89f5d4935fe877e1686',1,'BioGTK::Function']]]
+];

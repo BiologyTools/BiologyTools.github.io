@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['image_0',['Image',['../class_bio_g_t_k_1_1_plot.html#a2703969cf47eab158af48946408a1324',1,'BioGTK::Plot']]],
+  ['imagea_1',['ImageA',['../class_bio_g_t_k_1_1_apply_filter.html#a2fe1528a4bdef93a66b982c8e0dc57df',1,'BioGTK.ApplyFilter.ImageA'],['../class_bio_g_t_k_1_1_stack_tools.html#af53bd92621b4623579f9e679ee92f70b',1,'BioGTK.StackTools.ImageA']]],
+  ['imageb_2',['ImageB',['../class_bio_g_t_k_1_1_apply_filter.html#a3bed43bf9378866e80fa070c033c6d7a',1,'BioGTK.ApplyFilter.ImageB'],['../class_bio_g_t_k_1_1_stack_tools.html#af842f38244aea9f768bdf0b5a0f4e56c',1,'BioGTK.StackTools.ImageB']]],
+  ['imagescreenh_3',['ImageScreenH',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a128674a98025b7c72c44dbece7b35179',1,'BioGTK::SlideGLArea']]],
+  ['imagescreenw_4',['ImageScreenW',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a224a50a89fcbf2a7f422e5edac8218e8',1,'BioGTK::SlideGLArea']]],
+  ['imagescreenx_5',['ImageScreenX',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a87597b4784394e1d3b1d97fecafc911d',1,'BioGTK::SlideGLArea']]],
+  ['imagescreeny_6',['ImageScreenY',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a571d8e7840e5aa30866a8198a6bac3db',1,'BioGTK::SlideGLArea']]],
+  ['imageviewheight_7',['ImageViewHeight',['../class_bio_g_t_k_1_1_image_view.html#a471e5d8e29ccacd22785833ef575fd33',1,'BioGTK::ImageView']]],
+  ['imageviewwidth_8',['ImageViewWidth',['../class_bio_g_t_k_1_1_image_view.html#a3e38ab9b8c2f9b89a4edfb5289301aa6',1,'BioGTK::ImageView']]],
+  ['index_9',['Index',['../class_bio_1_1_magic_select.html#ae1af0e2ac5ebec1c7585b42e71bc4077',1,'Bio.MagicSelect.Index'],['../class_bio_g_t_k_1_1_objectives.html#af40ad131bd97fbd379b324cac78a8636',1,'BioGTK.Objectives.Index'],['../class_bio_g_t_k_1_1_skia_stitching_pipeline_1_1_tile_request.html#a9830fe8a79d610fb5b7bc1922c8bd211',1,'BioGTK.SkiaStitchingPipeline.TileRequest.Index']]],
+  ['inferencesession_10',['InferenceSession',['../class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html#aee0121d5446252012448d8f15a94a5d5',1,'BioGTK::ML::ML::Model']]],
+  ['inputmodule_11',['InputModule',['../class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html#a9b995898cc7d4122c2859bea23bc51b4',1,'BioGTK::ML::ML::Model']]],
+  ['internal_12',['Internal',['../class_bio_g_t_k_1_1_recorder.html#a48abe5d7ddf0ca76b2bf053293fd856a',1,'BioGTK::Recorder']]],
+  ['isenabled_13',['IsEnabled',['../class_bio_g_t_k_1_1_s_k_slide_renderer_1_1_cache_statistics.html#a0bf5025e25afeecb41928f3b9b82d0f9',1,'BioGTK::SKSlideRenderer::CacheStatistics']]],
+  ['ispanning_14',['IsPanning',['../class_bio_g_t_k_1_1_tools.html#a2ca555ee4d7ba5bdf5522006687e0083',1,'BioGTK::Tools']]],
+  ['isrendering_15',['IsRendering',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a4e7433aa02806089e28c42e788987c7d',1,'BioGTK::SKSlideRenderer']]]
+];

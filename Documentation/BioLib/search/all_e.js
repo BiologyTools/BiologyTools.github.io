@@ -1,6 +1,27 @@
 var searchData=
 [
-  ['quality_0',['Quality',['../class_bio_lib_1_1_slice_parame.html#a6d4572f1abfaf89cb5a8c2379a80dfee',1,'BioLib::SliceParame']]],
-  ['queuelinearfloodfiller_1',['QueueLinearFloodFiller',['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html',1,'Bio::Graphics']]],
-  ['qupath_2',['QuPath',['../class_bio_lib_1_1_qu_path.html',1,'BioLib']]]
+  ['objective_0',['Objective',['../class_bio_lib_1_1_objectives_1_1_objective.html',1,'BioLib.Objectives.Objective'],['../class_bio_lib_1_1_objectives_1_1_objective.html#a8fd885363a556319744ecb42a6634b49',1,'BioLib.Objectives.Objective.Objective(object o, int index)'],['../class_bio_lib_1_1_objectives_1_1_objective.html#a9b2d6c50b3385d2462ff07056b2dbea5',1,'BioLib.Objectives.Objective.Objective()']]],
+  ['objectives_1',['Objectives',['../class_bio_lib_1_1_objectives.html',1,'BioLib.Objectives'],['../class_bio_lib_1_1_objectives.html#aef12e6d626d7fd62597b2112832756b0',1,'BioLib.Objectives.Objectives()']]],
+  ['objecttype_2',['ObjectType',['../class_bio_lib_1_1_qu_path_1_1_properties.html#a71d71163f70520dbbbb3bb75132fb59d',1,'BioLib::QuPath::Properties']]],
+  ['oil_3',['Oil',['../class_bio_lib_1_1_objectives_1_1_objective.html#af7c957cf4cda9c8e00748c52dfe3c8b3',1,'BioLib::Objectives::Objective']]],
+  ['omero_4',['OMERO',['../class_bio_lib_1_1_o_m_e_r_o.html',1,'BioLib']]],
+  ['omero_2ecs_5',['OMERO.cs',['../_o_m_e_r_o_8cs.html',1,'']]],
+  ['open_6',['Open',['../class_bio_lib_1_1_slide_image.html#ab7a573bb72d4443fba4b0779e2330889',1,'BioLib::SlideImage']]],
+  ['open_7',['open',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#af0d8fc17c630ed975ed8b4b9b66ff440',1,'BioLib::Fiji::RoiDecoder']]],
+  ['openfrombytearray_8',['openFromByteArray',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#abc0eced4a4903e34f953ae99384f19f2',1,'BioLib::Fiji::RoiDecoder']]],
+  ['openproject_9',['OpenProject',['../class_bio_lib_1_1_qu_path.html#a426fe5423a952ac2ec49565f383bae86',1,'BioLib::QuPath']]],
+  ['openslide_10',['OpenSlide',['../_bio_8cs.html#a7223aa4c7315c0efe61fc9d4e1be1609a522f8777d0da620d1fc3dcbbb6146dbf',1,'Bio.cs']]],
+  ['openslidebase_11',['OpenSlideBase',['../class_bio_lib_1_1_bio_image.html#aecc79fc9291110ee19a06b4c17e2f73c',1,'BioLib::BioImage']]],
+  ['openslideimage_12',['openSlideImage',['../_bio_8cs.html#a57fdff60b70ec9c17bb432478cf16da7',1,'Bio.cs']]],
+  ['options_13',['OPTIONS',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#ae1ce04d160957b0fb6911bf95aa0a08a',1,'BioLib::Fiji::RoiDecoder']]],
+  ['order_14',['Order',['../class_bio_lib_1_1_bio_image.html#a11ee2e7074e51b5a7344654dd508f17f',1,'BioLib::BioImage']]],
+  ['origin_15',['Origin',['../class_bio_lib_1_1_bio_image_1_1_well_plate.html#a5459c26ef7579e1ef13423d21b3eea1c',1,'BioLib::BioImage::WellPlate']]],
+  ['outline_16',['OUTLINE',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#aae6ffbd603bc0c528d401aa2c3c7f3c8',1,'BioLib::Fiji::RoiDecoder']]],
+  ['outputas8bitimage_17',['OutputAs8BitImage',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a965454224ed36c29cdfd777d46a4f2a6',1,'BioLib::ROI::Mask']]],
+  ['overlay_5fbackgrounds_18',['OVERLAY_BACKGROUNDS',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a4369c1269ac7bd872201c171e1181f32',1,'BioLib::Fiji::RoiDecoder']]],
+  ['overlay_5fbold_19',['OVERLAY_BOLD',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#ab40b15e89ed92440346f100b25152b4d',1,'BioLib::Fiji::RoiDecoder']]],
+  ['overlay_5ffont_5fsize_20',['OVERLAY_FONT_SIZE',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a85c73f7b68b6ac35d4a920f110a64404',1,'BioLib::Fiji::RoiDecoder']]],
+  ['overlay_5flabel_5fcolor_21',['OVERLAY_LABEL_COLOR',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#af6acec1e3810457fa4fef5f6acbdb7e5',1,'BioLib::Fiji::RoiDecoder']]],
+  ['overlay_5flabels_22',['OVERLAY_LABELS',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a16db9b20663efa6d91c1aaa20e2116f2',1,'BioLib::Fiji::RoiDecoder']]],
+  ['overlay_5fnames_23',['OVERLAY_NAMES',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a792597b76abadfdeb4ecf599ba46b05a',1,'BioLib::Fiji::RoiDecoder']]]
 ];

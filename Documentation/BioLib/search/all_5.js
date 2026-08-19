@@ -1,18 +1,9 @@
 var searchData=
 [
-  ['fetchtilesasync_0',['FetchTilesAsync',['../class_bio_lib_1_1_slide_source_base.html#afb6e88bb00c771d506ca80f1e7f12e52',1,'BioLib::SlideSourceBase']]],
-  ['filestostack_1',['FilesToStack',['../class_bio_lib_1_1_bio_image.html#a82da0454f8fe6e463f3bd9ebdd250868',1,'BioLib::BioImage']]],
-  ['fillellipse_2',['FillEllipse',['../class_bio_1_1_graphics_1_1_graphics.html#acd71151ceb925ba836bae73965ca0cde',1,'Bio.Graphics.Graphics.FillEllipse(float xx, float yy, int w, int h, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a66f2d5fea74231f586c4638abd8b3bc9',1,'Bio.Graphics.Graphics.FillEllipse(RectangleF r, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a8bdc5741b5c8f5ce6dc5ad10610267e2',1,'Bio.Graphics.Graphics.FillEllipse(Rectangle r, ColorS c)']]],
-  ['fillpolygon_3',['FillPolygon',['../class_bio_1_1_graphics_1_1_graphics.html#a8a7c9ded61070b46b9c80ebc1b50000a',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, Rectangle r)'],['../class_bio_1_1_graphics_1_1_graphics.html#af77706b3dd2f809ff01f8ceadb26bd82',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, RectangleF r)'],['../class_bio_1_1_graphics_1_1_graphics.html#a450efd6201cc03f642c47c5e0bf8f3ba',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, Rectangle r, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a162707f987726d48720cfc55415b87e1',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, RectangleF r, ColorS c)']]],
-  ['fillrectangle_4',['FillRectangle',['../class_bio_1_1_graphics_1_1_graphics.html#add3271fa5107229c4ba15e3eb8b127fe',1,'Bio.Graphics.Graphics.FillRectangle(Rectangle r, ColorS col)'],['../class_bio_1_1_graphics_1_1_graphics.html#a35dbadf42b872a1e5b8e320122a61df3',1,'Bio.Graphics.Graphics.FillRectangle(RectangleF r, ColorS col)']]],
-  ['filt_5',['Filt',['../class_bio_lib_1_1_filt.html',1,'BioLib']]],
-  ['findfocus_6',['FindFocus',['../class_bio_lib_1_1_bio_image.html#afe55cc7945c8d19b0b6bc05e0222faad',1,'BioLib::BioImage']]],
-  ['floodfill_7',['FloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ae58a407dbc1df9bb0cdd373f139e0fa2',1,'Bio.Graphics.AbstractFloodFiller.FloodFill()'],['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html#a02cc51ca79a25f276eba1622c01a794b',1,'Bio.Graphics.QueueLinearFloodFiller.FloodFill()']]],
-  ['floodfillrange_8',['FloodFillRange',['../struct_bio_1_1_graphics_1_1_flood_fill_range.html',1,'Bio::Graphics']]],
-  ['floodfillrangequeue_9',['FloodFillRangeQueue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html',1,'Bio::Graphics']]],
-  ['focus_10',['Focus',['../class_bio_lib_1_1_focus.html',1,'BioLib']]],
-  ['foldertostack_11',['FolderToStack',['../class_bio_lib_1_1_bio_image.html#af0435ef46d10e0fda84ea0cddb364a5a',1,'BioLib::BioImage']]],
-  ['fromimage_12',['FromImage',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#aaea5eb8a8f0d2936a957279ac02d8fa2',1,'BioLib.BioImage.ImageJDesc.FromImage()'],['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio.Graphics.Graphics.FromImage()']]],
-  ['fromnumpy_13',['FromNumpy',['../class_bio_lib_1_1_bio_image.html#ad534b60a03704b8c78e07878e1ceeefa',1,'BioLib::BioImage']]],
-  ['function_14',['Function',['../class_bio_lib_1_1_fiji_1_1_macro_1_1_function.html',1,'BioLib::Fiji::Macro']]]
+  ['elementtype_0',['ElementType',['../class_bio_lib_1_1_objectives_1_1_objective.html#a4060e80de19ea5850066099703b2fdeb',1,'BioLib::Objectives::Objective']]],
+  ['ellipse_1',['ELLIPSE',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a6b204ebd6f640d0e117fb1e823ca3af5',1,'BioLib::Fiji::RoiDecoder']]],
+  ['ellipse_2',['Ellipse',['../class_bio_lib_1_1_r_o_i.html#ac1ec263bfd165b710f10848910000448a119518c2134c46108179369f0ce81fa2',1,'BioLib::ROI']]],
+  ['entryid_3',['EntryID',['../class_bio_lib_1_1_qu_path_1_1_image.html#ad9d84732afa04aa262e1ab1a6cb9ae28',1,'BioLib::QuPath::Image']]],
+  ['experimenter_4',['experimenter',['../class_bio_lib_1_1_o_m_e_r_o.html#a8fb0785eb1e94a8fb78f0b94f4ee2e93',1,'BioLib::OMERO']]],
+  ['experimentersudo_5',['experimenterSudo',['../class_bio_lib_1_1_o_m_e_r_o.html#ad9bc7f572125a63a5e025aa3936dabb6',1,'BioLib::OMERO']]]
 ];
