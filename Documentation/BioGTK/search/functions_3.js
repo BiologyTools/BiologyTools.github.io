@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['dispose_0',['Dispose',['../class_bio_g_t_k_1_1_skia_stitching_pipeline.html#adbd6132cd118297e78e6b95c18875c36',1,'BioGTK.SkiaStitchingPipeline.Dispose()'],['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#aaf5e137b5280fb0f95a4fdc7162790fa',1,'BioGTK.SKSlideRenderer.Dispose()'],['../class_bio_g_t_k_1_1_slide_area.html#a143a2c3fcef5ae533a4095241c348b45',1,'BioGTK.SlideArea.Dispose()']]],
-  ['downloadfileasync_1',['DownloadFileAsync',['../class_bio_g_t_k_1_1_updater.html#af85f9ec138285ef83948262188d5b180',1,'BioGTK::Updater']]],
+  ['decode_0',['Decode',['../class_bio_g_t_k_1_1_micro_s_a_m.html#a26ab44d77dd33c3ca52061b428bfd4a2',1,'BioGTK.MicroSAM.Decode()'],['../class_bio_g_t_k_1_1_s_a_m.html#a511abc4ff83855f522ff20827e347729',1,'BioGTK.SAM.Decode()']]],
+  ['dispose_1',['Dispose',['../class_bio_g_t_k_1_1_micro_s_a_m.html#af7f6618b42c2ff121e488834023a8565',1,'BioGTK.MicroSAM.Dispose()'],['../class_bio_g_t_k_1_1_s_a_m.html#a9dcab8f988a7dd924528c2374baeec70',1,'BioGTK.SAM.Dispose()']]],
   ['drawtocanvas_2',['DrawToCanvas',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a7dfd0e1b1be03567c01645efd21f97f9',1,'BioGTK::SKSlideRenderer']]]
 ];

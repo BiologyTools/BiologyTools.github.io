@@ -53,9 +53,9 @@ var NAVTREE =
     ] ],
     [ "ikvmc Tool", "md_doc_2tools_2ikvmc.html", null ],
     [ "ikvmstub Tool", "md_doc_2tools_2ikvmstub.html", null ],
-    [ "Namespaces", "namespaces.html", [
-      [ "Namespace List", "namespaces.html", "namespaces_dup" ],
-      [ "Namespace Members", "namespacemembers.html", [
+    [ "Packages", "namespaces.html", [
+      [ "Package List", "namespaces.html", "namespaces_dup" ],
+      [ "Package Members", "namespacemembers.html", [
         [ "All", "namespacemembers.html", null ],
         [ "Functions", "namespacemembers_func.html", null ],
         [ "Typedefs", "namespacemembers_type.html", null ],

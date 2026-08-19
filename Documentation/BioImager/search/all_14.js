@@ -1,20 +1,6 @@
 var searchData=
 [
-  ['w_0',['W',['../class_bio_imager_1_1_apply_filter.html#a8eee211740615c44c44ce5949bf96506',1,'BioImager::ApplyFilter']]],
-  ['waituntilnosepieceidle_1',['waitUntilNosePieceIdle',['../class_bio_imager_1_1_s_d_k.html#a9dcd8e9792641e2e907fa19c3125113e',1,'BioImager::SDK']]],
-  ['waituntilstageidle_2',['waitUntilStageIdle',['../class_bio_imager_1_1_s_d_k.html#a56b5021dbb6552adc646503576429dae',1,'BioImager::SDK']]],
-  ['waituntilzidle_3',['waitUntilZIdle',['../class_bio_imager_1_1_s_d_k.html#a90a5a62c937738231c99c76d4bae9252',1,'BioImager::SDK']]],
-  ['wheeldown_4',['wheeldown',['../class_bio_imager_1_1_automation_1_1_action.html#adeb7fd2692f7b1b15566826a656359faad6028dde0a2dcdfcc018cc7f0797804d',1,'BioImager::Automation::Action']]],
-  ['wheelup_5',['wheelup',['../class_bio_imager_1_1_automation_1_1_action.html#adeb7fd2692f7b1b15566826a656359faa800f2d07b62bbc15176bbcc4f49bbd36',1,'BioImager::Automation::Action']]],
-  ['width_6',['Width',['../class_bio_imager_1_1_m_l_1_1_m_l_1_1_model.html#ad86e6fbaf813ad2133d67b57c95ad0a9',1,'BioImager.ML.ML.Model.Width'],['../class_bio_imager_1_1_slide_imager_1_1_level.html#a6d7dedf65ba50743a2b1fe5e3cb9adb2',1,'BioImager.SlideImager.Level.Width']]],
-  ['widthd_7',['WIDTHD',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#af544bd4500307f7af002b123cbebab95',1,'BioImager::ImageJ::RoiDecoder']]],
-  ['widthpx_8',['WidthPx',['../class_bio_imager_1_1_slide_imager_1_1_level.html#a793d05389e0c63a4f7455e59fe3fda47',1,'BioImager::SlideImager::Level']]],
-  ['win32_9',['Win32',['../class_bio_imager_1_1_win32.html',1,'BioImager']]],
-  ['win32_2ecs_10',['Win32.cs',['../_win32_8cs.html',1,'']]],
-  ['wm_5fkeydown_11',['WM_KEYDOWN',['../class_bio_imager_1_1_win32.html#a7f298f41a88676bba185f90ff73e987a',1,'BioImager::Win32']]],
-  ['wm_5fkeyup_12',['WM_KEYUP',['../class_bio_imager_1_1_win32.html#a49360bb5c0a22f473cb6ed2d63d80260',1,'BioImager::Win32']]],
-  ['wndproc_13',['WndProc',['../class_bio_imager_1_1_code_view_1_1_scroll_text_box.html#ada9cf250fffef6a970fc8ca4e6cd5e3a',1,'BioImager::CodeView::ScrollTextBox']]],
-  ['wordwrap_14',['WordWrap',['../class_bio_imager_1_1_code_view.html#af588db126834ccbdd4ad21262c00dd7f',1,'BioImager::CodeView']]],
-  ['workingdistance_15',['WorkingDistance',['../class_bio_imager_1_1_objectives_1_1_objective.html#a3ca7af8507ac2a87af15693d72c54780',1,'BioImager::Objectives::Objective']]],
-  ['write_16',['write',['../class_bio_imager_1_1_image_j_1_1_roi_encoder.html#a08445d15d511bcb809827b0286b39891',1,'BioImager::ImageJ::RoiEncoder']]]
+  ['values_0',['values',['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html#ad86d5bc0b318804ede32d4505bb85160',1,'microscope.cameras.pvcam.PVParam.values()'],['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html#a077e39e7c2a4777b5ead609a4d329fce',1,'microscope.cameras.pvcam.PVEnumParam.values()'],['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html#a6a9b937af77d4d2b64e100755e754c96',1,'microscope.cameras.pvcam.PVStringParam.values()']]],
+  ['view_5fof_5finfo_1',['view_of_info',['../classmicroscope_1_1stages_1_1linkam_1_1___comms_info.html#a3004eec38f4654c3f57ac050c71d7e8b',1,'microscope::stages::linkam::_CommsInfo']]],
+  ['viewcontextmenu_2',['ViewContextMenu',['../class_bio_imager_1_1_image_view.html#af5dbb3d3dedfa20d69adf9aa9ec1a743',1,'BioImager::ImageView']]]
 ];

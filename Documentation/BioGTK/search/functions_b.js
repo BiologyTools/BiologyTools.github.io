@@ -1,12 +1,9 @@
 var searchData=
 [
-  ['magicselect_0',['MagicSelect',['../class_bio_1_1_magic_select.html#a5b8194993bce1553d40c9487e744850d',1,'Bio::MagicSelect']]],
-  ['model_1',['Model',['../class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html#af8a318aab5362562205baa4b1d339b40',1,'BioGTK::ML::ML::Model']]],
-  ['mousedown_2',['MouseDown',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#ae64f5bdafd7a537bc0d0fd513bf8be6b',1,'BioGTK::Plugin::IPlugin']]],
-  ['mousemove_3',['MouseMove',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a7b98d1b5122427a9a75678010677a3ff',1,'BioGTK::Plugin::IPlugin']]],
-  ['mouseup_4',['MouseUp',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a6aa85503eda757cea6c6e813408b8dff',1,'BioGTK::Plugin::IPlugin']]],
-  ['movedown_5',['MoveDown',['../class_bio_g_t_k_1_1_stage.html#a857b2be8f43abb054ee6d5e4495c790f',1,'BioGTK::Stage']]],
-  ['moveleft_6',['MoveLeft',['../class_bio_g_t_k_1_1_stage.html#a7eea43b150361694d456d7fc8604ad07',1,'BioGTK::Stage']]],
-  ['moveright_7',['MoveRight',['../class_bio_g_t_k_1_1_stage.html#a7e36cec2867aca2629f10f0080315cb7',1,'BioGTK::Stage']]],
-  ['moveup_8',['MoveUp',['../class_bio_g_t_k_1_1_stage.html#a6632a30b1f445c239d00156e5c5f8d36',1,'BioGTK::Stage']]]
+  ['onlocaldeleteevent_0',['OnLocalDeleteEvent',['../class_bio_g_t_k_1_1_node_view.html#a07eaa3d0dec13e2bd192efbdf1a284a8',1,'BioGTK::NodeView']]],
+  ['open_1',['Open',['../class_bio_g_t_k_1_1_tabs_view.html#a28dd2c4b5862349b0a645df73df91616',1,'BioGTK::TabsView']]],
+  ['openimagesmenuclick_2',['openImagesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a7f74351dca44ada13a82908ff408a53b',1,'BioGTK::TabsView']]],
+  ['openomeimagesmenuclick_3',['openOMEImagesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a9734ffc8d9368c7215541cd89ac5d98c',1,'BioGTK::TabsView']]],
+  ['openomeseriesmenuclick_4',['openOMESeriesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a5b116b7ffcc0e4edd9dbeac42a39a0c2',1,'BioGTK::TabsView']]],
+  ['openseriesmenuclick_5',['openSeriesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a60ea4a33e938ad8ba9f9011c622a9940',1,'BioGTK::TabsView']]]
 ];

@@ -1,21 +1,4 @@
 var searchData=
 [
-  ['c_5fposition_0',['C_POSITION',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a2558bdd8f5010ff54f64d7cb9af771bd',1,'BioLib::Fiji::RoiDecoder']]],
-  ['changer_1',['changer',['../class_bio_lib_1_1_objectives.html#aa3f1ed15d123aa69d63290843f7a77ff',1,'BioLib::Objectives']]],
-  ['changertype_2',['changerType',['../class_bio_lib_1_1_objectives.html#ad96af2a094e42a3ec0cfa2be2516bedf',1,'BioLib::Objectives']]],
-  ['channels_3',['Channels',['../class_bio_lib_1_1_bio_image.html#a171a974537cbc341b9bd89e2729aa221',1,'BioLib::BioImage']]],
-  ['channels_4',['channels',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#ad0752ca55d723f970c7ee2408ec8d951',1,'BioLib::BioImage::ImageJDesc']]],
-  ['client_5',['client',['../class_bio_lib_1_1_o_m_e_r_o.html#ad686c9acf4c9ed049304d92de122c8d3',1,'BioLib::OMERO']]],
-  ['closed_6',['closed',['../class_bio_lib_1_1_r_o_i.html#a47172067576700c1a95e6f29bce2b817',1,'BioLib::ROI']]],
-  ['config_7',['config',['../class_bio_lib_1_1_objectives_1_1_objective.html#abb2b28a3355302d044cd0f12fff020d0',1,'BioLib::Objectives::Objective']]],
-  ['configuration_8',['Configuration',['../class_bio_lib_1_1_objectives_1_1_objective.html#a12a09db5b3f3a99f885be4879aa72762',1,'BioLib::Objectives::Objective']]],
-  ['context_9',['Context',['../class_bio_lib_1_1_bio_image.html#a9234ea55fca6d3c111220acfdc395600',1,'BioLib::BioImage']]],
-  ['coord_10',['coord',['../class_bio_lib_1_1_r_o_i.html#a184870bbc890e05a3e7fbb23c2785ce1',1,'BioLib::ROI']]],
-  ['coordinates_11',['COORDINATES',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a0b264e05739aaa2faf229df82f5ee3a1',1,'BioLib::Fiji::RoiDecoder']]],
-  ['coords_12',['Coords',['../class_bio_lib_1_1_bio_image.html#a89919a844ae12f895168d318d570765d',1,'BioLib::BioImage']]],
-  ['count_13',['count',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#a5e880df850e2fb76480751eb483cd9bd',1,'BioLib::BioImage::ImageJDesc']]],
-  ['counters_5foffset_14',['COUNTERS_OFFSET',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#ae3bb1d60fa6dd8f2bb8a5c574680f7fa',1,'BioLib::Fiji::RoiDecoder']]],
-  ['cropheight_15',['cropHeight',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#afbd361b78633ff731283931de3d3d86e',1,'BioLib.ROI.Mask.cropHeight'],['../class_bio_lib_1_1_r_o_i_1_1_mask.html#adfa3c574734e56176e25d1fbd6f36730',1,'BioLib.ROI.Mask.cropHeight']]],
-  ['croppedmask_16',['croppedMask',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a14e0699179159cef9c824e669b3accc2',1,'BioLib::ROI::Mask']]],
-  ['cropwidth_17',['cropWidth',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a3d2d93bcc79ecdd8dffcd8498a596016',1,'BioLib.ROI.Mask.cropWidth'],['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a094d9c8c62e5962435e90c7f861d1409',1,'BioLib.ROI.Mask.cropWidth']]]
+  ['min_0',['min',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a4915e054885bbd896101ff9d42ae5c1a',1,'BioLib::ROI::Mask']]]
 ];

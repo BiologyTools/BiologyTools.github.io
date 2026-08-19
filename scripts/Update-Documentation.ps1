@@ -8,28 +8,34 @@ $ErrorActionPreference = 'Stop'
 
 $siteRoot = Split-Path -Parent $PSScriptRoot
 $documentationRoot = Join-Path $siteRoot 'Documentation'
+$repositoryRoot = 'C:\Users\Erikr\Documents\GitHub'
 $doxygen = (Get-Command doxygen -ErrorAction Stop).Source
+$legacyThemeDoxyfile = Join-Path $repositoryRoot 'BioLibDoxyfile'
 
 $projects = @{
     BioLib = @{
-        Root = 'C:\Users\Erikr\Documents\GitHub\BioLib'
-        Input = @('README.md', 'Source')
-        Brief = 'BioLib microscopy image processing library for .NET'
+        Root = Join-Path $repositoryRoot 'BioLib'
+        Readme = Join-Path $repositoryRoot 'BioLib\README.md'
+        Doxyfiles = @($legacyThemeDoxyfile)
+        WorkingDirectory = $repositoryRoot
     }
     BioImager = @{
-        Root = 'C:\Users\Erikr\Documents\GitHub\BioImager'
-        Input = @('README.md', 'Source')
-        Brief = 'BioImager microscopy image analysis application'
+        Root = Join-Path $repositoryRoot 'BioImager'
+        Readme = Join-Path $repositoryRoot 'BioImager\README.md'
+        Doxyfiles = @(Join-Path $repositoryRoot 'BioImagerDoxyfile')
+        WorkingDirectory = $repositoryRoot
     }
     BioGTK = @{
-        Root = 'C:\Users\Erikr\Documents\GitHub\BioGTK\BioGTK'
-        Input = @('README.md', 'Source')
-        Brief = 'BioGTK microscopy image analysis application'
+        Root = Join-Path $repositoryRoot 'BioGTK\BioGTK'
+        Readme = Join-Path $repositoryRoot 'BioGTK\BioGTK\README.md'
+        Doxyfiles = @(Join-Path $repositoryRoot 'BioGTKDoxyfile')
+        WorkingDirectory = $repositoryRoot
     }
     IKVM11 = @{
-        Root = 'C:\Users\Erikr\Documents\GitHub\ikvm'
-        Input = @('Doxyfile')
-        Brief = 'Java SE 11 Virtual Machine for .NET'
+        Root = Join-Path $repositoryRoot 'ikvm'
+        Readme = Join-Path $repositoryRoot 'ikvm\README.md'
+        Doxyfiles = @($legacyThemeDoxyfile, (Join-Path $repositoryRoot 'ikvm\Doxyfile'))
+        WorkingDirectory = Join-Path $repositoryRoot 'ikvm'
     }
 }
 
@@ -53,35 +59,25 @@ function Invoke-Doxygen {
 
 function New-Doxyfile {
     param(
-        [hashtable]$Definition,
-        [string]$ProjectName,
-        [string]$OutputDirectory
+        [string[]]$IncludedDoxyfiles,
+        [string]$OutputDirectory,
+        [string]$MainPage
     )
 
-    $quotedInputs = $Definition.Input | ForEach-Object {
-        '"{0}"' -f (Join-Path $Definition.Root $_).Replace('\', '/')
-    }
-
     @(
-        'DOXYFILE_ENCODING = UTF-8'
-        "PROJECT_NAME = $ProjectName"
-        "PROJECT_BRIEF = `"$($Definition.Brief)`""
+        $IncludedDoxyfiles | ForEach-Object {
+            "@INCLUDE = `"$($_.Replace('\', '/'))`""
+        }
         "OUTPUT_DIRECTORY = `"$($OutputDirectory.Replace('\', '/'))`""
-        'OUTPUT_LANGUAGE = English'
-        "INPUT = $($quotedInputs -join ' ')"
-        'FILE_PATTERNS = *.cs *.md'
-        'RECURSIVE = YES'
-        'EXCLUDE_PATTERNS = */bin/* */obj/* */.vs/* */packages/* */.tmp/*'
-        'EXTRACT_ALL = YES'
-        'EXTRACT_PRIVATE = NO'
-        'SOURCE_BROWSER = YES'
-        'INLINE_SOURCES = YES'
-        'GENERATE_HTML = YES'
-        'HTML_OUTPUT = html'
-        'GENERATE_LATEX = NO'
-        'GENERATE_XML = NO'
-        'HAVE_DOT = NO'
-        'USE_MDFILE_AS_MAINPAGE = README.md'
+        "INPUT += `"$($MainPage.Replace('\', '/'))`""
+        "USE_MDFILE_AS_MAINPAGE = `"$($MainPage.Replace('\', '/'))`""
+        'HTML_HEADER = D:/repos/RepoErik/doxygen-awesome/doxygen-custom/header.html'
+        'HTML_COLORSTYLE = TOGGLE'
+        'GENERATE_TREEVIEW = YES'
+        'DISABLE_INDEX = NO'
+        'FULL_SIDEBAR = NO'
+        'HTML_EXTRA_STYLESHEET = D:/repos/RepoErik/doxygen-awesome/doxygen-awesome.css D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-sidebar-only.css D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-sidebar-only-darkmode-toggle.css'
+        'HTML_EXTRA_FILES = D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-darkmode-toggle.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-fragment-copy-button.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-interactive-toc.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-paragraph-link.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-tabs.js D:/repos/RepoErik/doxygen-awesome/doxygen-custom/toggle-alternative-theme.js'
     ) -join [Environment]::NewLine
 }
 
@@ -92,23 +88,25 @@ foreach ($projectName in $requestedProjects) {
     if (-not (Test-Path -LiteralPath $definition.Root)) {
         throw "Project root not found: $($definition.Root)"
     }
+    foreach ($includedDoxyfile in $definition.Doxyfiles) {
+        if (-not (Test-Path -LiteralPath $includedDoxyfile)) {
+            throw "Doxygen configuration not found: $includedDoxyfile"
+        }
+    }
+    if (-not (Test-Path -LiteralPath $definition.Readme)) {
+        throw "README not found: $($definition.Readme)"
+    }
 
     $targetDirectory = Join-Path $documentationRoot $projectName
     $stagingDirectory = Join-Path $env:TEMP ("BiologyTools-Doxygen-$projectName-$([guid]::NewGuid())")
 
     try {
-        if ($projectName -eq 'IKVM11') {
-            Invoke-Doxygen -Configuration 'Doxyfile' -WorkingDirectory $definition.Root
-            $generatedHtml = Join-Path $definition.Root 'doc\doxygen\html'
-        }
-        else {
-            $doxyfile = Join-Path $stagingDirectory 'Doxyfile'
-            New-Item -ItemType Directory -Path $stagingDirectory -Force | Out-Null
-            Set-Content -LiteralPath $doxyfile -Value (New-Doxyfile -Definition $definition -ProjectName $projectName -OutputDirectory $stagingDirectory) -Encoding utf8
-            Invoke-Doxygen -Configuration $doxyfile -WorkingDirectory $definition.Root
-            $generatedHtml = Join-Path $stagingDirectory 'html'
-        }
+        New-Item -ItemType Directory -Path $stagingDirectory -Force | Out-Null
+        $doxyfile = Join-Path $stagingDirectory 'Doxyfile'
+        Set-Content -LiteralPath $doxyfile -Value (New-Doxyfile -IncludedDoxyfiles $definition.Doxyfiles -OutputDirectory $stagingDirectory -MainPage $definition.Readme) -Encoding utf8
+        Invoke-Doxygen -Configuration $doxyfile -WorkingDirectory $definition.WorkingDirectory
 
+        $generatedHtml = Join-Path $stagingDirectory 'html'
         if (-not (Test-Path -LiteralPath (Join-Path $generatedHtml 'index.html'))) {
             throw "Doxygen did not create an index page for $projectName."
         }

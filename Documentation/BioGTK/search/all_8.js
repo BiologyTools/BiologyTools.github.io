@@ -1,15 +1,19 @@
 var searchData=
 [
-  ['h_0',['H',['../class_bio_g_t_k_1_1_apply_filter.html#afba5a194783fcddb0b90b21af8f441b7',1,'BioGTK::ApplyFilter']]],
-  ['hastiletexture_1',['HasTileTexture',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a6ca916815e8246812c75ce975941ad5f',1,'BioGTK::SlideGLArea']]],
-  ['hasvalidimage_2',['HasValidImage',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a6cd0ff15e7820a3d39630400ae5b9dec',1,'BioGTK::SKSlideRenderer']]],
-  ['headless_3',['headless',['../class_bio_g_t_k_1_1_a_i.html#a2ad8822a216d8ae872241a239f6f7de5',1,'BioGTK.AI.headless'],['../class_bio_g_t_k_1_1_bio_console.html#ab0082c4c1d2478b1d7fd65a7e2613272',1,'BioGTK.BioConsole.headless']]],
-  ['height_4',['Height',['../class_bio_g_t_k_1_1_m_l_1_1_m_l_1_1_model.html#a61e815800eed58d20baa2bf7c3946b57',1,'BioGTK::ML::ML::Model']]],
-  ['histogramcontrol_5',['HistogramControl',['../class_bio_g_t_k_1_1_histogram_control.html',1,'BioGTK.HistogramControl'],['../class_bio_g_t_k_1_1_histogram_control.html#afd06dfcc22b5882d49e44e4a938714f6',1,'BioGTK.HistogramControl.HistogramControl()']]],
-  ['histogramcontrol_2ecs_6',['HistogramControl.cs',['../_histogram_control_8cs.html',1,'']]],
-  ['histogramcontrol_5fbuttonpressevent_7',['HistogramControl_ButtonPressEvent',['../class_bio_g_t_k_1_1_histogram_control.html#a0d7a6c18a95ea070234817b67b30f41d',1,'BioGTK::HistogramControl']]],
-  ['histogramcontrol_5fmotionnotifyevent_8',['HistogramControl_MotionNotifyEvent',['../class_bio_g_t_k_1_1_histogram_control.html#ac63ef42184afab0e4cbb2fd8a520705a',1,'BioGTK::HistogramControl']]],
-  ['hittestmask_9',['HitTestMask',['../class_bio_g_t_k_1_1_tools.html#af10a8f981095927f72424aff0fafc432',1,'BioGTK::Tools']]],
-  ['html_10',['Html',['../class_bio_g_t_k_1_1_updater_1_1_git_hub_file_1_1_links.html#ab293dfa7a0ad1bdd34ebe470104e7deb',1,'BioGTK::Updater::GitHubFile::Links']]],
-  ['htmlurl_11',['HtmlUrl',['../class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html#a702db0bc97fb249f4edeca790cfee81b',1,'BioGTK::Updater::GitHubFile']]]
+  ['image_0',['Image',['../class_bio_g_t_k_1_1_o_m_e_r_o_1_1_image.html',1,'BioGTK::OMERO']]],
+  ['imagestostackclick_1',['imagesToStackClick',['../class_bio_g_t_k_1_1_tabs_view.html#aabbb852f46aca19631e6bfe3d3540317',1,'BioGTK::TabsView']]],
+  ['imagetoviewspace_2',['ImageToViewSpace',['../class_bio_g_t_k_1_1_image_view.html#aa6bfd294d6f4293755e4b001e8ae7e46',1,'BioGTK::ImageView']]],
+  ['imageview_3',['ImageView',['../class_bio_g_t_k_1_1_image_view.html',1,'BioGTK']]],
+  ['importroisfromcsvmenuclick_4',['importROIsFromCSVMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#ac13694c7b38a99a893c751e086c6a28c',1,'BioGTK::TabsView']]],
+  ['init_5',['Init',['../class_bio_g_t_k_1_1_s_a_m_tool.html#a414cffeca420da546709c93c00562fe1',1,'BioGTK.SAMTool.Init()'],['../class_bio_g_t_k_1_1_histogram_control.html#a217af93d12c85a1e8e05af3bce1bc147',1,'BioGTK.HistogramControl.Init()'],['../class_bio_g_t_k_1_1_tools_1_1_tool.html#adc15c578c0fa4f2f27337d5d93d7b722',1,'BioGTK.Tools.Tool.Init()']]],
+  ['initializecontextmenu_6',['InitializeContextMenu',['../class_bio_g_t_k_1_1_function.html#a066a0909ce10f4a303747e27a815027c',1,'BioGTK::Function']]],
+  ['initializemainmenu_7',['InitializeMainMenu',['../class_bio_g_t_k_1_1_function.html#a264e1b546c4cf83abebe7f42426271d7',1,'BioGTK::Function']]],
+  ['inititems_8',['InitItems',['../class_bio_g_t_k_1_1_filters_view.html#ad8330afd3a72408074b416066f0f5b13',1,'BioGTK.FiltersView.InitItems()'],['../class_bio_g_t_k_1_1_node_view.html#a361a58a888cbb0e6557530e0b5f4ada1',1,'BioGTK.NodeView.InitItems()'],['../class_bio_1_1_r_o_i_manager.html#ab5ae180b9308cb9fbdd032cea4ed132d',1,'Bio.ROIManager.InitItems()'],['../class_bio_g_t_k_1_1_scripting.html#a33d7aa1b51c9043f5206f820bcefcf4a',1,'BioGTK.Scripting.InitItems()'],['../class_bio_g_t_k_1_1_set_tool.html#a654077c720bb8460e4c400da5d057f1b',1,'BioGTK.SetTool.InitItems()']]],
+  ['initstacks_9',['InitStacks',['../class_bio_g_t_k_1_1_apply_filter.html#adcbd602d67b98d8095ab17bcd258fb8c',1,'BioGTK::ApplyFilter']]],
+  ['install_10',['.NET Runtime Install',['../index.html#autotoc_md6',1,'']]],
+  ['installation_11',['Installation',['../index.html#autotoc_md9',1,'Linux Installation'],['../index.html#autotoc_md8',1,'Windows Installation']]],
+  ['installation_12',['Mac installation,',['../index.html#autotoc_md7',1,'']]],
+  ['instance_13',['Instance',['../class_bio_g_t_k_1_1_micro_s_a_m.html#a3631de0c0e4d12796763d6dd9051ca8b',1,'BioGTK.MicroSAM.Instance()'],['../class_bio_g_t_k_1_1_s_a_m.html#a6c6cafdb6ab64d95149fbd57cb4ab3cb',1,'BioGTK.SAM.Instance()']]],
+  ['invalidaterenderstate_14',['InvalidateRenderState',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a2a5f370c4c99a416796eabcb34c2074d',1,'BioGTK.SKSlideRenderer.InvalidateRenderState()'],['../class_bio_g_t_k_1_1_slide_renderer.html#a3b89488549b5148cb099897aee5d97ea',1,'BioGTK.SlideRenderer.InvalidateRenderState()']]],
+  ['iplugin_15',['IPlugin',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html',1,'BioGTK::Plugin']]]
 ];

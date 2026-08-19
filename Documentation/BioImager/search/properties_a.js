@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['labelresolution_0',['LabelResolution',['../class_bio_imager_1_1_image_view.html#a8e3f9a0c25f1b254f21dd617260e1754',1,'BioImager::ImageView']]],
-  ['level_1',['Level',['../class_bio_imager_1_1_image_view.html#add717aef7e5bb3d8475ecf08f3a74aff',1,'BioImager::ImageView']]],
-  ['list_2',['List',['../class_bio_imager_1_1_automation_1_1_recording.html#a35c42b860b977f7eccdac7ea85c5d4d6',1,'BioImager::Automation::Recording']]],
-  ['location_3',['Location',['../class_bio_imager_1_1_slide_imager_1_1_level.html#a46dd448117ebc8b3feb4bd2d6eb0820c',1,'BioImager::SlideImager::Level']]]
+  ['scale_0',['Scale',['../class_bio_imager_1_1_image_view.html#a0ae66d6b6ba4cdbc65ce29a00541e244',1,'BioImager::ImageView']]],
+  ['selectedindex_1',['SelectedIndex',['../class_bio_imager_1_1_image_view.html#ad8ba23b577c13188d8d1c18c1572d350',1,'BioImager::ImageView']]],
+  ['showcontrols_2',['ShowControls',['../class_bio_imager_1_1_image_view.html#a24d3d36836b688e599297db5f8ee4122',1,'BioImager::ImageView']]],
+  ['showstatus_3',['ShowStatus',['../class_bio_imager_1_1_image_view.html#a9e83ae1e2627dd93602e540fc83e7c08',1,'BioImager::ImageView']]]
 ];

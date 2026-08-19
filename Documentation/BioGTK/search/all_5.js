@@ -1,23 +1,11 @@
 var searchData=
 [
-  ['elementtype_0',['ElementType',['../class_bio_g_t_k_1_1_objectives_1_1_objective.html#ac6cf8652c063ac3a67cac230c6dcc6a8',1,'BioGTK::Objectives::Objective']]],
-  ['ellipse_1',['ellipse',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#afe6ea42d5c9a22476ceee46e28376d48a2ea558023e0395f98296b929dfdcfb05',1,'BioGTK::Tools::Tool']]],
-  ['emission_2',['Emission',['../class_bio_g_t_k_1_1_image_view.html#af2a0a02e6c275f473e6a4c6eae00c28cafcd6085dfce75d342b43c637cb63244c',1,'BioGTK::ImageView']]],
-  ['enableprefetch_3',['EnablePrefetch',['../class_bio_g_t_k_1_1_skia_stitching_pipeline.html#a006cc81a05d92017852d8c9536ef58c0',1,'BioGTK.SkiaStitchingPipeline.EnablePrefetch'],['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a71f5911a57f392579fcf1ca62335f1bc',1,'BioGTK.SKSlideRenderer.EnablePrefetch']]],
-  ['endc_4',['endc',['../class_bio_g_t_k_1_1_image_view.html#aab1e2c614bfe261aa3cfd4efcb05f541',1,'BioGTK::ImageView']]],
-  ['endt_5',['endt',['../class_bio_g_t_k_1_1_image_view.html#a13a1a0cae47ad0d8499993df7022ca57',1,'BioGTK::ImageView']]],
-  ['endz_6',['endz',['../class_bio_g_t_k_1_1_image_view.html#a9a825ca7fac1cadec45092dfc49e4533',1,'BioGTK::ImageView']]],
-  ['erasecolor_7',['EraseColor',['../class_bio_g_t_k_1_1_tools.html#a76c219590c2c235f20c3465ac58d7737',1,'BioGTK::Tools']]],
-  ['erasecolor_8',['eraseColor',['../class_bio_g_t_k_1_1_tools.html#a2e2e01eb8e0e2547b9641d2d9eb82153',1,'BioGTK::Tools']]],
-  ['eraser_9',['eraser',['../class_bio_g_t_k_1_1_tools_1_1_tool.html#afe6ea42d5c9a22476ceee46e28376d48a91e9b37f58778be003d21a65fab87e73',1,'BioGTK::Tools::Tool']]],
-  ['error_10',['error',['../class_bio_g_t_k_1_1_scripting.html#a3bcc340a94dc237aa46727c5e2c7102d',1,'BioGTK::Scripting']]],
-  ['event_11',['Event',['../class_bio_g_t_k_1_1_scripting.html#a400cd6dbfb57c03de3fe5049c005fc14',1,'BioGTK::Scripting']]],
-  ['ex_12',['ex',['../class_bio_g_t_k_1_1_scripting_1_1_script.html#a0f7f087229339b4eb6167f5d09b92e4b',1,'BioGTK::Scripting::Script']]],
-  ['examples_13',['Examples',['../index.html#autotoc_md10',1,'']]],
-  ['execute_14',['Execute',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#ab4148a22b6d889a58791d316ed5e0c40',1,'BioGTK::Plugin::IPlugin']]],
-  ['exit_15',['Exit',['../class_bio_g_t_k_1_1_scripting.html#a57386ecf8f6aa42b2b90be8319a16383',1,'BioGTK::Scripting']]],
-  ['exit_16',['exit',['../class_bio_g_t_k_1_1_scripting_1_1_script.html#ad67113cee23e79f912004bb7998d654d',1,'BioGTK::Scripting::Script']]],
-  ['exportroisoffolderofimagesmenuclick_17',['exportROIsOfFolderOfImagesMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a2e5095b7687b28f107c0faa4f94b1171',1,'BioGTK::TabsView']]],
-  ['exportroistocsvmenuclick_18',['exportROIsToCSVMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a3655d5f2222df2f1e8df3e0e44a52a75',1,'BioGTK::TabsView']]],
-  ['extent_19',['Extent',['../class_bio_g_t_k_1_1_skia_stitching_pipeline_1_1_tile_request.html#acfa6a603d76808b44300cc6227a9cf6c',1,'BioGTK::SkiaStitchingPipeline::TileRequest']]]
+  ['features_0',['Features',['../index.html#autotoc_md1',1,'']]],
+  ['filtersmenuclick_1',['filtersMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a61d126b63aea2e49cfe8896e3cc182a4',1,'BioGTK::TabsView']]],
+  ['filtersview_2',['FiltersView',['../class_bio_g_t_k_1_1_filters_view.html',1,'BioGTK']]],
+  ['focus_3',['Focus',['../class_bio_g_t_k_1_1_focus.html',1,'BioGTK']]],
+  ['fromcolor_4',['FromColor',['../class_bio_g_t_k_1_1_image_view.html#ad4c49d8990c4b4ab022ccdacb1b002f7',1,'BioGTK::ImageView']]],
+  ['function_5',['Function',['../class_bio_g_t_k_1_1_function.html',1,'BioGTK']]],
+  ['functions_6',['Functions',['../class_bio_g_t_k_1_1_functions.html',1,'BioGTK.Functions'],['../class_bio_g_t_k_1_1_functions.html#a5b0fd528ce77cd7fd3083a7495d2865d',1,'BioGTK.Functions.Functions()']]],
+  ['functionstoolmenuclick_7',['functionsToolMenuClick',['../class_bio_g_t_k_1_1_tabs_view.html#a6c62b16786eba3d152609ddea2588c79',1,'BioGTK::TabsView']]]
 ];

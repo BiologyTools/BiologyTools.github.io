@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['keydownevent_0',['KeyDownEvent',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a191f4df95a1232d6d479a8e90ec1609b',1,'BioGTK::Plugin::IPlugin']]],
-  ['keyupevent_1',['KeyUpEvent',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html#a8c6706b64f841940d0f2300cc197616d',1,'BioGTK::Plugin::IPlugin']]]
+  ['loadonnxmodel_0',['LoadONNXModel',['../class_bio_g_t_k_1_1_micro_s_a_m.html#a31c10a2d1e690585196030015f1d2051',1,'BioGTK.MicroSAM.LoadONNXModel()'],['../class_bio_g_t_k_1_1_s_a_m.html#af5fce0cb0d6759ad651893b6ae0b1991',1,'BioGTK.SAM.LoadONNXModel()']]]
 ];
