@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BiologyTools Documentation</title>
+  <meta name="description" content="Documentation hub for BiologyTools projects." />
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f4f7fb;
+      --panel: rgba(255, 255, 255, 0.86);
+      --panel-border: rgba(24, 44, 82, 0.12);
+      --text: #10243d;
+      --muted: #5d6d82;
+      --accent: #2563eb;
+      --accent-2: #0f766e;
+      --shadow: 0 18px 50px rgba(16, 36, 61, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { margin: 0; min-height: 100%; }
+
+    body {
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 28%),
+        radial-gradient(circle at 90% 10%, rgba(15, 118, 110, 0.12), transparent 24%),
+        linear-gradient(180deg, #ffffff 0%, var(--bg) 100%);
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin: 0 auto;
+      padding: 56px 24px 72px;
+    }
+
+    .hero {
+      display: grid;
+      gap: 20px;
+      grid-template-columns: minmax(0, 1.7fr) minmax(280px, 0.9fr);
+      align-items: stretch;
+      margin-bottom: 28px;
+    }
+
+    .hero-panel,
+    .side-panel,
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--panel-border);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(14px);
+    }
+
+    .hero-panel {
+      border-radius: 28px;
+      padding: 42px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 18px;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      box-shadow: 0 0 0 6px rgba(37, 99, 235, 0.12);
+    }
+
+    h1 {
+      margin: 0 0 16px;
+      font-size: clamp(2.2rem, 4vw, 4.4rem);
+      line-height: 0.98;
+      letter-spacing: -0.05em;
+    }
+
+    .lede {
+      margin: 0;
+      max-width: 68ch;
+      font-size: 1.08rem;
+      line-height: 1.7;
+      color: var(--muted);
+    }
+
+    .quick-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 700;
+      color: white;
+      background: linear-gradient(135deg, var(--accent), #1d4ed8);
+      box-shadow: 0 12px 26px rgba(37, 99, 235, 0.25);
+    }
+
+    .button.secondary {
+      color: var(--text);
+      background: rgba(255, 255, 255, 0.78);
+      border: 1px solid rgba(16, 36, 61, 0.12);
+      box-shadow: none;
+    }
+
+    .side-panel {
+      border-radius: 28px;
+      padding: 28px;
+      display: grid;
+      gap: 14px;
+      align-content: start;
+    }
+
+    .side-title {
+      margin: 0 0 4px;
+      font-size: 1.05rem;
+    }
+
+    .side-panel p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .stat {
+      padding: 14px;
+      border-radius: 18px;
+      background: rgba(16, 36, 61, 0.04);
+    }
+
+    .stat strong {
+      display: block;
+      font-size: 1.15rem;
+      margin-bottom: 4px;
+    }
+
+    .section-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin: 34px 4px 16px;
+    }
+
+    .section-head h2 {
+      margin: 0;
+      font-size: 1.35rem;
+    }
+
+    .section-head p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      border-radius: 24px;
+      padding: 26px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+    }
+
+    .card:hover {
+      transform: translateY(-3px);
+      border-color: rgba(37, 99, 235, 0.28);
+      box-shadow: 0 24px 60px rgba(16, 36, 61, 0.16);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      line-height: 1.65;
+      color: var(--muted);
+    }
+
+    .meta {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-top: 18px;
+    }
+
+    .tag {
+      font-size: 0.82rem;
+      padding: 7px 11px;
+      border-radius: 999px;
+      background: rgba(37, 99, 235, 0.10);
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    .archive-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .archive-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      padding: 12px 14px;
+      border-radius: 16px;
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(16, 36, 61, 0.10);
+      text-decoration: none;
+      color: var(--text);
+      box-shadow: 0 10px 22px rgba(16, 36, 61, 0.06);
+    }
+
+    .archive-link span {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    footer {
+      margin-top: 40px;
+      color: var(--muted);
+      font-size: 0.95rem;
+    }
+
+    @media (max-width: 1024px) {
+      .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      .archive-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 920px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero-panel { padding: 32px; }
+    }
+
+    @media (max-width: 560px) {
+      .wrap { padding: 20px 16px 44px; }
+      .hero-panel, .side-panel, .card { border-radius: 20px; }
+      .stats { grid-template-columns: 1fr; }
+      .grid, .archive-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <section class="hero">
+      <div class="hero-panel">
+        <div class="eyebrow">BiologyTools Documentation</div>
+        <h1>Project docs, organized in one place.</h1>
+        <p class="lede">
+          Find the published documentation for the BiologyTools projects below. The main project sites are surfaced first, followed by the historical version archives that are still available under the same documentation root.
+        </p>
+        <div class="quick-links">
+          <a class="button" href="./BioLib/">Open BioLib Docs</a>
+          <a class="button secondary" href="./IKVM11/">Open IKVM11 Docs</a>
+        </div>
+      </div>
+
+      <aside class="side-panel">
+        <div>
+          <h2 class="side-title">Published set</h2>
+          <p>Main projects and legacy versions are both available from this page.</p>
+        </div>
+        <div class="stats">
+          <div class="stat"><strong>BioLib</strong><span>Core biology utilities</span></div>
+          <div class="stat"><strong>BioImager</strong><span>Imaging application docs</span></div>
+          <div class="stat"><strong>BioGTK</strong><span>GTK UI docs</span></div>
+          <div class="stat"><strong>IKVM11</strong><span>Java 11 compatibility</span></div>
+        </div>
+      </aside>
+    </section>
+
+    <div class="section-head">
+      <h2>Main Projects</h2>
+      <p>Current project documentation sites.</p>
+    </div>
+
+    <section class="grid" aria-label="Main documentation links">
+      <a class="card" href="./BioLib/">
+        <h3>BioLib</h3>
+        <p>Core biology utilities and shared library documentation.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Current</span></div>
+      </a>
+
+      <a class="card" href="./BioImager/">
+        <h3>BioImager</h3>
+        <p>Documentation for the imaging application and its components.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Current</span></div>
+      </a>
+
+      <a class="card" href="./BioGTK/">
+        <h3>BioGTK</h3>
+        <p>GTK-based user interface documentation and project reference material.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Current</span></div>
+      </a>
+
+      <a class="card" href="./IKVM11/">
+        <h3>IKVM11</h3>
+        <p>IKVM11 documentation, updated for Java 11 and the current project branding.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Current</span></div>
+      </a>
+
+      <a class="card" href="./BioCore/">
+        <h3>BioCore</h3>
+        <p>Core project documentation preserved in the published site.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Project</span></div>
+      </a>
+
+      <a class="card" href="./MicroscopeConsole/">
+        <h3>MicroscopeConsole</h3>
+        <p>Console tooling documentation for microscope control workflows.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Project</span></div>
+      </a>
+
+      <a class="card" href="./SciChainLib/">
+        <h3>SciChainLib</h3>
+        <p>Documentation for the SciChain library project.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Project</span></div>
+      </a>
+
+      <a class="card" href="./ZarrNET/">
+        <h3>ZarrNET</h3>
+        <p>Documentation for the ZarrNET project.</p>
+        <div class="meta"><span class="tag">Generated docs</span><span class="tag">Project</span></div>
+      </a>
+
+      <a class="card" href="./Beta-1.2/">
+        <h3>Beta-1.2</h3>
+        <p>Legacy published documentation retained on the site.</p>
+        <div class="meta"><span class="tag">Archive</span><span class="tag">Legacy</span></div>
+      </a>
+    </section>
+
+    <div class="section-head">
+      <h2>Version Archives</h2>
+      <p>Historical docs kept for reference.</p>
+    </div>
+
+    <section class="archive-grid" aria-label="Version archive links">
+      <a class="archive-link" href="./BioCore-3.4.0/">BioCore-3.4.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioCore-3.6.0/">BioCore-3.6.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioCore-3.9.0/">BioCore-3.9.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioCore-4.0.1/">BioCore-4.0.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-2.0/">BioGTK-2.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-2.4.0/">BioGTK-2.4.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-3.6.0/">BioGTK-3.6.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-3.8.0/">BioGTK-3.8.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.1.0/">BioGTK-4.1.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.3.0/">BioGTK-4.3.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.5.0/">BioGTK-4.5.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.5.2/">BioGTK-4.5.2 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.6.0/">BioGTK-4.6.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.7.1/">BioGTK-4.7.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.8.0/">BioGTK-4.8.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-4.9.0/">BioGTK-4.9.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.0.1/">BioGTK-5.0.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.1.1/">BioGTK-5.1.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.4.1/">BioGTK-5.4.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.7.0/">BioGTK-5.7.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.8.2/">BioGTK-5.8.2 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-5.9.0/">BioGTK-5.9.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-6.0.0/">BioGTK-6.0.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-6.3.0/">BioGTK-6.3.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioGTK-6.5.0/">BioGTK-6.5.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-2.1.0/">BioImager-2.1.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.1.0/">BioImager-3.1.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.2.0/">BioImager-3.2.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.3.0/">BioImager-3.3.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.6.0/">BioImager-3.6.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.7.0/">BioImager-3.7.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.8.2/">BioImager-3.8.2 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-3.9.1/">BioImager-3.9.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioImager-4.9.0/">BioImager-4.9.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-1.8.0/">BioLib-1.8.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-2.0.0/">BioLib-2.0.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-2.2.1/">BioLib-2.2.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-2.3.0/">BioLib-2.3.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-2.7.2.1/">BioLib-2.7.2.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-2.9.1.0/">BioLib-2.9.1.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.1.1/">BioLib-3.1.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.2.0/">BioLib-3.2.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.3.0/">BioLib-3.3.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.4.1/">BioLib-3.4.1 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.6.2/">BioLib-3.6.2 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.7.0/">BioLib-3.7.0 <span>archive</span></a>
+      <a class="archive-link" href="./BioLib-3.9.1/">BioLib-3.9.1 <span>archive</span></a>
+      <a class="archive-link" href="./SciChain-0.3.1/">SciChain-0.3.1 <span>archive</span></a>
+      <a class="archive-link" href="./SciChainLib-0.2.1/">SciChainLib-0.2.1 <span>archive</span></a>
+    </section>
+
+    <footer>
+      If you want, I can also turn the archive section into grouped filters by project so the page stays shorter while still exposing every version.
+    </footer>
+  </main>
+</body>
+</html>
