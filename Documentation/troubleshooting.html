@@ -64,12 +64,20 @@
     }
     .hero { border-radius: 30px; padding: 34px; margin-bottom: 22px; }
     .bar { display: flex; justify-content: space-between; gap: 12px; align-items: center; flex-wrap: wrap; margin-bottom: 18px; }
+    .brand { display: flex; align-items: center; gap: 14px; min-width: 0; }
+    .brand img { width: 56px; height: 56px; border-radius: 14px; flex: 0 0 auto; box-shadow: 0 10px 26px rgba(16, 36, 61, 0.18); }
+    .brand-text { display: flex; flex-direction: column; min-width: 0; }
+    .brand-text strong { font-size: 1.02rem; }
+    .brand-text span { color: var(--page-secondary-foreground-color); font-size: 0.92rem; line-height: 1.35; }
     .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 0.84rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--primary-dark-color); }
     .eyebrow::before { content: ""; width: 10px; height: 10px; border-radius: 999px; background: linear-gradient(135deg, var(--primary-color), var(--primary-light-color)); box-shadow: 0 0 0 6px color-mix(in srgb, var(--primary-color) 22%, transparent); }
     .theme-toggle {
       appearance: none; border: 1px solid var(--separator-color); background: var(--panel-strong-background); color: var(--page-foreground-color);
       border-radius: 999px; padding: 10px 15px; font-weight: 700; cursor: pointer;
     }
+    .nav { display: flex; flex-wrap: wrap; gap: 8px; margin: 10px 0 22px; }
+    .nav a { text-decoration: none; padding: 8px 12px; border-radius: 999px; border: 1px solid var(--separator-color); background: color-mix(in srgb, var(--panel-background) 88%, transparent); color: var(--page-foreground-color); }
+    .nav a:hover { border-color: color-mix(in srgb, var(--primary-color) 50%, var(--separator-color)); }
     h1 { margin: 0 0 14px; font-size: clamp(2rem, 4vw, 3.8rem); line-height: 0.98; letter-spacing: -0.05em; }
     .lede { margin: 0; max-width: 72ch; font-size: 1.03rem; line-height: 1.72; color: var(--page-secondary-foreground-color); }
     .actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
@@ -84,17 +92,13 @@
     .card:hover { transform: translateY(-3px); border-color: color-mix(in srgb, var(--primary-color) 50%, var(--separator-color)); box-shadow: 0 24px 60px rgba(16, 36, 61, 0.16); }
     .card h2, .card h3 { margin: 0 0 10px; }
     .card p { margin: 0; line-height: 1.65; color: var(--page-secondary-foreground-color); }
-    .list { margin: 14px 0 0; padding-left: 18px; color: var(--page-secondary-foreground-color); line-height: 1.7; }
     .panel { border-radius: 22px; padding: 22px; }
     .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin: 28px 2px 14px; }
     .section-head h2 { margin: 0; font-size: 1.3rem; }
     .section-head p { margin: 0; color: var(--page-secondary-foreground-color); }
-    .archives { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
-    .archive-link { display: inline-flex; justify-content: space-between; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 16px; text-decoration: none; color: var(--page-foreground-color); background: var(--panel-background); border: 1px solid var(--separator-color); transition: transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease; }
-    .archive-link:hover { transform: translateY(-2px); border-color: color-mix(in srgb, var(--primary-color) 50%, var(--separator-color)); }
     footer { margin-top: 34px; color: var(--page-secondary-foreground-color); font-size: 0.95rem; }
-    @media (max-width: 900px) { .grid, .archives { grid-template-columns: 1fr; } }
-    @media (max-width: 560px) { .wrap { padding: 16px 14px 40px; } .hero { padding: 22px; border-radius: 22px; } }
+    @media (max-width: 900px) { .grid { grid-template-columns: 1fr; } }
+    @media (max-width: 560px) { .wrap { padding: 16px 14px 40px; } .hero { padding: 22px; border-radius: 22px; } .brand img { width: 52px; height: 52px; } }
   </style>
   <script>
     (function () {
@@ -127,15 +131,25 @@
 <body>
   <main class="wrap">
     <section class="hero">
-      <div class="bar"><nav class="nav" aria-label="Site navigation"><a href="./">Home</a><a href="./projects.html">Projects</a><a href="./releases.html">Releases</a><a href="./getting-started.html">Getting Started</a><a href="./troubleshooting.html">Troubleshooting</a><a href="./archive.html">Archive</a><a href="./search.html">Search</a><a href="./release-notes.html">Release Notes</a></nav>
-        <div class="eyebrow">BiologyTools Documentation</div>
+      <div class="bar">
+        <div class="brand">
+          <img src="../bio.png" alt="BiologyTools logo" />
+          <div class="brand-text">
+            <div class="eyebrow">BiologyTools Documentation</div>
+            <strong>Troubleshooting and fixes</strong>
+            <span>Common issues, checks, and recovery steps</span>
+          </div>
+        </div>
         <button class="theme-toggle" id="themeToggle" type="button" aria-pressed="false">Switch to night mode</button>
       </div>
+      <nav class="nav" aria-label="Site navigation">
+        <a href="../">Home</a><a href="./">Documentation</a><a href="./projects.html">Projects</a><a href="./releases.html">Releases</a><a href="./getting-started.html">Getting Started</a><a href="./troubleshooting.html">Troubleshooting</a><a href="./archive.html">Archive</a><a href="./search.html">Search</a><a href="./release-notes.html">Release Notes</a>
+      </nav>
       <h1>Quick checks when the docs do not look right.</h1>
       <p class="lede">This page collects the routine failure modes so you can fix problems without digging through the repo every time.</p>
       <div class="actions">
-        <a class="button" href="System.Collections.Hashtable.href">System.Collections.Hashtable.text</a>
-        <a class="button secondary" href="System.Collections.Hashtable.href">System.Collections.Hashtable.text</a>
+        <a class="button" href="./search.html">Search Docs</a>
+        <a class="button secondary" href="./projects.html">Browse Projects</a>
       </div>
     </section>
     <div class="section-head"><h2>Common Issues</h2><p>Known fixes and checks.</p></div>
@@ -149,4 +163,3 @@
   </main>
 </body>
 </html>
-
