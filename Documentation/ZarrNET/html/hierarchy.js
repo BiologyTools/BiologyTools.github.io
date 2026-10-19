@@ -4,6 +4,7 @@ var hierarchy =
     [ "ZarrNET.Core.OmeZarr.Metadata.AxisMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_axis_metadata.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html", null ],
     [ "ZarrNET.Core.BioImageDescriptor", "class_zarr_n_e_t_1_1_core_1_1_bio_image_descriptor.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Metadata.ByDimensionTransformation", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_by_dimension_transformation.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.ChannelDisplayMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_channel_display_metadata.html", null ],
     [ "ZarrNET.ChunkGridConfigurationDocument", "class_zarr_n_e_t_1_1_chunk_grid_configuration_document.html", null ],
     [ "ZarrNET.ChunkGridDocument", "class_zarr_n_e_t_1_1_chunk_grid_document.html", null ],
@@ -13,7 +14,10 @@ var hierarchy =
     [ "ZarrNET.CodecDocument", "class_zarr_n_e_t_1_1_codec_document.html", null ],
     [ "ZarrNET.CodecPipeline", "class_zarr_n_e_t_1_1_codec_pipeline.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.ColumnMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_column_metadata.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Metadata.CoordinateSystemMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_system_metadata.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Metadata.CoordinateSystemReference", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_system_reference.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.CoordinateTransformation", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_transformation.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformationGraph", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html", null ],
     [ "ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformService", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.DatasetMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_dataset_metadata.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.FieldCount", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_field_count.html", null ],
@@ -31,12 +35,16 @@ var hierarchy =
       [ "ZarrNET.Core.OmeZarrReader", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html", null ],
       [ "ZarrNET.Core.Zarr.Store.LocalFileSystemStore", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html", null ]
     ] ],
+    [ "IEquatable", null, [
+      [ "ZarrNET.Core.ZCT", "struct_zarr_n_e_t_1_1_core_1_1_z_c_t.html", null ]
+    ] ],
     [ "ZarrNET.Core.OmeZarr.Metadata.ImageLabelMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_image_label_metadata.html", null ],
     [ "ZarrNET.IZarrCodec", "interface_zarr_n_e_t_1_1_i_zarr_codec.html", [
       [ "ZarrNET.BloscCodec", "class_zarr_n_e_t_1_1_blosc_codec.html", null ],
       [ "ZarrNET.BytesCodec", "class_zarr_n_e_t_1_1_bytes_codec.html", null ],
       [ "ZarrNET.Crc32cCodec", "class_zarr_n_e_t_1_1_crc32c_codec.html", null ],
       [ "ZarrNET.GzipCodec", "class_zarr_n_e_t_1_1_gzip_codec.html", null ],
+      [ "ZarrNET.TransposeCodec", "class_zarr_n_e_t_1_1_transpose_codec.html", null ],
       [ "ZarrNET.ZstdCodec", "class_zarr_n_e_t_1_1_zstd_codec.html", null ]
     ] ],
     [ "ZarrNET.Core.OmeZarr.Metadata.LabelColorEntry", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_label_color_entry.html", null ],
@@ -69,7 +77,9 @@ var hierarchy =
     [ "ZarrNET.Core.ResolutionLevelDescriptor", "class_zarr_n_e_t_1_1_core_1_1_resolution_level_descriptor.html", null ],
     [ "ZarrNET.Core.Nodes.ResolutionLevelNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.RowMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_row_metadata.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Metadata.SceneMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_scene_metadata.html", null ],
     [ "ZarrNET.ShardingConfig", "class_zarr_n_e_t_1_1_sharding_config.html", null ],
+    [ "ZarrNET.Core.OmeZarr.Coordinates.VectorFieldTransformation", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_vector_field_transformation.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.WellMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_well_metadata.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.WellReference", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_well_reference.html", null ],
     [ "ZarrNET.Core.OmeZarr.Metadata.WindowMetadata", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_window_metadata.html", null ],
@@ -82,6 +92,5 @@ var hierarchy =
     [ "ZarrNET.ZarrV2ArrayDocument", "class_zarr_n_e_t_1_1_zarr_v2_array_document.html", null ],
     [ "ZarrNET.ZarrV2AttrsDocument", "class_zarr_n_e_t_1_1_zarr_v2_attrs_document.html", null ],
     [ "ZarrNET.ZarrV2CompressorDocument", "class_zarr_n_e_t_1_1_zarr_v2_compressor_document.html", null ],
-    [ "ZarrNET.ZarrV2GroupDocument", "class_zarr_n_e_t_1_1_zarr_v2_group_document.html", null ],
-    [ "ZarrNET.Core.ZCT", "struct_zarr_n_e_t_1_1_core_1_1_z_c_t.html", null ]
+    [ "ZarrNET.ZarrV2GroupDocument", "class_zarr_n_e_t_1_1_zarr_v2_group_document.html", null ]
 ];

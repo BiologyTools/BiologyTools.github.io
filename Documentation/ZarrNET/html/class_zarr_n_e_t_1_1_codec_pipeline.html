@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -140,6 +140,7 @@ $(function(){initNavTree('class_zarr_n_e_t_1_1_codec_pipeline.html',''); initRes
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#properties">Properties</a> &#124;
 <a href="class_zarr_n_e_t_1_1_codec_pipeline-members.html">List of all members</a>  </div>
   <div class="headertitle"><div class="title">ZarrNET.CodecPipeline Class Reference<span class="mlabels"><span class="mlabel">sealed</span></span></div></div>
 </div><!--header-->
@@ -150,21 +151,28 @@ $(function(){initNavTree('class_zarr_n_e_t_1_1_codec_pipeline.html',''); initRes
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aef19a2993848f8f78000433ed2c7b80b" id="r_aef19a2993848f8f78000433ed2c7b80b"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef19a2993848f8f78000433ed2c7b80b">CodecPipeline</a> (IReadOnlyList&lt; <a class="el" href="interface_zarr_n_e_t_1_1_i_zarr_codec.html">IZarrCodec</a> &gt; codecs, int elementSize)</td></tr>
-<tr class="separator:aef19a2993848f8f78000433ed2c7b80b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae11d7c710c8ffc0b54f4b1133124510a" id="r_ae11d7c710c8ffc0b54f4b1133124510a"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae11d7c710c8ffc0b54f4b1133124510a">CodecPipeline</a> (IReadOnlyList&lt; <a class="el" href="interface_zarr_n_e_t_1_1_i_zarr_codec.html">IZarrCodec</a> &gt; codecs, int byteOrderElementSize)</td></tr>
+<tr class="separator:ae11d7c710c8ffc0b54f4b1133124510a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0c04c9c45a3ad843f570fd58da2c1a9d" id="r_a0c04c9c45a3ad843f570fd58da2c1a9d"><td class="memItemLeft" align="right" valign="top">Task&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a0c04c9c45a3ad843f570fd58da2c1a9d">DecodeAsync</a> (byte[] input, CancellationToken ct=default)</td></tr>
 <tr class="separator:a0c04c9c45a3ad843f570fd58da2c1a9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:afd2d5fe2b843561d87d34610859a4a9c" id="r_afd2d5fe2b843561d87d34610859a4a9c"><td class="memItemLeft" align="right" valign="top">Task&lt; byte[]&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#afd2d5fe2b843561d87d34610859a4a9c">EncodeAsync</a> (byte[] input, CancellationToken ct=default)</td></tr>
 <tr class="separator:afd2d5fe2b843561d87d34610859a4a9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="properties" name="properties"></a>
+Properties</h2></td></tr>
+<tr class="memitem:a11bed1fd8dd8bcb1825f58424dee5a8b" id="r_a11bed1fd8dd8bcb1825f58424dee5a8b"><td class="memItemLeft" align="right" valign="top"><a id="a11bed1fd8dd8bcb1825f58424dee5a8b" name="a11bed1fd8dd8bcb1825f58424dee5a8b"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>CanStoreDecodedBytesWithoutTransform</b><code> [get]</code></td></tr>
+<tr class="memdesc:a11bed1fd8dd8bcb1825f58424dee5a8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">True when encoded storage bytes are identical to decoded in-memory array bytes. This allows whole-chunk IO to bypass byte-array materialization without skipping any Zarr-required transform. <br /></td></tr>
+<tr class="separator:a11bed1fd8dd8bcb1825f58424dee5a8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Applies an ordered list of codecs as a pipeline. </p>
 <p>Zarr v3 codec pipeline: Decode: last codec → ... → first codec (compressed bytes → array bytes) Encode: first codec → ... → last codec (array bytes → compressed bytes)</p>
-<p>The pipeline also resolves byte-order swapping for the <a class="el" href="class_zarr_n_e_t_1_1_bytes_codec.html" title="The &quot;bytes&quot; array-to-bytes codec (Zarr v3 spec section 3.3.2). Handles endianness conversion when tra...">BytesCodec</a> based on the data type element size from <a class="el" href="class_zarr_n_e_t_1_1_zarr_array_metadata.html" title="Typed metadata for a Zarr array node. Knows everything needed to read/write chunks — shape,...">ZarrArrayMetadata</a>.</p>
+<p>The pipeline also resolves byte-order swapping for the <a class="el" href="class_zarr_n_e_t_1_1_bytes_codec.html" title="The &quot;bytes&quot; array-to-bytes codec (Zarr v3 spec section 3.3.2). Handles endianness conversion when tra...">BytesCodec</a> based on the data type byte-order element size from <a class="el" href="class_zarr_n_e_t_1_1_zarr_array_metadata.html" title="Typed metadata for a Zarr array node. Knows everything needed to read/write chunks — shape,...">ZarrArrayMetadata</a>. For complex dtypes this is the real/imag component size, not the full complex size.</p>
 <p>When all codecs in the pipeline are synchronous (returning completed Tasks), the decode/encode path avoids async state machine overhead entirely. This is the common case for Blosc, Zstd, and <a class="el" href="class_zarr_n_e_t_1_1_bytes_codec.html" title="The &quot;bytes&quot; array-to-bytes codec (Zarr v3 spec section 3.3.2). Handles endianness conversion when tra...">BytesCodec</a> pipelines. </p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
-<a id="aef19a2993848f8f78000433ed2c7b80b" name="aef19a2993848f8f78000433ed2c7b80b"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef19a2993848f8f78000433ed2c7b80b">&#9670;&#160;</a></span>CodecPipeline()</h2>
+<a id="ae11d7c710c8ffc0b54f4b1133124510a" name="ae11d7c710c8ffc0b54f4b1133124510a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae11d7c710c8ffc0b54f4b1133124510a">&#9670;&#160;</a></span>CodecPipeline()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -177,20 +185,20 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>elementSize</em></span>&#160;)</td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>byteOrderElementSize</em></span>&#160;)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   24</span>    {</div>
-<div class="line"><span class="lineno">   25</span>        _codecs      = codecs;</div>
-<div class="line"><span class="lineno">   26</span>        _elementSize = elementSize;</div>
-<div class="line"><span class="lineno">   27</span> </div>
-<div class="line"><span class="lineno">   28</span>        <span class="comment">// Detect whether every codec in the pipeline is synchronous.</span></div>
-<div class="line"><span class="lineno">   29</span>        <span class="comment">// Synchronous codecs return Task.FromResult — we identify them by</span></div>
-<div class="line"><span class="lineno">   30</span>        <span class="comment">// interface marker or by known type. GzipCodec is the only async</span></div>
-<div class="line"><span class="lineno">   31</span>        <span class="comment">// codec in the codebase (uses Stream.CopyToAsync).</span></div>
-<div class="line"><span class="lineno">   32</span>        _allCodecsSync = codecs.All(c =&gt; c is not GzipCodec);</div>
-<div class="line"><span class="lineno">   33</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   25</span>    {</div>
+<div class="line"><span class="lineno">   26</span>        _codecs               = codecs;</div>
+<div class="line"><span class="lineno">   27</span>        _byteOrderElementSize = byteOrderElementSize;</div>
+<div class="line"><span class="lineno">   28</span> </div>
+<div class="line"><span class="lineno">   29</span>        <span class="comment">// Detect whether every codec in the pipeline is synchronous.</span></div>
+<div class="line"><span class="lineno">   30</span>        <span class="comment">// Synchronous codecs return Task.FromResult — we identify them by</span></div>
+<div class="line"><span class="lineno">   31</span>        <span class="comment">// interface marker or by known type. GzipCodec is the only async</span></div>
+<div class="line"><span class="lineno">   32</span>        <span class="comment">// codec in the codebase (uses Stream.CopyToAsync).</span></div>
+<div class="line"><span class="lineno">   33</span>        _allCodecsSync = codecs.All(c =&gt; c is not GzipCodec);</div>
+<div class="line"><span class="lineno">   34</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -213,13 +221,13 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   40</span>    {</div>
-<div class="line"><span class="lineno">   41</span>        <span class="comment">// Fast path: when all codecs are synchronous, avoid async state machine</span></div>
-<div class="line"><span class="lineno">   42</span>        <span class="keywordflow">if</span> (_allCodecsSync)</div>
-<div class="line"><span class="lineno">   43</span>            <span class="keywordflow">return</span> Task.FromResult(DecodeSynchronous(input, ct));</div>
-<div class="line"><span class="lineno">   44</span> </div>
-<div class="line"><span class="lineno">   45</span>        <span class="keywordflow">return</span> DecodeAsyncCore(input, ct);</div>
-<div class="line"><span class="lineno">   46</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   52</span>    {</div>
+<div class="line"><span class="lineno">   53</span>        <span class="comment">// Fast path: when all codecs are synchronous, avoid async state machine</span></div>
+<div class="line"><span class="lineno">   54</span>        <span class="keywordflow">if</span> (_allCodecsSync)</div>
+<div class="line"><span class="lineno">   55</span>            <span class="keywordflow">return</span> Task.FromResult(DecodeSynchronous(input, ct));</div>
+<div class="line"><span class="lineno">   56</span> </div>
+<div class="line"><span class="lineno">   57</span>        <span class="keywordflow">return</span> DecodeAsyncCore(input, ct);</div>
+<div class="line"><span class="lineno">   58</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -241,12 +249,12 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   49</span>    {</div>
-<div class="line"><span class="lineno">   50</span>        <span class="keywordflow">if</span> (_allCodecsSync)</div>
-<div class="line"><span class="lineno">   51</span>            <span class="keywordflow">return</span> Task.FromResult(EncodeSynchronous(input, ct));</div>
-<div class="line"><span class="lineno">   52</span> </div>
-<div class="line"><span class="lineno">   53</span>        <span class="keywordflow">return</span> EncodeAsyncCore(input, ct);</div>
-<div class="line"><span class="lineno">   54</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>    {</div>
+<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">if</span> (_allCodecsSync)</div>
+<div class="line"><span class="lineno">   63</span>            <span class="keywordflow">return</span> Task.FromResult(EncodeSynchronous(input, ct));</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>        <span class="keywordflow">return</span> EncodeAsyncCore(input, ct);</div>
+<div class="line"><span class="lineno">   66</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

@@ -25,6 +25,59 @@
 var NAVTREE =
 [
   [ "Zarr.NET", "index.html", [
+    [ "Features", "index.html#autotoc_md22", null ],
+    [ "Installation", "index.html#autotoc_md23", [
+      [ "Dependencies", "index.html#autotoc_md24", null ]
+    ] ],
+    [ "Documentation", "index.html#autotoc_md25", null ],
+    [ "Quick Start", "index.html#autotoc_md26", [
+      [ "Read a single 2D plane from a multiscale image", "index.html#autotoc_md27", null ],
+      [ "Read using physical coordinates (ROI in microns)", "index.html#autotoc_md28", null ],
+      [ "Read from remote HTTP/S3 URLs", "index.html#autotoc_md29", null ],
+      [ "Custom HTTP configuration (auth, timeouts)", "index.html#autotoc_md30", null ],
+      [ "Navigate HCS Plate structure", "index.html#autotoc_md31", null ],
+      [ "Work with labels (segmentation masks)", "index.html#autotoc_md32", null ]
+    ] ],
+    [ "Architecture", "index.html#autotoc_md33", [
+      [ "Design Principles", "index.html#autotoc_md34", null ]
+    ] ],
+    [ "Supported Features", "index.html#autotoc_md35", [
+      [ "Data Types", "index.html#autotoc_md36", null ],
+      [ "Compression", "index.html#autotoc_md37", null ],
+      [ "OME-Zarr Node Types", "index.html#autotoc_md38", null ],
+      [ "Zarr Versions", "index.html#autotoc_md39", null ],
+      [ "OME-Zarr 0.6 transformations", "index.html#autotoc_md40", null ]
+    ] ],
+    [ "API Overview", "index.html#autotoc_md41", [
+      [ "Core Classes", "index.html#autotoc_md42", [
+        [ "OmeZarrReader", "index.html#autotoc_md43", null ],
+        [ "ResolutionLevelNode", "index.html#autotoc_md44", null ],
+        [ "Low-level chunk API", "index.html#autotoc_md45", null ],
+        [ "PlaneResult", "index.html#autotoc_md46", null ],
+        [ "PhysicalROI and PixelRegion", "index.html#autotoc_md47", null ]
+      ] ]
+    ] ],
+    [ "Examples", "index.html#autotoc_md48", [
+      [ "Iterate through a Z-stack", "index.html#autotoc_md49", null ],
+      [ "Read all channels as separate planes", "index.html#autotoc_md50", null ],
+      [ "Choose optimal resolution level for display", "index.html#autotoc_md51", null ],
+      [ "Process an entire HCS plate", "index.html#autotoc_md52", null ],
+      [ "Save plane as image file (using ImageSharp)", "index.html#autotoc_md53", null ]
+    ] ],
+    [ "Performance Considerations", "index.html#autotoc_md54", [
+      [ "Chunk-Aligned Reads", "index.html#autotoc_md55", null ],
+      [ "Resolution Level Selection", "index.html#autotoc_md56", null ],
+      [ "Memory Management", "index.html#autotoc_md57", null ]
+    ] ],
+    [ "Limitations", "index.html#autotoc_md58", null ],
+    [ "Roadmap", "index.html#autotoc_md59", null ],
+    [ "Contributing", "index.html#autotoc_md60", [
+      [ "Converting a Zarr v2 array to v3", "index.html#autotoc_md61", null ]
+    ] ],
+    [ "License", "index.html#autotoc_md62", null ],
+    [ "Acknowledgments", "index.html#autotoc_md63", null ],
+    [ "Support", "index.html#autotoc_md64", null ],
+    [ "Please use image.sc forum for discussion.", "index.html#autotoc_md65", null ],
     [ "HTTP/Remote Storage Support - Implementation Summary", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html", [
       [ "What Was Added", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md1", [
         [ "New Files", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md2", null ],
@@ -49,66 +102,15 @@ var NAVTREE =
       [ "Dependencies", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md18", null ],
       [ "Breaking Changes", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md19", null ]
     ] ],
-    [ "Zarr.NET", "md__zarr_n_e_t_2_r_e_a_d_m_e.html", [
-      [ "Features", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md22", null ],
-      [ "Installation", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md23", [
-        [ "Dependencies", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md24", null ]
-      ] ],
-      [ "Quick Start", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md25", [
-        [ "Read a single 2D plane from a multiscale image", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md26", null ],
-        [ "Read using physical coordinates (ROI in microns)", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md27", null ],
-        [ "Read from remote HTTP/S3 URLs", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md28", null ],
-        [ "Custom HTTP configuration (auth, timeouts)", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md29", null ],
-        [ "Navigate HCS Plate structure", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md30", null ],
-        [ "Work with labels (segmentation masks)", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md31", null ]
-      ] ],
-      [ "Architecture", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md32", [
-        [ "Design Principles", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md33", null ]
-      ] ],
-      [ "Supported Features", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md34", [
-        [ "Data Types", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md35", null ],
-        [ "Compression", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md36", null ],
-        [ "OME-Zarr Node Types", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md37", null ],
-        [ "Zarr Versions", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md38", null ]
-      ] ],
-      [ "API Overview", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md39", [
-        [ "Core Classes", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md40", [
-          [ "OmeZarrReader", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md41", null ],
-          [ "ResolutionLevelNode", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md42", null ],
-          [ "Low-level chunk API", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md43", null ],
-          [ "PlaneResult", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md44", null ],
-          [ "PhysicalROI and PixelRegion", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md45", null ]
-        ] ]
-      ] ],
-      [ "Examples", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md46", [
-        [ "Iterate through a Z-stack", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md47", null ],
-        [ "Read all channels as separate planes", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md48", null ],
-        [ "Choose optimal resolution level for display", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md49", null ],
-        [ "Process an entire HCS plate", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md50", null ],
-        [ "Save plane as image file (using ImageSharp)", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md51", null ]
-      ] ],
-      [ "Performance Considerations", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md52", [
-        [ "Chunk-Aligned Reads", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md53", null ],
-        [ "Resolution Level Selection", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md54", null ],
-        [ "Memory Management", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md55", null ]
-      ] ],
-      [ "Limitations", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md56", null ],
-      [ "Roadmap", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md57", null ],
-      [ "Contributing", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md58", null ],
-      [ "License", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md59", null ],
-      [ "Acknowledgments", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md60", null ],
-      [ "Support", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md61", null ],
-      [ "Please use image.sc forum for discussion.", "md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md62", null ]
-    ] ],
     [ "Zarr v2 Support Added", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html", [
-      [ "What Changed", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md64", [
-        [ "v2 File Structure", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md65", null ],
-        [ "v3 File Structure (for reference)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md66", null ]
+      [ "What Changed", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md67", [
+        [ "v2 File Structure", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md68", null ],
+        [ "v3 File Structure (for reference)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69", null ]
       ] ],
-      [ "Files Modified", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md67", null ],
-      [ "Usage (no changes needed)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md68", null ],
-      [ "v2 Specifics Worth Knowing", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69", null ],
-      [ "Testing Your Fiji Data", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md70", null ]
+      [ "Files Modified", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md70", null ],
+      [ "Usage (no changes needed)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md71", null ],
+      [ "v2 Specifics Worth Knowing", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md72", null ],
+      [ "Testing Your Fiji Data", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73", null ]
     ] ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ],
@@ -135,8 +137,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "annotated.html",
-"class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#a82dd571fb97bd596c0bee43807c57bff",
-"namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175cab2c7c7f5592a2d285184d73d3b619173"
+"class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_chunk_lru_cache.html",
+"index.html#autotoc_md64"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

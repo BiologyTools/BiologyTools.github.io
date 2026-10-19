@@ -4,5 +4,8 @@ var interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store =
     [ "ExistsAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#abc696ca3cbba8df95a98c5542a5cec7c", null ],
     [ "ListAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#aba925552fda826a6b2e6d37977f6db7f", null ],
     [ "ReadAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a510e5c4efc888cf078a62a90586d8a30", null ],
-    [ "WriteAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a5d86d96dc85ea45e37f106c946e95e5e", null ]
+    [ "ReadAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a7b1b3084569474aefbed7bc709248760", null ],
+    [ "WriteAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a5d86d96dc85ea45e37f106c946e95e5e", null ],
+    [ "WriteAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#ad44ec97528e6cb7b53211dccd0ab2ad3", null ],
+    [ "WriteManyAsync", "interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a4748b2688db68bef4c5475d995295d3c", null ]
 ];

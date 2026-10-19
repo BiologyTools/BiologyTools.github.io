@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -261,35 +261,35 @@ Additional Inherited Members</h2></td></tr>
 
 <p>Discovers all available series paths with a configurable probe limit. </p>
 <p>The <em>maxProbe</em>  parameter caps the sequential probing fallback to prevent unbounded I/O against slow or remote stores. Only used when neither OME/.zattrs nor METADATA.ome.xml provide the series count. </p>
-<div class="fragment"><div class="line"><span class="lineno">  515</span>    {</div>
-<div class="line"><span class="lineno">  516</span>        <span class="comment">// 1. Explicit series list from OME/.zattrs</span></div>
-<div class="line"><span class="lineno">  517</span>        <span class="keywordflow">if</span> (CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">SeriesPaths</a> is not <span class="keyword">null</span>)</div>
-<div class="line"><span class="lineno">  518</span>            <span class="keywordflow">return</span> CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">SeriesPaths</a>;</div>
-<div class="line"><span class="lineno">  519</span> </div>
-<div class="line"><span class="lineno">  520</span>        <span class="comment">// 2. Image count from METADATA.ome.xml — generate paths without I/O</span></div>
-<div class="line"><span class="lineno">  521</span>        var omeXml = CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">OmeXml</a>;</div>
-<div class="line"><span class="lineno">  522</span>        <span class="keywordflow">if</span> (omeXml is not <span class="keyword">null</span> &amp;&amp; omeXml.ImageCount &gt; 0)</div>
-<div class="line"><span class="lineno">  523</span>        {</div>
-<div class="line"><span class="lineno">  524</span>            <span class="keywordflow">return</span> Enumerable.Range(0, omeXml.ImageCount)</div>
-<div class="line"><span class="lineno">  525</span>                .Select(i =&gt; i.ToString())</div>
-<div class="line"><span class="lineno">  526</span>                .ToArray();</div>
-<div class="line"><span class="lineno">  527</span>        }</div>
-<div class="line"><span class="lineno">  528</span> </div>
-<div class="line"><span class="lineno">  529</span>        <span class="comment">// 3. Bounded sequential probing (last resort)</span></div>
-<div class="line"><span class="lineno">  530</span>        var paths    = <span class="keyword">new</span> List&lt;string&gt;();</div>
-<div class="line"><span class="lineno">  531</span>        var probeMax = Math.Max(0, maxProbe);</div>
-<div class="line"><span class="lineno">  532</span> </div>
-<div class="line"><span class="lineno">  533</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; probeMax; i++)</div>
-<div class="line"><span class="lineno">  534</span>        {</div>
-<div class="line"><span class="lineno">  535</span>            <span class="keywordflow">if</span> (!await Group.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a3fe6464388610e4b0634e6fd5f041f65">HasChildAsync</a>(i.ToString(), ct).ConfigureAwait(<span class="keyword">false</span>))</div>
-<div class="line"><span class="lineno">  536</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><span class="lineno">  537</span>            paths.Add(i.ToString());</div>
-<div class="line"><span class="lineno">  538</span>        }</div>
-<div class="line"><span class="lineno">  539</span> </div>
-<div class="line"><span class="lineno">  540</span>        <span class="keywordflow">return</span> paths;</div>
-<div class="line"><span class="lineno">  541</span>    }</div>
-<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata_html_a1e3214454aa9efde81b31246110e5d5e"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata.SeriesPaths</a></div><div class="ttdeci">string?[] SeriesPaths</div><div class="ttdoc">Explicit series paths from OME/.zattrs &quot;series&quot; attribute. Null if the OME sub-group is absent or has...</div><div class="ttdef"><b>Definition</b> OmeZarrMetadata.cs:136</div></div>
-<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata_html_ac8d92a89e070157be56f7024bece0967"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata.OmeXml</a></div><div class="ttdeci">OmeXmlMetadata? OmeXml</div><div class="ttdoc">Rich metadata parsed from OME/METADATA.ome.xml, if present. Contains series names,...</div><div class="ttdef"><b>Definition</b> OmeZarrMetadata.cs:144</div></div>
+<div class="fragment"><div class="line"><span class="lineno">  517</span>    {</div>
+<div class="line"><span class="lineno">  518</span>        <span class="comment">// 1. Explicit series list from OME/.zattrs</span></div>
+<div class="line"><span class="lineno">  519</span>        <span class="keywordflow">if</span> (CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">SeriesPaths</a> is not <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  520</span>            <span class="keywordflow">return</span> CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">SeriesPaths</a>;</div>
+<div class="line"><span class="lineno">  521</span> </div>
+<div class="line"><span class="lineno">  522</span>        <span class="comment">// 2. Image count from METADATA.ome.xml — generate paths without I/O</span></div>
+<div class="line"><span class="lineno">  523</span>        var omeXml = CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">OmeXml</a>;</div>
+<div class="line"><span class="lineno">  524</span>        <span class="keywordflow">if</span> (omeXml is not <span class="keyword">null</span> &amp;&amp; omeXml.ImageCount &gt; 0)</div>
+<div class="line"><span class="lineno">  525</span>        {</div>
+<div class="line"><span class="lineno">  526</span>            <span class="keywordflow">return</span> Enumerable.Range(0, omeXml.ImageCount)</div>
+<div class="line"><span class="lineno">  527</span>                .Select(i =&gt; i.ToString())</div>
+<div class="line"><span class="lineno">  528</span>                .ToArray();</div>
+<div class="line"><span class="lineno">  529</span>        }</div>
+<div class="line"><span class="lineno">  530</span> </div>
+<div class="line"><span class="lineno">  531</span>        <span class="comment">// 3. Bounded sequential probing (last resort)</span></div>
+<div class="line"><span class="lineno">  532</span>        var paths    = <span class="keyword">new</span> List&lt;string&gt;();</div>
+<div class="line"><span class="lineno">  533</span>        var probeMax = Math.Max(0, maxProbe);</div>
+<div class="line"><span class="lineno">  534</span> </div>
+<div class="line"><span class="lineno">  535</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; probeMax; i++)</div>
+<div class="line"><span class="lineno">  536</span>        {</div>
+<div class="line"><span class="lineno">  537</span>            <span class="keywordflow">if</span> (!await Group.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a3fe6464388610e4b0634e6fd5f041f65">HasChildAsync</a>(i.ToString(), ct).ConfigureAwait(<span class="keyword">false</span>))</div>
+<div class="line"><span class="lineno">  538</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><span class="lineno">  539</span>            paths.Add(i.ToString());</div>
+<div class="line"><span class="lineno">  540</span>        }</div>
+<div class="line"><span class="lineno">  541</span> </div>
+<div class="line"><span class="lineno">  542</span>        <span class="keywordflow">return</span> paths;</div>
+<div class="line"><span class="lineno">  543</span>    }</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata_html_a1e3214454aa9efde81b31246110e5d5e"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#a1e3214454aa9efde81b31246110e5d5e">ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata.SeriesPaths</a></div><div class="ttdeci">string?[] SeriesPaths</div><div class="ttdoc">Explicit series paths from OME/.zattrs &quot;series&quot; attribute. Null if the OME sub-group is absent or has...</div><div class="ttdef"><b>Definition</b> OmeZarrMetadata.cs:209</div></div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata_html_ac8d92a89e070157be56f7024bece0967"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata.OmeXml</a></div><div class="ttdeci">OmeXmlMetadata? OmeXml</div><div class="ttdoc">Rich metadata parsed from OME/METADATA.ome.xml, if present. Contains series names,...</div><div class="ttdef"><b>Definition</b> OmeZarrMetadata.cs:217</div></div>
 <div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group_html_a3fe6464388610e4b0634e6fd5f041f65"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a3fe6464388610e4b0634e6fd5f041f65">ZarrNET.Core.Zarr.ZarrGroup.HasChildAsync</a></div><div class="ttdeci">async Task&lt; bool &gt; HasChildAsync(string name, CancellationToken ct=default)</div><div class="ttdoc">Returns true if this group has a child node (group or array) at the given name. Checks for both v3 (z...</div><div class="ttdef"><b>Definition</b> ZarrGroup.cs:150</div></div>
 </div><!-- fragment -->
 </div>
@@ -310,13 +310,13 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the OME-XML metadata for a specific series, if available. The index corresponds to the series position in the bioformats2raw layout. Returns null if METADATA.ome.xml was not present or the index is out of range. </p>
-<div class="fragment"><div class="line"><span class="lineno">  486</span>    {</div>
-<div class="line"><span class="lineno">  487</span>        var omeXml = CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">OmeXml</a>;</div>
-<div class="line"><span class="lineno">  488</span>        <span class="keywordflow">if</span> (omeXml is <span class="keyword">null</span>) <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
-<div class="line"><span class="lineno">  489</span>        <span class="keywordflow">if</span> (seriesIndex &lt; 0 || seriesIndex &gt;= omeXml.Images.Length) <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
-<div class="line"><span class="lineno">  490</span> </div>
-<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">return</span> omeXml.Images[seriesIndex];</div>
-<div class="line"><span class="lineno">  492</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  488</span>    {</div>
+<div class="line"><span class="lineno">  489</span>        var omeXml = CollectionMetadata.<a class="code hl_property" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967">OmeXml</a>;</div>
+<div class="line"><span class="lineno">  490</span>        <span class="keywordflow">if</span> (omeXml is <span class="keyword">null</span>) <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  491</span>        <span class="keywordflow">if</span> (seriesIndex &lt; 0 || seriesIndex &gt;= omeXml.Images.Length) <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  492</span> </div>
+<div class="line"><span class="lineno">  493</span>        <span class="keywordflow">return</span> omeXml.Images[seriesIndex];</div>
+<div class="line"><span class="lineno">  494</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -340,18 +340,18 @@ Additional Inherited Members</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Opens an image series by index. For single-series datasets this is just index 0. Returns a <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_multiscale_node.html" title="Represents a multiscale image group. Contains one or more resolution levels and optionally a labels s...">MultiscaleNode</a> ready for resolution level access. </p>
-<div class="fragment"><div class="line"><span class="lineno">  467</span>    {</div>
-<div class="line"><span class="lineno">  468</span>        var seriesPath  = ResolveSeriesPath(seriesIndex);</div>
-<div class="line"><span class="lineno">  469</span>        var seriesGroup = await Group.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#aa6e270e5307f3ed626658fc029d47408">OpenGroupAsync</a>(seriesPath, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  470</span> </div>
-<div class="line"><span class="lineno">  471</span>        var attributes = seriesGroup.Metadata.RawAttributes</div>
-<div class="line"><span class="lineno">  472</span>            ?? <span class="keywordflow">throw</span> <span class="keyword">new</span> InvalidOperationException(</div>
-<div class="line"><span class="lineno">  473</span>                $<span class="stringliteral">&quot;Series group at &#39;{seriesPath}&#39; has no attributes.&quot;</span>);</div>
-<div class="line"><span class="lineno">  474</span> </div>
-<div class="line"><span class="lineno">  475</span>        var multiscales = OmeAttributesParser.ParseMultiscales(attributes);</div>
+<div class="fragment"><div class="line"><span class="lineno">  469</span>    {</div>
+<div class="line"><span class="lineno">  470</span>        var seriesPath  = ResolveSeriesPath(seriesIndex);</div>
+<div class="line"><span class="lineno">  471</span>        var seriesGroup = await Group.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#aa6e270e5307f3ed626658fc029d47408">OpenGroupAsync</a>(seriesPath, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  472</span> </div>
+<div class="line"><span class="lineno">  473</span>        var attributes = seriesGroup.Metadata.RawAttributes</div>
+<div class="line"><span class="lineno">  474</span>            ?? <span class="keywordflow">throw</span> <span class="keyword">new</span> InvalidOperationException(</div>
+<div class="line"><span class="lineno">  475</span>                $<span class="stringliteral">&quot;Series group at &#39;{seriesPath}&#39; has no attributes.&quot;</span>);</div>
 <div class="line"><span class="lineno">  476</span> </div>
-<div class="line"><span class="lineno">  477</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> MultiscaleNode(seriesGroup, multiscales);</div>
-<div class="line"><span class="lineno">  478</span>    }</div>
+<div class="line"><span class="lineno">  477</span>        var multiscales = OmeAttributesParser.ParseMultiscales(attributes);</div>
+<div class="line"><span class="lineno">  478</span> </div>
+<div class="line"><span class="lineno">  479</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> MultiscaleNode(seriesGroup, multiscales);</div>
+<div class="line"><span class="lineno">  480</span>    }</div>
 <div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group_html_aa6e270e5307f3ed626658fc029d47408"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#aa6e270e5307f3ed626658fc029d47408">ZarrNET.Core.Zarr.ZarrGroup.OpenGroupAsync</a></div><div class="ttdeci">async Task&lt; ZarrGroup &gt; OpenGroupAsync(string relativePath, CancellationToken ct=default)</div><div class="ttdoc">Opens a child group at the given relative path.</div><div class="ttdef"><b>Definition</b> ZarrGroup.cs:33</div></div>
 </div><!-- fragment -->
 </div>
@@ -376,7 +376,7 @@ Additional Inherited Members</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  432</span>{ <span class="keyword">get</span>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">  434</span>{ <span class="keyword">get</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>

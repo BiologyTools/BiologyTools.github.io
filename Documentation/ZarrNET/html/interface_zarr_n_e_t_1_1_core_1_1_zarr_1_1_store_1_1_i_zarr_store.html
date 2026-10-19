@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -164,9 +164,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a510e5c4efc888cf078a62a90586d8a30" id="r_a510e5c4efc888cf078a62a90586d8a30"><td class="memItemLeft" align="right" valign="top">Task&lt; byte[]?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a510e5c4efc888cf078a62a90586d8a30">ReadAsync</a> (string key, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:a510e5c4efc888cf078a62a90586d8a30"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads raw bytes for a key. Returns null if the key does not exist.  <br /></td></tr>
 <tr class="separator:a510e5c4efc888cf078a62a90586d8a30"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7b1b3084569474aefbed7bc709248760" id="r_a7b1b3084569474aefbed7bc709248760"><td class="memItemLeft" align="right" valign="top">async Task&lt; int?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7b1b3084569474aefbed7bc709248760">ReadAsync</a> (string key, Memory&lt; byte &gt; destination, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:a7b1b3084569474aefbed7bc709248760"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads raw bytes into caller-owned memory. Returns null if the key does not exist.  <br /></td></tr>
+<tr class="separator:a7b1b3084569474aefbed7bc709248760"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5d86d96dc85ea45e37f106c946e95e5e" id="r_a5d86d96dc85ea45e37f106c946e95e5e"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a5d86d96dc85ea45e37f106c946e95e5e">WriteAsync</a> (string key, byte[] data, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:a5d86d96dc85ea45e37f106c946e95e5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw bytes to a key, creating it if it does not exist.  <br /></td></tr>
 <tr class="separator:a5d86d96dc85ea45e37f106c946e95e5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad44ec97528e6cb7b53211dccd0ab2ad3" id="r_ad44ec97528e6cb7b53211dccd0ab2ad3"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ad44ec97528e6cb7b53211dccd0ab2ad3">WriteAsync</a> (string key, ReadOnlyMemory&lt; byte &gt; data, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:ad44ec97528e6cb7b53211dccd0ab2ad3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw bytes to a key, creating it if it does not exist. Implementations must consume the memory before the returned task completes.  <br /></td></tr>
+<tr class="separator:ad44ec97528e6cb7b53211dccd0ab2ad3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4748b2688db68bef4c5475d995295d3c" id="r_a4748b2688db68bef4c5475d995295d3c"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a4748b2688db68bef4c5475d995295d3c">WriteManyAsync</a> (IEnumerable&lt; <a class="el" href="namespace_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store.html#a003ba5de5fb56621c8120d5449b160eb">ZarrStoreWrite</a> &gt; writes, int maxDegreeOfParallelism, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:a4748b2688db68bef4c5475d995295d3c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes several raw key/value payloads with bounded concurrency. The default implementation delegates to WriteAsync for each item; stores may override this to optimize local batching.  <br /></td></tr>
+<tr class="separator:a4748b2688db68bef4c5475d995295d3c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:abc696ca3cbba8df95a98c5542a5cec7c" id="r_abc696ca3cbba8df95a98c5542a5cec7c"><td class="memItemLeft" align="right" valign="top">Task&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#abc696ca3cbba8df95a98c5542a5cec7c">ExistsAsync</a> (string key, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:abc696ca3cbba8df95a98c5542a5cec7c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the key exists in the store.  <br /></td></tr>
 <tr class="separator:abc696ca3cbba8df95a98c5542a5cec7c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -256,7 +265,7 @@ Public Member Functions</h2></td></tr>
 </div>
 </div>
 <a id="a510e5c4efc888cf078a62a90586d8a30" name="a510e5c4efc888cf078a62a90586d8a30"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a510e5c4efc888cf078a62a90586d8a30">&#9670;&#160;</a></span>ReadAsync()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a510e5c4efc888cf078a62a90586d8a30">&#9670;&#160;</a></span>ReadAsync() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -280,8 +289,52 @@ Public Member Functions</h2></td></tr>
 
 </div>
 </div>
+<a id="a7b1b3084569474aefbed7bc709248760" name="a7b1b3084569474aefbed7bc709248760"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7b1b3084569474aefbed7bc709248760">&#9670;&#160;</a></span>ReadAsync() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task&lt; int?&gt; ZarrNET.Core.Zarr.Store.IZarrStore.ReadAsync </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Memory&lt; byte &gt;</td>          <td class="paramname"><span class="paramname"><em>destination</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads raw bytes into caller-owned memory. Returns null if the key does not exist. </p>
+
+<p>Implemented in <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#aef19d7d33acac17bd57a25828e113632">ZarrNET.Core.Zarr.Store.LocalFileSystemStore</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   23</span>    {</div>
+<div class="line"><span class="lineno">   24</span>        var data = await <a class="code hl_function" href="#a510e5c4efc888cf078a62a90586d8a30">ReadAsync</a>(key, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   25</span>        <span class="keywordflow">if</span> (data is <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">   26</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   27</span> </div>
+<div class="line"><span class="lineno">   28</span>        <span class="keywordflow">if</span> (data.Length &gt; destination.Length)</div>
+<div class="line"><span class="lineno">   29</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentException(</div>
+<div class="line"><span class="lineno">   30</span>                $<span class="stringliteral">&quot;Destination has {destination.Length} bytes, but key &#39;{key}&#39; contains {data.Length} bytes.&quot;</span>,</div>
+<div class="line"><span class="lineno">   31</span>                nameof(destination));</div>
+<div class="line"><span class="lineno">   32</span> </div>
+<div class="line"><span class="lineno">   33</span>        data.CopyTo(destination);</div>
+<div class="line"><span class="lineno">   34</span>        <span class="keywordflow">return</span> data.Length;</div>
+<div class="line"><span class="lineno">   35</span>    }</div>
+<div class="ttc" id="ainterface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store_html_a510e5c4efc888cf078a62a90586d8a30"><div class="ttname"><a href="#a510e5c4efc888cf078a62a90586d8a30">ZarrNET.Core.Zarr.Store.IZarrStore.ReadAsync</a></div><div class="ttdeci">Task&lt; byte[]?&gt; ReadAsync(string key, CancellationToken ct=default)</div><div class="ttdoc">Reads raw bytes for a key. Returns null if the key does not exist.</div></div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a5d86d96dc85ea45e37f106c946e95e5e" name="a5d86d96dc85ea45e37f106c946e95e5e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5d86d96dc85ea45e37f106c946e95e5e">&#9670;&#160;</a></span>WriteAsync()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a5d86d96dc85ea45e37f106c946e95e5e">&#9670;&#160;</a></span>WriteAsync() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -308,6 +361,87 @@ Public Member Functions</h2></td></tr>
 
 <p>Implemented in <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#a6dbd796bbfadd74db185abb0666625d5">ZarrNET.Core.Zarr.Store.HttpZarrStore</a>, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#a094538ec8c9f119bbf327be5d6e5f198">ZarrNET.Core.Zarr.Store.LocalFileSystemStore</a>, and <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#afc809d6c136e3b5a19faba27e8bed99a">ZarrNET.Core.Zarr.Store.S3ZarrStore</a>.</p>
 
+</div>
+</div>
+<a id="ad44ec97528e6cb7b53211dccd0ab2ad3" name="ad44ec97528e6cb7b53211dccd0ab2ad3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad44ec97528e6cb7b53211dccd0ab2ad3">&#9670;&#160;</a></span>WriteAsync() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task ZarrNET.Core.Zarr.Store.IZarrStore.WriteAsync </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ReadOnlyMemory&lt; byte &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes raw bytes to a key, creating it if it does not exist. Implementations must consume the memory before the returned task completes. </p>
+
+<p>Implemented in <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#a45ea79b60b6576ee9fd3da3af96801ba">ZarrNET.Core.Zarr.Store.HttpZarrStore</a>, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#ae789d9a2eaad9cac52314e8907eb60c3">ZarrNET.Core.Zarr.Store.LocalFileSystemStore</a>, and <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#a7b39a20c020bf122726b472c34bc9064">ZarrNET.Core.Zarr.Store.S3ZarrStore</a>.</p>
+
+</div>
+</div>
+<a id="a4748b2688db68bef4c5475d995295d3c" name="a4748b2688db68bef4c5475d995295d3c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4748b2688db68bef4c5475d995295d3c">&#9670;&#160;</a></span>WriteManyAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task ZarrNET.Core.Zarr.Store.IZarrStore.WriteManyAsync </td>
+          <td>(</td>
+          <td class="paramtype">IEnumerable&lt; <a class="el" href="namespace_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store.html#a003ba5de5fb56621c8120d5449b160eb">ZarrStoreWrite</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>writes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>maxDegreeOfParallelism</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes several raw key/value payloads with bounded concurrency. The default implementation delegates to WriteAsync for each item; stores may override this to optimize local batching. </p>
+
+<p>Implemented in <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#ab52ebf86773c0688a33d4e277a34f5e3">ZarrNET.Core.Zarr.Store.LocalFileSystemStore</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   56</span>    {</div>
+<div class="line"><span class="lineno">   57</span>        ArgumentNullException.ThrowIfNull(writes);</div>
+<div class="line"><span class="lineno">   58</span> </div>
+<div class="line"><span class="lineno">   59</span>        <span class="keywordflow">if</span> (maxDegreeOfParallelism &lt; 1)</div>
+<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException(</div>
+<div class="line"><span class="lineno">   61</span>                nameof(maxDegreeOfParallelism),</div>
+<div class="line"><span class="lineno">   62</span>                maxDegreeOfParallelism,</div>
+<div class="line"><span class="lineno">   63</span>                <span class="stringliteral">&quot;Maximum degree of parallelism must be at least 1.&quot;</span>);</div>
+<div class="line"><span class="lineno">   64</span> </div>
+<div class="line"><span class="lineno">   65</span>        var options = <span class="keyword">new</span> ParallelOptions</div>
+<div class="line"><span class="lineno">   66</span>        {</div>
+<div class="line"><span class="lineno">   67</span>            MaxDegreeOfParallelism = maxDegreeOfParallelism,</div>
+<div class="line"><span class="lineno">   68</span>            CancellationToken = ct</div>
+<div class="line"><span class="lineno">   69</span>        };</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>        await Parallel.ForEachAsync(writes, options, async (write, token) =&gt;</div>
+<div class="line"><span class="lineno">   72</span>        {</div>
+<div class="line"><span class="lineno">   73</span>            await <a class="code hl_function" href="#a5d86d96dc85ea45e37f106c946e95e5e">WriteAsync</a>(write.Key, write.Data, token).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   74</span>        }).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   75</span>    }</div>
+<div class="ttc" id="ainterface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store_html_a5d86d96dc85ea45e37f106c946e95e5e"><div class="ttname"><a href="#a5d86d96dc85ea45e37f106c946e95e5e">ZarrNET.Core.Zarr.Store.IZarrStore.WriteAsync</a></div><div class="ttdeci">Task WriteAsync(string key, byte[] data, CancellationToken ct=default)</div><div class="ttdoc">Writes raw bytes to a key, creating it if it does not exist.</div></div>
+</div><!-- fragment -->
 </div>
 </div>
 <hr/>The documentation for this interface was generated from the following file:<ul>

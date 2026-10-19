@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -167,9 +167,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a18a625961b586a183a5f170d10221bbb" id="r_a18a625961b586a183a5f170d10221bbb"><td class="memItemLeft" align="right" valign="top">async Task&lt; byte[]?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a18a625961b586a183a5f170d10221bbb">ReadAsync</a> (string key, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:a18a625961b586a183a5f170d10221bbb"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads raw bytes for a key. Returns null if the key does not exist.  <br /></td></tr>
 <tr class="separator:a18a625961b586a183a5f170d10221bbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef19d7d33acac17bd57a25828e113632" id="r_aef19d7d33acac17bd57a25828e113632"><td class="memItemLeft" align="right" valign="top">async Task&lt; int?&gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aef19d7d33acac17bd57a25828e113632">ReadAsync</a> (string key, Memory&lt; byte &gt; destination, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:aef19d7d33acac17bd57a25828e113632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads raw bytes into caller-owned memory. Returns null if the key does not exist.  <br /></td></tr>
+<tr class="separator:aef19d7d33acac17bd57a25828e113632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a094538ec8c9f119bbf327be5d6e5f198" id="r_a094538ec8c9f119bbf327be5d6e5f198"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a094538ec8c9f119bbf327be5d6e5f198">WriteAsync</a> (string key, byte[] data, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:a094538ec8c9f119bbf327be5d6e5f198"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw bytes to a key, creating it if it does not exist.  <br /></td></tr>
 <tr class="separator:a094538ec8c9f119bbf327be5d6e5f198"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae789d9a2eaad9cac52314e8907eb60c3" id="r_ae789d9a2eaad9cac52314e8907eb60c3"><td class="memItemLeft" align="right" valign="top">async Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae789d9a2eaad9cac52314e8907eb60c3">WriteAsync</a> (string key, ReadOnlyMemory&lt; byte &gt; data, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:ae789d9a2eaad9cac52314e8907eb60c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes raw bytes to a key, creating it if it does not exist. Implementations must consume the memory before the returned task completes.  <br /></td></tr>
+<tr class="separator:ae789d9a2eaad9cac52314e8907eb60c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab52ebf86773c0688a33d4e277a34f5e3" id="r_ab52ebf86773c0688a33d4e277a34f5e3"><td class="memItemLeft" align="right" valign="top">Task&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ab52ebf86773c0688a33d4e277a34f5e3">WriteManyAsync</a> (IEnumerable&lt; <a class="el" href="namespace_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store.html#a003ba5de5fb56621c8120d5449b160eb">ZarrStoreWrite</a> &gt; writes, int maxDegreeOfParallelism, CancellationToken ct=default)</td></tr>
+<tr class="memdesc:ab52ebf86773c0688a33d4e277a34f5e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Writes several raw key/value payloads with bounded concurrency. The default implementation delegates to WriteAsync for each item; stores may override this to optimize local batching.  <br /></td></tr>
+<tr class="separator:ab52ebf86773c0688a33d4e277a34f5e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a82dd571fb97bd596c0bee43807c57bff" id="r_a82dd571fb97bd596c0bee43807c57bff"><td class="memItemLeft" align="right" valign="top">Task&lt; bool &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a82dd571fb97bd596c0bee43807c57bff">ExistsAsync</a> (string key, CancellationToken ct=default)</td></tr>
 <tr class="memdesc:a82dd571fb97bd596c0bee43807c57bff"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns true if the key exists in the store.  <br /></td></tr>
 <tr class="separator:a82dd571fb97bd596c0bee43807c57bff"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -240,17 +249,17 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
 <p>Deletes a key. No-ops silently if the key does not exist. </p>
 
 <p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a701778f4368c701b9412d615e1d8f1ce">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  114</span>    {</div>
-<div class="line"><span class="lineno">  115</span>        ThrowIfDisposed();</div>
-<div class="line"><span class="lineno">  116</span>        ct.ThrowIfCancellationRequested();</div>
-<div class="line"><span class="lineno">  117</span> </div>
-<div class="line"><span class="lineno">  118</span>        var fullPath = ResolveKey(key);</div>
-<div class="line"><span class="lineno">  119</span> </div>
-<div class="line"><span class="lineno">  120</span>        <span class="keywordflow">if</span> (File.Exists(fullPath))</div>
-<div class="line"><span class="lineno">  121</span>            File.Delete(fullPath);</div>
-<div class="line"><span class="lineno">  122</span> </div>
-<div class="line"><span class="lineno">  123</span>        <span class="keywordflow">return</span> Task.CompletedTask;</div>
-<div class="line"><span class="lineno">  124</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  277</span>    {</div>
+<div class="line"><span class="lineno">  278</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">  279</span>        ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  280</span> </div>
+<div class="line"><span class="lineno">  281</span>        var fullPath = ResolveKey(key);</div>
+<div class="line"><span class="lineno">  282</span> </div>
+<div class="line"><span class="lineno">  283</span>        <span class="keywordflow">if</span> (File.Exists(fullPath))</div>
+<div class="line"><span class="lineno">  284</span>            File.Delete(fullPath);</div>
+<div class="line"><span class="lineno">  285</span> </div>
+<div class="line"><span class="lineno">  286</span>        <span class="keywordflow">return</span> Task.CompletedTask;</div>
+<div class="line"><span class="lineno">  287</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -288,10 +297,10 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
         </tr>
       </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">  163</span>    {</div>
-<div class="line"><span class="lineno">  164</span>        _disposed = <span class="keyword">true</span>;</div>
-<div class="line"><span class="lineno">  165</span>        <span class="keywordflow">return</span> ValueTask.CompletedTask;</div>
-<div class="line"><span class="lineno">  166</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  385</span>    {</div>
+<div class="line"><span class="lineno">  386</span>        _disposed = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">  387</span>        <span class="keywordflow">return</span> ValueTask.CompletedTask;</div>
+<div class="line"><span class="lineno">  388</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -317,15 +326,15 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
 <p>Returns true if the key exists in the store. </p>
 
 <p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#abc696ca3cbba8df95a98c5542a5cec7c">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   82</span>    {</div>
-<div class="line"><span class="lineno">   83</span>        ThrowIfDisposed();</div>
-<div class="line"><span class="lineno">   84</span>        ct.ThrowIfCancellationRequested();</div>
-<div class="line"><span class="lineno">   85</span> </div>
-<div class="line"><span class="lineno">   86</span>        var fullPath = ResolveKey(key);</div>
-<div class="line"><span class="lineno">   87</span>        var exists    = File.Exists(fullPath) || Directory.Exists(fullPath);</div>
-<div class="line"><span class="lineno">   88</span> </div>
-<div class="line"><span class="lineno">   89</span>        <span class="keywordflow">return</span> Task.FromResult(exists);</div>
-<div class="line"><span class="lineno">   90</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  245</span>    {</div>
+<div class="line"><span class="lineno">  246</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">  247</span>        ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  248</span> </div>
+<div class="line"><span class="lineno">  249</span>        var fullPath = ResolveKey(key);</div>
+<div class="line"><span class="lineno">  250</span>        var exists    = File.Exists(fullPath) || Directory.Exists(fullPath);</div>
+<div class="line"><span class="lineno">  251</span> </div>
+<div class="line"><span class="lineno">  252</span>        <span class="keywordflow">return</span> Task.FromResult(exists);</div>
+<div class="line"><span class="lineno">  253</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -351,30 +360,30 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
 <p>Lists all keys that begin with the given prefix. Pass an empty string to list from the root. </p>
 
 <p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#aba925552fda826a6b2e6d37977f6db7f">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   93</span>    {</div>
-<div class="line"><span class="lineno">   94</span>        ThrowIfDisposed();</div>
-<div class="line"><span class="lineno">   95</span>        ct.ThrowIfCancellationRequested();</div>
-<div class="line"><span class="lineno">   96</span> </div>
-<div class="line"><span class="lineno">   97</span>        var searchRoot = <span class="keywordtype">string</span>.IsNullOrEmpty(prefix)</div>
-<div class="line"><span class="lineno">   98</span>            ? _rootPath</div>
-<div class="line"><span class="lineno">   99</span>            : ResolveKey(prefix);</div>
-<div class="line"><span class="lineno">  100</span> </div>
-<div class="line"><span class="lineno">  101</span>        <span class="keywordflow">if</span> (!Directory.Exists(searchRoot))</div>
-<div class="line"><span class="lineno">  102</span>            <span class="keywordflow">return</span> Task.FromResult&lt;IReadOnlyList&lt;string&gt;&gt;(Array.Empty&lt;<span class="keywordtype">string</span>&gt;());</div>
-<div class="line"><span class="lineno">  103</span> </div>
-<div class="line"><span class="lineno">  104</span>        var allFiles = Directory</div>
-<div class="line"><span class="lineno">  105</span>            .EnumerateFiles(searchRoot, <span class="stringliteral">&quot;*&quot;</span>, SearchOption.AllDirectories)</div>
-<div class="line"><span class="lineno">  106</span>            .Select(absPath =&gt; ToStoreKey(absPath))</div>
-<div class="line"><span class="lineno">  107</span>            .OrderBy(k =&gt; k)</div>
-<div class="line"><span class="lineno">  108</span>            .ToList();</div>
-<div class="line"><span class="lineno">  109</span> </div>
-<div class="line"><span class="lineno">  110</span>        <span class="keywordflow">return</span> Task.FromResult&lt;IReadOnlyList&lt;string&gt;&gt;(allFiles);</div>
-<div class="line"><span class="lineno">  111</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">  256</span>    {</div>
+<div class="line"><span class="lineno">  257</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">  258</span>        ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  259</span> </div>
+<div class="line"><span class="lineno">  260</span>        var searchRoot = <span class="keywordtype">string</span>.IsNullOrEmpty(prefix)</div>
+<div class="line"><span class="lineno">  261</span>            ? _rootPath</div>
+<div class="line"><span class="lineno">  262</span>            : ResolveKey(prefix);</div>
+<div class="line"><span class="lineno">  263</span> </div>
+<div class="line"><span class="lineno">  264</span>        <span class="keywordflow">if</span> (!Directory.Exists(searchRoot))</div>
+<div class="line"><span class="lineno">  265</span>            <span class="keywordflow">return</span> Task.FromResult&lt;IReadOnlyList&lt;string&gt;&gt;(Array.Empty&lt;<span class="keywordtype">string</span>&gt;());</div>
+<div class="line"><span class="lineno">  266</span> </div>
+<div class="line"><span class="lineno">  267</span>        var allFiles = Directory</div>
+<div class="line"><span class="lineno">  268</span>            .EnumerateFiles(searchRoot, <span class="stringliteral">&quot;*&quot;</span>, SearchOption.AllDirectories)</div>
+<div class="line"><span class="lineno">  269</span>            .Select(absPath =&gt; ToStoreKey(absPath))</div>
+<div class="line"><span class="lineno">  270</span>            .OrderBy(k =&gt; k)</div>
+<div class="line"><span class="lineno">  271</span>            .ToList();</div>
+<div class="line"><span class="lineno">  272</span> </div>
+<div class="line"><span class="lineno">  273</span>        <span class="keywordflow">return</span> Task.FromResult&lt;IReadOnlyList&lt;string&gt;&gt;(allFiles);</div>
+<div class="line"><span class="lineno">  274</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="a18a625961b586a183a5f170d10221bbb" name="a18a625961b586a183a5f170d10221bbb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a18a625961b586a183a5f170d10221bbb">&#9670;&#160;</a></span>ReadAsync()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a18a625961b586a183a5f170d10221bbb">&#9670;&#160;</a></span>ReadAsync() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -404,18 +413,78 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
 <div class="line"><span class="lineno">   40</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
 <div class="line"><span class="lineno">   41</span> </div>
 <div class="line"><span class="lineno">   42</span>        var data = await File.ReadAllBytesAsync(fullPath, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">if</span> (s_debugCount &lt; 16)</div>
-<div class="line"><span class="lineno">   44</span>        {</div>
-<div class="line"><span class="lineno">   45</span>            Log($<span class="stringliteral">&quot;[LocalFileSystemStore.ReadAsync] key={key} path={fullPath} len={data.Length} sample={SampleBytes(data)}&quot;</span>);</div>
-<div class="line"><span class="lineno">   46</span>            s_debugCount++;</div>
-<div class="line"><span class="lineno">   47</span>        }</div>
-<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> data;</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
+<div class="line"><span class="lineno">   43</span>        <span class="keywordflow">return</span> data;</div>
+<div class="line"><span class="lineno">   44</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="aef19d7d33acac17bd57a25828e113632" name="aef19d7d33acac17bd57a25828e113632"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aef19d7d33acac17bd57a25828e113632">&#9670;&#160;</a></span>ReadAsync() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task&lt; int?&gt; ZarrNET.Core.Zarr.Store.LocalFileSystemStore.ReadAsync </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">Memory&lt; byte &gt;</td>          <td class="paramname"><span class="paramname"><em>destination</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Reads raw bytes into caller-owned memory. Returns null if the key does not exist. </p>
+
+<p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a7b1b3084569474aefbed7bc709248760">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   47</span>    {</div>
+<div class="line"><span class="lineno">   48</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">   49</span> </div>
+<div class="line"><span class="lineno">   50</span>        var fullPath = ResolveKey(key);</div>
+<div class="line"><span class="lineno">   51</span> </div>
+<div class="line"><span class="lineno">   52</span>        <span class="keywordflow">if</span> (!File.Exists(fullPath))</div>
+<div class="line"><span class="lineno">   53</span>            <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="line"><span class="lineno">   55</span>        var length = checked((<span class="keywordtype">int</span>)<span class="keyword">new</span> FileInfo(fullPath).Length);</div>
+<div class="line"><span class="lineno">   56</span>        <span class="keywordflow">if</span> (length &gt; destination.Length)</div>
+<div class="line"><span class="lineno">   57</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentException(</div>
+<div class="line"><span class="lineno">   58</span>                $<span class="stringliteral">&quot;Destination has {destination.Length} bytes, but key &#39;{key}&#39; contains {length} bytes.&quot;</span>,</div>
+<div class="line"><span class="lineno">   59</span>                nameof(destination));</div>
+<div class="line"><span class="lineno">   60</span> </div>
+<div class="line"><span class="lineno">   61</span>        await <span class="keyword">using </span>var stream = <span class="keyword">new</span> FileStream(</div>
+<div class="line"><span class="lineno">   62</span>            fullPath,</div>
+<div class="line"><span class="lineno">   63</span>            FileMode.Open,</div>
+<div class="line"><span class="lineno">   64</span>            FileAccess.Read,</div>
+<div class="line"><span class="lineno">   65</span>            FileShare.Read,</div>
+<div class="line"><span class="lineno">   66</span>            bufferSize: 1024 * 1024,</div>
+<div class="line"><span class="lineno">   67</span>            FileOptions.Asynchronous | FileOptions.SequentialScan);</div>
+<div class="line"><span class="lineno">   68</span> </div>
+<div class="line"><span class="lineno">   69</span>        var offset = 0;</div>
+<div class="line"><span class="lineno">   70</span>        <span class="keywordflow">while</span> (offset &lt; length)</div>
+<div class="line"><span class="lineno">   71</span>        {</div>
+<div class="line"><span class="lineno">   72</span>            var read = await stream.ReadAsync(destination[offset..length], ct).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">if</span> (read == 0)</div>
+<div class="line"><span class="lineno">   74</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> IOException(</div>
+<div class="line"><span class="lineno">   75</span>                    $<span class="stringliteral">&quot;Short read for &#39;{fullPath}&#39;: expected {length} bytes but received {offset} bytes.&quot;</span>);</div>
+<div class="line"><span class="lineno">   76</span> </div>
+<div class="line"><span class="lineno">   77</span>            offset += read;</div>
+<div class="line"><span class="lineno">   78</span>        }</div>
+<div class="line"><span class="lineno">   79</span> </div>
+<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">return</span> length;</div>
+<div class="line"><span class="lineno">   81</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <a id="a094538ec8c9f119bbf327be5d6e5f198" name="a094538ec8c9f119bbf327be5d6e5f198"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a094538ec8c9f119bbf327be5d6e5f198">&#9670;&#160;</a></span>WriteAsync()</h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a094538ec8c9f119bbf327be5d6e5f198">&#9670;&#160;</a></span>WriteAsync() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -441,34 +510,151 @@ string&#160;</td><td class="memItemRight" valign="bottom"><b>RootPath</b><code> 
 <p>Writes raw bytes to a key, creating it if it does not exist. </p>
 
 <p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a5d86d96dc85ea45e37f106c946e95e5e">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   52</span>    {</div>
-<div class="line"><span class="lineno">   53</span>        ThrowIfDisposed();</div>
-<div class="line"><span class="lineno">   54</span> </div>
-<div class="line"><span class="lineno">   55</span>        var fullPath = ResolveKey(key);</div>
-<div class="line"><span class="lineno">   56</span>        var directory = Path.GetDirectoryName(fullPath)!;</div>
-<div class="line"><span class="lineno">   57</span> </div>
-<div class="line"><span class="lineno">   58</span>        Directory.CreateDirectory(directory);</div>
-<div class="line"><span class="lineno">   59</span> </div>
-<div class="line"><span class="lineno">   60</span>        await File.WriteAllBytesAsync(fullPath, data, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">   61</span> </div>
-<div class="line"><span class="lineno">   62</span>        <span class="keywordflow">if</span> (s_debugCount &lt; 16)</div>
-<div class="line"><span class="lineno">   63</span>        {</div>
-<div class="line"><span class="lineno">   64</span>            Log($<span class="stringliteral">&quot;[LocalFileSystemStore.WriteAsync] key={key} path={fullPath} len={data.Length} sample={SampleBytes(data)}&quot;</span>);</div>
-<div class="line"><span class="lineno">   65</span>            <span class="keywordflow">if</span> (key.StartsWith(<span class="stringliteral">&quot;0/c/&quot;</span>, StringComparison.Ordinal))</div>
-<div class="line"><span class="lineno">   66</span>            {</div>
-<div class="line"><span class="lineno">   67</span>                <span class="keywordflow">try</span></div>
-<div class="line"><span class="lineno">   68</span>                {</div>
-<div class="line"><span class="lineno">   69</span>                    var disk = await File.ReadAllBytesAsync(fullPath, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">   70</span>                    Log($<span class="stringliteral">&quot;[LocalFileSystemStore.WriteAsync] disk key={key} path={fullPath} len={disk.Length} sample={SampleBytes(disk)}&quot;</span>);</div>
-<div class="line"><span class="lineno">   71</span>                }</div>
-<div class="line"><span class="lineno">   72</span>                <span class="keywordflow">catch</span> (Exception ex)</div>
-<div class="line"><span class="lineno">   73</span>                {</div>
-<div class="line"><span class="lineno">   74</span>                    Log($<span class="stringliteral">&quot;[LocalFileSystemStore.WriteAsync] disk-read EXCEPTION key={key} path={fullPath} {ex.GetType().Name}: {ex.Message}&quot;</span>);</div>
-<div class="line"><span class="lineno">   75</span>                }</div>
-<div class="line"><span class="lineno">   76</span>            }</div>
-<div class="line"><span class="lineno">   77</span>            s_debugCount++;</div>
-<div class="line"><span class="lineno">   78</span>        }</div>
-<div class="line"><span class="lineno">   79</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   84</span>    {</div>
+<div class="line"><span class="lineno">   85</span>        await <a class="code hl_function" href="#a094538ec8c9f119bbf327be5d6e5f198">WriteAsync</a>(key, data.AsMemory(), ct).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   86</span>    }</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store_html_a094538ec8c9f119bbf327be5d6e5f198"><div class="ttname"><a href="#a094538ec8c9f119bbf327be5d6e5f198">ZarrNET.Core.Zarr.Store.LocalFileSystemStore.WriteAsync</a></div><div class="ttdeci">async Task WriteAsync(string key, byte[] data, CancellationToken ct=default)</div><div class="ttdoc">Writes raw bytes to a key, creating it if it does not exist.</div><div class="ttdef"><b>Definition</b> LocalFileSystemStore.cs:83</div></div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ae789d9a2eaad9cac52314e8907eb60c3" name="ae789d9a2eaad9cac52314e8907eb60c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae789d9a2eaad9cac52314e8907eb60c3">&#9670;&#160;</a></span>WriteAsync() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">async Task ZarrNET.Core.Zarr.Store.LocalFileSystemStore.WriteAsync </td>
+          <td>(</td>
+          <td class="paramtype">string</td>          <td class="paramname"><span class="paramname"><em>key</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ReadOnlyMemory&lt; byte &gt;</td>          <td class="paramname"><span class="paramname"><em>data</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes raw bytes to a key, creating it if it does not exist. Implementations must consume the memory before the returned task completes. </p>
+
+<p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#ad44ec97528e6cb7b53211dccd0ab2ad3">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   89</span>    {</div>
+<div class="line"><span class="lineno">   90</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>        var fullPath = ResolveKey(key);</div>
+<div class="line"><span class="lineno">   93</span>        var directory = Path.GetDirectoryName(fullPath)!;</div>
+<div class="line"><span class="lineno">   94</span> </div>
+<div class="line"><span class="lineno">   95</span>        Directory.CreateDirectory(directory);</div>
+<div class="line"><span class="lineno">   96</span> </div>
+<div class="line"><span class="lineno">   97</span>        await <span class="keyword">using</span> (var stream = <span class="keyword">new</span> FileStream(</div>
+<div class="line"><span class="lineno">   98</span>            fullPath,</div>
+<div class="line"><span class="lineno">   99</span>            FileMode.Create,</div>
+<div class="line"><span class="lineno">  100</span>            FileAccess.Write,</div>
+<div class="line"><span class="lineno">  101</span>            FileShare.None,</div>
+<div class="line"><span class="lineno">  102</span>            bufferSize: 1024 * 1024,</div>
+<div class="line"><span class="lineno">  103</span>            FileOptions.Asynchronous | FileOptions.SequentialScan))</div>
+<div class="line"><span class="lineno">  104</span>        {</div>
+<div class="line"><span class="lineno">  105</span>            await stream.WriteAsync(data, ct).ConfigureAwait(<span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  106</span>        }</div>
+<div class="line"><span class="lineno">  107</span>    }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="ab52ebf86773c0688a33d4e277a34f5e3" name="ab52ebf86773c0688a33d4e277a34f5e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab52ebf86773c0688a33d4e277a34f5e3">&#9670;&#160;</a></span>WriteManyAsync()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Task ZarrNET.Core.Zarr.Store.LocalFileSystemStore.WriteManyAsync </td>
+          <td>(</td>
+          <td class="paramtype">IEnumerable&lt; <a class="el" href="namespace_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store.html#a003ba5de5fb56621c8120d5449b160eb">ZarrStoreWrite</a> &gt;</td>          <td class="paramname"><span class="paramname"><em>writes</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int</td>          <td class="paramname"><span class="paramname"><em>maxDegreeOfParallelism</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">CancellationToken</td>          <td class="paramname"><span class="paramname"><em>ct</em></span><span class="paramdefsep"> = </span><span class="paramdefval">default</span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Writes several raw key/value payloads with bounded concurrency. The default implementation delegates to WriteAsync for each item; stores may override this to optimize local batching. </p>
+
+<p>Implements <a class="el" href="interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a4748b2688db68bef4c5475d995295d3c">ZarrNET.Core.Zarr.Store.IZarrStore</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  113</span>    {</div>
+<div class="line"><span class="lineno">  114</span>        ThrowIfDisposed();</div>
+<div class="line"><span class="lineno">  115</span>        ArgumentNullException.ThrowIfNull(writes);</div>
+<div class="line"><span class="lineno">  116</span> </div>
+<div class="line"><span class="lineno">  117</span>        <span class="keywordflow">if</span> (maxDegreeOfParallelism &lt; 1)</div>
+<div class="line"><span class="lineno">  118</span>            <span class="keywordflow">throw</span> <span class="keyword">new</span> ArgumentOutOfRangeException(</div>
+<div class="line"><span class="lineno">  119</span>                nameof(maxDegreeOfParallelism),</div>
+<div class="line"><span class="lineno">  120</span>                maxDegreeOfParallelism,</div>
+<div class="line"><span class="lineno">  121</span>                <span class="stringliteral">&quot;Maximum degree of parallelism must be at least 1.&quot;</span>);</div>
+<div class="line"><span class="lineno">  122</span> </div>
+<div class="line"><span class="lineno">  123</span>        var writeList = writes as IReadOnlyList&lt;ZarrStoreWrite&gt; ?? writes.ToArray();</div>
+<div class="line"><span class="lineno">  124</span>        var plannedWrites = <span class="keyword">new</span> LocalWrite[writeList.Count];</div>
+<div class="line"><span class="lineno">  125</span> </div>
+<div class="line"><span class="lineno">  126</span>        <span class="keywordflow">for</span> (var i = 0; i &lt; writeList.Count; i++)</div>
+<div class="line"><span class="lineno">  127</span>        {</div>
+<div class="line"><span class="lineno">  128</span>            ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  129</span> </div>
+<div class="line"><span class="lineno">  130</span>            var write = writeList[i];</div>
+<div class="line"><span class="lineno">  131</span>            plannedWrites[i] = PlanBatchWrite(write);</div>
+<div class="line"><span class="lineno">  132</span>        }</div>
+<div class="line"><span class="lineno">  133</span> </div>
+<div class="line"><span class="lineno">  134</span>        var directories = <span class="keyword">new</span> HashSet&lt;string&gt;(StringComparer.Ordinal);</div>
+<div class="line"><span class="lineno">  135</span>        <span class="keywordflow">for</span> (var i = 0; i &lt; plannedWrites.Length; i++)</div>
+<div class="line"><span class="lineno">  136</span>        {</div>
+<div class="line"><span class="lineno">  137</span>            ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  138</span>            directories.Add(plannedWrites[i].Directory);</div>
+<div class="line"><span class="lineno">  139</span>        }</div>
+<div class="line"><span class="lineno">  140</span> </div>
+<div class="line"><span class="lineno">  141</span>        <span class="keywordflow">foreach</span> (var directory <span class="keywordflow">in</span> directories)</div>
+<div class="line"><span class="lineno">  142</span>        {</div>
+<div class="line"><span class="lineno">  143</span>            ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  144</span>            Directory.CreateDirectory(directory);</div>
+<div class="line"><span class="lineno">  145</span>        }</div>
+<div class="line"><span class="lineno">  146</span> </div>
+<div class="line"><span class="lineno">  147</span>        var options = <span class="keyword">new</span> ParallelOptions</div>
+<div class="line"><span class="lineno">  148</span>        {</div>
+<div class="line"><span class="lineno">  149</span>            MaxDegreeOfParallelism = maxDegreeOfParallelism,</div>
+<div class="line"><span class="lineno">  150</span>            CancellationToken = ct</div>
+<div class="line"><span class="lineno">  151</span>        };</div>
+<div class="line"><span class="lineno">  152</span> </div>
+<div class="line"><span class="lineno">  153</span>        Parallel.For(</div>
+<div class="line"><span class="lineno">  154</span>            0,</div>
+<div class="line"><span class="lineno">  155</span>            plannedWrites.Length,</div>
+<div class="line"><span class="lineno">  156</span>            options,</div>
+<div class="line"><span class="lineno">  157</span>            i =&gt;</div>
+<div class="line"><span class="lineno">  158</span>            {</div>
+<div class="line"><span class="lineno">  159</span>                ct.ThrowIfCancellationRequested();</div>
+<div class="line"><span class="lineno">  160</span>                var write = plannedWrites[i];</div>
+<div class="line"><span class="lineno">  161</span> </div>
+<div class="line"><span class="lineno">  162</span>                using var stream = new FileStream(</div>
+<div class="line"><span class="lineno">  163</span>                    write.FullPath,</div>
+<div class="line"><span class="lineno">  164</span>                    FileMode.Create,</div>
+<div class="line"><span class="lineno">  165</span>                    FileAccess.Write,</div>
+<div class="line"><span class="lineno">  166</span>                    FileShare.None,</div>
+<div class="line"><span class="lineno">  167</span>                    bufferSize: 1024 * 1024,</div>
+<div class="line"><span class="lineno">  168</span>                    FileOptions.SequentialScan);</div>
+<div class="line"><span class="lineno">  169</span> </div>
+<div class="line"><span class="lineno">  170</span>                stream.Write(write.Data.Span);</div>
+<div class="line"><span class="lineno">  171</span>            });</div>
+<div class="line"><span class="lineno">  172</span> </div>
+<div class="line"><span class="lineno">  173</span>        <span class="keywordflow">return</span> Task.CompletedTask;</div>
+<div class="line"><span class="lineno">  174</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

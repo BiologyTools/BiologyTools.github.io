@@ -9,5 +9,6 @@ var class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store =
     [ "ExistsAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#ac644522e58fbc07181b8b78bb12e54a8", null ],
     [ "ListAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#a9b6045ba79fa71c876c756c8174a06ec", null ],
     [ "ReadAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#a48a03d0f40e1d0da8ca3c701933a1752", null ],
-    [ "WriteAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#afc809d6c136e3b5a19faba27e8bed99a", null ]
+    [ "WriteAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#afc809d6c136e3b5a19faba27e8bed99a", null ],
+    [ "WriteAsync", "class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#a7b39a20c020bf122726b472c34bc9064", null ]
 ];

@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="BiologyTools" />
 <meta name="twitter:description" content="" />
 <!-- END twitter metadata -->
-<title>Zarr.NET: Main Page</title>
+<title>Zarr.NET: Zarr.NET</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -137,412 +137,559 @@ $(function(){initNavTree('index.html',''); initResizable(true); });
 </div>
 </div>
 
-<div class="header">
-  <div class="headertitle"><div class="title">Zarr.NET Documentation</div></div>
+<div><div class="header">
+  <div class="headertitle"><div class="title">Zarr.NET </div></div>
 </div><!--header-->
 <div class="contents">
-<a href="doxygen_crawl.html"></a>
-<h1 id="zarr-net">Zarr.NET</h1>
+<div class="textblock"><p><a class="anchor" id="md__zarr_n_e_t_2_r_e_a_d_m_e"></a></p>
 <p>A high-performance, fully async C# library for reading and writing OME-Zarr datasets with comprehensive support for multiscale images, labels, and High-Content Screening (HCS) plate data.</p>
-<h2 id="features">Features</h2>
-<p>✅ <strong>Zarr v2 &amp; v3 Support</strong> - Automatic version detection and handling<br>✅ <strong>OME-Zarr 0.4 &amp; 0.5</strong> - Full spec compliance for multiscale images, labels, and HCS plates<br>✅ <strong>Remote Access</strong> - Read from HTTP/HTTPS, S3<br>✅ <strong>Physical Coordinates</strong> - ROI reading in real-world units (micrometers, seconds, etc.)<br>✅ <strong>Compression</strong> - Blosc, Gzip, Zstandard (zstd) codec support<br>✅ <strong>Memory Efficient</strong> - Chunk-level reading with streaming support<br>✅ <strong>Type Safe</strong> - Strongly typed metadata models and coordinate transformations<br>✅ <strong>Cross-Platform</strong> - .NET 10.0, works on Windows, Linux, macOS<br>✅ <strong>Well-Architected</strong> - Clean separation of concerns, testable, extensible  </p>
-<h2 id="installation">Installation</h2>
-<pre><code class="lang-bash"><span class="hljs-comment"># Via NuGet</span>
-dotnet add package ZarrNET
-
-<span class="hljs-comment"># Or clone and build locally</span>
-git <span class="hljs-keyword">clone</span> <span class="hljs-title">https</span>://github.com/BiologyTools/Zarr.NET.git
-cd ZarrNET
-dotnet build
-</code></pre>
-<h3 id="dependencies">Dependencies</h3>
+<h1><a class="anchor" id="autotoc_md22"></a>
+Features</h1>
+<p>✅ <b>Zarr v2 &amp; v3 Support</b> - Automatic version detection and handling <br  />
+ ✅ <b>OME-Zarr 0.4, 0.5 &amp; 0.6</b> - Multiscale images, labels, and HCS plates; 0.6 coordinate-system metadata is supported ✅ <b>Remote Access</b> - Read from HTTP/HTTPS, S3 <br  />
+ ✅ <b>Physical Coordinates</b> - ROI reading in real-world units (micrometers, seconds, etc.) <br  />
+ ✅ <b>OME-Zarr 0.6 Transform Metadata</b> - Coordinate systems plus parsed and evaluable closed-form transforms ✅ <b>Codecs</b> - Bytes, transpose, Blosc, Gzip, Zstandard (zstd), and CRC32C support ✅ <b>Memory Efficient</b> - Chunk-level reading with streaming support <br  />
+ ✅ <b>Type Safe</b> - Strongly typed metadata models and coordinate transformations <br  />
+ ✅ <b>Cross-Platform</b> - .NET 10.0, works on Windows, Linux, macOS <br  />
+ ✅ <b>Well-Architected</b> - Clean separation of concerns, testable, extensible <br  />
+</p>
+<h1><a class="anchor" id="autotoc_md23"></a>
+Installation</h1>
+<div class="fragment"><div class="line"># Via NuGet</div>
+<div class="line">dotnet add package ZarrNET</div>
+<div class="line"> </div>
+<div class="line"># Or clone and build locally</div>
+<div class="line">git clone https://github.com/BiologyTools/Zarr.NET.git</div>
+<div class="line">cd ZarrNET</div>
+<div class="line">dotnet build</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md24"></a>
+Dependencies</h2>
 <ul>
 <li>.NET 10.0 or higher</li>
 <li>ZstdSharp.Port (managed zstd implementation)</li>
 <li>System.Text.Json</li>
 <li>AWS SDK S3 (for S3 zarr files)</li>
 </ul>
-<h2 id="quick-start">Quick Start</h2>
-<h3 id="read-a-single-2d-plane-from-a-multiscale-image">Read a single 2D plane from a multiscale image</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> ZarrNET;
-<span class="hljs-keyword">using</span> ZarrNET.Helpers;
-
-<span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">await</span> OmeZarrReader.OpenAsync(<span class="hljs-string">"/path/to/dataset.zarr"</span>);
-<span class="hljs-keyword">var</span> image = reader.AsMultiscaleImage();
-<span class="hljs-keyword">var</span> level = <span class="hljs-keyword">await</span> image.OpenResolutionLevelAsync(datasetIndex: <span class="hljs-number">0</span>);
-
-<span class="hljs-comment">// Read timepoint 0, channel 1, z-slice 5</span>
-<span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">1</span>, z: <span class="hljs-number">5</span>);
-
-<span class="hljs-comment">// Get as typed 2D array</span>
-<span class="hljs-keyword">ushort</span>[,] pixels = plane.As2DArray&lt;<span class="hljs-keyword">ushort</span>&gt;();  <span class="hljs-comment">// for uint16 data</span>
-Console.WriteLine(<span class="hljs-string">$"Plane: <span class="hljs-subst">{plane.Width}</span>x<span class="hljs-subst">{plane.Height}</span>, max value: <span class="hljs-subst">{pixels.Cast&lt;<span class="hljs-keyword">ushort</span>&gt;().Max()}</span>"</span>);
-
-<span class="hljs-comment">// Or get as byte array for interop</span>
-<span class="hljs-keyword">byte</span>[] bytes = plane.ToBytes&lt;<span class="hljs-keyword">ushort</span>&gt;(PixelFormat.Gray8);
-</code></pre>
-<h3 id="read-using-physical-coordinates-roi-in-microns-">Read using physical coordinates (ROI in microns)</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> ZarrNET.Coordinates;
-
-<span class="hljs-comment">// Define ROI: 100µm x 100µm region at specific location</span>
-<span class="hljs-keyword">var</span> roi = <span class="hljs-keyword">new</span> PhysicalROI(
-    origin: [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">50.0</span>, <span class="hljs-number">50.0</span>],    <span class="hljs-comment">// t, c, z, y, x in physical units</span>
-    size:   [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">100.0</span>, <span class="hljs-number">100.0</span>]   <span class="hljs-comment">// timepoint, channel, z-slice, 100µm x 100µm</span>
-);
-
-<span class="hljs-keyword">var</span> <span class="hljs-keyword">result</span> = <span class="hljs-keyword">await</span> level.ReadRegionAsync(roi);
-</code></pre>
-<h3 id="read-from-remote-http-s3-urls">Read from remote HTTP/S3 URLs</h3>
-<pre><code class="lang-csharp"><span class="hljs-comment">// Public HTTP server</span>
-<span class="hljs-keyword">var</span> httpUrl = <span class="hljs-string">"https://example.com/datasets/image.zarr"</span>;
-<span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">await</span> OmeZarrReader.OpenAsync(httpUrl);
-
-<span class="hljs-comment">// S3 public bucket</span>
-<span class="hljs-keyword">var</span> s3Url = <span class="hljs-string">"https://s3.amazonaws.com/bucket/image.zarr"</span>;
-<span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> s3Reader = <span class="hljs-keyword">await</span> OmeZarrReader.OpenAsync(s3Url);
-
-<span class="hljs-comment">// Works exactly the same as local files</span>
-<span class="hljs-keyword">var</span> image = reader.AsMultiscaleImage();
-<span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span>);
-</code></pre>
-<h3 id="custom-http-configuration-auth-timeouts-">Custom HTTP configuration (auth, timeouts)</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> OmeZarr.Core.Zarr.Store;
-
-<span class="hljs-keyword">var</span> httpClient = <span class="hljs-keyword">new</span> HttpClient();
-httpClient.DefaultRequestHeaders.Add(<span class="hljs-string">"Authorization"</span>, <span class="hljs-string">"Bearer YOUR_TOKEN"</span>);
-httpClient.Timeout = TimeSpan.FromMinutes(<span class="hljs-number">10</span>);
-
-<span class="hljs-keyword">var</span> store = <span class="hljs-keyword">new</span> HttpZarrStore(<span class="hljs-string">"https://example.com/data.zarr"</span>, httpClient);
-<span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">await</span> OmeZarrReader.OpenAsync(store);
-</code></pre>
-<h3 id="navigate-hcs-plate-structure">Navigate HCS Plate structure</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> plate = reader.AsPlate();
-Console.WriteLine(<span class="hljs-string">$"Plate: <span class="hljs-subst">{plate.PlateMetadata.Name}</span>"</span>);
-Console.WriteLine(<span class="hljs-string">$"Wells: <span class="hljs-subst">{plate.Wells.Count}</span>"</span>);
-
-<span class="hljs-comment">// Open well B3, field 0</span>
-<span class="hljs-keyword">var</span> well = <span class="hljs-keyword">await</span> plate.OpenWellAsync(<span class="hljs-string">"B"</span>, <span class="hljs-string">"3"</span>);
-<span class="hljs-keyword">var</span> field = <span class="hljs-keyword">await</span> well.OpenFieldAsync(<span class="hljs-number">0</span>);
-<span class="hljs-keyword">var</span> level = <span class="hljs-keyword">await</span> field.OpenResolutionLevelAsync(<span class="hljs-number">0</span>);
-
-<span class="hljs-comment">// Read a plane from the field</span>
-<span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(c: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span>);
-</code></pre>
-<h3 id="work-with-labels-segmentation-masks-">Work with labels (segmentation masks)</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> image = reader.AsMultiscaleImage();
-
-<span class="hljs-keyword">if</span> (<span class="hljs-keyword">await</span> image.HasLabelsAsync())
-{
-    <span class="hljs-keyword">var</span> labelGroup = <span class="hljs-keyword">await</span> image.OpenLabelsAsync();
-    Console.WriteLine(<span class="hljs-string">$"Available labels: <span class="hljs-subst">{<span class="hljs-keyword">string</span>.Join(<span class="hljs-string">", "</span>, labelGroup.LabelNames)}</span>"</span>);
-
-    <span class="hljs-keyword">var</span> cellLabel = <span class="hljs-keyword">await</span> labelGroup.OpenLabelAsync(<span class="hljs-string">"cells"</span>);
-    <span class="hljs-keyword">var</span> labelLevel = <span class="hljs-keyword">await</span> cellLabel.OpenResolutionLevelAsync(<span class="hljs-number">0</span>);
-
-    <span class="hljs-keyword">var</span> labelPlane = <span class="hljs-keyword">await</span> labelLevel.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span>);
-    <span class="hljs-keyword">var</span> labelIds = labelPlane.As1DArray&lt;<span class="hljs-keyword">uint</span>&gt;();  <span class="hljs-comment">// typically uint32</span>
-
-    <span class="hljs-keyword">var</span> uniqueCells = labelIds.Distinct().Count(id =&gt; id != <span class="hljs-number">0</span>);
-    Console.WriteLine(<span class="hljs-string">$"Detected <span class="hljs-subst">{uniqueCells}</span> cells"</span>);
-}
-</code></pre>
-<h2 id="architecture">Architecture</h2>
+<h1><a class="anchor" id="autotoc_md25"></a>
+Documentation</h1>
+<p><a href="https://BiologyTools.github.io/Documentation/ZarrNET/html/index.html">/Documentation/ZarrNET</a></p>
+<h1><a class="anchor" id="autotoc_md26"></a>
+Quick Start</h1>
+<h2><a class="anchor" id="autotoc_md27"></a>
+Read a single 2D plane from a multiscale image</h2>
+<div class="fragment"><div class="line"><span class="keyword">using </span><a class="code hl_namespace" href="namespace_zarr_n_e_t.html">ZarrNET</a>;</div>
+<div class="line"><span class="keyword">using </span>ZarrNET.Helpers;</div>
+<div class="line"> </div>
+<div class="line">await <span class="keyword">using </span>var reader = await OmeZarrReader.OpenAsync(<span class="stringliteral">&quot;/path/to/dataset.zarr&quot;</span>);</div>
+<div class="line">var image = reader.AsMultiscaleImage();</div>
+<div class="line">var level = await image.OpenResolutionLevelAsync(datasetIndex: 0);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Read timepoint 0, channel 1, z-slice 5</span></div>
+<div class="line">var plane = await level.ReadPlaneAsync(t: 0, c: 1, z: 5);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Get as typed 2D array</span></div>
+<div class="line">ushort[,] pixels = plane.As2DArray&lt;ushort&gt;();  <span class="comment">// for uint16 data</span></div>
+<div class="line">Console.WriteLine($<span class="stringliteral">&quot;Plane: {plane.Width}x{plane.Height}, max value: {pixels.Cast&lt;ushort&gt;().Max()}&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Or get as byte array for interop</span></div>
+<div class="line"><span class="keywordtype">byte</span>[] bytes = plane.ToBytes&lt;ushort&gt;(PixelFormat.Gray8);</div>
+<div class="ttc" id="anamespace_zarr_n_e_t_html"><div class="ttname"><a href="namespace_zarr_n_e_t.html">ZarrNET</a></div><div class="ttdef"><b>Definition</b> BloscCodec.cs:6</div></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md28"></a>
+Read using physical coordinates (ROI in microns)</h2>
+<div class="fragment"><div class="line"><span class="keyword">using </span>ZarrNET.Coordinates;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Define ROI: 100µm x 100µm region at specific location</span></div>
+<div class="line">var roi = <span class="keyword">new</span> PhysicalROI(</div>
+<div class="line">    origin: [0, 0, 5.0, 50.0, 50.0],    <span class="comment">// t, c, z, y, x in physical units</span></div>
+<div class="line">    size:   [1, 1, 1.0, 100.0, 100.0]   <span class="comment">// timepoint, channel, z-slice, 100µm x 100µm</span></div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line">var result = await level.ReadRegionAsync(roi);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md29"></a>
+Read from remote HTTP/S3 URLs</h2>
+<div class="fragment"><div class="line"><span class="comment">// Public HTTP server</span></div>
+<div class="line">var httpUrl = <span class="stringliteral">&quot;https://example.com/datasets/image.zarr&quot;</span>;</div>
+<div class="line">await <span class="keyword">using </span>var reader = await OmeZarrReader.OpenAsync(httpUrl);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// S3 public bucket</span></div>
+<div class="line">var s3Url = <span class="stringliteral">&quot;https://s3.amazonaws.com/bucket/image.zarr&quot;</span>;</div>
+<div class="line">await <span class="keyword">using </span>var s3Reader = await OmeZarrReader.OpenAsync(s3Url);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Works exactly the same as local files</span></div>
+<div class="line">var image = reader.AsMultiscaleImage();</div>
+<div class="line">var plane = await level.ReadPlaneAsync(t: 0, c: 0, z: 0);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md30"></a>
+Custom HTTP configuration (auth, timeouts)</h2>
+<div class="fragment"><div class="line"><span class="keyword">using </span>OmeZarr.Core.Zarr.Store;</div>
+<div class="line"> </div>
+<div class="line">var httpClient = <span class="keyword">new</span> HttpClient();</div>
+<div class="line">httpClient.DefaultRequestHeaders.Add(<span class="stringliteral">&quot;Authorization&quot;</span>, <span class="stringliteral">&quot;Bearer YOUR_TOKEN&quot;</span>);</div>
+<div class="line">httpClient.Timeout = TimeSpan.FromMinutes(10);</div>
+<div class="line"> </div>
+<div class="line">var store = <span class="keyword">new</span> HttpZarrStore(<span class="stringliteral">&quot;https://example.com/data.zarr&quot;</span>, httpClient);</div>
+<div class="line">await <span class="keyword">using </span>var reader = await OmeZarrReader.OpenAsync(store);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md31"></a>
+Navigate HCS Plate structure</h2>
+<div class="fragment"><div class="line">var plate = reader.AsPlate();</div>
+<div class="line">Console.WriteLine($<span class="stringliteral">&quot;Plate: {plate.PlateMetadata.Name}&quot;</span>);</div>
+<div class="line">Console.WriteLine($<span class="stringliteral">&quot;Wells: {plate.Wells.Count}&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Open well B3, field 0</span></div>
+<div class="line">var well = await plate.OpenWellAsync(<span class="stringliteral">&quot;B&quot;</span>, <span class="stringliteral">&quot;3&quot;</span>);</div>
+<div class="line">var field = await well.OpenFieldAsync(0);</div>
+<div class="line">var level = await field.OpenResolutionLevelAsync(0);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Read a plane from the field</span></div>
+<div class="line">var plane = await level.ReadPlaneAsync(c: 0, z: 0);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md32"></a>
+Work with labels (segmentation masks)</h2>
+<div class="fragment"><div class="line">var image = reader.AsMultiscaleImage();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">if</span> (await image.HasLabelsAsync())</div>
+<div class="line">{</div>
+<div class="line">    var labelGroup = await image.OpenLabelsAsync();</div>
+<div class="line">    Console.WriteLine($<span class="stringliteral">&quot;Available labels: {string.Join(&quot;</span>, <span class="stringliteral">&quot;, labelGroup.LabelNames)}&quot;</span>);</div>
+<div class="line">    </div>
+<div class="line">    var cellLabel = await labelGroup.OpenLabelAsync(<span class="stringliteral">&quot;cells&quot;</span>);</div>
+<div class="line">    var labelLevel = await cellLabel.OpenResolutionLevelAsync(0);</div>
+<div class="line">    </div>
+<div class="line">    var labelPlane = await labelLevel.ReadPlaneAsync(t: 0, c: 0, z: 0);</div>
+<div class="line">    var labelIds = labelPlane.As1DArray&lt;uint&gt;();  <span class="comment">// typically uint32</span></div>
+<div class="line">    </div>
+<div class="line">    var uniqueCells = labelIds.Distinct().Count(<span class="keywordtype">id</span> =&gt; <span class="keywordtype">id</span> != 0);</div>
+<div class="line">    Console.WriteLine($<span class="stringliteral">&quot;Detected {uniqueCells} cells&quot;</span>);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md33"></a>
+Architecture</h1>
 <p>The library is structured in clean, composable layers:</p>
-<pre><code>┌─────────────────────────────────────────────────────┐
-│ OmeZarrReader (Public API)                          │
-├─────────────────────────────────────────────────────┤
-│ <span class="hljs-keyword">Node</span> <span class="hljs-title">Tree</span> Layer                                      │
-│  - MultiscaleNode, PlateNode, WellNode, FieldNode   │
-│  - ResolutionLevelNode, LabelNode                   │
-├─────────────────────────────────────────────────────┤
-│ Coordinate Transform Layer                          │
-│  - PhysicalROI ↔ PixelRegion                        │
-│  - CoordinateTransformService                       │
-├─────────────────────────────────────────────────────┤
-│ OME-Zarr Metadata Layer                             │
-│  - MultiscaleMetadata, PlateMetadata, etc.          │
-│  - OmeAttributesParser                              │
-├─────────────────────────────────────────────────────┤
-│ Zarr Array/<span class="hljs-keyword">Group</span> <span class="hljs-title">Layer</span>                              │
-│  - ZarrArray (chunk reading, region extraction)     │
-│  - ZarrGroup (tree navigation)                      │
-├─────────────────────────────────────────────────────┤
-│ Codec Pipeline                                       │
-│  - BytesCodec, GzipCodec, ZstdCodec                 │
-│  - CodecPipeline (ordered application)              │
-├─────────────────────────────────────────────────────┤
-│ Store Layer (I/O)                                    │
-│  - IZarrStore, LocalFileSystemStore                 │
-└─────────────────────────────────────────────────────┘
-</code></pre><h3 id="design-principles">Design Principles</h3>
+<div class="fragment"><div class="line">┌─────────────────────────────────────────────────────┐</div>
+<div class="line">│ OmeZarrReader (Public API)                          │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ Node Tree Layer                                      │</div>
+<div class="line">│  - MultiscaleNode, PlateNode, WellNode, FieldNode   │</div>
+<div class="line">│  - ResolutionLevelNode, LabelNode                   │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ Coordinate Transform Layer                          │</div>
+<div class="line">│  - PhysicalROI ↔ PixelRegion                        │</div>
+<div class="line">│  - CoordinateTransformService                       │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ OME-Zarr Metadata Layer                             │</div>
+<div class="line">│  - MultiscaleMetadata, PlateMetadata, etc.          │</div>
+<div class="line">│  - OmeAttributesParser                              │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ Zarr Array/Group Layer                              │</div>
+<div class="line">│  - ZarrArray (chunk reading, region extraction)     │</div>
+<div class="line">│  - ZarrGroup (tree navigation)                      │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ Codec Pipeline                                       │</div>
+<div class="line">│  - BytesCodec, GzipCodec, ZstdCodec                 │</div>
+<div class="line">│  - CodecPipeline (ordered application)              │</div>
+<div class="line">├─────────────────────────────────────────────────────┤</div>
+<div class="line">│ Store Layer (I/O)                                    │</div>
+<div class="line">│  - IZarrStore, LocalFileSystemStore                 │</div>
+<div class="line">└─────────────────────────────────────────────────────┘</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md34"></a>
+Design Principles</h2>
 <ul>
-<li><strong>Separation of Concerns</strong> - Each layer has a single, well-defined responsibility</li>
-<li><strong>No Leaky Abstractions</strong> - Zarr layer knows nothing about OME, OME layer knows nothing about I/O</li>
-<li><strong>Async Throughout</strong> - All I/O operations are async from the start</li>
-<li><strong>Variable Staging Pattern</strong> - Readable code with clear intermediate values</li>
-<li><strong>Testable</strong> - Interfaces at key boundaries enable unit testing</li>
+<li><b>Separation of Concerns</b> - Each layer has a single, well-defined responsibility</li>
+<li><b>No Leaky Abstractions</b> - Zarr layer knows nothing about OME, OME layer knows nothing about I/O</li>
+<li><b>Async Throughout</b> - All I/O operations are async from the start</li>
+<li><b>Variable Staging Pattern</b> - Readable code with clear intermediate values</li>
+<li><b>Testable</b> - Interfaces at key boundaries enable unit testing</li>
 </ul>
-<h2 id="supported-features">Supported Features</h2>
-<h3 id="data-types">Data Types</h3>
+<h1><a class="anchor" id="autotoc_md35"></a>
+Supported Features</h1>
+<h2><a class="anchor" id="autotoc_md36"></a>
+Data Types</h2>
 <ul>
 <li><code>uint8</code>, <code>uint16</code>, <code>float32</code>, <code>float64</code>, <code>complex64</code>, <code>complex128</code></li>
 </ul>
-<p>The lower-level dtype parser also understands the core fixed-size integer and
-floating-point Zarr dtypes, including v2 NumPy dtype strings such as <code>&quot;&lt;f4&quot;</code> /
-<code>&quot;&lt;f8&quot;</code> / <code>&quot;&lt;c8&quot;</code> / <code>&quot;&lt;c16&quot;</code> and v3 data type names such as <code>&quot;float32&quot;</code> /
-<code>&quot;float64&quot;</code> / <code>&quot;complex64&quot;</code> / <code>&quot;complex128&quot;</code>.</p>
-<h3 id="compression">Compression</h3>
+<p>The lower-level dtype parser also understands the core fixed-size integer and floating-point Zarr dtypes, including v2 NumPy dtype strings such as <code>"&lt;f4"</code> / <code>"&lt;f8"</code> / <code>"&lt;c8"</code> / <code>"&lt;c16"</code> and v3 data type names such as <code>"float32"</code> / <code>"float64"</code> / <code>"complex64"</code> / <code>"complex128"</code>.</p>
+<h2><a class="anchor" id="autotoc_md37"></a>
+Compression</h2>
 <ul>
-<li><strong>Gzip</strong> - Standard compression (via System.IO.Compression)</li>
-<li><strong>Zstandard</strong> - High-performance compression (via ZstdSharp.Port)</li>
-<li><strong>Uncompressed</strong> - Raw data</li>
-<li><strong>Blosc</strong></li>
+<li><b>Gzip</b> - Standard compression (via System.IO.Compression)</li>
+<li><b>Zstandard</b> - High-performance compression (via ZstdSharp.Port)</li>
+<li><b>Uncompressed</b> - Raw data</li>
+<li><b>Blosc</b></li>
 </ul>
-<h3 id="ome-zarr-node-types">OME-Zarr Node Types</h3>
+<h2><a class="anchor" id="autotoc_md38"></a>
+OME-Zarr Node Types</h2>
 <ul>
-<li><strong>Multiscale Images</strong> - Pyramidal resolution levels with coordinate transforms</li>
-<li><strong>Labels</strong> - Segmentation masks with color/property metadata</li>
-<li><strong>HCS Plates</strong> - Wells, fields, acquisitions</li>
-<li><strong>Label Groups</strong> - Multiple label arrays per image</li>
+<li><b>Multiscale Images</b> - Pyramidal resolution levels with coordinate transforms</li>
+<li><b>Labels</b> - Segmentation masks with color/property metadata</li>
+<li><b>HCS Plates</b> - Wells, fields, acquisitions</li>
+<li><b>Label Groups</b> - Multiple label arrays per image</li>
 </ul>
-<h3 id="zarr-versions">Zarr Versions</h3>
+<h2><a class="anchor" id="autotoc_md39"></a>
+Zarr Versions</h2>
 <ul>
-<li><strong>Zarr v2</strong> - <code>.zarray</code>, <code>.zattrs</code>, <code>.zgroup</code> files (widely used by Fiji, napari, OMERO)</li>
-<li><strong>Zarr v3</strong> - Single <code>zarr.json</code> per node (newer spec)</li>
+<li><b>Zarr v2</b> - <code>.zarray</code>, <code>.zattrs</code>, <code>.zgroup</code> files (widely used by Fiji, napari, OMERO)</li>
+<li><b>Zarr v3</b> - Single <code>zarr.json</code> per node (newer spec)</li>
 <li>Automatic version detection and handling</li>
 </ul>
-<h2 id="api-overview">API Overview</h2>
-<h3 id="core-classes">Core Classes</h3>
-<h4 id="-omezarrreader-"><code>OmeZarrReader</code></h4>
+<h2><a class="anchor" id="autotoc_md40"></a>
+OME-Zarr 0.6 transformations</h2>
+<p>OME-Zarr 0.6 coordinate systems, transform endpoints, and nested transformation metadata are retained in the typed API. The point evaluator supports the closed-form transform types <code>identity</code>, <code>scale</code>, <code>translation</code>, <code>mapAxis</code>, <code>projectAxis</code>, <code>affine</code>, <code>rotation</code>, <code>sequence</code>, <code>byDimension</code>, and <code>bijection</code>.</p>
+<div class="fragment"><div class="line"><span class="keyword">using </span><a class="code hl_namespace" href="namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates.html">ZarrNET.Core.OmeZarr.Coordinates</a>;</div>
+<div class="line"> </div>
+<div class="line">var level = await image.OpenResolutionLevelAsync(datasetIndex: 0);</div>
+<div class="line">var transform = level.Dataset.CoordinateTransformations[0];</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Apply an inline transform to a physical point.</span></div>
+<div class="line"><span class="keywordtype">double</span>[] output = CoordinateTransformationEvaluator.TransformForward(</div>
+<div class="line">    transform, [12.5, 48.0]);</div>
+<div class="ttc" id="anamespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_html"><div class="ttname"><a href="namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates.html">ZarrNET.Core.OmeZarr.Coordinates</a></div><div class="ttdef"><b>Definition</b> CoordinateTransformationEvaluator.cs:3</div></div>
+</div><!-- fragment --><p>Affine and rotation matrices may be stored inline or in a separate Zarr array. Resolve array-backed parameters before evaluating the transform:</p>
+<div class="fragment"><div class="line">var resolved = await TransformParameterResolver.ResolveMatrixAsync(</div>
+<div class="line">    reader.RootGroup,</div>
+<div class="line">    transform,</div>
+<div class="line">    inputRank: 2,</div>
+<div class="line">    outputRank: 2);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">double</span>[] output = CoordinateTransformationEvaluator.TransformForward(</div>
+<div class="line">    resolved, [12.5, 48.0]);</div>
+</div><!-- fragment --><p><code>ReadRegionAsync(PhysicalROI)</code> returns the smallest axis-aligned source box. To produce an output grid through a rotated, sheared, or axis-mapped transform, resample into the physical region explicitly:</p>
+<div class="fragment"><div class="line">var output = await level.ResamplePhysicalRegionAsync(</div>
+<div class="line">    reader.RootGroup, <span class="comment">// resolves array-backed affine/rotation matrices when present</span></div>
+<div class="line">    <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html">PhysicalROI</a>(origin: [0, 0, 0, -50, -50], size: [1, 1, 1, 100, 100]),</div>
+<div class="line">    outputShape: [1, 1, 1, 512, 512],</div>
+<div class="line">    interpolation: <a class="code hl_enumeration" href="namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates.html#a469df8e627b284c3384c14ae2ae8af8c">ImageResamplingInterpolation</a>.Linear);</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i_html"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html">ZarrNET.Core.OmeZarr.Coordinates.PhysicalROI</a></div><div class="ttdoc">A region of interest expressed in physical units (e.g. micrometers). Axis order matches the multiscal...</div><div class="ttdef"><b>Definition</b> PhysicalROI.cs:9</div></div>
+<div class="ttc" id="anamespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_html_a469df8e627b284c3384c14ae2ae8af8c"><div class="ttname"><a href="namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates.html#a469df8e627b284c3384c14ae2ae8af8c">ZarrNET.Core.OmeZarr.Coordinates.ImageResamplingInterpolation</a></div><div class="ttdeci">ImageResamplingInterpolation</div><div class="ttdoc">Interpolation used while resampling an OME-Zarr image into a physical output grid.</div><div class="ttdef"><b>Definition</b> TransformResampler.cs:10</div></div>
+</div><!-- fragment --><p>This supports rank-preserving inline closed-form transforms and nearest, linear, or cubic B-spline image interpolation. The overload accepting <code>reader.RootGroup</code> resolves array-backed affine/rotation matrices and direct <code>coordinates</code> or <code>displacements</code> vector fields. Vector fields use a numerical inverse solve for pull-based resampling; nested vector-field compositions and rank-changing projections are not yet supported.</p>
+<p>Scene metadata can be parsed and used to map points across image groups:</p>
+<div class="fragment"><div class="line">var scene = OmeAttributesParser.ParseScene(reader.RawAttributes!.Value);</div>
+<div class="line">var graph = <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html">CoordinateTransformationGraph</a>.FromScene(scene!);</div>
+<div class="line"><span class="keywordtype">double</span>[] inInstrument1 = graph.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html#a755fb56d4017fb9632c6061369801aa5">TransformPoint</a>(pointInInstrument2, source, destination);</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph_html"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html">ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformationGraph</a></div><div class="ttdoc">Finds and evaluates point-transform paths through OME-Zarr 0.6 scene metadata. Each edge is traversed...</div><div class="ttdef"><b>Definition</b> CoordinateTransformationGraph.cs:10</div></div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph_html_a755fb56d4017fb9632c6061369801aa5"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html#a755fb56d4017fb9632c6061369801aa5">ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformationGraph.TransformPoint</a></div><div class="ttdeci">double[] TransformPoint(IReadOnlyList&lt; double &gt; point, CoordinateSystemReference source, CoordinateSystemReference destination)</div><div class="ttdoc">Transforms a point by following the shortest available graph path.</div><div class="ttdef"><b>Definition</b> CoordinateTransformationGraph.cs:56</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md41"></a>
+API Overview</h1>
+<h2><a class="anchor" id="autotoc_md42"></a>
+Core Classes</h2>
+<h3><a class="anchor" id="autotoc_md43"></a>
+<code>OmeZarrReader</code></h3>
 <p>Entry point for opening datasets. Auto-detects node type.</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> reader = <span class="hljs-keyword">await</span> OmeZarrReader.OpenAsync(path);
-<span class="hljs-keyword">var</span> root = reader.OpenRoot();  <span class="hljs-comment">// Auto-dispatch to correct type</span>
-
-<span class="hljs-comment">// Or strongly-typed access</span>
-<span class="hljs-keyword">var</span> image = reader.AsMultiscaleImage();
-<span class="hljs-keyword">var</span> plate = reader.AsPlate();
-<span class="hljs-keyword">var</span> well = reader.AsWell();
-</code></pre>
-<h4 id="-resolutionlevelnode-"><code>ResolutionLevelNode</code></h4>
+<div class="fragment"><div class="line">await <span class="keyword">using </span>var reader = await <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html">OmeZarrReader</a>.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a3723efeae78c567adc9b623bc581041c">OpenAsync</a>(path);</div>
+<div class="line">var root = reader.OpenRoot();  <span class="comment">// Auto-dispatch to correct type</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Or strongly-typed access</span></div>
+<div class="line">var image = reader.AsMultiscaleImage();</div>
+<div class="line">var plate = reader.AsPlate();</div>
+<div class="line">var well = reader.AsWell();</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader_html"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html">ZarrNET.Core.OmeZarrReader</a></div><div class="ttdoc">Entry point for reading OME-Zarr datasets.</div><div class="ttdef"><b>Definition</b> OmeZarrReader.cs:31</div></div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader_html_a3723efeae78c567adc9b623bc581041c"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a3723efeae78c567adc9b623bc581041c">ZarrNET.Core.OmeZarrReader.OpenAsync</a></div><div class="ttdeci">static async Task&lt; OmeZarrReader &gt; OpenAsync(string pathOrUrl, CancellationToken ct=default)</div><div class="ttdoc">Opens a Zarr store at the given path or URL and detects the OME-Zarr node type at the root.</div><div class="ttdef"><b>Definition</b> OmeZarrReader.cs:99</div></div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md44"></a>
+<code>ResolutionLevelNode</code></h3>
 <p>Represents a single resolution level in a multiscale pyramid.</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> level = <span class="hljs-keyword">await</span> image.OpenResolutionLevelAsync(datasetIndex: <span class="hljs-number">0</span>);
-
-<span class="hljs-comment">// Properties</span>
-<span class="hljs-keyword">long</span>[] shape = level.Shape;          <span class="hljs-comment">// [t, c, z, y, x]</span>
-<span class="hljs-keyword">string</span> dtype = level.DataType;       <span class="hljs-comment">// "uint16", "float32", etc.</span>
-<span class="hljs-keyword">double</span>[] pixelSize = level.GetPixelSize();  <span class="hljs-comment">// Physical size per pixel</span>
-
-<span class="hljs-comment">// Reading</span>
-<span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: <span class="hljs-number">5</span>);
-<span class="hljs-keyword">var</span> roi = <span class="hljs-keyword">await</span> level.ReadRegionAsync(physicalROI);
-<span class="hljs-keyword">var</span> region = <span class="hljs-keyword">await</span> level.ReadPixelRegionAsync(pixelRegion);
-
-<span class="hljs-comment">// Writing</span>
-<span class="hljs-keyword">await</span> level.WriteRegionAsync(pixelRegion, data);
-</code></pre>
-<h4 id="low-level-chunk-api">Low-level chunk API</h4>
-<p>For larger-than-memory and chunk-native workflows, open the underlying Zarr
-array and work directly with full chunks.</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">await</span> <span class="hljs-keyword">using</span> <span class="hljs-keyword">var</span> store = <span class="hljs-keyword">new</span> LocalFileSystemStore(<span class="hljs-string">"/path/to/data.zarr"</span>);
-<span class="hljs-keyword">var</span> root = <span class="hljs-keyword">await</span> ZarrGroup.OpenRootAsync(store);
-<span class="hljs-keyword">var</span> array = <span class="hljs-keyword">await</span> root.OpenArrayAsync(<span class="hljs-string">"0"</span>);
-
-<span class="hljs-keyword">await</span> <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> chunk <span class="hljs-keyword">in</span> array.EnumerateChunksAsync())
-{
-    <span class="hljs-comment">// Decoded path: full logical chunk buffer in array order.</span>
-    <span class="hljs-keyword">byte</span>[] decoded = <span class="hljs-keyword">await</span> array.ReadChunkDecodedAsync(chunk);
-    <span class="hljs-keyword">await</span> array.WriteChunkDecodedAsync(chunk, decoded);
-
-    <span class="hljs-comment">// Encoded path: copy compressed bytes when metadata/codecs are compatible.</span>
-    <span class="hljs-keyword">byte</span>[]? encoded = <span class="hljs-keyword">await</span> array.ReadChunkEncodedAsync(chunk);
-    <span class="hljs-keyword">if</span> (encoded <span class="hljs-keyword">is</span> not <span class="hljs-literal">null</span>)
-        <span class="hljs-keyword">await</span> array.WriteChunkEncodedAsync(chunk, encoded);
-}
-</code></pre>
-<p><code>ZarrChunkRef.Shape</code> gives the valid in-array extent for edge chunks. Decoded
-chunk buffers are padded to the full effective chunk shape, matching the region
-reader&#39;s fill-value behaviour. Encoded chunk access is available for non-sharded
-arrays; sharded arrays store logical chunks inside shard objects.</p>
-<h4 id="-planeresult-"><code>PlaneResult</code></h4>
+<div class="fragment"><div class="line">var level = await image.OpenResolutionLevelAsync(datasetIndex: 0);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Properties</span></div>
+<div class="line"><span class="keywordtype">long</span>[] shape = level.Shape;          <span class="comment">// [t, c, z, y, x]</span></div>
+<div class="line"><span class="keywordtype">string</span> dtype = level.DataType;       <span class="comment">// &quot;uint16&quot;, &quot;float32&quot;, etc.</span></div>
+<div class="line"><span class="keywordtype">double</span>[] pixelSize = level.GetPixelSize();  <span class="comment">// Physical size per pixel</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Reading</span></div>
+<div class="line">var plane = await level.ReadPlaneAsync(t: 0, c: 0, z: 5);</div>
+<div class="line">var roi = await level.ReadRegionAsync(physicalROI);</div>
+<div class="line">var region = await level.ReadPixelRegionAsync(pixelRegion);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Writing</span></div>
+<div class="line">await level.WriteRegionAsync(pixelRegion, data);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md45"></a>
+Low-level chunk API</h3>
+<p>For larger-than-memory and chunk-native workflows, open the underlying Zarr array and work directly with full chunks.</p>
+<div class="fragment"><div class="line">await <span class="keyword">using </span>var store = <span class="keyword">new</span> LocalFileSystemStore(<span class="stringliteral">&quot;/path/to/data.zarr&quot;</span>);</div>
+<div class="line">var root = await ZarrGroup.OpenRootAsync(store);</div>
+<div class="line">var array = await root.OpenArrayAsync(<span class="stringliteral">&quot;0&quot;</span>);</div>
+<div class="line"> </div>
+<div class="line">await <span class="keywordflow">foreach</span> (var chunk <span class="keywordflow">in</span> array.EnumerateChunksAsync())</div>
+<div class="line">{</div>
+<div class="line">    <span class="comment">// Decoded path: full logical chunk buffer in array order.</span></div>
+<div class="line">    <span class="keywordtype">byte</span>[] decoded = await array.ReadChunkDecodedAsync(chunk);</div>
+<div class="line">    await array.WriteChunkDecodedAsync(chunk, decoded);</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Caller-owned buffer path for uncompressed/native-endian bytes chunks.</span></div>
+<div class="line">    <span class="keywordtype">byte</span>[] rented = ArrayPool&lt;byte&gt;.Shared.Rent(decoded.Length);</div>
+<div class="line">    <span class="keywordflow">try</span></div>
+<div class="line">    {</div>
+<div class="line">        await array.ReadChunkDecodedAsync(</div>
+<div class="line">            chunk,</div>
+<div class="line">            rented.AsMemory(0, decoded.Length),</div>
+<div class="line">            allowBorrowedBuffer: <span class="keyword">true</span>);</div>
+<div class="line"> </div>
+<div class="line">        await array.WriteChunkDecodedAsync(</div>
+<div class="line">            chunk,</div>
+<div class="line">            rented.AsMemory(0, decoded.Length),</div>
+<div class="line">            allowBorrowedBuffer: <span class="keyword">true</span>);</div>
+<div class="line">    }</div>
+<div class="line">    <span class="keywordflow">finally</span></div>
+<div class="line">    {</div>
+<div class="line">        ArrayPool&lt;byte&gt;.Shared.Return(rented);</div>
+<div class="line">    }</div>
+<div class="line"> </div>
+<div class="line">    <span class="comment">// Encoded path: copy compressed bytes when metadata/codecs are compatible.</span></div>
+<div class="line">    <span class="keywordtype">byte</span>[]? encoded = await array.ReadChunkEncodedAsync(chunk);</div>
+<div class="line">    <span class="keywordflow">if</span> (encoded is not <span class="keyword">null</span>)</div>
+<div class="line">        await array.WriteChunkEncodedAsync(chunk, encoded);</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Bounded parallel decoded writes; no-op bytes pipelines use the local batch fast path.</span></div>
+<div class="line">IReadOnlyList&lt;ZarrDecodedChunkWrite&gt; decodedWrites = GetPreparedFullChunkWrites();</div>
+<div class="line">await array.WriteChunksDecodedAsync(decodedWrites, maxDegreeOfParallelism: 8, allowBorrowedBuffers: <span class="keyword">true</span>);</div>
+</div><!-- fragment --><p><code>ZarrChunkRef.Shape</code> gives the valid in-array extent for edge chunks. Decoded chunk buffers are padded to the full effective chunk shape, matching the region reader's fill-value behaviour. Encoded chunk access is available for non-sharded arrays; sharded arrays store logical chunks inside shard objects. For callers that need direct scheduling, <code>ReadChunksEncodedAsync</code> and <code>WriteChunksEncodedAsync</code> expose the same encoded path with caller-selected parallelism. <code>WriteChunksDecodedAsync</code> provides the analogous full-chunk decoded write path and can bypass encoding for native-endian bytes-only pipelines.</p>
+<h3><a class="anchor" id="autotoc_md46"></a>
+<code>PlaneResult</code></h3>
 <p>Result of reading a 2D plane with convenience extraction methods.</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span>);
-
-<span class="hljs-keyword">int</span> width = plane.Width;
-<span class="hljs-keyword">int</span> height = plane.Height;
-
-<span class="hljs-comment">// Extract as typed arrays</span>
-<span class="hljs-keyword">ushort</span>[,] pixels2D = plane.As2DArray&lt;<span class="hljs-keyword">ushort</span>&gt;();
-<span class="hljs-keyword">ushort</span>[] pixels1D = plane.As1DArray&lt;<span class="hljs-keyword">ushort</span>&gt;();
-
-<span class="hljs-comment">// Convert to specific formats</span>
-<span class="hljs-keyword">byte</span>[] gray8 = plane.ToBytes&lt;<span class="hljs-keyword">ushort</span>&gt;(PixelFormat.Gray8);
-<span class="hljs-keyword">byte</span>[] bgra32 = plane.ToBytes&lt;<span class="hljs-keyword">ushort</span>&gt;(PixelFormat.Bgra32);
-</code></pre>
-<h4 id="-physicalroi-and-pixelregion-"><code>PhysicalROI</code> and <code>PixelRegion</code></h4>
+<div class="fragment"><div class="line">var plane = await level.ReadPlaneAsync(t: 0, c: 0, z: 0);</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordtype">int</span> width = plane.Width;</div>
+<div class="line"><span class="keywordtype">int</span> height = plane.Height;</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Extract as typed arrays</span></div>
+<div class="line">ushort[,] pixels2D = plane.As2DArray&lt;ushort&gt;();</div>
+<div class="line">ushort[] pixels1D = plane.As1DArray&lt;ushort&gt;();</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Convert to specific formats</span></div>
+<div class="line"><span class="keywordtype">byte</span>[] gray8 = plane.ToBytes&lt;ushort&gt;(PixelFormat.Gray8);</div>
+<div class="line"><span class="keywordtype">byte</span>[] bgra32 = plane.ToBytes&lt;ushort&gt;(PixelFormat.Bgra32);</div>
+</div><!-- fragment --><h3><a class="anchor" id="autotoc_md47"></a>
+<code>PhysicalROI</code> and <code>PixelRegion</code></h3>
 <p>Coordinate representations for ROI specification.</p>
-<pre><code class="lang-csharp"><span class="hljs-comment">// Physical coordinates (microns, seconds, etc.)</span>
-<span class="hljs-keyword">var</span> physicalROI = <span class="hljs-keyword">new</span> <span class="hljs-type">PhysicalROI</span>(
-    origin: <span class="hljs-type"></span>[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">5.0</span>, <span class="hljs-number">100.0</span>, <span class="hljs-number">200.0</span>],
-    size:   <span class="hljs-type"></span>[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">2.0</span>, <span class="hljs-number">50.0</span>, <span class="hljs-number">50.0</span>]
-);
-
-<span class="hljs-comment">// Pixel coordinates (array indices)</span>
-<span class="hljs-keyword">var</span> pixelRegion = <span class="hljs-keyword">new</span> <span class="hljs-type">PixelRegion</span>(
-    start: <span class="hljs-type"></span>[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">10</span>, <span class="hljs-number">100</span>, <span class="hljs-number">200</span>],
-    end:   <span class="hljs-type"></span>[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">12</span>, <span class="hljs-number">150</span>, <span class="hljs-number">250</span>]
-);
-</code></pre>
-<h2 id="examples">Examples</h2>
-<h3 id="iterate-through-a-z-stack">Iterate through a Z-stack</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> axes = level.Multiscale.Axes;
-<span class="hljs-keyword">var</span> zIndex = Array.FindIndex(axes, a =&gt; a.Name.Equals(<span class="hljs-string">"z"</span>, StringComparison.OrdinalIgnoreCase));
-<span class="hljs-keyword">var</span> numSlices = (<span class="hljs-keyword">int</span>)level.Shape[zIndex];
-
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> z = <span class="hljs-number">0</span>; z &lt; numSlices; z++)
-{
-    <span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: z);
-    <span class="hljs-keyword">var</span> pixels = plane.As1DArray&lt;<span class="hljs-keyword">ushort</span>&gt;();
-
-    <span class="hljs-keyword">double</span> meanIntensity = pixels.Average(p =&gt; (<span class="hljs-keyword">double</span>)p);
-    Console.WriteLine(<span class="hljs-string">$"Z=<span class="hljs-subst">{z}</span>: mean intensity = <span class="hljs-subst">{meanIntensity:F1}</span>"</span>);
-}
-</code></pre>
-<h3 id="read-all-channels-as-separate-planes">Read all channels as separate planes</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> cIndex = Array.FindIndex(axes, a =&gt; a.Name.Equals(<span class="hljs-string">"c"</span>, StringComparison.OrdinalIgnoreCase));
-<span class="hljs-keyword">var</span> numChannels = (<span class="hljs-keyword">int</span>)level.Shape[cIndex];
-
-<span class="hljs-keyword">var</span> channels = <span class="hljs-keyword">new</span> List&lt;<span class="hljs-keyword">ushort</span>[,]&gt;();
-<span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> c = <span class="hljs-number">0</span>; c &lt; numChannels; c++)
-{
-    <span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: c, z: <span class="hljs-number">0</span>);
-    channels.Add(plane.As2DArray&lt;<span class="hljs-keyword">ushort</span>&gt;());
-}
-
-<span class="hljs-comment">// Create RGB composite, max projection, etc.</span>
-</code></pre>
-<h3 id="choose-optimal-resolution-level-for-display">Choose optimal resolution level for display</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> levels = <span class="hljs-keyword">await</span> image.OpenAllResolutionLevelsAsync();
-double targetMicronsPerPixel = <span class="hljs-number">0.5</span>;
-
-<span class="hljs-keyword">var</span> spatialAxisIndex = <span class="hljs-number">3</span>;  <span class="hljs-comment">// y axis in t,c,z,y,x</span>
-<span class="hljs-keyword">var</span> bestLevel = levels
-    .Select(<span class="hljs-function">(<span class="hljs-params">l, i</span>) =&gt;</span> (level: l, <span class="hljs-attr">index</span>: i, <span class="hljs-attr">pixelSize</span>: l.GetPixelSize()[spatialAxisIndex]))
-    .OrderBy(<span class="hljs-function"><span class="hljs-params">l</span> =&gt;</span> <span class="hljs-built_in">Math</span>.Abs(l.pixelSize - targetMicronsPerPixel))
-    .First();
-
-Console.WriteLine($<span class="hljs-string">"Using level {bestLevel.index} ({bestLevel.pixelSize:G4} µm/px)"</span>);
-</code></pre>
-<h3 id="process-an-entire-hcs-plate">Process an entire HCS plate</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> plate = reader.AsPlate();
-
-<span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> wellRef <span class="hljs-keyword">in</span> plate.Wells)
-{
-    <span class="hljs-keyword">var</span> well = <span class="hljs-keyword">await</span> plate.OpenWellAsync(wellRef.Path);
-
-    <span class="hljs-keyword">foreach</span> (<span class="hljs-keyword">var</span> fieldRef <span class="hljs-keyword">in</span> well.Fields)
-    {
-        <span class="hljs-keyword">var</span> field = <span class="hljs-keyword">await</span> well.OpenFieldAsync(fieldRef.Path);
-        <span class="hljs-keyword">var</span> level = <span class="hljs-keyword">await</span> field.OpenResolutionLevelAsync(<span class="hljs-number">0</span>);
-
-        <span class="hljs-comment">// Process each field</span>
-        <span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(c: <span class="hljs-number">0</span>, z: <span class="hljs-number">0</span>);
-        <span class="hljs-comment">// ... analyze, segment, etc.</span>
-    }
-}
-</code></pre>
-<h3 id="save-plane-as-image-file-using-imagesharp-">Save plane as image file (using ImageSharp)</h3>
-<pre><code class="lang-csharp"><span class="hljs-keyword">using</span> SixLabors.ImageSharp;
-<span class="hljs-keyword">using</span> SixLabors.ImageSharp.PixelFormats;
-
-<span class="hljs-keyword">var</span> plane = <span class="hljs-keyword">await</span> level.ReadPlaneAsync(t: <span class="hljs-number">0</span>, c: <span class="hljs-number">0</span>, z: <span class="hljs-number">5</span>);
-<span class="hljs-keyword">byte</span>[] pixels = plane.ToBytes&lt;<span class="hljs-keyword">ushort</span>&gt;(PixelFormat.Gray8);
-
-<span class="hljs-keyword">var</span> img = Image.LoadPixelData&lt;L8&gt;(pixels, plane.Width, plane.Height);
-img.SaveAsPng(<span class="hljs-string">"output.png"</span>);
-</code></pre>
-<h2 id="performance-considerations">Performance Considerations</h2>
-<h3 id="chunk-aligned-reads">Chunk-Aligned Reads</h3>
+<div class="fragment"><div class="line"><span class="comment">// Physical coordinates (microns, seconds, etc.)</span></div>
+<div class="line">var physicalROI = <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html">PhysicalROI</a>(</div>
+<div class="line">    origin: [0, 0, 5.0, 100.0, 200.0],</div>
+<div class="line">    size:   [1, 1, 2.0, 50.0, 50.0]</div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Pixel coordinates (array indices)</span></div>
+<div class="line">var pixelRegion = <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a>(</div>
+<div class="line">    start: [0, 0, 10, 100, 200],</div>
+<div class="line">    end:   [1, 1, 12, 150, 250]</div>
+<div class="line">);</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region_html"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">ZarrNET.Core.OmeZarr.Coordinates.PixelRegion</a></div><div class="ttdoc">A region expressed in pixel (array index) coordinates. Maps directly to ZarrArray....</div><div class="ttdef"><b>Definition</b> PhysicalROI.cs:52</div></div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md48"></a>
+Examples</h1>
+<h2><a class="anchor" id="autotoc_md49"></a>
+Iterate through a Z-stack</h2>
+<div class="fragment"><div class="line">var axes = level.Multiscale.Axes;</div>
+<div class="line">var zIndex = Array.FindIndex(axes, a =&gt; a.Name.Equals(<span class="stringliteral">&quot;z&quot;</span>, StringComparison.OrdinalIgnoreCase));</div>
+<div class="line">var numSlices = (int)level.Shape[zIndex];</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> z = 0; z &lt; numSlices; z++)</div>
+<div class="line">{</div>
+<div class="line">    var plane = await level.ReadPlaneAsync(t: 0, c: 0, z: z);</div>
+<div class="line">    var pixels = plane.As1DArray&lt;ushort&gt;();</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordtype">double</span> meanIntensity = pixels.Average(p =&gt; (<span class="keywordtype">double</span>)p);</div>
+<div class="line">    Console.WriteLine($<span class="stringliteral">&quot;Z={z}: mean intensity = {meanIntensity:F1}&quot;</span>);</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md50"></a>
+Read all channels as separate planes</h2>
+<div class="fragment"><div class="line">var cIndex = Array.FindIndex(axes, a =&gt; a.Name.Equals(<span class="stringliteral">&quot;c&quot;</span>, StringComparison.OrdinalIgnoreCase));</div>
+<div class="line">var numChannels = (int)level.Shape[cIndex];</div>
+<div class="line"> </div>
+<div class="line">var channels = <span class="keyword">new</span> List&lt;ushort[,]&gt;();</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> c = 0; c &lt; numChannels; c++)</div>
+<div class="line">{</div>
+<div class="line">    var plane = await level.ReadPlaneAsync(t: 0, c: c, z: 0);</div>
+<div class="line">    channels.Add(plane.As2DArray&lt;ushort&gt;());</div>
+<div class="line">}</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Create RGB composite, max projection, etc.</span></div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md51"></a>
+Choose optimal resolution level for display</h2>
+<div class="fragment"><div class="line">var levels = await image.OpenAllResolutionLevelsAsync();</div>
+<div class="line"><span class="keywordtype">double</span> targetMicronsPerPixel = 0.5;</div>
+<div class="line"> </div>
+<div class="line">var spatialAxisIndex = 3;  <span class="comment">// y axis in t,c,z,y,x</span></div>
+<div class="line">var bestLevel = levels</div>
+<div class="line">    .Select((l, i) =&gt; (level: l, index: i, pixelSize: l.GetPixelSize()[spatialAxisIndex]))</div>
+<div class="line">    .OrderBy(l =&gt; Math.Abs(l.pixelSize - targetMicronsPerPixel))</div>
+<div class="line">    .First();</div>
+<div class="line"> </div>
+<div class="line">Console.WriteLine($<span class="stringliteral">&quot;Using level {bestLevel.index} ({bestLevel.pixelSize:G4} µm/px)&quot;</span>);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md52"></a>
+Process an entire HCS plate</h2>
+<div class="fragment"><div class="line">var plate = reader.AsPlate();</div>
+<div class="line"> </div>
+<div class="line"><span class="keywordflow">foreach</span> (var wellRef <span class="keywordflow">in</span> plate.Wells)</div>
+<div class="line">{</div>
+<div class="line">    var well = await plate.OpenWellAsync(wellRef.Path);</div>
+<div class="line">    </div>
+<div class="line">    <span class="keywordflow">foreach</span> (var fieldRef <span class="keywordflow">in</span> well.Fields)</div>
+<div class="line">    {</div>
+<div class="line">        var field = await well.OpenFieldAsync(fieldRef.Path);</div>
+<div class="line">        var level = await field.OpenResolutionLevelAsync(0);</div>
+<div class="line">        </div>
+<div class="line">        <span class="comment">// Process each field</span></div>
+<div class="line">        var plane = await level.ReadPlaneAsync(c: 0, z: 0);</div>
+<div class="line">        <span class="comment">// ... analyze, segment, etc.</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md53"></a>
+Save plane as image file (using ImageSharp)</h2>
+<div class="fragment"><div class="line"><span class="keyword">using </span>SixLabors.ImageSharp;</div>
+<div class="line"><span class="keyword">using </span>SixLabors.ImageSharp.PixelFormats;</div>
+<div class="line"> </div>
+<div class="line">var plane = await level.ReadPlaneAsync(t: 0, c: 0, z: 5);</div>
+<div class="line"><span class="keywordtype">byte</span>[] pixels = plane.ToBytes&lt;ushort&gt;(PixelFormat.Gray8);</div>
+<div class="line"> </div>
+<div class="line">var img = Image.LoadPixelData&lt;L8&gt;(pixels, plane.Width, plane.Height);</div>
+<div class="line">img.SaveAsPng(<span class="stringliteral">&quot;output.png&quot;</span>);</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md54"></a>
+Performance Considerations</h1>
+<h2><a class="anchor" id="autotoc_md55"></a>
+Chunk-Aligned Reads</h2>
 <p>For best performance, align ROI boundaries to chunk boundaries when possible:</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">var</span> chunkShape = level.ZarrArray.Metadata.ChunkShape;  <span class="hljs-comment">// e.g., [1, 1, 1, 96, 96]</span>
-
-<span class="hljs-comment">// Good: aligned to chunk boundaries (multiples of 96)</span>
-<span class="hljs-keyword">var</span> alignedROI = <span class="hljs-keyword">new</span> <span class="hljs-type">PixelRegion</span>(
-    start: <span class="hljs-type"></span>[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>],
-    end:   <span class="hljs-type"></span>[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">96</span>, <span class="hljs-number">192</span>]  <span class="hljs-comment">// 1x2 chunks</span>
-);
-
-<span class="hljs-comment">// Less efficient: crosses chunk boundaries</span>
-<span class="hljs-keyword">var</span> unalignedROI = <span class="hljs-keyword">new</span> <span class="hljs-type">PixelRegion</span>(
-    start: <span class="hljs-type"></span>[<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">50</span>, <span class="hljs-number">50</span>],
-    end:   <span class="hljs-type"></span>[<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">150</span>, <span class="hljs-number">150</span>]  <span class="hljs-comment">// touches 4 chunks</span>
-);
-</code></pre>
-<h3 id="resolution-level-selection">Resolution Level Selection</h3>
+<div class="fragment"><div class="line">var chunkShape = level.ZarrArray.Metadata.ChunkShape;  <span class="comment">// e.g., [1, 1, 1, 96, 96]</span></div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Good: aligned to chunk boundaries (multiples of 96)</span></div>
+<div class="line">var alignedROI = <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a>(</div>
+<div class="line">    start: [0, 0, 0, 0, 0],</div>
+<div class="line">    end:   [1, 1, 1, 96, 192]  <span class="comment">// 1x2 chunks</span></div>
+<div class="line">);</div>
+<div class="line"> </div>
+<div class="line"><span class="comment">// Less efficient: crosses chunk boundaries</span></div>
+<div class="line">var unalignedROI = <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a>(</div>
+<div class="line">    start: [0, 0, 0, 50, 50],</div>
+<div class="line">    end:   [1, 1, 1, 150, 150]  <span class="comment">// touches 4 chunks</span></div>
+<div class="line">);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md56"></a>
+Resolution Level Selection</h2>
 <p>Use lower resolution levels for overview/navigation, full resolution for analysis:</p>
-<pre><code class="lang-csharp"><span class="hljs-comment">// Level 0: Full resolution (slow, detailed)</span>
-<span class="hljs-comment">// Level 3: 1/8 resolution (fast, overview)</span>
-<span class="hljs-keyword">var</span> overview = <span class="hljs-keyword">await</span> image.OpenResolutionLevelAsync(datasetIndex: <span class="hljs-number">3</span>);
-<span class="hljs-keyword">var</span> fullRes = <span class="hljs-keyword">await</span> image.OpenResolutionLevelAsync(datasetIndex: <span class="hljs-number">0</span>);
-</code></pre>
-<h3 id="memory-management">Memory Management</h3>
+<div class="fragment"><div class="line"><span class="comment">// Level 0: Full resolution (slow, detailed)</span></div>
+<div class="line"><span class="comment">// Level 3: 1/8 resolution (fast, overview)</span></div>
+<div class="line">var overview = await image.OpenResolutionLevelAsync(datasetIndex: 3);</div>
+<div class="line">var fullRes = await image.OpenResolutionLevelAsync(datasetIndex: 0);</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md57"></a>
+Memory Management</h2>
 <p>For large datasets, process in tiles rather than loading entire planes:</p>
-<pre><code class="lang-csharp"><span class="hljs-keyword">int</span> tileSize = <span class="hljs-number">512</span>;
-<span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> y = <span class="hljs-number">0</span>; y &lt; <span class="hljs-built_in">height</span>; y += tileSize)
-{
-    <span class="hljs-built_in">for</span> (<span class="hljs-keyword">int</span> x = <span class="hljs-number">0</span>; x &lt; <span class="hljs-built_in">width</span>; x += tileSize)
-    {
-        var tileRegion = <span class="hljs-keyword">new</span> PixelRegion(
-            start: [<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, y, x],
-            <span class="hljs-built_in">end</span>:   [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, Math.Min(y + tileSize, <span class="hljs-built_in">height</span>), Math.Min(x + tileSize, <span class="hljs-built_in">width</span>)]
-        );
-
-        var tile = await level.ReadPixelRegionAsync(tileRegion);
-        <span class="hljs-comment">// Process tile...</span>
-    }
-}
-</code></pre>
-<h2 id="limitations">Limitations</h2>
+<div class="fragment"><div class="line"><span class="keywordtype">int</span> tileSize = 512;</div>
+<div class="line"><span class="keywordflow">for</span> (<span class="keywordtype">int</span> y = 0; y &lt; height; y += tileSize)</div>
+<div class="line">{</div>
+<div class="line">    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> x = 0; x &lt; width; x += tileSize)</div>
+<div class="line">    {</div>
+<div class="line">        var tileRegion = <span class="keyword">new</span> <a class="code hl_class" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a>(</div>
+<div class="line">            start: [0, 0, 0, y, x],</div>
+<div class="line">            end:   [1, 1, 1, Math.Min(y + tileSize, height), Math.Min(x + tileSize, width)]</div>
+<div class="line">        );</div>
+<div class="line">        </div>
+<div class="line">        var tile = await level.ReadPixelRegionAsync(tileRegion);</div>
+<div class="line">        <span class="comment">// Process tile...</span></div>
+<div class="line">    }</div>
+<div class="line">}</div>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md58"></a>
+Limitations</h1>
 <ul>
-<li><strong>Sharded Zarr v3</strong> - Not yet supported (planned).</li>
-<li><strong>HTTP store listing</strong> - ListChildNamesAsync() not supported for HTTP stores. Use explicit path navigation.</li>
-<li><strong>Write support to HTTP</strong> - Read-only for remote stores. Use LocalFileSystemStore for writing.</li>
-<li><strong>Full dataset creation</strong> - Basic region writing works, but no complete writer API yet.</li>
+<li><b>HTTP store listing</b> - <code>ListChildNamesAsync()</code> works for HTTP stores with v2 <code>.zmetadata</code> or v3 inline consolidated metadata. Stores without either still require explicit path navigation.</li>
+<li><b>Write support to HTTP</b> - Read-only for remote stores. Use LocalFileSystemStore for writing.</li>
+<li><b>Transform-aware image resampling</b> - Closed-form, rank-preserving transforms (including array-backed affine/rotation matrices) support nearest, linear, and cubic B-spline output grids. Direct vector fields use a numerical inverse solve; nested vector fields and rank-changing projections remain unsupported.</li>
 </ul>
-<h2 id="roadmap">Roadmap</h2>
-<ul>
-<li>[x] HTTP/S3 remote store support</li>
-<li>[x] Blosc codec support</li>
-<li>[x] AWS S3 native SDK integration (ListObjects, credentials)</li>
-<li>[x] Sharded Zarr v3 support</li>
-<li>[ ] OME-Zarr writer API for creating new datasets</li>
-<li>[x] Parallel chunk reading for improved performance</li>
-<li>[ ] Zarr v2 → v3 conversion utilities</li>
-<li>[ ] NGFF transformations support (rotation, affine)</li>
-<li>[ ] Consolidated metadata (.zmetadata) support for HTTP stores</li>
+<h1><a class="anchor" id="autotoc_md59"></a>
+Roadmap</h1>
+<ul class="check">
+<li class="checked">HTTP/S3 remote store support</li>
 </ul>
-<h2 id="contributing">Contributing</h2>
+<ul class="check">
+<li class="checked">Blosc codec support</li>
+</ul>
+<ul class="check">
+<li class="checked">Zarr v3 transpose codec support</li>
+</ul>
+<ul class="check">
+<li class="checked">AWS S3 native SDK integration (ListObjects, credentials)</li>
+</ul>
+<ul class="check">
+<li class="checked">Sharded Zarr v3 support</li>
+</ul>
+<ul class="check">
+<li class="checked">OME-Zarr writer API for creating new datasets</li>
+</ul>
+<ul class="check">
+<li class="checked">Parallel chunk reading for improved performance</li>
+</ul>
+<ul class="check">
+<li class="checked">Automated baseline tests for writer/reader round-trips and coordinate transforms</li>
+</ul>
+<ul class="check">
+<li class="checked">Zarr v2 → v3 array conversion utility</li>
+<li class="unchecked">Recursive v2 → v3 hierarchy conversion with attributes and group metadata</li>
+</ul>
+<ul class="check">
+<li class="checked">OME-Zarr 0.6 coordinate systems and standard multiscale transforms</li>
+</ul>
+<ul class="check">
+<li class="checked">Closed-form 0.6 point transforms: affine, rotation, axis mapping, projection, sequences, by-dimension, and bijections</li>
+</ul>
+<ul class="check">
+<li class="checked">Array-backed affine and rotation parameter matrices</li>
+</ul>
+<ul class="check">
+<li class="checked">Vector-field <code>coordinates</code> and <code>displacements</code> transforms with nearest/linear interpolation</li>
+</ul>
+<ul class="check">
+<li class="checked">Cubic (<code>bspline-cubic</code>) vector-field interpolation</li>
+</ul>
+<ul class="check">
+<li class="checked">Transform-aware nearest/linear image resampling for rank-preserving closed-form transforms</li>
+</ul>
+<ul class="check">
+<li class="checked">Array-backed affine/rotation matrix resampling</li>
+</ul>
+<ul class="check">
+<li class="checked">Cubic B-spline image resampling</li>
+<li class="unchecked">Validate and extend vector-field image resampling (nested compositions)</li>
+</ul>
+<ul class="check">
+<li class="unchecked">Rank-changing projection image resampling</li>
+</ul>
+<ul class="check">
+<li class="checked">Scene metadata parsing and cross-image point transformation-graph traversal</li>
+</ul>
+<ul class="check">
+<li class="checked">Consolidated metadata (<code>.zmetadata</code> and v3 inline) support for HTTP stores</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md60"></a>
+Contributing</h1>
 <p>Contributions welcome! Please:</p>
-<ol>
+<ol type="1">
 <li>Follow the existing code style (variable staging pattern, clear separation of concerns)</li>
 <li>Add tests for new features</li>
+</ol>
+<p>Run the suite before submitting a change:</p>
+<div class="fragment"><div class="line">dotnet test ZarrNET.Tests/ZarrNET.Tests.csproj</div>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md61"></a>
+Converting a Zarr v2 array to v3</h2>
+<p><code>ZarrV2ToV3Converter</code> copies decoded chunks into a portable v3 bytes pipeline. It currently converts one non-root array; converting an entire hierarchy, including group metadata and attributes, remains future work.</p>
+<div class="fragment"><div class="line">await ZarrV2ToV3Converter.ConvertArrayAsync(</div>
+<div class="line">    sourceStore, <span class="stringliteral">&quot;0&quot;</span>,</div>
+<div class="line">    destinationStore, <span class="stringliteral">&quot;converted/0&quot;</span>);</div>
+</div><!-- fragment --><ol type="1">
 <li>Update documentation</li>
 <li>Open an issue first for major changes</li>
 </ol>
-<h2 id="license">License</h2>
+<h1><a class="anchor" id="autotoc_md62"></a>
+License</h1>
 <ul>
 <li>GNU GPL 3.0 only.</li>
 </ul>
-<h2 id="acknowledgments">Acknowledgments</h2>
+<h1><a class="anchor" id="autotoc_md63"></a>
+Acknowledgments</h1>
 <ul>
-<li><strong>OME-Zarr Specification</strong> - <a href="https://ngff.openmicroscopy.org/">https://ngff.openmicroscopy.org/</a></li>
-<li><strong>Zarr Specification</strong> - <a href="https://zarr-specs.readthedocs.io/">https://zarr-specs.readthedocs.io/</a></li>
-<li><strong>ZstdSharp</strong> - Managed Zstandard compression</li>
+<li><b>OME-Zarr Specification</b> - <a href="https://ngff.openmicroscopy.org/">https://ngff.openmicroscopy.org/</a></li>
+<li><b>Zarr Specification</b> - <a href="https://zarr-specs.readthedocs.io/">https://zarr-specs.readthedocs.io/</a></li>
+<li><b>ZstdSharp</b> - Managed Zstandard compression</li>
 <li>Inspired by zarr-python, ome-zarr-py, and the broader scientific imaging community</li>
 </ul>
-<h2 id="support">Support</h2>
-<h2 id="please-use-image-sc-forum-for-discussion-">Please use image.sc forum for discussion.</h2>
-<p><strong>Built with ❤️ for the scientific imaging community</strong></p>
-
+<h1><a class="anchor" id="autotoc_md64"></a>
+Support</h1>
+<h1><a class="anchor" id="autotoc_md65"></a>
+Please use image.sc forum for discussion.</h1>
+<p><b>Built with ❤️ for the scientific imaging community</b> </p>
+</div></div><!-- PageDoc -->
+<a href="doxygen_crawl.html"></a>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->

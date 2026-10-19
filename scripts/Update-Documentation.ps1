@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('All', 'BioLib', 'BioImager', 'BioGTK', 'IKVM11')]
+    [ValidateSet('All', 'BioLib', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET')]
     [string[]]$Project = @('All')
 )
 
@@ -9,7 +9,11 @@ $ErrorActionPreference = 'Stop'
 $siteRoot = Split-Path -Parent $PSScriptRoot
 $documentationRoot = Join-Path $siteRoot 'Documentation'
 $repositoryRoot = 'C:\Users\Erikr\Documents\GitHub'
-$doxygen = (Get-Command doxygen -ErrorAction Stop).Source
+$doxygenCommand = Get-Command doxygen -ErrorAction SilentlyContinue
+$doxygen = if ($doxygenCommand) { $doxygenCommand.Source } else { Join-Path $env:ProgramFiles 'doxygen\bin\doxygen.exe' }
+if (-not (Test-Path -LiteralPath $doxygen)) {
+    throw 'Doxygen was not found on PATH or in Program Files.'
+}
 $legacyThemeDoxyfile = Join-Path $repositoryRoot 'BioLibDoxyfile'
 
 $projects = @{
@@ -36,6 +40,18 @@ $projects = @{
         Readme = Join-Path $repositoryRoot 'ikvm\README.md'
         Doxyfiles = @($legacyThemeDoxyfile, (Join-Path $repositoryRoot 'ikvm\Doxyfile'))
         WorkingDirectory = Join-Path $repositoryRoot 'ikvm'
+    }
+    ZarrNET = @{
+        Root = Join-Path $repositoryRoot 'ZarrNET'
+        Readme = Join-Path $repositoryRoot 'ZarrNET\README.md'
+        Doxyfiles = @(Join-Path $repositoryRoot 'ZarrNETDoxyfile')
+        WorkingDirectory = $repositoryRoot
+        OutputSubdirectory = 'html'
+        ProjectFile = Join-Path $repositoryRoot 'ZarrNET\Zarr.NET.csproj'
+        Overrides = @(
+            'EXCLUDE_PATTERNS += */bin/* */obj/* */.git/* */.vs/* */.tmp/* */.agents/* */.codex/* */ZarrNET.Tests/*'
+            'HTML_EXTRA_FILES += D:/repos/RepoErik/doxygen-awesome/logo.drawio.svg'
+        )
     }
 }
 
@@ -81,7 +97,7 @@ function New-Doxyfile {
     ) -join [Environment]::NewLine
 }
 
-$requestedProjects = if ($Project -contains 'All') { @('BioLib', 'BioImager', 'BioGTK', 'IKVM11') } else { $Project }
+$requestedProjects = if ($Project -contains 'All') { @('BioLib', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET') } else { $Project }
 
 foreach ($projectName in $requestedProjects) {
     $definition = $projects[$projectName]
@@ -98,12 +114,25 @@ foreach ($projectName in $requestedProjects) {
     }
 
     $targetDirectory = Join-Path $documentationRoot $projectName
+    if ($definition.OutputSubdirectory) {
+        $targetDirectory = Join-Path $targetDirectory $definition.OutputSubdirectory
+    }
     $stagingDirectory = Join-Path $env:TEMP ("BiologyTools-Doxygen-$projectName-$([guid]::NewGuid())")
 
     try {
         New-Item -ItemType Directory -Path $stagingDirectory -Force | Out-Null
         $doxyfile = Join-Path $stagingDirectory 'Doxyfile'
-        Set-Content -LiteralPath $doxyfile -Value (New-Doxyfile -IncludedDoxyfiles $definition.Doxyfiles -OutputDirectory $stagingDirectory -MainPage $definition.Readme) -Encoding utf8
+        $configuration = New-Doxyfile -IncludedDoxyfiles $definition.Doxyfiles -OutputDirectory $stagingDirectory -MainPage $definition.Readme
+        if ($definition.ProjectFile) {
+            [xml]$projectXml = Get-Content -LiteralPath $definition.ProjectFile -Raw
+            $version = @($projectXml.Project.PropertyGroup.Version | Where-Object { $_ })[0]
+            if (-not $version) {
+                throw "Project version not found: $($definition.ProjectFile)"
+            }
+            $configuration += "`nPROJECT_NUMBER = $version"
+        }
+        $configuration += "`n" + ($definition.Overrides -join "`n")
+        Set-Content -LiteralPath $doxyfile -Value $configuration -Encoding utf8
         Invoke-Doxygen -Configuration $doxyfile -WorkingDirectory $definition.WorkingDirectory
 
         $generatedHtml = Join-Path $stagingDirectory 'html'
@@ -112,6 +141,11 @@ foreach ($projectName in $requestedProjects) {
         }
 
         New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
+        $resolvedTarget = [IO.Path]::GetFullPath($targetDirectory)
+        $resolvedDocumentationRoot = [IO.Path]::GetFullPath($documentationRoot) + [IO.Path]::DirectorySeparatorChar
+        if (-not $resolvedTarget.StartsWith($resolvedDocumentationRoot, [StringComparison]::OrdinalIgnoreCase)) {
+            throw "Documentation target is outside the documentation root: $resolvedTarget"
+        }
         & robocopy $generatedHtml $targetDirectory /MIR /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP
         if ($LASTEXITCODE -gt 7) {
             throw "Failed to publish $projectName documentation (robocopy exit code $LASTEXITCODE)."
@@ -121,6 +155,11 @@ foreach ($projectName in $requestedProjects) {
     }
     finally {
         if (Test-Path -LiteralPath $stagingDirectory) {
+            $resolvedStaging = [IO.Path]::GetFullPath($stagingDirectory)
+            $temporaryRoot = [IO.Path]::GetFullPath($env:TEMP).TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
+            if (-not $resolvedStaging.StartsWith($temporaryRoot, [StringComparison]::OrdinalIgnoreCase)) {
+                throw "Staging directory is outside the temporary root: $resolvedStaging"
+            }
             Remove-Item -LiteralPath $stagingDirectory -Recurse -Force
         }
     }

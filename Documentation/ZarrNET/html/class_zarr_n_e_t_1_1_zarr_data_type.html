@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -147,7 +147,7 @@ $(function(){initNavTree('class_zarr_n_e_t_1_1_zarr_data_type.html',''); initRes
 </div><!--header-->
 <div class="contents">
 
-<p>Typed representation of a Zarr v3 data type string (e.g. "uint8", "float32"). Resolves element size in bytes and provides type classification used by the codec pipeline for byte-order handling.  
+<p>Typed representation of a Zarr v3 data type string (e.g. "uint8", "float32", "complex64"). Resolves element size in bytes and provides type classification used by the codec pipeline for byte-order handling.
  <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
@@ -167,15 +167,19 @@ Properties</h2></td></tr>
 <tr class="separator:a2d5529e0b5f8691c79ce4712a7615a71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa5e8e80daf48e307a193c44a61786819" id="r_aa5e8e80daf48e307a193c44a61786819"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa5e8e80daf48e307a193c44a61786819">ElementSize</a><code> [get]</code></td></tr>
 <tr class="separator:aa5e8e80daf48e307a193c44a61786819"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa7ac64b4e00248b39fcd34ed325ae21b" id="r_aa7ac64b4e00248b39fcd34ed325ae21b"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa7ac64b4e00248b39fcd34ed325ae21b">ByteOrderElementSize</a><code> [get]</code></td></tr>
+<tr class="separator:aa7ac64b4e00248b39fcd34ed325ae21b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a717b4ae8b628b810719f33b04dae356b" id="r_a717b4ae8b628b810719f33b04dae356b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a717b4ae8b628b810719f33b04dae356b">IsFloat</a><code> [get]</code></td></tr>
 <tr class="separator:a717b4ae8b628b810719f33b04dae356b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a004113f4df6c8a6036747d1a5f80db2c" id="r_a004113f4df6c8a6036747d1a5f80db2c"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a004113f4df6c8a6036747d1a5f80db2c">IsInteger</a><code> [get]</code></td></tr>
 <tr class="separator:a004113f4df6c8a6036747d1a5f80db2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2f5ea2d591ba0379bda2a44320af5c98" id="r_a2f5ea2d591ba0379bda2a44320af5c98"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f5ea2d591ba0379bda2a44320af5c98">IsComplex</a><code> [get]</code></td></tr>
+<tr class="separator:a2f5ea2d591ba0379bda2a44320af5c98"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3b5e58e305a612b015623f35527f2bf6" id="r_a3b5e58e305a612b015623f35527f2bf6"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a3b5e58e305a612b015623f35527f2bf6">IsSigned</a><code> [get]</code></td></tr>
 <tr class="separator:a3b5e58e305a612b015623f35527f2bf6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Typed representation of a Zarr v3 data type string (e.g. "uint8", "float32"). Resolves element size in bytes and provides type classification used by the codec pipeline for byte-order handling. </p>
+<div class="textblock"><p>Typed representation of a Zarr v3 data type string (e.g. "uint8", "float32", "complex64"). Resolves element size in bytes and provides type classification used by the codec pipeline for byte-order handling. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a29439443f83cbc3e9c0857eaa3e227ca" name="a29439443f83cbc3e9c0857eaa3e227ca"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a29439443f83cbc3e9c0857eaa3e227ca">&#9670;&#160;</a></span>Parse()</h2>
@@ -199,27 +203,52 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   30</span>    {</div>
-<div class="line"><span class="lineno">   31</span>        <span class="keywordflow">return</span> typeString <span class="keywordflow">switch</span></div>
-<div class="line"><span class="lineno">   32</span>        {</div>
-<div class="line"><span class="lineno">   33</span>            <span class="stringliteral">&quot;bool&quot;</span>    =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
-<div class="line"><span class="lineno">   34</span>            <span class="stringliteral">&quot;int8&quot;</span>    =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   35</span>            <span class="stringliteral">&quot;uint8&quot;</span>   =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
-<div class="line"><span class="lineno">   36</span>            <span class="stringliteral">&quot;int16&quot;</span>   =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 2, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   37</span>            <span class="stringliteral">&quot;uint16&quot;</span>  =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 2, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
-<div class="line"><span class="lineno">   38</span>            <span class="stringliteral">&quot;int32&quot;</span>   =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 4, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   39</span>            <span class="stringliteral">&quot;uint32&quot;</span>  =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 4, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
-<div class="line"><span class="lineno">   40</span>            <span class="stringliteral">&quot;int64&quot;</span>   =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 8, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   41</span>            <span class="stringliteral">&quot;uint64&quot;</span>  =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 8, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
-<div class="line"><span class="lineno">   42</span>            <span class="stringliteral">&quot;float32&quot;</span> =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 4, isFloat: <span class="keyword">true</span>,  isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   43</span>            <span class="stringliteral">&quot;float64&quot;</span> =&gt; <span class="keyword">new</span> ZarrDataType(typeString, 8, isFloat: <span class="keyword">true</span>,  isSigned: <span class="keyword">true</span>),</div>
-<div class="line"><span class="lineno">   44</span>            _ =&gt; <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException($<span class="stringliteral">&quot;Unsupported Zarr data type: &#39;{typeString}&#39;&quot;</span>)</div>
-<div class="line"><span class="lineno">   45</span>        };</div>
-<div class="line"><span class="lineno">   46</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   65</span>    {</div>
+<div class="line"><span class="lineno">   66</span>        <span class="keywordflow">return</span> typeString <span class="keywordflow">switch</span></div>
+<div class="line"><span class="lineno">   67</span>        {</div>
+<div class="line"><span class="lineno">   68</span>            <span class="stringliteral">&quot;bool&quot;</span>       =&gt; Numeric(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
+<div class="line"><span class="lineno">   69</span>            <span class="stringliteral">&quot;int8&quot;</span>       =&gt; Numeric(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   70</span>            <span class="stringliteral">&quot;uint8&quot;</span>      =&gt; Numeric(typeString, 1, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
+<div class="line"><span class="lineno">   71</span>            <span class="stringliteral">&quot;int16&quot;</span>      =&gt; Numeric(typeString, 2, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   72</span>            <span class="stringliteral">&quot;uint16&quot;</span>     =&gt; Numeric(typeString, 2, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
+<div class="line"><span class="lineno">   73</span>            <span class="stringliteral">&quot;int32&quot;</span>      =&gt; Numeric(typeString, 4, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   74</span>            <span class="stringliteral">&quot;uint32&quot;</span>     =&gt; Numeric(typeString, 4, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
+<div class="line"><span class="lineno">   75</span>            <span class="stringliteral">&quot;int64&quot;</span>      =&gt; Numeric(typeString, 8, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   76</span>            <span class="stringliteral">&quot;uint64&quot;</span>     =&gt; Numeric(typeString, 8, isFloat: <span class="keyword">false</span>, isSigned: <span class="keyword">false</span>),</div>
+<div class="line"><span class="lineno">   77</span>            <span class="stringliteral">&quot;float32&quot;</span>    =&gt; Numeric(typeString, 4, isFloat: <span class="keyword">true</span>,  isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   78</span>            <span class="stringliteral">&quot;float64&quot;</span>    =&gt; Numeric(typeString, 8, isFloat: <span class="keyword">true</span>,  isSigned: <span class="keyword">true</span>),</div>
+<div class="line"><span class="lineno">   79</span>            <span class="stringliteral">&quot;complex64&quot;</span>  =&gt; Complex(typeString, 8, componentSize: 4),</div>
+<div class="line"><span class="lineno">   80</span>            <span class="stringliteral">&quot;complex128&quot;</span> =&gt; Complex(typeString, 16, componentSize: 8),</div>
+<div class="line"><span class="lineno">   81</span>            _ =&gt; <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException($<span class="stringliteral">&quot;Unsupported Zarr data type: &#39;{typeString}&#39;&quot;</span>)</div>
+<div class="line"><span class="lineno">   82</span>        };</div>
+<div class="line"><span class="lineno">   83</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
 <h2 class="groupheader">Property Documentation</h2>
+<a id="aa7ac64b4e00248b39fcd34ed325ae21b" name="aa7ac64b4e00248b39fcd34ed325ae21b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa7ac64b4e00248b39fcd34ed325ae21b">&#9670;&#160;</a></span>ByteOrderElementSize</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">int ZarrNET.ZarrDataType.ByteOrderElementSize</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   12</span>{ <span class="keyword">get</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="aa5e8e80daf48e307a193c44a61786819" name="aa5e8e80daf48e307a193c44a61786819"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#aa5e8e80daf48e307a193c44a61786819">&#9670;&#160;</a></span>ElementSize</h2>
 
@@ -243,6 +272,29 @@ Properties</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="a2f5ea2d591ba0379bda2a44320af5c98" name="a2f5ea2d591ba0379bda2a44320af5c98"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f5ea2d591ba0379bda2a44320af5c98">&#9670;&#160;</a></span>IsComplex</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool ZarrNET.ZarrDataType.IsComplex</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">get</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+<div class="fragment"><div class="line"><span class="lineno">   15</span>{ <span class="keyword">get</span>; }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a717b4ae8b628b810719f33b04dae356b" name="a717b4ae8b628b810719f33b04dae356b"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a717b4ae8b628b810719f33b04dae356b">&#9670;&#160;</a></span>IsFloat</h2>
 
@@ -262,7 +314,7 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   12</span>{ <span class="keyword">get</span>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">   13</span>{ <span class="keyword">get</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -285,7 +337,7 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   13</span>{ <span class="keyword">get</span>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">   14</span>{ <span class="keyword">get</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -308,7 +360,7 @@ Properties</h2></td></tr>
   </tr>
 </table>
 </div><div class="memdoc">
-<div class="fragment"><div class="line"><span class="lineno">   14</span>{ <span class="keyword">get</span>; }</div>
+<div class="fragment"><div class="line"><span class="lineno">   16</span>{ <span class="keyword">get</span>; }</div>
 </div><!-- fragment -->
 </div>
 </div>

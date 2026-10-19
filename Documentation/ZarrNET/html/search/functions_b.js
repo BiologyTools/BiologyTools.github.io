@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['readasync_0',['ReadAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#a9273043c207b15fc38a5f9a0c5aebada',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore.ReadAsync()'],['../interface_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_i_zarr_store.html#a510e5c4efc888cf078a62a90586d8a30',1,'ZarrNET.Core.Zarr.Store.IZarrStore.ReadAsync()'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_local_file_system_store.html#a18a625961b586a183a5f170d10221bbb',1,'ZarrNET.Core.Zarr.Store.LocalFileSystemStore.ReadAsync()'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_s3_zarr_store.html#a48a03d0f40e1d0da8ca3c701933a1752',1,'ZarrNET.Core.Zarr.Store.S3ZarrStore.ReadAsync()']]],
-  ['readchunkdecodedasync_1',['ReadChunkDecodedAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_array.html#a468fef39b7682b472775f81434d24295',1,'ZarrNET::Core::Zarr::ZarrArray']]],
-  ['readchunkencodedasync_2',['ReadChunkEncodedAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_array.html#a5a221eada8a7b0477da4ac32cb6270fd',1,'ZarrNET::Core::Zarr::ZarrArray']]],
-  ['readpixelregionasync_3',['ReadPixelRegionAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#ad4250731d935743972201e053b889164',1,'ZarrNET::Core::Nodes::ResolutionLevelNode']]],
-  ['readregionasync_4',['ReadRegionAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#a1250f34a13c95114788006e8582f60ce',1,'ZarrNET.Core.Nodes.ResolutionLevelNode.ReadRegionAsync()'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_array.html#a49868fe586d04f64190f29bdc5abeab0',1,'ZarrNET.Core.Zarr.ZarrArray.ReadRegionAsync()']]],
-  ['readtileasync_5',['ReadTileAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#acd3511295a30c91f0cd096943f62f0c9',1,'ZarrNET::Core::Nodes::ResolutionLevelNode']]],
-  ['regionresult_6',['RegionResult',['../namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_nodes.html#ab2105fbda7103a09d139ddc0627103e0',1,'ZarrNET::Core::OmeZarr::Nodes']]]
+  ['physicaltopixel_0',['PhysicalToPixel',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a020a93099702b82091e9cfa6ade379a1',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformService']]],
+  ['pixeltophysical_1',['PixelToPhysical',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a789f170ec3e770eebd1df5514ff6ad5b',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformService']]]
 ];

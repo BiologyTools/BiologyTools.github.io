@@ -1,4 +1,31 @@
 var searchData=
 [
-  ['quick_20start_0',['Quick Start',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md25',1,'']]]
+  ['ome_20zarr_200_206_20transformations_0',['OME-Zarr 0.6 transformations',['../index.html#autotoc_md40',1,'']]],
+  ['ome_20zarr_20node_20types_1',['OME-Zarr Node Types',['../index.html#autotoc_md38',1,'']]],
+  ['omemetadata_2',['OmeMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexml_3',['OmeXml',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_bioformats2_raw_metadata.html#ac8d92a89e070157be56f7024bece0967',1,'ZarrNET.Core.OmeZarr.Metadata.Bioformats2RawMetadata.OmeXml'],['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_bioformats2_raw_collection_node.html#a2ffa7fdcc845fde3bb9956138c62eb5e',1,'ZarrNET.Core.Nodes.Bioformats2RawCollectionNode.OmeXml']]],
+  ['omexmlchannelmetadata_4',['OmeXmlChannelMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_channel_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexmldetectormetadata_5',['OmeXmlDetectorMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_detector_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexmlimagemetadata_6',['OmeXmlImageMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_image_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexmlinstrumentmetadata_7',['OmeXmlInstrumentMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_instrument_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexmlmetadata_8',['OmeXmlMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omexmlobjectivemetadata_9',['OmeXmlObjectiveMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_objective_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['omezarrnode_10',['OmeZarrNode',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_ome_zarr_node.html',1,'ZarrNET::Core::Nodes']]],
+  ['omezarrreader_11',['OmeZarrReader',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html',1,'ZarrNET::Core']]],
+  ['omezarrreader_20tt_12',['&lt;tt&gt;OmeZarrReader&lt;/tt&gt;',['../index.html#autotoc_md43',1,'']]],
+  ['omezarrwriter_13',['OmeZarrWriter',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_writer.html',1,'ZarrNET::Core']]],
+  ['openallresolutionlevelsasync_14',['OpenAllResolutionLevelsAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_multiscale_node.html#a8b1ce86524dd666090112cb066a8e27d',1,'ZarrNET::Core::Nodes::MultiscaleNode']]],
+  ['openarrayasync_15',['OpenArrayAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a18c12644c1879bca27634255f5d4ab8c',1,'ZarrNET::Core::Zarr::ZarrGroup']]],
+  ['openasync_16',['OpenAsync',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a3723efeae78c567adc9b623bc581041c',1,'ZarrNET.Core.OmeZarrReader.OpenAsync(string pathOrUrl, CancellationToken ct=default)'],['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a38aa9713b08f048e881bd841eeb66cd8',1,'ZarrNET.Core.OmeZarrReader.OpenAsync(IZarrStore store, CancellationToken ct=default)']]],
+  ['openfieldasync_17',['OpenFieldAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_well_node.html#ae372290eeac840326750f51e7482a4a4',1,'ZarrNET.Core.Nodes.WellNode.OpenFieldAsync(string fieldPath, CancellationToken ct=default)'],['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_well_node.html#a952ae27098c9aaf315d1a96fe5d1fac4',1,'ZarrNET.Core.Nodes.WellNode.OpenFieldAsync(int fieldIndex=0, CancellationToken ct=default)']]],
+  ['opengroupasync_18',['OpenGroupAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#aa6e270e5307f3ed626658fc029d47408',1,'ZarrNET::Core::Zarr::ZarrGroup']]],
+  ['openresolutionlevelasync_19',['OpenResolutionLevelAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_multiscale_node.html#afbd30123a063e645b6ce2b1376730eb1',1,'ZarrNET::Core::Nodes::MultiscaleNode']]],
+  ['openroot_20',['OpenRoot',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a8fd44a11c32ea2c9d3dbeeb67685d4c4',1,'ZarrNET::Core::OmeZarrReader']]],
+  ['openrootasync_21',['OpenRootAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#ae44dc27aaf55f750fff5fe45f9f118ab',1,'ZarrNET::Core::Zarr::ZarrGroup']]],
+  ['openseriesasync_22',['OpenSeriesAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_bioformats2_raw_collection_node.html#a31982c791927a9903e4a2ccc6053341c',1,'ZarrNET::Core::Nodes::Bioformats2RawCollectionNode']]],
+  ['openwellasync_23',['OpenWellAsync',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node.html#a1cd5238cb462d4671dda02f0b03b8771',1,'ZarrNET.Core.Nodes.PlateNode.OpenWellAsync(string wellPath, CancellationToken ct=default)'],['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node.html#a360a2d0a771ee6952d0ee91eeb0c94bb',1,'ZarrNET.Core.Nodes.PlateNode.OpenWellAsync(string rowName, string columnName, CancellationToken ct=default)']]],
+  ['optimal_20resolution_20level_20for_20display_24',['Choose optimal resolution level for display',['../index.html#autotoc_md51',1,'']]],
+  ['order_25',['Order',['../class_zarr_n_e_t_1_1_zarr_v2_array_document.html#a8c70c39d60006f409c55bd75cc90cdff',1,'ZarrNET::ZarrV2ArrayDocument']]],
+  ['origin_26',['Origin',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html#ab34c05aac2d6e76c586302082eeaa253',1,'ZarrNET::Core::OmeZarr::Coordinates::PhysicalROI']]],
+  ['overview_27',['API Overview',['../index.html#autotoc_md41',1,'']]]
 ];

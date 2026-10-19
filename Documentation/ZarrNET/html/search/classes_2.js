@@ -9,7 +9,10 @@ var searchData=
   ['codecdocument_6',['CodecDocument',['../class_zarr_n_e_t_1_1_codec_document.html',1,'ZarrNET']]],
   ['codecpipeline_7',['CodecPipeline',['../class_zarr_n_e_t_1_1_codec_pipeline.html',1,'ZarrNET']]],
   ['columnmetadata_8',['ColumnMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_column_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
-  ['coordinatetransformation_9',['CoordinateTransformation',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_transformation.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
-  ['coordinatetransformservice_10',['CoordinateTransformService',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html',1,'ZarrNET::Core::OmeZarr::Coordinates']]],
-  ['crc32ccodec_11',['Crc32cCodec',['../class_zarr_n_e_t_1_1_crc32c_codec.html',1,'ZarrNET']]]
+  ['coordinatesystemmetadata_9',['CoordinateSystemMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_system_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['coordinatesystemreference_10',['CoordinateSystemReference',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_system_reference.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['coordinatetransformation_11',['CoordinateTransformation',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_coordinate_transformation.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['coordinatetransformationgraph_12',['CoordinateTransformationGraph',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html',1,'ZarrNET::Core::OmeZarr::Coordinates']]],
+  ['coordinatetransformservice_13',['CoordinateTransformService',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html',1,'ZarrNET::Core::OmeZarr::Coordinates']]],
+  ['crc32ccodec_14',['Crc32cCodec',['../class_zarr_n_e_t_1_1_crc32c_codec.html',1,'ZarrNET']]]
 ];

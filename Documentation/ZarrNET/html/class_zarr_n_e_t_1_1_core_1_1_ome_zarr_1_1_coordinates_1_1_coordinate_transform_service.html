@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -151,10 +151,10 @@ $(function(){initNavTree('class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a020a93099702b82091e9cfa6ade379a1" id="r_a020a93099702b82091e9cfa6ade379a1"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a020a93099702b82091e9cfa6ade379a1">PhysicalToPixel</a> (<a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html">PhysicalROI</a> roi, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_dataset_metadata.html">DatasetMetadata</a> dataset, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html">MultiscaleMetadata</a> multiscale, long[] arrayShape)</td></tr>
-<tr class="memdesc:a020a93099702b82091e9cfa6ade379a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a physical ROI to a pixel region for a specific resolution level. The pixel region is clamped to the array bounds and snapped to whole pixels.  <br /></td></tr>
+<tr class="memdesc:a020a93099702b82091e9cfa6ade379a1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a physical ROI to a pixel region for a specific resolution level. The pixel region is clamped to the array bounds and snapped to whole pixels. Rotated or sheared ROIs return an enclosing source rectangle; this method does not resample pixels into a rotated output grid.  <br /></td></tr>
 <tr class="separator:a020a93099702b82091e9cfa6ade379a1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a789f170ec3e770eebd1df5514ff6ad5b" id="r_a789f170ec3e770eebd1df5514ff6ad5b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html">PhysicalROI</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a789f170ec3e770eebd1df5514ff6ad5b">PixelToPhysical</a> (<a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html">PixelRegion</a> region, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_dataset_metadata.html">DatasetMetadata</a> dataset, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html">MultiscaleMetadata</a> multiscale)</td></tr>
-<tr class="memdesc:a789f170ec3e770eebd1df5514ff6ad5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a pixel region back to a physical ROI for a specific resolution level. Useful for reporting the actual physical extent of a read region.  <br /></td></tr>
+<tr class="memdesc:a789f170ec3e770eebd1df5514ff6ad5b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Converts a pixel region back to an axis-aligned physical bounding ROI for a specific resolution level. This is the exact extent for non-rotating transforms and an enclosing box for rotated/sheared transforms.  <br /></td></tr>
 <tr class="separator:a789f170ec3e770eebd1df5514ff6ad5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7cc880396bd3c5aea395a533a6e8c2d2" id="r_a7cc880396bd3c5aea395a533a6e8c2d2"><td class="memItemLeft" align="right" valign="top">double[]&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a7cc880396bd3c5aea395a533a6e8c2d2">GetPixelSize</a> (<a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_dataset_metadata.html">DatasetMetadata</a> dataset, <a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html">MultiscaleMetadata</a> multiscale)</td></tr>
 <tr class="memdesc:a7cc880396bd3c5aea395a533a6e8c2d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns the physical pixel size (scale) for a given dataset. Useful for resolution level selection — pick the level closest to the desired physical resolution.  <br /></td></tr>
@@ -162,8 +162,8 @@ Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Converts between physical coordinate space (ROI in microns, etc.) and array index space (<a class="el" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_pixel_region.html" title="A region expressed in pixel (array index) coordinates. Maps directly to ZarrArray....">PixelRegion</a>) using the coordinate transformations declared in OME-Zarr metadata. </p>
-<p>OME-Zarr transform semantics: Physical = Scale * Index + Translation (index → physical) Index = (Physical - Translation) / Scale (physical → index)</p>
-<p>Two levels of transforms must be composed:</p><ol type="1">
+<p>OME-Zarr transform semantics map array index coordinates to physical coordinates. For an axis-aligned ROI, all corners are transformed and the returned pixel region is the smallest axis-aligned array-space enclosure.</p>
+<p>Two levels of transforms are composed:</p><ol type="1">
 <li>Per-dataset transforms (on each DatasetMetadata)</li>
 <li>Top-level multiscale transforms (on MultiscaleMetadata itself)</li>
 </ol>
@@ -189,11 +189,25 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Returns the physical pixel size (scale) for a given dataset. Useful for resolution level selection — pick the level closest to the desired physical resolution. </p>
-<div class="fragment"><div class="line"><span class="lineno">   77</span>    {</div>
-<div class="line"><span class="lineno">   78</span>        var composedTransforms   = ComposeTransforms(dataset, multiscale);</div>
-<div class="line"><span class="lineno">   79</span>        var (scale, _)           = FlattenToScaleTranslation(composedTransforms, multiscale.Axes.Length);</div>
-<div class="line"><span class="lineno">   80</span>        <span class="keywordflow">return</span> scale;</div>
-<div class="line"><span class="lineno">   81</span>    }</div>
+<div class="fragment"><div class="line"><span class="lineno">   86</span>    {</div>
+<div class="line"><span class="lineno">   87</span>        var rank = multiscale.<a class="code hl_function" href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html#a8209e0fa44761fd89828d373b0754fcf">GetIntrinsicAxes</a>().Length;</div>
+<div class="line"><span class="lineno">   88</span>        <span class="keywordflow">if</span> (rank == 0) <span class="keywordflow">return</span> Array.Empty&lt;<span class="keywordtype">double</span>&gt;();</div>
+<div class="line"><span class="lineno">   89</span> </div>
+<div class="line"><span class="lineno">   90</span>        var composedTransforms = ComposeTransforms(dataset, multiscale);</div>
+<div class="line"><span class="lineno">   91</span>        var origin = TransformForward(composedTransforms, <span class="keyword">new</span> <span class="keywordtype">double</span>[rank]);</div>
+<div class="line"><span class="lineno">   92</span>        var size = <span class="keyword">new</span> <span class="keywordtype">double</span>[rank];</div>
+<div class="line"><span class="lineno">   93</span>        <span class="keywordflow">for</span> (var axis = 0; axis &lt; rank; axis++)</div>
+<div class="line"><span class="lineno">   94</span>        {</div>
+<div class="line"><span class="lineno">   95</span>            var adjacent = <span class="keyword">new</span> <span class="keywordtype">double</span>[rank];</div>
+<div class="line"><span class="lineno">   96</span>            adjacent[axis] = 1;</div>
+<div class="line"><span class="lineno">   97</span>            var transformed = TransformForward(composedTransforms, adjacent);</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">if</span> (transformed.Length != origin.Length)</div>
+<div class="line"><span class="lineno">   99</span>                <span class="keywordflow">throw</span> <span class="keyword">new</span> NotSupportedException(<span class="stringliteral">&quot;Pixel size is undefined for a rank-changing transformation.&quot;</span>);</div>
+<div class="line"><span class="lineno">  100</span>            size[axis] = Math.Sqrt(transformed.Zip(origin, (a, b) =&gt; (a - b) * (a - b)).Sum());</div>
+<div class="line"><span class="lineno">  101</span>        }</div>
+<div class="line"><span class="lineno">  102</span>        <span class="keywordflow">return</span> size;</div>
+<div class="line"><span class="lineno">  103</span>    }</div>
+<div class="ttc" id="aclass_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata_html_a8209e0fa44761fd89828d373b0754fcf"><div class="ttname"><a href="class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html#a8209e0fa44761fd89828d373b0754fcf">ZarrNET.Core.OmeZarr.Metadata.MultiscaleMetadata.GetIntrinsicAxes</a></div><div class="ttdeci">AxisMetadata[] GetIntrinsicAxes()</div><div class="ttdoc">Gets the intrinsic coordinate-system axes. Older metadata exposes these directly through Axes.</div><div class="ttdef"><b>Definition</b> OmeZarrMetadata.cs:31</div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -226,22 +240,27 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts a physical ROI to a pixel region for a specific resolution level. The pixel region is clamped to the array bounds and snapped to whole pixels. </p>
-<div class="fragment"><div class="line"><span class="lineno">   35</span>    {</div>
-<div class="line"><span class="lineno">   36</span>        var composedTransforms = ComposeTransforms(dataset, multiscale);</div>
-<div class="line"><span class="lineno">   37</span>        var (scale, translation) = FlattenToScaleTranslation(composedTransforms, roi.Rank);</div>
-<div class="line"><span class="lineno">   38</span> </div>
-<div class="line"><span class="lineno">   39</span>        var pixelStart = PhysicalToIndex(roi.Origin, scale, translation);</div>
-<div class="line"><span class="lineno">   40</span>        var physicalEnd = roi.End;</div>
-<div class="line"><span class="lineno">   41</span>        var pixelEnd   = PhysicalToIndex(physicalEnd, scale, translation);</div>
-<div class="line"><span class="lineno">   42</span> </div>
-<div class="line"><span class="lineno">   43</span>        var clampedStart = ClampAndFloor(pixelStart, arrayShape);</div>
-<div class="line"><span class="lineno">   44</span>        var clampedEnd   = ClampAndCeil(pixelEnd,   arrayShape);</div>
-<div class="line"><span class="lineno">   45</span> </div>
-<div class="line"><span class="lineno">   46</span>        EnsureMinimumRegion(clampedStart, clampedEnd, arrayShape);</div>
-<div class="line"><span class="lineno">   47</span> </div>
-<div class="line"><span class="lineno">   48</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> PixelRegion(clampedStart, clampedEnd);</div>
-<div class="line"><span class="lineno">   49</span>    }</div>
+<p>Converts a physical ROI to a pixel region for a specific resolution level. The pixel region is clamped to the array bounds and snapped to whole pixels. Rotated or sheared ROIs return an enclosing source rectangle; this method does not resample pixels into a rotated output grid. </p>
+<div class="fragment"><div class="line"><span class="lineno">   37</span>    {</div>
+<div class="line"><span class="lineno">   38</span>        var composedTransforms = ComposeTransforms(dataset, multiscale);</div>
+<div class="line"><span class="lineno">   39</span>        EnsureRank(arrayShape, roi.Rank, nameof(arrayShape));</div>
+<div class="line"><span class="lineno">   40</span> </div>
+<div class="line"><span class="lineno">   41</span>        <span class="comment">// A transformed axis-aligned physical ROI is not necessarily</span></div>
+<div class="line"><span class="lineno">   42</span>        <span class="comment">// axis-aligned in array space (for example after a rotation). Map all</span></div>
+<div class="line"><span class="lineno">   43</span>        <span class="comment">// corners back to index space and read the minimal enclosing box.</span></div>
+<div class="line"><span class="lineno">   44</span>        var indexCorners = EnumerateCorners(roi.Origin, roi.End)</div>
+<div class="line"><span class="lineno">   45</span>            .Select(corner =&gt; TransformInverse(composedTransforms, corner))</div>
+<div class="line"><span class="lineno">   46</span>            .ToArray();</div>
+<div class="line"><span class="lineno">   47</span>        EnsureRank(indexCorners, arrayShape.Length, <span class="stringliteral">&quot;inverse transformation output&quot;</span>);</div>
+<div class="line"><span class="lineno">   48</span> </div>
+<div class="line"><span class="lineno">   49</span>        var (minimum, maximum) = Bounds(indexCorners);</div>
+<div class="line"><span class="lineno">   50</span>        var clampedStart = ClampAndFloor(minimum, arrayShape);</div>
+<div class="line"><span class="lineno">   51</span>        var clampedEnd   = ClampAndCeil(maximum, arrayShape);</div>
+<div class="line"><span class="lineno">   52</span> </div>
+<div class="line"><span class="lineno">   53</span>        EnsureMinimumRegion(clampedStart, clampedEnd, arrayShape);</div>
+<div class="line"><span class="lineno">   54</span> </div>
+<div class="line"><span class="lineno">   55</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> PixelRegion(clampedStart, clampedEnd);</div>
+<div class="line"><span class="lineno">   56</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -269,18 +288,19 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Converts a pixel region back to a physical ROI for a specific resolution level. Useful for reporting the actual physical extent of a read region. </p>
-<div class="fragment"><div class="line"><span class="lineno">   59</span>    {</div>
-<div class="line"><span class="lineno">   60</span>        var composedTransforms   = ComposeTransforms(dataset, multiscale);</div>
-<div class="line"><span class="lineno">   61</span>        var (scale, translation) = FlattenToScaleTranslation(composedTransforms, region.Rank);</div>
-<div class="line"><span class="lineno">   62</span> </div>
-<div class="line"><span class="lineno">   63</span>        var physicalOrigin = IndexToPhysical(region.Start.Select(v =&gt; (<span class="keywordtype">double</span>)v).ToArray(), scale, translation);</div>
-<div class="line"><span class="lineno">   64</span>        var physicalEnd    = IndexToPhysical(region.End.Select(v =&gt; (<span class="keywordtype">double</span>)v).ToArray(), scale, translation);</div>
-<div class="line"><span class="lineno">   65</span> </div>
-<div class="line"><span class="lineno">   66</span>        var physicalSize = physicalOrigin.Zip(physicalEnd, (o, e) =&gt; Math.Abs(e - o)).ToArray();</div>
-<div class="line"><span class="lineno">   67</span> </div>
-<div class="line"><span class="lineno">   68</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> PhysicalROI(physicalOrigin, physicalSize);</div>
-<div class="line"><span class="lineno">   69</span>    }</div>
+<p>Converts a pixel region back to an axis-aligned physical bounding ROI for a specific resolution level. This is the exact extent for non-rotating transforms and an enclosing box for rotated/sheared transforms. </p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>    {</div>
+<div class="line"><span class="lineno">   68</span>        var composedTransforms = ComposeTransforms(dataset, multiscale);</div>
+<div class="line"><span class="lineno">   69</span>        var physicalCorners = EnumerateCorners(</div>
+<div class="line"><span class="lineno">   70</span>                region.Start.Select(value =&gt; (<span class="keywordtype">double</span>)value).ToArray(),</div>
+<div class="line"><span class="lineno">   71</span>                region.End.Select(value =&gt; (<span class="keywordtype">double</span>)value).ToArray())</div>
+<div class="line"><span class="lineno">   72</span>            .Select(corner =&gt; TransformForward(composedTransforms, corner))</div>
+<div class="line"><span class="lineno">   73</span>            .ToArray();</div>
+<div class="line"><span class="lineno">   74</span>        EnsureRank(physicalCorners, region.Rank, <span class="stringliteral">&quot;forward transformation output&quot;</span>);</div>
+<div class="line"><span class="lineno">   75</span> </div>
+<div class="line"><span class="lineno">   76</span>        var (origin, end) = Bounds(physicalCorners);</div>
+<div class="line"><span class="lineno">   77</span>        <span class="keywordflow">return</span> <span class="keyword">new</span> PhysicalROI(origin, origin.Zip(end, (start, finish) =&gt; finish - start).ToArray());</div>
+<div class="line"><span class="lineno">   78</span>    }</div>
 </div><!-- fragment -->
 </div>
 </div>

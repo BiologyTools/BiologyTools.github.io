@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.6.1</span>
+   &#160;<span id="projectnumber">0.8.0</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -141,11 +141,11 @@ $(function(){initNavTree('md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html',''); initRes
   <div class="headertitle"><div class="title">Zarr v2 Support Added</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p><a class="anchor" id="autotoc_md63"></a></p>
-<h1><a class="anchor" id="autotoc_md64"></a>
+<div class="textblock"><p><a class="anchor" id="autotoc_md66"></a></p>
+<h1><a class="anchor" id="autotoc_md67"></a>
 What Changed</h1>
 <p>Your Fiji-exported OME-Zarr is <b>Zarr v2</b>, which uses separate metadata files instead of a single zarr.json.</p>
-<h2><a class="anchor" id="autotoc_md65"></a>
+<h2><a class="anchor" id="autotoc_md68"></a>
 v2 File Structure</h2>
 <div class="fragment"><div class="line">dataset.zarr/</div>
 <div class="line">├── .zgroup          ← Group metadata (just format version)</div>
@@ -164,7 +164,7 @@ v2 File Structure</h2>
 <div class="line">        ├── 0/</div>
 <div class="line">        │   └── .zarray</div>
 <div class="line">        └── ...</div>
-</div><!-- fragment --><h2><a class="anchor" id="autotoc_md66"></a>
+</div><!-- fragment --><h2><a class="anchor" id="autotoc_md69"></a>
 v3 File Structure (for reference)</h2>
 <div class="fragment"><div class="line">dataset.zarr/</div>
 <div class="line">├── zarr.json        ← All metadata in one file</div>
@@ -174,7 +174,7 @@ v3 File Structure (for reference)</h2>
 <div class="line">│       ├── 0/0/0</div>
 <div class="line">│       └── ...</div>
 <div class="line">└── ...</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md67"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md70"></a>
 Files Modified</h1>
 <ol type="1">
 <li><b>ZarrV2Document.cs</b> (new)<ul>
@@ -204,7 +204,7 @@ Files Modified</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md68"></a>
+<h1><a class="anchor" id="autotoc_md71"></a>
 Usage (no changes needed)</h1>
 <p>Your existing usage code works identically. The reader auto-detects version:</p>
 <div class="fragment"><div class="line">await <span class="keyword">using </span>var reader = await OmeZarrReader.OpenAsync(<span class="stringliteral">&quot;/path/to/fiji-export.zarr&quot;</span>);</div>
@@ -214,7 +214,7 @@ Usage (no changes needed)</h1>
 <div class="line">var level = await image.OpenResolutionLevelAsync(datasetIndex: 0);</div>
 <div class="line">var roi   = <span class="keyword">new</span> PhysicalROI(origin: [0, 0, 0, 0, 0], size: [1, 1, 1, 100, 100]);</div>
 <div class="line">var data  = await level.ReadRegionAsync(roi);</div>
-</div><!-- fragment --><h1><a class="anchor" id="autotoc_md69"></a>
+</div><!-- fragment --><h1><a class="anchor" id="autotoc_md72"></a>
 v2 Specifics Worth Knowing</h1>
 <ol type="1">
 <li><b>Compressor instead of codec pipeline</b><ul>
@@ -225,8 +225,14 @@ v2 Specifics Worth Knowing</h1>
 <li><b>Numpy dtypes</b><ul>
 <li>v2: <code>"dtype": "&lt;u2"</code> → little-endian uint16</li>
 <li>v2: <code>"dtype": "&lt;f4"</code> → little-endian float32</li>
+<li>v2: <code>"dtype": "&lt;f8"</code> → little-endian float64</li>
+<li>v2: <code>"dtype": "&lt;c8"</code> → little-endian complex64</li>
+<li>v2: <code>"dtype": "&lt;c16"</code> → little-endian complex128</li>
 <li>v3: <code>"data_type": "uint16"</code> + <code>"endian": "little"</code> in bytes codec</li>
 <li>v3: <code>"data_type": "float32"</code> + <code>"endian": "little"</code> in bytes codec</li>
+<li>v3: <code>"data_type": "float64"</code> + <code>"endian": "little"</code> in bytes codec</li>
+<li>v3: <code>"data_type": "complex64"</code> + <code>"endian": "little"</code> in bytes codec</li>
+<li>v3: <code>"data_type": "complex128"</code> + <code>"endian": "little"</code> in bytes codec</li>
 </ul>
 </li>
 <li><b>Chunk keys</b><ul>
@@ -245,7 +251,7 @@ v2 Specifics Worth Knowing</h1>
 </ul>
 </li>
 </ol>
-<h1><a class="anchor" id="autotoc_md70"></a>
+<h1><a class="anchor" id="autotoc_md73"></a>
 Testing Your Fiji Data</h1>
 <div class="fragment"><div class="line">var zarrPath = <span class="stringliteral">@&quot;C:\path\to\fiji-export.zarr&quot;</span>;</div>
 <div class="line"> </div>

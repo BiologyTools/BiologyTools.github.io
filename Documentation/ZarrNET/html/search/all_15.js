@@ -1,8 +1,23 @@
 var searchData=
 [
-  ['v2_20file_20structure_0',['v2 File Structure',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md65',1,'']]],
-  ['v2_20specifics_20worth_20knowing_1',['v2 Specifics Worth Knowing',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69',1,'']]],
-  ['v2_20support_20added_2',['Zarr v2 Support Added',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html',1,'']]],
-  ['v3_20file_20structure_20for_20reference_3',['v3 File Structure (for reference)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md66',1,'']]],
-  ['versions_4',['Zarr Versions',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md38',1,'']]]
+  ['testing_0',['Testing',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md12',1,'']]],
+  ['testing_20your_20fiji_20data_1',['Testing Your Fiji Data',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73',1,'']]],
+  ['through_20a_20z_20stack_2',['Iterate through a Z-stack',['../index.html#autotoc_md49',1,'']]],
+  ['timeouts_3',['Custom HTTP configuration (auth, timeouts)',['../index.html#autotoc_md30',1,'']]],
+  ['to_20v3_4',['Converting a Zarr v2 array to v3',['../index.html#autotoc_md61',1,'']]],
+  ['tobytes_3c_20t_20_3e_5',['ToBytes&lt; T &gt;',['../class_zarr_n_e_t_1_1_core_1_1_helpers_1_1_plane_result.html#aa76ee73d169ea9eb60612e143c890f6c',1,'ZarrNET::Core::Helpers::PlaneResult']]],
+  ['totalinnerchunks_6',['TotalInnerChunks',['../class_zarr_n_e_t_1_1_sharding_config.html#a0186371a6b2446b308f20247772f3c82',1,'ZarrNET::ShardingConfig']]],
+  ['transformasync_7',['TransformAsync',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_vector_field_transformation.html#a0dcabc4a968cac9b20201e595fee7b77',1,'ZarrNET::Core::OmeZarr::Coordinates::VectorFieldTransformation']]],
+  ['transformations_8',['OME-Zarr 0.6 transformations',['../index.html#autotoc_md40',1,'']]],
+  ['transformpoint_9',['TransformPoint',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html#a755fb56d4017fb9632c6061369801aa5',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformationGraph']]],
+  ['transposecodec_10',['TransposeCodec',['../class_zarr_n_e_t_1_1_transpose_codec.html',1,'ZarrNET']]],
+  ['tryget_11',['TryGet',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_chunk_lru_cache.html#a57be2746ce4e3d8789f2f5ad927d784b',1,'ZarrNET::Core::Zarr::Store::ChunkLruCache']]],
+  ['tt_12',['tt',['../index.html#autotoc_md43',1,'&lt;tt&gt;OmeZarrReader&lt;/tt&gt;'],['../index.html#autotoc_md47',1,'&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;'],['../index.html#autotoc_md46',1,'&lt;tt&gt;PlaneResult&lt;/tt&gt;'],['../index.html#autotoc_md44',1,'&lt;tt&gt;ResolutionLevelNode&lt;/tt&gt;']]],
+  ['tt_20and_20tt_20pixelregion_20tt_13',['&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;',['../index.html#autotoc_md47',1,'']]],
+  ['tt_20omezarrreader_20tt_14',['&lt;tt&gt;OmeZarrReader&lt;/tt&gt;',['../index.html#autotoc_md43',1,'']]],
+  ['tt_20physicalroi_20tt_20and_20tt_20pixelregion_20tt_15',['&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;',['../index.html#autotoc_md47',1,'']]],
+  ['tt_20pixelregion_20tt_16',['&lt;tt&gt;PhysicalROI&lt;/tt&gt; and &lt;tt&gt;PixelRegion&lt;/tt&gt;',['../index.html#autotoc_md47',1,'']]],
+  ['tt_20planeresult_20tt_17',['&lt;tt&gt;PlaneResult&lt;/tt&gt;',['../index.html#autotoc_md46',1,'']]],
+  ['tt_20resolutionlevelnode_20tt_18',['&lt;tt&gt;ResolutionLevelNode&lt;/tt&gt;',['../index.html#autotoc_md44',1,'']]],
+  ['types_19',['Types',['../index.html#autotoc_md36',1,'Data Types'],['../index.html#autotoc_md38',1,'OME-Zarr Node Types']]]
 ];

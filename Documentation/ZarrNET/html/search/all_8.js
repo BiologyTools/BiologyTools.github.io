@@ -1,12 +1,22 @@
 var searchData=
 [
-  ['haschildasync_0',['HasChildAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a3fe6464388610e4b0634e6fd5f041f65',1,'ZarrNET::Core::Zarr::ZarrGroup']]],
-  ['hcs_20plate_1',['Process an entire HCS plate',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md50',1,'']]],
-  ['hcs_20plate_20structure_2',['Navigate HCS Plate structure',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md30',1,'']]],
-  ['how_20it_20works_3',['How It Works',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md6',1,'']]],
-  ['http_20configuration_20auth_20timeouts_4',['Custom HTTP configuration (auth, timeouts)',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md29',1,'']]],
-  ['http_20remote_20storage_20support_20implementation_20summary_5',['HTTP/Remote Storage Support - Implementation Summary',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html',1,'']]],
-  ['http_20requests_6',['HTTP Requests',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md8',1,'']]],
-  ['http_20s3_20urls_7',['Read from remote HTTP/S3 URLs',['../md__zarr_n_e_t_2_r_e_a_d_m_e.html#autotoc_md28',1,'']]],
-  ['httpzarrstore_8',['HttpZarrStore',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#a46f88ddab7ba44b2d3e18bd23a5cc73a',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore.HttpZarrStore(string baseUrl)'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#ab3edfbe344e5ad7986e5e6f0d3da95ed',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore.HttpZarrStore(string baseUrl, HttpClient httpClient, bool ownsHttpClient=false)']]]
+  ['features_0',['Features',['../index.html#autotoc_md22',1,'Features'],['../index.html#autotoc_md35',1,'Supported Features']]],
+  ['fieldcount_1',['FieldCount',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_field_count.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['fieldnode_2',['FieldNode',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_field_node.html',1,'ZarrNET::Core::Nodes']]],
+  ['fieldreference_3',['FieldReference',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_field_reference.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['fiji_20data_4',['Testing Your Fiji Data',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73',1,'']]],
+  ['file_20structure_5',['v2 File Structure',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md68',1,'']]],
+  ['file_20structure_20for_20reference_6',['v3 File Structure (for reference)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69',1,'']]],
+  ['file_20using_20imagesharp_7',['Save plane as image file (using ImageSharp)',['../index.html#autotoc_md53',1,'']]],
+  ['files_8',['Files',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md3',1,'Modified Files'],['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md2',1,'New Files']]],
+  ['files_20modified_9',['Files Modified',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md70',1,'']]],
+  ['findpath_10',['FindPath',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html#a4101ab94b64b51770c30096b3a9cb48d',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformationGraph']]],
+  ['for_20discussion_11',['Please use image.sc forum for discussion.',['../index.html#autotoc_md65',1,'']]],
+  ['for_20display_12',['Choose optimal resolution level for display',['../index.html#autotoc_md51',1,'']]],
+  ['for_20reference_13',['v3 File Structure (for reference)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69',1,'']]],
+  ['forum_20for_20discussion_14',['Please use image.sc forum for discussion.',['../index.html#autotoc_md65',1,'']]],
+  ['from_20a_20multiscale_20image_15',['Read a single 2D plane from a multiscale image',['../index.html#autotoc_md27',1,'']]],
+  ['from_20remote_20http_20s3_20urls_16',['Read from remote HTTP/S3 URLs',['../index.html#autotoc_md29',1,'']]],
+  ['fromv2document_17',['FromV2Document',['../class_zarr_n_e_t_1_1_zarr_array_metadata.html#a7d62245e066e0e9686fd089ac3c2aba7',1,'ZarrNET::ZarrArrayMetadata']]],
+  ['future_20enhancements_18',['Future Enhancements',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md14',1,'']]]
 ];
