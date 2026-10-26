@@ -1,14 +1,13 @@
 var searchData=
 [
-  ['name_0',['Name',['../class_zarr_n_e_t_1_1_blosc_codec.html#a8ab1f188f92bbdab551de8af9d0da7e0',1,'ZarrNET.BloscCodec.Name'],['../class_zarr_n_e_t_1_1_bytes_codec.html#a1a7f4d07d6244bb09c191de7f536c0ff',1,'ZarrNET.BytesCodec.Name'],['../class_zarr_n_e_t_1_1_crc32c_codec.html#aa682aafa46283d93fad7c2a34d389477',1,'ZarrNET.Crc32cCodec.Name'],['../class_zarr_n_e_t_1_1_gzip_codec.html#aeb97247764f4baa2a38ea5945f214f36',1,'ZarrNET.GzipCodec.Name'],['../interface_zarr_n_e_t_1_1_i_zarr_codec.html#a661c4c426bf13fef995bd26ed17e42ee',1,'ZarrNET.IZarrCodec.Name'],['../class_zarr_n_e_t_1_1_transpose_codec.html#ac9ca92eb974297e6bdfd19a82f5d78b0',1,'ZarrNET.TransposeCodec.Name'],['../class_zarr_n_e_t_1_1_zstd_codec.html#a3924dc3b9ed281f0538c27f52e2b514d',1,'ZarrNET.ZstdCodec.Name']]],
-  ['native_1',['Native',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175ca925641e0b76c28cc940e8f3ca178d826',1,'ZarrNET::Core::Helpers']]],
-  ['navigate_20hcs_20plate_20structure_2',['Navigate HCS Plate structure',['../index.html#autotoc_md31',1,'']]],
-  ['needed_3',['Usage (no changes needed)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md71',1,'']]],
-  ['net_4',['Zarr.NET',['../index.html',1,'']]],
-  ['new_20files_5',['New Files',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md2',1,'']]],
-  ['ngffversion_6',['NgffVersion',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_reader.html#a9b5bfcfb33ba07a46fa1b414f7ef8d1a',1,'ZarrNET::Core::OmeZarrReader']]],
-  ['no_20changes_20needed_7',['Usage (no changes needed)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md71',1,'']]],
-  ['node_20types_8',['OME-Zarr Node Types',['../index.html#autotoc_md38',1,'']]],
-  ['notes_9',['Architecture Notes',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md17',1,'']]],
-  ['notes_10',['Performance notes',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_writer.html#autotoc_md20',1,'']]]
+  ['management_0',['Memory Management',['../index.html#autotoc_md57',1,'']]],
+  ['masks_1',['Work with labels (segmentation masks)',['../index.html#autotoc_md32',1,'']]],
+  ['memory_20management_2',['Memory Management',['../index.html#autotoc_md57',1,'']]],
+  ['metadata_20caching_3',['Metadata Caching',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md9',1,'']]],
+  ['microns_4',['Read using physical coordinates (ROI in microns)',['../index.html#autotoc_md28',1,'']]],
+  ['modified_5',['Files Modified',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md75',1,'']]],
+  ['modified_20files_6',['Modified Files',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md3',1,'']]],
+  ['multiscale_20image_7',['Read a single 2D plane from a multiscale image',['../index.html#autotoc_md27',1,'']]],
+  ['multiscalemetadata_8',['MultiscaleMetadata',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['multiscalenode_9',['MultiscaleNode',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_multiscale_node.html',1,'ZarrNET::Core::Nodes']]]
 ];

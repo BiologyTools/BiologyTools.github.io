@@ -46,8 +46,10 @@ $projects = @{
         Readme = Join-Path $repositoryRoot 'ZarrNET\README.md'
         Doxyfiles = @(Join-Path $repositoryRoot 'ZarrNETDoxyfile')
         WorkingDirectory = $repositoryRoot
-        OutputSubdirectory = 'html'
         ProjectFile = Join-Path $repositoryRoot 'ZarrNET\Zarr.NET.csproj'
+        HtmlReplacements = @{
+            'https://BiologyTools.github.io/Documentation/ZarrNET/html/index.html' = 'https://biologytools.github.io/Documentation/ZarrNET/'
+        }
         Overrides = @(
             'EXCLUDE_PATTERNS += */bin/* */obj/* */.git/* */.vs/* */.tmp/* */.agents/* */.codex/* */ZarrNET.Tests/*'
             'HTML_EXTRA_FILES += D:/repos/RepoErik/doxygen-awesome/logo.drawio.svg'
@@ -140,6 +142,20 @@ foreach ($projectName in $requestedProjects) {
             throw "Doxygen did not create an index page for $projectName."
         }
 
+        # Keep links from upstream READMEs aligned with the site's published paths.
+        if ($definition.HtmlReplacements) {
+            foreach ($htmlFile in Get-ChildItem -LiteralPath $generatedHtml -Filter '*.html' -Recurse -File) {
+                $html = [IO.File]::ReadAllText($htmlFile.FullName)
+                $updatedHtml = $html
+                foreach ($replacement in $definition.HtmlReplacements.GetEnumerator()) {
+                    $updatedHtml = $updatedHtml.Replace($replacement.Key, $replacement.Value)
+                }
+                if ($updatedHtml -ne $html) {
+                    [IO.File]::WriteAllText($htmlFile.FullName, $updatedHtml)
+                }
+            }
+        }
+
         New-Item -ItemType Directory -Path $targetDirectory -Force | Out-Null
         $resolvedTarget = [IO.Path]::GetFullPath($targetDirectory)
         $resolvedDocumentationRoot = [IO.Path]::GetFullPath($documentationRoot) + [IO.Path]::DirectorySeparatorChar
@@ -150,6 +166,8 @@ foreach ($projectName in $requestedProjects) {
         if ($LASTEXITCODE -gt 7) {
             throw "Failed to publish $projectName documentation (robocopy exit code $LASTEXITCODE)."
         }
+        # Robocopy uses nonzero success codes; expose success to calling shells.
+        $global:LASTEXITCODE = 0
 
         Write-Host "Published $projectName documentation to $targetDirectory"
     }

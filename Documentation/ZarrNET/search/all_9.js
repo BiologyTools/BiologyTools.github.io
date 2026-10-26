@@ -1,12 +1,22 @@
 var searchData=
 [
-  ['getintrinsicaxes_0',['GetIntrinsicAxes',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html#a8209e0fa44761fd89828d373b0754fcf',1,'ZarrNET::Core::OmeZarr::Metadata::MultiscaleMetadata']]],
-  ['getobjective_1',['GetObjective',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_image_metadata.html#a933f08c0e2182ac252762e8bba8fd258',1,'ZarrNET::Core::OmeZarr::Metadata::OmeXmlImageMetadata']]],
-  ['getphysicalextent_2',['GetPhysicalExtent',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#a9b382cd68b11f1b4c565157c526c34bb',1,'ZarrNET::Core::Nodes::ResolutionLevelNode']]],
-  ['getpixelsize_3',['GetPixelSize',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a7cc880396bd3c5aea395a533a6e8c2d2',1,'ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformService.GetPixelSize()'],['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#aae28875ff9ff2c2b85d2ddb6baedeb98',1,'ZarrNET.Core.Nodes.ResolutionLevelNode.GetPixelSize()']]],
-  ['getrawbytes_4',['GetRawBytes',['../class_zarr_n_e_t_1_1_core_1_1_helpers_1_1_plane_result.html#ad6fe5ba22861cdcaad4a4c36759492e1',1,'ZarrNET::Core::Helpers::PlaneResult']]],
-  ['getseriesomexml_5',['GetSeriesOmeXml',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_bioformats2_raw_collection_node.html#a5fa1257143c5d7bc6695d3f711d14c2a',1,'ZarrNET::Core::Nodes::Bioformats2RawCollectionNode']]],
-  ['gray16_6',['Gray16',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175ca2a6ec0dac8730c09dba12f860dbbad12',1,'ZarrNET::Core::Helpers']]],
-  ['gray8_7',['Gray8',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175cac8cfe3d00282445878661f32adca48ef',1,'ZarrNET::Core::Helpers']]],
-  ['gzipcodec_8',['GzipCodec',['../class_zarr_n_e_t_1_1_gzip_codec.html',1,'ZarrNET']]]
+  ['features_0',['Features',['../index.html#autotoc_md22',1,'Features'],['../index.html#autotoc_md35',1,'Supported Features']]],
+  ['fieldcount_1',['FieldCount',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_field_count.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['fieldnode_2',['FieldNode',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_field_node.html',1,'ZarrNET::Core::Nodes']]],
+  ['fieldreference_3',['FieldReference',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_field_reference.html',1,'ZarrNET::Core::OmeZarr::Metadata']]],
+  ['fiji_20data_4',['Testing Your Fiji Data',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md78',1,'']]],
+  ['file_20structure_5',['v2 File Structure',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73',1,'']]],
+  ['file_20structure_20for_20reference_6',['v3 File Structure (for reference)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md74',1,'']]],
+  ['file_20using_20imagesharp_7',['Save plane as image file (using ImageSharp)',['../index.html#autotoc_md53',1,'']]],
+  ['files_8',['Files',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md3',1,'Modified Files'],['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md2',1,'New Files']]],
+  ['files_20modified_9',['Files Modified',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md75',1,'']]],
+  ['findpath_10',['FindPath',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transformation_graph.html#a4101ab94b64b51770c30096b3a9cb48d',1,'ZarrNET::Core::OmeZarr::Coordinates::CoordinateTransformationGraph']]],
+  ['for_20discussion_11',['Please use image.sc forum for discussion.',['../index.html#autotoc_md65',1,'']]],
+  ['for_20display_12',['Choose optimal resolution level for display',['../index.html#autotoc_md51',1,'']]],
+  ['for_20reference_13',['v3 File Structure (for reference)',['../md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md74',1,'']]],
+  ['forum_20for_20discussion_14',['Please use image.sc forum for discussion.',['../index.html#autotoc_md65',1,'']]],
+  ['from_20a_20multiscale_20image_15',['Read a single 2D plane from a multiscale image',['../index.html#autotoc_md27',1,'']]],
+  ['from_20remote_20http_20s3_20urls_16',['Read from remote HTTP/S3 URLs',['../index.html#autotoc_md29',1,'']]],
+  ['fromv2document_17',['FromV2Document',['../class_zarr_n_e_t_1_1_zarr_array_metadata.html#a7d62245e066e0e9686fd089ac3c2aba7',1,'ZarrNET::ZarrArrayMetadata']]],
+  ['future_20enhancements_18',['Future Enhancements',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md14',1,'']]]
 ];

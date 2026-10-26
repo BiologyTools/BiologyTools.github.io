@@ -102,15 +102,21 @@ var NAVTREE =
       [ "Dependencies", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md18", null ],
       [ "Breaking Changes", "md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md19", null ]
     ] ],
+    [ "ZarrNET 0.8.0", "md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html", [
+      [ "Added", "md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md67", null ],
+      [ "Changed", "md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md68", null ],
+      [ "Tests and documentation", "md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md69", null ],
+      [ "Current limits", "md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md70", null ]
+    ] ],
     [ "Zarr v2 Support Added", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html", [
-      [ "What Changed", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md67", [
-        [ "v2 File Structure", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md68", null ],
-        [ "v3 File Structure (for reference)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md69", null ]
+      [ "What Changed", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md72", [
+        [ "v2 File Structure", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73", null ],
+        [ "v3 File Structure (for reference)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md74", null ]
       ] ],
-      [ "Files Modified", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md70", null ],
-      [ "Usage (no changes needed)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md71", null ],
-      [ "v2 Specifics Worth Knowing", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md72", null ],
-      [ "Testing Your Fiji Data", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md73", null ]
+      [ "Files Modified", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md75", null ],
+      [ "Usage (no changes needed)", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md76", null ],
+      [ "v2 Specifics Worth Knowing", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md77", null ],
+      [ "Testing Your Fiji Data", "md__zarr_n_e_t_2_v2___s_u_p_p_o_r_t.html#autotoc_md78", null ]
     ] ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ],
