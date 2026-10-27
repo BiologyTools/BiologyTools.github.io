@@ -3,13 +3,16 @@ var hierarchy =
     [ "Bio.Graphics.AbstractFloodFiller", "class_bio_1_1_graphics_1_1_abstract_flood_filler.html", [
       [ "Bio.Graphics.QueueLinearFloodFiller", "class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html", null ]
     ] ],
+    [ "BioLib.ArrayExtensions", "class_bio_lib_1_1_array_extensions.html", null ],
     [ "BaseLayer", null, [
       [ "BioLib.SlideSliceLayer", "class_bio_lib_1_1_slide_slice_layer.html", null ]
     ] ],
     [ "BioLib.Cell", "class_bio_lib_1_1_cell.html", null ],
     [ "BioLib.QuPath.Channel", "class_bio_lib_1_1_qu_path_1_1_channel.html", null ],
     [ "BioLib.Fiji.Macro.Command", "class_bio_lib_1_1_fiji_1_1_macro_1_1_command.html", null ],
+    [ "BioLib.Fiji", "class_bio_lib_1_1_fiji.html", null ],
     [ "BioLib.Filt", "class_bio_lib_1_1_filt.html", null ],
+    [ "BioLib.Filters", "class_bio_lib_1_1_filters.html", null ],
     [ "Bio.Graphics.FloodFillRange", "struct_bio_1_1_graphics_1_1_flood_fill_range.html", null ],
     [ "Bio.Graphics.FloodFillRangeQueue", "class_bio_1_1_graphics_1_1_flood_fill_range_queue.html", null ],
     [ "BioLib.Focus", "class_bio_lib_1_1_focus.html", null ],
@@ -34,10 +37,15 @@ var hierarchy =
     ] ],
     [ "BioLib.QuPath.Image", "class_bio_lib_1_1_qu_path_1_1_image.html", null ],
     [ "BioLib.ImageInfo", "class_bio_lib_1_1_image_info.html", null ],
+    [ "BioLib.ImageJ", "class_bio_lib_1_1_image_j.html", null ],
     [ "BioLib.BioImage.ImageJDesc", "class_bio_lib_1_1_bio_image_1_1_image_j_desc.html", null ],
+    [ "BioLib.Images", "class_bio_lib_1_1_images.html", null ],
     [ "BioLib.ImageUtil", "class_bio_lib_1_1_image_util.html", null ],
     [ "BioLib.QuPath.Level", "class_bio_lib_1_1_qu_path_1_1_level.html", null ],
+    [ "BioLib.Fiji.Macro", "class_bio_lib_1_1_fiji_1_1_macro.html", null ],
     [ "BioLib.QuPath.Metadata", "class_bio_lib_1_1_qu_path_1_1_metadata.html", null ],
+    [ "BioLib.Microscope", "class_bio_lib_1_1_microscope.html", null ],
+    [ "BioLib.Napari", "class_bio_lib_1_1_napari.html", null ],
     [ "BioLib.NumPy.NpyHeader", "class_bio_lib_1_1_num_py_1_1_npy_header.html", null ],
     [ "BioLib.NumPy", "class_bio_lib_1_1_num_py.html", null ],
     [ "BioLib.Objectives.Objective", "class_bio_lib_1_1_objectives_1_1_objective.html", null ],
@@ -48,12 +56,14 @@ var hierarchy =
     [ "BioLib.QuPath.Project", "class_bio_lib_1_1_qu_path_1_1_project.html", null ],
     [ "BioLib.QuPath.Properties", "class_bio_lib_1_1_qu_path_1_1_properties.html", null ],
     [ "BioLib.QuPath", "class_bio_lib_1_1_qu_path.html", null ],
+    [ "BioLib.Recorder", "class_bio_lib_1_1_recorder.html", null ],
     [ "BioLib.Resolution", "struct_bio_lib_1_1_resolution.html", null ],
     [ "BioLib.RLShutter", "class_bio_lib_1_1_r_l_shutter.html", null ],
     [ "BioLib.Fiji.RoiDecoder", "class_bio_lib_1_1_fiji_1_1_roi_decoder.html", null ],
     [ "BioLib.Fiji.RoiEncoder", "class_bio_lib_1_1_fiji_1_1_roi_encoder.html", null ],
     [ "BioLib.BioImage.WellPlate.Well.Sample", "class_bio_lib_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html", null ],
     [ "BioLib.QuPath.ServerBuilder", "class_bio_lib_1_1_qu_path_1_1_server_builder.html", null ],
+    [ "BioLib.Settings", "class_bio_lib_1_1_settings.html", null ],
     [ "SlideSourceBase", null, [
       [ "BioLib.SlideBase", "class_bio_lib_1_1_slide_base.html", null ]
     ] ],
@@ -64,5 +74,7 @@ var hierarchy =
     [ "BioLib.TLShutter", "class_bio_lib_1_1_t_l_shutter.html", null ],
     [ "BioLib.BioImage.WellPlate.Well", "class_bio_lib_1_1_bio_image_1_1_well_plate_1_1_well.html", null ],
     [ "BioLib.BioImage.WellPlate", "class_bio_lib_1_1_bio_image_1_1_well_plate.html", null ],
+    [ "BioLib.Zarr", "class_bio_lib_1_1_zarr.html", null ],
+    [ "BioLib.ZarrConversion", "class_bio_lib_1_1_zarr_conversion.html", null ],
     [ "BioLib.QuPath.ZSpacing", "class_bio_lib_1_1_qu_path_1_1_z_spacing.html", null ]
 ];

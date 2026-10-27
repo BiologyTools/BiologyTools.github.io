@@ -22,5 +22,6 @@ var searchData=
   ['atproperty_19',['ATProperty',['../classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_property.html',1,'microscope::cameras::_SDK3Cam']]],
   ['atstring_20',['ATString',['../classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string.html',1,'microscope::cameras::_SDK3Cam']]],
   ['automation_21',['Automation',['../class_bio_imager_1_1_automation.html',1,'BioImager']]],
-  ['axislimits_22',['AxisLimits',['../classmicroscope_1_1_axis_limits.html',1,'microscope']]]
+  ['automationhelpers_22',['AutomationHelpers',['../class_bio_imager_1_1_automation_1_1_automation_helpers.html',1,'BioImager::Automation']]],
+  ['axislimits_23',['AxisLimits',['../classmicroscope_1_1_axis_limits.html',1,'microscope']]]
 ];

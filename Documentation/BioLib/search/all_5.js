@@ -1,13 +1,14 @@
 var searchData=
 [
-  ['fillellipse_0',['FillEllipse',['../class_bio_1_1_graphics_1_1_graphics.html#acd71151ceb925ba836bae73965ca0cde',1,'Bio.Graphics.Graphics.FillEllipse(float xx, float yy, int w, int h, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a66f2d5fea74231f586c4638abd8b3bc9',1,'Bio.Graphics.Graphics.FillEllipse(RectangleF r, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a8bdc5741b5c8f5ce6dc5ad10610267e2',1,'Bio.Graphics.Graphics.FillEllipse(Rectangle r, ColorS c)']]],
-  ['fillpolygon_1',['FillPolygon',['../class_bio_1_1_graphics_1_1_graphics.html#a8a7c9ded61070b46b9c80ebc1b50000a',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, Rectangle r)'],['../class_bio_1_1_graphics_1_1_graphics.html#af77706b3dd2f809ff01f8ceadb26bd82',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, RectangleF r)'],['../class_bio_1_1_graphics_1_1_graphics.html#a450efd6201cc03f642c47c5e0bf8f3ba',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, Rectangle r, ColorS c)'],['../class_bio_1_1_graphics_1_1_graphics.html#a162707f987726d48720cfc55415b87e1',1,'Bio.Graphics.Graphics.FillPolygon(PointF[] pfs, RectangleF r, ColorS c)']]],
-  ['fillrectangle_2',['FillRectangle',['../class_bio_1_1_graphics_1_1_graphics.html#add3271fa5107229c4ba15e3eb8b127fe',1,'Bio.Graphics.Graphics.FillRectangle(Rectangle r, ColorS col)'],['../class_bio_1_1_graphics_1_1_graphics.html#a35dbadf42b872a1e5b8e320122a61df3',1,'Bio.Graphics.Graphics.FillRectangle(RectangleF r, ColorS col)']]],
-  ['filt_3',['Filt',['../class_bio_lib_1_1_filt.html',1,'BioLib']]],
-  ['floodfill_4',['FloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ae58a407dbc1df9bb0cdd373f139e0fa2',1,'Bio.Graphics.AbstractFloodFiller.FloodFill()'],['../class_bio_1_1_graphics_1_1_queue_linear_flood_filler.html#a02cc51ca79a25f276eba1622c01a794b',1,'Bio.Graphics.QueueLinearFloodFiller.FloodFill()']]],
-  ['floodfillrange_5',['FloodFillRange',['../struct_bio_1_1_graphics_1_1_flood_fill_range.html',1,'Bio::Graphics']]],
-  ['floodfillrangequeue_6',['FloodFillRangeQueue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html',1,'Bio::Graphics']]],
-  ['focus_7',['Focus',['../class_bio_lib_1_1_focus.html',1,'BioLib']]],
-  ['fromimage_8',['FromImage',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#aaea5eb8a8f0d2936a957279ac02d8fa2',1,'BioLib.BioImage.ImageJDesc.FromImage()'],['../class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa',1,'Bio.Graphics.Graphics.FromImage()']]],
-  ['function_9',['Function',['../class_bio_lib_1_1_fiji_1_1_macro_1_1_function.html',1,'BioLib::Fiji::Macro']]]
+  ['elementtype_0',['ElementType',['../class_bio_lib_1_1_objectives_1_1_objective.html#a4060e80de19ea5850066099703b2fdeb',1,'BioLib::Objectives::Objective']]],
+  ['ellipse_1',['ELLIPSE',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a6b204ebd6f640d0e117fb1e823ca3af5',1,'BioLib::Fiji::RoiDecoder']]],
+  ['ellipse_2',['Ellipse',['../class_bio_lib_1_1_r_o_i.html#ac1ec263bfd165b710f10848910000448a119518c2134c46108179369f0ce81fa2',1,'BioLib::ROI']]],
+  ['endx_3',['EndX',['../struct_bio_1_1_graphics_1_1_flood_fill_range.html#a88987d38aa300408f62a304d40a2de7a',1,'Bio::Graphics::FloodFillRange']]],
+  ['enqueue_4',['Enqueue',['../class_bio_1_1_graphics_1_1_flood_fill_range_queue.html#a3dc2d86b2e4d9ca54270f66d1dc19e53',1,'Bio::Graphics::FloodFillRangeQueue']]],
+  ['entryid_5',['EntryID',['../class_bio_lib_1_1_qu_path_1_1_image.html#ad9d84732afa04aa262e1ab1a6cb9ae28',1,'BioLib::QuPath::Image']]],
+  ['experimenter_6',['experimenter',['../class_bio_lib_1_1_o_m_e_r_o.html#a8fb0785eb1e94a8fb78f0b94f4ee2e93',1,'BioLib::OMERO']]],
+  ['experimentersudo_7',['experimenterSudo',['../class_bio_lib_1_1_o_m_e_r_o.html#ad9bc7f572125a63a5e025aa3936dabb6',1,'BioLib::OMERO']]],
+  ['exportroifolder_8',['ExportROIFolder',['../_bio_8cs.html#a6b4326c9419a6f3c79a48ce5ba0de88a',1,'Bio.cs']]],
+  ['exportroiscsv_9',['ExportROIsCSV',['../_bio_8cs.html#a2a2a01a724cd1e722a5994f79089888e',1,'Bio.cs']]],
+  ['extractregionfromtiledtiff_10',['ExtractRegionFromTiledTiff',['../_bio_8cs.html#a4c46d0ddc599c3cef9269b2aa0f6e2cc',1,'Bio.cs']]]
 ];

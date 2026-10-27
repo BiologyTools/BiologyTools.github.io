@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['onkeyup_0',['OnKeyUp',['../class_bio_imager_1_1_code_view_1_1_scroll_text_box.html#ae177f00019a5c6cb3d66584e95170a13',1,'BioImager::CodeView::ScrollTextBox']]],
-  ['onmouseup_1',['OnMouseUp',['../class_bio_imager_1_1_code_view_1_1_scroll_text_box.html#a4a18bb7af8c0d83b4d6b2fb400269509',1,'BioImager::CodeView::ScrollTextBox']]],
-  ['open_2',['open',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#ad4b360e58c7918aae85e2f368e48a04d',1,'BioImager::ImageJ::RoiDecoder']]],
-  ['open_5fcomms_3',['open_comms',['../classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html#afeea82d41a2e2432f801581379108a52',1,'microscope::stages::linkam::_LinkamBase']]],
-  ['openfrombytearray_4',['openFromByteArray',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a668e4b1fd00368fdedc54c61c2b15971',1,'BioImager::ImageJ::RoiDecoder']]],
-  ['openinnewprocess_5',['OpenInNewProcess',['../class_bio_imager_1_1_tabs_view.html#a93c08e004fa721fe1683ef1e79e07fe9',1,'BioImager::TabsView']]]
+  ['n_5factuators_0',['n_actuators',['../classmicroscope_1_1abc_1_1_deformable_mirror.html#ab0d31d4c7f3b4eb3c5f44990e59c49ea',1,'microscope.abc.DeformableMirror.n_actuators()'],['../classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror.html#a2d58e03ce00f95642120bbdd9d3e2521',1,'microscope.mirror.alpao.AlpaoDeformableMirror.n_actuators()'],['../classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html#aa98f416363c6c0fb19b9bf2a6d737d93',1,'microscope.mirror.bmc.BMCDeformableMirror.n_actuators()'],['../classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e.html#a6b24b5522734d2b2d6ab821ef0866f25',1,'microscope.mirror.mirao52e.Mirao52e.n_actuators()'],['../classmicroscope_1_1simulators_1_1_simulated_deformable_mirror.html#aa0766ae8baeaae533d5ab2286b5e05f7',1,'microscope.simulators.SimulatedDeformableMirror.n_actuators()']]],
+  ['n_5fpositions_1',['n_positions',['../classmicroscope_1_1abc_1_1_filter_wheel.html#ae2fe23261c2f229532154c570e1e8011',1,'microscope::abc::FilterWheel']]],
+  ['next_5fpattern_2',['next_pattern',['../classmicroscope_1_1abc_1_1_deformable_mirror.html#a00ad32bca0d8dade56582b3e0b57f2b3',1,'microscope::abc::DeformableMirror']]],
+  ['node_3',['Node',['../class_bio_imager_1_1_filter_1_1_node.html#ae9d78ec11bce8b28f087c6a417f86134',1,'BioImager.Filter.Node.Node()'],['../class_bio_imager_1_1_node_view_1_1_node.html#a6cb7427586a82bc5787e14d4df017e79',1,'BioImager.NodeView.Node.Node()'],['../class_bio_imager_1_1_recordings_1_1_node.html#a4d30ba3aa087f1824e44ff5ac132f282',1,'BioImager.Recordings.Node.Node(Automation.Action el, TreeNode n, Type t)'],['../class_bio_imager_1_1_recordings_1_1_node.html#ab96e6d64b77ae669c9fcef217a312459',1,'BioImager.Recordings.Node.Node(Automation.Recording rec, TreeNode n, Type t)']]],
+  ['nodeview_4',['NodeView',['../class_bio_imager_1_1_node_view.html#a84cd5d4683eca5d671da19194b46267c',1,'BioImager::NodeView']]],
+  ['noise_5',['noise',['../classmicroscope_1_1simulators_1_1___image_generator.html#ac3d3e361512f9b0dea586ec144c3d9b2',1,'microscope::simulators::_ImageGenerator']]],
+  ['nosepiecebusy_6',['nosePieceBusy',['../class_bio_imager_1_1_s_d_k.html#a6f386cf881e2749f4f3c0ab84d1a1de5',1,'BioImager::SDK']]]
 ];

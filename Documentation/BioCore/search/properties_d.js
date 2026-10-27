@@ -1,5 +1,7 @@
 var searchData=
 [
-  ['rchannel_0',['RChannel',['../class_bio_core_1_1_image_view.html#a869deab4c625ee9a27a7e3e643e9944a',1,'BioCore::ImageView']]],
-  ['resolution_1',['Resolution',['../class_bio_core_1_1_image_view.html#aafa2eeefec9e50507c04b1ec3f3d1f23',1,'BioCore.ImageView.Resolution()'],['../class_bio_core_1_1_slice_info.html#a1bdec6a844d7e1488fb318b9d3d493e5',1,'BioCore.SliceInfo.Resolution()']]]
+  ['object_0',['Object',['../class_bio_core_1_1_node_view_1_1_node.html#ab7b945d94832c644d8c9fed7bd53eac0',1,'BioCore::NodeView::Node']]],
+  ['openslide_1',['OpenSlide',['../class_bio_core_1_1_image_view.html#a7cd1f6d2a5a0501c2c162aaabb8fa1f9',1,'BioCore::ImageView']]],
+  ['origin_2',['Origin',['../class_bio_core_1_1_image_view.html#abaf021ef3cac40b69a62501bbb883e3a',1,'BioCore::ImageView']]],
+  ['overview_3',['OverView',['../class_bio_core_1_1_image_view.html#a8e655f1d7a7ef94045848088d40481be',1,'BioCore::ImageView']]]
 ];

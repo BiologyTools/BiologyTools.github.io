@@ -18,5 +18,14 @@ var classmicroscope_1_1abc_1_1_camera =
     [ "set_exposure_time", "classmicroscope_1_1abc_1_1_camera.html#a925b8831a01c673565ecb97b4f781800", null ],
     [ "set_readout_mode", "classmicroscope_1_1abc_1_1_camera.html#aaf30b7c29d1b2a6ee6c76a241853a9ac", null ],
     [ "set_roi", "classmicroscope_1_1abc_1_1_camera.html#a611b492b2e6de513b0f490ce8467d939", null ],
-    [ "set_transform", "classmicroscope_1_1abc_1_1_camera.html#ac4a038c4d2e57fb7a66edf737d26eb03", null ]
+    [ "set_transform", "classmicroscope_1_1abc_1_1_camera.html#ac4a038c4d2e57fb7a66edf737d26eb03", null ],
+    [ "_client_transform", "classmicroscope_1_1abc_1_1_camera.html#a126dbc30506fffcfb4a159971469e226", null ],
+    [ "_readout_mode", "classmicroscope_1_1abc_1_1_camera.html#adf8e7edcfdfbce5020e2ef378227a719", null ],
+    [ "_readout_modes", "classmicroscope_1_1abc_1_1_camera.html#ab3af789ca09fe82c42211390c676ad77", null ],
+    [ "_readout_transform", "classmicroscope_1_1abc_1_1_camera.html#ae2a9945504fb98ce3865a07d93e10c21", null ],
+    [ "_transform", "classmicroscope_1_1abc_1_1_camera.html#a70ef4ff569ba8ba1d33f1bb23b8adaa4", null ],
+    [ "ALLOWED_TRANSFORMS", "classmicroscope_1_1abc_1_1_camera.html#a57ab81f2d1d0bf200a49b5fd84606ee7", null ],
+    [ "get_roi", "classmicroscope_1_1abc_1_1_camera.html#a6b7f2ea96bff157327e4d755020fa1c3", null ],
+    [ "set_readout_mode", "classmicroscope_1_1abc_1_1_camera.html#a8316e282eef59828ccc5570bb23eb74e", null ],
+    [ "set_roi", "classmicroscope_1_1abc_1_1_camera.html#abd873023e17a7f39f85490c94545f563", null ]
 ];

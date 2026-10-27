@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['cfps_0',['CFps',['../class_bio_core_1_1_image_view.html#a15e7483f78e5982f7d37d62e37eed2c0',1,'BioCore::ImageView']]],
-  ['coordinate_1',['Coordinate',['../class_bio_core_1_1_slice_info.html#a71dff02bc406a3a58d8c1ef2852f7315',1,'BioCore::SliceInfo']]],
-  ['count_2',['Count',['../class_bio_core_1_1_graphics_1_1_flood_fill_range_queue.html#aacfedc549697ae04b362d40eb6b515a2',1,'BioCore::Graphics::FloodFillRangeQueue']]]
+  ['bchannel_0',['BChannel',['../class_bio_core_1_1_image_view.html#ad1895e841eadbcc644280a5bd8b62a02',1,'BioCore::ImageView']]],
+  ['bin_1',['Bin',['../class_bio_core_1_1_histogram_control.html#a971f0f4b10910a7d6b860698ecce88a0',1,'BioCore::HistogramControl']]],
+  ['bitmap_2',['Bitmap',['../class_bio_core_1_1_abstract_flood_filler.html#a8864e45c4a68fbdeba5357f9edb0691c',1,'BioCore::AbstractFloodFiller']]],
+  ['button_3',['Button',['../class_bio_core_1_1_automation_1_1_action.html#a6488078946fb3e122659d5c7f26c6a8c',1,'BioCore::Automation::Action']]]
 ];

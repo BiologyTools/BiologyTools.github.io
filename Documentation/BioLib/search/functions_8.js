@@ -1,8 +1,20 @@
 var searchData=
 [
-  ['join16_0',['Join16',['../class_bio_lib_1_1_image_util.html#a782b9870a7644744295b74bf349ea7f5',1,'BioLib::ImageUtil']]],
-  ['join8bit_1',['Join8Bit',['../class_bio_lib_1_1_image_util.html#ad768a7e6d27e71f033bae3e2153bba42',1,'BioLib::ImageUtil']]],
-  ['joinrgb24_2',['JoinRGB24',['../class_bio_lib_1_1_image_util.html#a9ea491dc1e88c03b762c3fa91da391da',1,'BioLib::ImageUtil']]],
-  ['joinvips16_3',['JoinVips16',['../class_bio_lib_1_1_image_util.html#a5b986c69b40554910b5b9bda92702ba7',1,'BioLib::ImageUtil']]],
-  ['joinvipsrgb24_4',['JoinVipsRGB24',['../class_bio_lib_1_1_image_util.html#acaa72a7836049cb24e665df5d54f8b72',1,'BioLib::ImageUtil']]]
+  ['imagepoints_0',['ImagePoints',['../class_bio_lib_1_1_r_o_i.html#a59175d3e1700e3bc7d236c68568d43fa',1,'BioLib::ROI']]],
+  ['imagestostack_1',['ImagesToStack',['../_bio_8cs.html#a5fcb8bd402b12cf540e625a98872fa94',1,'Bio.cs']]],
+  ['importroiscsv_2',['ImportROIsCSV',['../_bio_8cs.html#a1285b407907b6021d93bd8ffb072b553',1,'Bio.cs']]],
+  ['init_3',['Init',['../class_bio_lib_1_1_filters.html#a819eaa7a0b2682a0dfadde798c3c5a15',1,'BioLib::Filters']]],
+  ['initdirectoryresolution_4',['InitDirectoryResolution',['../_bio_8cs.html#a6d0769fe106cac51230ff4f84a5f586a',1,'Bio.cs']]],
+  ['initialize_5',['Initialize',['../class_bio_lib_1_1_bio_image.html#aff02913f4fdad5ac06def579563aa71e',1,'BioLib.BioImage.Initialize()'],['../class_bio_lib_1_1_slide_image.html#ae5cd75ef3e38fc58bf306876589bfe7e',1,'BioLib.SlideImage.Initialize()'],['../class_bio_lib_1_1_fiji.html#a4ec90298006040393501537c9c763f45',1,'BioLib.Fiji.Initialize()'],['../class_bio_lib_1_1_image_j.html#ab9e9aea183888e9bbe7bb0f9aeedcc6b',1,'BioLib.ImageJ.Initialize()'],['../class_bio_lib_1_1_microscope.html#a718582aed5ea3d66ab78cf9e1dd741cb',1,'BioLib.Microscope.Initialize()'],['../class_bio_lib_1_1_napari.html#a929c22c682fd32da99f338303f56c929',1,'BioLib.Napari.Initialize()']]],
+  ['initresolutions_6',['InitResolutions',['../class_bio_lib_1_1_slide_base.html#a807c5a2f219c169de66e98760635dd03',1,'BioLib::SlideBase']]],
+  ['inplace_7',['InPlace',['../class_bio_lib_1_1_filters.html#ad6cb2443ac2abfdcf6fa1ffdce96b1d8',1,'BioLib::Filters']]],
+  ['inplace2_8',['InPlace2',['../class_bio_lib_1_1_filters.html#a0bfe93544400908e769afda413eba4c9',1,'BioLib::Filters']]],
+  ['inplacepartial_9',['InPlacePartial',['../class_bio_lib_1_1_filters.html#a8442a8960b5ff7ae9165d331e2cd7619',1,'BioLib::Filters']]],
+  ['invalidatetilecache_10',['InvalidateTileCache',['../class_bio_lib_1_1_bio_image.html#ab0b6e2b62207ce3d13428101f7294022',1,'BioLib::BioImage']]],
+  ['isome_11',['isOME',['../_bio_8cs.html#adca06e22b515863e0bf61f30aa4ecc81',1,'Bio.cs']]],
+  ['isomeseries_12',['isOMESeries',['../_bio_8cs.html#a1a874f898d8bbdedc4c600b43bd767b7',1,'Bio.cs']]],
+  ['isrgb_13',['isRGB',['../class_bio_lib_1_1_fiji.html#ab86ca5cc17049c7bfbf18b21f18dda32',1,'BioLib::Fiji']]],
+  ['isselected_14',['IsSelected',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a6b6b12f3de7a360893dbf27e635f0cfa',1,'BioLib::ROI::Mask']]],
+  ['istiffseries_15',['isTiffSeries',['../_bio_8cs.html#a1de8845eb0357ea6f8ae8c2c8329c1d1',1,'Bio.cs']]],
+  ['istifftiled_16',['IsTiffTiled',['../_bio_8cs.html#ab9a7b410a38ddb86c13b34d8ba42773d',1,'Bio.cs']]]
 ];

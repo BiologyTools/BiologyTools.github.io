@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioImager
-   &#160;<span id="projectnumber">4.9.0</span>
+   &#160;<span id="projectnumber">5.0.0</span>
    </div>
    <div id="projectbrief">A .NET microscopy imaging application based on Bio library. Supports various microscopes by using imported libraries &amp; GUI automation. Supports XInput game controllers to move stage, take images, run ImageJ macros on images or Bio C# scripts.</div>
   </td>
@@ -158,8 +158,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a296c218a6b0364f78ab489ce34907133" id="r_a296c218a6b0364f78ab489ce34907133"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a296c218a6b0364f78ab489ce34907133">UpdateItems</a> ()</td></tr>
 <tr class="memdesc:a296c218a6b0364f78ab489ce34907133"><td class="mdescLeft">&#160;</td><td class="mdescRight">It clears the listbox and then adds all the items in the Channels list to the listbox.  <br /></td></tr>
 <tr class="separator:a296c218a6b0364f78ab489ce34907133"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af82a7cea9c0bba20259ec9f651f298cb" id="r_af82a7cea9c0bba20259ec9f651f298cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af82a7cea9c0bba20259ec9f651f298cb">ChannelsTool</a> (List&lt; Channel &gt; Channels)</td></tr>
+<tr class="memitem:af82a7cea9c0bba20259ec9f651f298cb" id="r_af82a7cea9c0bba20259ec9f651f298cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#af82a7cea9c0bba20259ec9f651f298cb">ChannelsTool</a> (List&lt; Channel &gt; <a class="el" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>)</td></tr>
 <tr class="separator:af82a7cea9c0bba20259ec9f651f298cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa0385b24062f7551612859aef0eecdd6" id="r_aa0385b24062f7551612859aef0eecdd6"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#aa0385b24062f7551612859aef0eecdd6">RefreshHistogram</a> ()</td></tr>
+<tr class="separator:aa0385b24062f7551612859aef0eecdd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -195,22 +197,51 @@ Properties</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00054">54</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   55</span>        {</div>
-<div class="line"><span class="lineno">   56</span>            InitializeComponent();</div>
-<div class="line"><span class="lineno">   57</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
-<div class="line"><span class="lineno">   58</span>            {</div>
-<div class="line"><span class="lineno">   59</span>                channelsBox.Items.Add(item);</div>
-<div class="line"><span class="lineno">   60</span>            }</div>
-<div class="line"><span class="lineno">   61</span>            channelsBox.SelectedIndex = 0;</div>
-<div class="line"><span class="lineno">   62</span>            minBox.Value = (int)Channels[0].stats[0].StackMin;</div>
-<div class="line"><span class="lineno">   63</span>            maxBox.Value = (int)Channels[0].stats[0].StackMax;</div>
-<div class="line"><span class="lineno">   64</span>            hist = <span class="keyword">new</span> HistogramControl(Channels[channelsBox.SelectedIndex]);</div>
-<div class="line"><span class="lineno">   65</span>            hist.GraphMax = (int)maxBox.Value;</div>
-<div class="line"><span class="lineno">   66</span>            maxGraphBox.Value = (int)maxBox.Value;</div>
-<div class="line"><span class="lineno">   67</span>            MouseWheel += <span class="keyword">new</span> System.Windows.Forms.MouseEventHandler(ChannelsTool_MouseWheel);</div>
-<div class="line"><span class="lineno">   68</span>            statsPanel.Controls.Add(hist);</div>
-<div class="line"><span class="lineno">   69</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00068">68</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   69</span>        {</div>
+<div class="line"><span class="lineno">   70</span>            initializing = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   71</span>            InitializeComponent();</div>
+<div class="line"><span class="lineno">   72</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>)</div>
+<div class="line"><span class="lineno">   73</span>            {</div>
+<div class="line"><span class="lineno">   74</span>                channelsBox.Items.Add(item);</div>
+<div class="line"><span class="lineno">   75</span>            }</div>
+<div class="line"><span class="lineno">   76</span>            MouseWheel += <span class="keyword">new</span> System.Windows.Forms.MouseEventHandler(ChannelsTool_MouseWheel);</div>
+<div class="line"><span class="lineno">   77</span> </div>
+<div class="line"><span class="lineno">   78</span>            <span class="keywordflow">if</span> (<a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>.Count == 0)</div>
+<div class="line"><span class="lineno">   79</span>            {</div>
+<div class="line"><span class="lineno">   80</span>                channelsBox.Enabled = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   81</span>                sampleBox.Enabled = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   82</span>                statsPanel.Controls.Add(<span class="keyword">new</span> Label</div>
+<div class="line"><span class="lineno">   83</span>                {</div>
+<div class="line"><span class="lineno">   84</span>                    Dock = DockStyle.Fill,</div>
+<div class="line"><span class="lineno">   85</span>                    Text = <span class="stringliteral">&quot;No channel metadata is available for this image.&quot;</span>,</div>
+<div class="line"><span class="lineno">   86</span>                    TextAlign = ContentAlignment.MiddleCenter</div>
+<div class="line"><span class="lineno">   87</span>                });</div>
+<div class="line"><span class="lineno">   88</span>                initializing = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   89</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">   90</span>            }</div>
+<div class="line"><span class="lineno">   91</span> </div>
+<div class="line"><span class="lineno">   92</span>            channelsBox.SelectedIndex = 0;</div>
+<div class="line"><span class="lineno">   93</span>            Channel channel = <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>[0];</div>
+<div class="line"><span class="lineno">   94</span>            <span class="keywordtype">int</span> sample = channel.range?.Length &gt; 0 ? 0 : -1;</div>
+<div class="line"><span class="lineno">   95</span>            <span class="keywordtype">int</span> defaultMax = channel.BitsPerPixel &lt;= 8 ? byte.MaxValue : ushort.MaxValue;</div>
+<div class="line"><span class="lineno">   96</span>            <span class="keywordtype">int</span> minimum = sample &gt;= 0 ? channel.range[sample].Min : 0;</div>
+<div class="line"><span class="lineno">   97</span>            <span class="keywordtype">int</span> maximum = sample &gt;= 0 ? channel.range[sample].Max : defaultMax;</div>
+<div class="line"><span class="lineno">   98</span>            <span class="keywordflow">if</span> (channel.stats?.Length &gt; 0)</div>
+<div class="line"><span class="lineno">   99</span>            {</div>
+<div class="line"><span class="lineno">  100</span>                minimum = (int)channel.stats[0].StackMin;</div>
+<div class="line"><span class="lineno">  101</span>                maximum = (int)channel.stats[0].StackMax;</div>
+<div class="line"><span class="lineno">  102</span>            }</div>
+<div class="line"><span class="lineno">  103</span>            minBox.Value = Math.Clamp(minimum, (<span class="keywordtype">int</span>)minBox.Minimum, (<span class="keywordtype">int</span>)minBox.Maximum);</div>
+<div class="line"><span class="lineno">  104</span>            maxBox.Value = Math.Clamp(maximum, (<span class="keywordtype">int</span>)maxBox.Minimum, (<span class="keywordtype">int</span>)maxBox.Maximum);</div>
+<div class="line"><span class="lineno">  105</span>            hist = <span class="keyword">new</span> HistogramControl(channel);</div>
+<div class="line"><span class="lineno">  106</span>            hist.GraphMax = Math.Max(1, (<span class="keywordtype">int</span>)maxBox.Value);</div>
+<div class="line"><span class="lineno">  107</span>            maxGraphBox.Value = Math.Clamp(maxBox.Value, maxGraphBox.Minimum, maxGraphBox.Maximum);</div>
+<div class="line"><span class="lineno">  108</span>            statsPanel.Controls.Add(hist);</div>
+<div class="line"><span class="lineno">  109</span>            initializing = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">  110</span>            Shown += async (_, _) =&gt; await EnsureHistogramAsync();</div>
+<div class="line"><span class="lineno">  111</span>        }</div>
+<div class="ttc" id="aclass_bio_imager_1_1_channels_tool_html_a707dcdc45209907f5e311103fb27af13"><div class="ttname"><a href="#a707dcdc45209907f5e311103fb27af13">BioImager.ChannelsTool.Channels</a></div><div class="ttdeci">List&lt; Channel &gt; Channels</div><div class="ttdef"><b>Definition</b> <a href="_channels_tool_8cs_source.html#l00021">ChannelsTool.cs:22</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -257,6 +288,29 @@ Properties</h2></td></tr>
 </div><!-- fragment -->
 </div>
 </div>
+<a id="aa0385b24062f7551612859aef0eecdd6" name="aa0385b24062f7551612859aef0eecdd6"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa0385b24062f7551612859aef0eecdd6">&#9670;&#160;</a></span>RefreshHistogram()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BioImager.ChannelsTool.RefreshHistogram </td>
+          <td>(</td>
+          <td class="paramname"><span class="paramname"><em></em></span></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00329">329</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  330</span>        {</div>
+<div class="line"><span class="lineno">  331</span>            <span class="keywordflow">if</span> (Visible)</div>
+<div class="line"><span class="lineno">  332</span>                _ = EnsureHistogramAsync();</div>
+<div class="line"><span class="lineno">  333</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
 <a id="a296c218a6b0364f78ab489ce34907133" name="a296c218a6b0364f78ab489ce34907133"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a296c218a6b0364f78ab489ce34907133">&#9670;&#160;</a></span>UpdateItems()</h2>
 
@@ -274,14 +328,20 @@ Properties</h2></td></tr>
 
 <p>It clears the listbox and then adds all the items in the Channels list to the listbox. </p>
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00045">45</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   46</span>        {</div>
-<div class="line"><span class="lineno">   47</span>            channelsBox.Items.Clear();</div>
-<div class="line"><span class="lineno">   48</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
-<div class="line"><span class="lineno">   49</span>            {</div>
-<div class="line"><span class="lineno">   50</span>                channelsBox.Items.Add(item);</div>
-<div class="line"><span class="lineno">   51</span>            }</div>
-<div class="line"><span class="lineno">   52</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00053">53</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   54</span>        {</div>
+<div class="line"><span class="lineno">   55</span>            <span class="keywordtype">int</span> selectedIndex = channelsBox.SelectedIndex;</div>
+<div class="line"><span class="lineno">   56</span>            initializing = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   57</span>            channelsBox.Items.Clear();</div>
+<div class="line"><span class="lineno">   58</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>)</div>
+<div class="line"><span class="lineno">   59</span>            {</div>
+<div class="line"><span class="lineno">   60</span>                channelsBox.Items.Add(item);</div>
+<div class="line"><span class="lineno">   61</span>            }</div>
+<div class="line"><span class="lineno">   62</span>            channelsBox.SelectedIndex = Channels.Count == 0</div>
+<div class="line"><span class="lineno">   63</span>                ? -1</div>
+<div class="line"><span class="lineno">   64</span>                : Math.Clamp(selectedIndex, 0, <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>.Count - 1);</div>
+<div class="line"><span class="lineno">   65</span>            initializing = <span class="keyword">false</span>;</div>
+<div class="line"><span class="lineno">   66</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -306,13 +366,13 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00013">13</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   14</span>        {</div>
-<div class="line"><span class="lineno">   15</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">   16</span>            {</div>
-<div class="line"><span class="lineno">   17</span>                <span class="keywordflow">return</span> App.Channels;</div>
-<div class="line"><span class="lineno">   18</span>            }</div>
-<div class="line"><span class="lineno">   19</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00021">21</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   22</span>        {</div>
+<div class="line"><span class="lineno">   23</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">   24</span>            {</div>
+<div class="line"><span class="lineno">   25</span>                <span class="keywordflow">return</span> App.Channels;</div>
+<div class="line"><span class="lineno">   26</span>            }</div>
+<div class="line"><span class="lineno">   27</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -336,16 +396,16 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00021">21</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   22</span>        {</div>
-<div class="line"><span class="lineno">   23</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">   24</span>            {</div>
-<div class="line"><span class="lineno">   25</span>                <span class="keywordflow">if</span> (channelsBox.SelectedIndex != -1)</div>
-<div class="line"><span class="lineno">   26</span>                    <span class="keywordflow">return</span> Channels[channelsBox.SelectedIndex];</div>
-<div class="line"><span class="lineno">   27</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">   28</span>                    <span class="keywordflow">return</span> Channels[0];</div>
-<div class="line"><span class="lineno">   29</span>            }</div>
-<div class="line"><span class="lineno">   30</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00029">29</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   30</span>        {</div>
+<div class="line"><span class="lineno">   31</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">   32</span>            {</div>
+<div class="line"><span class="lineno">   33</span>                <span class="keywordflow">if</span> (channelsBox.SelectedIndex != -1)</div>
+<div class="line"><span class="lineno">   34</span>                    <span class="keywordflow">return</span> <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>[channelsBox.SelectedIndex];</div>
+<div class="line"><span class="lineno">   35</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">   36</span>                    <span class="keywordflow">return</span> <a class="code hl_property" href="#a707dcdc45209907f5e311103fb27af13">Channels</a>[0];</div>
+<div class="line"><span class="lineno">   37</span>            }</div>
+<div class="line"><span class="lineno">   38</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -369,17 +429,17 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00033">33</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   34</span>        {</div>
-<div class="line"><span class="lineno">   35</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">   36</span>            {</div>
-<div class="line"><span class="lineno">   37</span>                <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)sampleBox.Value;</div>
-<div class="line"><span class="lineno">   38</span>            }</div>
-<div class="line"><span class="lineno">   39</span>            <span class="keyword">set</span></div>
-<div class="line"><span class="lineno">   40</span>            {</div>
-<div class="line"><span class="lineno">   41</span>                sampleBox.Value = (decimal)value;</div>
-<div class="line"><span class="lineno">   42</span>            }</div>
-<div class="line"><span class="lineno">   43</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00041">41</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>        {</div>
+<div class="line"><span class="lineno">   43</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">   44</span>            {</div>
+<div class="line"><span class="lineno">   45</span>                <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)sampleBox.Value;</div>
+<div class="line"><span class="lineno">   46</span>            }</div>
+<div class="line"><span class="lineno">   47</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">   48</span>            {</div>
+<div class="line"><span class="lineno">   49</span>                sampleBox.Value = (decimal)value;</div>
+<div class="line"><span class="lineno">   50</span>            }</div>
+<div class="line"><span class="lineno">   51</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>

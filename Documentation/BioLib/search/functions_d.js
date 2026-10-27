@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['readregion_0',['ReadRegion',['../class_bio_lib_1_1_slide_image.html#a8afc2ebe1a041ffa0a0490e144bae00f',1,'BioLib::SlideImage']]],
-  ['removepoints_1',['RemovePoints',['../class_bio_lib_1_1_r_o_i.html#a98852b020240a785122ffbc50f615652',1,'BioLib::ROI']]],
-  ['resetdimensionscache_2',['ResetDimensionsCache',['../class_bio_lib_1_1_slide_image.html#ab833fbc35f3c2a2a763f5de14cef5266',1,'BioLib::SlideImage']]],
-  ['roidecoder_3',['RoiDecoder',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a56cb0fe8236bc3f111e909c10f81da3a',1,'BioLib.Fiji.RoiDecoder.RoiDecoder(string path)'],['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#adb135c01fc62ce7b6190f8edea6dcdbd',1,'BioLib.Fiji.RoiDecoder.RoiDecoder(byte[] bytes, string name)']]],
-  ['roiencoder_4',['RoiEncoder',['../class_bio_lib_1_1_fiji_1_1_roi_encoder.html#a50e544a078c7e542c11cbfa789723d7e',1,'BioLib.Fiji.RoiEncoder.RoiEncoder(String path)'],['../class_bio_lib_1_1_fiji_1_1_roi_encoder.html#a928b5b0dbdad3b099c7df96b790777e9',1,'BioLib.Fiji.RoiEncoder.RoiEncoder(FileStream f)']]]
+  ['parsenaparifiles_0',['ParseNapariFiles',['../class_bio_lib_1_1_napari.html#ad222c23bfa9a0116ecd881f85e2d71d2',1,'BioLib::Napari']]],
+  ['parsepointsfile_1',['ParsePointsFile',['../class_bio_lib_1_1_napari.html#ac2fe21180250bfa1b8e2b2ef7cb899bb',1,'BioLib::Napari']]],
+  ['parseshapesfile_2',['ParseShapesFile',['../class_bio_lib_1_1_napari.html#a72d709ff4531ba7a941f772585bdb251',1,'BioLib::Napari']]],
+  ['pen_3',['Pen',['../struct_bio_1_1_graphics_1_1_pen.html#a91cdc358bb95052bd962a56e713948d2',1,'Bio.Graphics.Pen.Pen(ColorS col, ushort w, int bitsPerPixel)'],['../struct_bio_1_1_graphics_1_1_pen.html#a15cae4243f9dbd9d7a0b4419ff5366f9',1,'Bio.Graphics.Pen.Pen(ColorS col, int w, int bitsPerPixel)']]],
+  ['pointinpolygon_4',['PointInPolygon',['../class_bio_1_1_graphics_1_1_graphics.html#aa1814fcf4590201c482aa96470e98ec7',1,'Bio::Graphics::Graphics']]],
+  ['pointstostring_5',['PointsToString',['../class_bio_lib_1_1_r_o_i.html#af3c1a3d4d37ddbc1c49a89a6ed4c762a',1,'BioLib::ROI']]],
+  ['prepareforfloodfill_6',['PrepareForFloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ad3579e973bc7d5cbe50fb5648836d32b',1,'Bio::Graphics::AbstractFloodFiller']]]
 ];

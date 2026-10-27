@@ -1,14 +1,12 @@
 var searchData=
 [
-  ['meanhistogram_0',['MeanHistogram',['../class_bio_core_1_1_statistics.html#a1737e7626ca05b3f0c0056e4acc2d54f',1,'BioCore::Statistics']]],
-  ['mergechannels_1',['MergeChannels',['../class_bio_core_1_1_bio_image.html#a7c09d9fbb026a76d500aee66d914699b',1,'BioCore.BioImage.MergeChannels(BioImage b2, BioImage b)'],['../class_bio_core_1_1_bio_image.html#aa9b1a3236c26a484e86458948ec79743',1,'BioCore.BioImage.MergeChannels(string bname, string b2name)']]],
-  ['merget_2',['MergeT',['../class_bio_core_1_1_bio_image.html#a7fb386b1a392954b30cb7034373d1035',1,'BioCore::BioImage']]],
-  ['mergez_3',['MergeZ',['../class_bio_core_1_1_bio_image.html#a8388eb51242ea8eeb0330bb121ef5d17',1,'BioCore::BioImage']]],
-  ['mouseevent_4',['MouseEvent',['../class_bio_core_1_1_mouse_operations.html#a3bac2e3638a36e37a50927c8dd424764',1,'BioCore::MouseOperations']]],
-  ['mousewheeldown_5',['MouseWheelDown',['../class_bio_core_1_1_win32.html#ad34d85cb2664f4c34d0385e3e9ff3d72',1,'BioCore::Win32']]],
-  ['mousewheelup_6',['MouseWheelUp',['../class_bio_core_1_1_win32.html#af35d32987e7aac6943388da83f96ca6e',1,'BioCore::Win32']]],
-  ['movedown_7',['MoveDown',['../class_bio_core_1_1_stage.html#a094e6f178d1cb0829e464793c3ae03ad',1,'BioCore::Stage']]],
-  ['moveleft_8',['MoveLeft',['../class_bio_core_1_1_stage.html#a4bf20f18fba932d449fbb81ccbf4d671',1,'BioCore::Stage']]],
-  ['moveright_9',['MoveRight',['../class_bio_core_1_1_stage.html#a68cc47dbba6b9150349193a17fd9de03',1,'BioCore::Stage']]],
-  ['moveup_10',['MoveUp',['../class_bio_core_1_1_stage.html#a7df1f487169192f51ce1694f67349c7f',1,'BioCore::Stage']]]
+  ['layer_0',['Layer',['../struct_bio_core_1_1_image_view_1_1_layer.html#a2ba0d941aa94de9f8a801458d339c24e',1,'BioCore.ImageView.Layer.Layer(double d)'],['../struct_bio_core_1_1_image_view_1_1_layer.html#a3e17e2ab500067ce7e1c82d2a289bf47',1,'BioCore.ImageView.Layer.Layer(double d, bool enabled)']]],
+  ['layers_1',['Layers',['../class_bio_core_1_1_layers.html#a944d76b8d378e5b474ffe259867e2bae',1,'BioCore::Layers']]],
+  ['leftclick_2',['LeftClick',['../class_bio_core_1_1_mouse_operations.html#a46138c13831c66a9f9e2b77546a3e98d',1,'BioCore::MouseOperations']]],
+  ['leftdown_3',['LeftDown',['../class_bio_core_1_1_mouse_operations.html#a9bfcadfa089965f20ee20af7a5104c04',1,'BioCore::MouseOperations']]],
+  ['leftup_4',['LeftUp',['../class_bio_core_1_1_mouse_operations.html#a1e92edcce29d67ba6e522778eb559868',1,'BioCore::MouseOperations']]],
+  ['lib_5',['Lib',['../class_bio_core_1_1_lib.html#ab8a09665d69bc6763b4a9dabe26ce736',1,'BioCore::Lib']]],
+  ['library_6',['Library',['../class_bio_core_1_1_library.html#aa61c9c80fe0f160088e2f7b8f6d11bad',1,'BioCore::Library']]],
+  ['login_7',['Login',['../class_bio_core_1_1_login.html#a488595fe0fc520063141bd28c5a02b30',1,'BioCore::Login']]],
+  ['logline_8',['LogLine',['../class_bio_core_1_1_scripting.html#a3e3da44b7221d7fe6335ecb4a573f64a',1,'BioCore::Scripting']]]
 ];

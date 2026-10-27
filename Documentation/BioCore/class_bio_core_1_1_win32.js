@@ -1,5 +1,30 @@
 var class_bio_core_1_1_win32 =
 [
-    [ "Rect", "struct_bio_core_1_1_win32_1_1_rect.html", null ],
-    [ "GetWindowRect", "class_bio_core_1_1_win32.html#aae8126169b390410af08e1e9fafc93f4", null ]
+    [ "Rect", "struct_bio_core_1_1_win32_1_1_rect.html", "struct_bio_core_1_1_win32_1_1_rect" ],
+    [ "GetActiveWindowTitle", "class_bio_core_1_1_win32.html#a64702b5320c56473c6dea6e8fa52de11", null ],
+    [ "GetAsyncKeyState", "class_bio_core_1_1_win32.html#a37b332a9c3118e0b287758afd050df4e", null ],
+    [ "GetForegroundWindow", "class_bio_core_1_1_win32.html#aec615e8f29830fd2a3dd5242540be094", null ],
+    [ "GetKeyState", "class_bio_core_1_1_win32.html#a531a1fe08fbbfc229dbadd157889399e", null ],
+    [ "GetWindowRect", "class_bio_core_1_1_win32.html#aae8126169b390410af08e1e9fafc93f4", null ],
+    [ "GetWindowText", "class_bio_core_1_1_win32.html#a60509f4f4d0a0311694bfb41ff9b8513", null ],
+    [ "mouse_event", "class_bio_core_1_1_win32.html#ad6d1475deed77ea5d98860da3d4ed821", null ],
+    [ "MouseWheelDown", "class_bio_core_1_1_win32.html#ad34d85cb2664f4c34d0385e3e9ff3d72", null ],
+    [ "MouseWheelUp", "class_bio_core_1_1_win32.html#af35d32987e7aac6943388da83f96ca6e", null ],
+    [ "RunningOnWine", "class_bio_core_1_1_win32.html#a77bae038b3c123727fde6be46653085c", null ],
+    [ "SetFocus", "class_bio_core_1_1_win32.html#af14f31bb095527142a20eca3ba52b824", null ],
+    [ "SetForegroundWindow", "class_bio_core_1_1_win32.html#af2926b3e9ae27ed8e1441595cbb2bfa2", null ],
+    [ "MOUSEEVENTF_ABSOLUTE", "class_bio_core_1_1_win32.html#a0bb54ca65d249bebaab96225c16af176", null ],
+    [ "MOUSEEVENTF_HWHEEL", "class_bio_core_1_1_win32.html#a245231f66dacd1460be7373eefe98422", null ],
+    [ "MOUSEEVENTF_LEFTDOWN", "class_bio_core_1_1_win32.html#ab9f3fd8f40ec3e0f9e72a109fa609e2f", null ],
+    [ "MOUSEEVENTF_LEFTUP", "class_bio_core_1_1_win32.html#af7761056212726b1a4863ee4c7203ddc", null ],
+    [ "MOUSEEVENTF_MIDDLEDOWN", "class_bio_core_1_1_win32.html#aba3868800a685536c7250feeaa2df376", null ],
+    [ "MOUSEEVENTF_MIDDLEUP", "class_bio_core_1_1_win32.html#a52f5253bfba63be1949c387f763cb41b", null ],
+    [ "MOUSEEVENTF_MOVE", "class_bio_core_1_1_win32.html#aa352596dbdfbf1e90630b160c5b8672e", null ],
+    [ "MOUSEEVENTF_RIGHTDOWN", "class_bio_core_1_1_win32.html#a1b9078d9da72442160a50132a7b35348", null ],
+    [ "MOUSEEVENTF_RIGHTUP", "class_bio_core_1_1_win32.html#a45feab8449eecaf2b5ab2076177a25eb", null ],
+    [ "MOUSEEVENTF_WHEEL", "class_bio_core_1_1_win32.html#accad3dce4ef876eb559c32dc765b518c", null ],
+    [ "MOUSEEVENTF_XDOWN", "class_bio_core_1_1_win32.html#a9573152d1456235773e30ea5eb70f242", null ],
+    [ "MOUSEEVENTF_XUP", "class_bio_core_1_1_win32.html#a69f55f41df5fb1eaed750d6c65c3e974", null ],
+    [ "WM_KEYDOWN", "class_bio_core_1_1_win32.html#a272361b602596746058fe0185afa3827", null ],
+    [ "WM_KEYUP", "class_bio_core_1_1_win32.html#a389a914f4d12c5e9c7a6349ba187a35c", null ]
 ];

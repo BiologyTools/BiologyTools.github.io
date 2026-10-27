@@ -1,0 +1,20 @@
+var searchData=
+[
+  ['n_5factuators_0',['n_actuators',['../classmicroscope_1_1abc_1_1_deformable_mirror.html#a0bc494c2a3886c3b74603a34dd378b1c',1,'microscope::abc::DeformableMirror']]],
+  ['n_5fcoordinates_1',['N_COORDINATES',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a714f21756cf64e7f278bbabb9ce2692b',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['name_2',['Name',['../class_bio_imager_1_1_imager_1_1_profile.html#af0ac036173dd0f5c6703db4ec0c4925a',1,'BioImager.Imager.Profile.Name'],['../class_bio_imager_1_1_objectives_1_1_objective.html#a43f0b1556318b20fd7acfcc45fbe6a8d',1,'BioImager.Objectives.Objective.Name']]],
+  ['name_3',['name',['../classmicroscope_1_1abc_1_1___setting.html#a354652a39947995ab02aeaf646820e45',1,'microscope.abc._Setting.name'],['../classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html#a67deb3dc85bb37e1ff6fe208d5cb401c',1,'microscope.cameras._SDK3.dllFunction.name'],['../classmicroscope_1_1cameras_1_1atmcd_1_1dll_function.html#aa258720a53696415fc39c9b5ae14d021',1,'microscope.cameras.atmcd.dllFunction.name'],['../classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html#a9daa2b1d5cc358cf9bbba15dab4d67c6',1,'microscope.cameras.pvcam.dllFunction.name'],['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html#ae6fe535f572badde5c80907203dbaee9',1,'microscope.cameras.pvcam.PVParam.name'],['../classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html#a2059821c178b1b3877a2a872aee7508d',1,'microscope.cameras.pvcam.PVEnumParam.name'],['../class_bio_imager_1_1_scripting_1_1_script.html#aeb48c7242b559c530f111f55c9538d88',1,'BioImager.Scripting.Script.name']]],
+  ['name_5flength_4',['NAME_LENGTH',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aa8401f420394d73ab58215f034c967ae',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['name_5foffset_5',['NAME_OFFSET',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a0a6ba90397309fcfd8d4e616c0c5fe86',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['nb_5fcommand_5fvalues_6',['NB_COMMAND_VALUES',['../namespacemicroscope_1_1__wrappers_1_1mirao52e.html#a34fb74050d5b0d5233b3141a38142269',1,'microscope::_wrappers::mirao52e']]],
+  ['newtab_7',['newTab',['../class_bio_imager_1_1_bio_console.html#ad5b2d156fd255bdbc28fd4364b41c3ea',1,'BioImager::BioConsole']]],
+  ['no_5fframe_5firqs_8',['NO_FRAME_IRQS',['../namespacemicroscope_1_1cameras_1_1pvcam.html#ae0201615d9039140fef82dcd9becf340',1,'microscope::cameras::pvcam']]],
+  ['noconnectioninfo_9',['NoConnectionInfo',['../classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a7384b8b5115715a26e9a9100e2500e7f',1,'microscope::stages::linkam::ErrorCode']]],
+  ['node_10',['node',['../class_bio_imager_1_1_filter_1_1_node.html#a06ae58b291959b1519a70804c65bf011',1,'BioImager.Filter.Node.node'],['../class_bio_imager_1_1_node_view_1_1_node.html#aff973856223898f34d000f0aafd6d087',1,'BioImager.NodeView.Node.node'],['../class_bio_imager_1_1_recordings_1_1_node.html#afb2c2d8a79214aef158984e232c93363',1,'BioImager.Recordings.Node.node']]],
+  ['nodeview_11',['nodeView',['../class_bio_imager_1_1_app.html#a19b9d6a4fea1b2ea427758d23c88fd0e',1,'BioImager::App']]],
+  ['noerror_12',['NoError',['../classmicroscope_1_1stages_1_1linkam_1_1_controller_error.html#a4a089bdd33b58d9bef0dea1e8489f953',1,'microscope.stages.linkam.ControllerError.NoError'],['../classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ab53fe8ef8bfdf6579482139d49a55d5f',1,'microscope.stages.linkam.ErrorCode.NoError']]],
+  ['normal_5fcool_13',['NORMAL_COOL',['../namespacemicroscope_1_1cameras_1_1pvcam.html#ab3cb3a0863eea0805177170a8f68d788',1,'microscope::cameras::pvcam']]],
+  ['num_5fbuffers_14',['num_buffers',['../classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html#a39105c9008c88338d35fc57d986259d1',1,'microscope::cameras::andorsdk3::AndorSDK3']]],
+  ['numbering_15',['numbering',['../classmicroscope_1_1simulators_1_1___image_generator.html#a34418cc4decd46182165384f4bc04994',1,'microscope::simulators::_ImageGenerator']]],
+  ['numcameras_16',['numCameras',['../classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg.html#a2553eef6c8574e5d55c25cfa91ae6254',1,'microscope::cameras::_SDK3Cam::camReg']]]
+];

@@ -3,9 +3,12 @@ var annotated_dup =
     [ "BioImager", "namespace_bio_imager.html", [
       [ "Graphics", "namespace_bio_imager_1_1_graphics.html", [
         [ "FloodTool", "class_bio_imager_1_1_graphics_1_1_flood_tool.html", "class_bio_imager_1_1_graphics_1_1_flood_tool" ],
-        [ "Graphics", "class_bio_imager_1_1_graphics_1_1_graphics.html", null ],
-        [ "Pen", "struct_bio_imager_1_1_graphics_1_1_pen.html", null ],
+        [ "Graphics", "class_bio_imager_1_1_graphics_1_1_graphics.html", "class_bio_imager_1_1_graphics_1_1_graphics" ],
+        [ "Pen", "struct_bio_imager_1_1_graphics_1_1_pen.html", "struct_bio_imager_1_1_graphics_1_1_pen" ],
         [ "PenTool", "class_bio_imager_1_1_graphics_1_1_pen_tool.html", "class_bio_imager_1_1_graphics_1_1_pen_tool" ]
+      ] ],
+      [ "ML", "namespace_bio_imager_1_1_m_l.html", [
+        [ "ML", "class_bio_imager_1_1_m_l_1_1_m_l.html", "class_bio_imager_1_1_m_l_1_1_m_l" ]
       ] ],
       [ "PythonMicroscope", "namespace_bio_imager_1_1_python_microscope.html", [
         [ "MicroscopeSetup", "class_bio_imager_1_1_python_microscope_1_1_microscope_setup.html", "class_bio_imager_1_1_python_microscope_1_1_microscope_setup" ]
@@ -14,9 +17,9 @@ var annotated_dup =
         [ "UrlDialog", "class_bio_imager_1_1_source_1_1_url_dialog.html", "class_bio_imager_1_1_source_1_1_url_dialog" ]
       ] ],
       [ "About", "class_bio_imager_1_1_about.html", "class_bio_imager_1_1_about" ],
-      [ "AbstractFloodFiller", "class_bio_imager_1_1_abstract_flood_filler.html", null ],
+      [ "AbstractFloodFiller", "class_bio_imager_1_1_abstract_flood_filler.html", "class_bio_imager_1_1_abstract_flood_filler" ],
       [ "Action", "class_bio_imager_1_1_action.html", "class_bio_imager_1_1_action" ],
-      [ "App", "class_bio_imager_1_1_app.html", null ],
+      [ "App", "class_bio_imager_1_1_app.html", "class_bio_imager_1_1_app" ],
       [ "ApplyFilter", "class_bio_imager_1_1_apply_filter.html", "class_bio_imager_1_1_apply_filter" ],
       [ "Automation", "class_bio_imager_1_1_automation.html", "class_bio_imager_1_1_automation" ],
       [ "BioConsole", "class_bio_imager_1_1_bio_console.html", "class_bio_imager_1_1_bio_console" ],
@@ -25,14 +28,15 @@ var annotated_dup =
       [ "CodeView", "class_bio_imager_1_1_code_view.html", "class_bio_imager_1_1_code_view" ],
       [ "ColorTool", "class_bio_imager_1_1_color_tool.html", "class_bio_imager_1_1_color_tool" ],
       [ "DInput", "class_bio_imager_1_1_d_input.html", null ],
+      [ "FileUtil", "class_bio_imager_1_1_file_util.html", "class_bio_imager_1_1_file_util" ],
       [ "Filter", "class_bio_imager_1_1_filter.html", "class_bio_imager_1_1_filter" ],
       [ "FilterWheel", "class_bio_imager_1_1_filter_wheel.html", "class_bio_imager_1_1_filter_wheel" ],
-      [ "FloodFillRange", "struct_bio_imager_1_1_flood_fill_range.html", null ],
+      [ "FloodFillRange", "struct_bio_imager_1_1_flood_fill_range.html", "struct_bio_imager_1_1_flood_fill_range" ],
       [ "FloodFillRangeQueue", "class_bio_imager_1_1_flood_fill_range_queue.html", "class_bio_imager_1_1_flood_fill_range_queue" ],
       [ "Focus", "class_bio_imager_1_1_focus.html", "class_bio_imager_1_1_focus" ],
       [ "Function", "class_bio_imager_1_1_function.html", "class_bio_imager_1_1_function" ],
       [ "FunctionForm", "class_bio_imager_1_1_function_form.html", "class_bio_imager_1_1_function_form" ],
-      [ "GLWindow", "class_bio_imager_1_1_g_l_window.html", null ],
+      [ "GLWindow", "class_bio_imager_1_1_g_l_window.html", "class_bio_imager_1_1_g_l_window" ],
       [ "HistogramControl", "class_bio_imager_1_1_histogram_control.html", "class_bio_imager_1_1_histogram_control" ],
       [ "HXPShutter", "class_bio_imager_1_1_h_x_p_shutter.html", "class_bio_imager_1_1_h_x_p_shutter" ],
       [ "ImageJ", "class_bio_imager_1_1_image_j.html", "class_bio_imager_1_1_image_j" ],
@@ -49,6 +53,9 @@ var annotated_dup =
       [ "LightSource", "class_bio_imager_1_1_light_source.html", "class_bio_imager_1_1_light_source" ],
       [ "Login", "class_bio_imager_1_1_login.html", "class_bio_imager_1_1_login" ],
       [ "MagicSelect", "class_bio_imager_1_1_magic_select.html", "class_bio_imager_1_1_magic_select" ],
+      [ "MicroManager", "class_bio_imager_1_1_micro_manager.html", "class_bio_imager_1_1_micro_manager" ],
+      [ "Microscope", "class_bio_imager_1_1_microscope.html", "class_bio_imager_1_1_microscope" ],
+      [ "MicroscopeConsole", "class_bio_imager_1_1_microscope_console.html", "class_bio_imager_1_1_microscope_console" ],
       [ "MicroscopeSetup", "class_bio_imager_1_1_microscope_setup.html", "class_bio_imager_1_1_microscope_setup" ],
       [ "MouseOperations", "class_bio_imager_1_1_mouse_operations.html", "class_bio_imager_1_1_mouse_operations" ],
       [ "NodeView", "class_bio_imager_1_1_node_view.html", "class_bio_imager_1_1_node_view" ],
@@ -58,7 +65,9 @@ var annotated_dup =
       [ "PlaySpeed", "class_bio_imager_1_1_play_speed.html", "class_bio_imager_1_1_play_speed" ],
       [ "Plot", "class_bio_imager_1_1_plot.html", "class_bio_imager_1_1_plot" ],
       [ "Plugin", "class_bio_imager_1_1_plugin.html", "class_bio_imager_1_1_plugin" ],
-      [ "PMicroscope", "class_bio_imager_1_1_p_microscope.html", null ],
+      [ "Plugins", "class_bio_imager_1_1_plugins.html", "class_bio_imager_1_1_plugins" ],
+      [ "PMicroscope", "class_bio_imager_1_1_p_microscope.html", "class_bio_imager_1_1_p_microscope" ],
+      [ "Prior", "class_bio_imager_1_1_prior.html", "class_bio_imager_1_1_prior" ],
       [ "Progress", "class_bio_imager_1_1_progress.html", "class_bio_imager_1_1_progress" ],
       [ "QueueLinearFloodFiller", "class_bio_imager_1_1_queue_linear_flood_filler.html", "class_bio_imager_1_1_queue_linear_flood_filler" ],
       [ "RangeTool", "class_bio_imager_1_1_range_tool.html", "class_bio_imager_1_1_range_tool" ],
@@ -68,43 +77,43 @@ var annotated_dup =
       [ "RLShutter", "class_bio_imager_1_1_r_l_shutter.html", "class_bio_imager_1_1_r_l_shutter" ],
       [ "ROIManager", "class_bio_imager_1_1_r_o_i_manager.html", "class_bio_imager_1_1_r_o_i_manager" ],
       [ "Scripting", "class_bio_imager_1_1_scripting.html", "class_bio_imager_1_1_scripting" ],
-      [ "SDK", "class_bio_imager_1_1_s_d_k.html", null ],
+      [ "SDK", "class_bio_imager_1_1_s_d_k.html", "class_bio_imager_1_1_s_d_k" ],
       [ "SelectRecording", "class_bio_imager_1_1_select_recording.html", "class_bio_imager_1_1_select_recording" ],
       [ "Series", "class_bio_imager_1_1_series.html", "class_bio_imager_1_1_series" ],
       [ "SetTool", "class_bio_imager_1_1_set_tool.html", "class_bio_imager_1_1_set_tool" ],
       [ "Setup", "class_bio_imager_1_1_setup.html", "class_bio_imager_1_1_setup" ],
       [ "SlideGLArea", "class_bio_imager_1_1_slide_g_l_area.html", "class_bio_imager_1_1_slide_g_l_area" ],
       [ "SlideImager", "class_bio_imager_1_1_slide_imager.html", "class_bio_imager_1_1_slide_imager" ],
-      [ "SlideRenderer", "class_bio_imager_1_1_slide_renderer.html", null ],
+      [ "SlideRenderer", "class_bio_imager_1_1_slide_renderer.html", "class_bio_imager_1_1_slide_renderer" ],
       [ "StackTools", "class_bio_imager_1_1_stack_tools.html", "class_bio_imager_1_1_stack_tools" ],
       [ "Stage", "class_bio_imager_1_1_stage.html", "class_bio_imager_1_1_stage" ],
       [ "StageTool", "class_bio_imager_1_1_stage_tool.html", "class_bio_imager_1_1_stage_tool" ],
       [ "TabsView", "class_bio_imager_1_1_tabs_view.html", "class_bio_imager_1_1_tabs_view" ],
       [ "TextInput", "class_bio_imager_1_1_text_input.html", "class_bio_imager_1_1_text_input" ],
-      [ "TileRenderInfo", "struct_bio_imager_1_1_tile_render_info.html", null ],
+      [ "TileRenderInfo", "struct_bio_imager_1_1_tile_render_info.html", "struct_bio_imager_1_1_tile_render_info" ],
       [ "TLShutter", "class_bio_imager_1_1_t_l_shutter.html", "class_bio_imager_1_1_t_l_shutter" ],
       [ "Tools", "class_bio_imager_1_1_tools.html", "class_bio_imager_1_1_tools" ],
       [ "Win32", "class_bio_imager_1_1_win32.html", "class_bio_imager_1_1_win32" ],
-      [ "XmlTreeDisplay", "class_bio_imager_1_1_xml_tree_display.html", null ],
+      [ "XmlTreeDisplay", "class_bio_imager_1_1_xml_tree_display.html", "class_bio_imager_1_1_xml_tree_display" ],
       [ "XMLView", "class_bio_imager_1_1_x_m_l_view.html", "class_bio_imager_1_1_x_m_l_view" ]
     ] ],
-    [ "microscope", null, [
-      [ "_utils", null, [
+    [ "microscope", "namespacemicroscope.html", [
+      [ "_utils", "namespacemicroscope_1_1__utils.html", [
         [ "OnlyTriggersBulbOnSoftwareMixin", "classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin.html", "classmicroscope_1_1__utils_1_1_only_triggers_bulb_on_software_mixin" ],
         [ "OnlyTriggersOnceOnSoftwareMixin", "classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin.html", "classmicroscope_1_1__utils_1_1_only_triggers_once_on_software_mixin" ],
-        [ "SharedSerial", "classmicroscope_1_1__utils_1_1_shared_serial.html", null ]
+        [ "SharedSerial", "classmicroscope_1_1__utils_1_1_shared_serial.html", "classmicroscope_1_1__utils_1_1_shared_serial" ]
       ] ],
-      [ "_wrappers", null, [
-        [ "asdk", null, [
+      [ "_wrappers", "namespacemicroscope_1_1__wrappers.html", [
+        [ "asdk", "namespacemicroscope_1_1__wrappers_1_1asdk.html", [
           [ "DM", "classmicroscope_1_1__wrappers_1_1asdk_1_1_d_m.html", null ]
         ] ],
-        [ "BMC", null, [
-          [ "DM", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m.html", null ],
-          [ "DM_DRIVER", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___d_r_i_v_e_r.html", null ],
+        [ "BMC", "namespacemicroscope_1_1__wrappers_1_1_b_m_c.html", [
+          [ "DM", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m.html", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m" ],
+          [ "DM_DRIVER", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___d_r_i_v_e_r.html", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___d_r_i_v_e_r" ],
           [ "DM_PRIV", "classmicroscope_1_1__wrappers_1_1_b_m_c_1_1_d_m___p_r_i_v.html", null ]
         ] ]
       ] ],
-      [ "abc", null, [
+      [ "abc", "namespacemicroscope_1_1abc.html", [
         [ "_Setting", "classmicroscope_1_1abc_1_1___setting.html", "classmicroscope_1_1abc_1_1___setting" ],
         [ "Camera", "classmicroscope_1_1abc_1_1_camera.html", "classmicroscope_1_1abc_1_1_camera" ],
         [ "Controller", "classmicroscope_1_1abc_1_1_controller.html", "classmicroscope_1_1abc_1_1_controller" ],
@@ -119,116 +128,116 @@ var annotated_dup =
         [ "StageAxis", "classmicroscope_1_1abc_1_1_stage_axis.html", "classmicroscope_1_1abc_1_1_stage_axis" ],
         [ "TriggerTargetMixin", "classmicroscope_1_1abc_1_1_trigger_target_mixin.html", "classmicroscope_1_1abc_1_1_trigger_target_mixin" ]
       ] ],
-      [ "cameras", null, [
-        [ "_SDK3", null, [
+      [ "cameras", "namespacemicroscope_1_1cameras.html", [
+        [ "_SDK3", "namespacemicroscope_1_1cameras_1_1___s_d_k3.html", [
           [ "_meta", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1__meta.html", null ],
-          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_i_n_g.html", null ],
-          [ "_OUTSTRLEN", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_l_e_n.html", null ],
-          [ "CameraError", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_camera_error.html", null ],
-          [ "dllFunction", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html", null ],
-          [ "OUTPUT", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_o_u_t_p_u_t.html", null ],
+          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_i_n_g.html", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_i_n_g" ],
+          [ "_OUTSTRLEN", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_l_e_n.html", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1___o_u_t_s_t_r_l_e_n" ],
+          [ "CameraError", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_camera_error.html", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_camera_error" ],
+          [ "dllFunction", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function" ],
+          [ "OUTPUT", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_o_u_t_p_u_t.html", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_o_u_t_p_u_t" ],
           [ "TimeoutError", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1_timeout_error.html", null ]
         ] ],
-        [ "_SDK3Cam", null, [
-          [ "ATBool", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_bool.html", null ],
-          [ "ATCommand", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_command.html", null ],
-          [ "ATEnum", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_enum.html", null ],
-          [ "ATFloat", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_float.html", null ],
-          [ "ATInt", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_int.html", null ],
-          [ "ATProperty", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_property.html", null ],
-          [ "ATString", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string.html", null ],
-          [ "camReg", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg.html", null ],
+        [ "_SDK3Cam", "namespacemicroscope_1_1cameras_1_1___s_d_k3_cam.html", [
+          [ "ATBool", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_bool.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_bool" ],
+          [ "ATCommand", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_command.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_command" ],
+          [ "ATEnum", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_enum.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_enum" ],
+          [ "ATFloat", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_float.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_float" ],
+          [ "ATInt", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_int.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_int" ],
+          [ "ATProperty", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_property.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_property" ],
+          [ "ATString", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string" ],
+          [ "camReg", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg" ],
           [ "SDK3Camera", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_s_d_k3_camera.html", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_s_d_k3_camera" ]
         ] ],
-        [ "andorsdk3", null, [
+        [ "andorsdk3", "namespacemicroscope_1_1cameras_1_1andorsdk3.html", [
           [ "AndorSDK3", "classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html", "classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3" ]
         ] ],
-        [ "atmcd", null, [
+        [ "atmcd", "namespacemicroscope_1_1cameras_1_1atmcd.html", [
           [ "_meta", "classmicroscope_1_1cameras_1_1atmcd_1_1__meta.html", null ],
-          [ "_OUTARRSIZE", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_a_r_r_s_i_z_e.html", null ],
-          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_i_n_g.html", null ],
-          [ "_OUTSTRLEN", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_l_e_n.html", null ],
-          [ "AcquisitionMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode.html", null ],
+          [ "_OUTARRSIZE", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_a_r_r_s_i_z_e.html", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_a_r_r_s_i_z_e" ],
+          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_i_n_g.html", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_i_n_g" ],
+          [ "_OUTSTRLEN", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_l_e_n.html", "classmicroscope_1_1cameras_1_1atmcd_1_1___o_u_t_s_t_r_l_e_n" ],
+          [ "AcquisitionMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode" ],
           [ "AndorAtmcd", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd" ],
-          [ "ANDORCAPS", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_n_d_o_r_c_a_p_s.html", null ],
+          [ "ANDORCAPS", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_n_d_o_r_c_a_p_s.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_n_d_o_r_c_a_p_s" ],
           [ "AT_DDGLiteChannelId", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_t___d_d_g_lite_channel_id.html", null ],
           [ "AT_VersionInfoId", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_t___version_info_id.html", null ],
-          [ "AtmcdException", "classmicroscope_1_1cameras_1_1atmcd_1_1_atmcd_exception.html", null ],
-          [ "COLORDEMOSAICINFO", "classmicroscope_1_1cameras_1_1atmcd_1_1_c_o_l_o_r_d_e_m_o_s_a_i_c_i_n_f_o.html", null ],
+          [ "AtmcdException", "classmicroscope_1_1cameras_1_1atmcd_1_1_atmcd_exception.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_atmcd_exception" ],
+          [ "COLORDEMOSAICINFO", "classmicroscope_1_1cameras_1_1atmcd_1_1_c_o_l_o_r_d_e_m_o_s_a_i_c_i_n_f_o.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_c_o_l_o_r_d_e_m_o_s_a_i_c_i_n_f_o" ],
           [ "dllFunction", "classmicroscope_1_1cameras_1_1atmcd_1_1dll_function.html", "classmicroscope_1_1cameras_1_1atmcd_1_1dll_function" ],
-          [ "OUTARR", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_a_r_r.html", null ],
-          [ "OUTPUT", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_p_u_t.html", null ],
-          [ "ReadMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_read_mode.html", null ],
-          [ "ReadoutMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_readout_mode.html", null ],
-          [ "SYSTEMTIME", "classmicroscope_1_1cameras_1_1atmcd_1_1_s_y_s_t_e_m_t_i_m_e.html", null ],
-          [ "TriggerMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_trigger_mode.html", null ],
-          [ "WHITEBALANCEINFO", "classmicroscope_1_1cameras_1_1atmcd_1_1_w_h_i_t_e_b_a_l_a_n_c_e_i_n_f_o.html", null ]
+          [ "OUTARR", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_a_r_r.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_a_r_r" ],
+          [ "OUTPUT", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_p_u_t.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_o_u_t_p_u_t" ],
+          [ "ReadMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_read_mode.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_read_mode" ],
+          [ "ReadoutMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_readout_mode.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_readout_mode" ],
+          [ "SYSTEMTIME", "classmicroscope_1_1cameras_1_1atmcd_1_1_s_y_s_t_e_m_t_i_m_e.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_s_y_s_t_e_m_t_i_m_e" ],
+          [ "TriggerMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_trigger_mode.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_trigger_mode" ],
+          [ "WHITEBALANCEINFO", "classmicroscope_1_1cameras_1_1atmcd_1_1_w_h_i_t_e_b_a_l_a_n_c_e_i_n_f_o.html", "classmicroscope_1_1cameras_1_1atmcd_1_1_w_h_i_t_e_b_a_l_a_n_c_e_i_n_f_o" ]
         ] ],
-        [ "picam", null, [
+        [ "picam", "namespacemicroscope_1_1cameras_1_1picam.html", [
           [ "PiCamera", "classmicroscope_1_1cameras_1_1picam_1_1_pi_camera.html", "classmicroscope_1_1cameras_1_1picam_1_1_pi_camera" ],
-          [ "TrgSourceMap", "classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map.html", null ]
+          [ "TrgSourceMap", "classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map.html", "classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map" ]
         ] ],
-        [ "pvcam", null, [
+        [ "pvcam", "namespacemicroscope_1_1cameras_1_1pvcam.html", [
           [ "_meta", "classmicroscope_1_1cameras_1_1pvcam_1_1__meta.html", null ],
-          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1pvcam_1_1___o_u_t_s_t_r_i_n_g.html", null ],
-          [ "active_camera_type", "classmicroscope_1_1cameras_1_1pvcam_1_1active__camera__type.html", null ],
-          [ "dllFunction", "classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html", null ],
-          [ "FRAME_INFO", "classmicroscope_1_1cameras_1_1pvcam_1_1_f_r_a_m_e___i_n_f_o.html", null ],
-          [ "io_list", "classmicroscope_1_1cameras_1_1pvcam_1_1io__list.html", null ],
-          [ "io_struct", "classmicroscope_1_1cameras_1_1pvcam_1_1io__struct.html", null ],
-          [ "md_ext_item", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item.html", null ],
-          [ "md_ext_item_collection", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__collection.html", null ],
-          [ "md_ext_item_info", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__info.html", null ],
-          [ "md_frame", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame.html", null ],
-          [ "md_frame_header", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__header.html", null ],
-          [ "md_frame_roi", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi.html", null ],
-          [ "md_frame_roi_header", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi__header.html", null ],
-          [ "OUTPUT", "classmicroscope_1_1cameras_1_1pvcam_1_1_o_u_t_p_u_t.html", null ],
-          [ "PVCAM_FRAME_INFO_GUID", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_c_a_m___f_r_a_m_e___i_n_f_o___g_u_i_d.html", null ],
+          [ "_OUTSTRING", "classmicroscope_1_1cameras_1_1pvcam_1_1___o_u_t_s_t_r_i_n_g.html", "classmicroscope_1_1cameras_1_1pvcam_1_1___o_u_t_s_t_r_i_n_g" ],
+          [ "active_camera_type", "classmicroscope_1_1cameras_1_1pvcam_1_1active__camera__type.html", "classmicroscope_1_1cameras_1_1pvcam_1_1active__camera__type" ],
+          [ "dllFunction", "classmicroscope_1_1cameras_1_1pvcam_1_1dll_function.html", "classmicroscope_1_1cameras_1_1pvcam_1_1dll_function" ],
+          [ "FRAME_INFO", "classmicroscope_1_1cameras_1_1pvcam_1_1_f_r_a_m_e___i_n_f_o.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_f_r_a_m_e___i_n_f_o" ],
+          [ "io_list", "classmicroscope_1_1cameras_1_1pvcam_1_1io__list.html", "classmicroscope_1_1cameras_1_1pvcam_1_1io__list" ],
+          [ "io_struct", "classmicroscope_1_1cameras_1_1pvcam_1_1io__struct.html", "classmicroscope_1_1cameras_1_1pvcam_1_1io__struct" ],
+          [ "md_ext_item", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item" ],
+          [ "md_ext_item_collection", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__collection.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__collection" ],
+          [ "md_ext_item_info", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__info.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__ext__item__info" ],
+          [ "md_frame", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame" ],
+          [ "md_frame_header", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__header.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__header" ],
+          [ "md_frame_roi", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi" ],
+          [ "md_frame_roi_header", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi__header.html", "classmicroscope_1_1cameras_1_1pvcam_1_1md__frame__roi__header" ],
+          [ "OUTPUT", "classmicroscope_1_1cameras_1_1pvcam_1_1_o_u_t_p_u_t.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_o_u_t_p_u_t" ],
+          [ "PVCAM_FRAME_INFO_GUID", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_c_a_m___f_r_a_m_e___i_n_f_o___g_u_i_d.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_c_a_m___f_r_a_m_e___i_n_f_o___g_u_i_d" ],
           [ "PVCamera", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera" ],
           [ "PVEnumParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param" ],
           [ "PVParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param" ],
           [ "PVStringParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param" ],
-          [ "rgn_type", "classmicroscope_1_1cameras_1_1pvcam_1_1rgn__type.html", null ],
-          [ "smart_stream_type", "classmicroscope_1_1cameras_1_1pvcam_1_1smart__stream__type.html", null ],
-          [ "TriggerMode", "classmicroscope_1_1cameras_1_1pvcam_1_1_trigger_mode.html", null ]
+          [ "rgn_type", "classmicroscope_1_1cameras_1_1pvcam_1_1rgn__type.html", "classmicroscope_1_1cameras_1_1pvcam_1_1rgn__type" ],
+          [ "smart_stream_type", "classmicroscope_1_1cameras_1_1pvcam_1_1smart__stream__type.html", "classmicroscope_1_1cameras_1_1pvcam_1_1smart__stream__type" ],
+          [ "TriggerMode", "classmicroscope_1_1cameras_1_1pvcam_1_1_trigger_mode.html", "classmicroscope_1_1cameras_1_1pvcam_1_1_trigger_mode" ]
         ] ],
-        [ "ximea", null, [
-          [ "TrgSelectorMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_selector_map.html", null ],
-          [ "TrgSourceMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html", null ],
+        [ "ximea", "namespacemicroscope_1_1cameras_1_1ximea.html", [
+          [ "TrgSelectorMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_selector_map.html", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_selector_map" ],
+          [ "TrgSourceMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map" ],
           [ "XimeaCamera", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera" ]
         ] ]
       ] ],
-      [ "clients", null, [
+      [ "clients", "namespacemicroscope_1_1clients.html", [
         [ "Client", "classmicroscope_1_1clients_1_1_client.html", "classmicroscope_1_1clients_1_1_client" ],
         [ "DataClient", "classmicroscope_1_1clients_1_1_data_client.html", "classmicroscope_1_1clients_1_1_data_client" ]
       ] ],
-      [ "controllers", null, [
-        [ "coolled", null, [
+      [ "controllers", "namespacemicroscope_1_1controllers.html", [
+        [ "coolled", "namespacemicroscope_1_1controllers_1_1coolled.html", [
           [ "_CoolLEDChannel", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel.html", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel" ],
           [ "_CoolLEDChannelConnection", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel_connection.html", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_channel_connection" ],
           [ "_CoolLEDConnection", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection.html", "classmicroscope_1_1controllers_1_1coolled_1_1___cool_l_e_d_connection" ],
           [ "CoolLED", "classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d.html", "classmicroscope_1_1controllers_1_1coolled_1_1_cool_l_e_d" ]
         ] ],
-        [ "lumencor", null, [
+        [ "lumencor", "namespacemicroscope_1_1controllers_1_1lumencor.html", [
           [ "_LightChannelConnection", "classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection.html", "classmicroscope_1_1controllers_1_1lumencor_1_1___light_channel_connection" ],
-          [ "_SpectraIIIConnection", "classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection.html", null ],
+          [ "_SpectraIIIConnection", "classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection.html", "classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_connection" ],
           [ "_SpectraIIILightChannel", "classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel.html", "classmicroscope_1_1controllers_1_1lumencor_1_1___spectra_i_i_i_light_channel" ],
           [ "SpectraIIILightEngine", "classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine.html", "classmicroscope_1_1controllers_1_1lumencor_1_1_spectra_i_i_i_light_engine" ]
         ] ],
-        [ "prior", null, [
+        [ "prior", "namespacemicroscope_1_1controllers_1_1prior.html", [
           [ "_ProScanIIIConnection", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection.html", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_connection" ],
           [ "_ProScanIIIFilterWheel", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_filter_wheel.html", "classmicroscope_1_1controllers_1_1prior_1_1___pro_scan_i_i_i_filter_wheel" ],
           [ "ProScanIII", "classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i.html", "classmicroscope_1_1controllers_1_1prior_1_1_pro_scan_i_i_i" ]
         ] ],
-        [ "toptica", null, [
+        [ "toptica", "namespacemicroscope_1_1controllers_1_1toptica.html", [
           [ "_iChromeConnection", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection.html", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_connection" ],
           [ "_iChromeLaser", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser.html", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser" ],
-          [ "_iChromeLaserConnection", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection.html", null ],
+          [ "_iChromeLaserConnection", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection.html", "classmicroscope_1_1controllers_1_1toptica_1_1__i_chrome_laser_connection" ],
           [ "iChromeMLE", "classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e.html", "classmicroscope_1_1controllers_1_1toptica_1_1i_chrome_m_l_e" ]
         ] ],
-        [ "zaber", null, [
-          [ "_ZaberConnection", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection.html", null ],
+        [ "zaber", "namespacemicroscope_1_1controllers_1_1zaber.html", [
+          [ "_ZaberConnection", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_connection" ],
           [ "_ZaberDeviceConnection", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_device_connection" ],
           [ "_ZaberFilterWheel", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_filter_wheel" ],
           [ "_ZaberLED", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_l_e_d" ],
@@ -237,67 +246,67 @@ var annotated_dup =
           [ "_ZaberStage", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage" ],
           [ "_ZaberStageAxis", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_axis.html", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_axis" ],
           [ "ZaberDaisyChain", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain.html", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain" ],
-          [ "ZaberDeviceType", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type.html", null ]
+          [ "ZaberDeviceType", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type.html", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type" ]
         ] ]
       ] ],
-      [ "device_server", null, [
+      [ "device_server", "namespacemicroscope_1_1device__server.html", [
         [ "DeviceServer", "classmicroscope_1_1device__server_1_1_device_server.html", "classmicroscope_1_1device__server_1_1_device_server" ],
         [ "DeviceServerOptions", "classmicroscope_1_1device__server_1_1_device_server_options.html", null ],
         [ "Filter", "classmicroscope_1_1device__server_1_1_filter.html", "classmicroscope_1_1device__server_1_1_filter" ]
       ] ],
-      [ "filterwheels", null, [
-        [ "aurox", null, [
+      [ "filterwheels", "namespacemicroscope_1_1filterwheels.html", [
+        [ "aurox", "namespacemicroscope_1_1filterwheels_1_1aurox.html", [
           [ "Clarity", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity" ]
         ] ],
-        [ "thorlabs", null, [
+        [ "thorlabs", "namespacemicroscope_1_1filterwheels_1_1thorlabs.html", [
           [ "ThorlabsFilterWheel", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel.html", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_filter_wheel" ],
           [ "ThorlabsFW102C", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c.html", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w102_c" ],
           [ "ThorlabsFW212C", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c.html", "classmicroscope_1_1filterwheels_1_1thorlabs_1_1_thorlabs_f_w212_c" ]
         ] ]
       ] ],
-      [ "gui", null, [
-        [ "_DataQueue", "classmicroscope_1_1gui_1_1___data_queue.html", null ],
-        [ "_Imager", "classmicroscope_1_1gui_1_1___imager.html", null ],
+      [ "gui", "namespacemicroscope_1_1gui.html", [
+        [ "_DataQueue", "classmicroscope_1_1gui_1_1___data_queue.html", "classmicroscope_1_1gui_1_1___data_queue" ],
+        [ "_Imager", "classmicroscope_1_1gui_1_1___imager.html", "classmicroscope_1_1gui_1_1___imager" ],
         [ "CameraWidget", "classmicroscope_1_1gui_1_1_camera_widget.html", "classmicroscope_1_1gui_1_1_camera_widget" ],
-        [ "ControllerWidget", "classmicroscope_1_1gui_1_1_controller_widget.html", null ],
+        [ "ControllerWidget", "classmicroscope_1_1gui_1_1_controller_widget.html", "classmicroscope_1_1gui_1_1_controller_widget" ],
         [ "DeformableMirrorWidget", "classmicroscope_1_1gui_1_1_deformable_mirror_widget.html", "classmicroscope_1_1gui_1_1_deformable_mirror_widget" ],
-        [ "DeviceSettingsWidget", "classmicroscope_1_1gui_1_1_device_settings_widget.html", null ],
-        [ "FilterWheelWidget", "classmicroscope_1_1gui_1_1_filter_wheel_widget.html", null ],
+        [ "DeviceSettingsWidget", "classmicroscope_1_1gui_1_1_device_settings_widget.html", "classmicroscope_1_1gui_1_1_device_settings_widget" ],
+        [ "FilterWheelWidget", "classmicroscope_1_1gui_1_1_filter_wheel_widget.html", "classmicroscope_1_1gui_1_1_filter_wheel_widget" ],
         [ "LightSourceWidget", "classmicroscope_1_1gui_1_1_light_source_widget.html", "classmicroscope_1_1gui_1_1_light_source_widget" ],
-        [ "MainWindow", "classmicroscope_1_1gui_1_1_main_window.html", null ],
-        [ "StageWidget", "classmicroscope_1_1gui_1_1_stage_widget.html", null ]
+        [ "MainWindow", "classmicroscope_1_1gui_1_1_main_window.html", "classmicroscope_1_1gui_1_1_main_window" ],
+        [ "StageWidget", "classmicroscope_1_1gui_1_1_stage_widget.html", "classmicroscope_1_1gui_1_1_stage_widget" ]
       ] ],
-      [ "lights", null, [
-        [ "cobolt", null, [
+      [ "lights", "namespacemicroscope_1_1lights.html", [
+        [ "cobolt", "namespacemicroscope_1_1lights_1_1cobolt.html", [
           [ "CoboltLaser", "classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser.html", "classmicroscope_1_1lights_1_1cobolt_1_1_cobolt_laser" ]
         ] ],
-        [ "deepstar", null, [
+        [ "deepstar", "namespacemicroscope_1_1lights_1_1deepstar.html", [
           [ "DeepstarLaser", "classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser.html", "classmicroscope_1_1lights_1_1deepstar_1_1_deepstar_laser" ]
         ] ],
-        [ "obis", null, [
+        [ "obis", "namespacemicroscope_1_1lights_1_1obis.html", [
           [ "ObisLaser", "classmicroscope_1_1lights_1_1obis_1_1_obis_laser.html", "classmicroscope_1_1lights_1_1obis_1_1_obis_laser" ]
         ] ],
-        [ "sapphire", null, [
+        [ "sapphire", "namespacemicroscope_1_1lights_1_1sapphire.html", [
           [ "SapphireLaser", "classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser.html", "classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser" ]
         ] ],
-        [ "toptica", null, [
+        [ "toptica", "namespacemicroscope_1_1lights_1_1toptica.html", [
           [ "_iBeamConnection", "classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html", "classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection" ],
           [ "TopticaiBeam", "classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html", "classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam" ]
         ] ]
       ] ],
-      [ "mirror", null, [
-        [ "alpao", null, [
+      [ "mirror", "namespacemicroscope_1_1mirror.html", [
+        [ "alpao", "namespacemicroscope_1_1mirror_1_1alpao.html", [
           [ "AlpaoDeformableMirror", "classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror.html", "classmicroscope_1_1mirror_1_1alpao_1_1_alpao_deformable_mirror" ]
         ] ],
-        [ "bmc", null, [
+        [ "bmc", "namespacemicroscope_1_1mirror_1_1bmc.html", [
           [ "BMCDeformableMirror", "classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror.html", "classmicroscope_1_1mirror_1_1bmc_1_1_b_m_c_deformable_mirror" ]
         ] ],
-        [ "mirao52e", null, [
+        [ "mirao52e", "namespacemicroscope_1_1mirror_1_1mirao52e.html", [
           [ "Mirao52e", "classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e.html", "classmicroscope_1_1mirror_1_1mirao52e_1_1_mirao52e" ]
         ] ]
       ] ],
-      [ "simulators", null, [
-        [ "stage_aware_camera", null, [
+      [ "simulators", "namespacemicroscope_1_1simulators.html", [
+        [ "stage_aware_camera", "namespacemicroscope_1_1simulators_1_1stage__aware__camera.html", [
           [ "StageAwareCamera", "classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html", "classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera" ]
         ] ],
         [ "_ImageGenerator", "classmicroscope_1_1simulators_1_1___image_generator.html", "classmicroscope_1_1simulators_1_1___image_generator" ],
@@ -309,109 +318,42 @@ var annotated_dup =
         [ "SimulatedStage", "classmicroscope_1_1simulators_1_1_simulated_stage.html", "classmicroscope_1_1simulators_1_1_simulated_stage" ],
         [ "SimulatedStageAxis", "classmicroscope_1_1simulators_1_1_simulated_stage_axis.html", "classmicroscope_1_1simulators_1_1_simulated_stage_axis" ]
       ] ],
-      [ "stages", null, [
-        [ "linkam", null, [
-          [ "_CMSError", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error.html", null ],
-          [ "_CMSErrorFlags", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error_flags.html", null ],
-          [ "_CMSStatus", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status.html", null ],
-          [ "_CMSStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status_flags.html", null ],
+      [ "stages", "namespacemicroscope_1_1stages.html", [
+        [ "linkam", "namespacemicroscope_1_1stages_1_1linkam.html", [
+          [ "_CMSError", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error.html", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error" ],
+          [ "_CMSErrorFlags", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_error_flags" ],
+          [ "_CMSStatus", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status.html", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status" ],
+          [ "_CMSStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___c_m_s_status_flags" ],
           [ "_CommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___comms_info.html", "classmicroscope_1_1stages_1_1linkam_1_1___comms_info" ],
-          [ "_ConnectionStatus", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status.html", null ],
-          [ "_ConnectionStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status_flags.html", null ],
-          [ "_ControllerStatus", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status.html", null ],
-          [ "_ControllerStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status_flags.html", null ],
+          [ "_ConnectionStatus", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status.html", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status" ],
+          [ "_ConnectionStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___connection_status_flags" ],
+          [ "_ControllerStatus", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status.html", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status" ],
+          [ "_ControllerStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___controller_status_flags" ],
           [ "_LinkamBase", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_base" ],
           [ "_LinkamMDSMixin", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin.html", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_m_d_s_mixin" ],
-          [ "_MDSStatus", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status.html", null ],
-          [ "_MDSStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status_flags.html", null ],
-          [ "_SerialCommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___serial_comms_info.html", null ],
-          [ "_StageConfig", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config.html", null ],
-          [ "_StageConfigFlags", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags.html", null ],
-          [ "_StageGroup", "classmicroscope_1_1stages_1_1linkam_1_1___stage_group.html", null ],
-          [ "_StageValueType", "classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type.html", null ],
-          [ "_USBCommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info.html", null ],
+          [ "_MDSStatus", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status.html", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status" ],
+          [ "_MDSStatusFlags", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___m_d_s_status_flags" ],
+          [ "_SerialCommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___serial_comms_info.html", "classmicroscope_1_1stages_1_1linkam_1_1___serial_comms_info" ],
+          [ "_StageConfig", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config.html", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config" ],
+          [ "_StageConfigFlags", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags.html", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags" ],
+          [ "_StageGroup", "classmicroscope_1_1stages_1_1linkam_1_1___stage_group.html", "classmicroscope_1_1stages_1_1linkam_1_1___stage_group" ],
+          [ "_StageValueType", "classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type.html", "classmicroscope_1_1stages_1_1linkam_1_1___stage_value_type" ],
+          [ "_USBCommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info.html", "classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info" ],
           [ "_Variant", "classmicroscope_1_1stages_1_1linkam_1_1___variant.html", "classmicroscope_1_1stages_1_1linkam_1_1___variant" ],
-          [ "ControllerError", "classmicroscope_1_1stages_1_1linkam_1_1_controller_error.html", null ],
-          [ "ErrorCode", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html", null ],
+          [ "ControllerError", "classmicroscope_1_1stages_1_1linkam_1_1_controller_error.html", "classmicroscope_1_1stages_1_1linkam_1_1_controller_error" ],
+          [ "ErrorCode", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html", "classmicroscope_1_1stages_1_1linkam_1_1_error_code" ],
           [ "LinkamCMS", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s" ],
-          [ "Msg", "classmicroscope_1_1stages_1_1linkam_1_1_msg.html", null ]
+          [ "Msg", "classmicroscope_1_1stages_1_1linkam_1_1_msg.html", "classmicroscope_1_1stages_1_1linkam_1_1_msg" ]
         ] ],
-        [ "ludl", null, [
+        [ "ludl", "namespacemicroscope_1_1stages_1_1ludl.html", [
           [ "_LudlController", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller" ],
           [ "_LudlStage", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage.html", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage" ],
           [ "_LudlStageAxis", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis.html", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis" ],
           [ "ludlMC2000", "classmicroscope_1_1stages_1_1ludl_1_1ludl_m_c2000.html", "classmicroscope_1_1stages_1_1ludl_1_1ludl_m_c2000" ]
         ] ]
       ] ],
-      [ "testsuite", null, [
-        [ "devices", null, [
-          [ "CamEnum", "classmicroscope_1_1testsuite_1_1devices_1_1_cam_enum.html", null ],
-          [ "DummyDSP", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p.html", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p" ],
-          [ "DummySLM", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m.html", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m" ],
-          [ "TestCamera", "classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html", "classmicroscope_1_1testsuite_1_1devices_1_1_test_camera" ],
-          [ "TestFloatingDevice", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device" ],
-          [ "TestLaser", "classmicroscope_1_1testsuite_1_1devices_1_1_test_laser.html", null ]
-        ] ],
-        [ "mock_devices", null, [
-          [ "CoboltLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock.html", null ],
-          [ "CoherentSapphireLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock.html", null ],
-          [ "OmicronDeepstarLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock.html", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock" ],
-          [ "SerialMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock" ]
-        ] ],
-        [ "test_client", null, [
-          [ "ExposedDeformableMirror", "classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror.html", null ],
-          [ "PyroService", "classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service.html", null ],
-          [ "TestClient", "classmicroscope_1_1testsuite_1_1test__client_1_1_test_client.html", "classmicroscope_1_1testsuite_1_1test__client_1_1_test_client" ]
-        ] ],
-        [ "test_device_server", null, [
-          [ "BaseTestDeviceServer", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server.html", null ],
-          [ "BaseTestServeDevices", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices.html", null ],
-          [ "DeviceServerExceptionQueue", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue.html", null ],
-          [ "DeviceWithPort", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port" ],
-          [ "ExposePIDDevice", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device" ],
-          [ "TestClashingArguments", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_clashing_arguments.html", null ],
-          [ "TestConfigLoader", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader" ],
-          [ "TestFloatingDeviceIndexInjection", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection.html", null ],
-          [ "TestFunctionInDeviceDefinition", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition" ],
-          [ "TestInputCheck", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check" ],
-          [ "TestKeepDeviceServerAlive", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive.html", null ],
-          [ "TestServingFloatingDevicesWithWrongUID", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_serving_floating_devices_with_wrong_u_i_d.html", null ],
-          [ "TestStarting", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting.html", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting" ]
-        ] ],
-        [ "test_devices", null, [
-          [ "CameraTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_camera_tests.html", null ],
-          [ "ControllerTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_controller_tests.html", null ],
-          [ "DeformableMirrorTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_deformable_mirror_tests.html", null ],
-          [ "DeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests" ],
-          [ "DSPTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_d_s_p_tests.html", null ],
-          [ "FilterWheelTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests.html", null ],
-          [ "LightSourceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_light_source_tests.html", null ],
-          [ "SerialDeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_serial_device_tests.html", null ],
-          [ "SLMTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_s_l_m_tests.html", null ],
-          [ "TestBaseDevice", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_base_device.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_base_device" ],
-          [ "TestCoboltLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser.html", null ],
-          [ "TestCoherentSapphireLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser.html", null ],
-          [ "TestDummyCamera", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_camera.html", null ],
-          [ "TestDummyController", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_controller.html", null ],
-          [ "TestDummyDeformableMirror", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_deformable_mirror.html", null ],
-          [ "TestDummyDSP", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_d_s_p.html", null ],
-          [ "TestDummyLightSource", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_light_source.html", null ],
-          [ "TestDummySLM", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m.html", null ],
-          [ "TestEmptyDummyFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_empty_dummy_filter_wheel.html", null ],
-          [ "TestImageGenerator", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_image_generator.html", null ],
-          [ "TestOmicronDeepstarLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser.html", null ],
-          [ "TestOnePositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_one_position_filter_wheel.html", null ],
-          [ "TestSerialMock", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock.html", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock" ],
-          [ "TestSixPositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_six_position_filter_wheel.html", null ]
-        ] ],
-        [ "test_settings", null, [
-          [ "EnumSetting", "classmicroscope_1_1testsuite_1_1test__settings_1_1_enum_setting.html", null ],
-          [ "TestEnumSetting", "classmicroscope_1_1testsuite_1_1test__settings_1_1_test_enum_setting.html", "classmicroscope_1_1testsuite_1_1test__settings_1_1_test_enum_setting" ],
-          [ "ThingWithSomething", "classmicroscope_1_1testsuite_1_1test__settings_1_1_thing_with_something.html", null ]
-        ] ]
-      ] ],
-      [ "win32", null, [
-        [ "MicroscopeWindowsService", "classmicroscope_1_1win32_1_1_microscope_windows_service.html", null ]
+      [ "win32", "namespacemicroscope_1_1win32.html", [
+        [ "MicroscopeWindowsService", "classmicroscope_1_1win32_1_1_microscope_windows_service.html", "classmicroscope_1_1win32_1_1_microscope_windows_service" ]
       ] ],
       [ "AxisLimits", "classmicroscope_1_1_axis_limits.html", null ],
       [ "Binning", "classmicroscope_1_1_binning.html", null ],
@@ -422,8 +364,8 @@ var annotated_dup =
       [ "LibraryLoadError", "classmicroscope_1_1_library_load_error.html", null ],
       [ "MicroscopeError", "classmicroscope_1_1_microscope_error.html", null ],
       [ "ROI", "classmicroscope_1_1_r_o_i.html", null ],
-      [ "TriggerMode", "classmicroscope_1_1_trigger_mode.html", null ],
-      [ "TriggerType", "classmicroscope_1_1_trigger_type.html", null ],
+      [ "TriggerMode", "classmicroscope_1_1_trigger_mode.html", "classmicroscope_1_1_trigger_mode" ],
+      [ "TriggerType", "classmicroscope_1_1_trigger_type.html", "classmicroscope_1_1_trigger_type" ],
       [ "UnsupportedFeatureError", "classmicroscope_1_1_unsupported_feature_error.html", null ]
     ] ]
 ];

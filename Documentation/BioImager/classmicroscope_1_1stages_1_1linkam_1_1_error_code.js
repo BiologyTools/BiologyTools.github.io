@@ -1,0 +1,25 @@
+var classmicroscope_1_1stages_1_1linkam_1_1_error_code =
+[
+    [ "CommandBufferLimitReached", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#af83efe01aad531e90dcb8bc5b774b6b0", null ],
+    [ "DeviceCreationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a3f8dfefd3e4d3de59ae5f6521544e9d3", null ],
+    [ "DeviceRegistrationFailed", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ae4f7044c28cc7266a361bd9ff7477959", null ],
+    [ "LibraryNotInitialised", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a3d8734917a436dc8a1c0ec9012e877f2", null ],
+    [ "Max", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#aaf7f2edf80c3b64ab8338d359cb09b12", null ],
+    [ "NoConnectionInfo", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a7384b8b5115715a26e9a9100e2500e7f", null ],
+    [ "NoError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ab53fe8ef8bfdf6579482139d49a55d5f", null ],
+    [ "SerialCommsHandshakeFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ad818b904a3744b2af32cabae73b12b4d", null ],
+    [ "SerialCommsInitialisationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a0c5fcb253a61d0be89cbf34fffdf6ec3", null ],
+    [ "SerialCommsRxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a31f5b1fd24a43bac34452101a6587caa", null ],
+    [ "SerialCommsTxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#acfec69f350c51eceeb9d4dec6ae1086a", null ],
+    [ "SerialCommsUnknownRxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ac3610d1f17ac182a2bf75ab89cf32d18", null ],
+    [ "SerialCommsUnknownTxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a4d5829eae82f9f628a596425d86ec774", null ],
+    [ "SerialPortSocketConfigurationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a0d833df32e97ad01a3addacf9b385ba4", null ],
+    [ "SerialPortSocketCreationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#ae322a1f6399c1e820e35bcd96b2218f2", null ],
+    [ "USBCommsHandshakeFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a416fc2c2357599b621c8693b5c59be68", null ],
+    [ "USBCommsInitialisationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a2a6ce48cb29039c140af2c1c275c13a6", null ],
+    [ "USBCommsRxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#addce4103807c91733d07a3746b2799de", null ],
+    [ "USBCommsTxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a9a1d55bce96c64a1ea68910c84b025ce", null ],
+    [ "USBCommsUnknownRxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#a9c6461172629b22850a9844e1022ef46", null ],
+    [ "USBCommsUnknownTxError", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#adb5ba245fdb49f3b0b7436b8e7bd897f", null ],
+    [ "USBPortSocketCreationFailure", "classmicroscope_1_1stages_1_1linkam_1_1_error_code.html#af0e4e96868c6cd5efcb834c1cda82148", null ]
+];

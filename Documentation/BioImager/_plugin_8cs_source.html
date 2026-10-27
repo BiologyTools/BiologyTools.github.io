@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioImager
-   &#160;<span id="projectnumber">4.9.0</span>
+   &#160;<span id="projectnumber">5.0.0</span>
    </div>
    <div id="projectbrief">A .NET microscopy imaging application based on Bio library. Supports various microscopes by using imported libraries &amp; GUI automation. Supports XInput game controllers to move stage, take images, run ImageJ macros on images or Bio C# scripts.</div>
   </td>
@@ -141,152 +141,199 @@ $(function(){initNavTree('_plugin_8cs_source.html',''); initResizable(true); });
   <div class="headertitle"><div class="title">Plugin.cs</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span>AForge;</div>
+<a href="_plugin_8cs.html">Go to the documentation of this file.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="keyword">using </span>AForge;</div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="keyword">using </span>SkiaSharp;</div>
-<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>SkiaSharp.Views.Desktop;</div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">using </span>System;</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">using </span>System.Collections.Generic;</div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">using </span>System.IO;</div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">using </span>System.Linq;</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">using </span>System.Reflection;</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">using </span>System.Text;</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">using </span>System.Threading.Tasks;</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">using </span>static <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>;</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>{</div>
-<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugin.html">   15</a></span>    <span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    {</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keyword">public</span> <span class="keyword">static</span> Dictionary&lt;string, IPlugin&gt; Plugins = <span class="keyword">new</span> Dictionary&lt;string, IPlugin&gt;();</div>
-<div class="foldopen" id="foldopen00018" data-start="{" data-end="};">
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">   18</a></span>        <span class="keyword">public</span> <span class="keyword">interface </span><a class="code hl_interface" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">IPlugin</a></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        {</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>            <span class="keywordtype">string</span> Name { <span class="keyword">get</span>; }</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>            <span class="keywordtype">string</span> MenuPath { <span class="keyword">get</span>; }</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            <span class="keywordtype">bool</span> ContextMenu { <span class="keyword">get</span>; }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            <span class="keywordtype">void</span> Execute(<span class="keywordtype">string</span>[] args);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>            <span class="keywordtype">void</span> KeyUpEvent(<span class="keywordtype">object</span> o, KeyEventArgs e);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keywordtype">void</span> KeyDownEvent(<span class="keywordtype">object</span> o, KeyEventArgs e);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            <span class="keywordtype">void</span> KeyPressEvent(<span class="keywordtype">object</span> o, KeyPressEventArgs e);</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>            <span class="keywordtype">void</span> ScrollEvent(<span class="keywordtype">object</span> o, MouseEventArgs args);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keywordtype">void</span> Paint(<span class="keywordtype">object</span> o, PaintEventArgs e);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="keywordtype">void</span> Render(<span class="keywordtype">object</span> o, PaintEventArgs e);</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            <span class="keywordtype">void</span> MouseMove(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts);</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            <span class="keywordtype">void</span> MouseUp(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts);</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keywordtype">void</span> MouseDown(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts);</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        }</div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="keyword">using </span>System;</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">using </span>System.Collections.Generic;</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="keyword">using </span>System.IO;</div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="keyword">using </span>System.Linq;</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">using </span>System.Reflection;</div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">using </span>System.Text;</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">using </span>System.Threading.Tasks;</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">using </span>static <a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a>.<a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>;</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">namespace </span><a class="code hl_namespace" href="namespace_bio_imager.html">BioImager</a></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>{</div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugin.html">   14</a></span>    <span class="keyword">public</span> <span class="keyword">class </span><a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">   16</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> Dictionary&lt;string, IPlugin&gt; <a class="code hl_class" href="class_bio_imager_1_1_plugins.html">Plugins</a> = <span class="keyword">new</span> Dictionary&lt;string, IPlugin&gt;();</div>
+<div class="foldopen" id="foldopen00017" data-start="{" data-end="};">
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">   17</a></span>        <span class="keyword">public</span> <span class="keyword">interface </span><a class="code hl_interface" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">IPlugin</a></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        {</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ab131a3e3812698998130736a0e6204a6">   19</a></span>            <span class="keywordtype">string</span> <a class="code hl_property" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ab131a3e3812698998130736a0e6204a6">Name</a> { <span class="keyword">get</span>; }</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ac4f69ff61199c769911dedaea95abc62">   20</a></span>            <span class="keywordtype">string</span> <a class="code hl_property" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ac4f69ff61199c769911dedaea95abc62">MenuPath</a> { <span class="keyword">get</span>; }</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a8dce77d16d21369959e24db643eaadaa">   21</a></span>            <span class="keywordtype">bool</span> <a class="code hl_property" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a8dce77d16d21369959e24db643eaadaa">ContextMenu</a> { <span class="keyword">get</span>; }</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a0e8aa7741206e6b717cda6aaeb891547">   22</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a0e8aa7741206e6b717cda6aaeb891547">Execute</a>(<span class="keywordtype">string</span>[] args);</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae1d1a9975fd4c3c5c959c7a6f7427aa0">   23</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae1d1a9975fd4c3c5c959c7a6f7427aa0">KeyUpEvent</a>(<span class="keywordtype">object</span> o, KeyEventArgs e);</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#aa998c55b31c038ab5ec889b9b40a7cf7">   24</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#aa998c55b31c038ab5ec889b9b40a7cf7">KeyDownEvent</a>(<span class="keywordtype">object</span> o, KeyEventArgs e);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a2f69efaa630b40986579f3cb42ab1e2e">   25</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a2f69efaa630b40986579f3cb42ab1e2e">KeyPressEvent</a>(<span class="keywordtype">object</span> o, KeyPressEventArgs e);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a7abca128d43649e196f973b41b20bc02">   26</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a7abca128d43649e196f973b41b20bc02">ScrollEvent</a>(<span class="keywordtype">object</span> o, MouseEventArgs args);</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6a7ba16d54cd87c577671862015c5f66">   27</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6a7ba16d54cd87c577671862015c5f66">Paint</a>(<span class="keywordtype">object</span> o, PaintEventArgs e);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae8f362df28ca79b7381302300fb1c266">   28</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae8f362df28ca79b7381302300fb1c266">Render</a>(<span class="keywordtype">object</span> o, PaintEventArgs e);</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a27532d4fe3ed7f8b0ab55b6e108ab5d1">   29</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a27532d4fe3ed7f8b0ab55b6e108ab5d1">MouseMove</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts);</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6e68e43d9b478d3b57e11e9861f602d5">   30</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6e68e43d9b478d3b57e11e9861f602d5">MouseUp</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a727cb354e7e05c917939421e51d9a0fa">   31</a></span>            <span class="keywordtype">void</span> <a class="code hl_function" href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a727cb354e7e05c917939421e51d9a0fa">MouseDown</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts);</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        }</div>
 </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    }</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    }</div>
 </div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    </div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class </span>Plugins</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> Initialize()</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            Directory.CreateDirectory(<span class="stringliteral">&quot;Plugins&quot;</span>);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> Directory.GetFiles(<span class="stringliteral">&quot;Plugins&quot;</span>))</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordflow">if</span> (!s.EndsWith(<span class="stringliteral">&quot;.dll&quot;</span>) || <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.ContainsKey(Path.GetFileName(s)))</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                    <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="comment">// Load the plugin assembly</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                Assembly pluginAssembly = Assembly.LoadFile(Environment.CurrentDirectory + <span class="stringliteral">&quot;/&quot;</span> + s);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                <span class="comment">// Find the type which implements the IPlugin interface</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                var pluginType = pluginAssembly.GetTypes().FirstOrDefault(t =&gt; typeof(IPlugin).IsAssignableFrom(t) &amp;&amp; !t.IsInterface);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <span class="keywordflow">if</span> (pluginType != <span class="keyword">null</span>)</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                    <span class="comment">// Create an instance of this type</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                    IPlugin pluginInstance = Activator.CreateInstance(pluginType) as IPlugin;</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                    <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Add(Path.GetFileName(s), pluginInstance);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                    <span class="keywordflow">if</span> (pluginInstance.ContextMenu)</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                        <a class="code hl_class" href="class_bio_imager_1_1_app.html">App</a>.<a class="code hl_function" href="class_bio_imager_1_1_app.html#ae107c8735686afc104acc99975d1ae82">AddContextMenu</a>(pluginInstance.MenuPath);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                    <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                        <a class="code hl_class" href="class_bio_imager_1_1_app.html">App</a>.<a class="code hl_function" href="class_bio_imager_1_1_app.html#a1516d5bec101a0700fcc7ab336f6e6dc">AddMenu</a>(pluginInstance.MenuPath);                   </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                }</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                <span class="keywordflow">else</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                {</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    Console.WriteLine(<span class="stringliteral">&quot;No plugin found in the assembly: &quot;</span> + s);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                }</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            }</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        }</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> KeyUpEvent(<span class="keywordtype">object</span> o, KeyEventArgs e)</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                p.KeyUpEvent(o, e);</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            }</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> KeyDownEvent(<span class="keywordtype">object</span> o, KeyEventArgs e)</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            {</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                p.KeyDownEvent(o, e);</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            }</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        }</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> KeyPressEvent(<span class="keywordtype">object</span> o, KeyPressEventArgs e)</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        {</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            {</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                p.KeyPressEvent(o, e);</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            }</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        }</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> ScrollEvent(<span class="keywordtype">object</span> o, MouseEventArgs args)</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        {</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            {</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                p.ScrollEvent(o, args);</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            }</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> Paint(<span class="keywordtype">object</span> o, PaintEventArgs e)</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        {</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            {</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                p.Paint(o, e);</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            }</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        }</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> Render(<span class="keywordtype">object</span> o, PaintEventArgs e)</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        {</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            {</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                p.Render(o, e);</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            }</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> MouseMove(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts)</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        {</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                p.MouseMove(o, e, buts);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        }</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> MouseUp(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts)</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        {</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            {</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>                p.MouseUp(o, e, buts);</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            }</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        }</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> MouseDown(<span class="keywordtype">object</span> o, PointD e, MouseEventArgs buts)</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        {</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.Plugins.Values)</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>            {</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                p.MouseDown(o, e, buts);</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            }</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        }</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    }</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>}</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    </div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="};">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html">   35</a></span>    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">class </span><a class="code hl_class" href="class_bio_imager_1_1_plugins.html">Plugins</a></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    {</div>
+<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a436ec40fe80e7ecc0a0ad2fde24b2ced">   37</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a436ec40fe80e7ecc0a0ad2fde24b2ced">Initialize</a>()</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        {</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            Directory.CreateDirectory(<span class="stringliteral">&quot;Plugins&quot;</span>);</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordflow">foreach</span> (<span class="keywordtype">string</span> s <span class="keywordflow">in</span> Directory.GetFiles(<span class="stringliteral">&quot;Plugins&quot;</span>))</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="keywordflow">if</span> (!s.EndsWith(<span class="stringliteral">&quot;.dll&quot;</span>) || <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.ContainsKey(Path.GetFileName(s)))</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                    <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                <span class="comment">// Load the plugin assembly</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                Assembly pluginAssembly = Assembly.LoadFile(Environment.CurrentDirectory + <span class="stringliteral">&quot;/&quot;</span> + s);</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                <span class="comment">// Find the type which implements the IPlugin interface</span></div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                var pluginType = pluginAssembly.GetTypes().FirstOrDefault(t =&gt; typeof(IPlugin).IsAssignableFrom(t) &amp;&amp; !t.IsInterface);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="keywordflow">if</span> (pluginType != <span class="keyword">null</span>)</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                {</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                    <span class="comment">// Create an instance of this type</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                    IPlugin pluginInstance = Activator.CreateInstance(pluginType) as IPlugin;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                    <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Add(Path.GetFileName(s), pluginInstance);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                    <span class="keywordflow">if</span> (pluginInstance.ContextMenu)</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                        <a class="code hl_class" href="class_bio_imager_1_1_app.html">App</a>.<a class="code hl_function" href="class_bio_imager_1_1_app.html#ae107c8735686afc104acc99975d1ae82">AddContextMenu</a>(pluginInstance.MenuPath);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                    <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                        <a class="code hl_class" href="class_bio_imager_1_1_app.html">App</a>.<a class="code hl_function" href="class_bio_imager_1_1_app.html#a1516d5bec101a0700fcc7ab336f6e6dc">AddMenu</a>(pluginInstance.MenuPath);                   </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                }</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <span class="keywordflow">else</span></div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                    Console.WriteLine(<span class="stringliteral">&quot;No plugin found in the assembly: &quot;</span> + s);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                }</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00064" data-start="{" data-end="}">
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#ab25eb41e06c94151f0fcb66f01183be2">   64</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#ab25eb41e06c94151f0fcb66f01183be2">KeyUpEvent</a>(<span class="keywordtype">object</span> o, KeyEventArgs e)</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        {</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                p.KeyUpEvent(o, e);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            }</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00071" data-start="{" data-end="}">
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a0e9634b92eb2bbf694990122fa351c4a">   71</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a0e9634b92eb2bbf694990122fa351c4a">KeyDownEvent</a>(<span class="keywordtype">object</span> o, KeyEventArgs e)</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                p.KeyDownEvent(o, e);</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00078" data-start="{" data-end="}">
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#ac839820d62cd2ff02f75a4ded8b7fc3e">   78</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#ac839820d62cd2ff02f75a4ded8b7fc3e">KeyPressEvent</a>(<span class="keywordtype">object</span> o, KeyPressEventArgs e)</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            {</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                p.KeyPressEvent(o, e);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            }</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00085" data-start="{" data-end="}">
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a1566356d8404253d7c245afee2fdaad3">   85</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a1566356d8404253d7c245afee2fdaad3">ScrollEvent</a>(<span class="keywordtype">object</span> o, MouseEventArgs args)</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        {</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                p.ScrollEvent(o, args);</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00092" data-start="{" data-end="}">
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a1f20d1ff131130d9979c4a69907ac450">   92</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a1f20d1ff131130d9979c4a69907ac450">Paint</a>(<span class="keywordtype">object</span> o, PaintEventArgs e)</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        {</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>                p.Paint(o, e);</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00099" data-start="{" data-end="}">
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#ae6d8fb48bbf474bda649f094e7e7a853">   99</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#ae6d8fb48bbf474bda649f094e7e7a853">Render</a>(<span class="keywordtype">object</span> o, PaintEventArgs e)</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        {</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>                p.Render(o, e);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00106" data-start="{" data-end="}">
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a961ec02f275f264f2b57e046fa3cf36c">  106</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a961ec02f275f264f2b57e046fa3cf36c">MouseMove</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts)</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>        {</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            {</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                p.MouseMove(o, e, buts);</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            }</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00113" data-start="{" data-end="}">
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#adaf0d246e365d0056bd4bdda2b0a7dcd">  113</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#adaf0d246e365d0056bd4bdda2b0a7dcd">MouseUp</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts)</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                p.MouseUp(o, e, buts);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            }</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        }</div>
+</div>
+<div class="foldopen" id="foldopen00120" data-start="{" data-end="}">
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno"><a class="line" href="class_bio_imager_1_1_plugins.html#a705494bc9abd933ea1fd6a19f20a1d22">  120</a></span>        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="class_bio_imager_1_1_plugins.html#a705494bc9abd933ea1fd6a19f20a1d22">MouseDown</a>(<span class="keywordtype">object</span> o, <a class="code hl_typedef" href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a> e, MouseEventArgs buts)</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        {</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="keywordflow">foreach</span> (IPlugin p <span class="keywordflow">in</span> <a class="code hl_class" href="class_bio_imager_1_1_plugin.html">Plugin</a>.<a class="code hl_variable" href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">Plugins</a>.Values)</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                p.MouseDown(o, e, buts);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        }</div>
+</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    }</div>
+</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>}</div>
+<div class="ttc" id="a_microscope_console_8cs_html_a40ad24a6b4c995cdf7ce359c4fab62d1"><div class="ttname"><a href="_microscope_console_8cs.html#a40ad24a6b4c995cdf7ce359c4fab62d1">PointD</a></div><div class="ttdeci">AForge.PointD PointD</div><div class="ttdef"><b>Definition</b> <a href="_microscope_console_8cs_source.html#l00005">MicroscopeConsole.cs:5</a></div></div>
 <div class="ttc" id="aclass_bio_imager_1_1_app_html"><div class="ttname"><a href="class_bio_imager_1_1_app.html">BioImager.App</a></div><div class="ttdef"><b>Definition</b> <a href="_app_8cs_source.html#l00012">App.cs:13</a></div></div>
 <div class="ttc" id="aclass_bio_imager_1_1_app_html_a1516d5bec101a0700fcc7ab336f6e6dc"><div class="ttname"><a href="class_bio_imager_1_1_app.html#a1516d5bec101a0700fcc7ab336f6e6dc">BioImager.App.AddMenu</a></div><div class="ttdeci">static void AddMenu(string menu, Function f)</div><div class="ttdef"><b>Definition</b> <a href="_app_8cs_source.html#l00390">App.cs:390</a></div></div>
 <div class="ttc" id="aclass_bio_imager_1_1_app_html_ae107c8735686afc104acc99975d1ae82"><div class="ttname"><a href="class_bio_imager_1_1_app.html#ae107c8735686afc104acc99975d1ae82">BioImager.App.AddContextMenu</a></div><div class="ttdeci">static void AddContextMenu(string menu, Function f)</div><div class="ttdef"><b>Definition</b> <a href="_app_8cs_source.html#l00398">App.cs:398</a></div></div>
-<div class="ttc" id="aclass_bio_imager_1_1_plugin_html"><div class="ttname"><a href="class_bio_imager_1_1_plugin.html">BioImager.Plugin</a></div><div class="ttdef"><b>Definition</b> <a href="#l00015">Plugin.cs:16</a></div></div>
-<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">BioImager.Plugin.IPlugin</a></div><div class="ttdef"><b>Definition</b> <a href="#l00018">Plugin.cs:19</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugin_html"><div class="ttname"><a href="class_bio_imager_1_1_plugin.html">BioImager.Plugin</a></div><div class="ttdef"><b>Definition</b> <a href="#l00014">Plugin.cs:15</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugin_html_a373b7d3a1b1b303b4337970623270d43"><div class="ttname"><a href="class_bio_imager_1_1_plugin.html#a373b7d3a1b1b303b4337970623270d43">BioImager.Plugin.Plugins</a></div><div class="ttdeci">static Dictionary&lt; string, IPlugin &gt; Plugins</div><div class="ttdef"><b>Definition</b> <a href="#l00016">Plugin.cs:16</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html">BioImager.Plugins</a></div><div class="ttdef"><b>Definition</b> <a href="#l00035">Plugin.cs:36</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a0e9634b92eb2bbf694990122fa351c4a"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a0e9634b92eb2bbf694990122fa351c4a">BioImager.Plugins.KeyDownEvent</a></div><div class="ttdeci">static void KeyDownEvent(object o, KeyEventArgs e)</div><div class="ttdef"><b>Definition</b> <a href="#l00071">Plugin.cs:71</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a1566356d8404253d7c245afee2fdaad3"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a1566356d8404253d7c245afee2fdaad3">BioImager.Plugins.ScrollEvent</a></div><div class="ttdeci">static void ScrollEvent(object o, MouseEventArgs args)</div><div class="ttdef"><b>Definition</b> <a href="#l00085">Plugin.cs:85</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a1f20d1ff131130d9979c4a69907ac450"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a1f20d1ff131130d9979c4a69907ac450">BioImager.Plugins.Paint</a></div><div class="ttdeci">static void Paint(object o, PaintEventArgs e)</div><div class="ttdef"><b>Definition</b> <a href="#l00092">Plugin.cs:92</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a436ec40fe80e7ecc0a0ad2fde24b2ced"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a436ec40fe80e7ecc0a0ad2fde24b2ced">BioImager.Plugins.Initialize</a></div><div class="ttdeci">static void Initialize()</div><div class="ttdef"><b>Definition</b> <a href="#l00037">Plugin.cs:37</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a705494bc9abd933ea1fd6a19f20a1d22"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a705494bc9abd933ea1fd6a19f20a1d22">BioImager.Plugins.MouseDown</a></div><div class="ttdeci">static void MouseDown(object o, PointD e, MouseEventArgs buts)</div><div class="ttdef"><b>Definition</b> <a href="#l00120">Plugin.cs:120</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_a961ec02f275f264f2b57e046fa3cf36c"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#a961ec02f275f264f2b57e046fa3cf36c">BioImager.Plugins.MouseMove</a></div><div class="ttdeci">static void MouseMove(object o, PointD e, MouseEventArgs buts)</div><div class="ttdef"><b>Definition</b> <a href="#l00106">Plugin.cs:106</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_ab25eb41e06c94151f0fcb66f01183be2"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#ab25eb41e06c94151f0fcb66f01183be2">BioImager.Plugins.KeyUpEvent</a></div><div class="ttdeci">static void KeyUpEvent(object o, KeyEventArgs e)</div><div class="ttdef"><b>Definition</b> <a href="#l00064">Plugin.cs:64</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_ac839820d62cd2ff02f75a4ded8b7fc3e"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#ac839820d62cd2ff02f75a4ded8b7fc3e">BioImager.Plugins.KeyPressEvent</a></div><div class="ttdeci">static void KeyPressEvent(object o, KeyPressEventArgs e)</div><div class="ttdef"><b>Definition</b> <a href="#l00078">Plugin.cs:78</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_adaf0d246e365d0056bd4bdda2b0a7dcd"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#adaf0d246e365d0056bd4bdda2b0a7dcd">BioImager.Plugins.MouseUp</a></div><div class="ttdeci">static void MouseUp(object o, PointD e, MouseEventArgs buts)</div><div class="ttdef"><b>Definition</b> <a href="#l00113">Plugin.cs:113</a></div></div>
+<div class="ttc" id="aclass_bio_imager_1_1_plugins_html_ae6d8fb48bbf474bda649f094e7e7a853"><div class="ttname"><a href="class_bio_imager_1_1_plugins.html#ae6d8fb48bbf474bda649f094e7e7a853">BioImager.Plugins.Render</a></div><div class="ttdeci">static void Render(object o, PaintEventArgs e)</div><div class="ttdef"><b>Definition</b> <a href="#l00099">Plugin.cs:99</a></div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html">BioImager.Plugin.IPlugin</a></div><div class="ttdef"><b>Definition</b> <a href="#l00017">Plugin.cs:18</a></div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a0e8aa7741206e6b717cda6aaeb891547"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a0e8aa7741206e6b717cda6aaeb891547">BioImager.Plugin.IPlugin.Execute</a></div><div class="ttdeci">void Execute(string[] args)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a27532d4fe3ed7f8b0ab55b6e108ab5d1"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a27532d4fe3ed7f8b0ab55b6e108ab5d1">BioImager.Plugin.IPlugin.MouseMove</a></div><div class="ttdeci">void MouseMove(object o, PointD e, MouseEventArgs buts)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a2f69efaa630b40986579f3cb42ab1e2e"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a2f69efaa630b40986579f3cb42ab1e2e">BioImager.Plugin.IPlugin.KeyPressEvent</a></div><div class="ttdeci">void KeyPressEvent(object o, KeyPressEventArgs e)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a6a7ba16d54cd87c577671862015c5f66"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6a7ba16d54cd87c577671862015c5f66">BioImager.Plugin.IPlugin.Paint</a></div><div class="ttdeci">void Paint(object o, PaintEventArgs e)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a6e68e43d9b478d3b57e11e9861f602d5"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a6e68e43d9b478d3b57e11e9861f602d5">BioImager.Plugin.IPlugin.MouseUp</a></div><div class="ttdeci">void MouseUp(object o, PointD e, MouseEventArgs buts)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a727cb354e7e05c917939421e51d9a0fa"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a727cb354e7e05c917939421e51d9a0fa">BioImager.Plugin.IPlugin.MouseDown</a></div><div class="ttdeci">void MouseDown(object o, PointD e, MouseEventArgs buts)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a7abca128d43649e196f973b41b20bc02"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a7abca128d43649e196f973b41b20bc02">BioImager.Plugin.IPlugin.ScrollEvent</a></div><div class="ttdeci">void ScrollEvent(object o, MouseEventArgs args)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_a8dce77d16d21369959e24db643eaadaa"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a8dce77d16d21369959e24db643eaadaa">BioImager.Plugin.IPlugin.ContextMenu</a></div><div class="ttdeci">bool ContextMenu</div><div class="ttdef"><b>Definition</b> <a href="#l00021">Plugin.cs:21</a></div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_aa998c55b31c038ab5ec889b9b40a7cf7"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#aa998c55b31c038ab5ec889b9b40a7cf7">BioImager.Plugin.IPlugin.KeyDownEvent</a></div><div class="ttdeci">void KeyDownEvent(object o, KeyEventArgs e)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_ab131a3e3812698998130736a0e6204a6"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ab131a3e3812698998130736a0e6204a6">BioImager.Plugin.IPlugin.Name</a></div><div class="ttdeci">string Name</div><div class="ttdef"><b>Definition</b> <a href="#l00019">Plugin.cs:19</a></div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_ac4f69ff61199c769911dedaea95abc62"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ac4f69ff61199c769911dedaea95abc62">BioImager.Plugin.IPlugin.MenuPath</a></div><div class="ttdeci">string MenuPath</div><div class="ttdef"><b>Definition</b> <a href="#l00020">Plugin.cs:20</a></div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_ae1d1a9975fd4c3c5c959c7a6f7427aa0"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae1d1a9975fd4c3c5c959c7a6f7427aa0">BioImager.Plugin.IPlugin.KeyUpEvent</a></div><div class="ttdeci">void KeyUpEvent(object o, KeyEventArgs e)</div></div>
+<div class="ttc" id="ainterface_bio_imager_1_1_plugin_1_1_i_plugin_html_ae8f362df28ca79b7381302300fb1c266"><div class="ttname"><a href="interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae8f362df28ca79b7381302300fb1c266">BioImager.Plugin.IPlugin.Render</a></div><div class="ttdeci">void Render(object o, PaintEventArgs e)</div></div>
 <div class="ttc" id="anamespace_bio_imager_html"><div class="ttname"><a href="namespace_bio_imager.html">BioImager</a></div><div class="ttdef"><b>Definition</b> <a href="_abstract_flood_filler_8cs_source.html#l00010">AbstractFloodFiller.cs:11</a></div></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="navelem"><a class="el" href="dir_995d4e889ce94e32e363b1aff38be6e0.html">BioImager</a></li><li class="navelem"><a class="el" href="dir_2ddc890780249ab65d275d932e2efd6b.html">Source</a></li><li class="navelem"><b>Plugin.cs</b></li>
+    <li class="navelem"><a class="el" href="dir_995d4e889ce94e32e363b1aff38be6e0.html">BioImager</a></li><li class="navelem"><a class="el" href="dir_2ddc890780249ab65d275d932e2efd6b.html">Source</a></li><li class="navelem"><a class="el" href="_plugin_8cs.html">Plugin.cs</a></li>
     <li class="footer">Generated by <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.12.0 </li>
   </ul>
 </div>

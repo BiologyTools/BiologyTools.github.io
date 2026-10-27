@@ -1,13 +1,29 @@
 var classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller =
 [
+    [ "__init__", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a1860e731dc40f59481b4c903edf32692", null ],
+    [ "_command_and_validate", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a24d3230414e1805f2732ba36316dca3e", null ],
+    [ "changed_timeout", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#acfbeb29169f4700952d7d09dc9564232", null ],
     [ "command", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#add4a03d1c3ce094776f51d029f3cfed6", null ],
+    [ "get_absolute_position", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#ad40130624c8e05564a2cb6ca03e55827", null ],
     [ "get_command", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#aa538b7e1ccab1e5b2980f6487179811a", null ],
     [ "get_description", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a34ac31f67b585435ffb69696e5dbeee6", null ],
+    [ "get_number_axes", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a55e07c2c34b2746d3bf60326ad573cc6", null ],
+    [ "is_busy", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a37f77c0390182e3dd7fc919e4a2e910a", null ],
+    [ "motor_moving", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a57f567ba8dbb26f07e8584dfb9f09e2c", null ],
     [ "move_by_relative_position", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a72a9f751ad9cc80c5b9d0513707376b4", null ],
     [ "move_command", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#ab1e24e50e7aa74429aee6d9d1f11fc30", null ],
     [ "move_to_absolute_position", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#abb81fc4a3d934780a0e1f16f2c1b4a57", null ],
+    [ "move_to_limit", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a8386173b594152d92cfa7865d56e4e46", null ],
+    [ "read_multiline", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a9f2eae3efe6fe37ed4d63953d7b3984e", null ],
     [ "read_until_timeout", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a23900f80d4e878fcaaf9442c3cc00554", null ],
     [ "readline", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a8af5295bc32b54e0752b2ef132078ce9", null ],
+    [ "reset_position", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a306c0df70d6c7bd80a60f2d338366ecc", null ],
     [ "set_command", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#aa5a22278bb4966a9855b709b50b8731c", null ],
-    [ "wait_until_idle", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a4975a305c046500ab17cbf0e3a58c92c", null ]
+    [ "set_speed", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a586420bde444b84ceb9c3bcceb027ec2", null ],
+    [ "wait_for_motor_stop", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a3eca0c63394b62a5516088854fc1db81", null ],
+    [ "wait_until_idle", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a4975a305c046500ab17cbf0e3a58c92c", null ],
+    [ "_devlist", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a390c9f03f91edf2f68dbbae5a7993a57", null ],
+    [ "_lock", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a6a18e68911832135c4144e74eeb4e0e9", null ],
+    [ "_lock", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a4fdb7b1f56c50c319c8a0353624ac003", null ],
+    [ "_serial", "classmicroscope_1_1stages_1_1ludl_1_1___ludl_controller.html#a75237abe8fb3f00e9c447be58e06edfb", null ]
 ];

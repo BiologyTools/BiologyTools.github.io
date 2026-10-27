@@ -1,6 +1,6 @@
 [CmdletBinding()]
 param(
-    [ValidateSet('All', 'BioLib', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET')]
+    [ValidateSet('All', 'BioLib', 'BioCore', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET')]
     [string[]]$Project = @('All')
 )
 
@@ -22,12 +22,35 @@ $projects = @{
         Readme = Join-Path $repositoryRoot 'BioLib\README.md'
         Doxyfiles = @($legacyThemeDoxyfile)
         WorkingDirectory = $repositoryRoot
+        ProjectFile = Join-Path $repositoryRoot 'BioLib\BioLib.csproj'
+        Overrides = @('EXTRACT_ALL = YES', 'EXTRACT_STATIC = YES')
+    }
+    BioCore = @{
+        Root = Join-Path $repositoryRoot 'BioCore\BioCore'
+        Readme = Join-Path $repositoryRoot 'BioCore\README.md'
+        Doxyfiles = @($legacyThemeDoxyfile)
+        WorkingDirectory = $repositoryRoot
+        ProjectFile = Join-Path $repositoryRoot 'BioCore\BioCore\BioCore.csproj'
+        Overrides = @(
+            'PROJECT_NAME = BioCore'
+            'PROJECT_BRIEF = "A Windows .NET microscopy library and application for viewing, editing, and annotating images."'
+            "INPUT = `"$repositoryRoot/BioCore/BioCore/Source`" `"$repositoryRoot/BioCore/BioCore/Graphics`" `"$repositoryRoot/BioCore/README.md`""
+            'SOURCE_BROWSER = YES'
+            'EXTRACT_ALL = YES'
+            'EXTRACT_STATIC = YES'
+        )
     }
     BioImager = @{
         Root = Join-Path $repositoryRoot 'BioImager'
         Readme = Join-Path $repositoryRoot 'BioImager\README.md'
         Doxyfiles = @(Join-Path $repositoryRoot 'BioImagerDoxyfile')
         WorkingDirectory = $repositoryRoot
+        ProjectFile = Join-Path $repositoryRoot 'BioImager\BioImager.csproj'
+        Overrides = @(
+            'EXTRACT_ALL = YES'
+            'EXTRACT_STATIC = YES'
+            'EXCLUDE_PATTERNS += */testsuite/*'
+        )
     }
     BioGTK = @{
         Root = Join-Path $repositoryRoot 'BioGTK\BioGTK'
@@ -96,10 +119,15 @@ function New-Doxyfile {
         'FULL_SIDEBAR = NO'
         'HTML_EXTRA_STYLESHEET = D:/repos/RepoErik/doxygen-awesome/doxygen-awesome.css D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-sidebar-only.css D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-sidebar-only-darkmode-toggle.css'
         'HTML_EXTRA_FILES = D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-darkmode-toggle.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-fragment-copy-button.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-interactive-toc.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-paragraph-link.js D:/repos/RepoErik/doxygen-awesome/doxygen-awesome-tabs.js D:/repos/RepoErik/doxygen-awesome/doxygen-custom/toggle-alternative-theme.js'
+        'HTML_EXTRA_FILES += D:/repos/RepoErik/doxygen-awesome/logo.drawio.svg'
+        "PROJECT_LOGO = `"$($siteRoot.Replace('\', '/'))/bio.png`""
+        "PROJECT_ICON = `"$($siteRoot.Replace('\', '/'))/bio.png`""
+        "STRIP_FROM_PATH = `"$($repositoryRoot.Replace('\', '/'))/`""
+        'EXCLUDE_PATTERNS += */bin/* */obj/* */.git/* */.vs/* */.tmp/* */.agents/* */.codex/*'
     ) -join [Environment]::NewLine
 }
 
-$requestedProjects = if ($Project -contains 'All') { @('BioLib', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET') } else { $Project }
+$requestedProjects = if ($Project -contains 'All') { @('BioLib', 'BioCore', 'BioImager', 'BioGTK', 'IKVM11', 'ZarrNET') } else { $Project }
 
 foreach ($projectName in $requestedProjects) {
     $definition = $projects[$projectName]
@@ -127,7 +155,11 @@ foreach ($projectName in $requestedProjects) {
         $configuration = New-Doxyfile -IncludedDoxyfiles $definition.Doxyfiles -OutputDirectory $stagingDirectory -MainPage $definition.Readme
         if ($definition.ProjectFile) {
             [xml]$projectXml = Get-Content -LiteralPath $definition.ProjectFile -Raw
-            $version = @($projectXml.Project.PropertyGroup.Version | Where-Object { $_ })[0]
+            $version = $null
+            foreach ($versionProperty in @('PackageVersion', 'Version', 'AssemblyVersion')) {
+                $version = @($projectXml.Project.PropertyGroup.$versionProperty | Where-Object { $_ }) | Select-Object -First 1
+                if ($version) { break }
+            }
             if (-not $version) {
                 throw "Project version not found: $($definition.ProjectFile)"
             }

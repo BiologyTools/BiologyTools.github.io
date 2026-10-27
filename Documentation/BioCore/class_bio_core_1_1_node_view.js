@@ -1,6 +1,7 @@
 var class_bio_core_1_1_node_view =
 [
-    [ "Node", "class_bio_core_1_1_node_view_1_1_node.html", null ],
+    [ "Node", "class_bio_core_1_1_node_view_1_1_node.html", "class_bio_core_1_1_node_view_1_1_node" ],
+    [ "NodeView", "class_bio_core_1_1_node_view.html#a264a2f27290be36d05ef0d3aae23a9ed", null ],
     [ "Dispose", "class_bio_core_1_1_node_view.html#af2a5d40f1a7f4f0c4a362e0ffa580b06", null ],
     [ "Exit", "class_bio_core_1_1_node_view.html#aab053f408183d556fb4227249ee9ffb8", null ],
     [ "InitNodes", "class_bio_core_1_1_node_view.html#ad42412891bca540fa21aab9da9d9beaf", null ],

@@ -1,7 +1,6 @@
 var searchData=
 [
-  ['leftclick_0',['LeftClick',['../class_bio_core_1_1_mouse_operations.html#a46138c13831c66a9f9e2b77546a3e98d',1,'BioCore::MouseOperations']]],
-  ['leftdown_1',['LeftDown',['../class_bio_core_1_1_mouse_operations.html#a9bfcadfa089965f20ee20af7a5104c04',1,'BioCore::MouseOperations']]],
-  ['leftup_2',['LeftUp',['../class_bio_core_1_1_mouse_operations.html#a1e92edcce29d67ba6e522778eb559868',1,'BioCore::MouseOperations']]],
-  ['levelfromresolution_3',['LevelFromResolution',['../class_bio_core_1_1_bio_image.html#ad0e29f500ae74a1f4a90b69d40fb0a4c',1,'BioCore::BioImage']]]
+  ['keydownevent_0',['KeyDownEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#ab9c32e7009802874baf580287196d9d6',1,'BioCore.Plugin.IPlugin.KeyDownEvent()'],['../class_bio_core_1_1_plugins.html#aa66831be719774e1d5974308786adfcb',1,'BioCore.Plugins.KeyDownEvent()']]],
+  ['keypressevent_1',['KeyPressEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#a28c70665265db2e333b7fb1175e6a061',1,'BioCore.Plugin.IPlugin.KeyPressEvent()'],['../class_bio_core_1_1_plugins.html#a9437df11e54582bed0960895fdcdea5e',1,'BioCore.Plugins.KeyPressEvent()']]],
+  ['keyupevent_2',['KeyUpEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#a7cb6dde395b35a7869a19f00b0fa13bc',1,'BioCore.Plugin.IPlugin.KeyUpEvent()'],['../class_bio_core_1_1_plugins.html#aa6af43590ec0e7dccc82c1e778545978',1,'BioCore.Plugins.KeyUpEvent()']]]
 ];

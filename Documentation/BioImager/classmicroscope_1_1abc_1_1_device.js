@@ -1,5 +1,7 @@
 var classmicroscope_1_1abc_1_1_device =
 [
+    [ "__init__", "classmicroscope_1_1abc_1_1_device.html#a3016ccdfc0aee2a51004de9dd8b7caa9", null ],
+    [ "__del__", "classmicroscope_1_1abc_1_1_device.html#a2ef1d1788cc5d1a708a0209f2cd5fe11", null ],
     [ "_do_disable", "classmicroscope_1_1abc_1_1_device.html#a296548eda50ef1c18b9b95b960f9b51c", null ],
     [ "_do_enable", "classmicroscope_1_1abc_1_1_device.html#ac2fe7ff5c10f90b0d9a2ddd177d8e8eb", null ],
     [ "_do_shutdown", "classmicroscope_1_1abc_1_1_device.html#a5aea26d74af624eab1335b1974bc9579", null ],
@@ -9,9 +11,12 @@ var classmicroscope_1_1abc_1_1_device =
     [ "disable", "classmicroscope_1_1abc_1_1_device.html#add8e7f466e7a28137d6e0ceede74e15e", null ],
     [ "enable", "classmicroscope_1_1abc_1_1_device.html#ac7759ad4eb304422f07cfee215a73961", null ],
     [ "get_all_settings", "classmicroscope_1_1abc_1_1_device.html#a2ca92a231b11543faae37eeea129907d", null ],
+    [ "get_is_enabled", "classmicroscope_1_1abc_1_1_device.html#ad7df11492cd21392cc41021e2304fe4f", null ],
     [ "get_setting", "classmicroscope_1_1abc_1_1_device.html#a2d85f43d2ad9b0c3ad61260dba109cd2", null ],
     [ "initialize", "classmicroscope_1_1abc_1_1_device.html#a84ae82a5c5a20f3906ccdd4229a39023", null ],
     [ "set_setting", "classmicroscope_1_1abc_1_1_device.html#ab2c54086d9210ce21903155b84a7d379", null ],
     [ "shutdown", "classmicroscope_1_1abc_1_1_device.html#a7e3ee3d63ee099e1a3b9df649fb28c5c", null ],
-    [ "update_settings", "classmicroscope_1_1abc_1_1_device.html#a3be37f7f4ecf662170709126d7fc078c", null ]
+    [ "update_settings", "classmicroscope_1_1abc_1_1_device.html#a3be37f7f4ecf662170709126d7fc078c", null ],
+    [ "_settings", "classmicroscope_1_1abc_1_1_device.html#a4170a4acee30419cb4dcad63880367f7", null ],
+    [ "enabled", "classmicroscope_1_1abc_1_1_device.html#a640a17ad1c1008f954cd4a1dba9b54fc", null ]
 ];

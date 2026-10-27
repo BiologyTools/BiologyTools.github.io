@@ -1,6 +1,7 @@
 var classmicroscope_1_1abc_1_1_data_device =
 [
     [ "__init__", "classmicroscope_1_1abc_1_1_data_device.html#af306e90265c27e6d643978f5911b54ca", null ],
+    [ "__del__", "classmicroscope_1_1abc_1_1_data_device.html#ac34e598f66e2e51b71b366343e8cf875", null ],
     [ "_client", "classmicroscope_1_1abc_1_1_data_device.html#a7956b46a333bfd31f4d92fc69111a5ed", null ],
     [ "_client", "classmicroscope_1_1abc_1_1_data_device.html#afeebf67b16acc0433115ea7713ec037b", null ],
     [ "_dispatch_loop", "classmicroscope_1_1abc_1_1_data_device.html#a4ed94264bca80e1d935f51f53e72d68a", null ],
@@ -16,5 +17,21 @@ var classmicroscope_1_1abc_1_1_data_device =
     [ "receiveClient", "classmicroscope_1_1abc_1_1_data_device.html#abf9edf0bbc1c90e2ec2acc2932f39b94", null ],
     [ "receiveData", "classmicroscope_1_1abc_1_1_data_device.html#a57857954200301186f9810237b74eb2d", null ],
     [ "set_client", "classmicroscope_1_1abc_1_1_data_device.html#a6c277bf2aa063667909404cb2dba13b5", null ],
-    [ "update_settings", "classmicroscope_1_1abc_1_1_data_device.html#a307a47932192c807d0501bb0a30d9a37", null ]
+    [ "update_settings", "classmicroscope_1_1abc_1_1_data_device.html#a307a47932192c807d0501bb0a30d9a37", null ],
+    [ "_acquiring", "classmicroscope_1_1abc_1_1_data_device.html#a9ac75a7a18a20b1345897f308f197c02", null ],
+    [ "_client", "classmicroscope_1_1abc_1_1_data_device.html#ad963ba380cb0cfaca37ee26edcb65bb0", null ],
+    [ "_clientStack", "classmicroscope_1_1abc_1_1_data_device.html#a5584f5cc5cf0ecdee253b5dc355c27b6", null ],
+    [ "_dispatch_buffer", "classmicroscope_1_1abc_1_1_data_device.html#a620b8ef4592aa347e2e17c73c15e590a", null ],
+    [ "_dispatch_thread", "classmicroscope_1_1abc_1_1_data_device.html#a956fbb609946199e678f019332c4b485", null ],
+    [ "_dispatch_thread", "classmicroscope_1_1abc_1_1_data_device.html#afc088d49617f71cf9c5cc715dc76ba2e", null ],
+    [ "_fetch_thread", "classmicroscope_1_1abc_1_1_data_device.html#a8b8f13117e43bec684c76e0374717b2e", null ],
+    [ "_fetch_thread", "classmicroscope_1_1abc_1_1_data_device.html#aa4c48f9626e0d7a166b8757dd0d72f1e", null ],
+    [ "_fetch_thread_run", "classmicroscope_1_1abc_1_1_data_device.html#a7366828c07108fbf32c18034b1192838", null ],
+    [ "_fetch_thread_run", "classmicroscope_1_1abc_1_1_data_device.html#a1c9f9a1f8f404b78b6eaf3e759e00809", null ],
+    [ "_liveClients", "classmicroscope_1_1abc_1_1_data_device.html#a9d52f2e25b57465af3705a503dcd04d0", null ],
+    [ "_new_data", "classmicroscope_1_1abc_1_1_data_device.html#ac96de0c14fd99588a54b0a7679fb1426", null ],
+    [ "_new_data_condition", "classmicroscope_1_1abc_1_1_data_device.html#a9e5277e6b0b99308dc493801313bb080", null ],
+    [ "_using_callback", "classmicroscope_1_1abc_1_1_data_device.html#ac1cbfcf76b887a6e255e33c2150ed561", null ],
+    [ "enabled", "classmicroscope_1_1abc_1_1_data_device.html#a19e6d8953cc53267c008274a15485a5b", null ],
+    [ "set_setting", "classmicroscope_1_1abc_1_1_data_device.html#ad6ae39983871de695304aefac604706f", null ]
 ];

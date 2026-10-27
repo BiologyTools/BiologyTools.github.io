@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['imagetype_0',['ImageType',['../namespace_bio_core.html#a1e23f8a1f22686a88eef99c57b42ba46',1,'BioCore']]]
+  ['actions_0',['Actions',['../class_bio_core_1_1_microscope.html#a5e6e61df4df06b6ec49c5d24fc939438',1,'BioCore::Microscope']]]
 ];

@@ -17,5 +17,8 @@ var class_bio_1_1_graphics_1_1_graphics =
     [ "FillPolygon", "class_bio_1_1_graphics_1_1_graphics.html#a162707f987726d48720cfc55415b87e1", null ],
     [ "FillRectangle", "class_bio_1_1_graphics_1_1_graphics.html#add3271fa5107229c4ba15e3eb8b127fe", null ],
     [ "FillRectangle", "class_bio_1_1_graphics_1_1_graphics.html#a35dbadf42b872a1e5b8e320122a61df3", null ],
-    [ "PointInPolygon", "class_bio_1_1_graphics_1_1_graphics.html#aa1814fcf4590201c482aa96470e98ec7", null ]
+    [ "FromImage", "class_bio_1_1_graphics_1_1_graphics.html#ac4e3f8c6712a31706ce2ab66b1d8e2fa", null ],
+    [ "PointInPolygon", "class_bio_1_1_graphics_1_1_graphics.html#aa1814fcf4590201c482aa96470e98ec7", null ],
+    [ "buf", "class_bio_1_1_graphics_1_1_graphics.html#ac00a4dc38243b9abd9663c63fbd63782", null ],
+    [ "pen", "class_bio_1_1_graphics_1_1_graphics.html#a150667d5233a2f97bd3084d1deed2e7f", null ]
 ];

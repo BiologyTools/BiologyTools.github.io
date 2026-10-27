@@ -1,0 +1,28 @@
+var class_bio_imager_1_1_slide_imager_1_1_level =
+[
+    [ "Level", "class_bio_imager_1_1_slide_imager_1_1_level.html#a4b9ac4615400c671fcbda56118244fc7", null ],
+    [ "Level", "class_bio_imager_1_1_slide_imager_1_1_level.html#a25dbac23fd7b1f5c5cd75cb4f1d3e56e", null ],
+    [ "ImageLevel", "class_bio_imager_1_1_slide_imager_1_1_level.html#a33b8d334dbd29d434feb461191ecf2c5", null ],
+    [ "Init", "class_bio_imager_1_1_slide_imager_1_1_level.html#a9e1a98ea2e19e69a3f65e95a3822a6be", null ],
+    [ "SaveLevel", "class_bio_imager_1_1_slide_imager_1_1_level.html#ad19d7d3853262d258f7a03fe3ca4001b", null ],
+    [ "SaveLevels", "class_bio_imager_1_1_slide_imager_1_1_level.html#ab586555a8ed9f180c30e93a8fe9ecb16", null ],
+    [ "Channels", "class_bio_imager_1_1_slide_imager_1_1_level.html#a18342f79ef3c810bd3e5e9592beeac8e", null ],
+    [ "Levels", "class_bio_imager_1_1_slide_imager_1_1_level.html#a98a4fe4a7b7473b1b364cd62c016497f", null ],
+    [ "BioImages", "class_bio_imager_1_1_slide_imager_1_1_level.html#abc968d4ca62c6cc4d46f8bea807e4940", null ],
+    [ "Compression", "class_bio_imager_1_1_slide_imager_1_1_level.html#a842d361925a98e3faefb4a43c93ea18a", null ],
+    [ "CompressionLevel", "class_bio_imager_1_1_slide_imager_1_1_level.html#abcb9822ecfac389653ac0fe90fb5f6e5", null ],
+    [ "Focus", "class_bio_imager_1_1_slide_imager_1_1_level.html#a6050f7b82d31012626e5f34c5bdc4eb5", null ],
+    [ "Height", "class_bio_imager_1_1_slide_imager_1_1_level.html#a7d5d235d6d288ad51538fb33047c2575", null ],
+    [ "HeightPx", "class_bio_imager_1_1_slide_imager_1_1_level.html#a05a9ec423bc3022186ba0dea02077a60", null ],
+    [ "Image", "class_bio_imager_1_1_slide_imager_1_1_level.html#a676b97b378da6aa0e2feaa65dbb091c5", null ],
+    [ "Index", "class_bio_imager_1_1_slide_imager_1_1_level.html#aadcdb2db645e8e50d8473bb559d978d8", null ],
+    [ "Location", "class_bio_imager_1_1_slide_imager_1_1_level.html#a46dd448117ebc8b3feb4bd2d6eb0820c", null ],
+    [ "Objective", "class_bio_imager_1_1_slide_imager_1_1_level.html#a3a13e410f29a73248ff631419d8eb362", null ],
+    [ "Parent", "class_bio_imager_1_1_slide_imager_1_1_level.html#a397e48a82d66bf4fcca695dbdaf28d74", null ],
+    [ "PhysicalX", "class_bio_imager_1_1_slide_imager_1_1_level.html#a1bc8afda11dfd0dee2b4f95a7bd331a5", null ],
+    [ "PhysicalY", "class_bio_imager_1_1_slide_imager_1_1_level.html#a3f1ea8a36973fb5fdc2e44d7f2fa3547", null ],
+    [ "PixelFormat", "class_bio_imager_1_1_slide_imager_1_1_level.html#a8cdbcdb491177c0ba5953ae661b4ba71", null ],
+    [ "VipsImage", "class_bio_imager_1_1_slide_imager_1_1_level.html#ace3c5087dfe0834ed772f552e331d690", null ],
+    [ "Width", "class_bio_imager_1_1_slide_imager_1_1_level.html#a6d7dedf65ba50743a2b1fe5e3cb9adb2", null ],
+    [ "WidthPx", "class_bio_imager_1_1_slide_imager_1_1_level.html#a793d05389e0c63a4f7455e59fe3fda47", null ]
+];

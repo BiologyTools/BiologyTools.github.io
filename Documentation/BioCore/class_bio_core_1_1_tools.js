@@ -1,8 +1,28 @@
 var class_bio_core_1_1_tools =
 [
-    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html", null ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html", "class_bio_core_1_1_tools_1_1_tool" ],
+    [ "Tools", "class_bio_core_1_1_tools.html#a4097b822e209ff7c0647d42c8b3b88b8", null ],
     [ "Dispose", "class_bio_core_1_1_tools.html#a5d196cb272ea0178a814cb105e07dcdd", null ],
+    [ "GetTool", "class_bio_core_1_1_tools.html#a7260ad373cf53cc34e4478d2464a3473", null ],
+    [ "GetTool", "class_bio_core_1_1_tools.html#a5cc9b4382a9bd4e74ed311e5b0a10bf1", null ],
     [ "ToolDown", "class_bio_core_1_1_tools.html#a4423434948c4b97817a8d8ad9ea3ed06", null ],
+    [ "ToolMove", "class_bio_core_1_1_tools.html#adda652d38de54e6928494531b816e6ba", null ],
     [ "ToolUp", "class_bio_core_1_1_tools.html#a4925d269a4e3647241490f2b957567e4", null ],
-    [ "UpdateSelected", "class_bio_core_1_1_tools.html#a5096ad41022380a88bfdbbafb5f5b57c", null ]
+    [ "UpdateOverlay", "class_bio_core_1_1_tools.html#a036b1f5eaf84e66b216267c0c4abd113", null ],
+    [ "UpdateSelected", "class_bio_core_1_1_tools.html#a5096ad41022380a88bfdbbafb5f5b57c", null ],
+    [ "UpdateView", "class_bio_core_1_1_tools.html#a68ea602cce723d121f6969273c52fda6", null ],
+    [ "applyToStack", "class_bio_core_1_1_tools.html#a702dbec419c25961c193fbbbcd7e3134", null ],
+    [ "bEnabled", "class_bio_core_1_1_tools.html#aa6460194626aa709d5f25196c80b3e3e", null ],
+    [ "colorTool", "class_bio_core_1_1_tools.html#ab48926c1d8a48d34e8bfd1a1b54cd8b6", null ],
+    [ "currentTool", "class_bio_core_1_1_tools.html#ac3e5be5770924c2e0e876e57c4f51c90", null ],
+    [ "font", "class_bio_core_1_1_tools.html#a901224dc408950919b0955d89d172301", null ],
+    [ "gEnabled", "class_bio_core_1_1_tools.html#a190ba4191acc3b4994499b199e38a440", null ],
+    [ "rEnabled", "class_bio_core_1_1_tools.html#a61636cea0f9db184fc21239efaa511c9", null ],
+    [ "selectBoxSize", "class_bio_core_1_1_tools.html#a484acf29630d40a25c1efda542b6f120", null ],
+    [ "selectionRect", "class_bio_core_1_1_tools.html#afb7154b57cc25457eb53dac186e516ac", null ],
+    [ "selectionRectangle", "class_bio_core_1_1_tools.html#ac6a3062fac765fde4a29fba087190441", null ],
+    [ "tools", "class_bio_core_1_1_tools.html#af26e699de4c79b2b457ab8b687f2eaf5", null ],
+    [ "DrawColor", "class_bio_core_1_1_tools.html#ac9fd45f6cb43337fd377b6785a01b576", null ],
+    [ "EraseColor", "class_bio_core_1_1_tools.html#a1e480c3734fec28c25c11f37cca6eb1b", null ],
+    [ "StrokeWidth", "class_bio_core_1_1_tools.html#a3be5e757b37979f6290bb4ba3762465f", null ]
 ];

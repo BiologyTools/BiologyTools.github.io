@@ -1,5 +1,6 @@
 var classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera =
 [
+    [ "__init__", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a2a31555b6df657a00076d85246d84899", null ],
     [ "_do_disable", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ab85b6a7d1a3f5b6f43b6c5004906ac8d", null ],
     [ "_do_enable", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a57c3b2fc8b0bd8af9611ea74397557e4", null ],
     [ "_do_shutdown", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ae18afbc8fdae9f480a7752e01d380b97", null ],
@@ -19,5 +20,28 @@ var classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera =
     [ "set_exposure_time", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a0defb477a4ac787f796e68348dece27d", null ],
     [ "set_readout_mode", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#af72a548217738b069d48ab4d7dcd98ad", null ],
     [ "set_trigger", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a02243c7766027f4737f26359d6ec4f7d", null ],
-    [ "soft_trigger", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#aa15c272c83836830f3e47263d45c4cbe", null ]
+    [ "soft_trigger", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#aa15c272c83836830f3e47263d45c4cbe", null ],
+    [ "trigger_mode", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#abb2b29bebff6a27dad812753593d49b8", null ],
+    [ "trigger_type", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a8394472fbb41ac5dc45fb4f1dbb1a8cb", null ],
+    [ "_acquiring", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#af0f77e7f7905ac95acc6f8311a6a87d9", null ],
+    [ "_buffer", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a2050c43c45f0d15ab74d64a5e5c17ea0", null ],
+    [ "_cbs", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a871b73c6181a70582b020440520bbafe", null ],
+    [ "_circ_buffer_length", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a87804b209103a32531f9d2dd4292211e", null ],
+    [ "_eof_callback", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ae05ea82001a6224c8321b87028c5e5d9", null ],
+    [ "_params", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ad24f7f7f7afd1c2a149904104ce43e98", null ],
+    [ "_pv_name", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a50d89ea25c34ef86f514a5061eef1418", null ],
+    [ "_readout_mode", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a49ffba089b720476cf33ec664ead7bf4", null ],
+    [ "_readout_mode_parameters", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ad79cdba234fe4bdadc62c312857957cb", null ],
+    [ "_readout_modes", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ae96e9eba031bfbc78b6b638e0b0cb88d", null ],
+    [ "_trigger", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ac1b01595986720f4505cb1216a748c5e", null ],
+    [ "_using_callback", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a8452131ddfedd41528b9f8d83b5de919", null ],
+    [ "binning", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#abda82018c4c3476765f7773acf61ae46", null ],
+    [ "cycle_time", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a48d32bc006a745e3965c7943cb2b279f", null ],
+    [ "exposure_time", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#ae6c18373d0a5618f6fdb9b65c56baf30", null ],
+    [ "handle", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a3ac4e6327a2d2b810f4d9e9ed960392d", null ],
+    [ "open_cameras", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#abdc720c268b6e29bf1acf53ba17791a3", null ],
+    [ "roi", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a62af6c753cc132c1da565260caaa2e76", null ],
+    [ "roi", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a04f1b8acc7cc1949fa5b6c929eac5a90", null ],
+    [ "set_exposure_time", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#af9543a37b25709e38dee236fc5285a4d", null ],
+    [ "shape", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html#a6b2bae7a75aee656802cb0dd6ac484cd", null ]
 ];

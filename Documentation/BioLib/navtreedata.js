@@ -34,10 +34,21 @@ var NAVTREE =
       [ "Class Index", "classes.html", null ],
       [ "Class Hierarchy", "hierarchy.html", "hierarchy" ],
       [ "Class Members", "functions.html", [
-        [ "All", "functions.html", null ],
-        [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", null ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "All", "functions.html", "functions_dup" ],
+        [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Variables", "functions_vars.html", "functions_vars" ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Properties", "functions_prop.html", "functions_prop" ]
+      ] ]
+    ] ],
+    [ "Files", "files.html", [
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Functions", "globals_func.html", null ],
+        [ "Variables", "globals_vars.html", null ],
+        [ "Typedefs", "globals_type.html", null ],
+        [ "Enumerations", "globals_enum.html", null ]
       ] ]
     ] ]
   ] ]
@@ -45,8 +56,16 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"annotated.html",
-"class_bio_lib_1_1_r_o_i.html#a332f4bc59ed2081effc14f9424f092ab"
+"_abstract_flood_filler_8cs.html",
+"class_bio_1_1_graphics_1_1_graphics.html#a35dbadf42b872a1e5b8e320122a61df3",
+"class_bio_lib_1_1_bio_image.html#a9c3303be61e8b21846d27aab5af842cd",
+"class_bio_lib_1_1_fiji.html#adbd44fcf6915e4b3d7e9d0d1cc1004c7",
+"class_bio_lib_1_1_focus.html#a176468c5d97029a41d383a0430ac40f7",
+"class_bio_lib_1_1_num_py.html#a03900a45b797e52031a86c97afd417c1ad966dd0f6dc22b834b636fb9df4b756a",
+"class_bio_lib_1_1_qu_path_1_1_geo_json_geometry_1_1_geo_json_plane.html#a73a90db8f6d5d8ef2f58747e98a36375",
+"class_bio_lib_1_1_r_o_i.html#a68aec0fcc88446a1863d651f53e2c4eb",
+"class_bio_lib_1_1_slide_image.html#ab886bdc158f003495fb2874b1c39ecf2",
+"struct_bio_1_1_graphics_1_1_pen.html#a65b8963eb9e6022adb6e298965db5e0f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -25,12 +25,17 @@
 var NAVTREE =
 [
   [ "BioCore", "index.html", [
+    [ "BioCore", "index.html#autotoc_md0", [
+      [ "Features", "index.html#autotoc_md1", null ],
+      [ "Dependencies", "index.html#autotoc_md2", null ],
+      [ "Licenses", "index.html#autotoc_md3", null ],
+      [ "Installation", "index.html#autotoc_md4", null ],
+      [ "Scripting", "index.html#autotoc_md5", null ],
+      [ "Plugins", "index.html#autotoc_md6", null ],
+      [ "Sample Tool Script", "index.html#autotoc_md7", null ]
+    ] ],
     [ "Packages", "namespaces.html", [
-      [ "Package List", "namespaces.html", "namespaces_dup" ],
-      [ "Package Members", "namespacemembers.html", [
-        [ "All", "namespacemembers.html", null ],
-        [ "Enumerations", "namespacemembers_enum.html", null ]
-      ] ]
+      [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
     [ "Classes", "annotated.html", [
       [ "Class List", "annotated.html", "annotated_dup" ],
@@ -39,22 +44,34 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
-        [ "Properties", "functions_prop.html", null ]
+        [ "Variables", "functions_vars.html", "functions_vars" ],
+        [ "Enumerations", "functions_enum.html", null ],
+        [ "Properties", "functions_prop.html", null ],
+        [ "Events", "functions_evnt.html", null ]
       ] ]
     ] ],
     [ "Files", "files.html", [
-      [ "File List", "files.html", "files_dup" ]
+      [ "File List", "files.html", "files_dup" ],
+      [ "File Members", "globals.html", [
+        [ "All", "globals.html", null ],
+        [ "Typedefs", "globals_type.html", null ]
+      ] ]
     ] ]
   ] ]
 ];
 
 var NAVTREEINDEX =
 [
-"_about_8_designer_8cs_source.html",
-"class_bio_core_1_1_bio_image.html#ad0e29f500ae74a1f4a90b69d40fb0a4c",
-"class_bio_core_1_1_image_view.html#a869deab4c625ee9a27a7e3e643e9944a",
-"class_bio_core_1_1_r_o_i_manager.html#ae12db601c5dd51f73a523faa703f0a28",
-"functions_func_t.html"
+"_about_8_designer_8cs.html",
+"class_bio_core_1_1_abstract_flood_filler.html#a9d31340fe55f10e77468f16c2d06f572",
+"class_bio_core_1_1_automation_1_1_automation_helpers.html#ac3b27a40297065f59b166f942acd8a06",
+"class_bio_core_1_1_function.html#a7d447839bbb9383808b2c7f099a5bd92",
+"class_bio_core_1_1_image_view.html#aa262a21b129a1ff58a5db2148a5d7e8b",
+"class_bio_core_1_1_magic_select.html#a8e4d7c3e04072fdefbad9ee5bcf542f1",
+"class_bio_core_1_1_objectives_1_1_objective.html#a8f29d30e88cfeddab30e6398650b867e",
+"class_bio_core_1_1_scripting.html#a2f2e3da6e84ef8f98f53ca1a4b738112a6bc362dbf494c61ea117fe3c71ca48a5",
+"class_bio_core_1_1_tabs_view.html#a014e4ead9ee769b62cc47d199880ee0c",
+"class_bio_core_1_1_win32.html#af7761056212726b1a4863ee4c7203ddc"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

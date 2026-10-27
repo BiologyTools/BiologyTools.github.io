@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['node_0',['Node',['../class_bio_core_1_1_filter_1_1_node.html',1,'BioCore.Filter.Node'],['../class_bio_core_1_1_node_view_1_1_node.html',1,'BioCore.NodeView.Node'],['../class_bio_core_1_1_recordings_1_1_node.html',1,'BioCore.Recordings.Node']]],
-  ['nodeview_1',['NodeView',['../class_bio_core_1_1_node_view.html',1,'BioCore']]]
+  ['objectinfo_0',['ObjectInfo',['../class_bio_core_1_1_lib_1_1_object_info.html',1,'BioCore::Lib']]],
+  ['objective_1',['Objective',['../class_bio_core_1_1_objectives_1_1_objective.html',1,'BioCore::Objectives']]],
+  ['objectives_2',['Objectives',['../class_bio_core_1_1_objectives.html',1,'BioCore']]],
+  ['omero_3',['OMERO',['../class_bio_core_1_1_o_m_e_r_o.html',1,'BioCore']]],
+  ['openintab_4',['OpenInTab',['../class_bio_core_1_1_open_in_tab.html',1,'BioCore']]]
 ];

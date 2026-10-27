@@ -16,5 +16,17 @@ var classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera =
     [ "get_exposure_time", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a0871c3a944a7176ad762ea615762fc99", null ],
     [ "initialize", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a808f82612986ac5d699f6f1cd69c2d8f", null ],
     [ "set_exposure_time", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a9a2ce2c562da7aed8eeecf398e3e9c4a", null ],
-    [ "set_trigger", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#ac25dadfc65a77eba66a5d7c042f2c4b8", null ]
+    [ "set_trigger", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#ac25dadfc65a77eba66a5d7c042f2c4b8", null ],
+    [ "soft_trigger", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a02daf24cdffb4b44d1e96a85ee3df74f", null ],
+    [ "trigger_mode", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a9ed76ee82f3c014a97541ac92f6a3ee0", null ],
+    [ "trigger_type", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a692b37ae4ead1cd6d8b6895308239b58", null ],
+    [ "_acquiring", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a13dab3575c318b8651dd9bea49de4dbf", null ],
+    [ "_binning", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a34cd192b79f51f863e87798838327192", null ],
+    [ "_handle", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a435b8d1ff38ea3c8b5dfc76497fc5045", null ],
+    [ "_img", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a1a2f2b459fe1917b995c90ce4ba9284a", null ],
+    [ "_roi", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#aeff3126bee35fbdf701f13fbecce0191", null ],
+    [ "_sensor_shape", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a19406d67f5eda963308d1730fac69843", null ],
+    [ "_serial_number", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a3b7c2bca41c84193976327ea7fc83e50", null ],
+    [ "trigger_mode", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a4f2ac6303db86c0f5011179267f8c88c", null ],
+    [ "trigger_type", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html#a2cab300c1403c904180c349f50f1bcf6", null ]
 ];

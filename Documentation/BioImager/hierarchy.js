@@ -55,8 +55,7 @@ var hierarchy =
           [ "microscope.cameras.pvcam.PVCamera", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html", null ],
           [ "microscope.cameras.ximea.XimeaCamera", "classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html", null ],
           [ "microscope.simulators.SimulatedCamera", "classmicroscope_1_1simulators_1_1_simulated_camera.html", [
-            [ "microscope.simulators.stage_aware_camera.StageAwareCamera", "classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html", null ],
-            [ "microscope.testsuite.devices.TestCamera", "classmicroscope_1_1testsuite_1_1devices_1_1_test_camera.html", null ]
+            [ "microscope.simulators.stage_aware_camera.StageAwareCamera", "classmicroscope_1_1simulators_1_1stage__aware__camera_1_1_stage_aware_camera.html", null ]
           ] ]
         ] ]
       ] ],
@@ -89,9 +88,7 @@ var hierarchy =
           [ "microscope.lights.obis.ObisLaser", "classmicroscope_1_1lights_1_1obis_1_1_obis_laser.html", null ],
           [ "microscope.lights.sapphire.SapphireLaser", "classmicroscope_1_1lights_1_1sapphire_1_1_sapphire_laser.html", null ],
           [ "microscope.lights.toptica.TopticaiBeam", "classmicroscope_1_1lights_1_1toptica_1_1_topticai_beam.html", null ],
-          [ "microscope.simulators.SimulatedLightSource", "classmicroscope_1_1simulators_1_1_simulated_light_source.html", [
-            [ "microscope.testsuite.devices.TestLaser", "classmicroscope_1_1testsuite_1_1devices_1_1_test_laser.html", null ]
-          ] ]
+          [ "microscope.simulators.SimulatedLightSource", "classmicroscope_1_1simulators_1_1_simulated_light_source.html", null ]
         ] ],
         [ "microscope.abc.Stage", "classmicroscope_1_1abc_1_1_stage.html", [
           [ "microscope.controllers.zaber._ZaberStage", "classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage.html", null ],
@@ -100,20 +97,14 @@ var hierarchy =
         ] ],
         [ "microscope.stages.linkam._LinkamBase", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html", [
           [ "microscope.stages.linkam.LinkamCMS", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html", null ]
-        ] ],
-        [ "microscope.testsuite.devices.DummyDSP", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_d_s_p.html", null ],
-        [ "microscope.testsuite.devices.DummySLM", "classmicroscope_1_1testsuite_1_1devices_1_1_dummy_s_l_m.html", null ],
-        [ "microscope.testsuite.devices.TestFloatingDevice", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html", null ],
-        [ "microscope.testsuite.test_device_server.DeviceWithPort", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_with_port.html", null ],
-        [ "microscope.testsuite.test_device_server.ExposePIDDevice", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_expose_p_i_d_device.html", null ]
+        ] ]
       ] ],
       [ "microscope.abc.FilterWheel", "classmicroscope_1_1abc_1_1_filter_wheel.html", null ],
       [ "microscope.abc.FloatingDeviceMixin", "classmicroscope_1_1abc_1_1_floating_device_mixin.html", [
         [ "microscope.cameras.andorsdk3.AndorSDK3", "classmicroscope_1_1cameras_1_1andorsdk3_1_1_andor_s_d_k3.html", null ],
         [ "microscope.cameras.atmcd.AndorAtmcd", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html", null ],
         [ "microscope.cameras.pvcam.PVCamera", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_camera.html", null ],
-        [ "microscope.stages.linkam._LinkamBase", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html", null ],
-        [ "microscope.testsuite.devices.TestFloatingDevice", "classmicroscope_1_1testsuite_1_1devices_1_1_test_floating_device.html", null ]
+        [ "microscope.stages.linkam._LinkamBase", "classmicroscope_1_1stages_1_1linkam_1_1___linkam_base.html", null ]
       ] ],
       [ "microscope.abc.LightSource", "classmicroscope_1_1abc_1_1_light_source.html", null ],
       [ "microscope.abc.SerialDeviceMixin", "classmicroscope_1_1abc_1_1_serial_device_mixin.html", [
@@ -162,6 +153,7 @@ var hierarchy =
       [ "microscope.cameras._SDK3Cam.ATString", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_a_t_string.html", null ]
     ] ],
     [ "BioImager.Automation", "class_bio_imager_1_1_automation.html", null ],
+    [ "BioImager.Automation.AutomationHelpers", "class_bio_imager_1_1_automation_1_1_automation_helpers.html", null ],
     [ "BioImager.SlideImager.BaseLevel", "class_bio_imager_1_1_slide_imager_1_1_base_level.html", null ],
     [ "microscope.cameras._SDK3Cam.camReg", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1cam_reg.html", null ],
     [ "microscope.clients.Client", "classmicroscope_1_1clients_1_1_client.html", [
@@ -172,33 +164,6 @@ var hierarchy =
     [ "BioImager.MicroManager.Conf", "struct_bio_imager_1_1_micro_manager_1_1_conf.html", null ],
     [ "BioImager.Imager.ControllerFuncs", "class_bio_imager_1_1_imager_1_1_controller_funcs.html", null ],
     [ "microscope.device_server.DeviceServerOptions", "classmicroscope_1_1device__server_1_1_device_server_options.html", null ],
-    [ "microscope.testsuite.test_devices.DeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_device_tests.html", [
-      [ "microscope.testsuite.test_devices.CameraTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_camera_tests.html", [
-        [ "microscope.testsuite.test_devices.TestDummyCamera", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_camera.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.ControllerTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_controller_tests.html", [
-        [ "microscope.testsuite.test_devices.TestDummyController", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_controller.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.DSPTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_d_s_p_tests.html", [
-        [ "microscope.testsuite.test_devices.TestDummyDSP", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_d_s_p.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.DeformableMirrorTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_deformable_mirror_tests.html", [
-        [ "microscope.testsuite.test_devices.TestDummyDeformableMirror", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_deformable_mirror.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.FilterWheelTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_filter_wheel_tests.html", [
-        [ "microscope.testsuite.test_devices.TestOnePositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_one_position_filter_wheel.html", null ],
-        [ "microscope.testsuite.test_devices.TestSixPositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_six_position_filter_wheel.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.LightSourceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_light_source_tests.html", [
-        [ "microscope.testsuite.test_devices.TestCoboltLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser.html", null ],
-        [ "microscope.testsuite.test_devices.TestCoherentSapphireLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser.html", null ],
-        [ "microscope.testsuite.test_devices.TestDummyLightSource", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_light_source.html", null ],
-        [ "microscope.testsuite.test_devices.TestOmicronDeepstarLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_devices.SLMTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_s_l_m_tests.html", [
-        [ "microscope.testsuite.test_devices.TestDummySLM", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m.html", null ]
-      ] ]
-    ] ],
     [ "BioImager.DInput", "class_bio_imager_1_1_d_input.html", null ],
     [ "microscope.cameras._SDK3.dllFunction", "classmicroscope_1_1cameras_1_1___s_d_k3_1_1dll_function.html", null ],
     [ "microscope.cameras.atmcd.dllFunction", "classmicroscope_1_1cameras_1_1atmcd_1_1dll_function.html", null ],
@@ -209,10 +174,7 @@ var hierarchy =
       [ "microscope.cameras.picam.TrgSourceMap", "classmicroscope_1_1cameras_1_1picam_1_1_trg_source_map.html", null ],
       [ "microscope.cameras.ximea.TrgSelectorMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_selector_map.html", null ],
       [ "microscope.cameras.ximea.TrgSourceMap", "classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html", null ],
-      [ "microscope.controllers.zaber.ZaberDeviceType", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type.html", null ],
-      [ "microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.Mode", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock_1_1_mode.html", null ],
-      [ "microscope.testsuite.mock_devices.OmicronDeepstarLaserMock.State", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock_1_1_state.html", null ],
-      [ "microscope.testsuite.test_settings.EnumSetting", "classmicroscope_1_1testsuite_1_1test__settings_1_1_enum_setting.html", null ]
+      [ "microscope.controllers.zaber.ZaberDeviceType", "classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type.html", null ]
     ] ],
     [ "Exception", null, [
       [ "microscope.MicroscopeError", "classmicroscope_1_1_microscope_error.html", [
@@ -230,6 +192,7 @@ var hierarchy =
       ] ],
       [ "microscope.cameras.atmcd.AtmcdException", "classmicroscope_1_1cameras_1_1atmcd_1_1_atmcd_exception.html", null ]
     ] ],
+    [ "BioImager.FileUtil", "class_bio_imager_1_1_file_util.html", null ],
     [ "logging.Filter", null, [
       [ "microscope.device_server.Filter", "classmicroscope_1_1device__server_1_1_filter.html", null ]
     ] ],
@@ -303,6 +266,7 @@ var hierarchy =
     [ "BioImager.SlideImager.Level", "class_bio_imager_1_1_slide_imager_1_1_level.html", null ],
     [ "BioImager.Lib", "class_bio_imager_1_1_lib.html", null ],
     [ "BioImager.LightSource", "class_bio_imager_1_1_light_source.html", null ],
+    [ "BioImager.ImageJ.Macro", "class_bio_imager_1_1_image_j_1_1_macro.html", null ],
     [ "metaclass", null, [
       [ "microscope.abc.Controller", "classmicroscope_1_1abc_1_1_controller.html", null ],
       [ "microscope.abc.DataDevice", "classmicroscope_1_1abc_1_1_data_device.html", null ],
@@ -316,6 +280,10 @@ var hierarchy =
       [ "microscope.abc.StageAxis", "classmicroscope_1_1abc_1_1_stage_axis.html", null ],
       [ "microscope.abc.TriggerTargetMixin", "classmicroscope_1_1abc_1_1_trigger_target_mixin.html", null ]
     ] ],
+    [ "BioImager.MicroManager", "class_bio_imager_1_1_micro_manager.html", null ],
+    [ "BioImager.Microscope", "class_bio_imager_1_1_microscope.html", null ],
+    [ "BioImager.MicroscopeConsole", "class_bio_imager_1_1_microscope_console.html", null ],
+    [ "BioImager.ML.ML", "class_bio_imager_1_1_m_l_1_1_m_l.html", null ],
     [ "BioImager.ML.ML.Model", "class_bio_imager_1_1_m_l_1_1_m_l_1_1_model.html", null ],
     [ "BioImager.MouseOperations", "class_bio_imager_1_1_mouse_operations.html", null ],
     [ "BioImager.MouseOperations.MousePoint", "struct_bio_imager_1_1_mouse_operations_1_1_mouse_point.html", null ],
@@ -330,20 +298,20 @@ var hierarchy =
     [ "BioImager.Lib.ObjectInfo", "class_bio_imager_1_1_lib_1_1_object_info.html", null ],
     [ "BioImager.MicroManager.Objectives.Objective", "class_bio_imager_1_1_micro_manager_1_1_objectives_1_1_objective.html", null ],
     [ "BioImager.Objectives.Objective", "class_bio_imager_1_1_objectives_1_1_objective.html", null ],
+    [ "BioImager.MicroManager.Objectives", "class_bio_imager_1_1_micro_manager_1_1_objectives.html", null ],
     [ "BioImager.Objectives", "class_bio_imager_1_1_objectives.html", null ],
     [ "BioImager.Plugin", "class_bio_imager_1_1_plugin.html", null ],
+    [ "BioImager.Plugins", "class_bio_imager_1_1_plugins.html", null ],
     [ "BioImager.PMicroscope", "class_bio_imager_1_1_p_microscope.html", null ],
+    [ "BioImager.Prior", "class_bio_imager_1_1_prior.html", null ],
     [ "multiprocessing.Process", null, [
-      [ "microscope.device_server.DeviceServer", "classmicroscope_1_1device__server_1_1_device_server.html", [
-        [ "microscope.testsuite.test_device_server.DeviceServerExceptionQueue", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_device_server_exception_queue.html", null ]
-      ] ]
+      [ "microscope.device_server.DeviceServer", "classmicroscope_1_1device__server_1_1_device_server.html", null ]
     ] ],
     [ "BioImager.Imager.Profile", "class_bio_imager_1_1_imager_1_1_profile.html", null ],
     [ "microscope.cameras.pvcam.PVParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_param.html", [
       [ "microscope.cameras.pvcam.PVEnumParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_enum_param.html", null ],
       [ "microscope.cameras.pvcam.PVStringParam", "classmicroscope_1_1cameras_1_1pvcam_1_1_p_v_string_param.html", null ]
     ] ],
-    [ "microscope.testsuite.test_client.PyroService", "classmicroscope_1_1testsuite_1_1test__client_1_1_pyro_service.html", null ],
     [ "QtWidgets.QMainWindow", null, [
       [ "microscope.gui.MainWindow", "classmicroscope_1_1gui_1_1_main_window.html", null ]
     ] ],
@@ -375,26 +343,12 @@ var hierarchy =
     [ "BioImager.Scripting.Script", "class_bio_imager_1_1_scripting_1_1_script.html", null ],
     [ "BioImager.SDK", "class_bio_imager_1_1_s_d_k.html", null ],
     [ "microscope.cameras._SDK3Cam.SDK3Camera", "classmicroscope_1_1cameras_1_1___s_d_k3_cam_1_1_s_d_k3_camera.html", null ],
-    [ "serial.serialutil.SerialBase", null, [
-      [ "microscope.testsuite.mock_devices.SerialMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_serial_mock.html", [
-        [ "microscope.testsuite.mock_devices.CoboltLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_cobolt_laser_mock.html", null ],
-        [ "microscope.testsuite.mock_devices.CoherentSapphireLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_coherent_sapphire_laser_mock.html", null ],
-        [ "microscope.testsuite.mock_devices.OmicronDeepstarLaserMock", "classmicroscope_1_1testsuite_1_1mock__devices_1_1_omicron_deepstar_laser_mock.html", null ]
-      ] ]
-    ] ],
-    [ "microscope.testsuite.test_devices.SerialDeviceTests", "classmicroscope_1_1testsuite_1_1test__devices_1_1_serial_device_tests.html", [
-      [ "microscope.testsuite.test_devices.TestCoboltLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser.html", null ],
-      [ "microscope.testsuite.test_devices.TestCoherentSapphireLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser.html", null ],
-      [ "microscope.testsuite.test_devices.TestOmicronDeepstarLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser.html", null ]
-    ] ],
-    [ "mocks.SerialMock", null, [
-      [ "microscope.testsuite.test_devices.TestSerialMock.Serial", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock_1_1_serial.html", null ]
-    ] ],
     [ "win32serviceutil.ServiceFramework", null, [
       [ "microscope.win32.MicroscopeWindowsService", "classmicroscope_1_1win32_1_1_microscope_windows_service.html", null ]
     ] ],
     [ "microscope._utils.SharedSerial", "classmicroscope_1_1__utils_1_1_shared_serial.html", null ],
     [ "BioImager.MicroManager.Shutters.Shutter", "class_bio_imager_1_1_micro_manager_1_1_shutters_1_1_shutter.html", null ],
+    [ "BioImager.MicroManager.Shutters", "class_bio_imager_1_1_micro_manager_1_1_shutters.html", null ],
     [ "BioImager.SlideRenderer", "class_bio_imager_1_1_slide_renderer.html", null ],
     [ "BioImager.Stage", "class_bio_imager_1_1_stage.html", null ],
     [ "BioImager.Scripting.State", "class_bio_imager_1_1_scripting_1_1_state.html", null ],
@@ -427,41 +381,6 @@ var hierarchy =
       [ "microscope.stages.linkam._StageConfigFlags", "classmicroscope_1_1stages_1_1linkam_1_1___stage_config_flags.html", null ],
       [ "microscope.stages.linkam._USBCommsInfo", "classmicroscope_1_1stages_1_1linkam_1_1___u_s_b_comms_info.html", null ]
     ] ],
-    [ "unittest.TestCase", null, [
-      [ "microscope.testsuite.test_client.TestClient", "classmicroscope_1_1testsuite_1_1test__client_1_1_test_client.html", null ],
-      [ "microscope.testsuite.test_device_server.BaseTestDeviceServer", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_device_server.html", [
-        [ "microscope.testsuite.test_device_server.TestFunctionInDeviceDefinition", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_function_in_device_definition.html", null ],
-        [ "microscope.testsuite.test_device_server.TestServingFloatingDevicesWithWrongUID", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_serving_floating_devices_with_wrong_u_i_d.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_device_server.BaseTestServeDevices", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_base_test_serve_devices.html", [
-        [ "microscope.testsuite.test_device_server.TestClashingArguments", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_clashing_arguments.html", null ],
-        [ "microscope.testsuite.test_device_server.TestFloatingDeviceIndexInjection", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_floating_device_index_injection.html", null ],
-        [ "microscope.testsuite.test_device_server.TestInputCheck", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_input_check.html", null ],
-        [ "microscope.testsuite.test_device_server.TestKeepDeviceServerAlive", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_keep_device_server_alive.html", null ],
-        [ "microscope.testsuite.test_device_server.TestStarting", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_starting.html", null ]
-      ] ],
-      [ "microscope.testsuite.test_device_server.TestConfigLoader", "classmicroscope_1_1testsuite_1_1test__device__server_1_1_test_config_loader.html", null ],
-      [ "microscope.testsuite.test_devices.TestBaseDevice", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_base_device.html", null ],
-      [ "microscope.testsuite.test_devices.TestCoboltLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_cobolt_laser.html", null ],
-      [ "microscope.testsuite.test_devices.TestCoherentSapphireLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_coherent_sapphire_laser.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummyCamera", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_camera.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummyController", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_controller.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummyDSP", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_d_s_p.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummyDeformableMirror", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_deformable_mirror.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummyLightSource", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_light_source.html", null ],
-      [ "microscope.testsuite.test_devices.TestDummySLM", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_dummy_s_l_m.html", null ],
-      [ "microscope.testsuite.test_devices.TestEmptyDummyFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_empty_dummy_filter_wheel.html", null ],
-      [ "microscope.testsuite.test_devices.TestImageGenerator", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_image_generator.html", null ],
-      [ "microscope.testsuite.test_devices.TestOmicronDeepstarLaser", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_omicron_deepstar_laser.html", null ],
-      [ "microscope.testsuite.test_devices.TestOnePositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_one_position_filter_wheel.html", null ],
-      [ "microscope.testsuite.test_devices.TestSerialMock", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_serial_mock.html", null ],
-      [ "microscope.testsuite.test_devices.TestSixPositionFilterWheel", "classmicroscope_1_1testsuite_1_1test__devices_1_1_test_six_position_filter_wheel.html", null ],
-      [ "microscope.testsuite.test_settings.TestEnumSetting", "classmicroscope_1_1testsuite_1_1test__settings_1_1_test_enum_setting.html", null ]
-    ] ],
-    [ "dummies.TestDeformableMirror", null, [
-      [ "microscope.testsuite.test_client.ExposedDeformableMirror", "classmicroscope_1_1testsuite_1_1test__client_1_1_exposed_deformable_mirror.html", null ]
-    ] ],
-    [ "microscope.testsuite.test_settings.ThingWithSomething", "classmicroscope_1_1testsuite_1_1test__settings_1_1_thing_with_something.html", null ],
     [ "BioImager.TileRenderInfo", "struct_bio_imager_1_1_tile_render_info.html", null ],
     [ "BioImager.TLShutter", "class_bio_imager_1_1_t_l_shutter.html", null ],
     [ "BioImager.Tools.Tool", "class_bio_imager_1_1_tools_1_1_tool.html", null ],
@@ -505,8 +424,7 @@ var hierarchy =
       [ "microscope.cameras.atmcd.AcquisitionMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode.html", null ],
       [ "microscope.cameras.atmcd.ReadMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_read_mode.html", null ],
       [ "microscope.cameras.atmcd.TriggerMode", "classmicroscope_1_1cameras_1_1atmcd_1_1_trigger_mode.html", null ],
-      [ "microscope.stages.linkam.Msg", "classmicroscope_1_1stages_1_1linkam_1_1_msg.html", null ],
-      [ "microscope.testsuite.devices.CamEnum", "classmicroscope_1_1testsuite_1_1devices_1_1_cam_enum.html", null ]
+      [ "microscope.stages.linkam.Msg", "classmicroscope_1_1stages_1_1linkam_1_1_msg.html", null ]
     ] ],
     [ "Structure", null, [
       [ "microscope.cameras.atmcd.ANDORCAPS", "classmicroscope_1_1cameras_1_1atmcd_1_1_a_n_d_o_r_c_a_p_s.html", null ],

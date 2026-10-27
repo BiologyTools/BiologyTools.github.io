@@ -1,5 +1,6 @@
 var class_bio_core_1_1_stage =
 [
+    [ "Stage", "class_bio_core_1_1_stage.html#a1cfdd3480e8ecffd708834df9dd702b2", null ],
     [ "GetPosition", "class_bio_core_1_1_stage.html#ad6fd487cdd7d65253cd70b2d0f19ea63", null ],
     [ "GetPositionX", "class_bio_core_1_1_stage.html#a55f2e21e3c851a60ada4790086d988e8", null ],
     [ "GetPositionY", "class_bio_core_1_1_stage.html#a9fcb92fa8943d237e11a1c5cf450a2c4", null ],
@@ -10,5 +11,17 @@ var class_bio_core_1_1_stage =
     [ "SetPosition", "class_bio_core_1_1_stage.html#a3c68a280b38be96cfd6ab76b8efca22f", null ],
     [ "SetPositionX", "class_bio_core_1_1_stage.html#a666b0d1a7424cd9fa82f37428433f41c", null ],
     [ "SetPositionY", "class_bio_core_1_1_stage.html#abc29aa775fc4893556272ba78f265a0a", null ],
-    [ "SetSWLimit", "class_bio_core_1_1_stage.html#a8d2e7e46a8016641d04d57dda7c1b6da", null ]
+    [ "SetSWLimit", "class_bio_core_1_1_stage.html#a8d2e7e46a8016641d04d57dda7c1b6da", null ],
+    [ "UpdateSWLimit", "class_bio_core_1_1_stage.html#ab6d0c96be1bf5e7fcbe598872b3fc5e4", null ],
+    [ "axisType", "class_bio_core_1_1_stage.html#a106bcdc092deef7994b1fd6b7bd73613", null ],
+    [ "maxX", "class_bio_core_1_1_stage.html#a73f299c2c69376852b9caa8772b95403", null ],
+    [ "maxY", "class_bio_core_1_1_stage.html#adf192aa056b537238666022168cea9e9", null ],
+    [ "minX", "class_bio_core_1_1_stage.html#aaf5b96436612763c2cae09861599c5bb", null ],
+    [ "minY", "class_bio_core_1_1_stage.html#a5afc54eb54d5b787d690827b151ca60c", null ],
+    [ "moveWait", "class_bio_core_1_1_stage.html#af20745a86f45d1457cece69a8b039e5d", null ],
+    [ "stageType", "class_bio_core_1_1_stage.html#af4004935c486d9f85fcbee70ae4c91b5", null ],
+    [ "xAxis", "class_bio_core_1_1_stage.html#a0a53f31032b4c24de98702dcb93361cb", null ],
+    [ "yAxis", "class_bio_core_1_1_stage.html#a3b7b301692e76e7fb2a308649cd0aca6", null ],
+    [ "X", "class_bio_core_1_1_stage.html#a72f5191748365d2706087678b47a5673", null ],
+    [ "Y", "class_bio_core_1_1_stage.html#a5cfb02a2f37074675084779b259513e8", null ]
 ];

@@ -1,13 +1,13 @@
 var searchData=
 [
-  ['leftclick_0',['LeftClick',['../class_bio_core_1_1_mouse_operations.html#a46138c13831c66a9f9e2b77546a3e98d',1,'BioCore::MouseOperations']]],
-  ['leftdown_1',['LeftDown',['../class_bio_core_1_1_mouse_operations.html#a9bfcadfa089965f20ee20af7a5104c04',1,'BioCore::MouseOperations']]],
-  ['leftup_2',['LeftUp',['../class_bio_core_1_1_mouse_operations.html#a1e92edcce29d67ba6e522778eb559868',1,'BioCore::MouseOperations']]],
-  ['level_3',['Level',['../class_bio_core_1_1_image_view.html#aa262a21b129a1ff58a5db2148a5d7e8b',1,'BioCore::ImageView']]],
-  ['levelcount_4',['LevelCount',['../class_bio_core_1_1_slide_image.html#a24a89a8e3dd692ce591e9d7c67ead15e',1,'BioCore::SlideImage']]],
-  ['levelfromresolution_5',['LevelFromResolution',['../class_bio_core_1_1_bio_image.html#ad0e29f500ae74a1f4a90b69d40fb0a4c',1,'BioCore::BioImage']]],
-  ['lib_6',['Lib',['../class_bio_core_1_1_lib.html',1,'BioCore']]],
-  ['library_7',['Library',['../class_bio_core_1_1_library.html',1,'BioCore']]],
-  ['lrucache_8',['LruCache',['../class_bio_core_1_1_lru_cache.html',1,'BioCore']]],
-  ['lrucache_3c_20biocore_3a_3atileinformation_2c_20byte_5b_5d_3e_9',['LruCache&lt; BioCore::TileInformation, byte[]&gt;',['../class_bio_core_1_1_lru_cache.html',1,'BioCore']]]
+  ['key_0',['Key',['../class_bio_core_1_1_automation_1_1_action.html#ad548d2eb2b8590f90898618fddc13d06',1,'BioCore.Automation.Action.Key'],['../class_bio_core_1_1_function.html#ab28fc3df19cb28803c14c13b0a3c81a5',1,'BioCore.Function.Key'],['../class_bio_core_1_1_function.html#a2d4f973088a71c9bac6f3b77889c0c5ea897356954c2cd3d41b221e3f24f99bba',1,'BioCore.Function.Key']]],
+  ['keydown_1',['keydown',['../class_bio_core_1_1_automation_1_1_action.html#ab72b13dc40a7a2c9ba5cf0dd3284d8c4a2959b6433abb3a4138a42ddda695c171',1,'BioCore::Automation::Action']]],
+  ['keydownevent_2',['KeyDownEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#ab9c32e7009802874baf580287196d9d6',1,'BioCore.Plugin.IPlugin.KeyDownEvent()'],['../class_bio_core_1_1_plugins.html#aa66831be719774e1d5974308786adfcb',1,'BioCore.Plugins.KeyDownEvent()']]],
+  ['keypress_3',['keypress',['../class_bio_core_1_1_automation_1_1_action.html#ab72b13dc40a7a2c9ba5cf0dd3284d8c4a40fad744772438d75fed1615b5f7da68',1,'BioCore::Automation::Action']]],
+  ['keypressevent_4',['KeyPressEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#a28c70665265db2e333b7fb1175e6a061',1,'BioCore.Plugin.IPlugin.KeyPressEvent()'],['../class_bio_core_1_1_plugins.html#a9437df11e54582bed0960895fdcdea5e',1,'BioCore.Plugins.KeyPressEvent()']]],
+  ['keys_5',['Keys',['../_image_view_8cs.html#ac2678948729f5f66b30b5280e4ce265d',1,'ImageView.cs']]],
+  ['keyup_6',['keyup',['../class_bio_core_1_1_automation_1_1_action.html#ab72b13dc40a7a2c9ba5cf0dd3284d8c4a9eadd330827f781afd1dbc79f0a55ce5',1,'BioCore::Automation::Action']]],
+  ['keyupevent_7',['KeyUpEvent',['../interface_bio_core_1_1_plugin_1_1_i_plugin.html#a7cb6dde395b35a7869a19f00b0fa13bc',1,'BioCore.Plugin.IPlugin.KeyUpEvent()'],['../class_bio_core_1_1_plugins.html#aa6af43590ec0e7dccc82c1e778545978',1,'BioCore.Plugins.KeyUpEvent()']]],
+  ['kind_8',['Kind',['../class_bio_core_1_1_lib_1_1_type_info.html#af0753bca1973eb3041135802f0138b3d',1,'BioCore::Lib::TypeInfo']]],
+  ['kind_9',['kind',['../class_bio_core_1_1_lib_1_1_type_info.html#afcd61841d3262b4ef715a36211040bd1',1,'BioCore::Lib::TypeInfo']]]
 ];

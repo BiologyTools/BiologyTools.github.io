@@ -1,8 +1,28 @@
 var class_bio_imager_1_1_tools =
 [
-    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html", null ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html", "class_bio_imager_1_1_tools_1_1_tool" ],
+    [ "Tools", "class_bio_imager_1_1_tools.html#a04fee41ebdb920095cee31b785ecefca", null ],
     [ "Dispose", "class_bio_imager_1_1_tools.html#a35ba5e10df51ed6b8dcca1be8915ad5b", null ],
+    [ "GetTool", "class_bio_imager_1_1_tools.html#a295b93aa24e05f238662e4222eb0f84f", null ],
+    [ "GetTool", "class_bio_imager_1_1_tools.html#ad23024695d3e29901dbdb4bafdc6f8a7", null ],
     [ "ToolDown", "class_bio_imager_1_1_tools.html#ae842cc509d58015162b974ce9f34e2b9", null ],
+    [ "ToolMove", "class_bio_imager_1_1_tools.html#a60173ccdfcfeefc2ed9d1c01b086860f", null ],
     [ "ToolUp", "class_bio_imager_1_1_tools.html#a9349759786fba18c79f921bb6fcfaedc", null ],
-    [ "UpdateSelected", "class_bio_imager_1_1_tools.html#a16a5aabb40065c4d44e459b662a57263", null ]
+    [ "UpdateOverlay", "class_bio_imager_1_1_tools.html#af0e96743246ad4734d223079bfd31629", null ],
+    [ "UpdateSelected", "class_bio_imager_1_1_tools.html#a16a5aabb40065c4d44e459b662a57263", null ],
+    [ "UpdateView", "class_bio_imager_1_1_tools.html#afedd0f2c3b4a31da715616268840b7b6", null ],
+    [ "applyToStack", "class_bio_imager_1_1_tools.html#a2f863e5172c79ad86b0152d47a3499d2", null ],
+    [ "bEnabled", "class_bio_imager_1_1_tools.html#a0bcad6715ac37f4911e26f95b73a26f3", null ],
+    [ "colorTool", "class_bio_imager_1_1_tools.html#af3737edeb78a4c1fdf0d0cccbcfda9c0", null ],
+    [ "currentTool", "class_bio_imager_1_1_tools.html#a427f1728d3b31a0f598e2fa899ffcd18", null ],
+    [ "font", "class_bio_imager_1_1_tools.html#adc01c611fe18dc0be5855d278a5611b7", null ],
+    [ "gEnabled", "class_bio_imager_1_1_tools.html#ad5301c0a0cf93f489b5c97341aa16f1c", null ],
+    [ "rEnabled", "class_bio_imager_1_1_tools.html#adf1e7544227d9a9b3dc1fbbe6c1c7302", null ],
+    [ "selectBoxSize", "class_bio_imager_1_1_tools.html#a50cd6db600bd8fb768ae21de544c412b", null ],
+    [ "selectionRect", "class_bio_imager_1_1_tools.html#a5092d87f8a10a37dc93949d883fe80ad", null ],
+    [ "selectionRectangle", "class_bio_imager_1_1_tools.html#a4cd8037ff1e0f85e57e7a1fba3515fff", null ],
+    [ "tools", "class_bio_imager_1_1_tools.html#abc4643eeb926aa3de77caa7499f20946", null ],
+    [ "DrawColor", "class_bio_imager_1_1_tools.html#a972e555095388c33d504c030756c67c5", null ],
+    [ "EraseColor", "class_bio_imager_1_1_tools.html#ad9832a72f8a76e1e0b2da74052737bb6", null ],
+    [ "StrokeWidth", "class_bio_imager_1_1_tools.html#a590eb41ebe2c3700c7370a89c1d3d868", null ]
 ];

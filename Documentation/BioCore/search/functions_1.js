@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['bake_0',['Bake',['../class_bio_core_1_1_bio_image.html#acdaf80c3b9b53e2999005882af5a50ff',1,'BioCore.BioImage.Bake(int rmin, int rmax, int gmin, int gmax, int bmin, int bmax)'],['../class_bio_core_1_1_bio_image.html#abbe0ea2173a47c43d594801702bd14fe',1,'BioCore.BioImage.Bake(IntRange rf, IntRange gf, IntRange bf)']]]
+  ['bioconsole_0',['BioConsole',['../class_bio_core_1_1_bio_console.html#a780b88d9fcb7a03f74040da8b4325836',1,'BioCore::BioConsole']]],
+  ['bytestoicon_1',['BytesToIcon',['../class_bio_core_1_1_o_m_e_r_o.html#a2b17a1d752f8bbb15206c04b44fb824a',1,'BioCore::OMERO']]]
 ];

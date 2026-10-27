@@ -1,4 +1,19 @@
 var searchData=
 [
-  ['grayimage_0',['grayImage',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a27ea1819e03792afdae33a38826401dc',1,'BioLib::ROI::Mask']]]
+  ['b_0',['b',['../_bio_8cs.html#a91b64995742fd30063314f12340b4b5a',1,'Bio.cs']]],
+  ['bit8color_1',['bit8color',['../class_bio_lib_1_1_bio_image_1_1_image_j_desc.html#a1e0f8840445fe32fef6bb5e809228475',1,'BioLib::BioImage::ImageJDesc']]],
+  ['bitmap_2',['bitmap',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a947f9eb55877dc0d4e7c78e9cf019c1e',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitmapbits_3',['bitmapBits',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a72acb9eadd3100b91c5f17c2c0f92013',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitmapheight_4',['bitmapHeight',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ab64d9137025da85dbb18db69efbf1171',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitmappixelformatsize_5',['bitmapPixelFormatSize',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a5aa3cf4cb3c207db7d8e48f30c1b3032',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitmapstride_6',['bitmapStride',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a739df2677c74e5c4375bf95c5181cfd0',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitmapwidth_7',['bitmapWidth',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a4dd765c4acf5b4047b5861c211b7aec5',1,'Bio::Graphics::AbstractFloodFiller']]],
+  ['bitsperpixel_8',['bitsPerPixel',['../struct_bio_1_1_graphics_1_1_pen.html#a412f67a5a1a851248b2aee510c2070dc',1,'Bio::Graphics::Pen']]],
+  ['bm_9',['bm',['../_bio_8cs.html#abfeb1e9e0f973093f5f6ef203526d03c',1,'Bio.cs']]],
+  ['bms_10',['bms',['../_bio_8cs.html#a980f2adc07c7ad1aab4e5a7901a4c139',1,'Bio.cs']]],
+  ['bottom_11',['BOTTOM',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#a35cf28a9259fd2961685308f55e14d24',1,'BioLib::Fiji::RoiDecoder']]],
+  ['browsefacil_12',['browsefacil',['../class_bio_lib_1_1_o_m_e_r_o.html#a1f2a9283ec817990edf33c03f551937d',1,'BioLib::OMERO']]],
+  ['buf_13',['buf',['../class_bio_1_1_graphics_1_1_graphics.html#ac00a4dc38243b9abd9663c63fbd63782',1,'Bio::Graphics::Graphics']]],
+  ['buffers_14',['Buffers',['../class_bio_lib_1_1_bio_image.html#ae3ca24c175c4a9e13c98f19d68586081',1,'BioLib::BioImage']]],
+  ['bytefillcolor_15',['byteFillColor',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#a0b91ef3a47935b4ba45a779ebf7fd7c3',1,'Bio::Graphics::AbstractFloodFiller']]]
 ];

@@ -1,0 +1,25 @@
+var class_bio_core_1_1_objectives_1_1_objective =
+[
+    [ "Objective", "class_bio_core_1_1_objectives_1_1_objective.html#a9b057afea5ce28ce6935f0e02840de74", null ],
+    [ "Objective", "class_bio_core_1_1_objectives_1_1_objective.html#a499816dd5c9ef0b1bb71398e857992aa", null ],
+    [ "ToString", "class_bio_core_1_1_objectives_1_1_objective.html#aaf725cae3dbbe2ce2b37e81efaa8ca5e", null ],
+    [ "AcquisitionExposure", "class_bio_core_1_1_objectives_1_1_objective.html#abd42846fb24e0156844da97954488b2f", null ],
+    [ "config", "class_bio_core_1_1_objectives_1_1_objective.html#a4eef074e052985e73c5b56725e9e6cf5", null ],
+    [ "Configuration", "class_bio_core_1_1_objectives_1_1_objective.html#a8f29d30e88cfeddab30e6398650b867e", null ],
+    [ "ElementType", "class_bio_core_1_1_objectives_1_1_objective.html#a471ff37e87cd2fe6e79d2cc568babd93", null ],
+    [ "Features", "class_bio_core_1_1_objectives_1_1_objective.html#a2737f7fd0dd28dc7e296141f6378d345", null ],
+    [ "FocusMoveAmount", "class_bio_core_1_1_objectives_1_1_objective.html#aba52d751612c6c87e5a8c8f096f5f58e", null ],
+    [ "Index", "class_bio_core_1_1_objectives_1_1_objective.html#a1f2785b783ebf90f36fb078c741b19e4", null ],
+    [ "LocateExposure", "class_bio_core_1_1_objectives_1_1_objective.html#a85e34d1f191e4d5e05b1f8e663d09526", null ],
+    [ "Magnification", "class_bio_core_1_1_objectives_1_1_objective.html#ab0f250f161b790b0631c69d3e22e6461", null ],
+    [ "Modes", "class_bio_core_1_1_objectives_1_1_objective.html#aff8e30c212b6700d82bcbe89916644ab", null ],
+    [ "MoveAmountL", "class_bio_core_1_1_objectives_1_1_objective.html#ad56a46948e2ff89ee6bb7337ce374472", null ],
+    [ "MoveAmountR", "class_bio_core_1_1_objectives_1_1_objective.html#ac36c8fed826fea6f94da8738675edb1c", null ],
+    [ "Name", "class_bio_core_1_1_objectives_1_1_objective.html#a9db11e2299b2c8a7f04d421f7812c523", null ],
+    [ "NumericAperture", "class_bio_core_1_1_objectives_1_1_objective.html#aaa1beb5fa8f001c3d0a1c1c630d79559", null ],
+    [ "Oil", "class_bio_core_1_1_objectives_1_1_objective.html#a8d1952d3a8aafa8b65cb37df0b030db7", null ],
+    [ "UniqueName", "class_bio_core_1_1_objectives_1_1_objective.html#aa7078bf1cbf6916e991a30b51fab52e6", null ],
+    [ "ViewHeight", "class_bio_core_1_1_objectives_1_1_objective.html#afec049f6534567e73a3c0d776bb9a977", null ],
+    [ "ViewWidth", "class_bio_core_1_1_objectives_1_1_objective.html#a36f2a4609f39a09db2836146539cc566", null ],
+    [ "WorkingDistance", "class_bio_core_1_1_objectives_1_1_objective.html#a5dee947a23961a5c4e2d11e247a449f4", null ]
+];

@@ -1,0 +1,23 @@
+var searchData=
+[
+  ['physicalsizex_0',['PhysicalSizeX',['../struct_bio_lib_1_1_resolution.html#a5623f1886a79574f09087d44223a955d',1,'BioLib.Resolution.PhysicalSizeX'],['../class_bio_lib_1_1_image_info.html#ae5fc56a276faf8c2f3e722e0aa3aac9f',1,'BioLib.ImageInfo.PhysicalSizeX'],['../class_bio_lib_1_1_bio_image.html#a35a0bc2ed871410e87ba636ade9ab5b6',1,'BioLib.BioImage.PhysicalSizeX'],['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a1faf71c62555638897923db0cc0b1af6',1,'BioLib.ROI.Mask.PhysicalSizeX']]],
+  ['physicalsizey_1',['PhysicalSizeY',['../struct_bio_lib_1_1_resolution.html#aa294db7141ce8c8f66f3c0e0e794deee',1,'BioLib.Resolution.PhysicalSizeY'],['../class_bio_lib_1_1_image_info.html#afef5da17a5f7c72d9ca9036f18510826',1,'BioLib.ImageInfo.PhysicalSizeY'],['../class_bio_lib_1_1_bio_image.html#a9f5d042140d843a5d99c499e06f550e4',1,'BioLib.BioImage.PhysicalSizeY'],['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a1df544a76a7e5ab74066dcca95d6edb1',1,'BioLib.ROI.Mask.PhysicalSizeY']]],
+  ['physicalsizez_2',['PhysicalSizeZ',['../struct_bio_lib_1_1_resolution.html#ad9444a86d6e9adad62bf17fa5bbd4521',1,'BioLib.Resolution.PhysicalSizeZ'],['../class_bio_lib_1_1_image_info.html#afb1eb70058bae72c4532b525eace5329',1,'BioLib.ImageInfo.PhysicalSizeZ'],['../class_bio_lib_1_1_bio_image.html#a03f02543321ebb36a3238ccc3b54281e',1,'BioLib.BioImage.PhysicalSizeZ']]],
+  ['pixbuf_3',['Pixbuf',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#ae70a56bbb47605f0d4bc7b0b69de32f7',1,'BioLib::ROI::Mask']]],
+  ['pixelcalibration_4',['PixelCalibration',['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a55053eb422dd9e7a11c9a5c06ab6fd08',1,'BioLib::QuPath::Metadata']]],
+  ['pixelformat_5',['PixelFormat',['../struct_bio_lib_1_1_resolution.html#a6c988b81e1d14061116bb65dea6b0edd',1,'BioLib::Resolution']]],
+  ['pixelheight_6',['PixelHeight',['../class_bio_lib_1_1_qu_path_1_1_pixel_calibration.html#a4e3b986070f7dd749d67f71688ba5660',1,'BioLib::QuPath::PixelCalibration']]],
+  ['pixeltype_7',['PixelType',['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a09e1ba6480dc722bc7b765e1f9988fb3',1,'BioLib::QuPath::Metadata']]],
+  ['pixelwidth_8',['PixelWidth',['../class_bio_lib_1_1_qu_path_1_1_pixel_calibration.html#a3c628767dacea05f7e6fcceb13d79f9b',1,'BioLib::QuPath::PixelCalibration']]],
+  ['plane_9',['plane',['../class_bio_lib_1_1_qu_path_1_1_geo_json_geometry.html#a5c94535f937bfa6cf454bdcf8d6df2ad',1,'BioLib.QuPath.GeoJsonGeometry.plane'],['../class_bio_lib_1_1_qu_path_1_1_geo_json_point.html#af0d09fe436a2dc5c1ffd392084dfc0bb',1,'BioLib.QuPath.GeoJsonPoint.plane'],['../class_bio_lib_1_1_qu_path_1_1_geo_json_line_string.html#ae423521529c817c231f8f8de06cb7f70',1,'BioLib.QuPath.GeoJsonLineString.plane'],['../class_bio_lib_1_1_qu_path_1_1_geo_json_polygon.html#a24e9f00c92a21f4e966b7d581225ad4f',1,'BioLib.QuPath.GeoJsonPolygon.plane']]],
+  ['point_10',['Point',['../class_bio_lib_1_1_r_o_i.html#a1ef4870ccb3aacb7c19aa79e3341c051',1,'BioLib::ROI']]],
+  ['points_11',['Points',['../class_bio_lib_1_1_r_o_i.html#af9300731d58a55cc7497848cbefbc2f0',1,'BioLib::ROI']]],
+  ['position_12',['Position',['../class_bio_lib_1_1_bio_image_1_1_well_plate_1_1_well_1_1_sample.html#a72fe571ee58393925271813fdada3626',1,'BioLib::BioImage::WellPlate::Well::Sample']]],
+  ['preferredtileheight_13',['PreferredTileHeight',['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a80e88a2fff9fbbfbaa45bf0ba4402b57',1,'BioLib::QuPath::Metadata']]],
+  ['preferredtilewidth_14',['PreferredTileWidth',['../class_bio_lib_1_1_qu_path_1_1_metadata.html#a8299380818e7f0eaf41b1665196f966a',1,'BioLib::QuPath::Metadata']]],
+  ['properties_15',['properties',['../class_bio_lib_1_1_qu_path_1_1_geo_json_feature.html#adbb01ac94e27ae73d3178658a156f1cc',1,'BioLib::QuPath::GeoJsonFeature']]],
+  ['providerclassname_16',['ProviderClassName',['../class_bio_lib_1_1_qu_path_1_1_server_builder.html#ab7051a11d76cf2ca40149e6cd4412880',1,'BioLib::QuPath::ServerBuilder']]],
+  ['pyramidalorigin_17',['PyramidalOrigin',['../class_bio_lib_1_1_bio_image.html#aa638c26a27270f40f870b19fa8dc0616',1,'BioLib::BioImage']]],
+  ['pyramidalsize_18',['PyramidalSize',['../class_bio_lib_1_1_bio_image.html#a8d1f884b57a07a01387a141e908a21ad',1,'BioLib::BioImage']]],
+  ['pyramidnativelevelcount_19',['PyramidNativeLevelCount',['../class_bio_lib_1_1_bio_image.html#a59c9d43be2ad1ff93e062ef3f582ebc8',1,'BioLib::BioImage']]]
+];

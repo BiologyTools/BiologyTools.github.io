@@ -1,6 +1,7 @@
 var classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s =
 [
     [ "RefillTracker", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker.html", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s_1_1_refill_tracker" ],
+    [ "__init__", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a358cfba332008f11a16d6ad52c9bfcb1", null ],
     [ "_update_status", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a26ffe1c7d4f47b9157599eba1213bd11", null ],
     [ "get_condensor_level", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a3566db7b7d5d0a43aba47d50d062aecf", null ],
     [ "get_light", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a7f099b098181eb5958ab78bf52116c22", null ],
@@ -12,5 +13,14 @@ var classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s =
     [ "set_condensor", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a7c8aa65536cf43aba9f495c7d9474e30", null ],
     [ "set_condensor_level", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a1dc229160349992d4d9a4aa805334d0d", null ],
     [ "set_light", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a14b21012f81afdca033e0e13ea974d49", null ],
-    [ "temperatures", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#aea63a3b0c6dc49a584928985cda9c18c", null ]
+    [ "temperatures", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#aea63a3b0c6dc49a584928985cda9c18c", null ],
+    [ "_cmserror", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a35e0545862cb102c9a6f742fb478423d", null ],
+    [ "_cmsstatus", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a7bd3d466a7165bd37d41730b698f8524", null ],
+    [ "_condensor_level", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#ab626e28df796c8a7769b6f51549f3eca", null ],
+    [ "_heater_map", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#ad0e72e96c87c550630fb3ac92f891360", null ],
+    [ "_refill_map", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a9d3dca93fa0b843d273991a93ac07373", null ],
+    [ "_refills", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a91b4610dae1546928135062803fd8683", null ],
+    [ "get_condensor_level", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#ac7419060f0de0242606ef1b06750fe1f", null ],
+    [ "set_condensor_level", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#a574f92c52b1a0db6524edf49f3f95f83", null ],
+    [ "uid", "classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html#ab33636668e04b99d36b258beca5b196e", null ]
 ];

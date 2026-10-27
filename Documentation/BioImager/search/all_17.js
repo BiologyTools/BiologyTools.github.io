@@ -1,6 +1,18 @@
 var searchData=
 [
-  ['zaberdaisychain_0',['ZaberDaisyChain',['../classmicroscope_1_1controllers_1_1zaber_1_1_zaber_daisy_chain.html',1,'microscope::controllers::zaber']]],
-  ['zaberdevicetype_1',['ZaberDeviceType',['../classmicroscope_1_1controllers_1_1zaber_1_1_zaber_device_type.html',1,'microscope::controllers::zaber']]],
-  ['zfps_2',['ZFps',['../class_bio_imager_1_1_image_view.html#aba0738f8765bc0d8beb1abba6bf825ec',1,'BioImager::ImageView']]]
+  ['x_0',['X',['../class_bio_imager_1_1_imager_1_1_controller_funcs.html#ae173963d5b8756063dfc7648100b78e7',1,'BioImager.Imager.ControllerFuncs.X'],['../class_bio_imager_1_1_stage.html#aee8543bfa0854831563097965797ca70',1,'BioImager.Stage.X'],['../struct_bio_imager_1_1_win32_1_1_rect.html#a40cff1478283385af183531fbd8175a4',1,'BioImager.Win32.Rect.X'],['../struct_bio_imager_1_1_mouse_operations_1_1_mouse_point.html#af2a7bc0edb991e72d75c7a21b4d78857',1,'BioImager.MouseOperations.MousePoint.X']]],
+  ['x1_1',['X1',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a7454c043d89b4078396fdbf94ea72f4f',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['x2_2',['X2',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#a44ad5db3dd1e87e7f3a178f23ae680f6',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['x_5faxis_3',['x_axis',['../namespacemicroscope_1_1getstagexy.html#acd2e54a0aa84960be7be1b9d2d4e4d43',1,'microscope.getstagexy.x_axis'],['../namespacemicroscope_1_1getstagexyz.html#a8e89811dabb1f03a62d6b5d2e6ad0957',1,'microscope.getstagexyz.x_axis'],['../namespacemicroscope_1_1setstagexy.html#ad5b54d5a7cb713c1ec46659fa14fa6dc',1,'microscope.setstagexy.x_axis'],['../namespacemicroscope_1_1setstagexyz.html#a5d97752a8915303e5b5fd8e25463e042',1,'microscope.setstagexyz.x_axis']]],
+  ['xd_4',['XD',['../class_bio_imager_1_1_image_j_1_1_roi_decoder.html#aaef08aec36a39edc2233a1921d5d66ad',1,'BioImager::ImageJ::RoiDecoder']]],
+  ['xi_5ftrg_5fedge_5ffalling_5',['XI_TRG_EDGE_FALLING',['../classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html#aaf5aba992a460819bec573d458383b91',1,'microscope::cameras::ximea::TrgSourceMap']]],
+  ['xi_5ftrg_5fedge_5frising_6',['XI_TRG_EDGE_RISING',['../classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html#a91f2622ba187b210797260a9b5937445',1,'microscope::cameras::ximea::TrgSourceMap']]],
+  ['xi_5ftrg_5fsel_5fframe_5fstart_7',['XI_TRG_SEL_FRAME_START',['../classmicroscope_1_1cameras_1_1ximea_1_1_trg_selector_map.html#aeac77ae1714d674913978d641bfb8085',1,'microscope::cameras::ximea::TrgSelectorMap']]],
+  ['xi_5ftrg_5fsoftware_8',['XI_TRG_SOFTWARE',['../classmicroscope_1_1cameras_1_1ximea_1_1_trg_source_map.html#abc8760ac61273ba0e826c9a1e58286b5',1,'microscope::cameras::ximea::TrgSourceMap']]],
+  ['ximea_2epy_9',['ximea.py',['../ximea_8py.html',1,'']]],
+  ['ximeacamera_10',['XimeaCamera',['../classmicroscope_1_1cameras_1_1ximea_1_1_ximea_camera.html',1,'microscope::cameras::ximea']]],
+  ['xmltreedisplay_11',['XmlTreeDisplay',['../class_bio_imager_1_1_xml_tree_display.html',1,'BioImager.XmlTreeDisplay'],['../class_bio_imager_1_1_xml_tree_display.html#af900346c6c41db162e5edc3f74766a8a',1,'BioImager.XmlTreeDisplay.XmlTreeDisplay()']]],
+  ['xmlview_12',['XMLView',['../class_bio_imager_1_1_x_m_l_view.html',1,'BioImager.XMLView'],['../class_bio_imager_1_1_x_m_l_view.html#a7d3b85a133d765399bbf081b267f3935',1,'BioImager.XMLView.XMLView()']]],
+  ['xmlview_2ecs_13',['XMLView.cs',['../_x_m_l_view_8cs.html',1,'']]],
+  ['xmlview_2edesigner_2ecs_14',['XMLView.Designer.cs',['../_x_m_l_view_8_designer_8cs.html',1,'']]]
 ];

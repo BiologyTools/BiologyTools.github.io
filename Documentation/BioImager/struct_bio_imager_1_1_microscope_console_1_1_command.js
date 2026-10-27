@@ -1,0 +1,35 @@
+var struct_bio_imager_1_1_microscope_console_1_1_command =
+[
+    [ "Type", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03f", [
+      [ "SetStage", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03faad5bc70642f30d0ba97bc51e12095eb0", null ],
+      [ "SetFocus", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa4d09f448e88293ab78206c1d899f23aa", null ],
+      [ "SetObjective", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fae66fe5e5ca24f10e885f989fe1cb45e1", null ],
+      [ "SetFilterWheel", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa1daa551e6c45c26fdd9a7324e8e72667", null ],
+      [ "SetHXP", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fab84a9db1f2f414cec78c587bc115464c", null ],
+      [ "SetRLHalogen", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fae4328fdca0fe760fc6c80d49479cf91e", null ],
+      [ "SetTLHalogen", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa673a5cd417897a33301ea10b72daeef5", null ],
+      [ "SetHXPShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa346bccf43fcc292a390ba96d65e1033e", null ],
+      [ "SetRLShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fad924e5477185fc39d5f08d2c4b441273", null ],
+      [ "SetTLShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fac14a4dc54c177cde0de469d1b4e37fb4", null ],
+      [ "SetStageSWLimit", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa8d459c123634cb86a59e89dd053c8980", null ],
+      [ "SetFocusSWLimit", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fad9b72109a6eccd2177916c837cee5895", null ],
+      [ "SetCalibration", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa6f741e1297f1983746b9d73b588fa0ce", null ],
+      [ "GetStage", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa4ccee8a6eef22e5557f3d66988545035", null ],
+      [ "GetFocus", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa9ae14866bd8940b353c50700afdd640e", null ],
+      [ "GetObjective", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fadaf0284d8d1a65dbae42f6824f8d3974", null ],
+      [ "GetFilterWheel", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa4b952f0c4e571cd324a032342548f445", null ],
+      [ "GetHXP", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa52e3bad15fa9a87e14d0f868804dcbd4", null ],
+      [ "GetRLHalogen", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03faa719d11988ee4f4e587c18ac1a90b8aa", null ],
+      [ "GetTLHalogen", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa45383649ab5c51eb0c8285fddee7bb64", null ],
+      [ "GetHXPShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03faa6555c601982d6d5ec2df28dd0543845", null ],
+      [ "GetRLShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03faa802ce474803d9efb7cd7b1fca593cc4", null ],
+      [ "GetTLShutter", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03faea306f1237eb4f6b302a3dd3a78cbc79", null ],
+      [ "GetStageSWLimit", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa92303285a75fb5d11f5f4a893d2f1f45", null ],
+      [ "GetFocusSWLimit", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa96c6f989529af2b8b72768a6d8178ff7", null ],
+      [ "GetCalibration", "struct_bio_imager_1_1_microscope_console_1_1_command.html#ac502d15833f931c44904db92be35f03fa52eb2146582e00a11868691a63684ce8", null ]
+    ] ],
+    [ "Command", "struct_bio_imager_1_1_microscope_console_1_1_command.html#a5f3a109d33abe36f1a58c59aa35dd224", null ],
+    [ "Command", "struct_bio_imager_1_1_microscope_console_1_1_command.html#a2f06cc8808364683e9b1dd33b79ef54a", null ],
+    [ "doubles", "struct_bio_imager_1_1_microscope_console_1_1_command.html#a7690fbfe1846ecc82bd2a3e8f37a88f0", null ],
+    [ "type", "struct_bio_imager_1_1_microscope_console_1_1_command.html#a2f01b9f687f246773576862c7ff1c308", null ]
+];

@@ -1,20 +1,15 @@
 var searchData=
 [
-  ['calcstatistics_0',['CalcStatistics',['../class_bio_core_1_1_statistics.html#a2ac6d99ec0256b324cb50bc9f04efcba',1,'BioCore::Statistics']]],
-  ['calculatebasefactor_1',['CalculateBaseFactor',['../class_bio_core_1_1_slide_image.html#aee2656fdfb76b85c408b27466b3b7b74',1,'BioCore::SlideImage']]],
-  ['checkpixel_2',['CheckPixel',['../class_bio_core_1_1_graphics_1_1_queue_linear_flood_filler.html#a0ad4d506e5f67ea94a93cf531e806a3d',1,'BioCore::Graphics::QueueLinearFloodFiller']]],
-  ['clearcalcbuffer_3',['ClearCalcBuffer',['../class_bio_core_1_1_statistics.html#a095161d261643b4df0bdc531d3537563',1,'BioCore::Statistics']]],
-  ['configuration_4',['Configuration',['../class_bio_core_1_1_graphics_1_1_configuration.html#a32be9061a0b3f4c769ad05fd4f949f47',1,'BioCore.Graphics.Configuration.Configuration()'],['../class_bio_core_1_1_graphics_1_1_configuration.html#a420b07ef6582ff4e5e5dc80fbcdadb07',1,'BioCore.Graphics.Configuration.Configuration(string title)']]],
-  ['coordstopixelindex_5',['CoordsToPixelIndex',['../class_bio_core_1_1_graphics_1_1_queue_linear_flood_filler.html#a4b9bc5987346657431a4252d5d566f6f',1,'BioCore::Graphics::QueueLinearFloodFiller']]],
-  ['copy_6',['Copy',['../class_bio_core_1_1_r_o_i.html#ae25d1e78c9cab683d15f7da11a9225e1',1,'BioCore.ROI.Copy()'],['../class_bio_core_1_1_r_o_i.html#a392d90d726062420fadd1bbb26aa2a33',1,'BioCore.ROI.Copy(ZCT cord)'],['../class_bio_core_1_1_buffer_info.html#af7f8a718344d77914a9435f3a2678318',1,'BioCore.BufferInfo.Copy()']]],
-  ['copyinfo_7',['CopyInfo',['../class_bio_core_1_1_buffer_info.html#a45ddc52ffef64738d96b3b268269d6db',1,'BioCore::BufferInfo']]],
-  ['copyselection_8',['CopySelection',['../class_bio_core_1_1_image_view.html#ab79bf133eb7f2a1a6578dcb7ebe52331',1,'BioCore::ImageView']]],
-  ['createellipse_9',['CreateEllipse',['../class_bio_core_1_1_r_o_i.html#a75f5ab664051a35be2fe8f06d45006a7',1,'BioCore::ROI']]],
-  ['createfreeform_10',['CreateFreeform',['../class_bio_core_1_1_r_o_i.html#a05419c7ac0b8a6df4ad912204cf4ce91',1,'BioCore::ROI']]],
-  ['createid_11',['CreateID',['../class_bio_core_1_1_buffer_info.html#a71bfdb136d7a558f39e31c699bea7998',1,'BioCore::BufferInfo']]],
-  ['createline_12',['CreateLine',['../class_bio_core_1_1_r_o_i.html#a29229c2e91372f713ee298bc2242061e',1,'BioCore::ROI']]],
-  ['createpoint_13',['CreatePoint',['../class_bio_core_1_1_r_o_i.html#abf057f2c7d0bee1b772a68a0ad5dedcd',1,'BioCore.ROI.CreatePoint(ZCT coord, double x, double y)'],['../class_bio_core_1_1_r_o_i.html#aeb0355212d440ac6628405e1785bcd6f',1,'BioCore.ROI.CreatePoint(int s, int z, int c, int t, double x, double y)']]],
-  ['createpolygon_14',['CreatePolygon',['../class_bio_core_1_1_r_o_i.html#a49011cbf90316ef4613269217f7e5028',1,'BioCore::ROI']]],
-  ['createrectangle_15',['CreateRectangle',['../class_bio_core_1_1_r_o_i.html#a8cc559434654e421490062244b64aaae',1,'BioCore::ROI']]],
-  ['crop_16',['Crop',['../class_bio_core_1_1_buffer_info.html#a4fb88f6529390c94df2a5d0aa4751bf5',1,'BioCore::BufferInfo']]]
+  ['channelstool_0',['ChannelsTool',['../class_bio_core_1_1_channels_tool.html#a61ca55ef6c424434ba1331caf2523f3b',1,'BioCore::ChannelsTool']]],
+  ['checkpixel_1',['CheckPixel',['../class_bio_core_1_1_queue_linear_flood_filler.html#a8f296f5aae8e4b82b5d4d97bbc38945f',1,'BioCore::QueueLinearFloodFiller']]],
+  ['clearcache_2',['ClearCache',['../class_bio_core_1_1_slide_renderer.html#a8317f191a6c387909bbeb43b0f78c104',1,'BioCore::SlideRenderer']]],
+  ['cleartexturecache_3',['ClearTextureCache',['../class_bio_core_1_1_slide_g_l_area.html#a41a7ba5bd652d04696472d758270103d',1,'BioCore::SlideGLArea']]],
+  ['closerl_4',['CloseRL',['../class_bio_core_1_1_microscope.html#a27192b2b61b5285e6b0e55f43bdb0e6f',1,'BioCore::Microscope']]],
+  ['closetl_5',['CloseTL',['../class_bio_core_1_1_microscope.html#a5ec3fedfbce1ce8a4f313cba3d980f27',1,'BioCore::Microscope']]],
+  ['closewindow_6',['CloseWindow',['../class_bio_core_1_1_app.html#a8207071e4296f8b5c9fe3e04b45d4303',1,'BioCore::App']]],
+  ['codeview_7',['CodeView',['../class_bio_core_1_1_code_view.html#a7d8c0f095f323c6a9b20df9166cc49bf',1,'BioCore::CodeView']]],
+  ['colortool_8',['ColorTool',['../class_bio_core_1_1_color_tool.html#a19cf209d73468a09558cc9ef9b320573',1,'BioCore.ColorTool.ColorTool()'],['../class_bio_core_1_1_color_tool.html#a4ac5fbbf65bf3b2d9358ac9e9f2064ef',1,'BioCore.ColorTool.ColorTool(ColorS col, int bitPerPixel)']]],
+  ['coordstobyteindex_9',['CoordsToByteIndex',['../class_bio_core_1_1_queue_linear_flood_filler.html#ac214d57e99020ed6d5ad968fc3b3ffea',1,'BioCore::QueueLinearFloodFiller']]],
+  ['coordstopixelindex_10',['CoordsToPixelIndex',['../class_bio_core_1_1_queue_linear_flood_filler.html#a31aff7911d9a8d5281cfb77c539ff972',1,'BioCore::QueueLinearFloodFiller']]],
+  ['copyselection_11',['CopySelection',['../class_bio_core_1_1_image_view.html#ab79bf133eb7f2a1a6578dcb7ebe52331',1,'BioCore::ImageView']]]
 ];

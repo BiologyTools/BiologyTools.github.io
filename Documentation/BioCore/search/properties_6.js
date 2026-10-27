@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['hardwareacceleration_0',['HardwareAcceleration',['../class_bio_core_1_1_image_view.html#a93d3c442dbb0357165b7cd29496666b5',1,'BioCore::ImageView']]],
-  ['height_1',['Height',['../class_bio_core_1_1_graphics_1_1_configuration.html#a49c694c36d0bdd8a9f90d35139b26a29',1,'BioCore::Graphics::Configuration']]],
-  ['horizontalscrollposition_2',['HorizontalScrollPosition',['../class_bio_core_1_1_code_view_1_1_scroll_text_box.html#a833722c3d3dc74585dc35a87eeec9222',1,'BioCore::CodeView::ScrollTextBox']]]
+  ['gchannel_0',['GChannel',['../class_bio_core_1_1_image_view.html#a47673bbf6a3e27f7f7a002ce9d048b8b',1,'BioCore::ImageView']]],
+  ['graphmax_1',['GraphMax',['../class_bio_core_1_1_histogram_control.html#a0c18c6120d260403460e58180c9aa7b4',1,'BioCore::HistogramControl']]],
+  ['graphmin_2',['GraphMin',['../class_bio_core_1_1_histogram_control.html#a619c74af6a113a15384b1d39ad8adcc0',1,'BioCore::HistogramControl']]]
 ];

@@ -1,5 +1,24 @@
 var searchData=
 [
-  ['verticalscrollposition_0',['VerticalScrollPosition',['../class_bio_core_1_1_code_view_1_1_scroll_text_box.html#ab9c585cf612fe222c620e991c88cdd1f',1,'BioCore::CodeView::ScrollTextBox']]],
-  ['viewcontextmenu_1',['ViewContextMenu',['../class_bio_core_1_1_image_view.html#ab8e907d61000940f586f1bc9d8af46bc',1,'BioCore::ImageView']]]
+  ['scale_0',['Scale',['../class_bio_core_1_1_image_view.html#a463155bca8c3d142228ee9373be60d7c',1,'BioCore::ImageView']]],
+  ['script_1',['Script',['../class_bio_core_1_1_function.html#a553ed7e3a434bf55965851dcd9d5c254',1,'BioCore.Function.Script'],['../class_bio_core_1_1_set_tool.html#a9fb99934cdca202cb325344e47a642c8',1,'BioCore.SetTool.Script']]],
+  ['selectedbuffer_2',['SelectedBuffer',['../class_bio_core_1_1_image_view.html#a8ed1d353f082abe99cb4b9cb6c1263db',1,'BioCore::ImageView']]],
+  ['selectedchannel_3',['SelectedChannel',['../class_bio_core_1_1_channels_tool.html#a6f6d41d4a6b4771dc2d9b723eb7489ff',1,'BioCore::ChannelsTool']]],
+  ['selectedimage_4',['SelectedImage',['../class_bio_core_1_1_image_view.html#a83970f9f2d210ede276beb18d88356fd',1,'BioCore.ImageView.SelectedImage'],['../class_bio_core_1_1_tabs_view.html#ac1c35c4ac7995a585ec757d207b7c54e',1,'BioCore.TabsView.SelectedImage']]],
+  ['selectedindex_5',['SelectedIndex',['../class_bio_core_1_1_image_view.html#af7641d504ca041a4da4a0f08d60ffff8',1,'BioCore::ImageView']]],
+  ['selectedsample_6',['SelectedSample',['../class_bio_core_1_1_channels_tool.html#a03054a7e8e800766136e098e30b19a64',1,'BioCore::ChannelsTool']]],
+  ['selectedviewer_7',['SelectedViewer',['../class_bio_core_1_1_tabs_view.html#ae589b32a5e55c3a54b520b5afe51a335',1,'BioCore::TabsView']]],
+  ['showcontrols_8',['ShowControls',['../class_bio_core_1_1_image_view.html#a16c00875d44750dba37532b3afc1133b',1,'BioCore::ImageView']]],
+  ['showmasks_9',['ShowMasks',['../class_bio_core_1_1_image_view.html#a4ee99879b66a93384fd7343f55c6707e',1,'BioCore::ImageView']]],
+  ['showoverview_10',['ShowOverview',['../class_bio_core_1_1_image_view.html#a79de492f1d121d081a0ec305eca7245f',1,'BioCore::ImageView']]],
+  ['showstage_11',['ShowStage',['../class_bio_core_1_1_image_view.html#a26889ef2e0d486ccb98c7c50753bca1b',1,'BioCore::ImageView']]],
+  ['showstatus_12',['ShowStatus',['../class_bio_core_1_1_image_view.html#a4b96d893825736243f60fdea479364b0',1,'BioCore::ImageView']]],
+  ['sizec_13',['SizeC',['../class_bio_core_1_1_images_to_stack.html#ae8d9b837605da5fc4d23a8f062d48aca',1,'BioCore::ImagesToStack']]],
+  ['sizet_14',['SizeT',['../class_bio_core_1_1_images_to_stack.html#a2be8dba40bf042b2213b3e22713877fa',1,'BioCore::ImagesToStack']]],
+  ['sizez_15',['SizeZ',['../class_bio_core_1_1_images_to_stack.html#aa1fedbdec84a4e01a46843541cf30cca',1,'BioCore::ImagesToStack']]],
+  ['stackhistogram_16',['StackHistogram',['../class_bio_core_1_1_histogram_control.html#a78f95da550206196989eb91c4f546ae5',1,'BioCore::HistogramControl']]],
+  ['state_17',['State',['../class_bio_core_1_1_function.html#afa73a125a1fd885c81f74e00b28ca095',1,'BioCore::Function']]],
+  ['status_18',['Status',['../class_bio_core_1_1_o_m_e_r_o.html#aed6e7e4c54ac4f598370e9a17aca6838',1,'BioCore.OMERO.Status'],['../class_bio_core_1_1_progress.html#a4a1dcced75247c8cba73a4c22092ae57',1,'BioCore.Progress.Status']]],
+  ['statusmessage_19',['StatusMessage',['../class_bio_core_1_1_histogram_control.html#a4566089db4c64a85dc093d80f7a6d4bb',1,'BioCore::HistogramControl']]],
+  ['strokewidth_20',['StrokeWidth',['../class_bio_core_1_1_tools.html#a3be5e757b37979f6290bb4ba3762465f',1,'BioCore::Tools']]]
 ];

@@ -1,8 +1,30 @@
 var class_bio_core_1_1_tabs_view =
 [
+    [ "TabsView", "class_bio_core_1_1_tabs_view.html#afe55bd0be7154f89dfa22572d2e8091b", null ],
+    [ "TabsView", "class_bio_core_1_1_tabs_view.html#a9b5cff8deccced6f601c1af8d7b1dc21", null ],
+    [ "TabsView", "class_bio_core_1_1_tabs_view.html#a2cf1e843cb34cca34ac204e21d026c37", null ],
     [ "AddTab", "class_bio_core_1_1_tabs_view.html#a6451bc02a83371d14200330a91d81a1f", null ],
+    [ "AddViewer", "class_bio_core_1_1_tabs_view.html#a35585a06a6a5f52e92f4d90d978a2c82", null ],
     [ "Dispose", "class_bio_core_1_1_tabs_view.html#a014e4ead9ee769b62cc47d199880ee0c", null ],
+    [ "GetViewer", "class_bio_core_1_1_tabs_view.html#ac81314a2a8673954aec3ec7f6522913f", null ],
+    [ "GetViewer", "class_bio_core_1_1_tabs_view.html#a29d91410211504bc7d455a55fa371775", null ],
+    [ "GetViewerCount", "class_bio_core_1_1_tabs_view.html#a32cb5d6a3de333664ab554830a74d0db", null ],
     [ "OpenInNewProcess", "class_bio_core_1_1_tabs_view.html#ae453542f9c9f1f76a39be241df21859d", null ],
+    [ "RemoveTab", "class_bio_core_1_1_tabs_view.html#a34e50c377aa51552dcaf2a093d7e9aa2", null ],
+    [ "RemoveViewer", "class_bio_core_1_1_tabs_view.html#a623408049b00f14eadb99aa4e00d5b08", null ],
+    [ "RenameTab", "class_bio_core_1_1_tabs_view.html#ae581c8fb5a47a3ccb5ebff58ecca95e9", null ],
     [ "ResizeView", "class_bio_core_1_1_tabs_view.html#a8dabb1e1a6954f091370905fb67ba956", null ],
-    [ "UpdateViewMode", "class_bio_core_1_1_tabs_view.html#aa27444a849e447c429e6b5880db5b2cc", null ]
+    [ "SetTab", "class_bio_core_1_1_tabs_view.html#a96f225cb14792a37bd3d2758c4586108", null ],
+    [ "SetTab", "class_bio_core_1_1_tabs_view.html#a02ecf308edfd0ada40e122027f76abd5", null ],
+    [ "UpdateViewMode", "class_bio_core_1_1_tabs_view.html#aa27444a849e447c429e6b5880db5b2cc", null ],
+    [ "filters", "class_bio_core_1_1_tabs_view.html#a77fcf07b065608196b0d8cebebaa76fd", null ],
+    [ "graphics", "class_bio_core_1_1_tabs_view.html#a162db3fbd611bea4cc0ac18371990d0b", null ],
+    [ "init", "class_bio_core_1_1_tabs_view.html#a214c4766fb00d20055dbe2ed216b6115", null ],
+    [ "viewers", "class_bio_core_1_1_tabs_view.html#accb651fd446f03f5fa13c5ff7ef12046", null ],
+    [ "Image", "class_bio_core_1_1_tabs_view.html#a4b27404e3b2b5f55f6f760c1344320dd", null ],
+    [ "ImageView", "class_bio_core_1_1_tabs_view.html#ae4836115f7954e5ea5e5204d178885e3", null ],
+    [ "SelectedImage", "class_bio_core_1_1_tabs_view.html#ac1c35c4ac7995a585ec757d207b7c54e", null ],
+    [ "SelectedViewer", "class_bio_core_1_1_tabs_view.html#ae589b32a5e55c3a54b520b5afe51a335", null ],
+    [ "TabCount", "class_bio_core_1_1_tabs_view.html#ad58f8ab72162ce1462ab8218ced3229e", null ],
+    [ "Viewer", "class_bio_core_1_1_tabs_view.html#a29555d3f51f5c55eb6c44208d1940ee8", null ]
 ];

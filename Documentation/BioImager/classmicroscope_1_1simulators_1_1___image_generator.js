@@ -1,12 +1,25 @@
 var classmicroscope_1_1simulators_1_1___image_generator =
 [
+    [ "__init__", "classmicroscope_1_1simulators_1_1___image_generator.html#a6c3f9b9d3a1e2425e23ac548d58517cb", null ],
     [ "black", "classmicroscope_1_1simulators_1_1___image_generator.html#a010cd30dc96421cc21cb92fcb7956b85", null ],
+    [ "data_type", "classmicroscope_1_1simulators_1_1___image_generator.html#a8e49330e4cbe3f8f6c5778ded590d25e", null ],
+    [ "enable_numbering", "classmicroscope_1_1simulators_1_1___image_generator.html#a9dfd7bbb37aef0f21faa517fe6006029", null ],
+    [ "get_data_types", "classmicroscope_1_1simulators_1_1___image_generator.html#af43d003fc980d0193e6ad643efcabcb4", null ],
     [ "get_image", "classmicroscope_1_1simulators_1_1___image_generator.html#a7cd21b397abf77355d1162b51cfc3951", null ],
     [ "get_methods", "classmicroscope_1_1simulators_1_1___image_generator.html#a4a3fce9b44e4dc86e5c0c44aee88fef9", null ],
     [ "gradient", "classmicroscope_1_1simulators_1_1___image_generator.html#af6f4585849753c684b929cbacdc9bf8a", null ],
     [ "method", "classmicroscope_1_1simulators_1_1___image_generator.html#a4cb625038aa6c7d3e2b631fab25249ee", null ],
     [ "noise", "classmicroscope_1_1simulators_1_1___image_generator.html#ac3d3e361512f9b0dea586ec144c3d9b2", null ],
+    [ "one_gaussian", "classmicroscope_1_1simulators_1_1___image_generator.html#a321ce8d50d105eb389a2cc71d74db0e7", null ],
     [ "sawtooth", "classmicroscope_1_1simulators_1_1___image_generator.html#a4a64b3ba411da549c948ce03cfea2ef4", null ],
+    [ "set_data_type", "classmicroscope_1_1simulators_1_1___image_generator.html#a6d41d22b65e1e2702da4e4195842abaf", null ],
     [ "set_method", "classmicroscope_1_1simulators_1_1___image_generator.html#a58de77c1fef77e5d2254f0192190fad3", null ],
-    [ "white", "classmicroscope_1_1simulators_1_1___image_generator.html#a25e654e5d03fc40cf21b6dbf0824434e", null ]
+    [ "white", "classmicroscope_1_1simulators_1_1___image_generator.html#a25e654e5d03fc40cf21b6dbf0824434e", null ],
+    [ "_datatype_index", "classmicroscope_1_1simulators_1_1___image_generator.html#a8012aa1a4e6e88646dd8eea26e8166c3", null ],
+    [ "_datatypes", "classmicroscope_1_1simulators_1_1___image_generator.html#aed56a3f8327083826b421c82af19bcbe", null ],
+    [ "_font", "classmicroscope_1_1simulators_1_1___image_generator.html#af72d363145aa1a0438479dfc3c36f1e3", null ],
+    [ "_method_index", "classmicroscope_1_1simulators_1_1___image_generator.html#a8af2945c5b5ea5329ed799240ead5fdb", null ],
+    [ "_methods", "classmicroscope_1_1simulators_1_1___image_generator.html#a10b38fd8ad8098cb9020fb28822e27d3", null ],
+    [ "_theta", "classmicroscope_1_1simulators_1_1___image_generator.html#a44bb5701834dfa064975a8f7ba58a7f7", null ],
+    [ "numbering", "classmicroscope_1_1simulators_1_1___image_generator.html#a34418cc4decd46182165384f4bc04994", null ]
 ];

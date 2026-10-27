@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['laser_5foff_0',['laser_off',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['laser_5fon_1',['laser_on',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['limits_2',['limits',['../classmicroscope_1_1abc_1_1_stage_axis.html#a538a855a503270a2f367d1ba6e9b0274',1,'microscope.abc.StageAxis.limits()'],['../classmicroscope_1_1abc_1_1_stage.html#a0dd6bdc7ce3afa46d24bab22c9fe6953',1,'microscope.abc.Stage.limits()'],['../classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_axis.html#ad43e5b478ef31ba4bd572d9c2e620e9a',1,'microscope.controllers.zaber._ZaberStageAxis.limits()'],['../classmicroscope_1_1simulators_1_1_simulated_stage_axis.html#a4be39d53ed9170f2f66750f5c8abbcb3',1,'microscope.simulators.SimulatedStageAxis.limits()'],['../classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis.html#a7f17397b728c325edec168527bee8fd7',1,'microscope.stages.ludl._LudlStageAxis.limits()']]],
-  ['lock_5fcomms_3',['lock_comms',['../classmicroscope_1_1abc_1_1_serial_device_mixin.html#ada5dd646c655dee45fb66d2210cfb2e9',1,'microscope::abc::SerialDeviceMixin']]]
+  ['keep_5facquiring_0',['keep_acquiring',['../namespacemicroscope_1_1abc.html#afd5a6b811ac9522ca02546f73573365c',1,'microscope::abc']]],
+  ['keydownevent_1',['KeyDownEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#aa998c55b31c038ab5ec889b9b40a7cf7',1,'BioImager.Plugin.IPlugin.KeyDownEvent()'],['../class_bio_imager_1_1_plugins.html#a0e9634b92eb2bbf694990122fa351c4a',1,'BioImager.Plugins.KeyDownEvent()']]],
+  ['keypressevent_2',['KeyPressEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a2f69efaa630b40986579f3cb42ab1e2e',1,'BioImager.Plugin.IPlugin.KeyPressEvent()'],['../class_bio_imager_1_1_plugins.html#ac839820d62cd2ff02f75a4ded8b7fc3e',1,'BioImager.Plugins.KeyPressEvent()']]],
+  ['keyupevent_3',['KeyUpEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae1d1a9975fd4c3c5c959c7a6f7427aa0',1,'BioImager.Plugin.IPlugin.KeyUpEvent()'],['../class_bio_imager_1_1_plugins.html#ab25eb41e06c94151f0fcb66f01183be2',1,'BioImager.Plugins.KeyUpEvent()']]]
 ];

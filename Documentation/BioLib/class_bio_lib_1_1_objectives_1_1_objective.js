@@ -1,0 +1,25 @@
+var class_bio_lib_1_1_objectives_1_1_objective =
+[
+    [ "Objective", "class_bio_lib_1_1_objectives_1_1_objective.html#a8fd885363a556319744ecb42a6634b49", null ],
+    [ "Objective", "class_bio_lib_1_1_objectives_1_1_objective.html#a9b2d6c50b3385d2462ff07056b2dbea5", null ],
+    [ "ToString", "class_bio_lib_1_1_objectives_1_1_objective.html#a71fe62b84d91bd9adeb78213c7e7567a", null ],
+    [ "AcquisitionExposure", "class_bio_lib_1_1_objectives_1_1_objective.html#a69ed5e05de78a6f859e155c218979fac", null ],
+    [ "config", "class_bio_lib_1_1_objectives_1_1_objective.html#abb2b28a3355302d044cd0f12fff020d0", null ],
+    [ "Configuration", "class_bio_lib_1_1_objectives_1_1_objective.html#a12a09db5b3f3a99f885be4879aa72762", null ],
+    [ "ElementType", "class_bio_lib_1_1_objectives_1_1_objective.html#a4060e80de19ea5850066099703b2fdeb", null ],
+    [ "Features", "class_bio_lib_1_1_objectives_1_1_objective.html#a271f59dee0b8aac927b2bbcffb3bf576", null ],
+    [ "FocusMoveAmount", "class_bio_lib_1_1_objectives_1_1_objective.html#a0b924e101728816bb9bb4cd8e34be90c", null ],
+    [ "Index", "class_bio_lib_1_1_objectives_1_1_objective.html#a1d28b0696d474288aa346cfce648d299", null ],
+    [ "LocateExposure", "class_bio_lib_1_1_objectives_1_1_objective.html#abbc0348bf9f48a71bf9374c98c81ecd6", null ],
+    [ "Magnification", "class_bio_lib_1_1_objectives_1_1_objective.html#a059adc11980319bd1b9a443c0a173f96", null ],
+    [ "Modes", "class_bio_lib_1_1_objectives_1_1_objective.html#ac29f31877409b8202412bd189426cd0b", null ],
+    [ "MoveAmountL", "class_bio_lib_1_1_objectives_1_1_objective.html#a1a02b325b84dfdc6e7d179423f676eff", null ],
+    [ "MoveAmountR", "class_bio_lib_1_1_objectives_1_1_objective.html#a0f3e4b46f8ea5bca840500bf685bd20c", null ],
+    [ "Name", "class_bio_lib_1_1_objectives_1_1_objective.html#a75ab5cc86cba0387609784e8a25fee02", null ],
+    [ "NumericAperture", "class_bio_lib_1_1_objectives_1_1_objective.html#a3e0df9804d0f466746104e6fd8db531f", null ],
+    [ "Oil", "class_bio_lib_1_1_objectives_1_1_objective.html#af7c957cf4cda9c8e00748c52dfe3c8b3", null ],
+    [ "UniqueName", "class_bio_lib_1_1_objectives_1_1_objective.html#ad8dd62d28ec85cfd76ec681583a01663", null ],
+    [ "ViewHeight", "class_bio_lib_1_1_objectives_1_1_objective.html#a77b4cba23047823e01b2aa99975e678b", null ],
+    [ "ViewWidth", "class_bio_lib_1_1_objectives_1_1_objective.html#a55f7ae57b46c68ce0e26f8e460d5fa9d", null ],
+    [ "WorkingDistance", "class_bio_lib_1_1_objectives_1_1_objective.html#a42b18ad73c86b0bd793c94ff2c72f459", null ]
+];

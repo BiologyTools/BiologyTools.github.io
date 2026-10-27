@@ -1,9 +1,28 @@
 var classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity =
 [
+    [ "__init__", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a4dbceaba4ddb575636ed5e4922ff8585", null ],
+    [ "_do_disable", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#ab35fe77559604336976b6de827898abe", null ],
+    [ "_do_enable", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a3365d975d2813f7eba4e7b4445d5c4bf", null ],
     [ "_do_get_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a1a2847980d7a1a443ac772f34170db91", null ],
     [ "_do_set_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a3cf6312559ffa1c2563c3580c0f7ca15", null ],
+    [ "_do_shutdown", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#af30c986ff83c355974d50b2e3831b9e1", null ],
     [ "_send_command", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#ab601e7e6a8f5fe5dd98b8262e6323a82", null ],
+    [ "close", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a81b99ebf89fba2c78dde9ce68c6f276f", null ],
+    [ "get_id", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a337a64f564e5828b78bde368ee1445f9", null ],
     [ "get_slide_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a892d683bdcc50cf517a8628ee6a3f63f", null ],
+    [ "get_slides", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a9f6a73741c14d5ced9f79dce014da31b", null ],
+    [ "get_status", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#aad7e48c42f2f2e0c21cd3593dd826e6e", null ],
+    [ "is_connected", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a5912d83ced09a7f6e98afdc69f20b4bd", null ],
     [ "moving", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#aec70685f8392b73e2b0431bac2caf2aa", null ],
-    [ "set_slide_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a968f1a6e44b947cae013d5f68a2a4da7", null ]
+    [ "open", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#aaf7ea4389124cf4fa89c0cfc1c40b4eb", null ],
+    [ "set_calibration", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a3b80269dce6abef937eefe5c3fe19420", null ],
+    [ "set_slide_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a968f1a6e44b947cae013d5f68a2a4da7", null ],
+    [ "_hid", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#abb61a1c7036f96466f6652590b2b97c9", null ],
+    [ "_lock", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a020a748cc5cc1118affad20e10c98409", null ],
+    [ "_lock", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a85b167a9753b40785a8c0e00d9223772", null ],
+    [ "_positions", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#ae46874a6a8952381ff63874c043c525a", null ],
+    [ "_resultlen", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a88afa322c9a037dd05c54e524568e66f", null ],
+    [ "_slide_to_sectioning", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#aa5033aace896c0bbe5c8edacf2df734f", null ],
+    [ "get_slide_position", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#a4ba6bf180bccc3965723f5507f27c994", null ],
+    [ "is_connected", "classmicroscope_1_1filterwheels_1_1aurox_1_1_clarity.html#affd19da70b5d5e1d2b4a28e9fba301a8", null ]
 ];

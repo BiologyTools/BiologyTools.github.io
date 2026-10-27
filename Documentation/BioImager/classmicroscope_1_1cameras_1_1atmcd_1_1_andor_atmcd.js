@@ -1,8 +1,10 @@
 var classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd =
 [
+    [ "__init__", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a4eb2112c5caa862d73a2e338777355bc", null ],
     [ "__enter__", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#afc3e0420b6d27092739d44b33ae16949", null ],
     [ "__exit__", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a766c7dce2b87cd3a493742fcf3899592", null ],
     [ "_acquiring", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a3e7d2fc8134c33d6414f7f36e19312d0", null ],
+    [ "_acquiring", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a9cd7b5b136bec778a9eb7e711906ad61", null ],
     [ "_bind", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#acad69707cc7e248328f19497fafaac87", null ],
     [ "_do_disable", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a480ed8859b98b5087ed76859c380d024", null ],
     [ "_do_enable", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a42a12f1ddc7cdb242a84ea5bae189442", null ],
@@ -25,5 +27,21 @@ var classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd =
     [ "initialize", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a1003e645d4dee56f2dcd1b81f0fbbf46", null ],
     [ "set_exposure_time", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a024618352e4c9656e80cf9fd1cac9d05", null ],
     [ "set_trigger", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#accca214264c6320ea6893ed983330081", null ],
-    [ "soft_trigger", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a02a004f4b3c419d64bfbd6aef8d2754e", null ]
+    [ "soft_trigger", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a02a004f4b3c419d64bfbd6aef8d2754e", null ],
+    [ "trigger_mode", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a7e0892cb5f400383cdf588b82da2d719", null ],
+    [ "trigger_type", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#ac7543ce46c2cce3007fcf2ca313cfccd", null ],
+    [ "_acquiring", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#aa65fec064942924a44e12a39bbce5793", null ],
+    [ "_binning", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a157c610e553d4f304dfdfd514865a4ed", null ],
+    [ "_caps", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#ac976a44fcfd305c0b0389cc60c4ebad6", null ],
+    [ "_get_sensor_temperature", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#aaa68271436adf73b1f5b4e2e7ff62d43", null ],
+    [ "_handle", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a1c17d0df3792debd4dd0b9d928522fb7", null ],
+    [ "_rdepth", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#ac16e49e635438ac011fb4cf723b65739", null ],
+    [ "_readout_modes", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a0e2c3a9f8445c0cb9a51713004bb8f52", null ],
+    [ "_roi", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a48c5b7071a440023f3056fd7042a4f2a", null ],
+    [ "_set_cooler_state", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#af5e55a7aac97b7040687face36be3c4e", null ],
+    [ "_set_readout_mode", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a074efb7ba1b1fe1e5a205f0bc2b68b07", null ],
+    [ "amplifiers", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a845a9af994a0a696eb1ba35fcc4d102c", null ],
+    [ "get_binning", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#aa12854e616b80d3f3938e75a21e0cee3", null ],
+    [ "get_roi", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#a2e4bf4a90d4a4a5c08ea53e5b2bf0546", null ],
+    [ "set_binning", "classmicroscope_1_1cameras_1_1atmcd_1_1_andor_atmcd.html#ac42ce75aa778a44589bc1ded490eb1cb", null ]
 ];

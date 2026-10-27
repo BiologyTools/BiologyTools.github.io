@@ -1,0 +1,45 @@
+var class_bio_core_1_1_tools_1_1_tool =
+[
+    [ "ToolType", "class_bio_core_1_1_tools_1_1_tool.html#a21024acab1848fe5a44a6464724d0ad7", [
+      [ "color", "class_bio_core_1_1_tools_1_1_tool.html#a21024acab1848fe5a44a6464724d0ad7a70dda5dfb8053dc6d1c492574bce9bfd", null ],
+      [ "annotation", "class_bio_core_1_1_tools_1_1_tool.html#a21024acab1848fe5a44a6464724d0ad7a61979344b10aa88f68bcf83c7e019cb2", null ],
+      [ "select", "class_bio_core_1_1_tools_1_1_tool.html#a21024acab1848fe5a44a6464724d0ad7a99938282f04071859941e18f16efcf42", null ],
+      [ "function", "class_bio_core_1_1_tools_1_1_tool.html#a21024acab1848fe5a44a6464724d0ad7ac1c425268e68385d1ab5074c17a94f14", null ]
+    ] ],
+    [ "Type", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1e", [
+      [ "pencil", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1eaa8f6830bce790a8a67fc2e84e12093ba", null ],
+      [ "brush", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea68f6f171811b2cede3c3a4084ad9918c", null ],
+      [ "bucket", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1eac2bfd01762cfbe4e34cc97b9769b4238", null ],
+      [ "eraser", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea91e9b37f58778be003d21a65fab87e73", null ],
+      [ "move", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea3734a903022249b3010be1897042568e", null ],
+      [ "point", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea78ee54aa8f813885fe2fe20d232518b9", null ],
+      [ "line", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea6438c669e0d0de98e6929c2cc0fac474", null ],
+      [ "rect", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea2676d7b68ff2c97c5776c6e5da218c01", null ],
+      [ "ellipse", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea2ea558023e0395f98296b929dfdcfb05", null ],
+      [ "polyline", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea6aa47402882444a244779aeaa2312e3b", null ],
+      [ "polygon", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1eae4fdf3290654756def4e6816fddce608", null ],
+      [ "text", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea1cb251ec0d568de6a929b520c4aed8d1", null ],
+      [ "delete", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea099af53f601532dbd31e0ea99ffdeb64", null ],
+      [ "freeform", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1eac02ec8d2c4233123a9f6a19086b9aa0f", null ],
+      [ "rectSel", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ead15cb72d8c56daa09890c909d4b06b6b", null ],
+      [ "pointSel", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea974351a0ce2d7566747a6b165e761605", null ],
+      [ "pan", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea96ac0342a3ccf9553e3d4c9da9b821b0", null ],
+      [ "magic", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea2f3a4fccca6406e35bcf33e92dd93135", null ],
+      [ "script", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea3205c0ded576131ea255ad2bd38b0fb2", null ],
+      [ "dropper", "class_bio_core_1_1_tools_1_1_tool.html#ada89154f5092fc01576b97cd7bf09b1ea741bbfe6375f736d064a3e23f004676d", null ]
+    ] ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html#a4a7605566f6718eed6480cc5abafcabc", null ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html#ab36fa5e9b2d534859457ca74359f98c0", null ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html#a1c377842e803b951a7ca7d2187f345b6", null ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html#aeaaec42c1733da0a7f3fde636b70b7c7", null ],
+    [ "Tool", "class_bio_core_1_1_tools_1_1_tool.html#aba41dee24c74df4978a8d8ac364b8d4a", null ],
+    [ "Init", "class_bio_core_1_1_tools_1_1_tool.html#a1675689d5294215c5ed88feda44cc0e8", null ],
+    [ "ToString", "class_bio_core_1_1_tools_1_1_tool.html#a9aaec63cefc7f76c3e9f8ccd1b2709d5", null ],
+    [ "Points", "class_bio_core_1_1_tools_1_1_tool.html#a7f2b2d319ce1eebfce2d18645dac5835", null ],
+    [ "script", "class_bio_core_1_1_tools_1_1_tool.html#a604d31e50850ca370b1f16cd931a1cbc", null ],
+    [ "tolerance", "class_bio_core_1_1_tools_1_1_tool.html#a92a7fef17886ddb006856d18c1d46839", null ],
+    [ "toolType", "class_bio_core_1_1_tools_1_1_tool.html#a302253e93e22889e4602892c6c169abb", null ],
+    [ "type", "class_bio_core_1_1_tools_1_1_tool.html#a896170131d61f840f3736a875acfef2a", null ],
+    [ "Rectangle", "class_bio_core_1_1_tools_1_1_tool.html#a88eb2308e7c2f4dddcc9678a75cb23da", null ],
+    [ "RectangleF", "class_bio_core_1_1_tools_1_1_tool.html#a7c40255673d4365e56694270ed26f8e2", null ]
+];

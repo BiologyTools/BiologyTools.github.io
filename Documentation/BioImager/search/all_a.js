@@ -1,21 +1,15 @@
 var searchData=
 [
-  ['laser_5foff_0',['laser_off',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a58f076d97c5a62722cd50a179ba6c34d',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['laser_5fon_1',['laser_on',['../classmicroscope_1_1lights_1_1toptica_1_1__i_beam_connection.html#a4737b82bf1a0a7859fbbb65824e34b2c',1,'microscope::lights::toptica::_iBeamConnection']]],
-  ['layer_2',['Layer',['../struct_bio_imager_1_1_image_view_1_1_layer.html',1,'BioImager::ImageView']]],
-  ['layers_3',['Layers',['../class_bio_imager_1_1_layers.html',1,'BioImager']]],
-  ['level_4',['Level',['../class_bio_imager_1_1_slide_imager_1_1_level.html',1,'BioImager.SlideImager.Level'],['../class_bio_imager_1_1_image_view.html#add717aef7e5bb3d8475ecf08f3a74aff',1,'BioImager.ImageView.Level']]],
-  ['lib_5',['Lib',['../class_bio_imager_1_1_lib.html',1,'BioImager']]],
-  ['library_6',['Library',['../class_bio_imager_1_1_library.html',1,'BioImager']]],
-  ['libraryloaderror_7',['LibraryLoadError',['../classmicroscope_1_1_library_load_error.html',1,'microscope']]],
-  ['licenses_8',['Licenses',['../index.html#autotoc_md5',1,'']]],
-  ['light_9',['Light',['../class_bio_imager_1_1_light.html',1,'BioImager']]],
-  ['lightsource_10',['LightSource',['../class_bio_imager_1_1_light_source.html',1,'BioImager.LightSource'],['../classmicroscope_1_1abc_1_1_light_source.html',1,'microscope.abc.LightSource']]],
-  ['lightsourcetests_11',['LightSourceTests',['../classmicroscope_1_1testsuite_1_1test__devices_1_1_light_source_tests.html',1,'microscope::testsuite::test_devices']]],
-  ['lightsourcewidget_12',['LightSourceWidget',['../classmicroscope_1_1gui_1_1_light_source_widget.html',1,'microscope::gui']]],
-  ['limits_13',['limits',['../classmicroscope_1_1abc_1_1_stage_axis.html#a538a855a503270a2f367d1ba6e9b0274',1,'microscope.abc.StageAxis.limits()'],['../classmicroscope_1_1abc_1_1_stage.html#a0dd6bdc7ce3afa46d24bab22c9fe6953',1,'microscope.abc.Stage.limits()'],['../classmicroscope_1_1controllers_1_1zaber_1_1___zaber_stage_axis.html#ad43e5b478ef31ba4bd572d9c2e620e9a',1,'microscope.controllers.zaber._ZaberStageAxis.limits()'],['../classmicroscope_1_1simulators_1_1_simulated_stage_axis.html#a4be39d53ed9170f2f66750f5c8abbcb3',1,'microscope.simulators.SimulatedStageAxis.limits()'],['../classmicroscope_1_1stages_1_1ludl_1_1___ludl_stage_axis.html#a7f17397b728c325edec168527bee8fd7',1,'microscope.stages.ludl._LudlStageAxis.limits()']]],
-  ['linkamcms_14',['LinkamCMS',['../classmicroscope_1_1stages_1_1linkam_1_1_linkam_c_m_s.html',1,'microscope::stages::linkam']]],
-  ['lock_5fcomms_15',['lock_comms',['../classmicroscope_1_1abc_1_1_serial_device_mixin.html#ada5dd646c655dee45fb66d2210cfb2e9',1,'microscope::abc::SerialDeviceMixin']]],
-  ['login_16',['Login',['../class_bio_imager_1_1_login.html',1,'BioImager']]],
-  ['ludlmc2000_17',['ludlMC2000',['../classmicroscope_1_1stages_1_1ludl_1_1ludl_m_c2000.html',1,'microscope::stages::ludl']]]
+  ['keep_5facquiring_0',['keep_acquiring',['../namespacemicroscope_1_1abc.html#afd5a6b811ac9522ca02546f73573365c',1,'microscope::abc']]],
+  ['key_1',['Key',['../class_bio_imager_1_1_automation_1_1_action.html#aa547f9c047d8800468e47bebc7b8014b',1,'BioImager.Automation.Action.Key'],['../class_bio_imager_1_1_function.html#ac60311e12fd273f84e5f17ca60cd578d',1,'BioImager.Function.Key'],['../class_bio_imager_1_1_function.html#a32edf51b4d2b15e5c9b4f308a35c6402a897356954c2cd3d41b221e3f24f99bba',1,'BioImager.Function.Key']]],
+  ['keydown_2',['keydown',['../class_bio_imager_1_1_automation_1_1_action.html#adeb7fd2692f7b1b15566826a656359faa2959b6433abb3a4138a42ddda695c171',1,'BioImager::Automation::Action']]],
+  ['keydownevent_3',['KeyDownEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#aa998c55b31c038ab5ec889b9b40a7cf7',1,'BioImager.Plugin.IPlugin.KeyDownEvent()'],['../class_bio_imager_1_1_plugins.html#a0e9634b92eb2bbf694990122fa351c4a',1,'BioImager.Plugins.KeyDownEvent()']]],
+  ['keypress_4',['keypress',['../class_bio_imager_1_1_automation_1_1_action.html#adeb7fd2692f7b1b15566826a656359faa40fad744772438d75fed1615b5f7da68',1,'BioImager::Automation::Action']]],
+  ['keypressevent_5',['KeyPressEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#a2f69efaa630b40986579f3cb42ab1e2e',1,'BioImager.Plugin.IPlugin.KeyPressEvent()'],['../class_bio_imager_1_1_plugins.html#ac839820d62cd2ff02f75a4ded8b7fc3e',1,'BioImager.Plugins.KeyPressEvent()']]],
+  ['keys_6',['Keys',['../_image_view_8cs.html#ac2678948729f5f66b30b5280e4ce265d',1,'ImageView.cs']]],
+  ['keyup_7',['keyup',['../class_bio_imager_1_1_automation_1_1_action.html#adeb7fd2692f7b1b15566826a656359faa9eadd330827f781afd1dbc79f0a55ce5',1,'BioImager::Automation::Action']]],
+  ['keyupevent_8',['KeyUpEvent',['../interface_bio_imager_1_1_plugin_1_1_i_plugin.html#ae1d1a9975fd4c3c5c959c7a6f7427aa0',1,'BioImager.Plugin.IPlugin.KeyUpEvent()'],['../class_bio_imager_1_1_plugins.html#ab25eb41e06c94151f0fcb66f01183be2',1,'BioImager.Plugins.KeyUpEvent()']]],
+  ['kind_9',['Kind',['../class_bio_imager_1_1_lib_1_1_type_info.html#a91d0061a7f07233b345d7a34d6029b54',1,'BioImager::Lib::TypeInfo']]],
+  ['kind_10',['kind',['../class_bio_imager_1_1_lib_1_1_type_info.html#a7459cffb9b9d55de695873d7115551b2',1,'BioImager::Lib::TypeInfo']]],
+  ['kinetics_11',['KINETICS',['../classmicroscope_1_1cameras_1_1atmcd_1_1_acquisition_mode.html#a9b2cbfacae58392d935981869babf4c9',1,'microscope::cameras::atmcd::AcquisitionMode']]]
 ];

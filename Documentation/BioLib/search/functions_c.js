@@ -1,6 +1,29 @@
 var searchData=
 [
-  ['pointinpolygon_0',['PointInPolygon',['../class_bio_1_1_graphics_1_1_graphics.html#aa1814fcf4590201c482aa96470e98ec7',1,'Bio::Graphics::Graphics']]],
-  ['pointstostring_1',['PointsToString',['../class_bio_lib_1_1_r_o_i.html#af3c1a3d4d37ddbc1c49a89a6ed4c762a',1,'BioLib::ROI']]],
-  ['prepareforfloodfill_2',['PrepareForFloodFill',['../class_bio_1_1_graphics_1_1_abstract_flood_filler.html#ad3579e973bc7d5cbe50fb5648836d32b',1,'Bio::Graphics::AbstractFloodFiller']]]
+  ['objective_0',['Objective',['../class_bio_lib_1_1_objectives_1_1_objective.html#a8fd885363a556319744ecb42a6634b49',1,'BioLib.Objectives.Objective.Objective(object o, int index)'],['../class_bio_lib_1_1_objectives_1_1_objective.html#a9b2d6c50b3385d2462ff07056b2dbea5',1,'BioLib.Objectives.Objective.Objective()']]],
+  ['objectives_1',['Objectives',['../class_bio_lib_1_1_objectives.html#aef12e6d626d7fd62597b2112832756b0',1,'BioLib::Objectives']]],
+  ['open_2',['Open',['../class_bio_lib_1_1_slide_image.html#ab7a573bb72d4443fba4b0779e2330889',1,'BioLib.SlideImage.Open()'],['../_bio_8cs.html#a78287e92cc22481f41a2e45f3d55a468',1,'Open(string file):&#160;Bio.cs'],['../_bio_8cs.html#a086b91e7222ab1152e6b1a6cb7d85722',1,'Open(string file, int z=0, int c=0, int t=0):&#160;Bio.cs'],['../_bio_8cs.html#ae79bd19fce364a8f48817520c2f375b3',1,'Open(string[] files, ZCT coord):&#160;Bio.cs']]],
+  ['open_3',['open',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#af0d8fc17c630ed975ed8b4b9b66ff440',1,'BioLib::Fiji::RoiDecoder']]],
+  ['openasbioimageasync_4',['OpenAsBioImageAsync',['../class_bio_lib_1_1_zarr_conversion.html#a753665a855f64870845165f5f9a8f91a',1,'BioLib::ZarrConversion']]],
+  ['openasync_5',['OpenAsync',['../_bio_8cs.html#a129b797c4c58db4025edd23b71e89606',1,'OpenAsync(string file, bool OME, bool newtab, bool images, int series):&#160;Bio.cs'],['../_bio_8cs.html#a33581a63c54bf7365de979711292227e',1,'OpenAsync(string[] files, bool OME, bool tab, bool images):&#160;Bio.cs']]],
+  ['openfile_6',['OpenFile',['../_bio_8cs.html#a8b0225ecb22e91f6a37a3e4f4d3328a5',1,'OpenFile(string file, ZCT coord=new ZCT()):&#160;Bio.cs'],['../_bio_8cs.html#a4d30feb493c3fca846d1293156af10f0',1,'OpenFile(string file, bool tab):&#160;Bio.cs'],['../_bio_8cs.html#a35dd2cd778654de8f98f88d36760f6c4',1,'OpenFile(string file, int series, bool tab, bool addToImages, bool tile, int tileX, int tileY, int tileSizeX=800, int tileSizeY=600):&#160;Bio.cs']]],
+  ['openfileasync_7',['OpenFileAsync',['../_bio_8cs.html#adfdd06175636c1f7f34ffdc364957486',1,'Bio.cs']]],
+  ['openfrombytearray_8',['openFromByteArray',['../class_bio_lib_1_1_fiji_1_1_roi_decoder.html#abc0eced4a4903e34f953ae99384f19f2',1,'BioLib::Fiji::RoiDecoder']]],
+  ['openome_9',['OpenOME',['../_bio_8cs.html#ac5ef5734c25117a5359b533aeca6f685',1,'OpenOME(string file, bool tab):&#160;Bio.cs'],['../_bio_8cs.html#a7d899213af7143a665acc796ddb123e1',1,'OpenOME(string file, int serie):&#160;Bio.cs'],['../_bio_8cs.html#a7512f82a3523f7bc0779af116e01f023',1,'OpenOME(string file, int serie, bool tab, bool addToImages, bool tile, int tilex, int tiley, int tileSizeX, int tileSizeY, bool useOpenSlide=true):&#160;Bio.cs']]],
+  ['openomerois_10',['OpenOMEROIs',['../_bio_8cs.html#a1941c82e106f4a3d098a31e33aa31db9',1,'Bio.cs']]],
+  ['openomeseries_11',['OpenOMESeries',['../_bio_8cs.html#a663d77feb20543fc02d628c86d1938a5',1,'Bio.cs']]],
+  ['openproject_12',['OpenProject',['../class_bio_lib_1_1_qu_path.html#a426fe5423a952ac2ec49565f383bae86',1,'BioLib::QuPath']]],
+  ['openrl_13',['OpenRL',['../class_bio_lib_1_1_microscope.html#af1f257dea76696e5eebb212a96d5ec31',1,'BioLib::Microscope']]],
+  ['openseries_14',['OpenSeries',['../_bio_8cs.html#ab25ac307a567f29b1b95b57142c72270',1,'Bio.cs']]],
+  ['openthread_15',['OpenThread',['../_bio_8cs.html#a96f1237ee4cbaa6fcdb6c87b8c299642',1,'Bio.cs']]],
+  ['opentl_16',['OpenTL',['../class_bio_lib_1_1_microscope.html#a84146002bcc606b6563c049d859e4db3',1,'BioLib::Microscope']]],
+  ['openurl_17',['OpenURL',['../_bio_8cs.html#a3abe73465b5b8b9f7e6dce4f7b4df2e5',1,'Bio.cs']]],
+  ['openvips_18',['OpenVips',['../_bio_8cs.html#a3733d064af0cd08eed7bfd50dfe64d3b',1,'Bio.cs']]],
+  ['openxml_19',['OpenXML',['../_bio_8cs.html#a404032cf4b116fa03d858449391b569f',1,'Bio.cs']]],
+  ['openzarrasync_20',['OpenZarrAsync',['../_bio_8cs.html#ae6764a855fef20e26f2f1386e41ff931',1,'Bio.cs']]],
+  ['operator_2a_21',['operator*',['../_bio_8cs.html#a0dfe2cf834ca071c1f30cf468292a9dd',1,'operator*(BioImage a, float b):&#160;Bio.cs'],['../_bio_8cs.html#a57a6f463478cd33f3d5a9808619103d1',1,'operator*(BioImage a, ColorS b):&#160;Bio.cs']]],
+  ['operator_2b_22',['operator+',['../_bio_8cs.html#a0caa7a2d0df20e3391d759ba3cc5c7ab',1,'operator+(BioImage a, float b):&#160;Bio.cs'],['../_bio_8cs.html#a6919fb22c5d7d7d5fc9db33bbedd1a93',1,'operator+(BioImage a, ColorS b):&#160;Bio.cs']]],
+  ['operator_2d_23',['operator-',['../_bio_8cs.html#afc1884b2a50742a6e462a62cb90c76ec',1,'operator-(BioImage a, float b):&#160;Bio.cs'],['../_bio_8cs.html#ac6cdbf9b6ae36eba12fce1e82f36bd7e',1,'operator-(BioImage a, ColorS b):&#160;Bio.cs']]],
+  ['operator_2f_24',['operator/',['../_bio_8cs.html#a5f7bbd8f80a91f9e80bb9e6dad12344f',1,'operator/(BioImage a, float b):&#160;Bio.cs'],['../_bio_8cs.html#a5687b77584ffabd91f9d290ef303500a',1,'operator/(BioImage a, ColorS b):&#160;Bio.cs']]],
+  ['outputas8bitimage_25',['OutputAs8BitImage',['../class_bio_lib_1_1_r_o_i_1_1_mask.html#a965454224ed36c29cdfd777d46a4f2a6',1,'BioLib::ROI::Mask']]]
 ];

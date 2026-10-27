@@ -1,0 +1,46 @@
+var class_bio_imager_1_1_tools_1_1_tool =
+[
+    [ "ToolType", "class_bio_imager_1_1_tools_1_1_tool.html#a716dfd1a1956f8651b82a3973cb0d9a9", [
+      [ "color", "class_bio_imager_1_1_tools_1_1_tool.html#a716dfd1a1956f8651b82a3973cb0d9a9a70dda5dfb8053dc6d1c492574bce9bfd", null ],
+      [ "annotation", "class_bio_imager_1_1_tools_1_1_tool.html#a716dfd1a1956f8651b82a3973cb0d9a9a61979344b10aa88f68bcf83c7e019cb2", null ],
+      [ "select", "class_bio_imager_1_1_tools_1_1_tool.html#a716dfd1a1956f8651b82a3973cb0d9a9a99938282f04071859941e18f16efcf42", null ],
+      [ "function", "class_bio_imager_1_1_tools_1_1_tool.html#a716dfd1a1956f8651b82a3973cb0d9a9ac1c425268e68385d1ab5074c17a94f14", null ]
+    ] ],
+    [ "Type", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74c", [
+      [ "pencil", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74caa8f6830bce790a8a67fc2e84e12093ba", null ],
+      [ "brush", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca68f6f171811b2cede3c3a4084ad9918c", null ],
+      [ "bucket", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74cac2bfd01762cfbe4e34cc97b9769b4238", null ],
+      [ "eraser", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca91e9b37f58778be003d21a65fab87e73", null ],
+      [ "move", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca3734a903022249b3010be1897042568e", null ],
+      [ "point", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca78ee54aa8f813885fe2fe20d232518b9", null ],
+      [ "line", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca6438c669e0d0de98e6929c2cc0fac474", null ],
+      [ "rect", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca2676d7b68ff2c97c5776c6e5da218c01", null ],
+      [ "select", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca99938282f04071859941e18f16efcf42", null ],
+      [ "ellipse", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca2ea558023e0395f98296b929dfdcfb05", null ],
+      [ "polyline", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca6aa47402882444a244779aeaa2312e3b", null ],
+      [ "polygon", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74cae4fdf3290654756def4e6816fddce608", null ],
+      [ "text", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca1cb251ec0d568de6a929b520c4aed8d1", null ],
+      [ "delete", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca099af53f601532dbd31e0ea99ffdeb64", null ],
+      [ "freeform", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74cac02ec8d2c4233123a9f6a19086b9aa0f", null ],
+      [ "rectSel", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74cad15cb72d8c56daa09890c909d4b06b6b", null ],
+      [ "pointSel", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca974351a0ce2d7566747a6b165e761605", null ],
+      [ "pan", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca96ac0342a3ccf9553e3d4c9da9b821b0", null ],
+      [ "magic", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca2f3a4fccca6406e35bcf33e92dd93135", null ],
+      [ "script", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca3205c0ded576131ea255ad2bd38b0fb2", null ],
+      [ "dropper", "class_bio_imager_1_1_tools_1_1_tool.html#aab606b248da3369951052b2d71e2e74ca741bbfe6375f736d064a3e23f004676d", null ]
+    ] ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html#ac59165bdad425ba2f03feb59c6fd12c4", null ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html#ae8adfed456a277d89e83539ca81da1a1", null ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html#afa62e58857620d73527859e1ef4df471", null ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html#a5a0eeae6618db4523e6836995fbfdba9", null ],
+    [ "Tool", "class_bio_imager_1_1_tools_1_1_tool.html#a3b09cc53ed268b8149ee1bc25524bc2e", null ],
+    [ "Init", "class_bio_imager_1_1_tools_1_1_tool.html#ab115e638d2e849de0965c8b6cb6ef542", null ],
+    [ "ToString", "class_bio_imager_1_1_tools_1_1_tool.html#a1c4316c0042c3302a54bb59e4122eac1", null ],
+    [ "Points", "class_bio_imager_1_1_tools_1_1_tool.html#a9bdaab02c318787489c24f467fbb14ff", null ],
+    [ "script", "class_bio_imager_1_1_tools_1_1_tool.html#a9ba17a6f38ce9eaa93f6bb9a2d6b8f2a", null ],
+    [ "tolerance", "class_bio_imager_1_1_tools_1_1_tool.html#acae5ec5178d1048f9a71a431c1b52a58", null ],
+    [ "toolType", "class_bio_imager_1_1_tools_1_1_tool.html#a21e8a0bab4c6f5efed6f15959fd3162c", null ],
+    [ "type", "class_bio_imager_1_1_tools_1_1_tool.html#a5e721730b4e143c935edeebaaeceaca0", null ],
+    [ "Rectangle", "class_bio_imager_1_1_tools_1_1_tool.html#a66c52420645d624c1777c2a6d1a3bc77", null ],
+    [ "RectangleF", "class_bio_imager_1_1_tools_1_1_tool.html#a2d359b18d8127b3e142925bcdb57a0ca", null ]
+];
