@@ -1,12 +1,12 @@
 var searchData=
 [
-  ['haschildasync_0',['HasChildAsync',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_zarr_group.html#a3fe6464388610e4b0634e6fd5f041f65',1,'ZarrNET::Core::Zarr::ZarrGroup']]],
-  ['hcs_20plate_1',['Process an entire HCS plate',['../index.html#autotoc_md52',1,'']]],
-  ['hcs_20plate_20structure_2',['Navigate HCS Plate structure',['../index.html#autotoc_md31',1,'']]],
-  ['how_20it_20works_3',['How It Works',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md6',1,'']]],
-  ['http_20configuration_20auth_20timeouts_4',['Custom HTTP configuration (auth, timeouts)',['../index.html#autotoc_md30',1,'']]],
-  ['http_20remote_20storage_20support_20implementation_20summary_5',['HTTP/Remote Storage Support - Implementation Summary',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html',1,'']]],
-  ['http_20requests_6',['HTTP Requests',['../md__zarr_n_e_t_2_h_t_t_p___s_u_p_p_o_r_t.html#autotoc_md8',1,'']]],
-  ['http_20s3_20urls_7',['Read from remote HTTP/S3 URLs',['../index.html#autotoc_md29',1,'']]],
-  ['httpzarrstore_8',['HttpZarrStore',['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#a46f88ddab7ba44b2d3e18bd23a5cc73a',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore.HttpZarrStore(string baseUrl)'],['../class_zarr_n_e_t_1_1_core_1_1_zarr_1_1_store_1_1_http_zarr_store.html#ab3edfbe344e5ad7986e5e6f0d3da95ed',1,'ZarrNET.Core.Zarr.Store.HttpZarrStore.HttpZarrStore(string baseUrl, HttpClient httpClient, bool ownsHttpClient=false)']]]
+  ['getintrinsicaxes_0',['GetIntrinsicAxes',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_multiscale_metadata.html#a8209e0fa44761fd89828d373b0754fcf',1,'ZarrNET::Core::OmeZarr::Metadata::MultiscaleMetadata']]],
+  ['getobjective_1',['GetObjective',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_metadata_1_1_ome_xml_image_metadata.html#a933f08c0e2182ac252762e8bba8fd258',1,'ZarrNET::Core::OmeZarr::Metadata::OmeXmlImageMetadata']]],
+  ['getphysicalextent_2',['GetPhysicalExtent',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#a9b382cd68b11f1b4c565157c526c34bb',1,'ZarrNET::Core::Nodes::ResolutionLevelNode']]],
+  ['getpixelsize_3',['GetPixelSize',['../class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_coordinate_transform_service.html#a7cc880396bd3c5aea395a533a6e8c2d2',1,'ZarrNET.Core.OmeZarr.Coordinates.CoordinateTransformService.GetPixelSize()'],['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html#aae28875ff9ff2c2b85d2ddb6baedeb98',1,'ZarrNET.Core.Nodes.ResolutionLevelNode.GetPixelSize()']]],
+  ['getrawbytes_4',['GetRawBytes',['../class_zarr_n_e_t_1_1_core_1_1_helpers_1_1_plane_result.html#ad6fe5ba22861cdcaad4a4c36759492e1',1,'ZarrNET::Core::Helpers::PlaneResult']]],
+  ['getseriesomexml_5',['GetSeriesOmeXml',['../class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_bioformats2_raw_collection_node.html#a5fa1257143c5d7bc6695d3f711d14c2a',1,'ZarrNET::Core::Nodes::Bioformats2RawCollectionNode']]],
+  ['gray16_6',['Gray16',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175ca2a6ec0dac8730c09dba12f860dbbad12',1,'ZarrNET::Core::Helpers']]],
+  ['gray8_7',['Gray8',['../namespace_zarr_n_e_t_1_1_core_1_1_helpers.html#a5b137830a7389bab7c62605326e0175cac8cfe3d00282445878661f32adca48ef',1,'ZarrNET::Core::Helpers']]],
+  ['gzipcodec_8',['GzipCodec',['../class_zarr_n_e_t_1_1_gzip_codec.html',1,'ZarrNET']]]
 ];

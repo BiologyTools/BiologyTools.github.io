@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['0_0',['ZarrNET 0.8.0',['../md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html',1,'']]],
+  ['0_0',['ZarrNET 0.8.0',['../md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md72',1,'']]],
   ['0_206_20transformations_1',['OME-Zarr 0.6 transformations',['../index.html#autotoc_md40',1,'']]],
-  ['0_208_200_2',['ZarrNET 0.8.0',['../md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html',1,'']]]
+  ['0_208_200_2',['ZarrNET 0.8.0',['../md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html#autotoc_md72',1,'']]],
+  ['0_208_201_3',['Zarr.NET 0.8.1',['../md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html',1,'']]]
 ];

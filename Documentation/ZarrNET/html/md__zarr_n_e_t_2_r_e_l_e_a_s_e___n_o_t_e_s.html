@@ -24,7 +24,7 @@
 <meta name="twitter:title" content="BiologyTools" />
 <meta name="twitter:description" content="" />
 <!-- END twitter metadata -->
-<title>Zarr.NET: ZarrNET 0.8.0</title>
+<title>Zarr.NET: Zarr.NET 0.8.1</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <link rel="icon" type="image/svg+xml" href="logo.drawio.svg"/>
 <script type="text/javascript" src="jquery.js"></script>
@@ -65,10 +65,10 @@
 <table cellspacing="0" cellpadding="0">
  <tbody>
  <tr style="height: 56px;">
-  <td id="projectlogo"><img alt="Logo" src="icon.png"/></td>
+  <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">Zarr.NET
-   &#160;<span id="projectnumber">0.8.0</span>
+   &#160;<span id="projectnumber">0.8.1</span>
    </div>
    <div id="projectbrief">Zarr reader and writer in .NET</div>
   </td>
@@ -138,14 +138,44 @@ $(function(){initNavTree('md__zarr_n_e_t_2_r_e_l_e_a_s_e___n_o_t_e_s.html',''); 
 </div>
 
 <div><div class="header">
-  <div class="headertitle"><div class="title">ZarrNET 0.8.0</div></div>
+  <div class="headertitle"><div class="title">Zarr.NET 0.8.1</div></div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p><a class="anchor" id="autotoc_md66"></a></p>
-<p>Changes since <code>Release-0.7.0</code>, through commit <code>e5f4ed1</code>.</p>
-<p>This release adds OME-Zarr 0.6 coordinate transformations and image resampling, Zarr v3 transpose encoding, HTTP hierarchy discovery from consolidated metadata, and a utility for converting individual Zarr v2 arrays to v3.</p>
+<p>Changes since <code>Release-0.8.0</code>, through commit <code>187b20f</code>.</p>
+<p>This release adds direct navigation of OME-Zarr 0.6 scenes and fixes coordinate transformation parsing and Blosc decoding.</p>
 <h1><a class="anchor" id="autotoc_md67"></a>
 Added</h1>
+<ul>
+<li><b>Scene-root detection and typed access:</b> Recognize scene roots as <code>OmeNodeType.Scene</code>. Use <code>OmeZarrReader.AsScene()</code> to access a <code>SceneNode</code>, including its parsed <code>SceneMetadata</code> and referenced <code>ImagePaths</code>.</li>
+<li><b>Scene image navigation:</b> Use <code>SceneNode.OpenImageAsync(imageIndex)</code> to open a referenced multiscale image. Image paths are deduplicated in first-use order, visiting transform inputs before outputs and traversing nested sequences and forward/inverse transforms.</li>
+<li><b>Automatic scene dispatch:</b> <code>OpenRoot()</code> now returns a <code>SceneNode</code> for scene roots. <code>AsMultiscaleImageAsync()</code> opens the first image referenced by a scene, supporting existing asynchronous single-image workflows.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md68"></a>
+Fixed</h1>
+<ul>
+<li><b>Coordinate transformation parsing:</b> Parse <code>byDimension</code> entries into <code>ByDimensionTransformations</code> only, and parse other transform lists into <code>Transformations</code>. This avoids interpreting entries using the wrong metadata structure.</li>
+<li><b>Blosc decoding:</b> Determine compressed block boundaries from their physical offsets rather than assuming blocks are stored in index order. This fixes decoding of frames whose blocks were written out of order by parallel compression.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md69"></a>
+Usage notes</h1>
+<ul>
+<li>For a scene root, use <code>AsScene()</code> to select an image explicitly, or <code>AsMultiscaleImageAsync()</code> to open the first referenced image. The synchronous <code>AsMultiscaleImage()</code> still requires a multiscale-image root.</li>
+<li>Opening a scene through <code>AsMultiscaleImageAsync()</code> reports an error if the scene contains no child-image references. <code>OpenImageAsync()</code> requires a valid image index and a reference pointing to a multiscale image.</li>
+</ul>
+<h1><a class="anchor" id="autotoc_md70"></a>
+Tests</h1>
+<ul>
+<li>Added an automated scene-reader test covering scene-root detection, NGFF version detection, referenced-image ordering, typed scene access, and opening the first referenced multiscale image through <code>AsMultiscaleImageAsync()</code>.</li>
+</ul>
+<p><a href="https://github.com/BiologyTools/Zarr.NET/compare/Release-0.8.0...187b20f4df5247eec7b0028b0c86ba107c9e69d5">Full comparison</a></p>
+<hr  />
+<h1><a class="anchor" id="autotoc_md72"></a>
+ZarrNET 0.8.0</h1>
+<p>Changes since <code>Release-0.7.0</code>, through commit <code>e5f4ed1</code>.</p>
+<p>This release adds OME-Zarr 0.6 coordinate transformations and image resampling, Zarr v3 transpose encoding, HTTP hierarchy discovery from consolidated metadata, and a utility for converting individual Zarr v2 arrays to v3.</p>
+<h2><a class="anchor" id="autotoc_md73"></a>
+Added</h2>
 <ul>
 <li><b>OME-Zarr 0.6 metadata:</b> Parse coordinate systems, transform input/output references, nested transformations, and scene metadata. Resolve image axes from coordinate-system metadata.</li>
 <li><b>Point transformations:</b> Evaluate <code>identity</code>, <code>scale</code>, <code>translation</code>, <code>mapAxis</code>, <code>projectAxis</code>, <code>affine</code>, <code>rotation</code>, <code>sequence</code>, <code>byDimension</code>, and <code>bijection</code> transforms, with inverse evaluation where supported. Load affine and rotation matrices stored in separate Zarr arrays using <code>TransformParameterResolver</code>.</li>
@@ -156,20 +186,20 @@ Added</h1>
 <li><b>HTTP hierarchy discovery:</b> List metadata keys and discover children using v2 <code>.zmetadata</code> or v3 inline consolidated metadata. Repeated listings reuse the fetched metadata index.</li>
 <li><b>Zarr v2 to v3 conversion:</b> Use <code>ZarrV2ToV3Converter.ConvertArrayAsync</code> to copy an individual non-root array through decoded chunks into an uncompressed, little-endian v3 bytes pipeline, retaining array shape and chunk shape.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md68"></a>
-Changed</h1>
+<h2><a class="anchor" id="autotoc_md74"></a>
+Changed</h2>
 <ul>
 <li><code>OmeZarrWriter</code> now emits OME-Zarr <b>0.6</b> metadata, replacing its previous 0.5 output. Generated metadata includes a named physical coordinate system, explicit transform endpoints, and a discrete channel axis. Check downstream reader support when consuming newly written datasets.</li>
 <li>Physical ROI conversion now maps every corner to compute enclosing bounds for rotated or sheared regions. Pixel-size calculation uses transformed unit steps to account for rotation and affine transforms.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md69"></a>
-Tests and documentation</h1>
+<h2><a class="anchor" id="autotoc_md75"></a>
+Tests and documentation</h2>
 <ul>
 <li>Added automated coverage for writer/reader round trips, physical ROI reads, affine inversion, transform composition, rotated ROI bounds, physical-grid resampling, transpose encoding, HTTP consolidated metadata listing, v2 reads, and v2-to-v3 conversion.</li>
 <li>Expanded the README and HTTP documentation with APIs, examples, and support limits.</li>
 </ul>
-<h1><a class="anchor" id="autotoc_md70"></a>
-Current limits</h1>
+<h2><a class="anchor" id="autotoc_md76"></a>
+Current limits</h2>
 <ul>
 <li>Resampling supports real numeric data and rank-preserving transforms. Nested vector-field compositions and rank-changing projections remain unsupported.</li>
 <li><code>ReadRegionAsync(PhysicalROI)</code> returns an enclosing source box; use <code>ResamplePhysicalRegionAsync</code> for an output grid in physical coordinates.</li>

@@ -14,6 +14,7 @@ var annotated_dup =
           [ "OmeZarrNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_ome_zarr_node.html", null ],
           [ "PlateNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node.html", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node" ],
           [ "ResolutionLevelNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node.html", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_resolution_level_node" ],
+          [ "SceneNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_scene_node.html", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_scene_node" ],
           [ "WellNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_well_node.html", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_well_node" ]
         ] ],
         [ "OmeZarr", "namespace_zarr_n_e_t_1_1_core_1_1_ome_zarr.html", [

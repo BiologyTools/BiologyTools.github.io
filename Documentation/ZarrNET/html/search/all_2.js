@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['6_20transformations_0',['OME-Zarr 0.6 transformations',['../index.html#autotoc_md40',1,'']]]
+  ['2d_20plane_20from_20a_20multiscale_20image_0',['Read a single 2D plane from a multiscale image',['../index.html#autotoc_md27',1,'']]]
 ];

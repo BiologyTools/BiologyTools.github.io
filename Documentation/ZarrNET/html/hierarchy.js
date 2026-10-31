@@ -66,6 +66,7 @@ var hierarchy =
       [ "ZarrNET.Core.Nodes.LabelNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_label_node.html", null ],
       [ "ZarrNET.Core.Nodes.MultiscaleNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_multiscale_node.html", null ],
       [ "ZarrNET.Core.Nodes.PlateNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_plate_node.html", null ],
+      [ "ZarrNET.Core.Nodes.SceneNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_scene_node.html", null ],
       [ "ZarrNET.Core.Nodes.WellNode", "class_zarr_n_e_t_1_1_core_1_1_nodes_1_1_well_node.html", null ]
     ] ],
     [ "ZarrNET.Core.OmeZarr.Coordinates.PhysicalROI", "class_zarr_n_e_t_1_1_core_1_1_ome_zarr_1_1_coordinates_1_1_physical_r_o_i.html", null ],

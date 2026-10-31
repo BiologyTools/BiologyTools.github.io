@@ -70,6 +70,7 @@ $projects = @{
         Doxyfiles = @(Join-Path $repositoryRoot 'ZarrNETDoxyfile')
         WorkingDirectory = $repositoryRoot
         ProjectFile = Join-Path $repositoryRoot 'ZarrNET\Zarr.NET.csproj'
+        LegacyOutputSubdirectory = 'html'
         HtmlReplacements = @{
             'https://BiologyTools.github.io/Documentation/ZarrNET/html/index.html' = 'https://biologytools.github.io/Documentation/ZarrNET/'
         }
@@ -194,9 +195,26 @@ foreach ($projectName in $requestedProjects) {
         if (-not $resolvedTarget.StartsWith($resolvedDocumentationRoot, [StringComparison]::OrdinalIgnoreCase)) {
             throw "Documentation target is outside the documentation root: $resolvedTarget"
         }
-        & robocopy $generatedHtml $targetDirectory /MIR /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP
+        $legacyTargetDirectory = $null
+        $copyExclusions = @()
+        if ($definition.LegacyOutputSubdirectory) {
+            $legacyTargetDirectory = Join-Path $targetDirectory $definition.LegacyOutputSubdirectory
+            $resolvedLegacyTarget = [IO.Path]::GetFullPath($legacyTargetDirectory)
+            $targetPrefix = $resolvedTarget.TrimEnd('\', '/') + [IO.Path]::DirectorySeparatorChar
+            if (-not $resolvedLegacyTarget.StartsWith($targetPrefix, [StringComparison]::OrdinalIgnoreCase)) {
+                throw "Legacy documentation target is outside the project directory: $resolvedLegacyTarget"
+            }
+            $copyExclusions = @('/XD', $legacyTargetDirectory)
+        }
+        & robocopy $generatedHtml $targetDirectory /MIR /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP @copyExclusions
         if ($LASTEXITCODE -gt 7) {
             throw "Failed to publish $projectName documentation (robocopy exit code $LASTEXITCODE)."
+        }
+        if ($legacyTargetDirectory) {
+            & robocopy $generatedHtml $legacyTargetDirectory /MIR /COPY:DAT /DCOPY:DAT /R:1 /W:1 /NFL /NDL /NJH /NJS /NP
+            if ($LASTEXITCODE -gt 7) {
+                throw "Failed to publish legacy $projectName documentation (robocopy exit code $LASTEXITCODE)."
+            }
         }
         # Robocopy uses nonzero success codes; expose success to calling shells.
         $global:LASTEXITCODE = 0
