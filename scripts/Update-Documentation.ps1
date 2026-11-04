@@ -57,6 +57,7 @@ $projects = @{
         Readme = Join-Path $repositoryRoot 'BioGTK\BioGTK\README.md'
         Doxyfiles = @(Join-Path $repositoryRoot 'BioGTKDoxyfile')
         WorkingDirectory = $repositoryRoot
+        ProjectFile = Join-Path $repositoryRoot 'BioGTK\BioGTK\BioGTK.csproj'
     }
     IKVM11 = @{
         Root = Join-Path $repositoryRoot 'ikvm'

@@ -62,7 +62,7 @@ var NAVTREEINDEX =
 [
 "_a_i_8cs_source.html",
 "class_bio_g_t_k_1_1_objectives.html",
-"class_bio_g_t_k_1_1_text_input.html"
+"class_bio_g_t_k_1_1_tabs_view.html#ad5d80f2b15570d0ae1d72b980c852aec"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">6.5.0</span>
+   &#160;<span id="projectnumber">6.7.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -156,6 +156,8 @@ Inheritance diagram for BioGTK.ChannelsTool:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr class="memitem:a2f799dbf6c0db84719f599de78bd3850" id="r_a2f799dbf6c0db84719f599de78bd3850"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#a2f799dbf6c0db84719f599de78bd3850">RefreshStatisticsForCoordinate</a> (BioImage image, ZCT coordinate)</td></tr>
+<tr class="separator:a2f799dbf6c0db84719f599de78bd3850"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae148a0e235f9c47af4a959e42ae39d03" id="r_ae148a0e235f9c47af4a959e42ae39d03"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="#ae148a0e235f9c47af4a959e42ae39d03">UpdateItems</a> ()</td></tr>
 <tr class="memdesc:ae148a0e235f9c47af4a959e42ae39d03"><td class="mdescLeft">&#160;</td><td class="mdescRight">It takes the list of channels and adds them to the ComboBox.  <br /></td></tr>
 <tr class="separator:ae148a0e235f9c47af4a959e42ae39d03"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -181,7 +183,7 @@ Properties</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00010">10</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00013">13</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a908bf8bccd9abc0060468c3443a5c2f7" name="a908bf8bccd9abc0060468c3443a5c2f7"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a908bf8bccd9abc0060468c3443a5c2f7">&#9670;&#160;</a></span>ChannelsTool()</h2>
@@ -210,77 +212,80 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00064">64</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   64</span>                                                               : base(handle)</div>
-<div class="line"><span class="lineno">   65</span>        {</div>
-<div class="line"><span class="lineno">   66</span>            _builder = builder;</div>
-<div class="line"><span class="lineno">   67</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">   68</span>            App.channelsTool = <span class="keyword">this</span>;</div>
-<div class="line"><span class="lineno">   69</span>            var store = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
-<div class="line"><span class="lineno">   70</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
-<div class="line"><span class="lineno">   71</span>            {</div>
-<div class="line"><span class="lineno">   72</span>                <span class="comment">// Add items to the ListStore</span></div>
-<div class="line"><span class="lineno">   73</span>                store.AppendValues(item.ToString());</div>
-<div class="line"><span class="lineno">   74</span>                channelsBox.Active = 0;</div>
-<div class="line"><span class="lineno">   75</span>            }</div>
-<div class="line"><span class="lineno">   76</span>            channelsBox.Model = store;</div>
-<div class="line"><span class="lineno">   77</span>            <span class="comment">// Set the text column to display</span></div>
-<div class="line"><span class="lineno">   78</span>            var renderer = <span class="keyword">new</span> CellRendererText();</div>
-<div class="line"><span class="lineno">   79</span>            channelsBox.PackStart(renderer, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">   80</span>            channelsBox.AddAttribute(renderer, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
-<div class="line"><span class="lineno">   81</span> </div>
-<div class="line"><span class="lineno">   82</span>            UpdateGUI();</div>
-<div class="line"><span class="lineno">   83</span> </div>
-<div class="line"><span class="lineno">   84</span>            minBox.Value = (int)Channels[0].stats[0].StackMin;</div>
-<div class="line"><span class="lineno">   85</span>            maxBox.Value = (int)Channels[0].stats[0].StackMax;</div>
-<div class="line"><span class="lineno">   86</span>            binBox.Value = 1;</div>
-<div class="line"><span class="lineno">   87</span>            binBox.Adjustment = <span class="keyword">new</span> Adjustment(1, 1, 255, 1, 1, 1);</div>
-<div class="line"><span class="lineno">   88</span>            hist = HistogramControl.Create(Channels[0]);</div>
-<div class="line"><span class="lineno">   89</span>            hist.GraphMax = (int)maxBox.Value;</div>
-<div class="line"><span class="lineno">   90</span>            graphMax.Value = (int)maxBox.Value;</div>
-<div class="line"><span class="lineno">   91</span>            hist.Show();</div>
-<div class="line"><span class="lineno">   92</span> </div>
-<div class="line"><span class="lineno">   93</span>            minBox.ButtonPressEvent += minBox_ValueChanged;</div>
-<div class="line"><span class="lineno">   94</span>            <span class="comment">//meanStackBox.Clicked += MeanStackBox_Clicked;</span></div>
-<div class="line"><span class="lineno">   95</span>            setMinAllBut.ButtonPressEvent += setMinAllBut_Click;</div>
-<div class="line"><span class="lineno">   96</span>            setMaxAllBut.ButtonPressEvent += setMaxAllBut_Click;</div>
-<div class="line"><span class="lineno">   97</span>            minBox.ValueChanged+= minBox_ValueChanged;</div>
-<div class="line"><span class="lineno">   98</span>            maxBox.ValueChanged+= maxBox_ValueChanged;</div>
-<div class="line"><span class="lineno">   99</span>            fluorBox.Changed += fluorBox_TextChanged;</div>
-<div class="line"><span class="lineno">  100</span>            emissionBox.ValueChanged += emissionBox_ValueChanged;</div>
-<div class="line"><span class="lineno">  101</span>            excitationBox.ValueChanged += excitationBox_ValueChanged;</div>
-<div class="line"><span class="lineno">  102</span>            binBox.ValueChanged += binBox_ValueChanged;</div>
-<div class="line"><span class="lineno">  103</span>            graphMinBox.ValueChanged += minGraphBox_ValueChanged;</div>
-<div class="line"><span class="lineno">  104</span>            graphMax.ValueChanged += maxGraphBox_ValueChanged;</div>
-<div class="line"><span class="lineno">  105</span>            applyBut.ButtonPressEvent += applyBut_Click;</div>
-<div class="line"><span class="lineno">  106</span>            resetBut.ButtonPressEvent += ResetButton_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">  107</span>            this.ButtonPressEvent += ChannelsTool_MouseDown;</div>
-<div class="line"><span class="lineno">  108</span>            this.FocusActivated += ChannelsTool_Activated;</div>
-<div class="line"><span class="lineno">  109</span>            channelsBox.Changed += ChannelsBox_Changed;</div>
-<div class="line"><span class="lineno">  110</span>            sampleBox.Changed += SampleBox_Changed;</div>
-<div class="line"><span class="lineno">  111</span>            meanStackBox.Clicked += MeanStackBox_Clicked;</div>
-<div class="line"><span class="lineno">  112</span> </div>
-<div class="line"><span class="lineno">  113</span>            maxUintBox.Changed += MaxUintBox_Changed;</div>
-<div class="line"><span class="lineno">  114</span>            maxUintBox2.Changed += MaxUintBox2_Changed;</div>
-<div class="line"><span class="lineno">  115</span> </div>
-<div class="line"><span class="lineno">  116</span>            var st = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
-<div class="line"><span class="lineno">  117</span>            st.AppendValues(ushort.MaxValue.ToString());</div>
-<div class="line"><span class="lineno">  118</span>            st.AppendValues(16383);</div>
-<div class="line"><span class="lineno">  119</span>            st.AppendValues(4096);</div>
-<div class="line"><span class="lineno">  120</span>            st.AppendValues(1023);</div>
-<div class="line"><span class="lineno">  121</span>            st.AppendValues(<span class="keywordtype">byte</span>.MaxValue.ToString());</div>
-<div class="line"><span class="lineno">  122</span>            maxUintBox.Model = st;</div>
-<div class="line"><span class="lineno">  123</span>            maxUintBox2.Model = st;</div>
-<div class="line"><span class="lineno">  124</span>            <span class="comment">// Set the text column to display</span></div>
-<div class="line"><span class="lineno">  125</span>            var rend = <span class="keyword">new</span> CellRendererText();</div>
-<div class="line"><span class="lineno">  126</span>            maxUintBox.PackStart(rend, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  127</span>            maxUintBox.AddAttribute(rend, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
-<div class="line"><span class="lineno">  128</span>            var rend2 = <span class="keyword">new</span> CellRendererText();</div>
-<div class="line"><span class="lineno">  129</span>            maxUintBox2.PackStart(rend2, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  130</span>            maxUintBox2.AddAttribute(rend2, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
-<div class="line"><span class="lineno">  131</span>            ShowAll();</div>
-<div class="line"><span class="lineno">  132</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">  133</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00067">67</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   67</span>                                                               : base(handle)</div>
+<div class="line"><span class="lineno">   68</span>        {</div>
+<div class="line"><span class="lineno">   69</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   70</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   71</span>            App.channelsTool = <span class="keyword">this</span>;</div>
+<div class="line"><span class="lineno">   72</span>            var store = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">   73</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
+<div class="line"><span class="lineno">   74</span>            {</div>
+<div class="line"><span class="lineno">   75</span>                <span class="comment">// Add items to the ListStore</span></div>
+<div class="line"><span class="lineno">   76</span>                store.AppendValues(item.ToString());</div>
+<div class="line"><span class="lineno">   77</span>                channelsBox.Active = 0;</div>
+<div class="line"><span class="lineno">   78</span>            }</div>
+<div class="line"><span class="lineno">   79</span>            channelsBox.Model = store;</div>
+<div class="line"><span class="lineno">   80</span>            <span class="comment">// Set the text column to display</span></div>
+<div class="line"><span class="lineno">   81</span>            var renderer = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">   82</span>            channelsBox.PackStart(renderer, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">   83</span>            channelsBox.AddAttribute(renderer, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">   84</span> </div>
+<div class="line"><span class="lineno">   85</span>            UpdateGUI();</div>
+<div class="line"><span class="lineno">   86</span> </div>
+<div class="line"><span class="lineno">   87</span>            GetChannelLimits(Channels[0], 0, out <span class="keywordtype">int</span> initialMin, out <span class="keywordtype">int</span> initialMax);</div>
+<div class="line"><span class="lineno">   88</span>            minBox.Value = initialMin;</div>
+<div class="line"><span class="lineno">   89</span>            maxBox.Value = initialMax;</div>
+<div class="line"><span class="lineno">   90</span>            binBox.Value = 1;</div>
+<div class="line"><span class="lineno">   91</span>            binBox.Adjustment = <span class="keyword">new</span> Adjustment(1, 1, 255, 1, 1, 1);</div>
+<div class="line"><span class="lineno">   92</span>            hist = HistogramControl.Create(Channels[0]);</div>
+<div class="line"><span class="lineno">   93</span>            <span class="keywordtype">int</span> initialGraphMaximum = GetObservedHistogramMaximum();</div>
+<div class="line"><span class="lineno">   94</span>            hist.GraphMax = initialGraphMaximum;</div>
+<div class="line"><span class="lineno">   95</span>            graphMax.Value = initialGraphMaximum;</div>
+<div class="line"><span class="lineno">   96</span>            hist.Show();</div>
+<div class="line"><span class="lineno">   97</span>            _ = LoadMissingZarrStatisticsAsync();</div>
+<div class="line"><span class="lineno">   98</span> </div>
+<div class="line"><span class="lineno">   99</span>            minBox.ButtonPressEvent += minBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  100</span>            <span class="comment">//meanStackBox.Clicked += MeanStackBox_Clicked;</span></div>
+<div class="line"><span class="lineno">  101</span>            setMinAllBut.ButtonPressEvent += setMinAllBut_Click;</div>
+<div class="line"><span class="lineno">  102</span>            setMaxAllBut.ButtonPressEvent += setMaxAllBut_Click;</div>
+<div class="line"><span class="lineno">  103</span>            minBox.ValueChanged+= minBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  104</span>            maxBox.ValueChanged+= maxBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  105</span>            fluorBox.Changed += fluorBox_TextChanged;</div>
+<div class="line"><span class="lineno">  106</span>            emissionBox.ValueChanged += emissionBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  107</span>            excitationBox.ValueChanged += excitationBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  108</span>            binBox.ValueChanged += binBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  109</span>            graphMinBox.ValueChanged += minGraphBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  110</span>            graphMax.ValueChanged += maxGraphBox_ValueChanged;</div>
+<div class="line"><span class="lineno">  111</span>            applyBut.ButtonPressEvent += applyBut_Click;</div>
+<div class="line"><span class="lineno">  112</span>            resetBut.ButtonPressEvent += ResetButton_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">  113</span>            this.ButtonPressEvent += ChannelsTool_MouseDown;</div>
+<div class="line"><span class="lineno">  114</span>            this.FocusActivated += ChannelsTool_Activated;</div>
+<div class="line"><span class="lineno">  115</span>            channelsBox.Changed += ChannelsBox_Changed;</div>
+<div class="line"><span class="lineno">  116</span>            sampleBox.Changed += SampleBox_Changed;</div>
+<div class="line"><span class="lineno">  117</span>            meanStackBox.Clicked += MeanStackBox_Clicked;</div>
+<div class="line"><span class="lineno">  118</span> </div>
+<div class="line"><span class="lineno">  119</span>            maxUintBox.Changed += MaxUintBox_Changed;</div>
+<div class="line"><span class="lineno">  120</span>            maxUintBox2.Changed += MaxUintBox2_Changed;</div>
+<div class="line"><span class="lineno">  121</span> </div>
+<div class="line"><span class="lineno">  122</span>            var st = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  123</span>            st.AppendValues(ushort.MaxValue.ToString());</div>
+<div class="line"><span class="lineno">  124</span>            st.AppendValues(16383);</div>
+<div class="line"><span class="lineno">  125</span>            st.AppendValues(4096);</div>
+<div class="line"><span class="lineno">  126</span>            st.AppendValues(1023);</div>
+<div class="line"><span class="lineno">  127</span>            st.AppendValues(<span class="keywordtype">byte</span>.MaxValue.ToString());</div>
+<div class="line"><span class="lineno">  128</span>            maxUintBox.Model = st;</div>
+<div class="line"><span class="lineno">  129</span>            maxUintBox2.Model = st;</div>
+<div class="line"><span class="lineno">  130</span>            <span class="comment">// Set the text column to display</span></div>
+<div class="line"><span class="lineno">  131</span>            var rend = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">  132</span>            maxUintBox.PackStart(rend, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  133</span>            maxUintBox.AddAttribute(rend, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">  134</span>            var rend2 = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">  135</span>            maxUintBox2.PackStart(rend2, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  136</span>            maxUintBox2.AddAttribute(rend2, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">  137</span>            ShowAll();</div>
+<div class="line"><span class="lineno">  138</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">  139</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -308,12 +313,53 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00057">57</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   58</span>        {</div>
-<div class="line"><span class="lineno">   59</span>            <span class="keywordtype">string</span> s = System.IO.Path.GetDirectoryName(Environment.ProcessPath).Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/ChannelsTool.glade&quot;</span>;</div>
-<div class="line"><span class="lineno">   60</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(s, FileMode.Open));</div>
-<div class="line"><span class="lineno">   61</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> ChannelsTool(builder, builder.GetObject(<span class="stringliteral">&quot;chanTool&quot;</span>).Handle);</div>
-<div class="line"><span class="lineno">   62</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00060">60</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   61</span>        {</div>
+<div class="line"><span class="lineno">   62</span>            <span class="keywordtype">string</span> s = System.IO.Path.GetDirectoryName(Environment.ProcessPath).Replace(<span class="stringliteral">&quot;\\&quot;</span>, <span class="stringliteral">&quot;/&quot;</span>) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/ChannelsTool.glade&quot;</span>;</div>
+<div class="line"><span class="lineno">   63</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(s, FileMode.Open));</div>
+<div class="line"><span class="lineno">   64</span>            <span class="keywordflow">return</span> <span class="keyword">new</span> ChannelsTool(builder, builder.GetObject(<span class="stringliteral">&quot;chanTool&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   65</span>        }</div>
+</div><!-- fragment -->
+</div>
+</div>
+<a id="a2f799dbf6c0db84719f599de78bd3850" name="a2f799dbf6c0db84719f599de78bd3850"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2f799dbf6c0db84719f599de78bd3850">&#9670;&#160;</a></span>RefreshStatisticsForCoordinate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void BioGTK.ChannelsTool.RefreshStatisticsForCoordinate </td>
+          <td>(</td>
+          <td class="paramtype">BioImage</td>          <td class="paramname"><span class="paramname"><em>image</em></span>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">ZCT</td>          <td class="paramname"><span class="paramname"><em>coordinate</em></span>&#160;)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00360">360</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  361</span>        {</div>
+<div class="line"><span class="lineno">  362</span>            <span class="keywordflow">if</span> (image == <span class="keyword">null</span>)</div>
+<div class="line"><span class="lineno">  363</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  364</span> </div>
+<div class="line"><span class="lineno">  365</span>            <span class="keywordtype">int</span> version = Interlocked.Increment(ref _statisticsRefreshVersion);</div>
+<div class="line"><span class="lineno">  366</span>            <span class="keywordflow">if</span> (!image.IsZarrSource)</div>
+<div class="line"><span class="lineno">  367</span>            {</div>
+<div class="line"><span class="lineno">  368</span>                UpdateValues();</div>
+<div class="line"><span class="lineno">  369</span>                hist?.<a class="code hl_function" href="class_bio_g_t_k_1_1_histogram_control.html#af394271a02f3da1330acf4ce2af8fb58">UpdateChannel</a>(SelectedChannel);</div>
+<div class="line"><span class="lineno">  370</span>                hist?.<a class="code hl_function" href="class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95">UpdateView</a>();</div>
+<div class="line"><span class="lineno">  371</span>                hist?.QueueDraw();</div>
+<div class="line"><span class="lineno">  372</span>                <span class="keywordflow">return</span>;</div>
+<div class="line"><span class="lineno">  373</span>            }</div>
+<div class="line"><span class="lineno">  374</span> </div>
+<div class="line"><span class="lineno">  375</span>            _ = RefreshZarrStatisticsAsync(image, coordinate, version, debounce: <span class="keyword">true</span>);</div>
+<div class="line"><span class="lineno">  376</span>        }</div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_histogram_control_html_abaf0a8507163541f016cd9b29f0dbb95"><div class="ttname"><a href="class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95">BioGTK.HistogramControl.UpdateView</a></div><div class="ttdeci">void UpdateView()</div><div class="ttdef"><b>Definition</b> <a href="_histogram_control_8cs_source.html#l00656">HistogramControl.cs:656</a></div></div>
+<div class="ttc" id="aclass_bio_g_t_k_1_1_histogram_control_html_af394271a02f3da1330acf4ce2af8fb58"><div class="ttname"><a href="class_bio_g_t_k_1_1_histogram_control.html#af394271a02f3da1330acf4ce2af8fb58">BioGTK.HistogramControl.UpdateChannel</a></div><div class="ttdeci">void UpdateChannel(Channel c)</div><div class="ttdef"><b>Definition</b> <a href="_histogram_control_8cs_source.html#l00649">HistogramControl.cs:649</a></div></div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -334,23 +380,23 @@ Properties</h2></td></tr>
 
 <p>It takes the list of channels and adds them to the ComboBox. </p>
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00365">365</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  366</span>        {</div>
-<div class="line"><span class="lineno">  367</span>            channelsBox.Model = <span class="keyword">null</span>;</div>
-<div class="line"><span class="lineno">  368</span>            var store = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
-<div class="line"><span class="lineno">  369</span>            <span class="comment">// Add items to the ListStore</span></div>
-<div class="line"><span class="lineno">  370</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
-<div class="line"><span class="lineno">  371</span>            {</div>
-<div class="line"><span class="lineno">  372</span>                store.AppendValues(item.Name);</div>
-<div class="line"><span class="lineno">  373</span>            }</div>
-<div class="line"><span class="lineno">  374</span>            <span class="comment">// Set the model for the ComboBox</span></div>
-<div class="line"><span class="lineno">  375</span>            channelsBox.Model = store;</div>
-<div class="line"><span class="lineno">  376</span>            <span class="comment">// Set the text column to display</span></div>
-<div class="line"><span class="lineno">  377</span>            var renderer = <span class="keyword">new</span> CellRendererText();</div>
-<div class="line"><span class="lineno">  378</span>            channelsBox.PackStart(renderer, <span class="keyword">false</span>);</div>
-<div class="line"><span class="lineno">  379</span>            channelsBox.AddAttribute(renderer, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
-<div class="line"><span class="lineno">  380</span> </div>
-<div class="line"><span class="lineno">  381</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00554">554</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  555</span>        {</div>
+<div class="line"><span class="lineno">  556</span>            channelsBox.Model = <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">  557</span>            var store = <span class="keyword">new</span> ListStore(typeof(<span class="keywordtype">string</span>));</div>
+<div class="line"><span class="lineno">  558</span>            <span class="comment">// Add items to the ListStore</span></div>
+<div class="line"><span class="lineno">  559</span>            <span class="keywordflow">foreach</span> (Channel item <span class="keywordflow">in</span> Channels)</div>
+<div class="line"><span class="lineno">  560</span>            {</div>
+<div class="line"><span class="lineno">  561</span>                store.AppendValues(item.Name);</div>
+<div class="line"><span class="lineno">  562</span>            }</div>
+<div class="line"><span class="lineno">  563</span>            <span class="comment">// Set the model for the ComboBox</span></div>
+<div class="line"><span class="lineno">  564</span>            channelsBox.Model = store;</div>
+<div class="line"><span class="lineno">  565</span>            <span class="comment">// Set the text column to display</span></div>
+<div class="line"><span class="lineno">  566</span>            var renderer = <span class="keyword">new</span> CellRendererText();</div>
+<div class="line"><span class="lineno">  567</span>            channelsBox.PackStart(renderer, <span class="keyword">false</span>);</div>
+<div class="line"><span class="lineno">  568</span>            channelsBox.AddAttribute(renderer, <span class="stringliteral">&quot;text&quot;</span>, 0);</div>
+<div class="line"><span class="lineno">  569</span> </div>
+<div class="line"><span class="lineno">  570</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -375,13 +421,13 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00336">336</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  337</span>        {</div>
-<div class="line"><span class="lineno">  338</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">  339</span>            {</div>
-<div class="line"><span class="lineno">  340</span>                <span class="keywordflow">return</span> ImageView.SelectedImage.Channels;</div>
-<div class="line"><span class="lineno">  341</span>            }</div>
-<div class="line"><span class="lineno">  342</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00525">525</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  526</span>        {</div>
+<div class="line"><span class="lineno">  527</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  528</span>            {</div>
+<div class="line"><span class="lineno">  529</span>                <span class="keywordflow">return</span> ImageView.SelectedImage.Channels;</div>
+<div class="line"><span class="lineno">  530</span>            }</div>
+<div class="line"><span class="lineno">  531</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -405,16 +451,16 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00343">343</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  344</span>        {</div>
-<div class="line"><span class="lineno">  345</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">  346</span>            {</div>
-<div class="line"><span class="lineno">  347</span>                <span class="keywordflow">if</span> (channelsBox.Active != -1)</div>
-<div class="line"><span class="lineno">  348</span>                    <span class="keywordflow">return</span> Channels[channelsBox.Active];</div>
-<div class="line"><span class="lineno">  349</span>                <span class="keywordflow">else</span></div>
-<div class="line"><span class="lineno">  350</span>                    <span class="keywordflow">return</span> Channels[0];</div>
-<div class="line"><span class="lineno">  351</span>            }</div>
-<div class="line"><span class="lineno">  352</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00532">532</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  533</span>        {</div>
+<div class="line"><span class="lineno">  534</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  535</span>            {</div>
+<div class="line"><span class="lineno">  536</span>                <span class="keywordflow">if</span> (channelsBox.Active != -1)</div>
+<div class="line"><span class="lineno">  537</span>                    <span class="keywordflow">return</span> Channels[channelsBox.Active];</div>
+<div class="line"><span class="lineno">  538</span>                <span class="keywordflow">else</span></div>
+<div class="line"><span class="lineno">  539</span>                    <span class="keywordflow">return</span> Channels[0];</div>
+<div class="line"><span class="lineno">  540</span>            }</div>
+<div class="line"><span class="lineno">  541</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -438,17 +484,17 @@ Properties</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00353">353</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">  354</span>        {</div>
-<div class="line"><span class="lineno">  355</span>            <span class="keyword">get</span></div>
-<div class="line"><span class="lineno">  356</span>            {</div>
-<div class="line"><span class="lineno">  357</span>                <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)sampleBox.Value;</div>
-<div class="line"><span class="lineno">  358</span>            }</div>
-<div class="line"><span class="lineno">  359</span>            <span class="keyword">set</span></div>
-<div class="line"><span class="lineno">  360</span>            {</div>
-<div class="line"><span class="lineno">  361</span>                sampleBox.Value = value;</div>
-<div class="line"><span class="lineno">  362</span>            }</div>
-<div class="line"><span class="lineno">  363</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_channels_tool_8cs_source.html#l00542">542</a> of file <a class="el" href="_channels_tool_8cs_source.html">ChannelsTool.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">  543</span>        {</div>
+<div class="line"><span class="lineno">  544</span>            <span class="keyword">get</span></div>
+<div class="line"><span class="lineno">  545</span>            {</div>
+<div class="line"><span class="lineno">  546</span>                <span class="keywordflow">return</span> (<span class="keywordtype">int</span>)sampleBox.Value;</div>
+<div class="line"><span class="lineno">  547</span>            }</div>
+<div class="line"><span class="lineno">  548</span>            <span class="keyword">set</span></div>
+<div class="line"><span class="lineno">  549</span>            {</div>
+<div class="line"><span class="lineno">  550</span>                sampleBox.Value = value;</div>
+<div class="line"><span class="lineno">  551</span>            }</div>
+<div class="line"><span class="lineno">  552</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>

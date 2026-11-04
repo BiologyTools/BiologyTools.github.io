@@ -14,6 +14,7 @@ var searchData=
   ['installation_11',['Installation',['../index.html#autotoc_md9',1,'Linux Installation'],['../index.html#autotoc_md8',1,'Windows Installation']]],
   ['installation_12',['Mac installation,',['../index.html#autotoc_md7',1,'']]],
   ['instance_13',['Instance',['../class_bio_g_t_k_1_1_micro_s_a_m.html#a3631de0c0e4d12796763d6dd9051ca8b',1,'BioGTK.MicroSAM.Instance()'],['../class_bio_g_t_k_1_1_s_a_m.html#a6c6cafdb6ab64d95149fbd57cb4ab3cb',1,'BioGTK.SAM.Instance()']]],
-  ['invalidaterenderstate_14',['InvalidateRenderState',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a2a5f370c4c99a416796eabcb34c2074d',1,'BioGTK.SKSlideRenderer.InvalidateRenderState()'],['../class_bio_g_t_k_1_1_slide_renderer.html#a3b89488549b5148cb099897aee5d97ea',1,'BioGTK.SlideRenderer.InvalidateRenderState()']]],
-  ['iplugin_15',['IPlugin',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html',1,'BioGTK::Plugin']]]
+  ['invalidaterenderstate_14',['InvalidateRenderState',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a2a5f370c4c99a416796eabcb34c2074d',1,'BioGTK.SKSlideRenderer.InvalidateRenderState()'],['../class_bio_g_t_k_1_1_slide_renderer.html#a433507cf20a7f5ae4463ca4171d5d294',1,'BioGTK.SlideRenderer.InvalidateRenderState(bool cancelActiveFetches=true)']]],
+  ['invalidateviewport_15',['InvalidateViewport',['../class_bio_g_t_k_1_1_slide_renderer.html#ab286d4c7c90125043363207959842437',1,'BioGTK::SlideRenderer']]],
+  ['iplugin_16',['IPlugin',['../interface_bio_g_t_k_1_1_plugin_1_1_i_plugin.html',1,'BioGTK::Plugin']]]
 ];
