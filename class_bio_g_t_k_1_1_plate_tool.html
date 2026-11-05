@@ -68,7 +68,7 @@
   <td id="projectlogo"><img alt="Logo" src="bio.png"/></td>
   <td id="projectalign" style="padding-left: 0.5em;">
    <div id="projectname">BioGTK
-   &#160;<span id="projectnumber">6.5.0</span>
+   &#160;<span id="projectnumber">6.7.0</span>
    </div>
    <div id="projectbrief">A .NET library &amp; program for annotating, editing various microscopy imaging formats using Bioformats supported images. Including whole slide, pyramidal, and series.</div>
   </td>
@@ -164,7 +164,7 @@ Protected Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock">
-<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00009">9</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
+<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00014">14</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a01e0e5db33c6fb889889f8d530e43286" name="a01e0e5db33c6fb889889f8d530e43286"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a01e0e5db33c6fb889889f8d530e43286">&#9670;&#160;</a></span>PlateTool()</h2>
@@ -193,20 +193,29 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00033">33</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   33</span>                                                            : base(handle)</div>
-<div class="line"><span class="lineno">   34</span>        {</div>
-<div class="line"><span class="lineno">   35</span>            _builder = builder;</div>
-<div class="line"><span class="lineno">   36</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">   37</span>            pictureBox.Drawn += PictureBox_Drawn;</div>
-<div class="line"><span class="lineno">   38</span>            pictureBox.ButtonPressEvent += PictureBox_ButtonPressEvent;</div>
-<div class="line"><span class="lineno">   39</span>            pictureBox.AddEvents((<span class="keywordtype">int</span>)</div>
-<div class="line"><span class="lineno">   40</span>                (EventMask.ButtonPressMask</div>
-<div class="line"><span class="lineno">   41</span>                | EventMask.ButtonReleaseMask</div>
-<div class="line"><span class="lineno">   42</span>                | EventMask.KeyPressMask</div>
-<div class="line"><span class="lineno">   43</span>                | EventMask.PointerMotionMask | EventMask.ScrollMask));</div>
-<div class="line"><span class="lineno">   44</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
-<div class="line"><span class="lineno">   45</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00063">63</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   63</span>                                                            : base(handle)</div>
+<div class="line"><span class="lineno">   64</span>        {</div>
+<div class="line"><span class="lineno">   65</span>            _builder = builder;</div>
+<div class="line"><span class="lineno">   66</span>            builder.Autoconnect(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   67</span> </div>
+<div class="line"><span class="lineno">   68</span>            Title = BuildTitle();</div>
+<div class="line"><span class="lineno">   69</span>            SetDefaultSize(1200, 900);</div>
+<div class="line"><span class="lineno">   70</span> </div>
+<div class="line"><span class="lineno">   71</span>            pictureBox.CanFocus = <span class="keyword">true</span>;</div>
+<div class="line"><span class="lineno">   72</span>            pictureBox.Drawn += PictureBox_Drawn;</div>
+<div class="line"><span class="lineno">   73</span>            pictureBox.ButtonPressEvent += PictureBox_ButtonPressEvent;</div>
+<div class="line"><span class="lineno">   74</span>            pictureBox.KeyPressEvent += PictureBox_KeyPressEvent;</div>
+<div class="line"><span class="lineno">   75</span>            pictureBox.ScrollEvent += PictureBox_ScrollEvent;</div>
+<div class="line"><span class="lineno">   76</span>            pictureBox.AddEvents((<span class="keywordtype">int</span>)(EventMask.ButtonPressMask</div>
+<div class="line"><span class="lineno">   77</span>                | EventMask.ButtonReleaseMask</div>
+<div class="line"><span class="lineno">   78</span>                | EventMask.KeyPressMask</div>
+<div class="line"><span class="lineno">   79</span>                | EventMask.PointerMotionMask</div>
+<div class="line"><span class="lineno">   80</span>                | EventMask.ScrollMask));</div>
+<div class="line"><span class="lineno">   81</span> </div>
+<div class="line"><span class="lineno">   82</span>            App.ApplyStyles(<span class="keyword">this</span>);</div>
+<div class="line"><span class="lineno">   83</span>            RebuildPlateLayout();</div>
+<div class="line"><span class="lineno">   84</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>
@@ -234,13 +243,27 @@ Protected Member Functions</h2></td></tr>
 </table>
 </div><div class="memdoc">
 
-<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00025">25</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
-<div class="fragment"><div class="line"><span class="lineno">   26</span>        {</div>
-<div class="line"><span class="lineno">   27</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(System.IO.Path.GetDirectoryName(Environment.ProcessPath) + <span class="stringliteral">&quot;/&quot;</span> + <span class="stringliteral">&quot;Glade/Plate.glade&quot;</span>, FileMode.Open));</div>
-<div class="line"><span class="lineno">   28</span>            PlateTool v = <span class="keyword">new</span> PlateTool(builder, builder.GetObject(<span class="stringliteral">&quot;plate&quot;</span>).Handle);</div>
-<div class="line"><span class="lineno">   29</span>            v.Show();</div>
-<div class="line"><span class="lineno">   30</span>            <span class="keywordflow">return</span> v;</div>
-<div class="line"><span class="lineno">   31</span>        }</div>
+<p class="definition">Definition at line <a class="el" href="_plate_8cs_source.html#l00041">41</a> of file <a class="el" href="_plate_8cs_source.html">Plate.cs</a>.</p>
+<div class="fragment"><div class="line"><span class="lineno">   42</span>        {</div>
+<div class="line"><span class="lineno">   43</span>            <span class="keywordflow">if</span> (ImageView.SelectedImage?.Plate == <span class="keyword">null</span> || ImageView.SelectedImage.Type != BioImage.ImageType.well)</div>
+<div class="line"><span class="lineno">   44</span>            {</div>
+<div class="line"><span class="lineno">   45</span>                var dialog = <span class="keyword">new</span> MessageDialog(</div>
+<div class="line"><span class="lineno">   46</span>                    <span class="keyword">null</span>,</div>
+<div class="line"><span class="lineno">   47</span>                    DialogFlags.Modal,</div>
+<div class="line"><span class="lineno">   48</span>                    MessageType.Info,</div>
+<div class="line"><span class="lineno">   49</span>                    ButtonsType.Ok,</div>
+<div class="line"><span class="lineno">   50</span>                    <span class="stringliteral">&quot;The current image does not contain a well plate.&quot;</span>);</div>
+<div class="line"><span class="lineno">   51</span>                dialog.Run();</div>
+<div class="line"><span class="lineno">   52</span>                dialog.Destroy();</div>
+<div class="line"><span class="lineno">   53</span>                <span class="keywordflow">return</span> <span class="keyword">null</span>;</div>
+<div class="line"><span class="lineno">   54</span>            }</div>
+<div class="line"><span class="lineno">   55</span> </div>
+<div class="line"><span class="lineno">   56</span>            <span class="keywordtype">string</span> gladePath = System.IO.Path.Combine(System.IO.Path.GetDirectoryName(Environment.ProcessPath) ?? <span class="keywordtype">string</span>.Empty, <span class="stringliteral">&quot;Glade&quot;</span>, <span class="stringliteral">&quot;Plate.glade&quot;</span>);</div>
+<div class="line"><span class="lineno">   57</span>            Builder builder = <span class="keyword">new</span> Builder(<span class="keyword">new</span> FileStream(gladePath, FileMode.Open, FileAccess.Read, FileShare.Read));</div>
+<div class="line"><span class="lineno">   58</span>            PlateTool v = <span class="keyword">new</span> PlateTool(builder, builder.GetObject(<span class="stringliteral">&quot;plate&quot;</span>).Handle);</div>
+<div class="line"><span class="lineno">   59</span>            v.ShowAll();</div>
+<div class="line"><span class="lineno">   60</span>            <span class="keywordflow">return</span> v;</div>
+<div class="line"><span class="lineno">   61</span>        }</div>
 </div><!-- fragment -->
 </div>
 </div>

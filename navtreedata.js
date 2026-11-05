@@ -25,6 +25,19 @@
 var NAVTREE =
 [
   [ "BioGTK", "index.html", [
+    [ "Features", "index.html#autotoc_md1", null ],
+    [ "Dependencies", "index.html#autotoc_md2", null ],
+    [ "Scripting", "index.html#autotoc_md3", null ],
+    [ "Plugins", "index.html#autotoc_md4", null ],
+    [ "Models", "index.html#autotoc_md5", null ],
+    [ ".NET Runtime Install", "index.html#autotoc_md6", null ],
+    [ "Mac installation,", "index.html#autotoc_md7", null ],
+    [ "Windows Installation", "index.html#autotoc_md8", null ],
+    [ "Linux Installation", "index.html#autotoc_md9", null ],
+    [ "Examples", "index.html#autotoc_md10", null ],
+    [ "Usage", "index.html#autotoc_md11", null ],
+    [ "Sample Plugin", "index.html#autotoc_md12", null ],
+    [ "Sample Tool Script", "index.html#autotoc_md13", null ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
@@ -35,6 +48,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", "functions_func" ],
+        [ "Properties", "functions_prop.html", null ],
         [ "Events", "functions_evnt.html", null ]
       ] ]
     ] ],
@@ -47,8 +61,8 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "_a_i_8cs_source.html",
-"class_bio_g_t_k_1_1_play.html#a74c75fc9fedd04083195f0c470431a19",
-"class_bio_g_t_k_1_1_transforms.html#acd57eaf49fba2e59edc30669fd074b97"
+"class_bio_g_t_k_1_1_objectives.html",
+"class_bio_g_t_k_1_1_tabs_view.html#ad5d80f2b15570d0ae1d72b980c852aec"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

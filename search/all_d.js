@@ -6,8 +6,9 @@ var searchData=
   ['platetool_3',['PlateTool',['../class_bio_g_t_k_1_1_plate_tool.html',1,'BioGTK']]],
   ['play_4',['Play',['../class_bio_g_t_k_1_1_play.html',1,'BioGTK']]],
   ['plot_5',['Plot',['../class_bio_g_t_k_1_1_plot.html',1,'BioGTK']]],
-  ['plugin_6',['Plugin',['../class_bio_g_t_k_1_1_plugin.html',1,'BioGTK']]],
-  ['pointpromotion_7',['PointPromotion',['../class_bio_g_t_k_1_1_point_promotion.html',1,'BioGTK']]],
-  ['progress_8',['Progress',['../class_bio_g_t_k_1_1_progress.html',1,'BioGTK']]],
-  ['promotion_9',['Promotion',['../class_bio_g_t_k_1_1_promotion.html',1,'BioGTK']]]
+  ['plugin_6',['Plugin',['../class_bio_g_t_k_1_1_plugin.html',1,'BioGTK.Plugin'],['../index.html#autotoc_md12',1,'Sample Plugin']]],
+  ['plugins_7',['Plugins',['../index.html#autotoc_md4',1,'']]],
+  ['pointpromotion_8',['PointPromotion',['../class_bio_g_t_k_1_1_point_promotion.html',1,'BioGTK']]],
+  ['progress_9',['Progress',['../class_bio_g_t_k_1_1_progress.html',1,'BioGTK']]],
+  ['promotion_10',['Promotion',['../class_bio_g_t_k_1_1_promotion.html',1,'BioGTK']]]
 ];

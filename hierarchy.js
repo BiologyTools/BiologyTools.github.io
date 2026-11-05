@@ -8,11 +8,13 @@ var hierarchy =
       [ "BioGTK.ComboPicker", "class_bio_g_t_k_1_1_combo_picker.html", null ],
       [ "BioGTK.Login", "class_bio_g_t_k_1_1_login.html", null ],
       [ "BioGTK.NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
+      [ "BioGTK.OpenUrlBox", "class_bio_g_t_k_1_1_open_url_box.html", null ],
       [ "BioGTK.Progress", "class_bio_g_t_k_1_1_progress.html", null ],
       [ "BioGTK.Resolutions", "class_bio_g_t_k_1_1_resolutions.html", null ],
       [ "BioGTK.TextInput", "class_bio_g_t_k_1_1_text_input.html", null ],
       [ "BioGTK.Tolerance", "class_bio_g_t_k_1_1_tolerance.html", null ],
-      [ "BioGTK.Updater", "class_bio_g_t_k_1_1_updater.html", null ]
+      [ "BioGTK.Updater", "class_bio_g_t_k_1_1_updater.html", null ],
+      [ "BioGTK.YesNoDialog", "class_bio_g_t_k_1_1_yes_no_dialog.html", null ]
     ] ],
     [ "BioGTK.Focus", "class_bio_g_t_k_1_1_focus.html", null ],
     [ "BioGTK.Function", "class_bio_g_t_k_1_1_function.html", null ],

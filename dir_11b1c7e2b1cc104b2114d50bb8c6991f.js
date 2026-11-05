@@ -13,12 +13,14 @@ var dir_11b1c7e2b1cc104b2114d50bb8c6991f =
     [ "Functions.cs", "_functions_8cs_source.html", null ],
     [ "HistogramControl.cs", "_histogram_control_8cs_source.html", null ],
     [ "ImageView.cs", "_image_view_8cs_source.html", null ],
+    [ "Log.cs", "_log_8cs_source.html", null ],
     [ "Login.cs", "_login_8cs_source.html", null ],
     [ "MagicSelect.cs", "_magic_select_8cs_source.html", null ],
     [ "Microscope.cs", "_microscope_8cs_source.html", null ],
     [ "NodeView.cs", "_node_view_8cs_source.html", null ],
     [ "NumberPicker.cs", "_number_picker_8cs_source.html", null ],
     [ "OMERO.cs", "_o_m_e_r_o_8cs_source.html", null ],
+    [ "OpenURLBox.cs", "_open_u_r_l_box_8cs_source.html", null ],
     [ "Plate.cs", "_plate_8cs_source.html", null ],
     [ "Play.cs", "_play_8cs_source.html", null ],
     [ "Plot.cs", "_plot_8cs_source.html", null ],
@@ -41,5 +43,8 @@ var dir_11b1c7e2b1cc104b2114d50bb8c6991f =
     [ "TextInput.cs", "_text_input_8cs_source.html", null ],
     [ "Tolerance.cs", "_tolerance_8cs_source.html", null ],
     [ "Tools.cs", "_tools_8cs_source.html", null ],
-    [ "Updater.cs", "_updater_8cs_source.html", null ]
+    [ "Updater.cs", "_updater_8cs_source.html", null ],
+    [ "YesNoDialog.cs", "_yes_no_dialog_8cs_source.html", null ],
+    [ "Zarr.cs", "_zarr_8cs_source.html", null ],
+    [ "ZarrMetadataFixup.cs", "_zarr_metadata_fixup_8cs_source.html", null ]
 ];

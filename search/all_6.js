@@ -9,7 +9,8 @@ var searchData=
   ['getstate_6',['GetState',['../class_bio_g_t_k_1_1_scripting.html#a9e93251402a3a8f8d7806bdea582a5b9',1,'BioGTK::Scripting']]],
   ['gettool_7',['GetTool',['../class_bio_g_t_k_1_1_tools.html#a1c551ee1521e32e3d042fd5ce6bf4065',1,'BioGTK::Tools']]],
   ['getup_8',['GetUp',['../class_bio_g_t_k_1_1_scripting_1_1_state.html#ab02c2a161a3ba01d3a43a70917ea18c2',1,'BioGTK::Scripting::State']]],
-  ['githubfile_9',['GitHubFile',['../class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html',1,'BioGTK::Updater']]],
-  ['glwindow_10',['GLWindow',['../class_bio_g_t_k_1_1_g_l_window.html',1,'BioGTK']]],
-  ['gotoimage_11',['GoToImage',['../class_bio_g_t_k_1_1_image_view.html#ac4a301e2a9eed8a20edbb86a231d4484',1,'BioGTK.ImageView.GoToImage()'],['../class_bio_g_t_k_1_1_image_view.html#ae3a3aaf970ac9718670d87187448afda',1,'BioGTK.ImageView.GoToImage(int i)']]]
+  ['getuploadedtilesize_9',['GetUploadedTileSize',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a8a24d5843a940962c3b87ff69dd9799f',1,'BioGTK::SlideGLArea']]],
+  ['githubfile_10',['GitHubFile',['../class_bio_g_t_k_1_1_updater_1_1_git_hub_file.html',1,'BioGTK::Updater']]],
+  ['glwindow_11',['GLWindow',['../class_bio_g_t_k_1_1_g_l_window.html',1,'BioGTK']]],
+  ['gotoimage_12',['GoToImage',['../class_bio_g_t_k_1_1_image_view.html#ac4a301e2a9eed8a20edbb86a231d4484',1,'BioGTK::ImageView']]]
 ];

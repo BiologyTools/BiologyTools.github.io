@@ -25,6 +25,7 @@ var namespace_bio_g_t_k =
     [ "NumberPicker", "class_bio_g_t_k_1_1_number_picker.html", null ],
     [ "Objectives", "class_bio_g_t_k_1_1_objectives.html", "class_bio_g_t_k_1_1_objectives" ],
     [ "OMERO", "class_bio_g_t_k_1_1_o_m_e_r_o.html", "class_bio_g_t_k_1_1_o_m_e_r_o" ],
+    [ "OpenUrlBox", "class_bio_g_t_k_1_1_open_url_box.html", null ],
     [ "PlateTool", "class_bio_g_t_k_1_1_plate_tool.html", null ],
     [ "Play", "class_bio_g_t_k_1_1_play.html", "class_bio_g_t_k_1_1_play" ],
     [ "Plot", "class_bio_g_t_k_1_1_plot.html", "class_bio_g_t_k_1_1_plot" ],
@@ -44,7 +45,7 @@ var namespace_bio_g_t_k =
     [ "SKSlideRenderer", "class_bio_g_t_k_1_1_s_k_slide_renderer.html", "class_bio_g_t_k_1_1_s_k_slide_renderer" ],
     [ "SlideArea", "class_bio_g_t_k_1_1_slide_area.html", "class_bio_g_t_k_1_1_slide_area" ],
     [ "SlideGLArea", "class_bio_g_t_k_1_1_slide_g_l_area.html", "class_bio_g_t_k_1_1_slide_g_l_area" ],
-    [ "SlideRenderer", "class_bio_g_t_k_1_1_slide_renderer.html", null ],
+    [ "SlideRenderer", "class_bio_g_t_k_1_1_slide_renderer.html", "class_bio_g_t_k_1_1_slide_renderer" ],
     [ "StackTools", "class_bio_g_t_k_1_1_stack_tools.html", "class_bio_g_t_k_1_1_stack_tools" ],
     [ "Stage", "class_bio_g_t_k_1_1_stage.html", "class_bio_g_t_k_1_1_stage" ],
     [ "TabsView", "class_bio_g_t_k_1_1_tabs_view.html", "class_bio_g_t_k_1_1_tabs_view" ],
@@ -54,5 +55,6 @@ var namespace_bio_g_t_k =
     [ "Tolerance", "class_bio_g_t_k_1_1_tolerance.html", "class_bio_g_t_k_1_1_tolerance" ],
     [ "Tools", "class_bio_g_t_k_1_1_tools.html", "class_bio_g_t_k_1_1_tools" ],
     [ "Transforms", "class_bio_g_t_k_1_1_transforms.html", "class_bio_g_t_k_1_1_transforms" ],
-    [ "Updater", "class_bio_g_t_k_1_1_updater.html", "class_bio_g_t_k_1_1_updater" ]
+    [ "Updater", "class_bio_g_t_k_1_1_updater.html", "class_bio_g_t_k_1_1_updater" ],
+    [ "YesNoDialog", "class_bio_g_t_k_1_1_yes_no_dialog.html", null ]
 ];

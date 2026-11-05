@@ -15,5 +15,6 @@ var searchData=
   ['updatestatus_12',['UpdateStatus',['../class_bio_g_t_k_1_1_image_view.html#af30cac8e394db9ec2db4ae13ff896847',1,'BioGTK::ImageView']]],
   ['updateview_13',['UpdateView',['../class_bio_g_t_k_1_1_histogram_control.html#abaf0a8507163541f016cd9b29f0dbb95',1,'BioGTK.HistogramControl.UpdateView()'],['../class_bio_g_t_k_1_1_image_view.html#a02cf81b0770f06f78d23e784757ee8d0',1,'BioGTK.ImageView.UpdateView()']]],
   ['updateviewasync_14',['UpdateViewAsync',['../class_bio_g_t_k_1_1_s_k_slide_renderer.html#a181bda27800f43bcbac25e3beec479bd',1,'BioGTK::SKSlideRenderer']]],
-  ['uploadtiletexture_15',['UploadTileTexture',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a527df637fbb512015bf266a245047056',1,'BioGTK::SlideGLArea']]]
+  ['uploadtiletexture_15',['UploadTileTexture',['../class_bio_g_t_k_1_1_slide_g_l_area.html#a527df637fbb512015bf266a245047056',1,'BioGTK::SlideGLArea']]],
+  ['usage_16',['Usage',['../index.html#autotoc_md11',1,'']]]
 ];
