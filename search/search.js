@@ -596,6 +596,11 @@ function SearchResults() {
 
 function createResults(resultsPath) {
 
+  function resultUrl(url) {
+    // The BioGTK main page now lives in the documentation directory.
+    return resultsPath + url.replace(/^\.\.\/index\.html(?=#|$)/, '../Documentation/BioGTK/index.html');
+  }
+
   function setKeyActions(elem,action) {
     elem.setAttribute('onkeydown',action);
     elem.setAttribute('onkeypress',action);
@@ -623,7 +628,7 @@ function createResults(resultsPath) {
     srLink.innerHTML = elem[1][0];
     srEntry.appendChild(srLink);
     if (elem[1].length==2) { // single result
-      srLink.setAttribute('href',resultsPath+elem[1][1][0]);
+      srLink.setAttribute('href',resultUrl(elem[1][1][0]));
       srLink.setAttribute('onclick','searchBox.CloseResultsWindow()');
       if (elem[1][1][1]) {
        srLink.setAttribute('target','_parent');
@@ -643,7 +648,7 @@ function createResults(resultsPath) {
         srChild.setAttribute('id','Item'+index+'_c'+c);
         setKeyActions(srChild,'return searchResults.NavChild(event,'+index+','+c+')');
         setClassAttr(srChild,'SRScope');
-        srChild.setAttribute('href',resultsPath+elem[1][c+1][0]);
+        srChild.setAttribute('href',resultUrl(elem[1][c+1][0]));
         srChild.setAttribute('onclick','searchBox.CloseResultsWindow()');
         if (elem[1][c+1][1]) {
          srChild.setAttribute('target','_parent');

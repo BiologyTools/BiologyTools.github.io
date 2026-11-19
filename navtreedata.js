@@ -24,20 +24,20 @@
 */
 var NAVTREE =
 [
-  [ "BioGTK", "index.html", [
-    [ "Features", "index.html#autotoc_md1", null ],
-    [ "Dependencies", "index.html#autotoc_md2", null ],
-    [ "Scripting", "index.html#autotoc_md3", null ],
-    [ "Plugins", "index.html#autotoc_md4", null ],
-    [ "Models", "index.html#autotoc_md5", null ],
-    [ ".NET Runtime Install", "index.html#autotoc_md6", null ],
-    [ "Mac installation,", "index.html#autotoc_md7", null ],
-    [ "Windows Installation", "index.html#autotoc_md8", null ],
-    [ "Linux Installation", "index.html#autotoc_md9", null ],
-    [ "Examples", "index.html#autotoc_md10", null ],
-    [ "Usage", "index.html#autotoc_md11", null ],
-    [ "Sample Plugin", "index.html#autotoc_md12", null ],
-    [ "Sample Tool Script", "index.html#autotoc_md13", null ],
+  [ "BioGTK", "Documentation/BioGTK/index.html", [
+    [ "Features", "Documentation/BioGTK/index.html#autotoc_md1", null ],
+    [ "Dependencies", "Documentation/BioGTK/index.html#autotoc_md2", null ],
+    [ "Scripting", "Documentation/BioGTK/index.html#autotoc_md3", null ],
+    [ "Plugins", "Documentation/BioGTK/index.html#autotoc_md4", null ],
+    [ "Models", "Documentation/BioGTK/index.html#autotoc_md5", null ],
+    [ ".NET Runtime Install", "Documentation/BioGTK/index.html#autotoc_md6", null ],
+    [ "Mac installation,", "Documentation/BioGTK/index.html#autotoc_md7", null ],
+    [ "Windows Installation", "Documentation/BioGTK/index.html#autotoc_md8", null ],
+    [ "Linux Installation", "Documentation/BioGTK/index.html#autotoc_md9", null ],
+    [ "Examples", "Documentation/BioGTK/index.html#autotoc_md10", null ],
+    [ "Usage", "Documentation/BioGTK/index.html#autotoc_md11", null ],
+    [ "Sample Plugin", "Documentation/BioGTK/index.html#autotoc_md12", null ],
+    [ "Sample Tool Script", "Documentation/BioGTK/index.html#autotoc_md13", null ],
     [ "Packages", "namespaces.html", [
       [ "Package List", "namespaces.html", "namespaces_dup" ]
     ] ],
